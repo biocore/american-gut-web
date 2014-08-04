@@ -49,6 +49,9 @@ coverage.xml
 *.log
 *.pot
 
+# OSX stuff
+.DS_Store
+
 # Sphinx documentation
 docs/_build/
 
