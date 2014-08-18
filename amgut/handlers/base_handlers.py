@@ -25,7 +25,7 @@ class BaseHandler(RequestHandler):
 
             self.render('error.html', error=error, trace_info=trace_info,
                         request_info=request_info,
-                        user=self.current_user)
+                        skid=self.current_user)
 
 
 class MainHandler(BaseHandler):
@@ -33,9 +33,9 @@ class MainHandler(BaseHandler):
     def get(self):
         username = self.current_user
         completedanalyses = []
-        self.render("index.html", user=username, analyses=completedanalyses)
+        self.render("index.html", skid=username, analyses=completedanalyses)
 
 
 class NoPageHandler(BaseHandler):
     def get(self):
-        self.render("404.html", user=self.current_user)
+        self.render("404.html", skid=self.current_user)
