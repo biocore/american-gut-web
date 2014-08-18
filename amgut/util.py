@@ -18,4 +18,3 @@ portal_type = 'americangut'
 DATA_ACCESS = data_access_factory(ServerConfig.data_access_type)
 AG_DATA_ACCESS = data_access_factory(ServerConfig.data_access_type,
                                      'american_gut')
-

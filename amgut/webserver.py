@@ -10,6 +10,8 @@ from tornado.options import define, options, parse_command_line
 
 from amgut.base_handlers import MainHandler, NoPageHandler
 
+import amgut.util
+
 define("port", default=8888, help="run on the given port", type=int)
 
 DIRNAME = dirname(__file__)
@@ -33,7 +35,9 @@ class Application(Application):
             "template_path": TEMPLATE_PATH,
             "debug": DEBUG,
             "cookie_secret": COOKIE_SECRET,
-            "login_url": "/auth/login/"
+            "login_url": "/auth/login/",
+            gzip: True,
+            ui_methods: amgut.util
         }
         Application.__init__(self, handlers, **settings)
 
