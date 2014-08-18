@@ -6,14 +6,11 @@
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
 
-from amgut.lib.data_access.data_access_connections import data_access_factory
-from amgut.lib.enums import ServerConfig, DataAccessType
+from amgut.lib.data_access.ag_data_access import AGDataAccess
 
-__all__ = ['DATA_ACCESS', 'AG_DATA_ACCESS']
+__all__ = ['AG_DATA_ACCESS']
 
 PORTAL_TYPE = 'americangut'
 
 # Data Access
-DATA_ACCESS = data_access_factory(ServerConfig.data_access_type)
-AG_DATA_ACCESS = data_access_factory(ServerConfig.data_access_type,
-                                     'american_gut')
+AG_DATA_ACCESS = AGDataAccess()

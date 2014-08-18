@@ -2,7 +2,7 @@
 from __future__ import division
 
 # -----------------------------------------------------------------------------
-# Copyright (c) 2014--, The Qiita Development Team.
+# Copyright (c) 2014--, The American Gut Development Team.
 #
 # Distributed under the terms of the BSD 3-clause License.
 #
@@ -13,16 +13,18 @@ from contextlib import contextmanager
 from psycopg2 import connect, Error as PostgresError
 from psycopg2.extras import DictCursor
 
+from amgut.lib.config_manager import AMGUT_CONFIG
+
 
 class SQLConnectionHandler(object):
     """Encapsulates the DB connection with the Postgres DB"""
     def __init__(self, con=None):
         if not con:
-            self._connection = connect(user='',
-                                       password='',
-                                       database='',
-                                       host='localhost',
-                                       port='5432')
+            self._connection = connect(user=AMGUT_CONFIG.user,
+                                       password=AMGUT_CONFIG.password,
+                                       database=AMGUT_CONFIG.database,
+                                       host=AMGUT_CONFIG.host,
+                                       port=AMGUT_CONFIG.port)
         else:
             self._connection = con
 
@@ -36,8 +38,6 @@ class SQLConnectionHandler(object):
         Returns
         -------
         pgcursor : psycopg2.cursor
-
-        Raises a QiitaDBConnectionError if the cursor cannot be created
         """
         with self._connection.cursor(cursor_factory=DictCursor) as cur:
             yield cur
@@ -76,7 +76,7 @@ class SQLConnectionHandler(object):
 
         Raises
         ------
-        QiitaDBExecutionError
+        ValueError
             If there is some error executing the SQL query
         """
         # Check that sql arguments have the correct type
@@ -119,11 +119,6 @@ class SQLConnectionHandler(object):
         list of tuples
             The results of the fetchall query
 
-        Raises
-        ------
-        QiitaDBExecutionError
-            If there is some error executing the SQL query
-
         Note: from psycopg2 documentation, only variable values should be bound
             via sql_args, it shouldn't be used to set table or field names. For
             those elements, ordinary string formatting should be used before
@@ -148,12 +143,9 @@ class SQLConnectionHandler(object):
         Tuple
             The results of the fetchone query
 
-        Raises
-        ------
-        QiitaDBExecutionError
-            if there is some error executing the SQL query
-
-        Note: from psycopg2 documentation, only variable values should be bound
+        Notes
+        -----
+        from psycopg2 documentation, only variable values should be bound
             via sql_args, it shouldn't be used to set table or field names. For
             those elements, ordinary string formatting should be used before
             running execute.
@@ -172,12 +164,9 @@ class SQLConnectionHandler(object):
         sql_args: tuple or list, optional
             The arguments for the SQL query
 
-        Raises
-        ------
-        QiitaDBExecutionError
-            if there is some error executing the SQL query
-
-        Note: from psycopg2 documentation, only variable values should be bound
+        Notes
+        -----
+        from psycopg2 documentation, only variable values should be bound
             via sql_args, it shouldn't be used to set table or field names. For
             those elements, ordinary string formatting should be used before
             running execute.
@@ -194,11 +183,6 @@ class SQLConnectionHandler(object):
             The SQL query
         sql_args: list of tuples
             The arguments for the SQL query
-
-        Raises
-        ------
-        QiitaDBExecutionError
-            If there is some error executing the SQL query
 
         Note: from psycopg2 documentation, only variable values should be bound
             via sql_args, it shouldn't be used to set table or field names. For

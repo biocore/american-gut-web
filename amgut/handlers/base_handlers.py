@@ -1,4 +1,5 @@
 from tornado.web import RequestHandler
+from amgut.util import AG_DATA_ACCESS
 
 
 class BaseHandler(RequestHandler):
@@ -31,9 +32,14 @@ class BaseHandler(RequestHandler):
 class MainHandler(BaseHandler):
     '''Index page'''
     def get(self):
-        username = self.current_user
-        completedanalyses = []
-        self.render("index.html", skid=username, analyses=completedanalyses)
+        latlong_db = AG_DATA_ACCESS.getMapMarkers()
+        latlong_list = []
+        for i, val in enumerate(latlong_db):
+            if val[0] and val[1] and val[2]:
+                study_alias = str(val[0]).replace("'", "\\'")
+                latlong_list.append([study_alias, val[1], val[2],
+                                    str(i+1), val[3]])
+        self.render("index.html", latlongs_db=latlong_list)
 
 
 class NoPageHandler(BaseHandler):

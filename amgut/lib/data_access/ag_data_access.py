@@ -20,6 +20,7 @@ from time import sleep
 import psycopg2
 
 from sql_connection import SQLConnectionHandler
+from amgut.lib.config_manager import AMGUT_CONFIG
 
 
 class GoogleAPILimitExceeded(Exception):
@@ -35,11 +36,11 @@ class AGDataAccess(object):
         self._metadataDatabaseConnection = None
         if not con:
             self.connection = \
-                psycopg2.connect(user='',
-                                 password='',
-                                 database='',
-                                 host='localhost',
-                                 port='5432')
+                psycopg2.connect(user=AMGUT_CONFIG.user,
+                                 password=AMGUT_CONFIG.password,
+                                 database=AMGUT_CONFIG.database,
+                                 host=AMGUT_CONFIG.host,
+                                 port=AMGUT_CONFIG.port)
         else:
             self.connection = con
 
@@ -940,11 +941,10 @@ class AGDataAccess(object):
             return print_results[0].strip()
 
     def get_user_for_kit(self, supplied_kit_id):
-        sql = ("select cast(AK.ag_login_id as varchar2(100)) from ag_kit AK "
+        sql = ("select AK.ag_login_id from ag_kit AK "
                "join ag_login AL on AK.ag_login_id = AL.ag_login_id "
-               "where AK.supplied_kit_id = '%s'" % supplied_kit_id)
-        con = self.getMetadataDatabaseConnection()
-        results = con.cursor().execute(sql).fetchone()
+               "where AK.supplied_kit_id = %s")
+        results = self.connection.cursor().execute(sql, [supplied_kit_id])
         if results:
             return results[0]
         else:

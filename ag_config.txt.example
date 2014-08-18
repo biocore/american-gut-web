@@ -1,0 +1,27 @@
+# WARNING!!!! DO NOT MODIFY THIS FILE
+# IF YOU NEED TO PROVIDE YOUR OWN CONFIGURATION, COPY THIS FILE AND EDIT THE COPY
+
+# ------------------------------ Main settings --------------------------------
+[main]
+# Change to FALSE in a production system
+TEST_ENVIRONMENT = TRUE
+
+# Path to the base directory where the data files are going to be stored
+BASE_DATA_DIR = /path/to/base/directory
+
+# ----------------------------- Postgres settings -----------------------------
+[postgres]
+# The user name to connect to the database
+USER = postgres
+
+#The password of the user. Uncomment to set.
+#PASSWORD = 
+
+# The database to connect to
+DATABASE = ag
+
+# The host where the database lives on
+HOST = localhost
+
+# The port to connect to the database
+PORT = 5432

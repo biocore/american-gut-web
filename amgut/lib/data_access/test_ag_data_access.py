@@ -15,19 +15,20 @@ import psycopg2
 import psycopg2.extras
 from unittest import TestCase, main
 
-from ag_data_access import NewAGDataAccess
+from ag_data_access import AGDataAccess
+from amgut.lib.config_manager import AMGUT_CONFIG
 
 
-#class TestGoogleAPILimitExceeded(TestCase):
+# class TestGoogleAPILimitExceeded(TestCase):
 
-class TestNewAGDataAccess(TestCase):
+class TestAGDataAccess(TestCase):
     def setUp(self):
-        self.con = psycopg2.connect(user='',
-                                    password='',
-                                    database='',
-                                    host='',
-                                    port='5432')
-        self.data_access = NewAGDataAccess(self.con)
+        self.con = psycopg2.connect(user=AMGUT_CONFIG.user,
+                                    password=AMGUT_CONFIG.password,
+                                    database=AMGUT_CONFIG.database,
+                                    host=AMGUT_CONFIG.host,
+                                    port=AMGUT_CONFIG.port)
+        self.data_access = AGDataAccess(self.con)
 
     def tearDown(self):
         self.con.close()
