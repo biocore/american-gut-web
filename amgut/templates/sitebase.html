@@ -1,0 +1,173 @@
+
+{% from future.utils import viewitems %}
+{% from amgut.util import * %}
+{% set human_participants, animal_participants, environmental_samples, kit_verified = AG_DATA_ACCESS.get_menu_items(skid) %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>American Gut Project</title>
+<script src="/static/vendor/js/jquery-2.1.0.js"></script>
+<script src="/static/vendor/js/jquery-ui-1.10.1.custom.min.js"></script>
+<script src="/static/vendor/js/jquery.ui.timepicker.js"></script>
+<script src="/static/js/american_gut.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/americangut.css">
+<link rel="stylesheet" type="text/css" href="/static/css/menu.css">
+<link rel="stylesheet" type="text/css" href="/static/vendor/css/ui-lightness/jquery-ui-1.10.1.custom.min.css">
+<link rel="icon" type="image/ico" href="/static/img/favicon.ico">
+{%block head%}{%end%}
+</head>
+<body>
+<div class="wrapper clearfix">
+  <div class="header clearfix">
+  <img id="logo" src="/static/img/ag_logo.jpg">
+  </div>
+  <br />
+
+  <div class="left menuwrapper">  <!-- Side Menu -->
+      <div id="cssmenu">
+        <ul>
+            <li class="active"><a href="fusebox.psp?page=portal.psp"><span>Home</span></a></li>
+            <li class="has-sub"><a><span>Participant Resources</span></a>
+                <ul>
+                    <li><a href="FAQ.psp#faq0" target="_blank"><span>American Gut 101</span></a></li>
+                    <li><a href="FAQ.psp" target="_blank"><span>FAQ</span></a></li>
+                    <li><a href="img/FAQ_Human_Microbiome.pdf" target="_blank"><span>Human Microbiome FAQ</span></a></li>
+                    <li><a href="addendum.psp" target="_blank"><span>How do I interpret my results?</span></a></li>
+                    <li class="last"><a href="http://goo.gl/Jdh1cZ" target="_blank"><span>Preliminary Results!</span></a></li>
+                </ul>
+          </li>
+          <li><a href="fusebox.psp?page=change_password.psp"><span>Change Password</span></a></li>
+          <li><a href="fusebox.psp?page=help_request.psp"><span>Contact Us</span></a></li>
+          <li class="last"><a href="logout.psp"><span>Log out</span></a></li>
+        </ul>
+      </div>
+      <div id="cssmenu">
+          <ul>
+          <li class="has-sub"><a><span>Human Samples</span></a>
+              <ul> <!-- list of participants-->
+              {% for hp, barcodes in viewitems(human_participants) %}
+                <li class="has-sub">
+                  <a onclick="document.forms['participant_overview_{{hp}}'].submit(); return false;">
+                      <form action="fusebox.psp" method="post" id="participant_overview_{{hp}}">
+                          <input type="hidden" name="page" value="participant_overview.psp"/>
+                          <input type="hidden" name="participant_name" value="{{hp}}"/>
+                          <input type="hidden" name="participant_type" value="human"/>
+                          <span>{{hp}}</span>
+                      </form>
+                  </a>
+                <ul>
+                {% for barcode in barcodes %}
+                  <li>
+                    <a href="" onclick="document.forms['sample_overview_{{barcode['barcode']}}'].submit(); return false;" 
+                    {% if barcode['status'] == 'Received' %}
+                      style="color:#0B0;"
+                    {% end %}
+                    >
+                        <form action="fusebox.psp" method="post" id="sample_overview_{{barcode['barcode']}}">
+                            <input type="hidden" name="page" id="page" value="sample_overview.psp"/>
+                            <input type="hidden" name="status" id="status" value="{{barcode['status']}}"/>
+                            <input type="hidden" name="barcode" id="barcode" value="{{barcode['barcode']}}"/>
+                            <span>
+                              {{barcode['barcode']}}
+                              {% if barcode['status'] == 'Received' %}
+                                (Recieved)
+                              {% end %}
+                            </span>
+                        </form>
+                      </a>
+                  </li>
+                  {% end %}
+                  </ul></li>
+                {%end%}
+                {% if kit_verified %}
+                <li><a href="fusebox.psp?page=new_participant_overview.psp"><span><strong>Add Human Source</strong></span></a></li>
+                {% end %}
+                </ul>
+          </li>
+          <!-- end list of participants-->
+
+              <!-- top-level Animals header-->
+              <li class="has-sub"><a><span>Animal Samples</span></a>
+                  <ul> <!-- list of animal participants -->
+                  {% for ap, barcodes in viewitems(animal_participants) %}
+                <li class="last">
+          <a href="" onclick="document.forms['add_sample_animal_{{ap}}'].submit(); return false;">
+              <form action="fusebox.psp" method="post" id="add_sample_animal_{{ap}}">
+                  <input type="hidden" name="page" value="add_sample.psp"/>
+                  <input type="hidden" name="sample_type" value="animal"/>
+                  <input type="hidden" name="participant_name" value="{{ap}}"/>
+                  <span><strong>Log Sample</strong></span>
+              </form>
+          </a>
+        </li>
+                {% for barcode in barcodes %}
+                  <li>
+                    <a href="" onclick="document.forms['sample_overview_{{barcode['barcode']}}'].submit(); return false;" 
+                    {% if barcode['status'] == 'Received' %}
+                      style="color:#0B0;"
+                    {% end %}
+                    >
+                        <form action="fusebox.psp" method="post" id="sample_overview_{{barcode['barcode']}}">
+                            <input type="hidden" name="page" id="page" value="sample_overview.psp"/>
+                            <input type="hidden" name="status" id="status" value="{{barcode['status']}}"/>
+                            <input type="hidden" name="barcode" id="barcode" value="{{barcode['barcode']}}"/>
+                            <span>
+                              {{barcode['barcode']}}
+                              {% if barcode['status'] == 'Received' %}
+                                (Recieved)
+                              {% end %}
+                            </span>
+                        </form>
+                      </a>
+                  </li>
+                  {% end %}
+                  </ul></li>
+                {%end%}
+                {% if kit_verified %}
+                <li><a href="fusebox.psp?page=animal_survey.psp"><span><strong>Add Animal Source</strong></span></a></li>
+                {% end %}
+                </ul></li> <!-- end list of animal participants -->
+
+
+              <li class="has-sub"><a><span>Environmental Samples</span></a>
+                  <ul>
+                  {% for barcode in environmental_samples %}
+                  <li>
+                    <a href="" onclick="document.forms['sample_overview_{{barcode['barcode']}}'].submit(); return false;" 
+                    {% if barcode['status'] == 'Received' %}
+                      style="color:#0B0;"
+                    {% end %}
+                    >
+                        <form action="fusebox.psp" method="post" id="sample_overview_{{barcode['barcode']}}">
+                            <input type="hidden" name="page" id="page" value="sample_overview.psp"/>
+                            <input type="hidden" name="status" id="status" value="{{barcode['status']}}"/>
+                            <input type="hidden" name="barcode" id="barcode" value="{{barcode['barcode']}}"/>
+                            <span>
+                              {{barcode['barcode']}}
+                              {% if barcode['status'] == 'Received' %}
+                                (Recieved)
+                              {% end %}
+                            </span>
+                        </form>
+                      </a>
+                  </li>
+                  {% end %}
+                  </ul>
+          </li>
+          {% if kit_verified %}
+          <li class="last"><a href="fusebox.psp?page=add_sample_overview.psp"><strong>Log Sample</strong></a></li>
+          {% end %}
+        </ul>
+      </div>
+      <!-- Twitter -->
+  <div>
+  <a class="twitter-timeline" href="https://twitter.com/americangut" data-widget-id="328928986170269696">Tweets by @americangut</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+  </div>
+</div>
+
+  {%block content%}{%end%}
+  {%block footer%}{%end%}
+  </body>
+</html>

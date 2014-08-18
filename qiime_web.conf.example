@@ -1,0 +1,3 @@
+data_access_type=DataAccessType.qiime_test
+user_dir=[HOME_DIR]/user_data
+home=[HOME_DIR]
