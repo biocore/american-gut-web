@@ -813,9 +813,7 @@ class AGDataAccess(object):
                          for hs in self.getHumanParticipants(ag_login_id)}
         animal_samples = {ans: self.getParticipantSamples(ag_login_id, ans)
                           for ans in self.getAnimalParticipants(ag_login_id)}
-        environmental_samples = {es: self.getParticipantSamples(
-            ag_login_id, es) for es in
-            self.getEnvironmentalParticipants(ag_login_id)}
+        environmental_samples = self.getEnvironmentalSamples(ag_login_id)
 
         return (human_samples, animal_samples, environmental_samples,
                 kit_verified)
