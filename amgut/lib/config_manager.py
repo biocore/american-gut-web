@@ -16,7 +16,7 @@ with standard_library.hooks():
 
 
 class ConfigurationManager(object):
-    """Holds the QIITA configuration
+    """Holds the configuration information
 
     Parameters
     ----------

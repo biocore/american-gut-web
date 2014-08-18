@@ -2,7 +2,7 @@
 from __future__ import division
 
 # -----------------------------------------------------------------------------
-# Copyright (c) 2014--, The Qiita Development Team.
+# Copyright (c) 2014--, The American Gut Development Team.
 #
 # Distributed under the terms of the BSD 3-clause License.
 #
@@ -36,8 +36,6 @@ class SQLConnectionHandler(object):
         Returns
         -------
         pgcursor : psycopg2.cursor
-
-        Raises a QiitaDBConnectionError if the cursor cannot be created
         """
         with self._connection.cursor(cursor_factory=DictCursor) as cur:
             yield cur
@@ -76,7 +74,7 @@ class SQLConnectionHandler(object):
 
         Raises
         ------
-        QiitaDBExecutionError
+        ValueError
             If there is some error executing the SQL query
         """
         # Check that sql arguments have the correct type
@@ -119,11 +117,6 @@ class SQLConnectionHandler(object):
         list of tuples
             The results of the fetchall query
 
-        Raises
-        ------
-        QiitaDBExecutionError
-            If there is some error executing the SQL query
-
         Note: from psycopg2 documentation, only variable values should be bound
             via sql_args, it shouldn't be used to set table or field names. For
             those elements, ordinary string formatting should be used before
@@ -148,12 +141,9 @@ class SQLConnectionHandler(object):
         Tuple
             The results of the fetchone query
 
-        Raises
-        ------
-        QiitaDBExecutionError
-            if there is some error executing the SQL query
-
-        Note: from psycopg2 documentation, only variable values should be bound
+        Notes
+        -----
+        from psycopg2 documentation, only variable values should be bound
             via sql_args, it shouldn't be used to set table or field names. For
             those elements, ordinary string formatting should be used before
             running execute.
@@ -172,12 +162,9 @@ class SQLConnectionHandler(object):
         sql_args: tuple or list, optional
             The arguments for the SQL query
 
-        Raises
-        ------
-        QiitaDBExecutionError
-            if there is some error executing the SQL query
-
-        Note: from psycopg2 documentation, only variable values should be bound
+        Notes
+        -----
+        from psycopg2 documentation, only variable values should be bound
             via sql_args, it shouldn't be used to set table or field names. For
             those elements, ordinary string formatting should be used before
             running execute.
@@ -194,11 +181,6 @@ class SQLConnectionHandler(object):
             The SQL query
         sql_args: list of tuples
             The arguments for the SQL query
-
-        Raises
-        ------
-        QiitaDBExecutionError
-            If there is some error executing the SQL query
 
         Note: from psycopg2 documentation, only variable values should be bound
             via sql_args, it shouldn't be used to set table or field names. For
