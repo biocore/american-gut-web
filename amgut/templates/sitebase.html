@@ -1,5 +1,6 @@
 
-{%from future.utils import viewitems%}
+{% from future.utils import viewitems %}
+{% from amgut.util import * %}
 {% set human_samples, animal_samples, environmental_samples, kit_verified = AG_DATA_ACCESS.get_menu_items() %}
 <!DOCTYPE html>
 <html lang="en">

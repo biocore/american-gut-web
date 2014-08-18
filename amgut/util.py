@@ -9,6 +9,8 @@
 from amgut.lib.data_access.data_access_connections import data_access_factory
 from amgut.lib.enums import ServerConfig, DataAccessType
 
+__all__ = ['DATA_ACCESS', 'AG_DATA_ACCESS']
+
 PORTAL_TYPE = 'americangut'
 
 # Data Access
