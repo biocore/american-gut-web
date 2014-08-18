@@ -9,8 +9,6 @@ from tornado.options import define, options, parse_command_line
 
 from amgut.handlers.base_handlers import MainHandler, NoPageHandler
 
-import amgut.util
-
 define("port", default=8888, help="run on the given port", type=int)
 
 DIRNAME = dirname(__file__)
@@ -22,6 +20,7 @@ DEBUG = True
 
 
 class QiimeWebApplication(Application):
+class Application(Application):
     def __init__(self):
         handlers = [
             (r"/", MainHandler),
@@ -35,8 +34,6 @@ class QiimeWebApplication(Application):
             "debug": DEBUG,
             "cookie_secret": COOKIE_SECRET,
             "login_url": "/auth/login/",
-            "gzip": True,
-            "ui_methods": amgut.util
         }
         super(QiimeWebApplication, self).__init__(handlers, **settings)
 
