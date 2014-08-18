@@ -13,16 +13,18 @@ from contextlib import contextmanager
 from psycopg2 import connect, Error as PostgresError
 from psycopg2.extras import DictCursor
 
+from amgut.lib.config_manager import AMGUT_CONFIG
+
 
 class SQLConnectionHandler(object):
     """Encapsulates the DB connection with the Postgres DB"""
     def __init__(self, con=None):
         if not con:
-            self._connection = connect(user='americangut',
-                                       password='M1cr0b3s',
-                                       database='ag',
-                                       host='webdev-kl4.colorado.edu',
-                                       port='5432')
+            self._connection = connect(user=AMGUT_CONFIG.user,
+                                       password=AMGUT_CONFIG.password,
+                                       database=AMGUT_CONFIG.database,
+                                       host=AMGUT_CONFIG.host,
+                                       port=AMGUT_CONFIG.port)
         else:
             self._connection = con
 
