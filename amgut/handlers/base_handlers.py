@@ -32,7 +32,6 @@ class BaseHandler(RequestHandler):
 class MainHandler(BaseHandler):
     '''Index page'''
     def get(self):
-        username = self.current_user
         latlong_db = AG_DATA_ACCESS.getMapMarkers()
         latlong_list = []
         for i, val in enumerate(latlong_db):
@@ -40,7 +39,7 @@ class MainHandler(BaseHandler):
                 study_alias = str(val[0]).replace("'", "\\'")
                 latlong_list.append([study_alias, val[1], val[2],
                                     str(i+1), val[3]])
-        self.render("index.html", skid=username, latlongs_db=latlong_list)
+        self.render("index.html", latlongs_db=latlong_list)
 
 
 class NoPageHandler(BaseHandler):

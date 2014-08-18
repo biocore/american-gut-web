@@ -20,7 +20,6 @@ DEBUG = True
 
 
 class QiimeWebApplication(Application):
-class Application(Application):
     def __init__(self):
         handlers = [
             (r"/", MainHandler),

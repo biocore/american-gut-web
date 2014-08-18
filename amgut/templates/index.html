@@ -6,15 +6,15 @@
 </noscript>
 <meta charset="utf-8">
 <title>American Gut</title>
-<link rel="stylesheet" type="text/css" href="style/americangut.css">
-<link rel="stylesheet" type="text/css" href="style/menu.css">
+<link rel="stylesheet" type="text/css" href="/static/css/americangut.css">
+<link rel="stylesheet" type="text/css" href="/static/css/menu.css">
+<link rel="icon" type="image/ico" href="/static/img/favicon.ico">
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-<script type="text/javascript" src="/qiime/js/qiime.js"></script>
-<script type="text/javascript" src="/qiime/js/jquery_validate/lib/jquery.js"></script>
-<script type="text/javascript" src="/qiime/js/jquery_validate/lib/jquery.metadata.js"></script>
-<script type="text/javascript" src="/qiime/js/jquery_validate/jquery.validate.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="/static/js/qiime.js"></script>
+<script src="/static/vendor/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript" src="/static/vendor/js/jquery.metadata.js"></script>
+<script type="text/javascript" src="/static/vendor/js/jquery.validate.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 
@@ -178,11 +178,15 @@ window.onload=initialize;
     <!-- Header logo -->
   <div class="wrapper clearfix" style="position:absolute; top:10px; left:50px; right:50px; opacity:0.9;">
         <div class="header clearfix">
-            <img id="logo" src="img/ag_logo.jpg">
-            {% if not latlong_list %}
-              <br/><br/><br/><br/><br/><br/><br/><br/>
-              <h1>Sorry, we could not connect to our database. <br/> We are working hard on the issue, please check back shortly!</h1>
-            {% end %}
+            <img id="logo" src="/static/img/ag_logo.jpg">
+            {% if not latlongs_db %}
+              <span style="text-align:center;">
+                  <br/><br/><br/><br/><br/><br/><br/><br/>
+                  <h1>Sorry, we could not connect to our database. <br/> We are working hard on the issue, please check back shortly!</h1>
+              </span>
+    </div>
+    </div>
+    {% else %}
     </div>
     </div>
 
@@ -235,5 +239,6 @@ window.onload=initialize;
     <br />
     </div>
         </div></div>
+    {% end %}
     </body>
 </html>
