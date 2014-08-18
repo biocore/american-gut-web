@@ -18,10 +18,10 @@ class SQLConnectionHandler(object):
     """Encapsulates the DB connection with the Postgres DB"""
     def __init__(self, con=None):
         if not con:
-            self._connection = connect(user='',
-                                       password='',
-                                       database='',
-                                       host='localhost',
+            self._connection = connect(user='americangut',
+                                       password='M1cr0b3s',
+                                       database='ag',
+                                       host='webdev-kl4.colorado.edu',
                                        port='5432')
         else:
             self._connection = con
