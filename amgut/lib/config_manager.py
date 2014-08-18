@@ -7,7 +7,7 @@
 # -----------------------------------------------------------------------------
 
 from functools import partial
-from os.path import join, dirname, abspath
+from os.path import join, dirname, abspath, exists
 from os import environ
 from future import standard_library
 with standard_library.hooks():
@@ -60,14 +60,9 @@ class ConfigurationManager(object):
     def _get_main(self, config):
         """Get the configuration of the main section"""
         self.test_environment = config.getboolean('main', 'TEST_ENVIRONMENT')
-        try:
-            self.base_data_dir = config.get('main', 'BASE_DATA_DIR')
-        except NoOptionError as e:
-            if self.test_environment:
-                self.base_data_dir = join(dirname(abspath(__file__)),
-                                          '..', 'ag_config.txt')
-            else:
-                raise e
+        self.base_data_dir = config.get('main', 'BASE_DATA_DIR')
+        if not exists(self.base_data_dir):
+            raise IOError("Directory %s does not exist!" % self.base_data_dir)
 
     def _get_postgres(self, config):
         """Get the configuration of the postgres section"""
