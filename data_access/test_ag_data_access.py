@@ -25,7 +25,7 @@ class TestNewAGDataAccess(TestCase):
         self.con = psycopg2.connect(user='',
                                     password='',
                                     database='',
-                                    host='localhost',
+                                    host='',
                                     port='5432')
         self.data_access = NewAGDataAccess(self.con)
 
@@ -323,7 +323,7 @@ class TestNewAGDataAccess(TestCase):
         data = self.data_access.getAnimalParticipants(
             'd8592c74-7da1-2135-e040-8a80115d6401')
         #this test needs updated when the test database is updated
-        self.assertEqual(len(data), 2)
+        self.assertEqual(len(data), 1)
 
     def test_getParticipantExceptions(self):
         data = self.data_access.getParticipantExceptions(
