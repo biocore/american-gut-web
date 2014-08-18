@@ -790,7 +790,7 @@ class AGDataAccess(object):
             return print_results[0].strip()
 
     def get_user_for_kit(self, supplied_kit_id):
-        sql = ("select AK.ag_login_id from ag_kit AK "
+        sql = ("select cast(AK.ag_login_id as varchar2(100)) from ag_kit AK "
                "join ag_login AL on AK.ag_login_id = AL.ag_login_id "
                "where AK.supplied_kit_id = '%s'" % supplied_kit_id)
         con = self.getMetadataDatabaseConnection()
