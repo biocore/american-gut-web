@@ -1,0 +1,41 @@
+SET client_encoding TO 'UTF8';
+
+\set ON_ERROR_STOP ON
+
+
+CREATE OR REPLACE FUNCTION ag_get_barcode_details (
+    barcode_ in text,
+    user_data_ refcursor
+)
+ RETURNS refcursor AS $body$
+BEGIN
+
+    open user_data_ for
+        SELECT  al.email, 
+                cast(akb.ag_kit_barcode_id as varchar(100)), 
+                cast(akb.ag_kit_id as varchar(100)), 
+                akb.barcode, 
+                akb.site_sampled, akb.environment_sampled, akb.sample_date, 
+                akb.sample_time, akb.participant_name, akb.notes
+        from    ag_kit_barcodes akb
+                inner join ag_kit ak
+                on akb.ag_kit_id = ak.ag_kit_id
+                inner join ag_login al
+                on ak.ag_login_id = al.ag_login_id
+        where   akb.barcode = barcode_;
+    return user_data_;
+
+end;
+/*
+begin;
+select ag_get_barcode_details('000010860', 'a');
+fetch all in a;
+commit;
+*/
+
+$body$
+LANGUAGE PLPGSQL;
+
+
+
+
