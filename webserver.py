@@ -4,11 +4,12 @@ from uuid import uuid4
 
 import tornado.httpserver import HTTPServer
 import tornado.ioloop import IOLoop
-from tornado.web import Application, StaticFileHandler
+from tornado.web import Application
 import tornado.websocket
 from tornado.options import define, options, parse_command_line
 
-from amgut.base_handlers import MainHandler, NoPageHandler
+from amgut.base_handlers import (MainHandler, NoPageHandler)
+import amgut.util
 
 define("port", default=8888, help="run on the given port", type=int)
 
@@ -20,12 +21,14 @@ COOKIE_SECRET = b64encode(uuid4().bytes + uuid4().bytes)
 DEBUG = True
 
 
-class Application(Application):
+class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
             (r"/", MainHandler),
-            (r"/results/(.*)", StaticFileHandler, {"path": RES_PATH}),
-            (r"/static/(.*)", StaticFileHandler, {"path": STATIC_PATH}),
+            (r"/results/(.*)", tornado.web.StaticFileHandler,
+             {"path": RES_PATH}),
+            (r"/static/(.*)", tornado.web.StaticFileHandler,
+             {"path": STATIC_PATH}),
             # 404 PAGE MUST BE LAST IN THIS LIST!
             (r".*", NoPageHandler)
         ]
@@ -33,7 +36,10 @@ class Application(Application):
             "template_path": TEMPLATE_PATH,
             "debug": DEBUG,
             "cookie_secret": COOKIE_SECRET,
-            "login_url": "/auth/login/"
+            "login_url": "/auth/login/",
+            gzip: True,
+            ui_methods: util
+
         }
         Application.__init__(self, handlers, **settings)
 
