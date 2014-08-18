@@ -799,9 +799,10 @@ class AGDataAccess(object):
     def handoutCheck(self, username, password):
         con = self.connection
         is_handout = 'n'
-        result = con.cursor().callproc('ag_is_handout', [is_handout, username,
-                                                         password])
-        is_handout = result[0]
+        cursor = con.cursor()
+        cursor.callproc('ag_is_handout', [username, password])
+        is_handout = cursor.fetchone()[0]
+
         return is_handout.strip()
 
     def checkBarcode(self, barcode):
