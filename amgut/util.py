@@ -16,4 +16,4 @@ PORTAL_TYPE = 'americangut'
 # Data Access
 DATA_ACCESS = data_access_factory(ServerConfig.data_access_type)
 AG_DATA_ACCESS = data_access_factory(ServerConfig.data_access_type,
-                                     PORTAL_TYPE)
+                                     'american_gut')
