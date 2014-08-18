@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+from __future__ import division
+
 # -----------------------------------------------------------------------------
 # Copyright (c) 2014--, The American Gut Project Development Team.
 #
@@ -5,13 +8,3 @@
 #
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
-
-from amgut.lib.data_access.data_access_connections import data_access_factory
-from amgut.lib.enums import ServerConfig, DataAccessType
-
-PORTAL_TYPE = 'americangut'
-
-# Data Access
-DATA_ACCESS = data_access_factory(ServerConfig.data_access_type)
-AG_DATA_ACCESS = data_access_factory(ServerConfig.data_access_type,
-                                     PORTAL_TYPE)

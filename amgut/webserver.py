@@ -2,13 +2,12 @@ from os.path import dirname, join
 from base64 import b64encode
 from uuid import uuid4
 
-import tornado.httpserver import HTTPServer
-import tornado.ioloop import IOLoop
+from tornado.httpserver import HTTPServer
+from tornado.ioloop import IOLoop
 from tornado.web import Application, StaticFileHandler
-import tornado.websocket
 from tornado.options import define, options, parse_command_line
 
-from amgut.base_handlers import MainHandler, NoPageHandler
+from amgut.handlers.base_handlers import MainHandler, NoPageHandler
 
 import amgut.util
 
