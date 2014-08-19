@@ -14,6 +14,7 @@ from amgut.handlers.kit_handlers import KitIndexHandler
 from amgut.handlers.addendum import AddendumHandler
 from amgut.handlers.FAQ import FAQHandler
 from amgut.handlers.construction import ConstructionHandler
+from amgut.handlers.new_participant import NewParticipantHandler
 
 define("port", default=8888, help="run on the given port", type=int)
 
@@ -36,6 +37,7 @@ class QiimeWebApplication(Application):
             (r"/auth/register/", AuthRegisterHandoutHandler),
             (r"/authed/index/", KitIndexHandler),
             (r"/authed/addendum/", AddendumHandler),
+            (r"/authed/new_participant/", NewParticipantHandler),
             (r"/faq/", FAQHandler),
             (r"/construction/", ConstructionHandler),
             # 404 PAGE MUST BE LAST IN THIS LIST!
