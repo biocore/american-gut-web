@@ -4,7 +4,7 @@ from amgut.util import AG_DATA_ACCESS
 from amgut.handlers.base_handlers import BaseHandler
 
 
-class ResultsPortalHander(BaseHandler):
+class ResultsPortalHandler(BaseHandler):
     @authenticated
     def get(self):
         results = AG_DATA_ACCESS.get_results(self.current_user)
