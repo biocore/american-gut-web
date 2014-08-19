@@ -56,3 +56,8 @@ docs/_build/
 #Project stuff
 ag_config.txt
 
+# vi(m) swap and temp files
+*.swp
+*.swo
+*~
+
