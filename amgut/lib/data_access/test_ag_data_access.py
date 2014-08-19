@@ -118,6 +118,7 @@ class TestAGDataAccess(TestCase):
         data = self.data_access.getAGBarcodeDetails('000000001')
         self.assertEqual(data['participant_name'], 'foo')
         self.assertEqual(data['site_sampled'], 'Stool')
+        self.assertEqual(data['status'], 'Received')
 
     def test_getAGKitDetails(self):
         data = self.data_access.getAGKitDetails('test')
