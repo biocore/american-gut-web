@@ -12,6 +12,7 @@ from amgut.handlers.auth_handlers import (
     AuthRegisterHandoutHandler, AuthLoginHandler, AuthLogoutHandler)
 from amgut.handlers.kit_handlers import KitIndexHandler
 from amgut.handlers.addendum import AddendumHandler
+from amgut.handlers.results_portal import ResultsPortalHandler
 from amgut.handlers.FAQ import FAQHandler
 from amgut.handlers.construction import ConstructionHandler
 
@@ -36,6 +37,7 @@ class QiimeWebApplication(Application):
             (r"/auth/register/", AuthRegisterHandoutHandler),
             (r"/authed/index/", KitIndexHandler),
             (r"/authed/addendum/", AddendumHandler),
+            (r"/authed/results_portal/", ResultsPortalHandler),
             (r"/faq/", FAQHandler),
             (r"/construction/", ConstructionHandler),
             # 404 PAGE MUST BE LAST IN THIS LIST!
