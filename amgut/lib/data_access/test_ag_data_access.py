@@ -14,7 +14,6 @@ __status__ = "Production"
 import psycopg2
 import psycopg2.extras
 from unittest import TestCase, main
-#from random import choice
 from ag_data_access import AGDataAccess
 from amgut.lib.config_manager import AMGUT_CONFIG
 
@@ -49,7 +48,6 @@ class TestAGDataAccess(TestCase):
                                                                  'wrong'))
         data = self.data_access.authenticateWebAppUser(
             'test', AMGUT_CONFIG.badpassword)
-        #print data
         self.assertEqual(data['email'], 'test@microbio.me')
 
     def test_addAGLogin(self):
