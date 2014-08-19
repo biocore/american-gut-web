@@ -16,6 +16,7 @@ from amgut.handlers.addendum import AddendumHandler
 from amgut.handlers.FAQ import FAQHandler
 from amgut.handlers.international import InternationalHandler
 from amgut.handlers.construction import ConstructionHandler
+from amgut.handlers.survey import SurveyMainHandler
 
 
 define("port", default=8888, help="run on the given port", type=int)
@@ -41,6 +42,7 @@ class QiimeWebApplication(Application):
             (r"/authed/index/", KitIndexHandler),
             (r"/authed/help_request/", HelpRequestHandler),
             (r"/authed/addendum/", AddendumHandler),
+            (r"/authed/survey_main/", SurveyMainHandler),
             (r"/faq/", FAQHandler),
             (r"/international_shipping/", InternationalHandler),
             (r"/construction/", ConstructionHandler),
