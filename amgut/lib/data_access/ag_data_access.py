@@ -818,10 +818,7 @@ class AGDataAccess(object):
         value = str(value).replace("'", "''")
         participant_name = str(participant_name).replace("'", "''")
         table = "update ag_human_survey set %s" % field
-        sql = table + """
-        = %s where ag_login_id = %s and
-         participant_name = %s
-        """
+        sql = table + "= %s where ag_login_id = %s and participant_name = %s"
         con.cursor().execute(sql, [value, ag_login_id, participant_name])
         con.commit()
 
