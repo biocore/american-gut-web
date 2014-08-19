@@ -11,6 +11,7 @@ from amgut.handlers.base_handlers import MainHandler, NoPageHandler
 from amgut.handlers.auth_handlers import (
     AuthRegisterHandoutHandler, AuthLoginHandler, AuthLogoutHandler)
 from amgut.handlers.kit_handlers import KitIndexHandler
+from amgut.handlers.help_request import HelpRequestHandler
 from amgut.handlers.addendum import AddendumHandler
 from amgut.handlers.results_portal import ResultsPortalHandler
 from amgut.handlers.FAQ import FAQHandler
@@ -39,6 +40,7 @@ class QiimeWebApplication(Application):
             (r"/auth/logout/", AuthLogoutHandler),
             (r"/auth/register/", AuthRegisterHandoutHandler),
             (r"/authed/index/", KitIndexHandler),
+            (r"/authed/help_request/", HelpRequestHandler),
             (r"/authed/addendum/", AddendumHandler),
             (r"/authed/results_portal/", ResultsPortalHandler),
             (r"/faq/", FAQHandler),
