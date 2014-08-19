@@ -966,3 +966,31 @@ class AGDataAccess(object):
         cursor.execute(sql, [supplied_kit_id])
         results = cursor.fetchone()[0]
         return results
+
+    def get_user_info(self, supplied_kit_id):
+        sql = """SELECT  cast(agl.ag_login_id as varchar(100)) as ag_login_id,
+                        agl.email, agl.name, agl.address, agl.city,
+                        agl.state, agl.zip, agl.country
+                 from    ag_login agl
+                        inner join ag_kit agk
+                        on agl.ag_login_id = agk.ag_login_id
+                 where   agk.supplied_kit_id = %s"""
+        con = self.connection
+        cursor = con.cursor()
+        cursor.execute(sql, [supplied_kit_id])
+        row = cursor.fetchone()
+        user_data = {'web_app_user_id': str(row[0]), 'email': row[1],
+                     'name': row[2], 'address': row[3], 'city': row[4],
+                     'state': row[5], 'zip': row[6], 'country': row[7]}
+        return user_data
+
+    def get_barcode_results(self, supplied_kit_id):
+        sql = """select akb.barcode, akb.participant_name
+                 from ag_kit_barcodes akb
+                 inner join ag_kit agk  on akb.ag_kit_id = agk.ag_kit_id
+                 where agk.supplied_kit_id =  %s and akb.results_ready = 'Y'"""
+        con = self.connection
+        cursor = con.cursor()
+        cursor.execute(sql, [supplied_kit_id])
+        results = cursor.fetchall()
+        return results

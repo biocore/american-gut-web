@@ -524,6 +524,13 @@ class TestAGDataAccess(TestCase):
         data = self.data_access.get_verification_code('test')
         self.assertEqual(data, 'test')
 
+    def test_get_user_info(self):
+        data = self.data_access.get_user_info('test')
+        self.assertEqual(data['email'], 'test@microbio.me')
+
+    def test_get_barcode_results(self):
+        data = self.data_access.get_barcode_results('test')
+        self.assertEqual(len(data), 1)
 
 if __name__ == "__main__":
     main()
