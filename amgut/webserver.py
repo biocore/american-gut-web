@@ -11,8 +11,10 @@ from amgut.handlers.base_handlers import MainHandler, NoPageHandler
 from amgut.handlers.auth_handlers import (
     AuthRegisterHandoutHandler, AuthLoginHandler, AuthLogoutHandler)
 from amgut.handlers.kit_handlers import KitIndexHandler
+from amgut.handlers.addendum import AddendumHandler
 from amgut.handlers.FAQ import FAQHandler
 from amgut.handlers.international import InternationalHandler
+from amgut.handlers.construction import ConstructionHandler
 
 
 define("port", default=8888, help="run on the given port", type=int)
@@ -36,8 +38,10 @@ class QiimeWebApplication(Application):
             (r"/auth/logout/", AuthLogoutHandler),
             (r"/auth/register/", AuthRegisterHandoutHandler),
             (r"/authed/index/", KitIndexHandler),
+            (r"/authed/addendum/", AddendumHandler),
             (r"/faq/", FAQHandler),
             (r"/international_shipping/", InternationalHandler),
+            (r"/construction/", ConstructionHandler),
             # 404 PAGE MUST BE LAST IN THIS LIST!
             (r".*", NoPageHandler)
         ]
