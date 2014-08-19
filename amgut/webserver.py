@@ -8,6 +8,9 @@ from tornado.web import Application, StaticFileHandler
 from tornado.options import define, options, parse_command_line
 
 from amgut.handlers.base_handlers import MainHandler, NoPageHandler
+from amgut.handlers.auth_handlers import (
+    AuthRegisterHandoutHandler, AuthLoginHandler, AuthLogoutHandler)
+from amgut.handlers.kit_handlers import KitIndexHandler
 
 define("port", default=8888, help="run on the given port", type=int)
 
@@ -22,9 +25,13 @@ DEBUG = True
 class QiimeWebApplication(Application):
     def __init__(self):
         handlers = [
-            (r"/", MainHandler),
             (r"/results/(.*)", StaticFileHandler, {"path": RES_PATH}),
             (r"/static/(.*)", StaticFileHandler, {"path": STATIC_PATH}),
+            (r"/", MainHandler),
+            (r"/auth/login/", AuthLoginHandler),
+            (r"/auth/logout/", AuthLogoutHandler),
+            (r"/auth/register/", AuthRegisterHandoutHandler),
+            (r"/authed/index/", KitIndexHandler),
             # 404 PAGE MUST BE LAST IN THIS LIST!
             (r".*", NoPageHandler)
         ]

@@ -1,0 +1,70 @@
+{% extends index.html  %}
+{% block javascript %}
+function validateNewParticipant() {
+    for(var i = 0; i < document.newParticipant.length; i++) 
+    {
+        document.newParticipant[i].className = document.newParticipant[i].className.replace(/(?:^|\s)highlight(?!\S)/ , '');
+    }
+	
+	var valid = true;
+	
+	if(!validateEmail(document.newParticipant.email.value))
+	{
+		document.newParticipant.email.className += " highlight"
+		valid = false;
+	}
+	
+	if(document.newParticipant.participantname.value == "")
+	{
+		document.newParticipant.participantname.className += " highlight"
+		valid = false;
+	}
+	
+	if(document.newParticipant.address.value == "")
+	{
+		document.newParticipant.address.className += " highlight"
+		valid = false;
+	}
+	if(document.newParticipant.city.value == "")
+	{
+		document.newParticipant.city.className += " highlight"
+		valid = false;
+	}
+	if(document.newParticipant.state.value == "")
+	{
+		document.newParticipant.state.className += " highlight"
+		valid = false;
+	}
+	if(document.newParticipant.zip.value == "")
+	{
+		document.newParticipant.zip.className += " highlight"
+		valid = false;
+	}
+	if(document.newParticipant.country.value == "")
+	{
+		document.newParticipant.country.className += " highlight"
+		valid = false;
+	}
+	
+	if(valid)
+		$('#newParticipant').submit();
+}
+{% end %}
+{% block content %}
+<div class="registerwrapper" style="position:absolute; top:16px; left:285px; padding:15px;">
+    <form name="newParticipant" id="newParticipant" method="post" action="/register/">
+        <input type="hidden" name="kit_id" id="kit_id" value="{{skid}}">
+        <h3>New User Registration</h3>
+        <table>
+            <tr><td>Email</td><td><input type="text" name="email" id="email"></td></tr>            
+            <tr><td>Name</td><td><input type="text" name="participantname" id="participantname"></td></tr>
+            <tr><td>Address</td><td><input type="text" name="address" id="address"></td></tr>      
+            <tr><td>City</td><td><input type="text" name="city" id="city"></td></tr>               
+            <tr><td>State</td><td><input type="text" name="state" id="state"></td></tr>        
+            <tr><td>Zip</td><td><input type="text" name="zip" id="zip"></td></tr>
+            <tr><td>Country</td><td><input type="text" name="country" id="country"></td></tr>
+            <tr><td></td><td><input type="button" onclick="validateNewParticipant()" value="Submit My Information"/></td></tr>
+        </table>
+    </form>
+</div>
+{% end %}
