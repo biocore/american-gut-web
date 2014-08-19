@@ -16,8 +16,10 @@ from amgut.handlers.addendum import AddendumHandler
 from amgut.handlers.results_portal import ResultsPortalHandler
 from amgut.handlers.sample_overview import SampleOverviewHandler
 from amgut.handlers.FAQ import FAQHandler
+from amgut.handlers.participant_overview import ParticipantOverviewHandler
 from amgut.handlers.international import InternationalHandler
 from amgut.handlers.construction import ConstructionHandler
+from amgut.handlers.survey import SurveyMainHandler
 
 
 define("port", default=8888, help="run on the given port", type=int)
@@ -45,7 +47,9 @@ class QiimeWebApplication(Application):
             (r"/authed/addendum/", AddendumHandler),
             (r"/authed/results_portal/", ResultsPortalHandler),
             (r"/authed/sample_overview/", SampleOverviewHandler),
+            (r"/authed/survey_main/", SurveyMainHandler),
             (r"/faq/", FAQHandler),
+            (r"/participants/(.*)", ParticipantOverviewHandler),
             (r"/international_shipping/", InternationalHandler),
             (r"/construction/", ConstructionHandler),
             # 404 PAGE MUST BE LAST IN THIS LIST!

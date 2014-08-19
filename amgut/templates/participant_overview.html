@@ -1,0 +1,58 @@
+{% extends sitebase.html %}
+{% block content %}
+
+<form action="survey1.html" method="post" id="edit_survey">
+
+{% for field_name, default_value in sorted(defaults.items()) %}
+    <input type="hidden" name="{{field_name}}" value="{{default_value}}" />
+{% end %}
+
+</form>
+
+<h2>Overview for participant {{participant_name}}</h2>
+<div class="overview_wrapper">
+    <div class="overview">
+        <table class="list" id="survey" width="100%">
+{% if participant_type == 'human' %}
+            <tr>
+                <td>Completed consent</td>
+                <td><img src="/static/img/icon-green-checkmark.png"/></td>
+            </tr>
+{% end %}
+            <tr>
+                <td>Completed survey
+{% if participant_type == 'human' %}
+                    (<a href="#" onclick="editHumanSurvey();">edit</a>)
+{% end %}
+                </td>
+                <td><img src="/static/img/icon-green-checkmark.png"/></td>
+            </tr>
+            <tr>
+                <td>Samples assigned</td>
+                <td>
+                    <ul class="sample_list">
+
+{% for sample in samples %}
+                        <li>
+                            <form action="sample_overview.psp" method="post" id="view_sample_{{sample['barcode']}}">
+                                <input type="hidden" name="barcode" value="{{sample['barcode']}}"/>
+                                <img class="icon" src="/static/img/sample_icon.png"/>
+                                <input type="button" onclick="document.forms['view_sample_{{sample['barcode']}}'].submit(); return false;" value="{{sample['barcode']}}"/>
+                            </form>
+                        </li>
+{% end %}
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <form action="remove_participant.html" method="post" id="remove_participant_{{participant_name}}">
+                        <input type="hidden" name="participant_name" value="{{participant_name}}"/>
+                        <input type="button" onclick="document.forms['remove_participant_{{participant_name}}'].submit(); return false;" value="Remove {{participant_name}}"/>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% end %}
