@@ -6,9 +6,7 @@
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
 
-from functools import partial
 from os.path import join, dirname, abspath, exists
-from os import environ
 from future import standard_library
 with standard_library.hooks():
     from configparser import (ConfigParser, NoOptionError,
@@ -39,6 +37,10 @@ class ConfigurationManager(object):
         The host where the database lives
     port : int
         The port used to connect to the postgres database in the previous host
+    goodpassword : str
+        The correct password for the test account
+    badpassword : str
+        The password used for testing on the test account
     """
     def __init__(self):
         conf_fp = join(dirname(abspath(__file__)),
@@ -49,13 +51,14 @@ class ConfigurationManager(object):
         with open(conf_fp, 'U') as conf_file:
             config.readfp(conf_file)
 
-        _expected_sections = {'main', 'postgres'}
+        _expected_sections = {'main', 'postgres', 'test'}
         if set(config.sections()) != _expected_sections:
             missing = _expected_sections - set(config.sections())
             raise MissingSectionHeaderError("Missing: %r" % missing)
 
         self._get_main(config)
         self._get_postgres(config)
+        self._get_test(config)
 
     def _get_main(self, config):
         """Get the configuration of the main section"""
@@ -77,6 +80,11 @@ class ConfigurationManager(object):
         self.database = config.get('postgres', 'DATABASE')
         self.host = config.get('postgres', 'HOST')
         self.port = config.getint('postgres', 'PORT')
+
+    def _get_test(self, config):
+        """Get the configuration of the test section"""
+        self.goodpassword = config.get('test', 'GOODPASSWORD')
+        self.badpassword = config.get('test', 'BADPASSWORD')
 
 
 AMGUT_CONFIG = ConfigurationManager()
