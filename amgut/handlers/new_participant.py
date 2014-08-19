@@ -2,6 +2,23 @@ from tornado.web import authenticated
 
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.util import AG_DATA_ACCESS
+from amgut.lib.mail import send_email
+
+
+MESSAGE_TEMPLATE = """Contact: %s
+        --------------------------------------------------------------------------------
+        Message:
+        This participant is a child, the person filling out the survey for them
+        needs to provide proof of consent. Email them for proof.
+
+        Juvenile age: %s
+        Parent/Guardian 1: %s
+        Parent/Guardian 2: %s
+        Deceased: %s
+        Kit id: %s
+        Email: %s
+        --------------------------------------------------------------------------------
+"""
 
 
 class NewParticipantHandler(BaseHandler):
@@ -17,7 +34,7 @@ class NewParticipantHandler(BaseHandler):
         is_juvenile = self.get_argument("is_juvenile", 'off')
 
         ag_login_id = AG_DATA_ACCESS.get_user_for_kit(self.current_user)
-        kit_email = AG_DATA_ACCESS.TODO_SOMETHING(self.current_user)
+        kit_email = AG_DATA_ACCESS.get_user_info(self.current_user)['email']
 
         # Get the list of participants attached to that login id
         participants = AG_DATA_ACCESS.getHumanParticipants(ag_login_id)
@@ -29,13 +46,13 @@ class NewParticipantHandler(BaseHandler):
 
         # If the participant already exists, stop them outright
         if participant_name in participants:
-            self.render("portal.html", errmsg="Participant %s already exists!"
-                                              % participant_name)
+            errmsg = "Participant %s already exists!" % participant_name
+            self.redirect("portal.html?errmsg=%s" % errmsg)
 
         if is_juvenile == 'off' and is_exception:
-            self.render("portal.html", errmsg="We are expecting a survey from "
-                                              "that juvenile user (%s)"
-                                              % participant_name)
+            errmsg = ("We are expecting a survey from that juvenile user (%s)"
+                      % participant_name)
+            self.redirect("portal.html?errmsg=%s" % errmsg)
 
         if is_juvenile == 'on':
             # If they aren't already an exception, we need to verify them
@@ -52,18 +69,21 @@ class NewParticipantHandler(BaseHandler):
                 subject = ("AGJUVENILE: %s (ag_login_id: %s) is a child"
                            % (participant_name, ag_login_id))
 
-                message = ("""Contact: %s
-        --------------------------------------------------------------------------------
-        Message:
-        This participant is a child, the person filling out the survey for them
-        needs to provide proof of consent. Email them for proof.
+                message = MESSAGE_TEMPLATE % (participant_name, juvenile_age,
+                                              parent_1_name, parent_2_name,
+                                              deceased_parent,
+                                              self.current_user, kit_email)
 
-        Juvenile age: %s
-        Parent/Guardian 1: %s
-        Parent/Guardian 2: %s
-        Deceased: %s
-        Kit id: %s
-        Email: %s
-        --------------------------------------------------------------------------------
-        """ % (participant_name, juvenile_age, parent_1_name, parent_2_name,
-               deceased_parent, self.current_user, kit_email))
+                try:
+                    send_email(message, subject, sender=kit_email)
+                    alert_message = ("Your message has been sent."
+                                     " We will reply shortly")
+                except:
+                    alert_message = ("There was a problem sending your email."
+                                     " Please contact us directly at "
+                                     "<a href='mailto:info@americangut.org'>"
+                                     "info@americangut.org</a>")
+
+                self.redirect("portal.html?errmsg=%s" % alert_message)
+
+        self.redirect("survey_main.html")
