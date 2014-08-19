@@ -49,9 +49,7 @@
               {% for hp, barcodes in viewitems(human_participants) %}
                 <li class="has-sub">
                   <a onclick="document.forms['participant_overview_{{hp}}'].submit(); return false;">
-                      <form action="fusebox.psp" method="post" id="participant_overview_{{hp}}">
-                          <input type="hidden" name="page" value="participant_overview.psp"/>
-                          <input type="hidden" name="participant_name" value="{{hp}}"/>
+                      <form action="/participants/{{hp}}" method="post" id="participant_overview_{{hp}}">
                           <input type="hidden" name="participant_type" value="human"/>
                           <span>{{hp}}</span>
                       </form>
