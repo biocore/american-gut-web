@@ -995,3 +995,11 @@ class AGDataAccess(object):
         cursor.execute(sql, [supplied_kit_id])
         results = cursor.fetchall()
         return results
+
+    def get_barcodes_from_handout_kit(self, supplied_kit_id):
+        sql = "select barcode from ag_handout_kits where kit_id = %s"
+        con = self.connection
+        cursor = con.cursor()
+        cursor.execute(sql, [supplied_kit_id])
+        results = cursor.fetchall()
+        return results

@@ -533,5 +533,8 @@ class TestAGDataAccess(TestCase):
         data = self.data_access.get_barcode_results('test')
         self.assertEqual(len(data), 1)
 
+    def test_get_barcodes_from_handout_kit(self):
+        data = self.data_access.get_barcodes_from_handout_kit('PGP_cRzJo')
+        self.assertEqual(len(data), 5)
 if __name__ == "__main__":
     main()
