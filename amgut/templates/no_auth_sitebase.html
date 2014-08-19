@@ -10,7 +10,6 @@
 <link rel="stylesheet" type="text/css" href="/static/css/menu.css">
 <link rel="icon" type="image/ico" href="/static/img/favicon.ico">
 
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <script type="text/javascript" src="/static/js/qiime.js"></script>
 <script src="/static/vendor/js/jquery-2.1.0.min.js"></script>
 <script type="text/javascript" src="/static/vendor/js/jquery.metadata.js"></script>
@@ -57,137 +56,14 @@ function toggleSection(section_name)
         $('#' + header_name)[0].innerHTML = header_content.replace('-', '+');
     }
 }
-
-function drawMap(zoom_level, position)
-{
-    var mapOptions =
-    {
-        zoom: zoom_level,
-        center: position,
-        scrollwheel: false,
-        mapTypeId: google.maps.MapTypeId.TERRAIN,
-        mapTypeControl: false,
-        streetViewControl: false,
-        panControl: false
-    };
-
-
-    var stylez = [
-        {
-          featureType: "all",
-          elementType: "all",
-          stylers: [
-            { saturation: -100 } // <-- THIS
-          ]
-        }
-    ];
-
-    var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-
-    var mapType = new google.maps.StyledMapType(stylez, { name:"Grayscale" });
-    map.mapTypes.set('tehgrayz', mapType);
-    map.setMapTypeId('tehgrayz');
-
-    setMarkers(map, latlongs_db);
-}
-
-function renderLocalizedMap(position)
-{
-    p = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    zoom_level = 10;
-    drawMap(zoom_level, p);
-}
-
-function renderMap()
-{
-    p = new google.maps.LatLng(39.83, -99.89);
-    zoom_level = 4;
-    drawMap(zoom_level, p);
-}
-
-function initialize()
-{
-    if (navigator.geolocation)
-    {
-        navigator.geolocation.getCurrentPosition(renderLocalizedMap, renderMap);
-    }
-    else
-    {
-        renderMap()
-    }
-}
-
-function setMarkers(map, locations)
-{
-    for (var i = 0; i < locations.length; i++)
-    {
-        var loc = locations[i];
-        var myLatLng = new google.maps.LatLng(loc[1], loc[2]);
-
-        var pinColor = loc[4];
-        var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|" + pinColor,
-            new google.maps.Size(21, 34),
-            new google.maps.Point(0,0),
-            new google.maps.Point(10, 34));
-        var pinShadow = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
-            new google.maps.Size(40, 37),
-            new google.maps.Point(0, 0),
-            new google.maps.Point(12, 35));
-
-        var marker = new google.maps.Marker({
-            position: myLatLng,
-            map: map,
-            icon: pinImage,
-            shadow: pinShadow
-        });
-    }
-}
-
-var latlongs_db = {{latlongs_db}};
-window.onload=initialize;
 </script>
 </head>
 <body>
-
-    <div style="width:100%; height:100%; background-color:#000;">
-    <div id="map_canvas" style="width:100%; height:100%; opacity:0.8;"></div>
-    </div>
-
-    <!-- Map key -->
-    <div style="position:absolute; bottom: 30px; left:50px; opacity:0.9; width:260px;">
-        <div class="left menuheader" style="margin-top:10px;">
-            <p>Map Key</p>
-        </div>
-
-        <div class="left keywrapper">
-            <ul class="key">
-                <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|00B2FF"/> Participant</li>
-                <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|ffff00"/> Kit Verified</li>
-                <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|00ff00"/> Sample(s) Logged</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- Twitter
-    <div style="position:absolute; top:145px; right:50px; width:300px;">
-    <a class="twitter-timeline" href="https://twitter.com/americangut" data-widget-id="328928986170269696">Tweets by @americangut</a>
-    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </div>
-     -->
-
     <!-- Header logo -->
   <div class="wrapper clearfix" style="position:absolute; top:10px; left:50px; right:50px; opacity:0.9;">
         <div class="header clearfix">
             <img id="logo" src="/static/img/ag_logo.jpg">
-            {% if not latlongs_db %}
-              <span style="text-align:center;">
-                  <br/><br/><br/><br/><br/><br/><br/><br/>
-                  <h1>Sorry, we could not connect to our database. <br/> We are working hard on the issue, please check back shortly!</h1>
-              </span>
-    </div>
-    </div>
-    {% else %}
-    </div>
+        </div>
     </div>
 
     <div class="wrapper clearfix" style="position:absolute; top:130px; left:50px; opacity:0.9; width:260px;">
@@ -209,7 +85,6 @@ window.onload=initialize;
                 </li>
       </ul>
         </div>
-        {%block content%}
         <div id="cssmenu">
         <!-- Login form div -->
         <div>
@@ -233,15 +108,12 @@ window.onload=initialize;
                 </tr>
             </table>
         </div>
-        {% end %}
         <!-- End login form div -->
-
     </div>
-    <div>
-    &nbsp;
-    <br />
     </div>
-        </div></div>
+    <div class="content">
+    {% block content %}
     {% end %}
+    </div>
     </body>
 </html>
