@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<noscript>
+<meta HTTP-EQUIV="REFRESH" content="0; url=nojs.html">
+</noscript>
+<meta charset="utf-8">
+<title>American Gut</title>
+<link rel="stylesheet" type="text/css" href="/static/css/americangut.css">
+<link rel="stylesheet" type="text/css" href="/static/css/menu.css">
+<link rel="icon" type="image/ico" href="/static/img/favicon.ico">
+
+<script type="text/javascript" src="/static/js/qiime.js"></script>
+<script src="/static/vendor/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript" src="/static/vendor/js/jquery.metadata.js"></script>
+<script type="text/javascript" src="/static/vendor/js/jquery.validate.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+    $("ul.subnav").parent().append("<span></span>"); //Only shows drop down trigger when js is enabled - Adds empty span tag after ul.subnav
+
+    $("ul.topnav li span").click(function() { //When trigger is clicked...
+
+        //Following events are applied to the subnav itself (moving subnav up and down)
+        $(this).parent().find("ul.subnav").slideDown('fast').show(); //Drop down the subnav on click
+
+        $(this).parent().hover(function() {
+        }, function(){
+            $(this).parent().find("ul.subnav").slideUp('slow'); //When the mouse hovers out of the subnav, move it back up
+        });
+
+        //Following events are applied to the trigger (Hover events for the trigger)
+        }).hover(function() {
+            $(this).addClass("subhover"); //On hover over, add class "subhover"
+        }, function(){  //On Hover Out
+            $(this).removeClass("subhover"); //On hover out, remove class "subhover"
+    });
+
+});
+
+function toggleSection(section_name)
+{
+    div = document.getElementById(section_name);
+    header_name = section_name + '_header';
+    if (div.style.display == 'none')
+    {
+        $('#' + section_name).fadeIn('fast')
+        header_content = $('#' + header_name)[0].innerHTML
+        $('#' + header_name)[0].innerHTML = header_content.replace('+', '-');
+        window.scrollBy(0, 200);
+    }
+    else
+    {
+        $('#' + section_name).fadeOut('fast')
+        header_content = $('#' + header_name)[0].innerHTML
+        $('#' + header_name)[0].innerHTML = header_content.replace('-', '+');
+    }
+}
+</script>
+</head>
+<body>
+    <!-- Header logo -->
+  <div class="wrapper clearfix" style="position:absolute; top:10px; left:50px; right:50px; opacity:0.9;">
+        <div class="header clearfix">
+            <img id="logo" src="/static/img/ag_logo.jpg">
+        </div>
+    </div>
+
+    <div class="wrapper clearfix" style="position:absolute; top:130px; left:50px; opacity:0.9; width:260px;">
+    <br>
+    <div class="left menuwrapper">
+        <div id="cssmenu">
+      <ul>
+                <li><a href="/faq/#faq0">American Gut 101</a></li>
+                <li><a href="https://fundrazr.com/campaigns/4Tqx5" target="_blank">Join the Project</a></li>
+                <li><a href="http://goo.gl/Jdh1cZ" target="_blank">Preliminary Results</a></li>
+                <li><a href="img/FAQ_Human_Microbiome.pdf" target="_blank">Human Microbiome FAQ</a></li>
+                <li class="has-sub"><a><span>Participant Resources</span></a>
+                    <ul>
+                        <li><a href="FAQ.psp">FAQ</a></li>
+                        <li><a href="img/full_instructions.pdf" target="_blank">Kit Instructions</a></li>
+                        <li><a href="international_shipping.psp?lan=en">International Shipping</a></li>
+                        <li class="last"><a  href="international_shipping.psp?lan=es">International Shipping (Espa&ntilde;ol)</a></li>
+                    </ul>
+                </li>
+      </ul>
+        </div>
+        <div id="cssmenu">
+        <!-- Login form div -->
+        <div>
+            <h3 style="margin-left:5px;">Participant Log In</h3>
+            <table width="100%">
+                <tr width="100%">
+                    <td width="30%"></td>
+                    <td width="30%">
+                        <div style="color:red">{{loginerror}}</div>
+                        <form method="post" action="/auth/login/">
+                            <table width="100%">
+                              <tr><td>Kit ID</td><td><input type="text" id="skid" name="skid"></td></tr>
+                              <tr><td>Password</td><td><input type="password" id="password" name="password"></td></tr>
+                              <tr><td colspan="2"><input type="submit" value="Log In"></tr> 
+                                <tr><td colspan="2"><a href="retrieve_kitid.psp" class="small_link">I forgot my Kit ID</a></td></tr>
+                                <tr><td colspan="2"><a href="forgot_password.psp" class="small_link">I forgot my password</a></td></tr>
+                            </table>
+                        </form>
+                    </td>
+                    <td width="30%"></td>
+                </tr>
+            </table>
+        </div>
+        <!-- End login form div -->
+    </div>
+    </div>
+
+    {% block content %}
+    {% end %}
+    </body>
+</html>
