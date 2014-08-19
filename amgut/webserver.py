@@ -12,8 +12,11 @@ from amgut.handlers.auth_handlers import (
     AuthRegisterHandoutHandler, AuthLoginHandler, AuthLogoutHandler)
 from amgut.handlers.kit_handlers import KitIndexHandler
 from amgut.handlers.FAQ import FAQHandler
+from amgut.handlers.international import InternationalHandler
+
 
 define("port", default=8888, help="run on the given port", type=int)
+
 
 DIRNAME = dirname(__file__)
 STATIC_PATH = join(DIRNAME, "static")
@@ -34,6 +37,7 @@ class QiimeWebApplication(Application):
             (r"/auth/register/", AuthRegisterHandoutHandler),
             (r"/authed/index/", KitIndexHandler),
             (r"/faq/", FAQHandler),
+            (r"/international_shipping/", InternationalHandler),
             # 404 PAGE MUST BE LAST IN THIS LIST!
             (r".*", NoPageHandler)
         ]
