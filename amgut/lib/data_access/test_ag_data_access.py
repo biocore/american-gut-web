@@ -14,7 +14,6 @@ __status__ = "Production"
 import psycopg2
 import psycopg2.extras
 from unittest import TestCase, main
-
 from ag_data_access import AGDataAccess
 from amgut.lib.config_manager import AMGUT_CONFIG
 
@@ -29,8 +28,13 @@ class TestAGDataAccess(TestCase):
                                     host=AMGUT_CONFIG.host,
                                     port=AMGUT_CONFIG.port)
         self.data_access = AGDataAccess(self.con)
+        self.data_access.ag_update_kit_password('test',
+                                                AMGUT_CONFIG.badpassword)
+        self.con.commit()
 
     def tearDown(self):
+        self.data_access.ag_update_kit_password('test',
+                                                AMGUT_CONFIG.goodpassword)
         self.con.close()
 
     def test_testDatabase(self):
@@ -38,6 +42,13 @@ class TestAGDataAccess(TestCase):
 
     # def test_dynamicMetadataSelect(self):
     #     raise NotImplementedError()
+
+    def test_authenticateWebAppUser(self):
+        self.assertFalse(self.data_access.authenticateWebAppUser('bad',
+                                                                 'wrong'))
+        data = self.data_access.authenticateWebAppUser(
+            'test', AMGUT_CONFIG.badpassword)
+        self.assertEqual(data['email'], 'test@microbio.me')
 
     def test_addAGLogin(self):
         self.data_access.addAGLogin('deleteme@no.no', 'test', 'test',
@@ -113,9 +124,11 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(data['kit_verification_code'], 'test')
 
     # def test_getAGCode(self):
+    #     should never be used
     #     raise NotImplementedError()
 
     # def test_getNewAGKitId(self):
+    #     should never be used
     #     raise NotImplementedError()
 
     def test_getNextAGBarcode(self):
@@ -232,8 +245,24 @@ class TestAGDataAccess(TestCase):
                     ('d8592c747da12135e0408a80115d6401', 'fuzzy2',))
         self.con.commit()
 
-    # def test_addAGSingle(self):
-    #     raise NotImplementedError()
+    def test_addAGSingle(self):
+        self.data_access.addAGSingle('d8592c747da12135e0408a80115d6401',
+                                     'Emily', 'softener', 'haha',
+                                     'ag_human_survey')
+        cur = self.con.cursor()
+        cur.execute('select softener from ag_human_survey where ag_login_id = '
+                    '%s and participant_name = %s',
+                    ('d8592c747da12135e0408a80115d6401', 'Emily',))
+        rec = cur.fetchone()[0]
+        self.assertEqual(rec, 'haha')
+        self.data_access.addAGSingle('d8592c747da12135e0408a80115d6401',
+                                     'Emily', 'softener', 'no',
+                                     'ag_human_survey')
+        cur.execute('select softener from ag_human_survey where ag_login_id = '
+                    '%s and participant_name = %s',
+                    ('d8592c747da12135e0408a80115d6401', 'Emily',))
+        rec = cur.fetchone()[0]
+        self.assertEqual(rec, 'no')
 
     def test_deleteAGParticipant(self):
         cur = self.con.cursor()
@@ -361,6 +390,7 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(rec[0], 'y')
 
     # def test_addGeocodingInfo(self):
+    #     used in wwwadmin
     #     raise NotImplementedError()
 
     def test_getMapMarkers(self):
@@ -368,12 +398,15 @@ class TestAGDataAccess(TestCase):
         self.assertNotEqual(len(data), 0)
 
     # def test_getGeocodeJSON(self):
+    #     used in wwwadmin
     #     raise NotImplementedError()
 
     # def test_getElevationJSON(self):
+    #     used in wwwadmin
     #     raise NotImplementedError()
 
     # def test_updateGeoInfo(self):
+    #     used in wwwadmin
     #     raise NotImplementedError()
 
     def test_addBruceWayne(self):
@@ -397,8 +430,22 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(data[0], 'Stool')
         self.assertEqual(data[-1], 'Test')
 
-    # def test_updateAGSurvey(self):
-    #     raise NotImplementedError()
+    def test_updateAGSurvey(self):
+        self.data_access.updateAGSurvey('d8592c747da12135e0408a80115d6401',
+                                        'Emily', 'softener', 'haha')
+        cur = self.con.cursor()
+        cur.execute('select softener from ag_human_survey where ag_login_id = '
+                    '%s and participant_name = %s',
+                    ('d8592c747da12135e0408a80115d6401', 'Emily',))
+        rec = cur.fetchone()[0]
+        self.assertEqual(rec, 'haha')
+        self.data_access.updateAGSurvey('d8592c747da12135e0408a80115d6401',
+                                        'Emily', 'softener', 'no')
+        cur.execute('select softener from ag_human_survey where ag_login_id = '
+                    '%s and participant_name = %s',
+                    ('d8592c747da12135e0408a80115d6401', 'Emily',))
+        rec = cur.fetchone()[0]
+        self.assertEqual(rec, 'no')
 
     def test_getAGStats(self):
         data = self.data_access.getAGStats()
@@ -463,6 +510,19 @@ class TestAGDataAccess(TestCase):
     def test_checkPrintResults(self):
         data = self.data_access.checkPrintResults('test')
         self.assertTrue(data is None)
+
+    def test_get_user_for_kit(self):
+        data = self.data_access.get_user_for_kit('test')
+        self.assertEqual(data, 'd8592c74-7da1-2135-e040-8a80115d6401')
+
+    def test_menu_items(self):
+        data = self.data_access.get_menu_items('test')
+        self.assertEqual(data[0]['foo'][0]['barcode'], '000000001')
+        #print data
+
+    def test_get_verification_code(self):
+        data = self.data_access.get_verification_code('test')
+        self.assertEqual(data, 'test')
 
 
 if __name__ == "__main__":
