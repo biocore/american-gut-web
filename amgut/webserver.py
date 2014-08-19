@@ -14,6 +14,7 @@ from amgut.handlers.kit_handlers import KitIndexHandler
 from amgut.handlers.help_request import HelpRequestHandler
 from amgut.handlers.addendum import AddendumHandler
 from amgut.handlers.results_portal import ResultsPortalHandler
+from amgut.handlers.sample_overview import SampleOverviewHandler
 from amgut.handlers.FAQ import FAQHandler
 from amgut.handlers.international import InternationalHandler
 from amgut.handlers.construction import ConstructionHandler
@@ -43,6 +44,7 @@ class QiimeWebApplication(Application):
             (r"/authed/help_request/", HelpRequestHandler),
             (r"/authed/addendum/", AddendumHandler),
             (r"/authed/results_portal/", ResultsPortalHandler),
+            (r"/authed/sample_overview/", SampleOverviewHandler),
             (r"/faq/", FAQHandler),
             (r"/international_shipping/", InternationalHandler),
             (r"/construction/", ConstructionHandler),
