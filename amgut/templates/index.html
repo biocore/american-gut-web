@@ -12,9 +12,9 @@
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <script type="text/javascript" src="/static/js/qiime.js"></script>
-<script src="/static/vendor/js/jquery-2.1.0.min.js"></script>
+<script src="/static/vendor/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="/static/vendor/js/jquery.metadata.js"></script>
-<script type="text/javascript" src="/static/vendor/js/jquery.validate.js"></script>
+<script type="text/javascript" src="/static/vendor/js/jquery.validate.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 
@@ -146,6 +146,7 @@ function setMarkers(map, locations)
 var latlongs_db = {{latlongs_db}};
 window.onload=initialize;
 </script>
+{% block head %}{% end %}
 </head>
 <body>
 
