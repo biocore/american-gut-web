@@ -77,7 +77,7 @@ function toggleSection(section_name)
                 <li><a href="img/FAQ_Human_Microbiome.pdf" target="_blank">Human Microbiome FAQ</a></li>
                 <li class="has-sub"><a><span>Participant Resources</span></a>
                     <ul>
-                        <li><a href="FAQ.psp">FAQ</a></li>
+                        <li><a href="/faq/">FAQ</a></li>
                         <li><a href="img/full_instructions.pdf" target="_blank">Kit Instructions</a></li>
                         <li><a href="international_shipping.psp?lan=en">International Shipping</a></li>
                         <li class="last"><a  href="international_shipping.psp?lan=es">International Shipping (Espa&ntilde;ol)</a></li>
@@ -111,8 +111,9 @@ function toggleSection(section_name)
         <!-- End login form div -->
     </div>
     </div>
-
+    <div class="content">
     {% block content %}
     {% end %}
+    </div>
     </body>
 </html>

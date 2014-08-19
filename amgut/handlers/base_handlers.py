@@ -1,6 +1,7 @@
 from tornado.web import RequestHandler
 from amgut.util import AG_DATA_ACCESS
 
+
 def _get_lat_long():
     latlong_db = AG_DATA_ACCESS.getMapMarkers()
     latlong_list = []
