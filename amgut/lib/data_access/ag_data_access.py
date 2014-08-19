@@ -88,25 +88,25 @@ class AGDataAccess(object):
     # Users
     #####################################
 
-    # def authenticateWebAppUser(self, username, password):
-    #     """ Attempts to validate authenticate the supplied username/password
+    def authenticateWebAppUser(self, username, password):
+        """ Attempts to validate authenticate the supplied username/password
 
-    #     Attempt to authenticate the user against the list of users in
-    #     web_app_user table. If successful, a dict with user innformation is
-    #     returned. If not, the function returns False.
-    #     """
-    #     con = self.connection
-    #     user_data = con.cursor()
-    #     con.cursor().callproc('ag_authenticate_user', [username, password,
-    #                           user_data])
-    #     row = user_data.fetchone()
-    #     if row:
-    #         user_data = {'web_app_user_id': str(row[0]), 'email': row[1],
-    #                      'name': row[2], 'address': row[3], 'city': row[4],
-    #                      'state': row[5], 'zip': row[6], 'country': row[7]}
-    #         return user_data
-    #     else:
-    #         return False
+        Attempt to authenticate the user against the list of users in
+        web_app_user table. If successful, a dict with user innformation is
+        returned. If not, the function returns False.
+        """
+        data = self._sql.execute_proc_return_cursor(
+            'ag_authenticate_user', [username, password])
+        row = data.fetchone()
+        print "ROW!!!!!!", row, username, password
+        data.close()
+        if row:
+            user_data = {'web_app_user_id': str(row[0]), 'email': row[1],
+                         'name': row[2], 'address': row[3], 'city': row[4],
+                         'state': row[5], 'zip': row[6], 'country': row[7]}
+            return user_data
+        else:
+            return False
 
     def addAGLogin(self, email, name, address, city, state, zip, country):
         con = self.connection
@@ -944,7 +944,11 @@ class AGDataAccess(object):
         sql = ("select AK.ag_login_id from ag_kit AK "
                "join ag_login AL on AK.ag_login_id = AL.ag_login_id "
                "where AK.supplied_kit_id = %s")
-        results = self.connection.cursor().execute(sql, [supplied_kit_id])
+        con = self.connection
+        cursor = con.cursor()
+        cursor.execute(sql, [supplied_kit_id])
+        results = cursor.fetchone()
+        print "RESULTS", results
         if results:
             return results[0]
         else:

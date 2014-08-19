@@ -209,6 +209,7 @@ window.onload=initialize;
                 </li>
       </ul>
         </div>
+        {%block content%}
         <div id="cssmenu">
         <!-- Login form div -->
         <div>
@@ -217,9 +218,10 @@ window.onload=initialize;
                 <tr width="100%">
                     <td width="30%"></td>
                     <td width="30%">
+                        <div style="color:red">{{loginerror}}</div>
                         <form method="post" action="/auth/login/">
                             <table width="100%">
-                              <tr><td>Kit ID</td><td><input type="text" id="username" name="username"></td></tr>
+                              <tr><td>Kit ID</td><td><input type="text" id="skid" name="skid"></td></tr>
                               <tr><td>Password</td><td><input type="password" id="password" name="password"></td></tr>
                               <tr><td colspan="2"><input type="submit" value="Log In"></tr> 
                                 <tr><td colspan="2"><a href="retrieve_kitid.psp" class="small_link">I forgot my Kit ID</a></td></tr>
@@ -231,6 +233,7 @@ window.onload=initialize;
                 </tr>
             </table>
         </div>
+        {% end %}
         <!-- End login form div -->
 
     </div>
