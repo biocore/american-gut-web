@@ -78,7 +78,7 @@ class AnimalSurveyHandler(BaseHandler):
                                             field, value)
 
         message = urlencode([('errmsg', "Successfully added %s!" % participant_name)])
-        self.redirect('/portal/?%s' % message)
+        self.redirect('/authed/portal/?%s' % message)
 
 
 class CheckParticipantName(WebSocketHandler, BaseHandler):
