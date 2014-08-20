@@ -20,4 +20,4 @@ class PortalHandler(BaseHandler):
 
         self.render("portal.html", skid=self.current_user, user_name=user_name,
                     errmsg=errmsg, kit_verified=kit_verified,
-                    has_results=has_results)
+                    has_results=has_results, results=results)
