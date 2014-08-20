@@ -24,8 +24,6 @@ class TaxaSummaryHandler(BaseHandler):
         # and we need this path for users to access the file
         taxa_summary_url = join('/results', 'taxa-summaries', barcode+'.txt')
 
-        print taxa_summary_fp
-
         # read lines from taxa summary table, omit comment lines
         lines = [x.replace(';', '\t').strip() for x in
             open(taxa_summary_fp, 'U').readlines() if not x.startswith('#')]
