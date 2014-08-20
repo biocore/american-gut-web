@@ -47,7 +47,7 @@ class NewParticipantHandler(BaseHandler):
         # If the participant already exists, stop them outright
         if participant_name in participants:
             errmsg = "Participant %s already exists!" % participant_name
-            self.redirect("portal.html?errmsg=%s" % errmsg)
+            self.redirect("/authed/portal/?errmsg=%s" % errmsg)
 
         if is_juvenile == 'off' and is_exception:
             errmsg = ("We are expecting a survey from that juvenile user (%s)"
