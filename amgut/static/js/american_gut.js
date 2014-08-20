@@ -617,9 +617,9 @@ function validateVerification() {
 	
     var valid = true;
 	
-    if(document.verification_submit.email_verification_code.value == "")
+    if(document.verification_submit.user_verification_code.value == "")
     {
-        document.verification_submit.email_verification_code.className += " highlight";
+        document.verification_submit.user_verification_code.className += " highlight";
         valid = false;
     }
 	
@@ -631,7 +631,6 @@ function validateVerification() {
 			valid = false;
 		}
 	}
-	
     if(!valid) 
 	{
         return;
