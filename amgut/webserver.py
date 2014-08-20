@@ -18,6 +18,7 @@ from amgut.handlers.participant_overview import ParticipantOverviewHandler
 from amgut.handlers.international import InternationalHandler
 from amgut.handlers.construction import ConstructionHandler
 from amgut.handlers.survey import SurveyMainHandler
+from amgut.handlers.portal import PortalHandler
 
 
 define("port", default=8888, help="run on the given port", type=int)
@@ -44,6 +45,7 @@ class QiimeWebApplication(Application):
             (r"/authed/help_request/", HelpRequestHandler),
             (r"/authed/addendum/", AddendumHandler),
             (r"/authed/survey_main/", SurveyMainHandler),
+            (r"/authed/portal/", PortalHandler),
             (r"/faq/", FAQHandler),
             (r"/participants/(.*)", ParticipantOverviewHandler),
             (r"/international_shipping/", InternationalHandler),
