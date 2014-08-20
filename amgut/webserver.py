@@ -7,6 +7,8 @@ from tornado.ioloop import IOLoop
 from tornado.web import Application, StaticFileHandler
 from tornado.options import define, options, parse_command_line
 
+from amgut.lib.config_manager import AMGUT_CONFIG
+
 from amgut.handlers.base_handlers import MainHandler, NoPageHandler
 from amgut.handlers.auth_handlers import (
     AuthRegisterHandoutHandler, AuthLoginHandler, AuthLogoutHandler)
@@ -25,6 +27,7 @@ from amgut.handlers.survey import SurveyMainHandler
 from amgut.handlers.portal import PortalHandler
 from amgut.handlers.retrieve_kitid import KitIDHandler
 
+
 define("port", default=8888, help="run on the given port", type=int)
 
 
@@ -39,7 +42,8 @@ DEBUG = True
 class QiimeWebApplication(Application):
     def __init__(self):
         handlers = [
-            (r"/results/(.*)", StaticFileHandler, {"path": RES_PATH}),
+            (r"/results/(.*)", StaticFileHandler,
+             {"path": AMGUT_CONFIG.base_data_dir}),
             (r"/static/(.*)", StaticFileHandler, {"path": STATIC_PATH}),
             (r"/", MainHandler),
             (r"/auth/login/", AuthLoginHandler),
