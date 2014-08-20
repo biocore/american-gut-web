@@ -99,12 +99,20 @@ class AGDataAccess(object):
             return False
 
     def addAGLogin(self, email, name, address, city, state, zip, country):
+        sql = "select ag_login_id from ag_login WHERE email = %s"
         con = self.connection
         cur = con.cursor()
-        cur.callproc('ag_insert_login', [email.strip().lower(), name,
-                                         address,
-                                         city, state, zip, country])
-        con.commit()
+        cur.execute(sql, [email])
+        ag_login_id = cur.fetchone()
+        if not ag_login_id:
+            # create the login
+            cur.callproc('ag_insert_login', [email.strip().lower(), name,
+                                             address,
+                                             city, state, zip, country])
+            con.commit()
+            cur.execute(sql, [email])
+            ag_login_id = cur.fetchone()
+        return ag_login_id[0]
 
     def updateAGLogin(self, ag_login_id, email, name, address, city, state,
                       zip, country):
@@ -216,6 +224,24 @@ class AGDataAccess(object):
             'verification_email_sent': row[6]
         }
         results.close()
+        return kit_details
+
+    def getAGHandoutKitDetails(self, supplied_kit_id):
+        sql = "SELECT * FROM ag_handout_kits WHERE kit_id = %s"
+        con = self.connection
+        cur = con.cursor()
+        cur.execute(sql, [supplied_kit_id])
+        row = cur.fetchone()
+        kit_details = {
+            'ag_kit_id': row[0],
+            'kit_password': row[1],
+            'barcode': row[2],
+            'kit_verification_code': row[3],
+            'sample_barcode_file': row[4],
+            'swabs_per_kit': row[5],
+            'print_results': row[6]
+        }
+        cur.close()
         return kit_details
 
     # def getAGCode(self, type):

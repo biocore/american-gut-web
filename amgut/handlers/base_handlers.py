@@ -50,3 +50,6 @@ class MainHandler(BaseHandler):
 class NoPageHandler(BaseHandler):
     def get(self):
         self.render("404.html", skid=self.current_user)
+
+class DBErrorHandler(BaseHandler):
+    pass

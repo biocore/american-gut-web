@@ -22,6 +22,7 @@ $(document).ready(function() {
         state: "required",
         zip: "required",
         country: "required",
+        pass: "required"
       },
       messages: {
         participantname: {
@@ -47,6 +48,9 @@ $(document).ready(function() {
         country: {
           required: "Please enter your country",
         }
+        pass: {
+          required: "Please re-enter your kit password",
+        }
       }
     });
   });
@@ -66,6 +70,7 @@ $(document).ready(function() {
             <tr><td>State</td><td><input type="text" name="state" id="state"></td></tr>        
             <tr><td>Zip</td><td><input type="text" name="zip" id="zip"></td></tr>
             <tr><td>Country</td><td><input type="text" name="country" id="country"></td></tr>
+            <tr><td>Re-enter password</td><td><input type="password" name="pass" id="pass"></td></tr>
             <tr><td></td><td><input type="submit" value="Submit My Information"/></td></tr>
         </table>
     </form>
