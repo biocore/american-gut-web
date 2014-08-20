@@ -17,6 +17,9 @@ from amgut.handlers.FAQ import FAQHandler
 from amgut.handlers.participant_overview import ParticipantOverviewHandler
 from amgut.handlers.international import InternationalHandler
 from amgut.handlers.construction import ConstructionHandler
+from amgut.handlers.animal_survey import (
+    AnimalSurveyHandler, CheckParticipantName
+)
 from amgut.handlers.new_participant import NewParticipantHandler
 from amgut.handlers.survey import SurveyMainHandler
 from amgut.handlers.portal import PortalHandler
@@ -52,6 +55,8 @@ class QiimeWebApplication(Application):
             (r"/participants/(.*)", ParticipantOverviewHandler),
             (r"/international_shipping/", InternationalHandler),
             (r"/construction/", ConstructionHandler),
+            (r"/add_animal/", AnimalSurveyHandler),
+            (r"/check_participant_name/", CheckParticipantName),
             (r"/retrieve_kitid/", KitIDHandler),
             # 404 PAGE MUST BE LAST IN THIS LIST!
             (r".*", NoPageHandler)
