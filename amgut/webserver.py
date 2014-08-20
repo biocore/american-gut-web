@@ -15,6 +15,7 @@ from amgut.handlers.addendum import AddendumHandler
 from amgut.handlers.FAQ import FAQHandler
 from amgut.handlers.international import InternationalHandler
 from amgut.handlers.construction import ConstructionHandler
+from amgut.handlers.animal_survey import AnimalSurveyHandler
 
 
 define("port", default=8888, help="run on the given port", type=int)
@@ -43,6 +44,7 @@ class QiimeWebApplication(Application):
             (r"/international_shipping/", InternationalHandler),
             (r"/construction/", ConstructionHandler),
             # 404 PAGE MUST BE LAST IN THIS LIST!
+            (r"/add_animal/", AnimalSurveyHandler),
             (r".*", NoPageHandler)
         ]
         settings = {
