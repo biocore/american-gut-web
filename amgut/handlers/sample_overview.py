@@ -14,7 +14,8 @@ def _format_data_path(barcode, ext):
 class SampleOverviewHandler(BaseHandler):
     @authenticated
     def post(self):
-        barcode = self.get_argument('barcode')['barcode']
+        barcode = self.get_argument('barcode')
+
         sample_data = AG_DATA_ACCESS.getAGBarcodeDetails(barcode)
 
         barcode_pdf = _format_data_path(barcode, 'pdf')
