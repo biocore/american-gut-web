@@ -1,0 +1,22 @@
+<script type="text/javascript" src="/static/js/map.js"></script>
+<script type="text/javascript">
+    var latlongs_db = {% raw latlongs_db %};
+</script>
+
+<div style="width:100%; height:100%; background-color:#000;">
+    <div id="map_canvas" style="width:100%; height:100%; opacity:0.8;"></div>
+</div>
+
+<div style="position:absolute; bottom: 30px; left:50px; opacity:0.9; width:260px;">
+    <div class="left menuheader" style="margin-top:10px;">
+        <p>Map Key</p>
+    </div>
+
+    <div class="left keywrapper">
+        <ul class="key">
+            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|00B2FF"/> Participant</li>
+            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|ffff00"/> Kit Verified</li>
+            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|00ff00"/> Sample(s) Logged</li>
+        </ul>
+    </div>
+</div>
