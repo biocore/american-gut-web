@@ -667,15 +667,50 @@ class AGDataAccess(object):
             self.updateGeoInfo(ag_login_id, lat, lon, elevation, '')
 
     def getMapMarkers(self):
-        #con = self.connection
-        #results = con.cursor()
-        #con.cursor().callproc('ag_get_map_markers', [results])
-        results = self._sql.execute_proc_return_cursor('ag_get_map_markers',
-                                                       [])
-        # zipcode, latitude, longitude, marker_color
-        return_res = [(row[0], row[1], row[2], row[3]) for row in results]
-        results.close()
-        return return_res
+        cur_completed = self.connection.cursor()
+        cur_ver = self.connection.cursor()
+        cur_ll = self.connection.cursor()
+
+        # fetch all latitide/longitude by kit id
+        cur_ll.execute("""SELECT ak.supplied_kit_id, al.latitude, al.longitude
+                          FROM ag_login al
+                               INNER JOIN ag_kit ak
+                               ON ak.ag_login_id=al.ag_login_id
+                          WHERE al.latitude IS NOT NULL AND
+                                al.longitude IS NOT NULL""")
+        ll = {res[0]: (res[1], res[2]) for res in cur_ll.fetchall()}
+
+        # determine all completed kits
+        cur_completed.execute("""SELECT ak.supplied_kit_id
+                                 FROM ag_kit ak
+                                 WHERE (
+                                       SELECT  count(*)
+                                       FROM ag_kit_barcodes akb
+                                       WHERE akb.ag_kit_id = ak.ag_kit_id
+                                       ) =
+                                       (
+                                       SELECT  count(*)
+                                       FROM ag_kit_barcodes akb
+                                       WHERE akb.ag_kit_id = ak.ag_kit_id AND
+                                             akb.site_sampled IS NOT NULL
+                                       )""")
+        completed = (res[0] for res in cur_completed.fetchall())
+
+        # determine what kit are not verified
+        cur_ver.execute("""SELECT supplied_kit_id, kit_verified
+                           FROM ag_kit""")
+        notverified = (res[0] for res in cur_ver.fetchall() if res[1] == 'n')
+
+        # set green for completed kits
+        res = {ll[kid]: '00FF00' for kid in completed if kid in ll}
+
+        # set blue for unverified kits
+        res.update({ll[kid]: '00B2FF' for kid in notverified if kid in ll})
+
+        # set yellow for all others
+        res.update({v: 'FFFF00' for k, v in ll.items() if v not in res})
+
+        return [[lat, lng, c] for ((lat, lng), c) in res.items()]
 
     def getGeocodeJSON(self, url):
         conn = httplib.HTTPConnection('maps.googleapis.com')
