@@ -46,7 +46,7 @@ class PortalHandler(BaseHandler):
 
         if kit_details['kit_verification_code'] == user_code:
             AG_DATA_ACCESS.verifyKit(kit_id)
-            message = 'Kit %s successfully verified!' % kit_id
+            message = ''
             verification_textbox = ''
         else:
             message = ('The kit verification code you entered does not match '

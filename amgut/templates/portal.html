@@ -47,7 +47,7 @@
                         <h3>Kit ID: {{ skid }}</h3>
                         <h4>Please enter the verification code sent to your email address <a href="#" class="help" title="If you did not recieve a verification code in your email from American Gut, please check your spam folder. If you still can not find it, contact info@americangut.org">(?)</a></h4>
     {% if message %}
-        {% raw message %}
+        The kit verification code you entered does not match our records. Please double-check the code you entered. If you continue to experience difficulties, please <a href=/authed/help_request/>contact us</a>.
     {% end %}
                         <input class="{{ verification_textbox }}"  type="text" name="user_verification_code" id="user_verification_code"></input>
                         <h4>Please verify that the barcode(s) you received in the mail match the barcode(s) here <a id="barcode_popup_trigger" class="help" title="" onmouseover="setVisible('barcode_popup')" onmouseout="setInvisible('barcode_popup')">(?)</a><div id="barcode_popup" class="help_popup invisible">The barcode you need to verify is located on the outside of your sample tube.<br /><img src="/static/img/sample_barcode.jpg"/></div></h4>
