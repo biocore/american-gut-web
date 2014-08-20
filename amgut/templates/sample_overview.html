@@ -1,0 +1,78 @@
+{% extends sitebase.html %}
+{% block content %}
+
+{% if status == 'Received' %}
+<h2>Sample {{ barcode }}. This sample has been received by the sequencing center!</h2>
+{% else %}
+<h2>Sample {{ barcode }}</h2>
+{% end %}
+
+<div class="overview_wrapper">
+    <div class="overview">
+        <table class="list" id="survey" style="background:{{ bgcolor }}; text-align:right">
+            <tr>
+                <td>Data Visualization</td>
+{% if barcode_pdf %}
+                <td><a href="{{ barcode_pdf }}" title="Click this link to visualize sample {{ barcode }} in the context of other microbiomes!" target="blank">{{ barcode }}.pdf</a>
+{% else %}
+                <td>This sample has not yet been processed. Please check back later.</td>
+{% end %}
+            </tr>
+
+            <tr>
+                <td>Taxa Summary</td>
+{% if barcode_txt %}
+                <td>
+                    <form action=/authed/taxa_summary/" method="post" id="taxa_summary">
+                        <input type="submit" name="taxa_summary" value="View Taxa Summary">
+                    </form>
+                </td>
+{% else %}
+                <td>This sample has not yet been processed. Please check back later.</td>
+{% end %}
+            </tr>
+
+            <tr>
+                <td style="width: 150px;">Sample Status</td>
+                <td>{{ status }}</td>
+            </tr>
+
+            <tr>
+                <td style="width: 150px;">Sample Site</td>
+                <td>{{ sample_origin }}</td>
+            </tr>
+
+            <tr>
+                <td>Sample Date</td>
+                <td>{{ sample_date }}</td>
+            </tr>
+
+            <tr>
+                <td>Sample Time</td>
+                <td>{{ sample_time }}</td>
+            </tr>
+
+            <tr>
+                <td>Notes</td>
+                <td>
+                    <div class="notescroll">
+                        {{ notes }}
+                    </div>
+                </td>
+            </tr>
+
+{% if status != 'Received' %}
+            <tr>
+                <td colspan="2">
+                    <form action="/authed/remove_sample/" method="post" id="remove_sample_{{ barcode }}">
+                        <input type="button" onclick="document.forms['remove_sample_{{ barcode }}'].submit(); return false;" value="Remove barcode {{ barcode }}"/>
+                    </form>
+                </td>
+            </tr>
+{% end %}
+        </table>
+    </div>
+</div>
+<br/>
+<br/>
+{% end %}
