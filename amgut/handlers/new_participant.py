@@ -52,7 +52,7 @@ class NewParticipantHandler(BaseHandler):
         if is_juvenile == 'off' and is_exception:
             errmsg = ("We are expecting a survey from that juvenile user (%s)"
                       % participant_name)
-            self.redirect("portal.html?errmsg=%s" % errmsg)
+            self.redirect("/authed/portal/?errmsg=%s" % errmsg)
 
         if is_juvenile == 'on':
             # If they aren't already an exception, we need to verify them
@@ -84,6 +84,6 @@ class NewParticipantHandler(BaseHandler):
                                      "<a href='mailto:info@americangut.org'>"
                                      "info@americangut.org</a>")
 
-                self.redirect("portal.html?errmsg=%s" % alert_message)
+                self.redirect("/authed/portal/?errmsg=%s" % alert_message)
 
-        self.redirect("survey_main.html")
+        self.redirect("/authed/survey_main/")
