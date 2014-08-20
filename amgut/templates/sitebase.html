@@ -46,31 +46,29 @@
           <ul>
           <li class="has-sub"><a><span>Human Samples</span></a>
               <ul> <!-- list of participants-->
-              {% for hp, barcodes in viewitems(human_participants) %}
+              {% for hp, sitebase_barcodes in viewitems(human_participants) %}
                 <li class="has-sub">
                   <a onclick="document.forms['participant_overview_{{hp}}'].submit(); return false;">
-                      <form action="fusebox.psp" method="post" id="participant_overview_{{hp}}">
-                          <input type="hidden" name="page" value="participant_overview.psp"/>
-                          <input type="hidden" name="participant_name" value="{{hp}}"/>
+                      <form action="/participants/{{hp}}" method="post" id="participant_overview_{{hp}}">
                           <input type="hidden" name="participant_type" value="human"/>
                           <span>{{hp}}</span>
                       </form>
                   </a>
                 <ul>
-                {% for barcode in barcodes %}
+                {% for sitebase_barcode in sitebase_barcodes %}
                   <li>
-                    <a href="" onclick="document.forms['sample_overview_{{barcode['barcode']}}'].submit(); return false;" 
-                    {% if barcode['status'] == 'Received' %}
+                    <a href="" onclick="document.forms['sample_overview_{{sitebase_barcode['barcode']}}'].submit(); return false;" 
+                    {% if sitebase_barcode['status'] == 'Received' %}
                       style="color:#0B0;"
                     {% end %}
                     >
-                        <form action="fusebox.psp" method="post" id="sample_overview_{{barcode['barcode']}}">
+                        <form action="fusebox.psp" method="post" id="sample_overview_{{sitebase_barcode['barcode']}}">
                             <input type="hidden" name="page" id="page" value="sample_overview.psp"/>
-                            <input type="hidden" name="status" id="status" value="{{barcode['status']}}"/>
-                            <input type="hidden" name="barcode" id="barcode" value="{{barcode['barcode']}}"/>
+                            <input type="hidden" name="status" id="status" value="{{sitebase_barcode['status']}}"/>
+                            <input type="hidden" name="barcode" id="barcode" value="{{sitebase_barcode['barcode']}}"/>
                             <span>
-                              {{barcode['barcode']}}
-                              {% if barcode['status'] == 'Received' %}
+                              {{sitebase_barcode['barcode']}}
+                              {% if sitebase_barcode['status'] == 'Received' %}
                                 (Recieved)
                               {% end %}
                             </span>
@@ -90,31 +88,32 @@
               <!-- top-level Animals header-->
               <li class="has-sub"><a><span>Animal Samples</span></a>
                   <ul> <!-- list of animal participants -->
-                  {% for ap, barcodes in viewitems(animal_participants) %}
+                  {% for ap, sitebase_barcodes in viewitems(animal_participants) %}
                 <li class="last">
           <a href="" onclick="document.forms['add_sample_animal_{{ap}}'].submit(); return false;">
               <form action="fusebox.psp" method="post" id="add_sample_animal_{{ap}}">
                   <input type="hidden" name="page" value="add_sample.psp"/>
                   <input type="hidden" name="sample_type" value="animal"/>
                   <input type="hidden" name="participant_name" value="{{ap}}"/>
-                  <span><strong>Log Sample</strong></span>
+                  <span>{{ap}}</span>
               </form>
           </a>
         </li>
-                {% for barcode in barcodes %}
+        <ul>
+                {% for sitebase_barcode in sitebase_barcodes %}
                   <li>
-                    <a href="" onclick="document.forms['sample_overview_{{barcode['barcode']}}'].submit(); return false;" 
-                    {% if barcode['status'] == 'Received' %}
+                    <a href="" onclick="document.forms['sample_overview_{{sitebase_barcode['barcode']}}'].submit(); return false;" 
+                    {% if sitebase_barcode['status'] == 'Received' %}
                       style="color:#0B0;"
                     {% end %}
                     >
-                        <form action="fusebox.psp" method="post" id="sample_overview_{{barcode['barcode']}}">
+                        <form action="fusebox.psp" method="post" id="sample_overview_{{sitebase_barcode['barcode']}}">
                             <input type="hidden" name="page" id="page" value="sample_overview.psp"/>
-                            <input type="hidden" name="status" id="status" value="{{barcode['status']}}"/>
-                            <input type="hidden" name="barcode" id="barcode" value="{{barcode['barcode']}}"/>
+                            <input type="hidden" name="status" id="status" value="{{sitebase_barcode['status']}}"/>
+                            <input type="hidden" name="barcode" id="barcode" value="{{sitebase_barcode['barcode']}}"/>
                             <span>
-                              {{barcode['barcode']}}
-                              {% if barcode['status'] == 'Received' %}
+                              {{sitebase_barcode['barcode']}}
+                              {% if sitebase_barcode['status'] == 'Received' %}
                                 (Recieved)
                               {% end %}
                             </span>
@@ -132,20 +131,20 @@
 
               <li class="has-sub"><a><span>Environmental Samples</span></a>
                   <ul>
-                  {% for barcode in environmental_samples %}
+                  {% for sitebase_barcode in environmental_samples %}
                   <li>
-                    <a href="" onclick="document.forms['sample_overview_{{barcode['barcode']}}'].submit(); return false;" 
-                    {% if barcode['status'] == 'Received' %}
+                    <a href="" onclick="document.forms['sample_overview_{{sitebase_barcode['barcode']}}'].submit(); return false;" 
+                    {% if sitebase_barcode['status'] == 'Received' %}
                       style="color:#0B0;"
                     {% end %}
                     >
-                        <form action="fusebox.psp" method="post" id="sample_overview_{{barcode['barcode']}}">
+                        <form action="fusebox.psp" method="post" id="sample_overview_{{sitebase_barcode['barcode']}}">
                             <input type="hidden" name="page" id="page" value="sample_overview.psp"/>
-                            <input type="hidden" name="status" id="status" value="{{barcode['status']}}"/>
-                            <input type="hidden" name="barcode" id="barcode" value="{{barcode['barcode']}}"/>
+                            <input type="hidden" name="status" id="status" value="{{sitebase_barcode['status']}}"/>
+                            <input type="hidden" name="barcode" id="barcode" value="{{sitebase_barcode['barcode']}}"/>
                             <span>
-                              {{barcode['barcode']}}
-                              {% if barcode['status'] == 'Received' %}
+                              {{sitebase_barcode['barcode']}}
+                              {% if sitebase_barcode['status'] == 'Received' %}
                                 (Recieved)
                               {% end %}
                             </span>

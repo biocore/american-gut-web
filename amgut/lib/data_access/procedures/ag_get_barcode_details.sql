@@ -16,12 +16,14 @@ BEGIN
                 cast(akb.ag_kit_id as varchar(100)), 
                 akb.barcode, 
                 akb.site_sampled, akb.environment_sampled, akb.sample_date, 
-                akb.sample_time, akb.participant_name, akb.notes
+                akb.sample_time, akb.participant_name, akb.notes, b.status
         from    ag_kit_barcodes akb
                 inner join ag_kit ak
                 on akb.ag_kit_id = ak.ag_kit_id
                 inner join ag_login al
                 on ak.ag_login_id = al.ag_login_id
+                inner join barcode b 
+                on akb.barcode = b.barcode
         where   akb.barcode = barcode_;
     return user_data_;
 
