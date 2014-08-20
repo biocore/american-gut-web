@@ -21,13 +21,13 @@ class PortalHandler(BaseHandler):
 
         barcodes = AG_DATA_ACCESS.getBarcodesByKit(kit_id)
 
-        message = ''
+        kit_ver_error = False
         verification_textbox = ''
 
         self.render("portal.html", skid=kit_id, user_name=user_name,
                     errmsg=errmsg, kit_verified=kit_verified,
                     has_results=has_results, results=results,
-                    barcodes=barcodes, message=message,
+                    barcodes=barcodes, kit_ver_error=kit_ver_error,
                     verification_textbox=verification_textbox)
 
     @authenticated
@@ -46,17 +46,15 @@ class PortalHandler(BaseHandler):
 
         if kit_details['kit_verification_code'] == user_code:
             AG_DATA_ACCESS.verifyKit(kit_id)
-            message = ''
+            kit_ver_error = False
             verification_textbox = ''
         else:
-            message = ('The kit verification code you entered does not match '
-                       'our records. Please double-check the code you '
-                       'entered. If you continue to experience difficulties, '
-                       'please <a href=/authed/help_request/>contact us</a>.')
+            kit_ver_error = True
             verification_textbox = ' highlight'
 
         self.render("portal.html", skid=kit_id, user_name=user_name,
                     errmsg=errmsg, kit_verified=kit_verified,
                     has_results=has_results, results=results,
                     barcodes=barcodes,
-                    verification_textbox=verification_textbox, message=message)
+                    verification_textbox=verification_textbox,
+                    kit_ver_error=kit_ver_error)

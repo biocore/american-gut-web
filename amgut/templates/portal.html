@@ -46,7 +46,7 @@
                     <form name="verification_submit" id="verification_submit" method="post" action="/authed/portal/">
                         <h3>Kit ID: {{ skid }}</h3>
                         <h4>Please enter the verification code sent to your email address <a href="#" class="help" title="If you did not recieve a verification code in your email from American Gut, please check your spam folder. If you still can not find it, contact info@americangut.org">(?)</a></h4>
-    {% if message %}
+    {% if kit_ver_error %}
         The kit verification code you entered does not match our records. Please double-check the code you entered. If you continue to experience difficulties, please <a href=/authed/help_request/>contact us</a>.
     {% end %}
                         <input class="{{ verification_textbox }}"  type="text" name="user_verification_code" id="user_verification_code"></input>
