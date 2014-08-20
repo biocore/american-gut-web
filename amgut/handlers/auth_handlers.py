@@ -32,7 +32,7 @@ class AuthRegisterHandoutHandler(BaseHandler):
                                   info['state'], info['zip'],
                                   info['country'])
 
-        self.redirect('/authed/index/')
+        self.redirect('/authed/portal/')
 
 
 class AuthLoginHandler(BaseHandler):
@@ -45,12 +45,12 @@ class AuthLoginHandler(BaseHandler):
         if login:
             # everything good so log in
             self.set_current_user(skid)
-            self.redirect("/authed/index/")
+            self.redirect("/authed/portal/")
             return
         else:
             is_handout = AG_DATA_ACCESS.handoutCheck(skid, password)
             if is_handout == 'y':
-                #login user but have them register themselves
+                # login user but have them register themselves
                 self.set_current_user(skid)
                 self.redirect('/auth/register/?skid=%s' % skid)
                 return

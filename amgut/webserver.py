@@ -10,7 +10,6 @@ from tornado.options import define, options, parse_command_line
 from amgut.handlers.base_handlers import MainHandler, NoPageHandler
 from amgut.handlers.auth_handlers import (
     AuthRegisterHandoutHandler, AuthLoginHandler, AuthLogoutHandler)
-from amgut.handlers.kit_handlers import KitIndexHandler
 from amgut.handlers.help_request import HelpRequestHandler
 from amgut.handlers.addendum import AddendumHandler
 from amgut.handlers.sample_overview import SampleOverviewHandler
@@ -42,7 +41,6 @@ class QiimeWebApplication(Application):
             (r"/auth/login/", AuthLoginHandler),
             (r"/auth/logout/", AuthLogoutHandler),
             (r"/auth/register/", AuthRegisterHandoutHandler),
-            (r"/authed/index/", KitIndexHandler),
             (r"/authed/help_request/", HelpRequestHandler),
             (r"/authed/addendum/", AddendumHandler),
             (r"/authed/sample_overview/", SampleOverviewHandler),
