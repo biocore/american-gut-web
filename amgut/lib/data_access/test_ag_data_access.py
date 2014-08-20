@@ -118,6 +118,7 @@ class TestAGDataAccess(TestCase):
         data = self.data_access.getAGBarcodeDetails('000000001')
         self.assertEqual(data['participant_name'], 'foo')
         self.assertEqual(data['site_sampled'], 'Stool')
+        self.assertEqual(data['status'], 'Received')
 
     def test_getAGKitDetails(self):
         data = self.data_access.getAGKitDetails('test')
@@ -531,6 +532,11 @@ class TestAGDataAccess(TestCase):
     def test_get_barcode_results(self):
         data = self.data_access.get_barcode_results('test')
         self.assertEqual(len(data), 1)
+        data = self.data_access.get_barcode_results('1111')
+        self.assertEqual(len(data), 0)
 
+    def test_get_barcodes_from_handout_kit(self):
+        data = self.data_access.get_barcodes_from_handout_kit('PGP_cRzJo')
+        self.assertEqual(len(data), 5)
 if __name__ == "__main__":
     main()

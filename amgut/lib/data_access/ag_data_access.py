@@ -193,7 +193,8 @@ class AGDataAccess(object):
             'sample_date': barcode_details[6],
             'sample_time': barcode_details[7],
             'participant_name': barcode_details[8],
-            'notes': barcode_details[9]
+            'notes': barcode_details[9],
+            'status': barcode_details[10]
         }
         results.close()
         return row_dict
@@ -858,6 +859,7 @@ class AGDataAccess(object):
         kit_ids = []
         for row in results:
             kit_ids.append(row[0])
+        results.close()
         return kit_ids
 
     def ag_set_pass_change_code(self, email, kitid, pass_code):
@@ -989,6 +991,14 @@ class AGDataAccess(object):
                  from ag_kit_barcodes akb
                  inner join ag_kit agk  on akb.ag_kit_id = agk.ag_kit_id
                  where agk.supplied_kit_id =  %s and akb.results_ready = 'Y'"""
+        con = self.connection
+        cursor = con.cursor()
+        cursor.execute(sql, [supplied_kit_id])
+        results = cursor.fetchall()
+        return results
+
+    def get_barcodes_from_handout_kit(self, supplied_kit_id):
+        sql = "select barcode from ag_handout_kits where kit_id = %s"
         con = self.connection
         cursor = con.cursor()
         cursor.execute(sql, [supplied_kit_id])
