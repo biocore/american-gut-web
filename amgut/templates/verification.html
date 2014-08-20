@@ -1,92 +1,37 @@
-<%
-__author__ = "Meg Pirrung"
-__copyright__ = "Copyright 2009-2013, QIIME Web Analysis"
-__credits__ = ["Meg Pirrung", "Adam Robbins-Pianka", "Yoshiki Vazquez-Baeza"]
-__license__ = "GPL"
-__version__ = "1.0.0.dev"
-__maintainer__ = ["Meg Pirrung"]
-__email__ = "meganap@gmail.com <mailto:meganap@gmail.com>"
-__status__ = "Development"
-%>
+{% extends sitebase.html %}
+{% block content %}
 
-<%
-from utils.psp_utils import format_submit_form_to_fusebox_string
+{% if message %}
+    {% raw message %}
+{% end %}
 
-# convenience variables
-ag_login_id = sess['user_data']['web_app_user_id']
-barcodes_fp = sess['resources']['barcode_images_fp']
-supplied_kit_id = sess['supplied_kit_id']
-
-# requires barcode as string 6 times 
-BARCODE_ROW = '''
-    <table width="30%%" id="barcode_{0}" name="barcode_{0}">
-        <tr>
-        <td><input type="checkbox" id="barcode_{0}" name="barcode_{0}"></input></td>
-        <td>{0}</td>
-        </tr>
-    </table>
-'''
-
-query = ("select kit_verification_code, kit_verified from ag_kit "
-         "where supplied_kit_id = '%s'" % supplied_kit_id)
-
-verification_textbox_class = ""
-db_code, kit_verified = ag_data_access.dynamicMetadataSelect(query).fetchone()
-
-user_verification_code = form.get('email_verification_code', None)
-if user_verification_code:
-    # The user submitted the form on this page already
-
-    if db_code == user_verification_code:
-        ag_data_access.verifyKit(supplied_kit_id)
-        # redirects the user back to portal.psp cannot use psp.redirect
-        # because fusebox is already using req.write
-        req.write(format_submit_form_to_fusebox_string(page="portal.psp",
-            message="Kit %s successfully verified!" % supplied_kit_id))
-    else:
-        # error message when the verification code was wrong
-        req.write(format_submit_form_to_fusebox_string(page="portal.psp",
-            message='The kit verification code you entered does '
-            'not match our records. Please double-check the code you '
-            'entered. If you continue to experience difficulties, please '
-            '<a href=&quot;fusebox.psp?page=help_request.psp&quot;>'
-            'contact us</a>'))
-        # sets the verification_code text box to highlight red
-        verification_textbox_class = " highlight"
-    #ENDIF
-elif kit_verified == 'n':
-    #INDENT
-%>
-
+<p>{{ verification_textbox }}</p>
+{% if not kit_verified %}
 <div class="middle_content centered">
     <h2>Verify your identity and kit barcode(s)</h2>
-    <div class="lefta clearfix formdiv" id="verification">
-        <form name="verification_submit" id="verification_submit" method="post" action="fusebox.psp?page=portal.psp">
-            <h3>Kit ID: <%= supplied_kit_id %></h3>
+    <div class="lefta clearfix formdiv" id="verification_div">
+        <form name="verification_submit" id="verification_submit" method="post" action="/authed/verification/">
+            <h3>Kit ID: {{ skid }}</h3>
             <h4>Please enter the verification code sent to your email address <a href="#" class="help" title="If you did not recieve a verification code in your email from American Gut, please check your spam folder. If you still can not find it, contact info@americangut.org">(?)</a></h4>
-            <input class = <%= '"'+verification_textbox_class+'"' %> type="text" name="email_verification_code" id="email_verification_code"></input>
+            <input class="{{ verification_textbox }}"  type="text" name="user_verification_code" id="user_verification_code"></input>
             <h4>Please verify that the barcode(s) you received in the mail match the barcode(s) here <a id="barcode_popup_trigger" class="help" title="" onmouseover="setVisible('barcode_popup')" onmouseout="setInvisible('barcode_popup')">(?)</a><div id="barcode_popup" class="help_popup invisible">The barcode you need to verify is located on the outside of your sample tube.<br /><img src="img/sample_barcode.jpg"/></div></h4>
             <table width="30%">
-<%
-    query = ("select B.barcode "
-         "from AG_KIT A join AG_KIT_BARCODES B on A.AG_KIT_ID = B.AG_KIT_ID "
-         "where A.supplied_kit_id = '%s'" % supplied_kit_id)
-
-    for barcode in sorted(ag_data_access.dynamicMetadataSelect(query),
-                          key=lambda x: int(x[0])):
-        req.write(BARCODE_ROW.format(barcode[0]))
-
-    #ENDFOR
-%>
+    {% for barcode in barcodes %}
+                <table width="30%%" id="barcode_{{ barcode }}" name="barcode_{{ barcode }}">
+                    <tr>
+                        <td><input type="checkbox" id="barcode_{{ barcode }}" name="barcode_{{ barcode }}"></input></td>
+                        <td>{{ barcode }}</td>
+                    </tr>
+                </table>
+    {% end %}
+            </table>
             <br>
             <div class="center">
-            <input type="button" value="Verify" id="submit_form" onclick="validateVerification()"/>
-            <input type="hidden" id="supplied_kit_id" name="supplied_kit_id" value=<%= '"'+supplied_kit_id+'"' %>>
+                <input type="button" value="Verify" id="submit_form" onclick="validateVerification()"/>
             </div>
         </form>
         <br>
     </div>
 </div>
-<%
-#END IF
-%>
+{% end %}
+{% end %}
