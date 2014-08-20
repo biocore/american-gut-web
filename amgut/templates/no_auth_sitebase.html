@@ -57,6 +57,8 @@ function toggleSection(section_name)
     }
 }
 </script>
+{% block head %}
+{% end %}
 </head>
 <body>
     <!-- Header logo -->
@@ -99,7 +101,7 @@ function toggleSection(section_name)
                               <tr><td>Kit ID</td><td><input type="text" id="skid" name="skid"></td></tr>
                               <tr><td>Password</td><td><input type="password" id="password" name="password"></td></tr>
                               <tr><td colspan="2"><input type="submit" value="Log In"></tr> 
-                                <tr><td colspan="2"><a href="retrieve_kitid.psp" class="small_link">I forgot my Kit ID</a></td></tr>
+                                <tr><td colspan="2"><a href="/retrieve_kitid/" class="small_link">I forgot my Kit ID</a></td></tr>
                                 <tr><td colspan="2"><a href="forgot_password.psp" class="small_link">I forgot my password</a></td></tr>
                             </table>
                         </form>
@@ -112,6 +114,7 @@ function toggleSection(section_name)
     </div>
     </div>
     <div class="content">
+
     {% block content %}
     {% end %}
     </div>

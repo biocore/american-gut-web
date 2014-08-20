@@ -18,6 +18,7 @@ from amgut.handlers.participant_overview import ParticipantOverviewHandler
 from amgut.handlers.international import InternationalHandler
 from amgut.handlers.construction import ConstructionHandler
 from amgut.handlers.survey import SurveyMainHandler
+from amgut.handlers.retrieve_kitid import KitIDHandler
 
 
 define("port", default=8888, help="run on the given port", type=int)
@@ -48,6 +49,7 @@ class QiimeWebApplication(Application):
             (r"/participants/(.*)", ParticipantOverviewHandler),
             (r"/international_shipping/", InternationalHandler),
             (r"/construction/", ConstructionHandler),
+            (r"/retrieve_kitid/", KitIDHandler),
             # 404 PAGE MUST BE LAST IN THIS LIST!
             (r".*", NoPageHandler)
         ]

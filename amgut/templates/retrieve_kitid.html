@@ -1,0 +1,68 @@
+{% extends no_auth_sitebase.html %}
+{% block head%}
+
+<script type="text/javascript"> 
+/* from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript */
+function validateEmail(email) { 
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+} 
+function validateKitRequest() {
+    for(var i = 0; i < document.get_kit.length; i++) 
+    {
+        document.get_kit[i].className = document.get_kit[i].className.replace(/(?:^|\s)highlight(?!\S)/ , '');
+    }
+    
+    var valid = true;
+    
+    if(!validateEmail(document.get_kit.email.value))
+    {
+        document.get_kit.email.className += " highlight"
+        valid = false;
+    }
+    if(document.get_kit.email.value == "")
+    {
+        document.get_kit.email.className += " highlight"
+        valid = false;
+    }
+    if(valid)
+        $('#get_kit').submit();
+}
+</script>
+
+{% end %}
+
+{% block content %}
+<div class="forgotwrapper" style="position:absolute; top:15px; left:275px; padding:15px;">
+<hr/>
+<br/>
+{% if output == 'form' %}
+ {% if message %}
+<h2 style="color:red;">This email address is not in our system</h2>
+ {% end %}
+<form id="get_kit" name="get_kit" method="post" action="/retrieve_kitid/">
+    <table>
+    <tr><td><h2>Please Enter Your Email</h2></td></tr>
+    <tr><td>E-mail:</td><td><input type="text" id="email" name="email" /></td></tr>
+    </table>
+    <input type="button" name="submit_button" id="submit_button" value="Send Kit ID Email" onclick="validateKitRequest()">
+</form>
+
+{% elif output == 'success' %}
+<p>Your kit ID has been emailed to you. Please  check your email</p>
+
+{% elif output == 'noemail' %}
+Mail can be sent only from microbio.me domain.<br><br>{{message}}
+
+{% elif output == 'exception' %}
+<p>There was a problem sending you the kit ID. Please contact us directly at <a href=\"mailto:info@americangut.org\"> info@americangut.org</a>.</p>
+
+{% else %}
+ERROR
+
+{% end %}
+</div>
+{% end %}
+
+</body>
+</html>
