@@ -10,10 +10,8 @@ from tornado.options import define, options, parse_command_line
 from amgut.handlers.base_handlers import MainHandler, NoPageHandler
 from amgut.handlers.auth_handlers import (
     AuthRegisterHandoutHandler, AuthLoginHandler, AuthLogoutHandler)
-from amgut.handlers.kit_handlers import KitIndexHandler
 from amgut.handlers.help_request import HelpRequestHandler
 from amgut.handlers.addendum import AddendumHandler
-from amgut.handlers.results_portal import ResultsPortalHandler
 from amgut.handlers.sample_overview import SampleOverviewHandler
 from amgut.handlers.FAQ import FAQHandler
 from amgut.handlers.participant_overview import ParticipantOverviewHandler
@@ -23,7 +21,8 @@ from amgut.handlers.animal_survey import (
     AnimalSurveyHandler, CheckParticipantName
 )
 from amgut.handlers.survey import SurveyMainHandler
-from amgut.handlers.verification import VerificationHandler
+from amgut.handlers.portal import PortalHandler
+from amgut.handlers.retrieve_kitid import KitIDHandler
 
 define("port", default=8888, help="run on the given port", type=int)
 
@@ -45,12 +44,11 @@ class QiimeWebApplication(Application):
             (r"/auth/login/", AuthLoginHandler),
             (r"/auth/logout/", AuthLogoutHandler),
             (r"/auth/register/", AuthRegisterHandoutHandler),
-            (r"/authed/index/", KitIndexHandler),
             (r"/authed/help_request/", HelpRequestHandler),
             (r"/authed/addendum/", AddendumHandler),
-            (r"/authed/results_portal/", ResultsPortalHandler),
             (r"/authed/sample_overview/", SampleOverviewHandler),
             (r"/authed/survey_main/", SurveyMainHandler),
+            (r"/authed/portal/", PortalHandler),
             (r"/faq/", FAQHandler),
             (r"/participants/(.*)", ParticipantOverviewHandler),
             (r"/international_shipping/", InternationalHandler),
@@ -58,6 +56,7 @@ class QiimeWebApplication(Application):
             (r"/authed/verification/", VerificationHandler),
             (r"/add_animal/", AnimalSurveyHandler),
             (r"/check_participant_name/", CheckParticipantName),
+            (r"/retrieve_kitid/", KitIDHandler),
             # 404 PAGE MUST BE LAST IN THIS LIST!
             (r".*", NoPageHandler)
         ]
