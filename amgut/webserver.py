@@ -20,7 +20,6 @@ from amgut.handlers.construction import ConstructionHandler
 from amgut.handlers.survey import SurveyMainHandler
 from amgut.handlers.portal import PortalHandler
 from amgut.handlers.retrieve_kitid import KitIDHandler
-from amgut.handlers.verification import VerificationHandler
 
 define("port", default=8888, help="run on the given port", type=int)
 
@@ -52,7 +51,6 @@ class QiimeWebApplication(Application):
             (r"/international_shipping/", InternationalHandler),
             (r"/construction/", ConstructionHandler),
             (r"/retrieve_kitid/", KitIDHandler),
-            (r"/authed/verification/", VerificationHandler),
             # 404 PAGE MUST BE LAST IN THIS LIST!
             (r".*", NoPageHandler)
         ]
