@@ -23,6 +23,7 @@ from amgut.handlers.animal_survey import (
     AnimalSurveyHandler, CheckParticipantName
 )
 from amgut.handlers.new_participant import NewParticipantHandler
+from amgut.handlers.taxa_summary import TaxaSummaryHandler
 from amgut.handlers.survey import SurveyMainHandler
 from amgut.handlers.portal import PortalHandler
 from amgut.handlers.retrieve_kitid import KitIDHandler
@@ -61,6 +62,7 @@ class QiimeWebApplication(Application):
             (r"/construction/", ConstructionHandler),
             (r"/add_animal/", AnimalSurveyHandler),
             (r"/check_participant_name/", CheckParticipantName),
+            (r"/taxa_summaries/(.*)", TaxaSummaryHandler),
             (r"/retrieve_kitid/", KitIDHandler),
             # 404 PAGE MUST BE LAST IN THIS LIST!
             (r".*", NoPageHandler)
