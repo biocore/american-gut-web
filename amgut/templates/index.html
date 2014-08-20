@@ -38,7 +38,7 @@ $(document).ready(function(){
     });
 
 });
-/*
+
 function toggleSection(section_name)
 {
     div = document.getElementById(section_name);
@@ -122,9 +122,9 @@ function setMarkers(map, locations)
     for (var i = 0; i < locations.length; i++)
     {
         var loc = locations[i];
-        var myLatLng = new google.maps.LatLng(loc[1], loc[2]);
+        var myLatLng = new google.maps.LatLng(loc[0], loc[1]);
 
-        var pinColor = loc[4];
+        var pinColor = loc[2];
         var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|" + pinColor,
             new google.maps.Size(21, 34),
             new google.maps.Point(0,0),
@@ -145,7 +145,7 @@ function setMarkers(map, locations)
 
 var latlongs_db = {{latlongs_db}};
 window.onload=initialize;
-*/
+
 </script>
 </head>
 <body>
