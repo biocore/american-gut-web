@@ -55,7 +55,6 @@ class QiimeWebApplication(Application):
             (r"/participants/(.*)", ParticipantOverviewHandler),
             (r"/international_shipping/", InternationalHandler),
             (r"/construction/", ConstructionHandler),
-            (r"/authed/verification/", VerificationHandler),
             (r"/add_animal/", AnimalSurveyHandler),
             (r"/check_participant_name/", CheckParticipantName),
             (r"/retrieve_kitid/", KitIDHandler),
