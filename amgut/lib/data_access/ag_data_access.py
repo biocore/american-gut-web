@@ -859,6 +859,7 @@ class AGDataAccess(object):
         kit_ids = []
         for row in results:
             kit_ids.append(row[0])
+        results.close()
         return kit_ids
 
     def ag_set_pass_change_code(self, email, kitid, pass_code):
