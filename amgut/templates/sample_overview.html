@@ -23,7 +23,7 @@
                 <td>Taxa Summary</td>
 {% if barcode_txt %}
                 <td>
-                    <form action=/authed/taxa_summary/" method="post" id="taxa_summary">
+                    <form action="/taxa_summaries/{{ barcode }}" method="post" id="taxa_summary">
                         <input type="submit" name="taxa_summary" value="View Taxa Summary">
                     </form>
                 </td>
