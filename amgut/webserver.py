@@ -17,6 +17,7 @@ from amgut.handlers.FAQ import FAQHandler
 from amgut.handlers.participant_overview import ParticipantOverviewHandler
 from amgut.handlers.international import InternationalHandler
 from amgut.handlers.construction import ConstructionHandler
+from amgut.handlers.new_participant import NewParticipantHandler
 from amgut.handlers.survey import SurveyMainHandler
 from amgut.handlers.portal import PortalHandler
 from amgut.handlers.retrieve_kitid import KitIDHandler
@@ -43,6 +44,7 @@ class QiimeWebApplication(Application):
             (r"/auth/register/", AuthRegisterHandoutHandler),
             (r"/authed/help_request/", HelpRequestHandler),
             (r"/authed/addendum/", AddendumHandler),
+            (r"/authed/new_participant/", NewParticipantHandler),
             (r"/authed/sample_overview/", SampleOverviewHandler),
             (r"/authed/survey_main/", SurveyMainHandler),
             (r"/authed/portal/", PortalHandler),
