@@ -4,21 +4,27 @@ from re import sub
 from tornado.web import authenticated
 
 from amgut.handlers.base_handlers import BaseHandler
-from amgut.lib.format import tab_delim_lines_to_table
 from amgut.lib.config_manager import AMGUT_CONFIG
 
 
-class TaxaSummary(BaseHandler):
-    def get(self):
-        barcode = self.get_argument('barcode', None)
+class TaxaSummaryHandler(BaseHandler):
+    @authenticated
+    def get(self, barcode):
 
         # nothing else to do
         if barcode is None:
-            self.render("taxa_summary.html",
+            self.render("taxa_summary.html", skid=self.current_user,
                         loginerror="ERROR: No barcode was requested")
             return
 
-        taxa_summary_fp = join(AMGUT_CONFIG.base_data_dir, barcode+'.txt')
+        # we need this path to access the filesystem
+        taxa_summary_fp = join(AMGUT_CONFIG.base_data_dir, 'taxa-summaries',
+                               barcode+'.txt')
+
+        # and we need this path for users to access the file
+        taxa_summary_url = join('/results', 'taxa-summaries', barcode+'.txt')
+
+        print taxa_summary_fp
 
         # read lines from taxa summary table, omit comment lines
         lines = [x.replace(';', '\t').strip() for x in
@@ -47,5 +53,8 @@ class TaxaSummary(BaseHandler):
             'Genus', 'Relative Abundance (%)']
 
         self.render("taxa_summary.html", headers=headers, data=lines,
-                    loginerror="")
+                    barcode=barcode, file_path=taxa_summary_url, loginerror="",
+                    skid=self.current_user)
+
+        return
 
