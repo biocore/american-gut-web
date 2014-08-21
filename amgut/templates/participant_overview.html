@@ -34,8 +34,7 @@
 
 {% for sample in samples %}
                         <li>
-                            <form action="sample_overview.psp" method="post" id="view_sample_{{sample['barcode']}}">
-                                <input type="hidden" name="barcode" value="{{sample['barcode']}}"/>
+                            <form action="/atuhed/sample_overview/?barcode={{sample['barcode']}}" method="post" id="view_sample_{{sample['barcode']}}">
                                 <img class="icon" src="/static/img/sample_icon.png"/>
                                 <input type="button" onclick="document.forms['view_sample_{{sample['barcode']}}'].submit(); return false;" value="{{sample['barcode']}}"/>
                             </form>
@@ -46,9 +45,9 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <form action="remove_participant.html" method="post" id="remove_participant_{{participant_name}}">
-                        <input type="hidden" name="participant_name" value="{{participant_name}}"/>
-                        <input type="button" onclick="document.forms['remove_participant_{{participant_name}}'].submit(); return false;" value="Remove {{participant_name}}"/>
+                    <form action="/participants/{{participant_name}}" method="post" id="remove_participant_{{participant_name}}">
+                        <input type="hidden" name="remove" value="{{participant_name}}">
+                        <input type="submit" value="Remove {{participant_name}}"/>
                     </form>
                 </td>
             </tr>
