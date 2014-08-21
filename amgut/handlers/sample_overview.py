@@ -15,6 +15,12 @@ def _format_data_path(dir, barcode, ext):
 class SampleOverviewHandler(BaseHandler):
     @authenticated
     def post(self):
+        bc_to_remove = self.get_argument("remove", None)
+        if bc_to_remove:
+            ag_login_id = AG_DATA_ACCESS.get_user_for_kit(self.current_user)
+            AG_DATA_ACCESS.deleteSample(bc_to_remove, ag_login_id)
+            self.redirect("/authed/portal/")
+
         barcode = self.get_argument('barcode')
 
         sample_data = AG_DATA_ACCESS.getAGBarcodeDetails(barcode)

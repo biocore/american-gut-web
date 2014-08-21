@@ -64,8 +64,9 @@
 {% if status != 'Received' %}
             <tr>
                 <td colspan="2">
-                    <form action="/authed/remove_sample/" method="post" id="remove_sample_{{ barcode }}">
-                        <input type="button" onclick="document.forms['remove_sample_{{ barcode }}'].submit(); return false;" value="Remove barcode {{ barcode }}"/>
+                    <form action="/authed/sample_overview/" method="post" id="remove_sample_{{ barcode }}">
+                        <input type="hidden" name="remove" value="{{ barcode }}">
+                        <input type="submit" value="Remove barcode {{ barcode }}"/>
                     </form>
                 </td>
             </tr>
