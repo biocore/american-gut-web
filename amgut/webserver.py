@@ -7,7 +7,8 @@ from tornado.ioloop import IOLoop
 from tornado.web import Application, StaticFileHandler
 from tornado.options import define, options, parse_command_line
 
-from amgut.handlers.base_handlers import MainHandler, NoPageHandler
+from amgut.handlers.base_handlers import (
+    MainHandler, NoPageHandler, DBErrorHandler)
 from amgut.handlers.auth_handlers import (
     AuthRegisterHandoutHandler, AuthLoginHandler, AuthLogoutHandler)
 from amgut.handlers.help_request import HelpRequestHandler
@@ -39,6 +40,7 @@ class QiimeWebApplication(Application):
             (r"/results/(.*)", StaticFileHandler, {"path": RES_PATH}),
             (r"/static/(.*)", StaticFileHandler, {"path": STATIC_PATH}),
             (r"/", MainHandler),
+            (r"/db_error/", DBErrorHandler)
             (r"/auth/login/", AuthLoginHandler),
             (r"/auth/logout/", AuthLogoutHandler),
             (r"/auth/register/", AuthRegisterHandoutHandler),
