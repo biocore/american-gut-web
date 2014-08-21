@@ -38,7 +38,7 @@ class MainHandler(BaseHandler):
 
 class NoPageHandler(BaseHandler):
     def get(self):
-        self.render("404.html", skid=self.current_user)
+        self.render("404.html", loginerror="")
 
 
 class DBErrorHandler(BaseHandler):

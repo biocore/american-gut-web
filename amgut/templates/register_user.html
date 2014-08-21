@@ -1,4 +1,4 @@
-{% extends index.html  %}
+{% extends no_auth_sitebase.html %}
 {% block head %}
 <script src="/static/vendor/js/jquery.validate.min.js"></script>
 <script type="text/javascript">
@@ -51,6 +51,10 @@ $(document).ready(function() {
     });
   });
 </script>
+{% end %}
+
+{% block map %}
+{% include map.html %}
 {% end %}
 
 {% block content %}

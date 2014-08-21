@@ -1,4 +1,14 @@
-{%extends sitebase.html%}
+{%extends no_auth_sitebase.html%}
+{% block head %}
+<script type="text/javascript">
+$(document).ready(function() {
+  document.getElementById('badurl').innerHTML = "<h2>" + document.URL + "</h2>";
+});
+</script>
+{% end %}
 {%block content%}
 <h1>404: Page not found!</h1>
-{%end%}
+Click <a href="mailto:info@americangut.org">HERE</a> to email us about the issue. Please include the URL you were trying to acess:
+
+<div id='badurl'></div>
+{% end %}
