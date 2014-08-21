@@ -2,17 +2,6 @@ from tornado.web import RequestHandler
 from amgut.util import AG_DATA_ACCESS
 
 
-def _get_lat_long():
-    latlong_db = AG_DATA_ACCESS.getMapMarkers()
-    latlong_list = []
-    for i, val in enumerate(latlong_db):
-        if val[0] and val[1] and val[2]:
-            study_alias = str(val[0]).replace("'", "\\'")
-            latlong_list.append([study_alias, val[1], val[2],
-                                str(i+1), val[3]])
-    return latlong_list
-
-
 class BaseHandler(RequestHandler):
     def get_current_user(self):
         '''Overrides default method of returning user curently connected'''
@@ -43,7 +32,7 @@ class BaseHandler(RequestHandler):
 class MainHandler(BaseHandler):
     '''Index page'''
     def get(self):
-        latlong_db = _get_lat_long()
+        latlong_db = AG_DATA_ACCESS.getMapMarkers()
         self.render("index.html", latlongs_db=latlong_db, loginerror="")
 
 
