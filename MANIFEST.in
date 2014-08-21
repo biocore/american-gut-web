@@ -1,0 +1,7 @@
+include LICENSE
+include README.md
+
+graft amgut
+
+global-exclude *.pyc
+global-exclude *.pyo
