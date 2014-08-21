@@ -79,7 +79,6 @@ class QiimeWebApplication(Application):
             (r"/check_participant_name/", CheckParticipantName),
             (r"/taxa_summaries/(.*)", TaxaSummaryHandler),
             (r"/retrieve_kitid/", KitIDHandler),
-            (r"/authed/verification/", VerificationHandler),
             (r"/forgot_password/", ForgotPasswordHandler),
             (r"/change_pass_verify/", ChangePassVerifyHandler),
             # 404 PAGE MUST BE LAST IN THIS LIST!
