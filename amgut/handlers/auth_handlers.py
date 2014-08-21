@@ -15,13 +15,12 @@ class AuthRegisterHandoutHandler(BaseHandler):
     @authenticated
     def get(self):
         latlong_db = AG_DATA_ACCESS.getMapMarkers()
-        skid = self.get_argument("skid").strip()
-        self.render("register_user.html", skid=skid, latlongs_db=latlong_db)
+        self.render("register_user.html", skid=self.current_user,
+                    latlongs_db=latlong_db)
 
     @authenticated
     def post(self):
         skid = self.current_user
-        password = self.get_argument('pass')
         info = {}
         for info_column in ("email", "participantname", "address", "city",
                             "state", "zip", "country"):
@@ -38,13 +37,15 @@ class AuthRegisterHandoutHandler(BaseHandler):
         if printresults is None:
             printresults = 'n'
         success = AG_DATA_ACCESS.addAGKit(
-            ag_login_id, skid, password, kitinfo['swabs_per_kit'],
-            kitinfo['kit_verification_code'], printresults)
+            ag_login_id, skid, kitinfo['kit_password'],
+            kitinfo['swabs_per_kit'], kitinfo['kit_verification_code'],
+            printresults)
         if success == -1:
             self.redirect('/db_error/?err=regkit')
             return
 
         # Add the barcodes
+        kitinfo = AG_DATA_ACCESS.getAGKitDetails(skid)
         ag_kit_id = kitinfo['ag_kit_id']
         results = AG_DATA_ACCESS.get_barcodes_from_handout_kit(skid)
         for row in results:
@@ -54,12 +55,10 @@ class AuthRegisterHandoutHandler(BaseHandler):
                 self.redirect('/db_error/?err=regbarcode')
                 return
 
-
-
         # Email the verification code
         subject = "American Gut Verification Code"
         addendum = ''
-        if kit_id.startswith('PGP_'):
+        if skid.startswith('PGP_'):
             addendum = ("\n\nFor the PGP cohort, we are requesting that you "
                         "collect one sample from each of the following sites:"
                         "\n\nLeft hand\nRight hand\nForehead\nMouth\nFecal\n\n"
@@ -88,8 +87,7 @@ class AuthRegisterHandoutHandler(BaseHandler):
                       "contact us directly at "
                       "<a href='mailto:info@americangut.org'>info@americangut.org</a>")
 
-            self.render('help_request.html', skid=self.current_user,
-                        result=result)
+            self.render('help_request.html', skid=skid, result=result)
 
         self.redirect('/authed/portal/')
 
@@ -100,7 +98,7 @@ class AuthLoginHandler(BaseHandler):
         skid = self.get_argument("skid", "").strip()
         password = self.get_argument("password", "")
         login = AG_DATA_ACCESS.authenticateWebAppUser(skid, password)
-
+        print login
         if login:
             # everything good so log in
             self.set_current_user(skid)

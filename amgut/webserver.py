@@ -40,7 +40,7 @@ class QiimeWebApplication(Application):
             (r"/results/(.*)", StaticFileHandler, {"path": RES_PATH}),
             (r"/static/(.*)", StaticFileHandler, {"path": STATIC_PATH}),
             (r"/", MainHandler),
-            (r"/db_error/", DBErrorHandler)
+            (r"/db_error/", DBErrorHandler),
             (r"/auth/login/", AuthLoginHandler),
             (r"/auth/logout/", AuthLogoutHandler),
             (r"/auth/register/", AuthRegisterHandoutHandler),
