@@ -8,10 +8,12 @@
 <title>American Gut</title>
 <link rel="stylesheet" type="text/css" href="/static/css/americangut.css">
 <link rel="stylesheet" type="text/css" href="/static/css/menu.css">
+<link rel="stylesheet" type="text/css" href="/static/vendor/css/ui-lightness/jquery-ui-1.10.1.custom.min.css">
 <link rel="icon" type="image/ico" href="/static/img/favicon.ico">
 
 <script type="text/javascript" src="/static/js/qiime.js"></script>
-<script src="/static/vendor/js/jquery-2.1.0.min.js"></script>
+<script src="/static/vendor/js/jquery-1.11.1.min.js"></script>
+<script src="/static/vendor/js/jquery-ui-1.10.1.custom.min.js"></script>
 <script type="text/javascript" src="/static/vendor/js/jquery.metadata.js"></script>
 <script type="text/javascript" src="/static/vendor/js/jquery.validate.min.js"></script>
 <script type="text/javascript">
@@ -60,65 +62,60 @@ function toggleSection(section_name)
 {% block head %}
 {% end %}
 </head>
-<body>
+    <body>
     {% block map %}
     {% end %}
     <!-- Header logo -->
-  <div class="wrapper clearfix" style="position:absolute; top:10px; left:50px; right:50px; opacity:0.9;">
+    <div class="wrapper clearfix" style="position:absolute; top:10px; left:50px; right:50px; opacity:0.9;">
         <div class="header clearfix">
             <img id="logo" src="/static/img/ag_logo.jpg">
         </div>
-    </div>
-
-    <div class="wrapper clearfix" style="position:absolute; top:130px; left:50px; opacity:0.9; width:260px;">
-    <br>
-    <div class="left menuwrapper">
-        <div id="cssmenu">
-      <ul>
-                <li><a href="/faq/#faq0">American Gut 101</a></li>
-                <li><a href="https://fundrazr.com/campaigns/4Tqx5" target="_blank">Join the Project</a></li>
-                <li><a href="http://goo.gl/Jdh1cZ" target="_blank">Preliminary Results</a></li>
-                <li><a href="img/FAQ_Human_Microbiome.pdf" target="_blank">Human Microbiome FAQ</a></li>
-                <li class="has-sub"><a><span>Participant Resources</span></a>
-                    <ul>
-                        <li><a href="/faq/">FAQ</a></li>
-                        <li><a href="img/full_instructions.pdf" target="_blank">Kit Instructions</a></li>
-                        <li><a href="international_shipping/lan=en">International Shipping</a></li>
-                        <li class="last"><a  href="international_shipping/lan=es">International Shipping (Espa&ntilde;ol)</a></li>
-                    </ul>
-                </li>
-      </ul>
+        <br>
+        <div class="left menuwrapper">
+            <div id="cssmenu">
+                <ul>
+                    <li><a href="/faq/#faq0">American Gut 101</a></li>
+                    <li><a href="https://fundrazr.com/campaigns/4Tqx5" target="_blank">Join the Project</a></li>
+                    <li><a href="http://goo.gl/Jdh1cZ" target="_blank">Preliminary Results</a></li>
+                    <li><a href="img/FAQ_Human_Microbiome.pdf" target="_blank">Human Microbiome FAQ</a></li>
+                    <li class="has-sub"><a><span>Participant Resources</span></a>
+                        <ul>
+                            <li><a href="/faq/">FAQ</a></li>
+                            <li><a href="img/full_instructions.pdf" target="_blank">Kit Instructions</a></li>
+                            <li><a href="international_shipping/lan=en">International Shipping</a></li>
+                            <li class="last"><a  href="international_shipping/lan=es">International Shipping (Espa&ntilde;ol)</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div id="cssmenu">
+            <!-- Login form div -->
+                <h3 style="margin-left:5px;">Participant Log In</h3>
+                <table width="100%">
+                    <tr width="100%">
+                        <td width="30%"></td>
+                        <td width="30%">
+                            <div style="color:red">{{loginerror}}</div>
+                            <form method="post" action="/auth/login/">
+                                <table width="100%">
+                                  <tr><td>Kit ID</td><td><input type="text" id="skid" name="skid"></td></tr>
+                                  <tr><td>Password</td><td><input type="password" id="password" name="password"></td></tr>
+                                  <tr><td colspan="2"><input type="submit" value="Log In"></tr> 
+                                    <tr><td colspan="2"><a href="/retrieve_kitid/" class="small_link">I forgot my Kit ID</a></td></tr>
+                                    <tr><td colspan="2"><a href="forgot_password.psp" class="small_link">I forgot my password</a></td></tr>
+                                </table>
+                            </form>
+                        </td>
+                        <td width="30%"></td>
+                    </tr>
+                </table>
+            <!-- End login form div -->
+            </div>
         </div>
-        <div id="cssmenu">
-        <!-- Login form div -->
-        <div>
-            <h3 style="margin-left:5px;">Participant Log In</h3>
-            <table width="100%">
-                <tr width="100%">
-                    <td width="30%"></td>
-                    <td width="30%">
-                        <div style="color:red">{{loginerror}}</div>
-                        <form method="post" action="/auth/login/">
-                            <table width="100%">
-                              <tr><td>Kit ID</td><td><input type="text" id="skid" name="skid"></td></tr>
-                              <tr><td>Password</td><td><input type="password" id="password" name="password"></td></tr>
-                              <tr><td colspan="2"><input type="submit" value="Log In"></tr> 
-                                <tr><td colspan="2"><a href="/retrieve_kitid/" class="small_link">I forgot my Kit ID</a></td></tr>
-                                <tr><td colspan="2"><a href="forgot_password.psp" class="small_link">I forgot my password</a></td></tr>
-                            </table>
-                        </form>
-                    </td>
-                    <td width="30%"></td>
-                </tr>
-            </table>
+        <div class="content">
+        {% block content %}
+        {% end %}
         </div>
-        <!-- End login form div -->
-    </div>
-    </div>
-    <div class="content">
-
-    {% block content %}
-    {% end %}
     </div>
     </body>
 </html>
