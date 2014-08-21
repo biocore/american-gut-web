@@ -14,6 +14,8 @@ class LogSample(Form):
 
 
 class AddSample(BaseHandler):
+    _sample_sites = []
+
     @authenticated
     def post(self):
         # Required vars
@@ -32,22 +34,36 @@ class AddSample(BaseHandler):
 
         self.redirect('/authed/portal/')
 
-
-class AddHumanSampleHandler(AddSample):
     @authenticated
     def get(self):
         kit_id = self.current_user
         ag_login_id = AG_DATA_ACCESS.get_user_for_kit(kit_id)
         kit_barcodes = AG_DATA_ACCESS.getAvailableBarcodes(ag_login_id)
-        participant_name = self.get_argument('participant_name', "MAKE SURE THIS IS BEING PASSED")
+        participant_name = self.get_argument('participant_name',
+                                             'environmetal')
 
         form = LogSample()
-
         form.barcode.choices = [(v, v) for v in kit_barcodes]
-        form.sample_site = [(v, v) for v in AG_DATA_ACCESS.human_sites]
-        form.sample_site.insert(0, (0, 'Please select...'))
+        form.sample_site.choices = self._get_sample_sites()
 
-        self.render('add_sample_human.html', skid=kit_id,
+        self.render('add_sample.html', skid=kit_id,
                     kit_barcodes=kit_barcodes,
                     participant_name=participant_name,
                     form=form)
+
+    def _get_sample_sites(self):
+        sample_site = [(v, v) for v in self._sample_sites]
+        sample_site.insert(0, (0, 'Please select...'))
+        return sample_site
+
+
+class AddHumanSampleHandler(AddSample):
+    _sample_sites = AG_DATA_ACCESS.human_sites
+
+
+class AddAnimalSampleHandler(AddSample):
+    _sample_sites = AG_DATA_ACCESS.animal_sites
+
+
+class AddGeneralSampleHandler(AddSample):
+    _sample_sites = AG_DATA_ACCESS.general_sites

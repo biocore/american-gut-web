@@ -43,6 +43,25 @@ class AGDataAccess(object):
                    'Ear wax',
                    'Vaginal mucus']
 
+    animal_sites = ['Stool',
+                    'Mouth',
+                    'Nares',
+                    'Ears',
+                    'Skin',
+                    'Fur']
+
+    general_sites = ['Animal Habitat',
+                     'Biofilm',
+                     'Dust',
+                     'Food',
+                     'Fermented Food',
+                     'Indoor Surface',
+                     'Outdoor Surface',
+                     'Plant habitat',
+                     'Soil',
+                     'Sole of shoe',
+                     'Water']
+
     def __init__(self, con=None):
         self._metadataDatabaseConnection = None
         if not con:
