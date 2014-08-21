@@ -80,8 +80,8 @@ class AuthRegisterHandoutHandler(BaseHandler):
 
         result = 'Kit registered successfully.'
         try:
-                send_email(MESSAGE, subject, recipient=info['email'],
-                           sender='americangut@gmail.com')
+            send_email(MESSAGE, subject, recipient=info['email'],
+                       sender='americangut@gmail.com')
         except:
             result = ("There was a problem sending your email. Please "
                       "contact us directly at "
@@ -98,7 +98,6 @@ class AuthLoginHandler(BaseHandler):
         skid = self.get_argument("skid", "").strip()
         password = self.get_argument("password", "")
         login = AG_DATA_ACCESS.authenticateWebAppUser(skid, password)
-        print login
         if login:
             # everything good so log in
             self.set_current_user(skid)
