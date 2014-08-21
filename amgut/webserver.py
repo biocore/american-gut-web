@@ -7,22 +7,32 @@ from tornado.ioloop import IOLoop
 from tornado.web import Application, StaticFileHandler
 from tornado.options import define, options, parse_command_line
 
+from amgut.lib.config_manager import AMGUT_CONFIG
+
 from amgut.handlers.base_handlers import MainHandler, NoPageHandler
 from amgut.handlers.auth_handlers import (
     AuthRegisterHandoutHandler, AuthLoginHandler, AuthLogoutHandler)
-from amgut.handlers.kit_handlers import KitIndexHandler
 from amgut.handlers.help_request import HelpRequestHandler
 from amgut.handlers.addendum import AddendumHandler
-from amgut.handlers.results_portal import ResultsPortalHandler
 from amgut.handlers.sample_overview import SampleOverviewHandler
 from amgut.handlers.FAQ import FAQHandler
 from amgut.handlers.participant_overview import ParticipantOverviewHandler
 from amgut.handlers.international import InternationalHandler
 from amgut.handlers.construction import ConstructionHandler
+from amgut.handlers.animal_survey import (
+    AnimalSurveyHandler, CheckParticipantName
+)
+from amgut.handlers.new_participant import NewParticipantHandler
+from amgut.handlers.new_participant_overview import (
+    NewParticipantOverviewHandler)
+from amgut.handlers.taxa_summary import TaxaSummaryHandler
 from amgut.handlers.survey import SurveyMainHandler
+from amgut.handlers.portal import PortalHandler
 from amgut.handlers.retrieve_kitid import KitIDHandler
 from amgut.handlers.verification import VerificationHandler
 from amgut.handlers.forgot_password import ForgotPasswordHandler
+from amgut.handlers.add_sample_overview import AddSampleOverviewHandler
+from amgut.handlers.change_pass_verify import ChangePassVerifyHandler
 
 define("port", default=8888, help="run on the given port", type=int)
 
@@ -38,22 +48,29 @@ DEBUG = True
 class QiimeWebApplication(Application):
     def __init__(self):
         handlers = [
-            (r"/results/(.*)", StaticFileHandler, {"path": RES_PATH}),
+            (r"/results/(.*)", StaticFileHandler,
+             {"path": AMGUT_CONFIG.base_data_dir}),
             (r"/static/(.*)", StaticFileHandler, {"path": STATIC_PATH}),
             (r"/", MainHandler),
             (r"/auth/login/", AuthLoginHandler),
             (r"/auth/logout/", AuthLogoutHandler),
             (r"/auth/register/", AuthRegisterHandoutHandler),
-            (r"/authed/index/", KitIndexHandler),
             (r"/authed/help_request/", HelpRequestHandler),
             (r"/authed/addendum/", AddendumHandler),
-            (r"/authed/results_portal/", ResultsPortalHandler),
+            (r"/authed/new_participant/", NewParticipantHandler),
+            (r"/authed/new_participant_overview/",
+                NewParticipantOverviewHandler),
             (r"/authed/sample_overview/", SampleOverviewHandler),
+            (r"/authed/add_sample_overview/", AddSampleOverviewHandler),
             (r"/authed/survey_main/", SurveyMainHandler),
+            (r"/authed/portal/", PortalHandler),
             (r"/faq/", FAQHandler),
             (r"/participants/(.*)", ParticipantOverviewHandler),
             (r"/international_shipping/", InternationalHandler),
             (r"/construction/", ConstructionHandler),
+            (r"/add_animal/", AnimalSurveyHandler),
+            (r"/check_participant_name/", CheckParticipantName),
+            (r"/taxa_summaries/(.*)", TaxaSummaryHandler),
             (r"/retrieve_kitid/", KitIDHandler),
             (r"/authed/verification/", VerificationHandler),
             (r"/forgot_password/", ForgotPasswordHandler),

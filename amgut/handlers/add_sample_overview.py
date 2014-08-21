@@ -1,10 +1,9 @@
 from tornado.web import authenticated
 
-
 from amgut.handlers.base_handlers import BaseHandler
 
 
-class KitIndexHandler(BaseHandler):
+class AddSampleOverviewHandler(BaseHandler):
     @authenticated
     def get(self):
-        self.render("authed_index.html", skid=self.current_user)
+        self.render("add_sample_overview.html", skid=self.current_user)
