@@ -22,6 +22,7 @@ from amgut.handlers.construction import ConstructionHandler
 from amgut.handlers.survey import SurveyMainHandler
 from amgut.handlers.retrieve_kitid import KitIDHandler
 from amgut.handlers.verification import VerificationHandler
+from amgut.handlers.forgot_password import ForgotPasswordHandler
 
 define("port", default=8888, help="run on the given port", type=int)
 
@@ -55,6 +56,8 @@ class QiimeWebApplication(Application):
             (r"/construction/", ConstructionHandler),
             (r"/retrieve_kitid/", KitIDHandler),
             (r"/authed/verification/", VerificationHandler),
+            (r"/forgot_password/", ForgotPasswordHandler),
+            (r"/change_pass_verify/", ChangePassVerifyHandler),
             # 404 PAGE MUST BE LAST IN THIS LIST!
             (r".*", NoPageHandler)
         ]
