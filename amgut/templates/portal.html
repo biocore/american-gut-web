@@ -215,7 +215,7 @@
             <ul>
     {% for barcode, name in results %}        
                 <li>
-                    <form action=/authed/sample_overview/ method="post" id="sample_overview2_{{ barcode }}">
+                    <form action="/authed/sample_overview/" method="post" id="sample_overview2_{{ barcode }}">
                         <input type="hidden" name="barcode" id="barcode" value="{{ barcode }}"/>
                     </form>
                     <a href="" onclick="document.forms['sample_overview2_{{ barcode }}'].submit(); return false;">{{ barcode }} ({{ escape(name) }})</a>
