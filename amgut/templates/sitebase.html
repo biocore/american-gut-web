@@ -1,6 +1,5 @@
-
 {% from future.utils import viewitems %}
-{% from amgut.util import * %}
+{% from amgut.util import AG_DATA_ACCESS %}
 {% set human_participants, animal_participants, environmental_samples, kit_verified = AG_DATA_ACCESS.get_menu_items(skid) %}
 <!DOCTYPE html>
 <html lang="en">
@@ -86,34 +85,24 @@
                         <ul>
 {% for ap, sitebase_barcodes in viewitems(animal_participants) %}
                             <li class="last">
-                                <a href="" onclick="document.forms['add_sample_animal_{{ap}}'].submit(); return false;">
-                                    <form action="fusebox.psp" method="post" id="add_sample_animal_{{ap}}">
-                                        <input type="hidden" name="page" value="add_sample.psp"/>
-                                        <input type="hidden" name="sample_type" value="animal"/>
-                                        <input type="hidden" name="participant_name" value="{{ap}}"/>
-                                        <span>{{ap}}</span>
-                                    </form>
+                                <a href="/authed/add_sample_animal/?participant_name={{ap}}">
+                                    <span>{{ap}}</span>
                                 </a>
                             </li>
                             <ul>
     {% for sitebase_barcode in sitebase_barcodes %}
                                 <li>
-                                    <a href="" onclick="document.forms['sample_overview_{{sitebase_barcode['barcode']}}'].submit(); return false;" 
+                                    <a href="/authed/sample_overview/?barcode={{sitebase_barcode['barcode']}}"
         {% if sitebase_barcode['status'] == 'Received' %}
             style="color:#0B0;"
         {% end %}
                                     >
-                                        <form action="fusebox.psp" method="post" id="sample_overview_{{sitebase_barcode['barcode']}}">
-                                            <input type="hidden" name="page" id="page" value="sample_overview.psp"/>
-                                            <input type="hidden" name="status" id="status" value="{{sitebase_barcode['status']}}"/>
-                                            <input type="hidden" name="barcode" id="barcode" value="{{sitebase_barcode['barcode']}}"/>
-                                            <span>
+                                        <span>
             {{sitebase_barcode['barcode']}}
             {% if sitebase_barcode['status'] == 'Received' %}
                 (Recieved)
             {% end %}
-                                            </span>
-                                        </form>
+                                        </span>
                                     </a>
                                 </li>
     {% end %}
@@ -129,29 +118,24 @@
                         <ul>
 {% for sitebase_barcode in environmental_samples %}
                             <li>
-                                <a href="" onclick="document.forms['sample_overview_{{sitebase_barcode['barcode']}}'].submit(); return false;" 
+                                <a href="/authed/sample_overview/?barcode={{sitebase_barcode['barcode']}}"
     {% if sitebase_barcode['status'] == 'Received' %}
         style="color:#0B0;"
     {% end %}
                                 >
-                                    <form action="fusebox.psp" method="post" id="sample_overview_{{sitebase_barcode['barcode']}}">
-                                        <input type="hidden" name="page" id="page" value="sample_overview.psp"/>
-                                        <input type="hidden" name="status" id="status" value="{{sitebase_barcode['status']}}"/>
-                                        <input type="hidden" name="barcode" id="barcode" value="{{sitebase_barcode['barcode']}}"/>
-                                        <span>
+                                    <span>
     {{sitebase_barcode['barcode']}}
     {% if sitebase_barcode['status'] == 'Received' %}
         (Recieved)
     {% end %}
-                                        </span>
-                                    </form>
+                                    </span>
                                 </a>
                             </li>
 {% end %}
                         </ul>
                     </li>
 {% if kit_verified %}
-                    <li class="last"><a href="fusebox.psp?page=add_sample_overview.psp"><strong>Log Sample</strong></a></li>
+                    <li class="last"><a href="/authed/add_sample_overview/"><strong>Log Sample</strong></a></li>
 {% end %}
                 </ul>
             </div>
