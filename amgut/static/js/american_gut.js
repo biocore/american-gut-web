@@ -24,49 +24,6 @@ function GetXmlHttpObject()
     return null;
 }
 
-function validatePetSurvey1()
-{
-    // disable the submit button so that the user doesn't click it again
-    document.pet_survey.petsubmit.disabled = true;
-
-    // check if browser can perform xmlhttp
-    xmlhttp = GetXmlHttpObject()
-    if (xmlhttp==null)
-    {
-        alert ("Your browser does not support XML HTTP Request");
-        return;
-    }
-
-    url = 'check_participant_name.psp?participant_name=' + document.pet_survey.animal_name.value
-
-    xmlhttp.onreadystatechange=function()
-    {
-        if (xmlhttp.readyState==4)
-        {
-            try
-            {
-                // participant_name already exists
-                var responseText = xmlhttp.responseText.substring(0, xmlhttp.responseText.length - 1)
-                if (responseText != '')
-                {
-                    alert(responseText);
-                    document.pet_survey.animal_name.value = ''
-                }
-
-                validatePetSurvey2()
-            }
-            catch(e)
-            {
-                // Do nothing
-            }
-        }
-    }
-
-    // perform a GET
-    xmlhttp.open("GET", url, true);
-    xmlhttp.send(null);
-}
-
  function setDefaultText() {
      $('input[type="text"], textarea').focus(function () {
          defaultText = $(this).val();
@@ -811,7 +768,34 @@ function validateSurvey1() {
  
 }
 
-function validatePetSurvey2() {
+function validateParticipantName(participant_name, valid) {
+    document.pet_survey.petsubmit.disabled = true;
+    var host = 'ws://' + window.location.host + '/check_participant_name/';
+    var websocket = new WebSocket(host);
+
+    websocket.onopen = function() {
+        websocket.send(participant_name);
+    }
+
+    websocket.onmessage = function(msg) {
+        if (msg.data == 'success') {
+            $('#pet_survey').submit();
+            websocket.close();
+        }
+        else {
+            document.getElementById('status_message').innerHTML = msg.data;
+            window.scrollTo(0, 0);
+            websocket.close();
+        }
+    }
+
+    websocket.onerror = function(msg) {
+        document.getElementById('status_message').innerHTML = "Database error!";
+        websocket.close();
+    }
+}
+
+function validatePetSurvey() {
 	var valid = true;
     for(var i = 0; i < document.pet_survey.length; i++) 
     {
@@ -822,21 +806,22 @@ function validatePetSurvey2() {
 		}
         document.pet_survey[i].className = document.pet_survey[i].className.replace(/(?:^|\s)highlight(?!\S)/ , '');
     }
-	
+
     if(document.pet_survey.animal_name.value == "")
 	{
 		document.pet_survey.animal_name.className += " highlight"
 		valid = false;
 	}
 
-	if(valid)
-		$('#pet_survey').submit();
-	else
-    {
+	if(valid) {
+        validateParticipantName(document.pet_survey.animal_name.value);
+    }
+	else {
 		window.scrollTo(0, 0);
     }
 
     document.pet_survey.petsubmit.disabled = false;
+
 }
 
 function verifyOptionalQuestions() {
