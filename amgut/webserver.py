@@ -7,9 +7,10 @@ from tornado.ioloop import IOLoop
 from tornado.web import Application, StaticFileHandler
 from tornado.options import define, options, parse_command_line
 
+from amgut.handlers.base_handlers import (
+    MainHandler, NoPageHandler, DBErrorHandler)
 from amgut.lib.config_manager import AMGUT_CONFIG
 
-from amgut.handlers.base_handlers import MainHandler, NoPageHandler
 from amgut.handlers.auth_handlers import (
     AuthRegisterHandoutHandler, AuthLoginHandler, AuthLogoutHandler)
 from amgut.handlers.help_request import HelpRequestHandler
@@ -23,6 +24,8 @@ from amgut.handlers.animal_survey import (
     AnimalSurveyHandler, CheckParticipantName
 )
 from amgut.handlers.new_participant import NewParticipantHandler
+from amgut.handlers.new_participant_overview import (
+    NewParticipantOverviewHandler)
 from amgut.handlers.taxa_summary import TaxaSummaryHandler
 from amgut.handlers.survey import SurveyMainHandler
 from amgut.handlers.portal import PortalHandler
@@ -48,12 +51,15 @@ class QiimeWebApplication(Application):
              {"path": AMGUT_CONFIG.base_data_dir}),
             (r"/static/(.*)", StaticFileHandler, {"path": STATIC_PATH}),
             (r"/", MainHandler),
+            (r"/db_error/", DBErrorHandler),
             (r"/auth/login/", AuthLoginHandler),
             (r"/auth/logout/", AuthLogoutHandler),
             (r"/auth/register/", AuthRegisterHandoutHandler),
             (r"/authed/help_request/", HelpRequestHandler),
             (r"/authed/addendum/", AddendumHandler),
             (r"/authed/new_participant/", NewParticipantHandler),
+            (r"/authed/new_participant_overview/",
+                NewParticipantOverviewHandler),
             (r"/authed/sample_overview/", SampleOverviewHandler),
             (r"/authed/add_sample_overview/", AddSampleOverviewHandler),
             (r"/authed/survey_main/", SurveyMainHandler),
