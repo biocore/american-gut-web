@@ -39,3 +39,20 @@ class MainHandler(BaseHandler):
 class NoPageHandler(BaseHandler):
     def get(self):
         self.render("404.html", skid=self.current_user)
+
+
+class DBErrorHandler(BaseHandler):
+    def get(self):
+        err = self.get_argument('err')
+
+        errors = {
+            "regkit": "Could not add kit to database.  Did you hit the back "
+            "button while registering and press 'register user' again?",
+
+            "regbarcode": "Could not add barcode to database. Did you hit the "
+            "back button while registering and press 'register user' again?"
+        }
+        if err not in errors:
+            raise ValueError('DB Error not found: %s' % err)
+        self.render("db_error.html", skid=self.current_user,
+                    message=errors[err])
