@@ -54,5 +54,3 @@ class TaxaSummaryHandler(BaseHandler):
                     barcode=barcode, file_path=taxa_summary_url, loginerror="",
                     skid=self.current_user)
 
-        return
-
