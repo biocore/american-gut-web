@@ -7,6 +7,8 @@ from tornado.ioloop import IOLoop
 from tornado.web import Application, StaticFileHandler
 from tornado.options import define, options, parse_command_line
 
+from amgut.lib.config_manager import AMGUT_CONFIG
+
 from amgut.handlers.base_handlers import MainHandler, NoPageHandler
 from amgut.handlers.auth_handlers import (
     AuthRegisterHandoutHandler, AuthLoginHandler, AuthLogoutHandler)
@@ -23,10 +25,12 @@ from amgut.handlers.animal_survey import (
 from amgut.handlers.new_participant import NewParticipantHandler
 from amgut.handlers.new_participant_overview import (
     NewParticipantOverviewHandler)
+from amgut.handlers.taxa_summary import TaxaSummaryHandler
 from amgut.handlers.survey import SurveyMainHandler
 from amgut.handlers.portal import PortalHandler
 from amgut.handlers.retrieve_kitid import KitIDHandler
 from amgut.handlers.add_sample_overview import AddSampleOverviewHandler
+
 
 define("port", default=8888, help="run on the given port", type=int)
 
@@ -42,7 +46,8 @@ DEBUG = True
 class QiimeWebApplication(Application):
     def __init__(self):
         handlers = [
-            (r"/results/(.*)", StaticFileHandler, {"path": RES_PATH}),
+            (r"/results/(.*)", StaticFileHandler,
+             {"path": AMGUT_CONFIG.base_data_dir}),
             (r"/static/(.*)", StaticFileHandler, {"path": STATIC_PATH}),
             (r"/", MainHandler),
             (r"/auth/login/", AuthLoginHandler),
@@ -63,6 +68,7 @@ class QiimeWebApplication(Application):
             (r"/construction/", ConstructionHandler),
             (r"/add_animal/", AnimalSurveyHandler),
             (r"/check_participant_name/", CheckParticipantName),
+            (r"/taxa_summaries/(.*)", TaxaSummaryHandler),
             (r"/retrieve_kitid/", KitIDHandler),
             # 404 PAGE MUST BE LAST IN THIS LIST!
             (r".*", NoPageHandler)

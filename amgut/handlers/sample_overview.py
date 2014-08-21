@@ -7,8 +7,9 @@ from amgut.util import AG_DATA_ACCESS
 from amgut.handlers.base_handlers import BaseHandler
 
 
-def _format_data_path(barcode, ext):
-    return os.path.join(AMGUT_CONFIG.base_data_dir, '.'.join([barcode, ext]))
+def _format_data_path(dir, barcode, ext):
+    return os.path.join(AMGUT_CONFIG.base_data_dir, dir,
+                        '.'.join([barcode, ext]))
 
 
 class SampleOverviewHandler(BaseHandler):
@@ -18,11 +19,12 @@ class SampleOverviewHandler(BaseHandler):
 
         sample_data = AG_DATA_ACCESS.getAGBarcodeDetails(barcode)
 
-        barcode_pdf = _format_data_path(barcode, 'pdf')
-        barcode_txt = _format_data_path(barcode, 'txt')
+        barcode_pdf = _format_data_path('pdfs', barcode, 'pdf')
+        barcode_txt = _format_data_path('taxa-summaries', barcode, 'txt')
 
-        if not os.path.exists(barcode_pdf) or not os.path.exists(barcode_txt):
+        if not os.path.exists(barcode_pdf):
             barcode_pdf = None
+        if not os.path.exists(barcode_txt):
             barcode_txt = None
 
         sample_time = sample_data['sample_time']
