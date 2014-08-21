@@ -1,5 +1,5 @@
 from string import letters, digits
-from urllib import quote, unquote
+from urllib import quote
 from random import choice
 
 from amgut.lib.mail import send_email
@@ -20,12 +20,9 @@ class ForgotPasswordHandler(BaseHandler):
         email = self.get_argument('email', None)
         kitid = self.get_argument('kitid', None)
         passcode = self.get_argument('passcode', None)
-        new_password = self.get_argument('new_password', None)
-        confirm_password = self.get_arguemnt('confirm_password', None)
 
         self.render('forgot_password.html', email=email, kitid=kitid,
-                    passcode=passcode, new_password=new_password,
-                    confirm_password=confirm_password, result=None,
+                    passcode=passcode, result=None,
                     message='', latlongs_db='', loginerror='')
 
     def create_passcode_and_send_email(self, email, kit_id):
@@ -39,7 +36,7 @@ class ForgotPasswordHandler(BaseHandler):
 
             MESSAGE = ('The password on American Gut Kit ID %s  has been reset'
                        ' please click the link below within two hours\n'
-                       'http://microbio.me/americangut/forgot_password.psp?'
+                       'http://microbio.me/americangut/change_pass_verify/?'
                        'email=%s;kit_id=%s;'
                        'passcode=%s' % (kit_id,
                                         quote(email),

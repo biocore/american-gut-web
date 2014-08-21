@@ -1,6 +1,4 @@
-from string import letters, digits
-from urllib import quote, unquote
-from random import choice
+from urllib import unquote
 
 from amgut.lib.mail import send_email
 from amgut.handlers.base_handlers import BaseHandler
@@ -10,7 +8,9 @@ from amgut.util import AG_DATA_ACCESS
 class ChangePassVerifyHandler(BaseHandler):
 
     def get(self):
-        email = unquote(self.get_argument('email', None))
+        email = self.get_argument('email', None)
+        if email is not None:
+            email = unquote(email)
         kitid = self.get_argument('kitid', None)
         passcode = self.get_argument('passcode', None)
         new_password = self.get_argument('new_password', None)
@@ -28,19 +28,14 @@ class ChangePassVerifyHandler(BaseHandler):
                     loginerror='')
 
     def post(self):
-        email = unquote(self.get_argument('email', None))
+        email = self.get_argument('email', None)
         kit_id = self.get_argument('kitid', None)
-        #passcode = self.get_argument('passcode', None)
+        if email is not None:
+            email = unquote(email)
         new_password = self.get_argument('new_password', None)
         confirm_password = self.get_argument('confirm_password', None)
-        #latlongs = AG_DATA_ACCESS.getMapMarkers()
         self.reset_pass_and_email(new_password, confirm_password, email,
                                   kit_id)
-
-        # self.render('forgot_password.html', email=email, kitid=kitid,
-        #             passcode=passcode, new_password=new_password,
-        #             confirm_password=confirm_password, result=None,
-        #             message='', latlongs_db=latlongs, loginerror='')
 
     def is_valid(self, email, kitid, passcode):
         return AG_DATA_ACCESS.ag_verify_kit_password_change_code(email, kitid,
