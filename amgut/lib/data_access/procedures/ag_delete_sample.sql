@@ -12,11 +12,11 @@ BEGIN
 
     -- Delete the associated samples
     update  ag_kit_barcodes
-    set     participant_name = '',
-            site_sampled = '',
-            sample_time = '',
-            sample_date = '',
-            environment_sampled = '',
+    set     participant_name = null,
+            site_sampled = null,
+            sample_time = null,
+            sample_date = null,
+            environment_sampled = null,
             notes = ''
     where   barcode in
             (

@@ -20,9 +20,11 @@ from amgut.handlers.FAQ import FAQHandler
 from amgut.handlers.participant_overview import ParticipantOverviewHandler
 from amgut.handlers.international import InternationalHandler
 from amgut.handlers.construction import ConstructionHandler
-from amgut.handlers.animal_survey import (
-    AnimalSurveyHandler, CheckParticipantName
-)
+from amgut.handlers.animal_survey import (AnimalSurveyHandler,
+                                          CheckParticipantName)
+from amgut.handlers.add_sample import (AddHumanSampleHandler,
+                                       AddGeneralSampleHandler,
+                                       AddAnimalSampleHandler)
 from amgut.handlers.new_participant import NewParticipantHandler
 from amgut.handlers.new_participant_overview import (
     NewParticipantOverviewHandler)
@@ -30,8 +32,10 @@ from amgut.handlers.taxa_summary import TaxaSummaryHandler
 from amgut.handlers.survey import SurveyMainHandler
 from amgut.handlers.portal import PortalHandler
 from amgut.handlers.retrieve_kitid import KitIDHandler
+from amgut.handlers.verification import VerificationHandler
+from amgut.handlers.forgot_password import ForgotPasswordHandler
 from amgut.handlers.add_sample_overview import AddSampleOverviewHandler
-
+from amgut.handlers.change_pass_verify import ChangePassVerifyHandler
 
 define("port", default=8888, help="run on the given port", type=int)
 
@@ -64,6 +68,9 @@ class QiimeWebApplication(Application):
             (r"/authed/add_sample_overview/", AddSampleOverviewHandler),
             (r"/authed/survey_main/", SurveyMainHandler),
             (r"/authed/portal/", PortalHandler),
+            (r"/authed/add_sample_human/", AddHumanSampleHandler),
+            (r"/authed/add_sample_animal/", AddAnimalSampleHandler),
+            (r"/authed/add_sample_general/", AddGeneralSampleHandler),
             (r"/faq/", FAQHandler),
             (r"/participants/(.*)", ParticipantOverviewHandler),
             (r"/international_shipping/", InternationalHandler),
@@ -72,6 +79,9 @@ class QiimeWebApplication(Application):
             (r"/check_participant_name/", CheckParticipantName),
             (r"/taxa_summaries/(.*)", TaxaSummaryHandler),
             (r"/retrieve_kitid/", KitIDHandler),
+            (r"/authed/verification/", VerificationHandler),
+            (r"/forgot_password/", ForgotPasswordHandler),
+            (r"/change_pass_verify/", ChangePassVerifyHandler),
             # 404 PAGE MUST BE LAST IN THIS LIST!
             (r".*", NoPageHandler)
         ]
