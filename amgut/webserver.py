@@ -24,6 +24,7 @@ from amgut.handlers.new_participant import NewParticipantHandler
 from amgut.handlers.survey import SurveyMainHandler
 from amgut.handlers.portal import PortalHandler
 from amgut.handlers.retrieve_kitid import KitIDHandler
+from amgut.handlers.add_sample_overview import AddSampleOverviewHandler
 
 define("port", default=8888, help="run on the given port", type=int)
 
@@ -49,6 +50,7 @@ class QiimeWebApplication(Application):
             (r"/authed/addendum/", AddendumHandler),
             (r"/authed/new_participant/", NewParticipantHandler),
             (r"/authed/sample_overview/", SampleOverviewHandler),
+            (r"/authed/add_sample_overview/", AddSampleOverviewHandler),
             (r"/authed/survey_main/", SurveyMainHandler),
             (r"/authed/portal/", PortalHandler),
             (r"/faq/", FAQHandler),
