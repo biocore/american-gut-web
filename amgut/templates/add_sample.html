@@ -1,0 +1,86 @@
+{% extends sitebase.html %}
+{% block content %}
+
+<script>
+  $(function() {
+    $( "#sample_date" ).datepicker({
+            changeMonth: true,
+            maxDate: '+0m',
+            onSelect: function(dateText, inst) {
+                $(this).focus();
+            }
+    });
+  });
+  $(function() {
+    $( "#sample_time" ).timepicker({
+        showPeriod: true,
+        showLeadingZero: true,
+        onSelect: function(dateText, inst) {
+            $(this).focus();
+        }
+    });
+  });
+</script>
+
+<h2>Log a new sample for {{ participant_name }}</h2>
+
+<form id="add_sample" name="add_sample" method="post" action="/authed/add_sample_human/">
+    <input type="hidden" name="participant_name" value="{{ participant_name }}"/>
+    <table width="100%">
+        <tr>
+        <td width="20%"></td>
+        <td>
+        <div class="lefta">
+            <table id="survey" width="100%">
+                <colgroup>
+                       <col span="1" style="width: 50%;">
+                       <col span="1" style="width: 50%;">
+                </colgroup>
+                <tr>
+                    <td>Choose the barcode from your kit that corresponds to the sample you are logging.</p>
+                    <p>It is very important that the sample barcode matches <strong>exactly</strong> for downstream analysis steps.</td>
+                    <td>
+    {% raw form.barcode(tabindex=1) %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Site Sampled</td>
+                    <td>
+                        <div id="sample_site_div" class="">
+    {% raw form.sample_site(tabindex=2) %}
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Date</td>
+                    <td>
+    {% raw form.sample_date(tabindex=3) %} mm/dd/yyyy (Example: 05/07/2013)
+                    </td>
+                </tr>
+                <tr>
+                    <td>Time</td>
+                    <td>
+    {% raw form.sample_time(tabindex=4) %} hh:mm AM/PM (Example: 04:35 PM)
+                    </td>
+                </tr>
+                <tr>
+                    <td>Additional Notes (optional)</td>
+                    <td>
+    {% raw form.notes(tabindex=5, style="width:300px;") %}
+                    </td>
+                </tr>
+            </table>
+            </div>
+            <table id="survey" width="100%">
+                <tr>
+                    <td>
+                    <input type="button" value="Add Sample" onclick="verifyAddSample()">
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td width="20%"></td>
+        </tr>
+    </table>
+</form>
+{% end %}
