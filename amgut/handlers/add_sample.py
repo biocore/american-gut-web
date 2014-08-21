@@ -1,7 +1,53 @@
+from wtforms import Form, SelectField, DateField, DateTimeField, TextField
 from tornado.web import authenticated
 
+from amgut.util import AG_DATA_ACCESS
 from amgut.handlers.base_handlers import BaseHandler
 
 
-class AddSampleHandler(BaseHandler):
-    pass
+class LogSample(Form):
+    barcode = SelectField()
+    sample_site = SelectField()
+    sample_date = DateField(format='%m/%d/%Y')
+    sample_time = DateTimeField(format='%I:%M %p')
+    notes = TextField('notes')
+
+
+class AddSample(BaseHandler):
+    @authenticated
+    def post(self):
+        # Required vars
+        barcode = self.get_argument('barcode')
+        sample_date = self.get_argument('sample_date')
+        sample_time = self.get_argument('sample_time')
+        notes = self.get_argument('notes')
+        participant_name = self.get_argument('participant_name', '')
+        sample_site = self.get_argument('sample_site', '')
+        env_sampled = self.get_argument('environment_sampled', '')
+
+        AG_DATA_ACCESS.logParticipantSample(barcode, sample_site,
+                                            env_sampled, sample_date,
+                                            sample_time, participant_name,
+                                            notes)
+
+        self.redirect('/authed/portal/')
+
+
+class AddHumanSampleHandler(AddSample):
+    @authenticated
+    def get(self):
+        kit_id = self.current_user
+        ag_login_id = AG_DATA_ACCESS.get_user_for_kit(kit_id)
+        kit_barcodes = AG_DATA_ACCESS.getAvailableBarcodes(ag_login_id)
+        participant_name = self.get_argument('participant_name', "MAKE SURE THIS IS BEING PASSED")
+
+        form = LogSample()
+
+        form.barcode.choices = [(v, v) for v in kit_barcodes]
+        form.sample_site = [(v, v) for v in AG_DATA_ACCESS.human_sites]
+        form.sample_site.insert(0, (0, 'Please select...'))
+
+        self.render('add_sample_human.html', skid=kit_id,
+                    kit_barcodes=kit_barcodes,
+                    participant_name=participant_name,
+                    form=form)

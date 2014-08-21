@@ -30,6 +30,18 @@ class AGDataAccess(object):
     """
     Data Access implementation for all the American Gut web portal
     """
+    # arbitrary, unique ID and value
+    human_sites = ['Stool',
+                   'Mouth',
+                   'Right hand',
+                   'Left hand',
+                   'Forehead',
+                   'Nares',
+                   'Hair',
+                   'Tears',
+                   'Nasal mucus',
+                   'Ear wax',
+                   'Vaginal mucus']
 
     def __init__(self, con=None):
         self._metadataDatabaseConnection = None

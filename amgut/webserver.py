@@ -20,6 +20,7 @@ from amgut.handlers.construction import ConstructionHandler
 from amgut.handlers.animal_survey import (
     AnimalSurveyHandler, CheckParticipantName
 )
+from amgut.handlers.add_sample import AddHumanSampleHandler
 from amgut.handlers.new_participant import NewParticipantHandler
 from amgut.handlers.survey import SurveyMainHandler
 from amgut.handlers.portal import PortalHandler
@@ -51,6 +52,7 @@ class QiimeWebApplication(Application):
             (r"/authed/sample_overview/", SampleOverviewHandler),
             (r"/authed/survey_main/", SurveyMainHandler),
             (r"/authed/portal/", PortalHandler),
+            (r"/authed/add_sample_human/", AddHumanSampleHandler),
             (r"/faq/", FAQHandler),
             (r"/participants/(.*)", ParticipantOverviewHandler),
             (r"/international_shipping/", InternationalHandler),
