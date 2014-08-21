@@ -21,6 +21,8 @@ from amgut.handlers.animal_survey import (
     AnimalSurveyHandler, CheckParticipantName
 )
 from amgut.handlers.new_participant import NewParticipantHandler
+from amgut.handlers.new_participant_overview import (
+    NewParticipantOverviewHandler)
 from amgut.handlers.survey import SurveyMainHandler
 from amgut.handlers.portal import PortalHandler
 from amgut.handlers.retrieve_kitid import KitIDHandler
@@ -48,6 +50,8 @@ class QiimeWebApplication(Application):
             (r"/authed/help_request/", HelpRequestHandler),
             (r"/authed/addendum/", AddendumHandler),
             (r"/authed/new_participant/", NewParticipantHandler),
+            (r"/authed/new_participant_overview/",
+                NewParticipantOverviewHandler),
             (r"/authed/sample_overview/", SampleOverviewHandler),
             (r"/authed/survey_main/", SurveyMainHandler),
             (r"/authed/portal/", PortalHandler),
