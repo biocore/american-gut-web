@@ -38,9 +38,6 @@ class ChangePassVerifyHandler(BaseHandler):
                                   kit_id)
 
     def is_valid(self, email, kitid, passcode):
-        print email
-        print kitid
-        print passcode
         return AG_DATA_ACCESS.ag_verify_kit_password_change_code(email, kitid,
                                                                  passcode)
 
@@ -59,7 +56,6 @@ class ChangePassVerifyHandler(BaseHandler):
                         confirm_password='', result=4, message='',
                         latlongs_db=latlongs, loginerror='')
         except:
-            print 'email not sent'
             self.render('change_pass_verify.html', email='', kitid='',
                         passocde='', new_password='',
                         confirm_password='', result=5, message='',
