@@ -38,6 +38,9 @@ class ChangePassVerifyHandler(BaseHandler):
                                   kit_id)
 
     def is_valid(self, email, kitid, passcode):
+        print email
+        print kitid
+        print passcode
         return AG_DATA_ACCESS.ag_verify_kit_password_change_code(email, kitid,
                                                                  passcode)
 

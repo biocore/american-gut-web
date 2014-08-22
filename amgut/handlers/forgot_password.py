@@ -11,33 +11,29 @@ class ForgotPasswordHandler(BaseHandler):
     def get(self):
         email = self.get_argument('email', None)
         kitid = self.get_argument('kitid', None)
-        passcode = self.get_argument('passcode', None)
+        latlongs = AG_DATA_ACCESS.getMapMarkers()
         self.render('forgot_password.html', email=email, kitid=kitid,
-                    passcode=passcode, result='new', messaage='',
-                    latlongs_db='', loginerror='')
+                    result=None, messaage='',
+                    latlongs_db=latlongs, loginerror='')
 
     def post(self):
         email = self.get_argument('email', None)
         kitid = self.get_argument('kitid', None)
-        passcode = self.get_argument('passcode', None)
-
-        self.render('forgot_password.html', email=email, kitid=kitid,
-                    passcode=passcode, result=None,
-                    message='', latlongs_db='', loginerror='')
+        self.create_passcode_and_send_email(email, kitid)
 
     def create_passcode_and_send_email(self, email, kit_id):
         kitids = AG_DATA_ACCESS.getAGKitbyEmail(email)
+        latlongs = AG_DATA_ACCESS.getMapMarkers()
         #if the kit id matches the email generate and send an email
         if kit_id in kitids:
             alphabet = letters + digits
             new_act_code = ''.join([choice(alphabet) for i in range(20)])
             # add new pass to the database
             AG_DATA_ACCESS.ag_set_pass_change_code(email, kit_id, new_act_code)
-
             MESSAGE = ('The password on American Gut Kit ID %s  has been reset'
                        ' please click the link below within two hours\n'
                        'http://microbio.me/americangut/change_pass_verify/?'
-                       'email=%s;kit_id=%s;'
+                       'email=%s;kitid=%s;'
                        'passcode=%s' % (kit_id,
                                         quote(email),
                                         kit_id,
@@ -47,17 +43,14 @@ class ForgotPasswordHandler(BaseHandler):
             try:
                     send_email(MESSAGE, 'American Gut Password Reset', email)
                     self.render('forgot_password.html', email='', kitid='',
-                                passocde='', new_password='',
-                                confirm_password='', result=1, message='',
-                                loginerror='')
+                                result=1, message='',
+                                latlongs_db=latlongs, loginerror='')
             except:
                     self.render('forgot_password.html', email='', kitid='',
-                                passocde='', new_password='',
-                                confirm_password='', result=2, message=MESSAGE,
-                                loginerror='')
+                                result=2, message=MESSAGE,
+                                latlongs_db=latlongs, loginerror='')
 
         else:
             self.render('forgot_password.html', email='', kitid='',
-                        passocde='', new_password='',
-                        confirm_password='', result=3, message='',
-                        loginerror='')
+                        result=3, message='',
+                        latlongs_db=latlongs, loginerror='')
