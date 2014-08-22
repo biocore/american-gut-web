@@ -161,7 +161,7 @@ function parseMultiplesString(form_name, field_name) {
     
 }
 
-// function to write default values for the supplements field (survey2.psp)
+// function to write default values for the supplements field (survey2.html)
 function setSupplementsDefaults(form_name, field_name, default_field_name) {
     var hits = parseMultiplesString(form_name, default_field_name); 
     var new_field_names = [];
@@ -174,42 +174,42 @@ function setSupplementsDefaults(form_name, field_name, default_field_name) {
     setMultiplesDefaults_text(form_name, new_field_names, hits);
 }
 
-// function to write default values for the special dietary restrictions field (survey2.psp)
+// function to write default values for the special dietary restrictions field (survey2.html)
 function setDietaryRestrictionsDefaults(form_name, field_name, default_field_name) {
     // like the supplements field, this is only text, so we can use the same
     // function
     setSupplementsDefaults(form_name, field_name, default_field_name);
 }
 
-// function to write default values for the drugs field (survey5.psp)
+// function to write default values for the drugs field (survey5.html)
 function setGeneralMedsDefaults(form_name, field_name, default_field_name) {
     // like the supplements field, this is only text, so we can use the same
     // function
     setSupplementsDefaults(form_name, field_name, default_field_name);
 }
 
-// function to write default values for the antibiotics field (survey5.psp)
+// function to write default values for the antibiotics field (survey5.html)
 function setAntibioticMedsDefaults(form_name, field_name, default_field_name) {
     // like the supplements field, this is only text, so we can use the same
     // function
     setSupplementsDefaults(form_name, field_name, default_field_name);
 }
 
-// function to write default values for the diabetes medications field (optional_questions.psp)
+// function to write default values for the diabetes medications field (optional_questions.html)
 function setDiabetesMedsDefaults(form_name, field_name, default_field_name) {
     // like the supplements field, this is only text, so we can use the same
     // function
     setSupplementsDefaults(form_name, field_name, default_field_name);
 }
 
-// function to write default values for the diabetes medications field (optional_questions.psp)
+// function to write default values for the diabetes medications field (optional_questions.html)
 function setMigraineMedsDefaults(form_name, field_name, default_field_name) {
     // like the supplements field, this is only text, so we can use the same
     // function
     setSupplementsDefaults(form_name, field_name, default_field_name);
 }
 
-// function to write default values for the travel options field (survey3.psp)
+// function to write default values for the travel options field (survey3.html)
 function setTravelOptionsDefaults(form_name, travel_location, travel_duration, travel_location_default, travel_duration_default) {
     var hits_travel_location = parseMultiplesString(form_name, travel_location_default);
     var hits_travel_duration = parseMultiplesString(form_name, travel_duration_default);
@@ -233,7 +233,7 @@ function setTravelOptionsDefaults(form_name, travel_location, travel_duration, t
     setMultiplesDefaults_text(form_name, new_field_names_travel_duration, hits_travel_duration);
 }
 
-// function to write default values for the related participants field (survey3.psp)
+// function to write default values for the related participants field (survey3.html)
 function setRelatedParticipantsDefaults(form_name, field_name_related, field_name_relation, default_field_name_related, default_field_name_relation) {
     var hits_related = parseMultiplesString(form_name, default_field_name_related); 
     var hits_relation = parseMultiplesString(form_name, default_field_name_relation); 
@@ -257,7 +257,7 @@ function setRelatedParticipantsDefaults(form_name, field_name_related, field_nam
     setMultiplesDefaults_text(form_name, new_field_names_relation, hits_relation);
 }
 
-// function to set default values for addint pets on survey_3.psp
+// function to set default values for addint pets on survey_3.html
 function setPetsDefaults(form_name, field_name_pet_type, field_name_pet_housing, field_name_pet_contact, pet_type_default, pet_housing_default, pet_contact_default) {
     var pet_type_hits = parseMultiplesString(form_name, pet_type_default); 
     var pet_housing_hits = parseMultiplesString(form_name, pet_housing_default); 
