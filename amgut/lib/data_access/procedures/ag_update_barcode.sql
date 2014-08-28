@@ -11,7 +11,9 @@ CREATE OR REPLACE FUNCTION ag_update_barcode (
     sample_date_ in text, 
     sample_time_ in text, 
     participant_name_ in text, 
-    notes_ in text
+    notes_ in text,
+    refunded_ in text, 
+    withdrawn_ in text
 )
  RETURNS VOID AS $body$
 BEGIN
@@ -23,7 +25,9 @@ BEGIN
             sample_date = sample_date_,
             sample_time = sample_time_,
             participant_name = participant_name_,
-            notes = notes_
+            notes = notes_,
+            refunded = refunded_,
+            withdrawn = withdrawn_
     where   barcode = barcode_; 
 
 end;
