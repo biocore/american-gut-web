@@ -298,7 +298,7 @@ class AGDataAccess(object):
         obs_kit_ids = get_used_kit_ids(cur)
         kit_id = make_kit_id(8)
         while kit_id in obs_kit_ids:
-                kit_id = make_kit_id(8)
+            kit_id = make_kit_id(8)
 
         return kit_id
 
