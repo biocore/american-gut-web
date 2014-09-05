@@ -114,7 +114,10 @@ class AGDataAccess(object):
         return con.cursor().execute(query_string)
 
     def _get_col_names_from_cursor(self, cur):
-        reutrn [x[0] for x in cur.description]
+        if cur.description:
+            return [x[0] for x in cur.description]
+        else:
+            return []
 
     #####################################
     # Users
@@ -129,12 +132,12 @@ class AGDataAccess(object):
         """
         data = self._sql.execute_proc_return_cursor(
             'ag_authenticate_user', [username, password])
-        col_names = self._get_col_names_from_cursor(data)
         row = data.fetchone()
+        col_names = self._get_col_names_from_cursor(data)
         data.close()
         if row:
             results = dict(zip(col_names, row))
-            results['web_app_user_id'] = str(results['web_app_user_id'])
+            results['ag_login_id'] = str(results['ag_login_id'])
             return results
         else:
             return False
@@ -167,28 +170,36 @@ class AGDataAccess(object):
         results = self._sql.execute_proc_return_cursor('ag_get_survey_details',
                                                        [ag_login_id,
                                                         participant_name])
-        data = {}
-        for row in results:
-            if row[3]:
-                data[row[2]] = row[3]
+        rows = results.fetchall()
+        col_names = self._get_col_names_from_cursor(results)
         results.close()
+
+        rows = [dict(zip(col_names, row)) for row in rows]
+
+        data = {row['question']: row['answer'] for row in rows
+                if row['answer']}
+
         return data
 
     def getAGLogins(self):
         results = self._sql.execute_proc_return_cursor('ag_get_logins', [])
+        rows = results.fetchall()
         col_names = self._get_col_names_from_cursor(results)
-        # ag_login_id, email, name
-        return_res = [dict(zip(col_names, row)) for row in results]
         results.close()
+
+        return_res = [dict(zip(col_names, row)) for row in rows]
+
         return return_res
 
     def getAGKitsByLogin(self):
         results = self._sql.execute_proc_return_cursor('ag_get_kits_by_login',
                                                        [])
+        rows = results.fetchall()
         col_names = self._get_col_names_from_cursor(results)
-        # ag_login_id, email, name
-        return_res = [dict(zip(col_names, row)) for row in results]
         results.close()
+
+        return_res = [dict(zip(col_names, row)) for row in rows]
+
         return return_res
 
     def getAGBarcodes(self):
@@ -204,26 +215,34 @@ class AGDataAccess(object):
         results = self._sql.execute_proc_return_cursor(
             'ag_get_barcodes_by_login',
             [ag_login_id])
+        rows = results.fetchall()
         col_names = self._get_col_names_from_cursor(results)
-        barcode_info = [dict(zip(col_names, row)) for row in results]
         results.close()
+
+        barcode_info = [dict(zip(col_names, row)) for row in rows]
+
         return barcode_info 
 
     def getAGBarcodeDetails(self, barcode):
         results = self._sql.execute_proc_return_cursor(
             'ag_get_barcode_details', [barcode])
-        col_names = self._get_col_names_from_cursor(results)
         barcode_details = results.fetchone()
-        row_dict = dict(zip(col_names, barcode_details))
+        col_names = self._get_col_names_from_cursor(results)
         results.close()
+
+        row_dict = {}
+        if barcode_details:
+            row_dict = dict(zip(col_names, barcode_details))
+
         return row_dict
 
     def getAGKitDetails(self, supplied_kit_id):
         results = self._sql.execute_proc_return_cursor('ag_get_kit_details',
                                                        [supplied_kit_id])
-        col_names = self._get_col_names_from_cursor(results)
         row = results.fetchone()
+        col_names = self._get_col_names_from_cursor(results)
         results.close()
+
         kit_details = {}
         if row:
             kit_details = dict(zip(col_names, row))
@@ -444,10 +463,12 @@ class AGDataAccess(object):
     def AGGetBarcodeMetadata(self, barcode):
         results = self._sql.execute_proc_return_cursor(
             'ag_get_barcode_metadata', [barcode])
+        rows = results.fetchall()
         col_names = self._get_col_names_from_cursor(results)
-
-        return_res = [dict(zip(col_names, row)) for row in results]
         results.close()
+
+        return_res = [dict(zip(col_names, row)) for row in rows]
+
         return return_res
 
     def AGGetBarcodeMetadataAnimal(self, barcode):
@@ -477,18 +498,24 @@ class AGDataAccess(object):
     def getParticipantSamples(self, ag_login_id, participant_name):
         results = self._sql.execute_proc_return_cursor(
             'ag_get_participant_samples', [ag_login_id, participant_name])
+        rows = results.fetchall()
         col_names = self._get_col_names_from_cursor(results)
-        barcodes = [dict(zip(col_names, row)) for row in results]
         results.close()
+
+        barcodes = [dict(zip(col_names, row)) for row in rows]
+
         return barcodes
 
     def getEnvironmentalSamples(self, ag_login_id):
         barcodes = []
         results = self._sql.execute_proc_return_cursor(
             'ag_get_environmental_samples', [ag_login_id])
+        rows = results.fetchall()
         col_names = self._get_col_names_from_cursor(results)
-        barcodes = [dict(zip(col_names, row)) for row in results]
         results.close()
+
+        barcodes = [dict(zip(col_names, row)) for row in rows]
+
         return barcodes
 
     def getAvailableBarcodes(self, ag_login_id):
@@ -767,13 +794,15 @@ class AGDataAccess(object):
         # ag_check_barcode_status.sql).
         results = self._sql.execute_proc_return_cursor(
             'ag_check_barcode_status', [barcode])
+        row = results.fetchone()
         col_names = self._get_col_names_from_cursor(results)
-        barcode_details = [dict(zip(col_names, row)) for row in results]
         results.close()
-        if barcode_details:
-            return barcode_details[0]
-        else:  # if the barcode does not exist in database
-            return []
+
+        barcode_details = {}
+        if row:
+            barcode_details = dict(zip(col_names, row))
+
+        return barcode_details
 
     def updateAGSurvey(self, ag_login_id, participant_name, field, value):
         con = self.connection
@@ -924,12 +953,13 @@ class AGDataAccess(object):
         con = self.connection
         cursor = con.cursor()
         cursor.execute(sql, [supplied_kit_id])
-        col_names = self._get_col_names_from_cursor(cursor)
-        user_data = {}
         row = cursor.fetchone()
+        col_names = self._get_col_names_from_cursor(cursor)
+
+        user_data = {}
         if row:
             user_data = dict(zip(col_names, row))
-            user_data['web_app_user_id'] = str(user_data['web_app_user_id'])
+            user_data['ag_login_id'] = str(user_data['ag_login_id'])
 
         return user_data
 
@@ -941,8 +971,8 @@ class AGDataAccess(object):
         con = self.connection
         cursor = con.cursor()
         cursor.execute(sql, [supplied_kit_id])
-        col_names = self._get_col_names_from_cursor(cursor)
         results = cursor.fetchall()
+        col_names = self._get_col_names_from_cursor(cursor)
         return [dict(zip(col_names, row)) for row in results]
 
     def get_barcodes_from_handout_kit(self, supplied_kit_id):
