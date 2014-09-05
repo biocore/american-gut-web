@@ -16,21 +16,21 @@ import urllib
 import httplib
 import json
 from time import sleep
-import psycopg2
 from random import choice
+
+import psycopg2
 
 from sql_connection import SQLConnectionHandler
 from amgut.lib.config_manager import AMGUT_CONFIG
 
 
-
-
 # character sets for kit id, passwords and verification codes
-KIT_ALPHA = "abcdefghjkmnpqrstuvwxyz"  # removed l and o for clarity
+KIT_ALPHA = "abcdefghjkmnpqrstuvwxyz"  # removed i, l and o for clarity
 KIT_PASSWD = '1234567890'
 KIT_VERCODE = KIT_PASSWD
 KIT_PASSWD_NOZEROS = KIT_PASSWD[0:-1]
 KIT_VERCODE_NOZEROS = KIT_PASSWD_NOZEROS
+
 
 class GoogleAPILimitExceeded(Exception):
     pass
@@ -164,10 +164,6 @@ class AGDataAccess(object):
         con.commit()
 
     def getAGSurveyDetails(self, ag_login_id, participant_name):
-        #con = self.connection
-        #results = con.cursor()
-        #con.cursor().callproc('ag_get_survey_details',
-        #                      [ag_login_id, participant_name, results])
         results = self._sql.execute_proc_return_cursor('ag_get_survey_details',
                                                        [ag_login_id,
                                                         participant_name])
@@ -179,9 +175,6 @@ class AGDataAccess(object):
         return data
 
     def getAGLogins(self):
-        #con = self.connection
-        #results = con.cursor()
-        #con.cursor().callproc('ag_get_logins', [results])
         results = self._sql.execute_proc_return_cursor('ag_get_logins', [])
         # ag_login_id, email, name
         return_res = [(row[0], row[1], row[2]) for row in results]
@@ -189,9 +182,6 @@ class AGDataAccess(object):
         return return_res
 
     def getAGKitsByLogin(self):
-        #con = self.connection
-        #results = con.cursor()
-        #con.cursor().callproc('ag_get_kits_by_login', [results])
         results = self._sql.execute_proc_return_cursor('ag_get_kits_by_login',
                                                        [])
         # ag_login_id, email, name
@@ -209,8 +199,6 @@ class AGDataAccess(object):
         # returned tuple consists of:
         # site_sampled, sample_date, sample_time, participant_name,
         #environment_sampled, notes
-        #con.cursor().callproc('ag_get_barcodes_by_login',
-        #                      [ag_login_id])
         results = self._sql.execute_proc_return_cursor(
             'ag_get_barcodes_by_login',
             [ag_login_id])
@@ -226,9 +214,6 @@ class AGDataAccess(object):
         return barcodes
 
     def getAGBarcodeDetails(self, barcode):
-        #con = self.connection
-        #results = con.cursor()
-        #con.cursor().callproc('ag_get_barcode_details', [barcode, results])
         results = self._sql.execute_proc_return_cursor(
             'ag_get_barcode_details', [barcode])
         barcode_details = results.fetchone()
@@ -251,9 +236,6 @@ class AGDataAccess(object):
         return row_dict
 
     def getAGKitDetails(self, supplied_kit_id):
-        #con = self.connection
-        #results = con.cursor()
-        #con.cursor().callproc('ag_get_kit_details',[supplied_kit_id, results])
         results = self._sql.execute_proc_return_cursor('ag_get_kit_details',
                                                        [supplied_kit_id])
         row = results.fetchone()
@@ -321,9 +303,6 @@ class AGDataAccess(object):
         return kit_id
 
     def getNextAGBarcode(self):
-        #con = self.connection
-        #results = con.cursor()
-        #con.cursor().callproc('ag_get_next_barcode', [results])
         results = self._sql.execute_proc_return_cursor('ag_get_next_barcode',
                                                        [])
         next_barcode = results.fetchone()[0]
@@ -487,10 +466,6 @@ class AGDataAccess(object):
         con.commit()
 
     def getHumanParticipants(self, ag_login_id):
-        #con = self.connection
-        #results = con.cursor()
-        #con.cursor().callproc('ag_get_human_participants', [ag_login_id,
-        #                                                    results])
         results = self._sql.execute_proc_return_cursor(
             'ag_get_human_participants', [ag_login_id])
         return_res = [row[0] for row in results]
@@ -498,9 +473,6 @@ class AGDataAccess(object):
         return return_res
 
     def AGGetBarcodeMetadata(self, barcode):
-        #con = self.connection
-        #results = con.cursor()
-        #con.cursor().callproc('ag_get_barcode_metadata', [barcode, results])
         results = self._sql.execute_proc_return_cursor(
             'ag_get_barcode_metadata', [barcode])
         headers = [
@@ -554,9 +526,6 @@ class AGDataAccess(object):
         return return_res
 
     def AGGetBarcodeMetadataAnimal(self, barcode):
-        #con = self.connection
-        #results = con.cursor()
-        #con.cursor().callproc('ag_get_barcode_md_animal', [barcode, results])
         results = self._sql.execute_proc_return_cursor(
             'ag_get_barcode_md_animal', [barcode])
 
@@ -580,10 +549,6 @@ class AGDataAccess(object):
         return return_res
 
     def getAnimalParticipants(self, ag_login_id):
-        #con = self.connection
-        #results = con.cursor()
-        #con.cursor().callproc('ag_get_animal_participants', [ag_login_id,
-        #                                                     results])
         results = self._sql.execute_proc_return_cursor(
             'ag_get_animal_participants', [ag_login_id])
 
@@ -592,10 +557,6 @@ class AGDataAccess(object):
         return return_res
 
     def getParticipantExceptions(self, ag_login_id):
-        #con = self.connection
-        #results = con.cursor()
-        #con.cursor().callproc('ag_get_participant_exceptions', [ag_login_id,
-        #                                                        results])
         results = self._sql.execute_proc_return_cursor(
             'ag_get_participant_exceptions', [ag_login_id])
 
@@ -604,12 +565,7 @@ class AGDataAccess(object):
         return return_res
 
     def getParticipantSamples(self, ag_login_id, participant_name):
-        #con = self.connection
-        #results = con.cursor()
         barcodes = []
-        #con.cursor().callproc('ag_get_participant_samples', [ag_login_id,
-        #                                                     participant_name,
-        #                                                     results])
         results = self._sql.execute_proc_return_cursor(
             'ag_get_participant_samples', [ag_login_id, participant_name])
         for row in results:
@@ -621,11 +577,7 @@ class AGDataAccess(object):
         return barcodes
 
     def getEnvironmentalSamples(self, ag_login_id):
-        #con = self.connection
-        #results = con.cursor()
         barcodes = []
-        #con.cursor().callproc('ag_get_environmental_samples', [ag_login_id,
-        #                                                       results])
         results = self._sql.execute_proc_return_cursor(
             'ag_get_environmental_samples', [ag_login_id])
         for row in results:
@@ -637,9 +589,6 @@ class AGDataAccess(object):
         return barcodes
 
     def getAvailableBarcodes(self, ag_login_id):
-        #con = self.connection
-        #results = con.cursor()
-        #con.cursor().callproc('ag_available_barcodes', [ag_login_id, results])
         results = self._sql.execute_proc_return_cursor('ag_available_barcodes',
                                                        [ag_login_id])
         return_res = [row[0] for row in results]
@@ -663,7 +612,6 @@ class AGDataAccess(object):
         on subsequent calls to this function.  Pass retry=True to retry all
         (or maximum of limit) previously failed geocodings.
         """
-        #con = self.connection
 
         # clear previous geocoding attempts if retry is True
         if retry:
@@ -937,9 +885,6 @@ class AGDataAccess(object):
         # returned tuple consists of:
         # site_sampled, sample_date, sample_time, participant_name,
         #environment_sampled, notes
-        #con = self.connection
-        #results = con.cursor()
-        #con.cursor().callproc('ag_stats', [results])
         results = self._sql.execute_proc_return_cursor('ag_stats', [])
         ag_stats = results.fetchall()
         results.close()
@@ -960,10 +905,6 @@ class AGDataAccess(object):
         email is email address of login
         returns a list of kit_id's associated with the email or an empty list
         """
-        #con = self.connection
-        #results = con.cursor()
-        #con.cursor().callproc('ag_get_kit_id_by_email', [email.lower(),
-        #                                                 results])
         results = self._sql.execute_proc_return_cursor(
             'ag_get_kit_id_by_email', [email.lower()])
         kit_ids = []
@@ -1006,19 +947,12 @@ class AGDataAccess(object):
         cursor.callproc('ag_verify_password_change_code', [email, kitid,
                                                            passcode])
         return cursor.fetchone()[0]
-        #results = self._sql.execute_proc_return_cursor(
-        #    'ag_verify_password_change_code', [email, kitid, passcode])
-        #isgood = results.fetchone()
-        #return isgood is not None and isgood[0] == 1
 
     def getBarcodesByKit(self, kitID):
         """Returns a list of barcodes in a kit
 
         kitID is the supplied_kit_id from the ag_kit table
         """
-        #con = self.connection
-        #results = con.cursor()
-        #con.cursor().callproc('ag_get_barcodes_by_kit', [kitID, results])
         results = self._sql.execute_proc_return_cursor(
             'ag_get_barcodes_by_kit', [kitID])
         barcodes = [row[0] for row in results]
@@ -1026,9 +960,6 @@ class AGDataAccess(object):
         return barcodes
 
     def checkPrintResults(self, kit_id):
-        #con = self.connection
-        #results = con.cursor()
-        #con.cursor().callproc('ag_get_print_results', [kit_id, results])
         results = self._sql.execute_proc_return_cursor('ag_get_print_results',
                                                        [kit_id])
         print_results = results.fetchone()
