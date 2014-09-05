@@ -20,7 +20,7 @@ from random import choice
 
 import psycopg2
 
-from sql_connection import SQLConnectionHandler
+from amgut.lib.data_access.sql_connection import SQLConnectionHandler
 from amgut.lib.config_manager import AMGUT_CONFIG
 
 
@@ -37,8 +37,7 @@ class GoogleAPILimitExceeded(Exception):
 
 
 class AGDataAccess(object):
-    """
-    Data Access implementation for all the American Gut web portal
+    """Data Access implementation for all the American Gut web portal
     """
     # arbitrary, unique ID and value
     human_sites = ['Stool',
@@ -74,13 +73,11 @@ class AGDataAccess(object):
 
     def __init__(self, con=None):
         self._metadataDatabaseConnection = None
-        if not con:
-            self.connection = \
-                psycopg2.connect(user=AMGUT_CONFIG.user,
-                                 password=AMGUT_CONFIG.password,
-                                 database=AMGUT_CONFIG.database,
-                                 host=AMGUT_CONFIG.host,
-                                 port=AMGUT_CONFIG.port)
+        if con is None:
+            self.connection = psycopg2.connect(
+                user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
+                database=AMGUT_CONFIG.database, host=AMGUT_CONFIG.host,
+                port=AMGUT_CONFIG.port)
         else:
             self.connection = con
 
@@ -116,6 +113,9 @@ class AGDataAccess(object):
         con = self.connection
         return con.cursor().execute(query_string)
 
+    def _get_col_names_from_cursor(self, cur):
+        reutrn [x[0] for x in cur.description]
+
     #####################################
     # Users
     #####################################
@@ -129,13 +129,13 @@ class AGDataAccess(object):
         """
         data = self._sql.execute_proc_return_cursor(
             'ag_authenticate_user', [username, password])
+        col_names = self._get_col_names_from_cursor(data)
         row = data.fetchone()
         data.close()
         if row:
-            user_data = {'web_app_user_id': str(row[0]), 'email': row[1],
-                         'name': row[2], 'address': row[3], 'city': row[4],
-                         'state': row[5], 'zip': row[6], 'country': row[7]}
-            return user_data
+            results = dict(zip(col_names, row))
+            results['web_app_user_id'] = str(results['web_app_user_id'])
+            return results
         else:
             return False
 
@@ -176,16 +176,18 @@ class AGDataAccess(object):
 
     def getAGLogins(self):
         results = self._sql.execute_proc_return_cursor('ag_get_logins', [])
+        col_names = self._get_col_names_from_cursor(results)
         # ag_login_id, email, name
-        return_res = [(row[0], row[1], row[2]) for row in results]
+        return_res = [dict(zip(col_names, row)) for row in results]
         results.close()
         return return_res
 
     def getAGKitsByLogin(self):
         results = self._sql.execute_proc_return_cursor('ag_get_kits_by_login',
                                                        [])
+        col_names = self._get_col_names_from_cursor(results)
         # ag_login_id, email, name
-        return_res = [(row[0], row[1], row[2]) for row in results]
+        return_res = [dict(zip(col_names, row)) for row in results]
         results.close()
         return return_res
 
@@ -202,55 +204,29 @@ class AGDataAccess(object):
         results = self._sql.execute_proc_return_cursor(
             'ag_get_barcodes_by_login',
             [ag_login_id])
-        barcodes = results.fetchall()
-        """
-        Tuple format is:
-
-        al.email, akb.ag_kit_barcode_id, akb.ag_kit_id, akb.barcode,
-        akb.site_sampled, akb.environment_sampled, akb.sample_date,
-        akb.sample_time, akb.participant_name, akb.notes
-        """
+        col_names = self._get_col_names_from_cursor(results)
+        barcode_info = [dict(zip(col_names, row)) for row in results]
         results.close()
-        return barcodes
+        return barcode_info 
 
     def getAGBarcodeDetails(self, barcode):
         results = self._sql.execute_proc_return_cursor(
             'ag_get_barcode_details', [barcode])
+        col_names = self._get_col_names_from_cursor(results)
         barcode_details = results.fetchone()
-        row_dict = {
-            'email': barcode_details[0],
-            'ag_kit_barcode_id': barcode_details[1],
-            'ag_kit_id': barcode_details[2],
-            'barcode': barcode_details[3],
-            'site_sampled': barcode_details[4],
-            'environment_sampled': barcode_details[5],
-            'sample_date': barcode_details[6],
-            'sample_time': barcode_details[7],
-            'participant_name': barcode_details[8],
-            'notes': barcode_details[9],
-            'status': barcode_details[10],
-            'refunded': barcode_details[11],
-            'withdrawn': barcode_details[12]
-        }
+        row_dict = dict(zip(col_names, barcode_details))
         results.close()
         return row_dict
 
     def getAGKitDetails(self, supplied_kit_id):
         results = self._sql.execute_proc_return_cursor('ag_get_kit_details',
                                                        [supplied_kit_id])
+        col_names = self._get_col_names_from_cursor(results)
         row = results.fetchone()
+        results.close()
         kit_details = {}
         if row:
-            kit_details = {
-                'ag_kit_id': row[0],
-                'supplied_kit_id': row[1],
-                'kit_password': row[2],
-                'swabs_per_kit': row[3],
-                'kit_verification_code': row[4],
-                'kit_verified': row[5],
-                'verification_email_sent': row[6]
-            }
-        results.close()
+            kit_details = dict(zip(col_names, row))
         return kit_details
 
     def getAGHandoutKitDetails(self, supplied_kit_id):
@@ -258,16 +234,9 @@ class AGDataAccess(object):
         con = self.connection
         cur = con.cursor()
         cur.execute(sql, [supplied_kit_id])
+        col_names = self._get_col_names_from_cursor(cur)
         row = cur.fetchone()
-        kit_details = {
-            'ag_kit_id': row[0],
-            'kit_password': row[1],
-            'barcode': row[2],
-            'kit_verification_code': row[3],
-            'sample_barcode_file': row[4],
-            'swabs_per_kit': row[5],
-            'print_results': row[6]
-        }
+        kit_details = dict(zip(col_names, row))
         cur.close()
         return kit_details
 
@@ -475,76 +444,17 @@ class AGDataAccess(object):
     def AGGetBarcodeMetadata(self, barcode):
         results = self._sql.execute_proc_return_cursor(
             'ag_get_barcode_metadata', [barcode])
-        headers = [
-            'SAMPLE_NAME', 'ANONYMIZED_NAME', 'COLLECTION_DATE', 'public',
-            'DEPTH', 'DESCRIPTION', 'SAMPLE_TIME', 'ALTITUDE',
-            'ASSIGNED_FROM_GEO', 'TITLE', 'SITE_SAMPLED', 'HOST_SUBJECT_ID',
-            'TAXON_ID', 'HOST_TAXID', 'COMMON_NAME', 'HOST_COMMON_NAME',
-            'BODY_HABITAT', 'BODY_SITE', 'BODY_PRODUCT', 'ENV_BIOME',
-            'ENV_FEATURE', 'ENV_MATTER', 'CITY', 'STATE', 'ZIP', 'COUNTRY',
-            'LATITUDE', 'LONGITUDE', 'ELEVATION', 'AGE_UNIT', 'AGE',
-            'ACNE_MEDICATION', 'ACNE_MEDICATION_OTC', 'ALCOHOL_FREQUENCY',
-            'FAT_PER', 'CARBOHYDRATE_PER', 'PROTEIN_PER', 'ANIMAL_PER',
-            'PLANT_PER', 'ANTIBIOTIC_CONDITION', 'ANTIBIOTIC_SELECT',
-            'APPENDIX_REMOVED', 'ASTHMA', 'BIRTH_DATE', 'CAT', 'CHICKENPOX',
-            'COMMUNAL_DINING', 'CONDITIONS_MEDICATION', 'CONTRACEPTIVE',
-            'COSMETICS_FREQUENCY', 'COUNTRY_OF_BIRTH', 'CSECTION',
-            'CURRENT_RESIDENCE_DURATION', 'DECEASED_PARENT', 'DEODORANT_USE',
-            'DIABETES', 'DIABETES_DIAGNOSE_DATE', 'DIABETES_MEDICATION',
-            'DIET_TYPE', 'DOG', 'DRINKING_WATER_SOURCE', 'EXERCISE_FREQUENCY',
-            'EXERCISE_LOCATION', 'FIBER_GRAMS', 'FLOSSING_FREQUENCY',
-            'FLU_VACCINE_DATE', 'FOODALLERGIES_OTHER',
-            'FOODALLERGIES_OTHER_TEXT', 'FOODALLERGIES_PEANUTS',
-            'FOODALLERGIES_SHELLFISH', 'FOODALLERGIES_TREENUTS', 'FRAT', 'SEX',
-            'GLUTEN', 'DOMINANT_HAND', 'HEIGHT_IN', 'HEIGHT_OR_LENGTH', 'IBD',
-            'LACTOSE', 'LAST_TRAVEL', 'LIVINGWITH', 'MAINFACTOR_OTHER_1',
-            'MAINFACTOR_OTHER_2', 'MAINFACTOR_OTHER_3', 'MIGRAINE',
-            'MIGRAINEMEDS', 'MIGRAINE_AGGRAVATION', 'MIGRAINE_AURA',
-            'MIGRAINE_FACTOR_1', 'MIGRAINE_FACTOR_2', 'MIGRAINE_FACTOR_3',
-            'MIGRAINE_FREQUENCY', 'MIGRAINE_NAUSEA', 'MIGRAINE_PAIN',
-            'MIGRAINE_PHONOPHOBIA', 'MIGRAINE_PHOTOPHOBIA',
-            'MIGRAINE_RELATIVES', 'MULTIVITAMIN', 'NAILS',
-            'NONFOODALLERGIES_BEESTINGS', 'NONFOODALLERGIES_DANDER',
-            'NONFOODALLERGIES_DRUG', 'NONFOODALLERGIES_NO',
-            'NONFOODALLERGIES_POISONIVY', 'NONFOODALLERGIES_SUN',
-            'PERCENTAGE_FROM_CARBS', 'PKU', 'POOL_FREQUENCY', 'PREGNANT',
-            'PREGNANT_DUE_DATE', 'PRIMARY_CARB', 'PRIMARY_VEGETABLE', 'RACE',
-            'RACE_OTHER', 'ROOMMATES', 'SEASONAL_ALLERGIES', 'SHARED_HOUSING',
-            'SKIN_CONDITION', 'SLEEP_DURATION', 'SMOKING_FREQUENCY',
-            'SOFTENER', 'SPECIAL_RESTRICTIONS', 'SUPPLEMENTS', 'TANNING_BEDS',
-            'TANNING_SPRAYS', 'TEETHBRUSHING_FREQUENCY', 'TONSILS_REMOVED',
-            'TYPES_OF_PLANTS', 'WEIGHT_CHANGE', 'TOT_MASS', 'WEIGHT_LBS',
-            'BMI', 'ANTIBIOTIC_MEDS', 'DIABETES_MEDICATIONS',
-            'DIET_RESTRICTIONS', 'GENERAL_MEDS', 'MIGRAINE_MEDICATIONS',
-            'PETS', 'PET_CONTACT', 'PET_LOCATIONS', 'RELATIONS',
-            'SUPPLEMENTS_FIELDS', 'MACRONUTRIENT_PCT_TOTAL', 'QUINOLINE',
-            'NITROMIDAZOLE', 'PENICILLIN', 'SULFA_DRUG', 'CEPHALOSPORIN'
-        ]
+        col_names = self._get_col_names_from_cursor(results)
 
-        return_res = [dict(zip(headers, row)) for row in results]
+        return_res = [dict(zip(col_names, row)) for row in results]
         results.close()
         return return_res
 
     def AGGetBarcodeMetadataAnimal(self, barcode):
         results = self._sql.execute_proc_return_cursor(
             'ag_get_barcode_md_animal', [barcode])
-
-        animal_headers = [
-            'SAMPLE_NAME', 'ANONYMIZED_NAME', 'COLLECTION_DATE', 'public',
-            'DEPTH', 'DESCRIPTION', 'SAMPLE_TIME', 'ALTITUDE',
-            'ASSIGNED_FROM_GEO', 'TITLE', 'SITE_SAMPLED', 'HOST_SUBJECT_ID',
-            'TAXON_ID', 'HOST_TAXID', 'COMMON_NAME', 'HOST_COMMON_NAME',
-            'BODY_HABITAT', 'BODY_SITE', 'BODY_PRODUCT', 'ENV_BIOME',
-            'ENV_FEATURE', 'ENV_MATTER', 'CITY', 'STATE', 'ZIP', 'COUNTRY',
-            'LATITUDE', 'LONGITUDE', 'ELEVATION', 'AGE_UNIT', 'AGE', 'SEX',
-            'COPROPHAGE', 'DIET', 'EATS_HUMAN_FOOD', 'EATS_STORE_FOOD',
-            'EATS_WILD_FOOD', 'FOOD_TYPE', 'EATS_GRAIN_FREE_FOOD',
-            'EATS_ORGANIC_FOOD', 'LIVING_STATUS', 'ORIGIN', 'OUTSIDE_TIME',
-            'SETTING', 'TOILE_WATER_ACCESS', 'WEIGHT_CLASS', 'HUMAN_SEXES',
-            'HUMAN_AGES', 'PETS_COHOUSED'
-        ]
-
-        return_res = [dict(zip(animal_headers, row)) for row in results]
+        col_names = self._get_col_names_from_cursor(results)
+        return_res = [dict(zip(col_names, row)) for row in results]
         results.close()
         return return_res
 
@@ -565,14 +475,10 @@ class AGDataAccess(object):
         return return_res
 
     def getParticipantSamples(self, ag_login_id, participant_name):
-        barcodes = []
         results = self._sql.execute_proc_return_cursor(
             'ag_get_participant_samples', [ag_login_id, participant_name])
-        for row in results:
-            data = {'barcode': row[0], 'site_sampled': row[1],
-                    'sample_date': row[2], 'sample_time': row[3],
-                    'notes': row[4], 'status': row[5]}
-            barcodes.append(data)
+        col_names = self._get_col_names_from_cursor(results)
+        barcodes = [dict(zip(col_names, row)) for row in results]
         results.close()
         return barcodes
 
@@ -580,11 +486,8 @@ class AGDataAccess(object):
         barcodes = []
         results = self._sql.execute_proc_return_cursor(
             'ag_get_environmental_samples', [ag_login_id])
-        for row in results:
-            data = {'barcode': row[0], 'site_sampled': row[1],
-                    'sample_date': row[2], 'sample_time': row[3],
-                    'notes': row[4], 'status': row[5]}
-            barcodes.append(data)
+        col_names = self._get_col_names_from_cursor(results)
+        barcodes = [dict(zip(col_names, row)) for row in results]
         results.close()
         return barcodes
 
@@ -864,12 +767,13 @@ class AGDataAccess(object):
         # ag_check_barcode_status.sql).
         results = self._sql.execute_proc_return_cursor(
             'ag_check_barcode_status', [barcode])
-        barcode_details = results.fetchall()
+        col_names = self._get_col_names_from_cursor(results)
+        barcode_details = [dict(zip(col_names, row)) for row in results]
         results.close()
         if barcode_details:
             return barcode_details[0]
         else:  # if the barcode does not exist in database
-            return ()
+            return []
 
     def updateAGSurvey(self, ag_login_id, participant_name, field, value):
         con = self.connection
@@ -886,7 +790,8 @@ class AGDataAccess(object):
         # site_sampled, sample_date, sample_time, participant_name,
         #environment_sampled, notes
         results = self._sql.execute_proc_return_cursor('ag_stats', [])
-        ag_stats = results.fetchall()
+        col_names = self._get_col_names_from_cursor(results)
+        ag_stats = [dict(zip(col_names, row)) for row in results]
         results.close()
         return ag_stats
 
@@ -899,7 +804,7 @@ class AGDataAccess(object):
                                              other_text, date_of_last_email])
         con.commit()
 
-    def getAGKitbyEmail(self, email):
+    def getAGKitIDsByEmail(self, email):
         """Returns a list of kitids based on email
 
         email is email address of login
@@ -907,9 +812,7 @@ class AGDataAccess(object):
         """
         results = self._sql.execute_proc_return_cursor(
             'ag_get_kit_id_by_email', [email.lower()])
-        kit_ids = []
-        for row in results:
-            kit_ids.append(row[0])
+        kit_ids = [row[0] for row in results]
         results.close()
         return kit_ids
 
@@ -1021,12 +924,13 @@ class AGDataAccess(object):
         con = self.connection
         cursor = con.cursor()
         cursor.execute(sql, [supplied_kit_id])
+        col_names = self._get_col_names_from_cursor(cursor)
         user_data = {}
         row = cursor.fetchone()
         if row:
-            user_data = {'web_app_user_id': str(row[0]), 'email': row[1],
-                         'name': row[2], 'address': row[3], 'city': row[4],
-                         'state': row[5], 'zip': row[6], 'country': row[7]}
+            user_data = dict(zip(col_names, row))
+            user_data['web_app_user_id'] = str(user_data['web_app_user_id'])
+
         return user_data
 
     def get_barcode_results(self, supplied_kit_id):
@@ -1037,8 +941,9 @@ class AGDataAccess(object):
         con = self.connection
         cursor = con.cursor()
         cursor.execute(sql, [supplied_kit_id])
+        col_names = self._get_col_names_from_cursor(cursor)
         results = cursor.fetchall()
-        return results
+        return [dict(zip(col_names, row)) for row in results]
 
     def get_barcodes_from_handout_kit(self, supplied_kit_id):
         sql = "select barcode from ag_handout_kits where kit_id = %s"
@@ -1054,11 +959,12 @@ class AGDataAccess(object):
         con = self.connection
         cursor = con.cursor()
         cursor.execute(sql, [email])
-        results = cursor.fetchone()
+        col_names = self._get_col_names_from_cursor(cursor)
+        row = cursor.fetchone()
+
         login = {}
-        if results:
-            login = {'email': email, 'name': results[0], 'address': results[1],
-                     'city': results[2], 'state': results[3],
-                     'zipcode': results[4], 'country': results[5],
-                     'login_id': results[6]}
+        if row:
+            login = dict(zip(col_names, row))
+            login['email'] = email
+
         return login
