@@ -1107,7 +1107,7 @@ class AGDataAccess(object):
         cursor.execut(sql, [term, term, term])
         results = cursor.fetchall()
         cursor.close()
-        return results
+        return [x[0] for x in results]
 
     def search_kits(self, term):
         sql = """ select  cast(ag_login_id as varchar2(100)) as ag_login_id
@@ -1120,7 +1120,7 @@ class AGDataAccess(object):
         cursor.execut(sql, [term, term, term])
         results = cursor.fetchall()
         cursor.close()
-        return results
+        return [x[0] for x in results]
 
     def search_barcodes(self, term):
         sql = """select  cast(ak.ag_login_id as varchar2(100)) as ag_login_id
@@ -1134,7 +1134,14 @@ class AGDataAccess(object):
         cursor.execut(sql, [term, term, term])
         results = cursor.fetchall()
         cursor.close()
-        return results
+        return [x[0] for x in results]
 
     def search_handout_kits(self, term):
-        
+        sql = """select kit_id from ag_handout_kits where kit_id like '%s'
+                 or barcode like '%s'"""
+        con = self.connection
+        cursor = con.cursor()
+        cursor.execut(sql, [term, term])
+        results = cursor.fetchall()
+        cursor.close()
+        return [x[0] for x in results]
