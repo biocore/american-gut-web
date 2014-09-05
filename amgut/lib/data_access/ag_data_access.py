@@ -1096,3 +1096,45 @@ class AGDataAccess(object):
         cursor.execute(sql, [supplied_kit_id])
         results = cursor.fetchall()
         return results
+
+    def search_participant_info(self, term):
+        sql = """select   cast(ag_login_id as varchar2(100)) as ag_login_id
+                 from    ag_login al
+                 where   lower(email) like '%s' or lower(name) like
+                 '%s' or lower(address) like '%s'"""
+        con = self.connection
+        cursor = con.cursor()
+        cursor.execut(sql, [term, term, term])
+        results = cursor.fetchall()
+        cursor.close()
+        return results
+
+    def search_kits(self, term):
+        sql = """ select  cast(ag_login_id as varchar2(100)) as ag_login_id
+                 from    ag_kit
+                 where   lower(supplied_kit_id) like '%s' or
+                 lower(kit_password) like '%s' or
+                 lower(kit_verification_code) = '%s'"""
+        con = self.connection
+        cursor = con.cursor()
+        cursor.execut(sql, [term, term, term])
+        results = cursor.fetchall()
+        cursor.close()
+        return results
+
+    def search_barcodes(self, term):
+        sql = """select  cast(ak.ag_login_id as varchar2(100)) as ag_login_id
+                 from    ag_kit ak
+                 inner join ag_kit_barcodes akb
+                 on ak.ag_kit_id = akb.ag_kit_id
+                 where   barcode like '%s' or lower(participant_name) like
+                 '%s' or lower(notes) like '%s'"""
+        con = self.connection
+        cursor = con.cursor()
+        cursor.execut(sql, [term, term, term])
+        results = cursor.fetchall()
+        cursor.close()
+        return results
+
+    def search_handout_kits(self, term):
+        
