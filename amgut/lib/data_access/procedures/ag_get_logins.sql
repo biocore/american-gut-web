@@ -11,7 +11,7 @@ BEGIN
 
     open user_data_ for
         SELECT  cast(ag_login_id as varchar(100)) as ag_login_id, 
-                lower(email), name
+                lower(email) as email, name
         from    ag_login
         order by lower(email);
     return user_data_;
