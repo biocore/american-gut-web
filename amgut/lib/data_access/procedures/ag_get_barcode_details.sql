@@ -16,7 +16,8 @@ BEGIN
                 cast(akb.ag_kit_id as varchar(100)), 
                 akb.barcode, 
                 akb.site_sampled, akb.environment_sampled, akb.sample_date, 
-                akb.sample_time, akb.participant_name, akb.notes, b.status
+                akb.sample_time, akb.participant_name, akb.notes, b.status, 
+                akb.refunded, akb.withdrawn
         from    ag_kit_barcodes akb
                 inner join ag_kit ak
                 on akb.ag_kit_id = ak.ag_kit_id
