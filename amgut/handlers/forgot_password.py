@@ -22,7 +22,7 @@ class ForgotPasswordHandler(BaseHandler):
         self.create_passcode_and_send_email(email, kitid)
 
     def create_passcode_and_send_email(self, email, kit_id):
-        kitids = AG_DATA_ACCESS.getAGKitbyEmail(email)
+        kitids = AG_DATA_ACCESS.getAGKitIDsByEmail(email)
         latlongs = AG_DATA_ACCESS.getMapMarkers()
         #if the kit id matches the email generate and send an email
         if kit_id in kitids:

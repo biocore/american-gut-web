@@ -213,12 +213,12 @@
             <p class="portal_blurb">One or more of the samples you submitted have been sequenced, and the results are now available online! We will be mailing hardcopies of these results shortly. Currently, we have only processed fecal samples, but we will be processing samples from other body sites soon.</p>
             <p class="portal_blurb">To access your available results, hover over "Human Samples" in the menu on the left, hover over your name, then click on your sample to view your results, or click one of the links below. The following barcodes are ready:
             <ul>
-    {% for barcode, name in results %}        
+    {% for result in results %}
                 <li>
-                    <form action="/authed/sample_overview/" method="post" id="sample_overview2_{{ barcode }}">
-                        <input type="hidden" name="barcode" id="barcode" value="{{ barcode }}"/>
+                    <form action="/authed/sample_overview/" method="post" id="sample_overview2_{{ result['barcode'] }}">
+                        <input type="hidden" name="barcode" id="barcode" value="{{ result['barcode'] }}"/>
                     </form>
-                    <a href="" onclick="document.forms['sample_overview2_{{ barcode }}'].submit(); return false;">{{ barcode }} ({{ escape(name) }})</a>
+                    <a href="" onclick="document.forms['sample_overview2_{{ result['barcode'] }}'].submit(); return false;">{{ result['barcode'] }} ({{ escape(result['participant_name']) }})</a>
                 </li>
     {% end %}
             </ul>

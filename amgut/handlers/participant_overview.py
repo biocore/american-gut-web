@@ -18,7 +18,7 @@ class ParticipantOverviewHandler(BaseHandler):
                 ag_login_id, participant_to_remove)
             # Remove all the samples attached to the participant
             for bc in barcodes:
-                AG_DATA_ACCESS.deleteSample(bc, ag_login_id)
+                AG_DATA_ACCESS.deleteSample(bc['barcode'], ag_login_id)
             # Remove the participant
             AG_DATA_ACCESS.deleteAGParticipant(
                 ag_login_id, participant_to_remove)

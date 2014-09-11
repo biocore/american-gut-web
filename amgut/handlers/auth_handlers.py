@@ -37,8 +37,8 @@ class AuthRegisterHandoutHandler(BaseHandler):
         if printresults is None:
             printresults = 'n'
         success = AG_DATA_ACCESS.addAGKit(
-            ag_login_id, skid, kitinfo['kit_password'],
-            kitinfo['swabs_per_kit'], kitinfo['kit_verification_code'],
+            ag_login_id, skid, kitinfo['password'],
+            kitinfo['swabs_per_kit'], kitinfo['verification_code'],
             printresults)
         if success == -1:
             self.redirect('/db_error/?err=regkit')
