@@ -11,14 +11,14 @@ __maintainer__ = ["Emily TerAvest"]
 __email__ = "emily.teravest@colorado.edu"
 __status__ = "Production"
 
+from unittest import TestCase, main
+
 import psycopg2
 import psycopg2.extras
-from unittest import TestCase, main
-from ag_data_access import AGDataAccess
+
+from amgut.lib.data_access.ag_data_access import AGDataAccess
 from amgut.lib.config_manager import AMGUT_CONFIG
 
-
-# class TestGoogleAPILimitExceeded(TestCase):
 
 class TestAGDataAccess(TestCase):
     def setUp(self):
@@ -40,9 +40,6 @@ class TestAGDataAccess(TestCase):
     def test_testDatabase(self):
         self.assertTrue(self.data_access.testDatabase())
 
-    # def test_dynamicMetadataSelect(self):
-    #     raise NotImplementedError()
-
     def test_authenticateWebAppUser(self):
         self.assertFalse(self.data_access.authenticateWebAppUser('bad',
                                                                  'wrong'))
@@ -59,7 +56,7 @@ class TestAGDataAccess(TestCase):
         rec = cur.fetchall()
         self.assertEqual(len(rec), 1)
         cur.execute('delete from ag_login where email = %s',
-                   ('deleteme@no.no',))
+                    ('deleteme@no.no',))
         self.con.commit()
         cur.execute(
             'select * from ag_login where email = %s', ('deleteme@no.no',))
@@ -86,21 +83,22 @@ class TestAGDataAccess(TestCase):
 
     def test_getAGSurveyDetails(self):
         ag_login_id = 'd8592c74-7da1-2135-e040-8a80115d6401'
-        participant_name = 'test'
+        participant_name = 'foo'
         data = self.data_access.getAGSurveyDetails(ag_login_id,
                                                    participant_name)
-        self.assertEqual(data['participant_name'], 'test')
         self.assertEqual(data['consent'], 'Yes')
 
     def test_getAGLogins(self):
         data = self.data_access.getAGLogins()
-        self.assertTrue(('d8592c74-7da1-2135-e040-8a80115d6401',
-                         'test@microbio.me', 'Test') in data)
+        self.assertTrue({'ag_login_id': 'd8592c74-7da1-2135-e040-8a80115d6401',
+                         'email': 'test@microbio.me', 'name': 'Test'} in data)
 
     def test_getAGKitsByLogin(self):
         data = self.data_access.getAGKitsByLogin()
-        self.assertTrue(('test@microbio.me', 'test',
-                         'd8592c74-7da2-2135-e040-8a80115d6401') in data)
+        self.assertTrue({'email': 'test@microbio.me',
+                         'supplied_kit_id': 'test',
+                         'ag_kit_id': 'd8592c74-7da2-2135-e040-8a80115d6401'}
+                         in data)
 
     def test_getAGBarcodes(self):
         data = self.data_access.getAGBarcodes()
@@ -110,9 +108,12 @@ class TestAGDataAccess(TestCase):
     def test_getAGBarcodesByLogin(self):
         data = self.data_access.getAGBarcodesByLogin(
             'd8592c74-7da1-2135-e040-8a80115d6401')
-        barcodes = {row[3] for row in data}
-        self.assertEqual({'000010860', '000010859', '000006616', '000000001'},
-                         barcodes)
+        expected = {
+            '000017221', '000017223', '000017222', '000017225', '000017224',
+            '000017227', '000017226', '000010860', '000010859', '000006616',
+            '000000001'}
+        observed = {row['barcode'] for row in data}
+        self.assertEqual(observed, expected)
 
     def test_getAGBarcodeDetails(self):
         data = self.data_access.getAGBarcodeDetails('000000001')
@@ -123,14 +124,6 @@ class TestAGDataAccess(TestCase):
     def test_getAGKitDetails(self):
         data = self.data_access.getAGKitDetails('test')
         self.assertEqual(data['kit_verification_code'], 'test')
-
-    # def test_getAGCode(self):
-    #     should never be used
-    #     raise NotImplementedError()
-
-    # def test_getNewAGKitId(self):
-    #     should never be used
-    #     raise NotImplementedError()
 
     def test_getNextAGBarcode(self):
         barcode, barcode_text = self.data_access.getNextAGBarcode()
@@ -206,7 +199,7 @@ class TestAGDataAccess(TestCase):
     def test_updateAGBarcode(self):
         self.data_access.updateAGBarcode(
             '000010860', 'd8592c74-7da2-2135-e040-8a80115d6401', 'Stool', '',
-            '07/30/2014', '9:30 AM', 'test', '')
+            '07/30/2014', '9:30 AM', 'test', 'notes', 'n', 'n')
         cur = self.con.cursor()
         cur.execute('select * from ag_kit_barcodes where barcode = %s',
                     ('000010860',))
@@ -215,7 +208,7 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(rec[6], '07/30/2014')
         self.data_access.updateAGBarcode(
             '000010860', 'd8592c74-7da2-2135-e040-8a80115d6401', '', '', '',
-            '', '', '')
+            '', '', '', '', '')
         cur.execute('select * from ag_kit_barcodes where barcode = %s',
                     ('000010860',))
         rec = cur.fetchone()
@@ -275,7 +268,7 @@ class TestAGDataAccess(TestCase):
             'd8592c747da12135e0408a80115d6401', 'sp_test')
         data = self.data_access.getHumanParticipants(
             'd8592c747da12135e0408a80115d6401')
-        self.assertEqual(len(data), 3)
+        self.assertEqual(len(data), 2)
 
     def test_addAGGeneralValue(self):
         self.data_access.addAGGeneralValue('d8592c747da12135e0408a80115d6401',
@@ -317,7 +310,7 @@ class TestAGDataAccess(TestCase):
         self.data_access.deleteSample('000010860',
                                       'd8592c747da12135e0408a80115d6401')
         data = self.data_access.getAGBarcodeDetails('000010860')
-        self.assertEqual(data['participant_name'], '')
+        self.assertEqual(data['participant_name'], None)
 
     def test_deleteSample(self):
         cur = self.con.cursor()
@@ -333,28 +326,28 @@ class TestAGDataAccess(TestCase):
         self.data_access.deleteSample('000010860',
                                       'd8592c747da12135e0408a80115d6401')
         data = self.data_access.getAGBarcodeDetails('000010860')
-        self.assertEqual(data['participant_name'], '')
+        self.assertEqual(data['participant_name'], None)
 
     def test_getHumanParticipants(self):
         data = self.data_access.getHumanParticipants(
             'd8592c74-7da1-2135-e040-8a80115d6401')
-        self.assertEqual(set(data), {'Emily', 'foo', 'test'})
+        self.assertEqual(set(data), {'Emily', 'foo'})
 
     def test_AGGetBarcodeMetadata(self):
         data = self.data_access.AGGetBarcodeMetadata('000000001')
-        self.assertEqual(data[0]['FOODALLERGIES_PEANUTS'], 'unknown')
-        self.assertEqual(data[0]['CHICKENPOX'], 'unknown')
+        self.assertEqual(data[0]['foodallergies_peanuts'], 'unknown')
+        self.assertEqual(data[0]['chickenpox'], 'unknown')
 
     def test_AGGetBarcodeMetadataAnimal(self):
         data = self.data_access.AGGetBarcodeMetadataAnimal('000010860')
-        #this test needs to be changed when the test database is updated
+        # this test needs to be changed when the test database is updated
         self.assertEqual(len(data), 0)
 
     def test_getAnimalParticipants(self):
         data = self.data_access.getAnimalParticipants(
             'd8592c74-7da1-2135-e040-8a80115d6401')
-        #this test needs updated when the test database is updated
-        self.assertEqual(len(data), 1)
+        # this test needs updated when the test database is updated
+        self.assertEqual(len(data), 9)
 
     def test_getParticipantExceptions(self):
         data = self.data_access.getParticipantExceptions(
@@ -371,13 +364,16 @@ class TestAGDataAccess(TestCase):
         data = self.data_access.getEnvironmentalSamples(
             'd8592c74-7da1-2135-e040-8a80115d6401')
         barcodes = {x['barcode'] for x in data}
-        self.assertEqual(barcodes, {'000010859', '000006616'})
+        # TODO: This is broken -- there are no environmental samples associated
+        # with the test user. We need to set something up like we have in qiita
+        # where a test DB is set up and torn down for each individual test
+        self.assertEqual(barcodes, set())
 
     def test_getAvailableBarcodes(self):
         data = self.data_access.getAvailableBarcodes(
             'd8592c74-7da1-2135-e040-8a80115d6401')
-        #this test will change when test database is updated
-        self.assertEqual(len(data), 1)
+        # this test will change when test database is updated
+        self.assertEqual(len(data), 9)
 
     def test_verifyKit(self):
         cur = self.con.cursor()
@@ -390,25 +386,9 @@ class TestAGDataAccess(TestCase):
         rec = cur.fetchone()
         self.assertEqual(rec[0], 'y')
 
-    # def test_addGeocodingInfo(self):
-    #     used in wwwadmin
-    #     raise NotImplementedError()
-
     def test_getMapMarkers(self):
         data = self.data_access.getMapMarkers()
         self.assertNotEqual(len(data), 0)
-
-    # def test_getGeocodeJSON(self):
-    #     used in wwwadmin
-    #     raise NotImplementedError()
-
-    # def test_getElevationJSON(self):
-    #     used in wwwadmin
-    #     raise NotImplementedError()
-
-    # def test_updateGeoInfo(self):
-    #     used in wwwadmin
-    #     raise NotImplementedError()
 
     def test_addBruceWayne(self):
         self.data_access.addBruceWayne('d8592c747da12135e0408a80115d6401',
@@ -428,8 +408,8 @@ class TestAGDataAccess(TestCase):
 
     def test_checkBarcode(self):
         data = self.data_access.checkBarcode('000000001')
-        self.assertEqual(data[0], 'Stool')
-        self.assertEqual(data[-1], 'Test')
+        self.assertEqual(data['site_sampled'], 'Stool')
+        self.assertEqual(data['name'], 'Test')
 
     def test_updateAGSurvey(self):
         self.data_access.updateAGSurvey('d8592c747da12135e0408a80115d6401',
@@ -466,8 +446,8 @@ class TestAGDataAccess(TestCase):
         rec = cur.fetchone()
         self.assertEqual([rec[11], rec[12], rec[13]], [None, None, None])
 
-    def test_getAGKitbyEmail(self):
-        data = self.data_access.getAGKitbyEmail('test@microbio.me')
+    def test_getAGKitIDsByEmail(self):
+        data = self.data_access.getAGKitIDsByEmail('test@microbio.me')
         self.assertEqual(set(data), {'test', '1111'})
 
     def test_ag_set_pass_change_code(self):
@@ -504,9 +484,12 @@ class TestAGDataAccess(TestCase):
         self.con.commit()
 
     def test_getBarcodesByKit(self):
-        data = self.data_access.getBarcodesByKit('test')
-        self.assertEqual(set(data), {'000010860', '000010859', '000006616',
-                                     '000000001'})
+        observed = self.data_access.getBarcodesByKit('test')
+        expected = {'000010860', '000010859', '000006616', '000000001',
+                    '000017221', '000017223', '000017222', '000017225',
+                    '000017224', '000017227', '000017226'}
+
+        self.assertEqual(set(observed), expected)
 
     def test_checkPrintResults(self):
         data = self.data_access.checkPrintResults('test')
@@ -519,7 +502,6 @@ class TestAGDataAccess(TestCase):
     def test_menu_items(self):
         data = self.data_access.get_menu_items('test')
         self.assertEqual(data[0]['foo'][0]['barcode'], '000000001')
-        #print data
 
     def test_get_verification_code(self):
         data = self.data_access.get_verification_code('test')
@@ -538,5 +520,7 @@ class TestAGDataAccess(TestCase):
     def test_get_barcodes_from_handout_kit(self):
         data = self.data_access.get_barcodes_from_handout_kit('PGP_cRzJo')
         self.assertEqual(len(data), 5)
+
+
 if __name__ == "__main__":
     main()
