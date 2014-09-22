@@ -217,7 +217,7 @@ class AGDataAccess(object):
 
         barcode_info = [dict(zip(col_names, row)) for row in rows]
 
-        return barcode_info 
+        return barcode_info
 
     def getAGBarcodeDetails(self, barcode):
         results = self._sql.execute_proc_return_cursor(
@@ -313,9 +313,9 @@ class AGDataAccess(object):
         try:
             self.connection.cursor().callproc('ag_insert_kit',
                                               [ag_login_id, kit_id,
-                                              kit_password, swabs_per_kit,
-                                              kit_verification_code,
-                                              printresults])
+                                               kit_password, swabs_per_kit,
+                                               kit_verification_code,
+                                               printresults])
             self.connection.commit()
         except psycopg2.IntegrityError:
             self.connection.commit()
@@ -406,9 +406,9 @@ class AGDataAccess(object):
                              notes):
         self.connection.cursor().callproc('ag_log_participant_sample',
                                           [barcode, sample_site,
-                                          environment_sampled, sample_date,
-                                          sample_time, participant_name,
-                                          notes])
+                                           environment_sampled, sample_date,
+                                           sample_time, participant_name,
+                                           notes])
         self.connection.commit()
 
     def deleteSample(self, barcode, ag_login_id):
@@ -1091,7 +1091,7 @@ class AGDataAccess(object):
 
     def getBarcodeProjType(self, barcode):
         """ Get the project type of the barcode.
-            Return a strings of project type.
+            Return a tuple of project and project type.
         """
         sql = """select p.project from project p inner join
                  project_barcode pb on (pb.project_id = p.project_id)
@@ -1100,24 +1100,66 @@ class AGDataAccess(object):
         cursor = con.cursor()
         cursor.execute(sql, [barcode])
         results = cursor.fetchone()
-        return results[0]
+        proj = results[0]
+        #this will get changed to get the project type from the db
+        if proj in ('American Gut Project', 'ICU Microbiome', 'Handout Kits',
+                    'Office Succession Study',
+                    'American Gut Project: Functional Feces',
+                    'Down Syndrome Microbiome', 'Beyond Bacteria',
+                    'All in the Family', 'American Gut Handout kit',
+                    'Personal Genome Project', 'Sleep Study',
+                    'Anxiety/Depression cohort', 'Alzheimers Study'):
+            proj_type = 'American Gut'
+        else:
+            proj_type = proj
+        return (proj, proj_type)
 
-    # def setBarcodeProjType(self, project, barcode):
-    #     """sets the project type of the barcodel
+    def setBarcodeProjType(self, project, barcode):
+        """sets the project type of the barcodel
 
-    #         project is the project name from the project table
-    #         barcode is the barcode
-    #     """
-    #     con = self.getMetadataDatabaseConnection()
-    #     con.cursor().callproc('set_barcode_proj_type', [project, barcode])
+            project is the project name from the project table
+            barcode is the barcode
+        """
+        sql = """update project_barcode set project_id =
+                (select project_id from project where project = %s)
+                where barcode = %s"""
+        con = self.connection
+        result = con.cursor()
+        con = self.connection
+        cursor = con.cursor()
+        cursor.execute(sql, [project, barcode])
+        con.commit()
+        cursor.close()
 
     def getProjectNames(self):
         """Returns a list of project names
         """
-        sql = """select project_name from project"""
+        sql = """select project from project"""
+        con = self.connection
         result = con.cursor()
         con = self.connection
         cursor = con.cursor()
         cursor.execute(sql)
         results = cursor.fetchall()
-        return results
+        return [x[0] for x in results]
+
+    def updateBarcodeStatus(self, status, postmark, scan_date, barcode,
+                            biomass_remaining, sequencing_status, obsolete):
+        """ Updates a barcode's status
+        """
+        sql = """update  barcode
+        set     status = %s,
+            sample_postmark_date = %s,
+            scan_date = %s,
+            biomass_remaining = %s,
+            sequencing_status = %s,
+            obsolete = %s
+        where   barcode = %s"""
+        con = self.connection
+        result = con.cursor()
+        con = self.connection
+        cursor = con.cursor()
+        cursor.execute(sql, [status, postmark, scan_date, biomass_remaining,
+                             sequencing_status, obsolete, barcode])
+        con.commit()
+        cursor.close()
