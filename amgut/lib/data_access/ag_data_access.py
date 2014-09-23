@@ -1060,6 +1060,9 @@ class AGDataAccess(object):
 ################################################
 # not sure where these should end up
     def get_barcode_details(self, barcode):
+        """
+        Returns the genral barcode details for a barcode
+        """
         sql = """select  create_date_time, status, scan_date,
                   sample_postmark_date,
                   biomass_remaining, sequencing_status, obsolete
@@ -1077,6 +1080,9 @@ class AGDataAccess(object):
             return {}
 
     def get_plate_for_barcode(self, barcode):
+        """
+        Gets the sequencing plates a barcode is on
+        """
         sql = """select  p.plate, p.sequence_date
                  from    plate p inner join plate_barcode pb on
                  pb.plate_id = p.plate_id \
@@ -1156,7 +1162,6 @@ class AGDataAccess(object):
             obsolete = %s
         where   barcode = %s"""
         con = self.connection
-        result = con.cursor()
         con = self.connection
         cursor = con.cursor()
         cursor.execute(sql, [status, postmark, scan_date, biomass_remaining,
