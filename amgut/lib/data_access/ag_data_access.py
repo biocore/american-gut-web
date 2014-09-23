@@ -217,7 +217,7 @@ class AGDataAccess(object):
 
         barcode_info = [dict(zip(col_names, row)) for row in rows]
 
-        return barcode_info 
+        return barcode_info
 
     def getAGBarcodeDetails(self, barcode):
         results = self._sql.execute_proc_return_cursor(
@@ -313,9 +313,9 @@ class AGDataAccess(object):
         try:
             self.connection.cursor().callproc('ag_insert_kit',
                                               [ag_login_id, kit_id,
-                                              kit_password, swabs_per_kit,
-                                              kit_verification_code,
-                                              printresults])
+                                               kit_password, swabs_per_kit,
+                                               kit_verification_code,
+                                               printresults])
             self.connection.commit()
         except psycopg2.IntegrityError:
             self.connection.commit()
@@ -406,9 +406,9 @@ class AGDataAccess(object):
                              notes):
         self.connection.cursor().callproc('ag_log_participant_sample',
                                           [barcode, sample_site,
-                                          environment_sampled, sample_date,
-                                          sample_time, participant_name,
-                                          notes])
+                                           environment_sampled, sample_date,
+                                           sample_time, participant_name,
+                                           notes])
         self.connection.commit()
 
     def deleteSample(self, barcode, ag_login_id):
@@ -941,6 +941,105 @@ class AGDataAccess(object):
         results = cursor.fetchall()
         return results
 
+    def search_participant_info(self, term):
+        sql = """select   cast(ag_login_id as varchar(100)) as ag_login_id
+                 from    ag_login al
+                 where   lower(email) like %s or lower(name) like
+                 %s or lower(address) like %s"""
+        con = self.connection
+        cursor = con.cursor()
+        liketerm = '%%' + term + '%%'
+        cursor.execute(sql, [liketerm, liketerm, liketerm])
+        results = cursor.fetchall()
+        cursor.close()
+        return [x[0] for x in results]
+
+    def search_kits(self, term):
+        sql = """ select  cast(ag_login_id as varchar(100)) as ag_login_id
+                 from    ag_kit
+                 where   lower(supplied_kit_id) like %s or
+                 lower(kit_password) like %s or
+                 lower(kit_verification_code) = %s"""
+        con = self.connection
+        cursor = con.cursor()
+        liketerm = '%%' + term + '%%'
+        cursor.execute(sql, [liketerm, liketerm, term])
+        results = cursor.fetchall()
+        cursor.close()
+        return [x[0] for x in results]
+
+    def search_barcodes(self, term):
+        sql = """select  cast(ak.ag_login_id as varchar(100)) as ag_login_id
+                 from    ag_kit ak
+                 inner join ag_kit_barcodes akb
+                 on ak.ag_kit_id = akb.ag_kit_id
+                 where   barcode like %s or lower(participant_name) like
+                 %s or lower(notes) like %s"""
+        con = self.connection
+        cursor = con.cursor()
+        liketerm = '%%' + term + '%%'
+        cursor.execute(sql, [liketerm, liketerm, liketerm])
+        results = cursor.fetchall()
+        cursor.close()
+        return [x[0] for x in results]
+
+    def get_login_info(self, ag_login_id):
+        sql = """select  ag_login_id, email, name, address, city, state, zip,
+                         country
+                 from    ag_login
+                 where   ag_login_id = %s"""
+        con = self.connection
+        cursor = con.cursor()
+        cursor.execute(sql, [ag_login_id])
+        col_names = [x[0] for x in cursor.description]
+        results = [dict(zip(col_names, row)) for row in cursor.fetchall()]
+        cursor.close()
+        return results
+
+    def get_kit_info_by_login(self, ag_login_id):
+        sql = """select  cast(ag_kit_id as varchar(100)) as ag_kit_id,
+                        cast(ag_login_id as varchar(100)) as ag_login_id,
+                        supplied_kit_id, kit_password, swabs_per_kit,
+                        kit_verification_code, kit_verified
+                from    ag_kit
+                where   ag_login_id = %s"""
+        con = self.connection
+        cursor = con.cursor()
+        cursor.execute(sql, [ag_login_id])
+        col_names = [x[0] for x in cursor.description]
+        results = [dict(zip(col_names, row)) for row in cursor.fetchall()]
+        cursor.close()
+        return results
+
+    def get_barcode_info_by_kit_id(self, ag_kit_id):
+        sql = """select  cast(ag_kit_barcode_id as varchar(100)) as
+                  ag_kit_barcode_id, cast(ag_kit_id as varchar(100)) as
+                  ag_kit_id, barcode, sample_date, sample_time, site_sampled,
+                  participant_name, environment_sampled, notes, results_ready,
+                  withdrawn, refunded
+                from    ag_kit_barcodes
+                where   ag_kit_id = %s"""
+        con = self.connection
+        cursor = con.cursor()
+        cursor.execute(sql, [ag_kit_id])
+        col_names = [x[0] for x in cursor.description]
+        results = [dict(zip(col_names, row)) for row in cursor.fetchall()]
+        cursor.close()
+        return results
+
+    def search_handout_kits(self, term):
+        sql = """select kit_id, password, barcode, verification_code
+                 from ag_handout_kits where kit_id like %s
+                 or barcode like %s"""
+        con = self.connection
+        cursor = con.cursor()
+        liketerm = '%%' + term + '%%'
+        cursor.execute(sql, [liketerm, liketerm])
+        col_names = [x[0] for x in cursor.description]
+        results = [dict(zip(col_names, row)) for row in cursor.fetchall()]
+        cursor.close()
+        return results
+
     def get_login_by_email(self, email):
         sql = """select name, address, city, state, zip, country, ag_login_id
                  from ag_login where email = %s"""
@@ -955,3 +1054,117 @@ class AGDataAccess(object):
             login['email'] = email
 
         return login
+
+#################################################
+### GENERAL DATA ACCESS  #######################
+################################################
+# not sure where these should end up
+    def get_barcode_details(self, barcode):
+        """
+        Returns the genral barcode details for a barcode
+        """
+        sql = """select  create_date_time, status, scan_date,
+                  sample_postmark_date,
+                  biomass_remaining, sequencing_status, obsolete
+                  from    barcode
+                  where barcode = %s"""
+        con = self.connection
+        cursor = con.cursor()
+        cursor.execute(sql, [barcode])
+        col_names = [x[0] for x in cursor.description]
+        results = [dict(zip(col_names, row)) for row in cursor.fetchall()]
+        cursor.close()
+        if results:
+            return results[0]
+        else:
+            return {}
+
+    def get_plate_for_barcode(self, barcode):
+        """
+        Gets the sequencing plates a barcode is on
+        """
+        sql = """select  p.plate, p.sequence_date
+                 from    plate p inner join plate_barcode pb on
+                 pb.plate_id = p.plate_id \
+                where   pb.barcode = %s"""
+        con = self.connection
+        cursor = con.cursor()
+        cursor.execute(sql, [barcode])
+        col_names = [x[0] for x in cursor.description]
+        results = [dict(zip(col_names, row)) for row in cursor.fetchall()]
+        cursor.close()
+        return results
+
+    def getBarcodeProjType(self, barcode):
+        """ Get the project type of the barcode.
+            Return a tuple of project and project type.
+        """
+        sql = """select p.project from project p inner join
+                 project_barcode pb on (pb.project_id = p.project_id)
+                 where pb.barcode = %s"""
+        con = self.connection
+        cursor = con.cursor()
+        cursor.execute(sql, [barcode])
+        results = cursor.fetchone()
+        proj = results[0]
+        #this will get changed to get the project type from the db
+        if proj in ('American Gut Project', 'ICU Microbiome', 'Handout Kits',
+                    'Office Succession Study',
+                    'American Gut Project: Functional Feces',
+                    'Down Syndrome Microbiome', 'Beyond Bacteria',
+                    'All in the Family', 'American Gut Handout kit',
+                    'Personal Genome Project', 'Sleep Study',
+                    'Anxiety/Depression cohort', 'Alzheimers Study'):
+            proj_type = 'American Gut'
+        else:
+            proj_type = proj
+        return (proj, proj_type)
+
+    def setBarcodeProjType(self, project, barcode):
+        """sets the project type of the barcodel
+
+            project is the project name from the project table
+            barcode is the barcode
+        """
+        sql = """update project_barcode set project_id =
+                (select project_id from project where project = %s)
+                where barcode = %s"""
+        con = self.connection
+        result = con.cursor()
+        con = self.connection
+        cursor = con.cursor()
+        cursor.execute(sql, [project, barcode])
+        con.commit()
+        cursor.close()
+
+    def getProjectNames(self):
+        """Returns a list of project names
+        """
+        sql = """select project from project"""
+        con = self.connection
+        result = con.cursor()
+        con = self.connection
+        cursor = con.cursor()
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        return [x[0] for x in results]
+
+    def updateBarcodeStatus(self, status, postmark, scan_date, barcode,
+                            biomass_remaining, sequencing_status, obsolete):
+        """ Updates a barcode's status
+        """
+        sql = """update  barcode
+        set     status = %s,
+            sample_postmark_date = %s,
+            scan_date = %s,
+            biomass_remaining = %s,
+            sequencing_status = %s,
+            obsolete = %s
+        where   barcode = %s"""
+        con = self.connection
+        con = self.connection
+        cursor = con.cursor()
+        cursor.execute(sql, [status, postmark, scan_date, biomass_remaining,
+                             sequencing_status, obsolete, barcode])
+        con.commit()
+        cursor.close()
