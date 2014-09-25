@@ -1,7 +1,7 @@
 {% extends sitebase.html %}
 {% block content %}
-<h2>Contact the American Gut</h2>
-<h4>We will send a response to the email address you supply within 24 hours.</h4>
+<h2>{% raw text_locale['CONTACT_HEADER'] %}</h2>
+<h4>{% raw text_locale['RESPONSE_TIMING'] %}</h4>
 
 <form id="help_request" name="help_request" action="/authed/help_request/" method="post">
     <table width="100%">
@@ -11,13 +11,13 @@
             <div class="lefta">
                 <table>
                     <tr>
-                        <td>First Name</td><td><input type="text" id="first_name" name="first_name"/></td>
+                        <td>{% raw text_locale['FIRST_NAME'] %}</td><td><input type="text" id="first_name" name="first_name"/></td>
                     </tr>
                     <tr>
-                        <td>Last Name</td><td><input type="text" id="last_name" name="last_name"/></td>
+                        <td>{% raw text_locale['LAST_NAME'] %}</td><td><input type="text" id="last_name" name="last_name"/></td>
                     </tr>
                     <tr>
-                        <td>Email address</td><td><input type="text" id="email_address" name="email_address"/></td>
+                        <td>{% raw text_locale['EMAIL_ADDRESS'] %}</td><td><input type="text" id="email_address" name="email_address"/></td>
                     </tr>
                 </table>
             </div>
@@ -26,7 +26,7 @@
         </tr>
     </table>
     <br/> <br/>
-    Enter information related to your problem<br/>
+    {% raw text_locale['PROBLEM_PROMPT'] %}<br/>
     <textarea rows="4" cols="50" style="resize:none" id="message_body" name="message_body"/></textarea>
     <br />
     <br />
