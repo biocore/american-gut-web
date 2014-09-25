@@ -9,7 +9,7 @@ from tornado.options import define, options, parse_command_line
 
 from amgut.handlers.base_handlers import (
     MainHandler, NoPageHandler, DBErrorHandler)
-from amgut.lib.config_manager import AMGUT_CONFIG
+from amgut import AMGUT_CONFIG
 
 from amgut.handlers.auth_handlers import (
     AuthRegisterHandoutHandler, AuthLoginHandler, AuthLogoutHandler)
