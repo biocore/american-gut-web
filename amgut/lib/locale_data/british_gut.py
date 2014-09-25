@@ -14,5 +14,5 @@ from __future__ import division
 text_locale = {}
 
 # Any media specific localizations
-media_locale = {'logo': '/static/img/british_gut_logo.jpg',
-                'project_title': 'British Gut Project'}
+media_locale = {'LOGO': '/static/img/british_gut_logo.jpg',
+                'PROJECT_TITLE': 'British Gut Project'}
