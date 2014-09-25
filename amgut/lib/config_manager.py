@@ -64,6 +64,8 @@ class ConfigurationManager(object):
         """Get the configuration of the main section"""
         self.test_environment = config.getboolean('main', 'TEST_ENVIRONMENT')
         self.base_data_dir = config.get('main', 'BASE_DATA_DIR')
+        self.locale = config.get('main', 'LOCALE')
+
         if not exists(self.base_data_dir):
             raise IOError("Directory %s does not exist!" % self.base_data_dir)
 
