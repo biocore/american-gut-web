@@ -18,7 +18,7 @@ class TaxaSummaryHandler(BaseHandler):
             self.render(page, skid=self.current_user,
                         loginerror="ERROR: No barcode was requested",
                         text_locale=text_locale[page],
-                        media_locale=media_locale[page])
+                        media_locale=media_locale)
             return
 
         # we need this path to access the filesystem
@@ -57,4 +57,4 @@ class TaxaSummaryHandler(BaseHandler):
         self.render(page, headers=headers, data=lines,
                     barcode=barcode, file_path=taxa_summary_url, loginerror="",
                     skid=self.current_user, text_locale=text_locale[page],
-                    media_locale=media_locale[page])
+                    media_locale=media_locale)
