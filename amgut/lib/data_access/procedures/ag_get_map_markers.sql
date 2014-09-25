@@ -28,7 +28,8 @@ BEGIN
                         on akb.ag_kit_id = ak.ag_kit_id
                 where   ak.ag_login_id = agl.ag_login_id
                         and (akb.site_sampled IS NOT NULL AND akb.site_sampled::text <> '')
-            );
+            ) AND
+            where latitude IS NOT NULL and longitude is not NULL;
     
     -- Second priority: verified
     insert  into ag_map_markers
@@ -43,7 +44,8 @@ BEGIN
                 where   ak.ag_login_id = agl.ag_login_id
                         and kit_verified = 'y'
             ) > 0
-            and coalesce(mm.zipcode::text, '') = '';
+            and coalesce(mm.zipcode::text, '') = ''
+            and where latitude IS NOT NULL and longitude is not NULL;
             
     -- Finally, existing participants
     insert  into ag_map_markers
@@ -55,7 +57,7 @@ BEGIN
     where   coalesce(mm.zipcode::text, '') = '';
 
     open results_ for
-        SELECT  zipcode, latitude, longitude, marker_color
+        SELECT  latitude, longitude, marker_color
         from    ag_map_markers
         order by order_by desc;
     return results_;
