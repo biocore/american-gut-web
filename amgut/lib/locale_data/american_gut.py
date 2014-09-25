@@ -19,4 +19,5 @@ text_locale = {
         }
 
 # Any media specific localizations
-media_locale = {'logo': '/static/img/ag_logo.jpg'}
+media_locale = {'logo': '/static/img/ag_logo.jpg',
+                'project_title': 'American Gut Project'}
