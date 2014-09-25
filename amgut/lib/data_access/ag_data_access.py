@@ -587,6 +587,25 @@ class AGDataAccess(object):
 
             self.updateGeoInfo(ag_login_id, lat, lon, elevation, '')
 
+    def getGeocodeStats(self):
+        stat_queries = [
+            ("Total Rows",
+             "select count(*) from ag_login"),
+            ("Cannot Geocode",
+             "select count(*) from ag_login where cannot_geocode = 'y'"),
+            ("Null Latitude Field",
+             "select count(*) from ag_login where latitude is null"),
+            ("Null Elevation Field",
+             "select count(*) from ag_login where elevation is null")
+        ]
+        results = []
+        for name, sql in stat_queries:
+            cur = self.connection.cursor()
+            cur.execute(sql)
+            total = cur.fetchone()[0]
+            results.append((name, total))
+        return results
+
     def getMapMarkers(self):
         cur_completed = self.connection.cursor()
         cur_ver = self.connection.cursor()
