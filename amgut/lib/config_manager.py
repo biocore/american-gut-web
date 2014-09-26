@@ -62,6 +62,8 @@ class ConfigurationManager(object):
 
     def _get_main(self, config):
         """Get the configuration of the main section"""
+        self.project_name = config.get('main', 'NAME')
+        self.project_shorthand = config.get('main', 'SHORTHAND')
         self.test_environment = config.getboolean('main', 'TEST_ENVIRONMENT')
         self.base_data_dir = config.get('main', 'BASE_DATA_DIR')
         self.locale = config.get('main', 'LOCALE')
