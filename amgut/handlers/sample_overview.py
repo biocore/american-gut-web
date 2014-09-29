@@ -2,6 +2,7 @@ import os
 
 from tornado.web import authenticated
 
+from amgut import media_locale
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.util import AG_DATA_ACCESS
 from amgut.handlers.base_handlers import BaseHandler
@@ -51,7 +52,8 @@ class SampleOverviewHandler(BaseHandler):
                     barcode_pdf=barcode_pdf, barcode_txt=barcode_txt,
                     bgcolor=bgcolor, status=status, barcode=barcode,
                     sample_origin=sample_origin, sample_date=sample_date,
-                    sample_time=sample_time, notes=notes)
+                    sample_time=sample_time, notes=notes,
+                    media_locale=media_locale)
 
     @authenticated
     def get(self):

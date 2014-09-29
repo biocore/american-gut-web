@@ -1,5 +1,6 @@
 from tornado.web import authenticated
 
+from amgut import media_locale
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.util import AG_DATA_ACCESS
 from amgut.lib.mail import send_email
@@ -25,7 +26,8 @@ class NewParticipantHandler(BaseHandler):
     """"""
     @authenticated
     def get(self):
-        self.render("new_participant.html", skid=self.current_user)
+        self.render("new_participant.html", skid=self.current_user,
+                    media_locale=media_locale)
 
     @authenticated
     def post(self):

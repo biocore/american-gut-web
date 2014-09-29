@@ -1,5 +1,6 @@
 from tornado.web import authenticated
 
+from amgut import media_locale
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.util import AG_DATA_ACCESS
 
@@ -28,7 +29,8 @@ class PortalHandler(BaseHandler):
                     errmsg=errmsg, kit_verified=kit_verified,
                     has_results=has_results, results=results,
                     barcodes=barcodes, kit_ver_error=kit_ver_error,
-                    verification_textbox=verification_textbox)
+                    verification_textbox=verification_textbox,
+                    media_locale=media_locale)
 
     @authenticated
     def post(self):
@@ -55,6 +57,6 @@ class PortalHandler(BaseHandler):
         self.render("portal.html", skid=kit_id, user_name=user_name,
                     errmsg=errmsg, kit_verified=kit_verified,
                     has_results=has_results, results=results,
-                    barcodes=barcodes,
+                    barcodes=barcodes, media_locale=media_locale,
                     verification_textbox=verification_textbox,
                     kit_ver_error=kit_ver_error)

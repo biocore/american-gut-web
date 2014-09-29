@@ -1,5 +1,6 @@
 from urllib import unquote
 
+from amgut import media_locale
 from amgut.lib.mail import send_email
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.util import AG_DATA_ACCESS
@@ -25,7 +26,7 @@ class ChangePassVerifyHandler(BaseHandler):
                     passcode=passcode, new_password=new_password,
                     confirm_password=confirm_password,
                     result=result, message=None, latlongs_db=latlongs,
-                    loginerror='')
+                    loginerror='', media_locale=media_locale)
 
     def post(self):
         email = self.get_argument('email', None)
@@ -53,10 +54,12 @@ class ChangePassVerifyHandler(BaseHandler):
             send_email(MESSAGE, 'American Gut Password Reset', email)
             self.render('change_pass_verify.html', email='', kitid='',
                         passocde='', new_password='',
+                        media_locale=media_locale,
                         confirm_password='', result=4, message='',
                         latlongs_db=latlongs, loginerror='')
         except:
             self.render('change_pass_verify.html', email='', kitid='',
                         passocde='', new_password='',
                         confirm_password='', result=5, message='',
-                        latlongs_db=latlongs, loginerror='')
+                        latlongs_db=latlongs, loginerror='',
+                        media_locale=media_locale)

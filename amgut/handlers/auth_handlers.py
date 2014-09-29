@@ -3,6 +3,7 @@
 from tornado.web import authenticated
 from tornado.escape import json_encode
 
+from amgut import media_locale
 from amgut.util import AG_DATA_ACCESS
 from amgut.lib.mail import send_email
 from amgut.handlers.base_handlers import BaseHandler
@@ -16,7 +17,7 @@ class AuthRegisterHandoutHandler(BaseHandler):
     def get(self):
         latlong_db = AG_DATA_ACCESS.getMapMarkers()
         self.render("register_user.html", skid=self.current_user,
-                    latlongs_db=latlong_db)
+                    latlongs_db=latlong_db, media_locale=media_locale)
 
     @authenticated
     def post(self):
@@ -87,7 +88,8 @@ class AuthRegisterHandoutHandler(BaseHandler):
                       "contact us directly at "
                       "<a href='mailto:info@americangut.org'>info@americangut.org</a>")
 
-            self.render('help_request.html', skid=skid, result=result)
+            self.render('help_request.html', skid=skid, result=result,
+                        media_locale=media_locale)
 
         self.redirect('/authed/portal/')
 
@@ -114,7 +116,7 @@ class AuthLoginHandler(BaseHandler):
                 msg = "Invalid Kit ID or Password"
                 latlongs_db = AG_DATA_ACCESS.getMapMarkers()
                 self.render("index.html", user=None, loginerror=msg,
-                            latlongs_db=latlongs_db)
+                            latlongs_db=latlongs_db, media_locale=media_locale)
                 return
 
     def set_current_user(self, user):
