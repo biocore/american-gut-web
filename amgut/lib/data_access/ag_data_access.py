@@ -802,8 +802,7 @@ class AGDataAccess(object):
         # site_sampled, sample_date, sample_time, participant_name,
         #environment_sampled, notes
         results = self._sql.execute_proc_return_cursor('ag_stats', [])
-        col_names = self._get_col_names_from_cursor(results)
-        ag_stats = [dict(zip(col_names, row)) for row in results]
+        ag_stats = results.fetchall()
         results.close()
         return ag_stats
 
