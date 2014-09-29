@@ -1,5 +1,8 @@
 {% extends no_auth_sitebase.html %}
 {% block head %}
+{% from amgut import text_locale %}
+{% set tl = text_locale['register_user.html'] %}
+
 <script src="/static/vendor/js/jquery.validate.min.js"></script>
 <script type="text/javascript">
 $.validator.setDefaults({
@@ -25,27 +28,27 @@ $(document).ready(function() {
       },
       messages: {
         participantname: {
-          required: "Please enter your name",
+          required: "{% raw tl['ENTER_NAME'] %}",
         },
         email: {
-          required: "Please enter your email",
-          email: "You must supply a valid email"
+          required: "{% raw tl['ENTER_EMAIL'] %}",
+          email: "{% raw tl['REQUIRED_EMAIL'] %}"
         },
         address: {
-          required: "Please enter your address",
+          required: "{% raw tl['ENTER_ADDRESS'] %}",
         },
         city: {
-          required: "Please enter your city",
+          required: "{% raw tl['ENTER_CITY'] %}",
         },
         state: {
-          required: "Please enter your state",
+          required: "{% raw tl['ENTER_STATE'] %}",
         },
         zip: {
-          required: "Please enter your zip",
-          minlength: "Your zip must consist of at least 5 characters"
+          required: "{% raw tl['ENTER_ZIP'] %}",
+          minlength: "{% raw tl['REQUIRED_ZIP'] %}"
         },
         country: {
-          required: "Please enter your country",
+          required: "{% raw tl['ENTER_COUNTRY'] %}",
         }
       }
     });
@@ -58,19 +61,21 @@ $(document).ready(function() {
 {% end %}
 
 {% block content %}
+{% from amgut import text_locale %}
+{% set tl = text_locale['register_user.html'] %}
 <div class="registerwrapper" style="position:absolute; top:16px; left:285px; padding:15px;">
     <form name="newParticipant" id="newParticipant" method="post" action="/auth/register/">
         <input type="hidden" name="kit_id" id="kit_id" value="{{skid}}">
         <h3>New User Registration</h3>
         <table>
-            <tr><td>Email</td><td><input type="text" name="email" id="email"></td></tr>            
-            <tr><td>Name</td><td><input type="text" name="participantname" id="participantname"></td></tr>
-            <tr><td>Address</td><td><input type="text" name="address" id="address"></td></tr>      
-            <tr><td>City</td><td><input type="text" name="city" id="city"></td></tr>               
-            <tr><td>State</td><td><input type="text" name="state" id="state"></td></tr>        
-            <tr><td>Zip</td><td><input type="text" name="zip" id="zip"></td></tr>
-            <tr><td>Country</td><td><input type="text" name="country" id="country"></td></tr>
-            <tr><td></td><td><input type="submit" value="Submit My Information"/></td></tr>
+            <tr><td>{% raw tl['EMAIL'] %}</td><td><input type="text" name="email" id="email"></td></tr>            
+            <tr><td>{% raw tl['NAME'] %}</td><td><input type="text" name="participantname" id="participantname"></td></tr>
+            <tr><td>{% raw tl['ADDRESS'] %}</td><td><input type="text" name="address" id="address"></td></tr>      
+            <tr><td>{% raw tl['CITY'] %}</td><td><input type="text" name="city" id="city"></td></tr>               
+            <tr><td>{% raw tl['STATE'] %}</td><td><input type="text" name="state" id="state"></td></tr>        
+            <tr><td>{% raw tl['ZIP'] %}</td><td><input type="text" name="zip" id="zip"></td></tr>
+            <tr><td>{% raw tl['COUNTRY'] %}</td><td><input type="text" name="country" id="country"></td></tr>
+            <tr><td></td><td><input type="submit" value="{% raw tl['SUBMIT'] %}"/></td></tr>
         </table>
     </form>
 </div>

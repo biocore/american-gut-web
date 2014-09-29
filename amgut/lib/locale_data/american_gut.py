@@ -215,6 +215,26 @@ _RETREIVE_KITID = {
     'EMAIL_PROMPT': 'Email:'
     }
 
+_REGISTER_USER = {
+    'ENTER_NAME': 'Please enter your name',
+    'ENTER_EMAIL': 'Please enter your email',
+    'REQUIRED_EMAIL': 'You must supply a valid email',
+    'ENTER_ADDRESS': 'Please enter your address',
+    'ENTER_CITY': 'Please enter your city',
+    'ENTER_STATE': 'Please enter your state',
+    'ENTER_ZIP': 'Please enter your zip',
+    'ENTER_COUNTRY': 'Please enter your country',
+    'REQUIRED_ZIP': 'Your zip must consist of at least 5 characters',
+    'EMAIL': 'Email',
+    'NAME': 'Name',
+    'ADDRESS': 'Address',
+    'CITY': 'City',
+    'STATE': 'State',
+    'ZIP': 'Zip',
+    'COUNTRY': 'Country',
+    'SUBMIT': 'Submit My Information'
+}
+
 # Actual text locale
 text_locale = {
     'FAQ.html': _FAQ,
@@ -225,5 +245,6 @@ text_locale = {
     'help_request.html': _HELP_REQUEST,
     'sample_overview.html': _SAMPLE_OVERVIEW,
     'taxa_summary.html': _TAXA_SUMMARY,
-    'construction.html': _CONSTRUCTION
+    'construction.html': _CONSTRUCTION,
+    'register_user.html': _REGISTER_USER
     }

@@ -16,7 +16,7 @@ class AuthRegisterHandoutHandler(BaseHandler):
     def get(self):
         latlong_db = AG_DATA_ACCESS.getMapMarkers()
         self.render("register_user.html", skid=self.current_user,
-                    latlongs_db=latlong_db)
+                    latlongs_db=latlong_db, loginerror='')
 
     @authenticated
     def post(self):
