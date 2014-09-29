@@ -1,7 +1,8 @@
 {% extends sitebase.html %}
 {% block content %}
-{% from amgut import text_locale %}
+{% from amgut import text_locale, media_locale %}
 {% set tl = text_locale['portal.html'] %}
+{% set fmt = {'help_email': media_locale['HELP_EMAIL']}
 <h2>Hi {{user_name}}! Please follow the steps below.</h2>
 
 {% if errmsg %}
@@ -31,25 +32,19 @@
 
     <div id="workflow_content">
         <div id="verify_content" class="portal_selected">
-            <h2>Verification</h2>
-            <p class="portal_blurb">
-                We ask you to verify that you received the correct sample tubes and kit. Using a <strong>Verification Code</strong> helps us ensure that you receive the correct barcodes and Credentials Sheet.  
-            </p>
-            <p class="portal_blurb">
-                Your <strong>Verification Code</strong> will be sent to you via email to the address that you entered when you made your donation; if you made an anonymous donation, please <a href="/authed/help_request/">contact us directly</a>.
-            </p>
-            <p class="portal_blurb">
-                If you cannot find your <strong>Verification Code</strong>, please make sure to check your spam folder. If you still cannot find the code, please <a href="/authed/help_request/">contact us</a>.
-            </p>
+            <h2>{% raw tl['VERIFICATION_HEADER_1'] %}</h2>
+            <p class="portal_blurb">{% raw tl['VERIFICATION_TEXT_1'] %}</p>
+            <p class="portal_blurb">{% raw tl['VERIFICATION_TEXT_2'] %}</p>
+            <p class="portal_blurb">{% raw tl['VERIFICATION_TEXT_3'] %}</p>
 {% if not kit_verified %}
             <div class="middle_content centered">
-                <h2>Verify your identity and kit barcode(s)</h2>
+                <h2>{% raw tl['VERIFICATION_HEADER_2'] %}</h2>
                 <div class="lefta clearfix formdiv" id="verification_div">
                     <form name="verification_submit" id="verification_submit" method="post" action="/authed/portal/">
                         <h3>Kit ID: {{ skid }}</h3>
-                        <h4>Please enter the verification code sent to your email address <a href="#" class="help" title="If you did not recieve a verification code in your email from American Gut, please check your spam folder. If you still can not find it, contact info@americangut.org">(?)</a></h4>
+                        <h4>{% raw tl['VERIFICATION_CODE_PROMPT'] % fmt %}</a></h4>
     {% if kit_ver_error %}
-        The kit verification code you entered does not match our records. Please double-check the code you entered. If you continue to experience difficulties, please <a href=/authed/help_request/>contact us</a>.
+        {% raw tl['VERIFICATION_CODE_ERROR'] %}
     {% end %}
                         <input class="{{ verification_textbox }}"  type="text" name="user_verification_code" id="user_verification_code"></input>
                         <h4>Please verify that the barcode(s) you received in the mail match the barcode(s) here <a id="barcode_popup_trigger" class="help" title="" onmouseover="setVisible('barcode_popup')" onmouseout="setInvisible('barcode_popup')">(?)</a><div id="barcode_popup" class="help_popup invisible">The barcode you need to verify is located on the outside of your sample tube.<br /><img src="/static/img/sample_barcode.jpg"/></div></h4>
