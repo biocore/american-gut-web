@@ -1,5 +1,7 @@
 {% extends sitebase.html %}
 {% block content %}
+{% from amgut import text_locale %}
+{% set tl = text_locale['participant_overview.html'] %}
 
 <form action="survey1.html" method="post" id="edit_survey">
 
@@ -9,18 +11,18 @@
 
 </form>
 
-<h2>Overview for participant {{participant_name}}</h2>
+<h2>{% raw tl['OVERVIEW_FOR_PARTICPANT'] %} {{participant_name}}</h2>
 <div class="overview_wrapper">
     <div class="overview">
         <table class="list" id="survey" width="100%">
 {% if participant_type == 'human' %}
             <tr>
-                <td>Completed consent</td>
+                <td>{% raw tl['COMPLETED_CONSENT'] %}</td>
                 <td><img src="/static/img/icon-green-checkmark.png"/></td>
             </tr>
 {% end %}
             <tr>
-                <td>Completed survey
+                <td>{% raw tl['COMPLETED_SURVEY'] %}
 {% if participant_type == 'human' %}
                     (<a href="#" onclick="editHumanSurvey();">edit</a>)
 {% end %}
@@ -28,7 +30,7 @@
                 <td><img src="/static/img/icon-green-checkmark.png"/></td>
             </tr>
             <tr>
-                <td>Samples assigned</td>
+                <td>{% raw tl['SAMPLES_ASSIGNED'] %}</td>
                 <td>
                     <ul class="sample_list">
 
