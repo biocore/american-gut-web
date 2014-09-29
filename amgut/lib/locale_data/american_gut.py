@@ -106,7 +106,7 @@ _FAQ = {
     'DIFFERENT_WHATS_WRONG_WITH_ME': "I'm different than other people in my category. Does that mean something is wrong with me?",
     'WHY_TWO_SWABS_ANS_2': "<P>Each tube is used for <strong>one sample</strong>. The tube has two swabs in it because one is a backup in case the DNA does not amplify on the first swab.</p>"
                                 "<p>Here's a video of Rob Knight talking about swab handling:</p>",
-    'MISSING METADATA_ANS': 'Metadata are information describing your age, gender, diet, etc. Missing metadata mean that this person did not provide us with this information.',
+    'MISSING_METADATA_ANS': 'Metadata are information describing your age, gender, diet, etc. Missing metadata mean that this person did not provide us with this information.',
     'WHERE_SEND_SAMPLE': 'Where do I send my sample?',
     'VARIABLE': 'TEXT',
     'LOG_IN_WHAT_NOW': "I'm logged in, what do I do now?",
@@ -117,7 +117,7 @@ _FAQ = {
     'WHAT_FORMS_ANS': 'The instruction on the sampling instructions that requires you to "place your forms and the sample tube in preaddressed envelope" is leftover from a previous version of the sampling instructions. There are no forms for you to include inside the envelope with your sample. If you are shipping internationally, please visit the <a href="/international_shipping/">International Shipping Instructions</a></p>'
                                 '',
     'WHY_TWO_SWABS_ANS_1': 'Each sampling tube contains two swabs and looks like this:',
-    'MISSING METADATA': 'What are missing metadata?',
+    'MISSING_METADATA': 'What are missing metadata?',
     'ONLY_FECAL_RESULTS': 'I sent more than one kind of sample, but I only received data for my fecal sample. What happened to my other samples?',
     'NOT_A_BUSINESS_ANS': 'We have had many enquiries about our "service" or "business". %(shorthand)s is a donation-supported academic project that is a collaboration between the <a href="http://www.earthmicrobiome.org">Earth Microbiome Project</a> and the <a href="http://humanfoodproject.com/">Human Food Project</a>, primarily run out of the <a href="https://knightlab.colorado.edu/">Knight Lab</a> at the University of Colorado at Boulder, and is not a business or service.  In particular, %(shorthand)s is not a diagnostic test (although the information gained through the project may in future contribute to the development of diagnostic tests). All data except for information that needs to be kept confidential for privacy reasons is openly and freely released into public databases, and the project is not intended to make a profit (any surplus funds would be recycled back into furthering human microbiome research).' % {"shorthand": AMGUT_CONFIG.project_shorthand},
     'LOG_FOOD': '<a href="%(food_log_vid)s">%(shorthand)s - How to Log Food</a> from <a href="http://vimeo.com/user16100300">shelley schlender</a> on <a href="http://vimeo.com">Vimeo</a>.' % {'food_log_vid': media_locale["FOOD_LOG"], 'shorthand': AMGUT_CONFIG.project_shorthand},
