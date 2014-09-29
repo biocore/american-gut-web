@@ -52,9 +52,20 @@ _ERROR = {
     'ERROR_CONTACT': 'Please copy the following into an email and send this information, along with the url you were trying to access, to <a href="mailto:info@americangut.org">info@americangut.org</a>'
     }
 
+_RETREIVE_KITID = {
+    'UNKNOWN_EMAIL': 'This email address is not in our system',
+    'ENTER_EMAIL': 'Please Enter Your Email',
+    'SEND_EMAIL': 'Send Kit ID Email',
+    'EMAIL_SUCCESS': 'Your kit ID has been emailed to you. Please check your email.',
+    'EMAIL_CANTSEND': 'Mail can be sent only from microbio.me domain.',
+    'EMAIL_EXCEPTION': 'There was a problem sending you the kit ID. Please contact us directly at <a href=\"mailto:info@americangut.org\">info@americangut.org</a>.',
+    'EMAIL_PROMPT': 'Email:'
+    }
+
 # Actual text locale
 text_locale = {
     'FAQ.html': _FAQ,
+    'retrieve_kitid.html': _RETREIVE_KITID,
     'error.html': _ERROR,
     'forgot_password.html': _FORGOT_PASSWORD,
     'help_request.html': _HELP_REQUEST,
