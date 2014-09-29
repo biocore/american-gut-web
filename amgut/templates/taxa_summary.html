@@ -1,12 +1,14 @@
 {% extends sitebase.html %}
 {% block content %}
+{% from amgut import text_locale %}
+{% set tl = text_locale['taxa_summary.html'] %}
 
 <div class="red">
-    {% raw text_locale['RESOLUTION_NOTE'] %}
+    {% raw tl['RESOLUTION_NOTE'] %}
     <br>
-	{% raw text_locale['PERCENTAGES_NOTE'] %}
+	{% raw tl['PERCENTAGES_NOTE'] %}
 </div>
-<a href="{{file_path}}" download>{% raw text_locale['DOWNLOAD_LINK'] %}</a>
+<a href="{{file_path}}" download>{% raw tl['DOWNLOAD_LINK'] %}</a>
 <center>
 <table cellspacing="15">
     {% for header in headers %}
