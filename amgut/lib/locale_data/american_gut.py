@@ -74,6 +74,18 @@ _RETREIVE_KITID = {
     'EMAIL_PROMPT': 'Email:'
     }
 
+_ADD_SAMPLE = {
+    'NEW_SAMPLE_TITLE': 'Log a new sample for',
+    'NEW_SAMPLE_DESCRIPTION_1': 'Choose the barcode from your kit that corresponds to the sample you are logging.',
+    'NEW_SAMPLE_DESCRIPTION_2': 'It is very important that the sample barcode matches <strong>exactly</strong> for downstream analysis steps.',
+    'SITE_SAMPLED': 'Site Sampled',
+    'DATE': 'Date',
+    'DATE_EXAMPLE': ' mm/dd/yyyy (Example: 05/07/2013)',
+    'TIME': 'Time',
+    'TIME_EXAMPLE': ' hh:mm AM/PM (Example: 04:35 PM)',
+    'NOTES': 'Additional Notes (optional)',
+}
+
 _REGISTER_USER = {
     'ENTER_NAME': 'Please enter your name',
     'ENTER_EMAIL': 'Please enter your email',
@@ -99,6 +111,7 @@ text_locale = {
     'FAQ.html': _FAQ,
     'db_error.html': _DB_ERROR,
     'retrieve_kitid.html': _RETREIVE_KITID,
+    'add_sample.html': _ADD_SAMPLE,
     'error.html': _ERROR,
     'forgot_password.html': _FORGOT_PASSWORD,
     'help_request.html': _HELP_REQUEST,
