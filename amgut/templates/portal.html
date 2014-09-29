@@ -2,8 +2,10 @@
 {% block content %}
 {% from amgut import text_locale, media_locale %}
 {% set tl = text_locale['portal.html'] %}
-{% set fmt = {'help_email': media_locale['HELP_EMAIL']}
-<h2>Hi {{user_name}}! Please follow the steps below.</h2>
+{% set fmt = {'help_email': media_locale['HELP_EMAIL'], 
+              'project': media_locale['PROJECT_TITLE'],
+              'user_name': user_name} %}
+<h2>{% raw tl['GREETING'] % fmt %}</h2>
 
 {% if errmsg %}
     <h2 class="msg">{{errmsg}}</h2>
@@ -47,7 +49,7 @@
         {% raw tl['VERIFICATION_CODE_ERROR'] %}
     {% end %}
                         <input class="{{ verification_textbox }}"  type="text" name="user_verification_code" id="user_verification_code"></input>
-                        <h4>Please verify that the barcode(s) you received in the mail match the barcode(s) here <a id="barcode_popup_trigger" class="help" title="" onmouseover="setVisible('barcode_popup')" onmouseout="setInvisible('barcode_popup')">(?)</a><div id="barcode_popup" class="help_popup invisible">The barcode you need to verify is located on the outside of your sample tube.<br /><img src="/static/img/sample_barcode.jpg"/></div></h4>
+                        <h4>{% raw tl['VERIFY_BARCODES'] %}<a id="barcode_popup_trigger" class="help" title="" onmouseover="setVisible('barcode_popup')" onmouseout="setInvisible('barcode_popup')">(?)</a><div id="barcode_popup" class="help_popup invisible">{% raw tl['VERIFY_BARCODES_POPUP'] %}<br /><img src="/static/img/sample_barcode.jpg"/></div></h4>
                         <table width="30%">
     {% for barcode in barcodes %}
                             <table width="30%%" id="barcode_{{ barcode }}" name="barcode_{{ barcode }}">
@@ -68,13 +70,9 @@
 {% end %}
         </div>
         <div id="source_content" class="portal_unselected">
-            <h2>Sample Source</h2>
-            <p class="portal_blurb">
-                There are three different sample sources that you can choose from for the American Gut Project. The sources are human, animal and environmental. The buttons below will allow you to add a new sample source.
-            </p>
-            <p class="portal_blurb">
-                If you add a <strong>human</strong> source, you will need to have a completed 7 day food diary for that human. If you add a <strong>human</strong> or <strong>animal</strong> source, you will be asked to complete a survey.
-            </p>
+            <h2>{% raw tl['SAMPLE_SOURCE_HEADER_1'] %}</h2>
+            <p class="portal_blurb">{% raw tl['SAMPLE_SOURCE_TEXT_1'] % fmt %}</p>
+            <p class="portal_blurb">{% raw tl['SAMPLE_SOURCE_TEXT_2']%}</p>
             <div id="source_icons">
                 <a href="/authed/new_participant_overview.html"><div class="source_icon"><img src="/static/img/human.png"><div>Human</div></div></a>
                 <a href="/authed/animal_survey.html"><div class="source_icon"><img src="/static/img/animal.png"><div>Animal</div></div></a>
