@@ -21,10 +21,16 @@ _HELP_REQUEST = {
     'PROBLEM_PROMPT': "Enter information related to your problem"
 }
 
+_ERROR = {
+    'ERROR_OCCURED': 'AN ERROR HAS OCCURED!',
+    'ERROR_CONTACT': 'Please copy the following into an email and send this information, along with the url you were trying to access, to <a href="mailto:info@americangut.org">info@americangut.org</a>'
+    }
+
 # Actual text locale
 text_locale = {
     'FAQ.html': _FAQ,
-    'help_request.html': _HELP_REQUEST
+    'help_request.html': _HELP_REQUEST,
+    'error.html': _ERROR
     }
 
 # Any media specific localizations
