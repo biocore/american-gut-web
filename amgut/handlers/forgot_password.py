@@ -2,7 +2,6 @@ from string import letters, digits
 from urllib import quote
 from random import choice
 
-from amgut import media_locale
 from amgut.lib.mail import send_email
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.util import AG_DATA_ACCESS
@@ -14,7 +13,7 @@ class ForgotPasswordHandler(BaseHandler):
         kitid = self.get_argument('kitid', None)
         latlongs = AG_DATA_ACCESS.getMapMarkers()
         self.render('forgot_password.html', email=email, kitid=kitid,
-                    result=None, messaage='', media_locale=media_locale,
+                    result=None, messaage='',
                     latlongs_db=latlongs, loginerror='')
 
     def post(self):
@@ -45,15 +44,13 @@ class ForgotPasswordHandler(BaseHandler):
                     send_email(MESSAGE, 'American Gut Password Reset', email)
                     self.render('forgot_password.html', email='', kitid='',
                                 result=1, message='',
-                                media_locale=media_locale,
                                 latlongs_db=latlongs, loginerror='')
             except:
                     self.render('forgot_password.html', email='', kitid='',
                                 result=2, message=MESSAGE,
-                                latlongs_db=latlongs, loginerror='',
-                                media_locale=media_locale)
+                                latlongs_db=latlongs, loginerror='')
 
         else:
             self.render('forgot_password.html', email='', kitid='',
-                        result=3, message='', media_locale=media_locale,
+                        result=3, message='',
                         latlongs_db=latlongs, loginerror='')

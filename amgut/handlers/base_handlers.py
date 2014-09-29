@@ -1,6 +1,5 @@
 from tornado.web import RequestHandler
 
-from amgut import media_locale
 from amgut.util import AG_DATA_ACCESS
 
 
@@ -27,7 +26,7 @@ class BaseHandler(RequestHandler):
             error = exc_info[1]
 
             self.render('error.html', error=error, trace_info=trace_info,
-                        request_info=request_info, media_locale=media_locale,
+                        request_info=request_info,
                         skid=self.current_user)
 
 
@@ -35,18 +34,15 @@ class MainHandler(BaseHandler):
     '''Index page'''
     def get(self):
         latlong_db = AG_DATA_ACCESS.getMapMarkers()
-        self.render("index.html", latlongs_db=latlong_db, loginerror="",
-                    media_locale=media_locale)
+        self.render("index.html", latlongs_db=latlong_db, loginerror="")
 
 
 class NoPageHandler(BaseHandler):
     def get(self):
         if self.current_user:
-            self.render("404.html", skid=self.current_user,
-                        media_locale=media_locale)
+            self.render("404.html", skid=self.current_user)
         else:
-            self.render("no_auth_404.html", loginerror="",
-                        media_locale=media_locale)
+            self.render("no_auth_404.html", loginerror="")
 
 
 class DBErrorHandler(BaseHandler):
@@ -63,4 +59,4 @@ class DBErrorHandler(BaseHandler):
         if err not in errors:
             raise ValueError('DB Error not found: %s' % err)
         self.render("db_error.html", skid=self.current_user,
-                    message=errors[err], media_locale=media_locale)
+                    message=errors[err])

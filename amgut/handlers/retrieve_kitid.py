@@ -1,4 +1,3 @@
-from amgut import media_locale
 from amgut.lib.mail import send_email
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.util import AG_DATA_ACCESS
@@ -7,7 +6,7 @@ from amgut.util import AG_DATA_ACCESS
 class KitIDHandler(BaseHandler):
     def get(self):
         self.render('retrieve_kitid.html', message='', output='form',
-                    loginerror='', media_locale=media_locale)
+                    loginerror='')
 
     def post(self):
         email = self.get_argument('email')
@@ -23,17 +22,14 @@ class KitIDHandler(BaseHandler):
                 try:
                     send_email(MESSAGE, 'American Gut Kit ID', email)
                     self.render('retrieve_kitid.html', message='',
-                                output='success', loginerror='',
-                                media_locale=media_locale)
+                                output='success', loginerror='')
                 except:
                     self.render('retrieve_kitid.html', message=MESSAGE,
-                                output='noemail', loginerror='',
-                                media_locale=media_locale)
+                                output='noemail', loginerror='')
             else:
                 self.render('retrieve_kitid.html', message='nokit',
-                            output='form', loginerror='',
-                            media_locale=media_locale)
+                            output='form', loginerror='')
 
         except:
             self.render('retrieve_kitid.html', message='', output='exception',
-                        loginerror='', media_locale=media_locale)
+                        loginerror='')

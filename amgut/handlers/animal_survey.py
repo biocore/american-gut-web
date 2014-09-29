@@ -4,7 +4,6 @@ from json import loads
 from tornado.web import authenticated
 from tornado.websocket import WebSocketHandler
 
-from amgut import media_locale
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.util import AG_DATA_ACCESS
 
@@ -13,8 +12,7 @@ class AnimalSurveyHandler(BaseHandler):
     @authenticated
     def get(self):
         skid = self.current_user
-        self.render('animal_survey.html', message='', skid=skid,
-                    media_locale=media_locale)
+        self.render('animal_survey.html', message='', skid=skid)
 
     @authenticated
     def post(self):

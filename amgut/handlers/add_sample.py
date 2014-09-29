@@ -1,7 +1,6 @@
 from wtforms import Form, SelectField, DateField, DateTimeField, TextField
 from tornado.web import authenticated
 
-from amgut import media_locale
 from amgut.util import AG_DATA_ACCESS
 from amgut.handlers.base_handlers import BaseHandler
 
@@ -50,7 +49,7 @@ class AddSample(BaseHandler):
         self.render('add_sample.html', skid=kit_id,
                     kit_barcodes=kit_barcodes,
                     participant_name=participant_name,
-                    form=form, media_locale=media_locale)
+                    form=form)
 
     def _get_sample_sites(self):
         sample_site = [(v, v) for v in self._sample_sites]

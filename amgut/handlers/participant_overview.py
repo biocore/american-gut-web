@@ -1,7 +1,6 @@
 from tornado.web import authenticated
 from tornado.web import HTTPError
 
-from amgut import media_locale
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.util import AG_DATA_ACCESS
 
@@ -62,5 +61,4 @@ class ParticipantOverviewHandler(BaseHandler):
 
         self.render('participant_overview.html', defaults=defaults, skid=skid,
                     participant_name=participant_name,
-                    participant_type=participant_type, samples=samples,
-                    media_locale=media_locale)
+                    participant_type=participant_type, samples=samples)
