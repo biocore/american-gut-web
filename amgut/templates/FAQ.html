@@ -2,7 +2,7 @@
 {% block content %}
 {% from amgut import text_locale, media_locale %}
 {% set tl = text_locale['FAQ.html'] %}
-<h2>{% raw text_locale['FAQ_HEADER'] %}</h2>
+<h2>{% raw tl['FAQ_HEADER'] %}</h2>
 <div class="faq_wrapper">
   <div class="faq">
       <div class="separator"></div>
@@ -20,7 +20,7 @@
       <li><a href="#faq0">{% raw tl['PROJECT_101'] %}</a></li>
       <li><a href="#faq1">{% raw tl['PASSWORD_SAME_VERIFICATION'] %}</a></li>
       <li><a href="#faq2">{% raw tl['PASSWORD_DOESNT_WORK'] %}</a></li>
-      <li><a href="#faq3">{% raw tl['LOGGED_IN_WHAT_NOW'] %}</a></li>
+      <li><a href="#faq3">{% raw tl['LOG_IN_WHAT_NOW'] %}</a></li>
       <li><a href="#faq4">{% raw tl['TAKES_SIX_MONTHS'] %}</a></li>
       <li><a href="#faq5">Why are there 2 swabs inside the tube?</a></li>
       <li><a href="#faq6">{% raw tl['WHY_TWO_SWABS'] %}</a></li>
@@ -41,7 +41,7 @@
       <li><a href="#faq21">{% raw tl['FOOD_DIARY'] %}</a></li>
       <li><a href="#faq22">{% raw tl['CONVERT_GRAMS_CALORIES'] %}</a></li>
       <li><a href="#faq23">{% raw tl['PARTICIPATE_WITH_DIAGNOSIS'] %}</a></li>
-      <li><a href="#faq24">{% raw tl['MISSING_METADATA'] %}</a></li>
+      <li><a href="#faq24">{% raw tl['MISSING METADATA'] %}</a></li>
       <li><a href="#faq25">{% raw tl['HOW_PROCESS_SAMPLES'] %}</a></li>
       <li><a href="#faq26">{% raw tl['NOT_A_BUSINESS'] %}</a></li>
       </ul>
@@ -76,7 +76,7 @@
           {% raw tl['LOG_IN_WHAT_NOW_ANS_2'] %}
           <img src="{{media_locale['ADD_PARTICIPANT_IMG_MENU']}}"/>
           <p>{% raw tl['LOG_IN_WHAT_NOW_ANS_3'] %}</p>
-          <img src="{{media_locale['ADD_SAMPLE_OPTS']}}"/>
+          <img src="{{media_locale['LOG_SAMPLE_OPTS']}}"/>
           <p>{% raw tl['LOG_IN_WHAT_NOW_ANS_4'] %}</p>
           <img src="{{media_locale['ADD_SAMPLE_HIGHLIGHT']}}"/>
           <p>{% raw tl['LOG_IN_WHAT_NOW_ANS_5'] %}</p>
@@ -135,7 +135,7 @@
       </div>
       <div class="separator"></div>
 
-      <h3 class="faq_header" id="faq13">{% raw tl['only_fecal-results'] %}</h3>
+      <h3 class="faq_header" id="faq13">{% raw tl['ONLY_FECAL_RESULTS'] %}</h3>
       <div class="faq_content">
           <p>{% raw tl['ONLY_FECAL_RESULTS_ANS'] %}</p>
       </div>
@@ -159,9 +159,9 @@
       </div>
       <div class="separator"></div>
 
-      <h3 class="faq_header" id="faq17">{% raw tl['DETAILED_INFO'] %}</h3>
+      <h3 class="faq_header" id="faq17">{% raw tl['FIND_DETAILED_INFO'] %}</h3>
       <div class="faq_content">
-          <p>{% raw tl['DETAILED_INFO_ANS'] %}</p>
+          <p>{% raw tl['FIND_DETAILED_INFO_ANS'] %}</p>
       </div>
       <div class="separator"></div>
 
@@ -201,9 +201,9 @@
       </div>
       <div class="separator"></div>
 
-      <h3 class="faq_header" id="faq24">{% raw tl['MISSING_METADATA'] %}</h3>
+      <h3 class="faq_header" id="faq24">{% raw tl['MISSING METADATA'] %}</h3>
       <div class="faq_content">
-          <p>{% raw tl['MISSING_METADATA_ANS'] %}</p>
+          <p>{% raw tl['MISSING METADATA_ANS'] %}</p>
       </div>
       <div class="separator"></div>
 
