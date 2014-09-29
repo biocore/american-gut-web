@@ -1,8 +1,11 @@
 {% extends no_auth_sitebase.html %}
 {% block content%}
+{% from amgut import text_locale, media_locale %}
+{% set tl = text_locale['construction.html'] %}
+{% set fmt = {'help_email': media_locale['help_email']} %}
+
 <img src="/static/img/ag_construction.png">
-<p class="construction_text">
-    Welcome – you have reached the participant login page for the American Gut Project. Thanks again for joining the study – we appreciate your support. This is our first citizen science project so we are still working out some kinks. A few things:</p>
+<p class="construction_text">{% raw tl['WELCOME'] %}</p>
 <ol class="construction">
     <li>
         We are making final changes and additions to the online consent form you will sign and the questionnaire you will be asked to fill out. The AmericanGut developers team is working double-time to get this done, as are a lot of other people in our lab at University of Colorado. So please come back to this page in a few days.
