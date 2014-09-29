@@ -12,7 +12,8 @@ from amgut.lib.config_manager import AMGUT_CONFIG
 # Any media specific localizations
 media_locale = {
     'logo': '/static/img/ag_logo.jpg',
-    'steps_video': "http://player.vimeo.com/video/63542787"
+    'steps_video': "http://player.vimeo.com/video/63542787",
+    'faq_ambiguous_pass': '/static/img/creds_example.png'
 }
 
 # Template specific dicts
@@ -35,17 +36,17 @@ _FAQ = {
     'ADD_PARTICIPANT': '<a href="http://vimeo.com/63931218">%(shorthand)s - How to Add a Participant</a> from <a href="http://vimeo.com/user16100300">shelley schlender</a> on <a href="http://vimeo.com">Vimeo</a>.' % {"shorthand": AMGUT_CONFIG.project_shorthand},
     'PASSWORD_DOESNT_WORK': "My password doesn't work!",
     'COMBINE_RESULTS': 'My whole family participated, can we combine the results somehow?',
-    'PASSWORD_DOESNT_WORK_ANS': 'The passwords have some ambiguous characters in them, so we have this guide to help you decipher which characters are in your password.</p>'
+    'PASSWORD_DOESNT_WORK_ANS': '<p>The passwords have some ambiguous characters in them, so we have this guide to help you decipher which characters are in your password.</p>'
                                 '<p class="ambig">abcdefghijklmnopqrstuvwxyz<br>ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>1234567890<br>1 = the number 1<br>l = the letter l as in Lima<br>0 = the number 0<br>O = the letter O as in Oscar<br>g = the letter g as in golf<br>q = the letter q as in quebec</p>',
     'HANDLING_SWABS': '%(shorthand)s - Handling Your SWABS</a> from' % {"shorthand": AMGUT_CONFIG.project_shorthand},
     'LOG_IN_WHAT_NOW_ANS_4': 'The generic add sample page looks like this:',
     'RAW_DATA_ANS_2': 'Processed sequence data and open-access descriptions of the bioinformatic processing can be found at our <a href="https://github.com/qiime/American-Gut">Github repository</a>.</p>'
                                 '<p>Sequencing of %(shorthand)s samples is an on-going project, as are the bioinformatic analyses. These resources will be updated as more information is added and as more open-access descriptions are finalized.' % {"shorthand": AMGUT_CONFIG.project_shorthand},
-    'RAW_DATA_ANS_1': 'The raw data can be fetched from the <a href=http://www.ebi.ac.uk/>European Bioinformatics Institute</a>. EBI is part of <a href=http://www.insdc.org/>The International Nucleotide Sequence Database Collaboration</a> and is a public warehouse for sequence data. The deposited %(project)s accessions so far are:' % {"project": AMGUT_CONFIG.project_name},
+    'RAW_DATA_ANS_1': '<P>The raw data can be fetched from the <a href=http://www.ebi.ac.uk/>European Bioinformatics Institute</a>. EBI is part of <a href=http://www.insdc.org/>The International Nucleotide Sequence Database Collaboration</a> and is a public warehouse for sequence data. The deposited %(project)s accessions so far are:' % {"project": AMGUT_CONFIG.project_name},
     'BETTER_OR_WORSE_ANS': 'Right now, you can\xe2\x80\x99t. We\xe2\x80\x99re still trying to understand what constitutes a normal or average gut microbiome, and we have a lot to learn about the functions of many of the microbes that inhabit the gut. Therefore, it\xe2\x80\x99s tough to know what combinations of microbes are best for nutrition and health. That\xe2\x80\x99s one reason collecting data from so many people is important\xe2\x80\x94hopefully we can start to learn more about this.',
     'LOOK_BELOW': "If you're still experiencing issues, look for your problem in the FAQ below",
     'PASSWORD_SAME_VERIFICATION_ANS': 'No. Your <strong>password</strong> is printed on the sheet that you received with your kit in the mail. That sheet looks like this:</p>'
-                                '<img src="/static/img/creds_example.png"/><p>Your <strong>verification code</strong> is emailed to you. Look for the email: <br /><br /><strong>FROM:</strong>  %(project)s (info@americangut.org)<br /><strong>SUBJECT:</strong>  %(shorthand)s Kit ID & Verification Code' % {"shorthand": AMGUT_CONFIG.project_shorthand, "project": AMGUT_CONFIG.project_name},
+                                '<img src="%(faq_ambiguous_pass)s"/><p>Your <strong>verification code</strong> is emailed to you. Look for the email: <br /><br /><strong>FROM:</strong>  %(project)s (info@americangut.org)<br /><strong>SUBJECT:</strong>  %(shorthand)s Kit ID & Verification Code' % {"shorthand": AMGUT_CONFIG.project_shorthand, "project": AMGUT_CONFIG.project_name, "faq_ambiguous_pass": media_locale['faq_ambiguous_pass']},
     'TAKES_SIX_MONTHS_ANS': 'Yes. It takes about 8 weeks for extractions, 8 weeks for the remainder of the processing, and 2 weeks to do the actual sequencing. This is before any analysis and if everything goes as planned, with no delays - equipment down, run failures, reagents or other consumables back ordered. Things do sometimes go wrong, so we say up to 6 months.',
     'PARTICIPATE_WITH_DIAGNOSIS_ANS': 'Of course! The only exclusion criteria are: you must be more than 6 weeks old and cannot be a convicted felon. Please keep in mind that, for legal and ethical reasons, the %(project)s does not provide medically actionable results or advice.' % {"project": AMGUT_CONFIG.project_name},
     'HOW_PROCESS_SAMPLES': 'How are the samples and data processed?',
@@ -69,7 +70,7 @@ _FAQ = {
     'FECAL_NO_RESULTS': 'I sent in a fecal sample but did not get any results, what happened to them?',
     'CONVERT_GRAMS_CALORIES_ANS': 'Once you determine how many grams of protein, carbohydrates and lipids you have consumed each day, multiply the grams of protein and the grams of carbohydrates by 4 each (since there are 4 calories in every gram of protein and carbohydrate) and multiply the grams of lipids by 9 (since there are 9 calories in every gram of lipids). Add all of these numbers together to determine the total number of calories you consumed. Divide protein calories by the total calories to determine the percentage of calories consumed as protein. Repeat for carbohydrates and lipids.',
     'DIFFERENT_WHATS_WRONG_WITH_ME': "I'm different than other people in my category. Does that mean something is wrong with me?",
-    'WHY_TWO_SWABS_ANS_2': "Each tube is used for <strong>one sample</strong>. The tube has two swabs in it because one is a backup in case the DNA does not amplify on the first swab.</p>"
+    'WHY_TWO_SWABS_ANS_2': "<P>Each tube is used for <strong>one sample</strong>. The tube has two swabs in it because one is a backup in case the DNA does not amplify on the first swab.</p>"
                                 "<p>Here's a video of Rob Knight talking about swab handling:</p>",
     'MISSING METADATA_ANS': 'Metadata are information describing your age, gender, diet, etc. Missing metadata mean that this person did not provide us with this information.',
     'WHERE_SEND_SAMPLE': 'Where do I send my sample?',
