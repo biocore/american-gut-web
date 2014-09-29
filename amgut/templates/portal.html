@@ -74,72 +74,41 @@
             <p class="portal_blurb">{% raw tl['SAMPLE_SOURCE_TEXT_1'] % fmt %}</p>
             <p class="portal_blurb">{% raw tl['SAMPLE_SOURCE_TEXT_2']%}</p>
             <div id="source_icons">
-                <a href="/authed/new_participant_overview.html"><div class="source_icon"><img src="/static/img/human.png"><div>Human</div></div></a>
-                <a href="/authed/animal_survey.html"><div class="source_icon"><img src="/static/img/animal.png"><div>Animal</div></div></a>
-                <a href="" onclick="document.forms['add_sample_general'].submit(); return false;"><div class="source_icon"><img src="/static/img/environmental.png"><div>Environmental</div></div></a>
+                <a href="/authed/new_participant_overview.html"><div class="source_icon"><img src="/static/img/human.png"><div>{% raw tl['SAMPLE_SOURCE_TYPE_HUMAN'] %}</div></div></a>
+                <a href="/authed/animal_survey.html"><div class="source_icon"><img src="/static/img/animal.png"><div>{% raw tl['SAMPLE_SOURCE_TYPE_ANIMAL'] %}</div></div></a>
+                <a href="" onclick="document.forms['add_sample_general'].submit(); return false;"><div class="source_icon"><img src="/static/img/environmental.png"><div>{% raw tl['SAMPLE_SOURCE_TYPE_ENVIRONMENTAL'] %}</div></div></a>
             </div>
             <br />
             <br />
-            <h2>Survey</h2>
-            <p class="portal_blurb">
-                If you are taking a human or animal sample, we ask that you complete a survey.
-            </p>
-            <p class="portal_blurb">
-                The survey will take <strong>30-45 minutes</strong> for a human subject, or <strong>10 minutes</strong> for an animal subject. You <strong>cannot</strong> save in the middle of the survey, so please set aside enough time to complete the entire survey.
-            </p>
-            <p class="portal_blurb">
-                If you are taking a human sample, the survey includes demographic, lifestyle, medical and diet questions. All survey questions are optional.
-            </p>
-            <p class="portal_blurb">
-                The 7 day food diary is used when answering the human survey, so please be sure to have that ready <strong>before</strong> starting the survey. We strongly recommend using <a href="http://caloriecount.about.com/">CalorieCount</a> to record dietary intake, though you are free to use whatever method you find most convenient. A screenshot of the dietary questions is shown below, <strong>please make sure to use a tool that will allow you to accurately answer these questions</strong>.
-            </p>
-            <p class="portal_blurb">
-                Additionally, <a href="http://titojankowski.com">Tito Jankowski</a> has compiled a <a href="http://titojankowski.com/american-gut-how-to/">comprehensive guide</a> on how to do this if you are a <a href="http://www.myfitnesspal.com">MyFitnessPal</a> user.
-            </p>
+            <h2>{% raw tl['SURVEY_HEADER_1'] %}</h2>
+            <p class="portal_blurb">{% raw tl['SURVEY_TEXT_1'] %}</p>
+            <p class="portal_blurb">{% raw tl['SURVEY_TEXT_2'] %}</p>
+            <p class="portal_blurb">{% raw tl['SURVEY_TEXT_3'] %}</p>
+            <p class="portal_blurb">{% raw tl['SURVEY_TEXT_4'] %}</p>
+            <p class="portal_blurb">{% raw tl['SURVEY_TEXT_5'] %}</p>
             <div class="centered">
                 <img src="/static/img/diet_questions.png">
             </div>
         </div>
         <div id="sample_content" class="portal_unselected">
-            <h2>Before Taking Your Samples</h2>
-            <p class="portal_blurb">
-                These are the steps involved in taking a sample:
-            </p>
-            <ol class="sample_steps">
-                <li>Make sure you have <a href="#" onclick="selectTab('source')">added your sample source and complete the required survey(s)</a></li>
-                <li>Remove the sample swabs from the sample tube</li>
-                <li>Collect your sample following the guidelines below</li>
-                <li>Place sample swabs into the sample tube</li>
-            </ol>
-            <p class="portal_blurb">
-                These sample collection instructions are very important, please read through them <strong>before</strong> beginning to take your sample. Deviations will cause issues with sample processing, sequencing, and data analysis. We cannot guarantee that we will be able to process your sample if the instructions are not followed, and <strong>we cannot offer replacements if instructions were not followed</strong>. Please do not hesitate to ask us questions at <a href="/authed/help_request/">info@americangut.org</a>.
-            </p>
-            <h2>Taking Your Samples</h2>
-            <p class="portal_blurb">
-                Once you have removed the sample tube, only handle the sample swab by the red cap.
-            </p>
+            <h2>{% raw tl['SAMPLE_STEPS_HEADER_1'] %}</h2>
+            <p class="portal_blurb">{% raw tl['SAMPLE_STEPS_TEXT_1'] %}</p>
+            <ol class="sample_steps">{% raw tl['SAMPLE_STEPS_TEXT_2'] %}</ol>
+            <p class="portal_blurb">{% raw tl['SAMPLE_STEPS_TEXT_3'] % fmt %}</p>
+            <h2>{% raw tl['SAMPLE_STEPS_HEADER_2'] %}</h2>
+            <p class="portal_blurb">{% raw tl['SAMPLE_STEPS_TEXT_4'] %}</p>
             <div class="centered"><img src="/static/img/sampling_wrong.png"><img src="/static/img/sampling_correct.png"></div>
-            <p class="portal_blurb">
-                For a <strong>fecal sample</strong>, rub both cotton tips on a fecal specimen (a used piece ofbathroom tissue). Collect a small amount of biomass. Maximum collection would be to saturate 1/2 a swab. <strong>More is not better!</strong> The ideal amount of biomass collected is shown below.
-            </p>
+            <p class="portal_blurb">{% raw tl['SAMPLE_STEPS_TEXT_5'] %}</p>
             <div class="centered"><img src="/static/img/biomass.png"></div>
             <div class="centered"><img src="/static/img/good1.png"><img src="/static/img/good2.png"><br/><img src="/static/img/bad1.png"><img src="/static/img/bad2.png"></div>
             <br>
-            <p class="portal_blurb">
-                For an <strong>oral sample</strong>, firmly rub both sides of both cotton tips on the surface of the tongue for 20 seconds. Take great caution not to touch the cheeks, teeth, or lips.
-            </p>
+            <p class="portal_blurb">{% raw tl['SAMPLE_STEPS_TEXT_6'] %}</p>
             <div class="centered"><img src="/static/img/oral.png"></div>
-            <p class="portal_blurb">
-                For a <strong>skin sample</strong>, firmly rub both sides of both cotton tips over the skin surface being sampled for 20 seconds.
-            </p>
+            <p class="portal_blurb">{% raw tl['SAMPLE_STEPS_TEXT_7'] %}</p>
             <div class="centered"><img src="/static/img/forehead.png"></div>
-            <p class="portal_blurb">
-                For an <strong>other/environmental sample</strong>, firmly rub both sides of both cotton tips over the surface being sampled for 20 seconds.
-            </p>
+            <p class="portal_blurb">{% raw tl['SAMPLE_STEPS_TEXT_8'] %}</p>
             <br>
-            <p class="portal_blurb">
-                After you have finished taking your sample, return the swabs to the sample tube and push the red cap on firmly.
-            </p>
+            <p class="portal_blurb">{% raw tl['SAMPLE_STEPS_TEXT_9'] %}</p>
             <br>
         </div>
         <div id="log_content" class="portal_unselected">
