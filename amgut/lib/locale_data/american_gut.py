@@ -25,8 +25,8 @@ _FORGOT_PASSWORD = {'ENTER_ID_EMAIL': 'Enter your Kit ID and email',
                     'KIT_ID': 'Kit ID:',
                     'EMAIL': 'E-mail',
                     'EMAIL_RESET_PASSWORD': 'You will receive an email shortly with instructions to reset your password. Please check your email because you need to reset your password within two hours.',
-                    'EMAIL_FAILED': '<p>There was a problem sending you the password reset code. Please contact us directly at <a href=\"mailto:info@americangut.org\" target=\"_blank\"> info@americangut.org</a>.</p><p>Email contained: </p><p>{{message}}</p>',
-                    'NO_RECORD': '<p style="color:red;">This information does not match our records</p><p>Please email <a href="mailto:info@americangut.org" target="_blank"> for further assistance<p>',
+                    'EMAIL_FAILED': '<p>There was a problem sending you the password reset code. Please contact us directly at <a href=\"mailto:%(help_email)s\" target=\"_blank\">%(help_email)s</a>.</p><p>Email contained: </p><p>{{message}}</p>',
+                    'NO_RECORD': '<p style="color:red;">This information does not match our records</p><p>Please email <a href="mailto:%(help_email)s">directly</a> for further assistance<p>',
                     'SEND_EMAIL': 'Send email'}
 
 # Actual text locale
@@ -37,4 +37,5 @@ text_locale = {
     }
 
 # Any media specific localizations
-media_locale = {'logo': '/static/img/ag_logo.jpg'}
+media_locale = {'logo': '/static/img/ag_logo.jpg',
+                'help_email': 'info@americangut.org'}
