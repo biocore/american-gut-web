@@ -1,9 +1,10 @@
-<H2> Oops! There seems to be a database error. </H2>
+{% from amgut import text_locale, media_locale %}
+{% set fmt = media_locale['help_email'] %}
+<H2> {% raw text_locale['db_error.html']['HEADER'] %}Oops! There seems to be a database error. </H2>
 <br />
 {{message}}
- <br /><br />
-Please help us to debug by emailing us at 
-<a href="mailto:info@americangut.org">info@americangut.org</a> and 
-tell us exactly what happend before you got this error. <br /><br />
+<br /><br />
+{% raw text_locale['db_error.html']['MESSAGE'] % fmt %}
+<br /><br />
 
-<br /> Thanks, <br /> The American Gut Team <br />
+<br />{% raw text_locale['db_error.html']['SIGNOFF'] %}<br />

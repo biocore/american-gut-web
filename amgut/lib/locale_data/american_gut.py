@@ -20,11 +20,17 @@ _HELP_REQUEST = {
     'EMAIL_ADDRESS': "Email address",
     'PROBLEM_PROMPT': "Enter information related to your problem"
 }
+_DB_ERROR = {
+    'HEADER': 'Oops! There seems to be a database error.',
+    'MESSAGE': 'Please help us to debug by emailing us at <a href="mailto:%(help_email)s">%(help_email)s</a> and tell us exactly what happend before you got this error.',
+    'SIGNOFF': 'Thanks, <br /> The American Gut Team'
+}
 
 # Actual text locale
 text_locale = {
     'FAQ.html': _FAQ,
-    'help_request.html': _HELP_REQUEST
+    'help_request.html': _HELP_REQUEST,
+    'db_error.html': _DB_ERROR
     }
 
 # Any media specific localizations
