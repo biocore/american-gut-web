@@ -10,10 +10,9 @@ from amgut.lib.config_manager import AMGUT_CONFIG
 class TaxaSummaryHandler(BaseHandler):
     @authenticated
     def get(self, barcode):
-
         # nothing else to do
         if barcode is None:
-            self.render("taxa_summary.html", skid=self.current_user,
+            self.render('taxa_summary.html', skid=self.current_user,
                         loginerror="ERROR: No barcode was requested")
             return
 
@@ -50,7 +49,6 @@ class TaxaSummaryHandler(BaseHandler):
         headers = ['Kingdom', 'Phylum', 'Class', 'Order', 'Family',
             'Genus', 'Relative Abundance (%)']
 
-        self.render("taxa_summary.html", headers=headers, data=lines,
+        self.render('taxa_summary.html', headers=headers, data=lines,
                     barcode=barcode, file_path=taxa_summary_url, loginerror="",
                     skid=self.current_user)
-
