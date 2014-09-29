@@ -12,6 +12,9 @@ from __future__ import division
 
 # Template specific dicts
 _FAQ = {'FAQ_0_WHAT_IS_A_GUT': 'asdasdasd'}
+_TAXA_SUMMARY = {'RESOLUTION_NOTE': "Note: Where there are blanks in the table below, the taxonomy could not be resolved in finer detail.",
+                 'PERCENTAGES_NOTE': "Note: The percentages listed represent the relative abundance of each taxon. This summary is based off of normalized data. Because of limitations in the way the samples are processed, we cannot reliably obtain species level resolution. As such, the data shown are collapsed at the genus level.",
+                 'DOWNLOAD_LINK': "Download the table"}
 _HELP_REQUEST = {
     'CONTACT_HEADER': "Contact the American Gut",
     'RESPONSE_TIMING': "We will send a response to the email address you supply within 24 hours.",
@@ -20,11 +23,28 @@ _HELP_REQUEST = {
     'EMAIL_ADDRESS': "Email address",
     'PROBLEM_PROMPT': "Enter information related to your problem"
 }
+_SAMPLE_OVERVIEW = {
+    'BARCODE_RECEIVED': 'Sample %(barcode)s. This sample has been received by the sequencing center!',
+    'DISPLAY_BARCODE': 'Sample %(barcode)s',
+    'RESULTS_PDF_LINK': 'Click this link to visualize sample %(barcode)s in the context of other microbiomes!',
+    'SAMPLE_NOT_PROCESSED': 'This sample has not yet been processed. Please check back later.',
+    'DATA_VIS_TITLE': 'Data Visualization',
+    'TAXA_SUM_TITLE': 'Taxa Summary',
+    'VIEW_TAXA_SUMMARY': 'View Taxa Summary',
+    'SAMPLE_STATUS': 'Sample Status',
+    'SAMPLE_SITE': 'Sample Site',
+    'SAMPLE_DATE': 'Sample Date',
+    'SAMPLE_TIME': 'Sample Time',
+    'SAMPLE_NOTES': 'Notes',
+    'REMOVE_BARCODE': 'Remove barcode %(barcode)s'
+}
 
 # Actual text locale
 text_locale = {
     'FAQ.html': _FAQ,
-    'help_request.html': _HELP_REQUEST
+    'help_request.html': _HELP_REQUEST,
+    'sample_overview.html': _SAMPLE_OVERVIEW,
+    'taxa_summary.html': _TAXA_SUMMARY
     }
 
 # Any media specific localizations
