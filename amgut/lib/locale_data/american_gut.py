@@ -55,16 +55,16 @@ _ERROR = {
 # Actual text locale
 text_locale = {
     'FAQ.html': _FAQ,
-    'error.html': _ERROR
+    'error.html': _ERROR,
     'forgot_password.html': _FORGOT_PASSWORD,
-    'help_request.html': _HELP_REQUEST
+    'help_request.html': _HELP_REQUEST,
     'sample_overview.html': _SAMPLE_OVERVIEW,
     'taxa_summary.html': _TAXA_SUMMARY
     }
 
 # Any media specific localizations
 media_locale = {'LOGO': '/static/img/ag_logo.jpg',
-                'HELP_EMAIL': 'info@americangut.org'}
+                'HELP_EMAIL': 'info@americangut.org',
                 'PROJECT_TITLE': 'American Gut Project',
                 'FAVICON': '/static/img/favicon.ico',
                 'FUNDRAZR_URL': 'https://fundrazr.com/campaigns/4Tqx5',
