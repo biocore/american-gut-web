@@ -7,7 +7,7 @@ from amgut.handlers.base_handlers import BaseHandler
 class HelpRequestHandler(BaseHandler):
     @authenticated
     def get(self):
-        self.render(skid=self.current_user, result='')
+        self.render('help_request.html', skid=self.current_user, result='')
 
     @authenticated
     def post(self):
@@ -36,4 +36,5 @@ class HelpRequestHandler(BaseHandler):
                           "contact us directly at "
                           "<a href='mailto:info@americangut.org'>info@americangut.org</a>")
 
-            self.render(skid=self.current_user, result=result)
+            self.render('help_request.html', skid=self.current_user,
+                        result=result)
