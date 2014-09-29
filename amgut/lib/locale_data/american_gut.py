@@ -38,13 +38,19 @@ _SAMPLE_OVERVIEW = {
     'SAMPLE_NOTES': 'Notes',
     'REMOVE_BARCODE': 'Remove barcode %(barcode)s'
 }
+_CONSTRUCTION = {
+    'WELCOME': 'Welcome - you have reached the participant login page for the American Gut Project. Thanks again for joining the study - we appreciate your support. This is our first citizen science project so we are still working out some kinks. A few things:',
+    'MAIN_TEXT': '<li>We are making final changes and additions to the online consent form you will sign and the questionnaire you will be asked to fill out. The American Gut developers team is working double-time to get this done, as are a lot of other people in our lab at University of Colorado. So please come back to this page in a few days.</li><li>When the site is live, you will be able to log in and sign the consent form. Please, do not take your sample and mail back to us before you sign the online consent form. If you have any questions e-mail <a href="%(help_email)s">us</a>.</li><li>Since we will be asking you for a week\'s worth of dietary info in the questionnaire, it would be great if you could get a head start on that now. Note we ask that you take your sample AFTER you have recorded your dietary info for a week. There are a number of FREE online dietary tools out there - we recommend Calorie Count. Note we will be asking questions about your carb, protein, fat, alcohol, and fiber intake, (as a percentage of your total intake) as well as some info on types of food. So, use a tool that allows you to enter as much detail as possible.</li>',
+    'FOOTER': 'Again, we appreciate your patience. Everyone is working hard on our end to make this project as interesting as possible for everyone. If you have any questions, please email us at %(help_email)s.'
+}
 
 # Actual text locale
 text_locale = {
     'FAQ.html': _FAQ,
     'help_request.html': _HELP_REQUEST,
     'sample_overview.html': _SAMPLE_OVERVIEW,
-    'taxa_summary.html': _TAXA_SUMMARY
+    'taxa_summary.html': _TAXA_SUMMARY,
+    'construction.html': _CONSTRUCTION
     }
 
 # Any media specific localizations
