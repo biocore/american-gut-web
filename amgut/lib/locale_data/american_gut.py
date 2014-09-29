@@ -22,6 +22,7 @@ media_locale = {
     'ADD_SAMPLE_OVERVIEW': "/static/img/add_sample_overview.png",
     'FAQ_AMBIGUOUS_PASS': '/static/img/creds_example.png',
     'SAMPLE_BARCODE': '/static/img/sample_barcode.jpg',
+    'SWAB_HANDLING': 'http://player.vimeo.com/video/62393487',
     'HELP_EMAIL': 'info@americangut.org',
     'PROJECT_TITLE': AMGUT_CONFIG.project_name,
     'FAVICON': '/static/img/favicon.ico',
@@ -105,7 +106,8 @@ _FAQ = {
     'CONVERT_GRAMS_CALORIES_ANS': 'Once you determine how many grams of protein, carbohydrates and lipids you have consumed each day, multiply the grams of protein and the grams of carbohydrates by 4 each (since there are 4 calories in every gram of protein and carbohydrate) and multiply the grams of lipids by 9 (since there are 9 calories in every gram of lipids). Add all of these numbers together to determine the total number of calories you consumed. Divide protein calories by the total calories to determine the percentage of calories consumed as protein. Repeat for carbohydrates and lipids.',
     'DIFFERENT_WHATS_WRONG_WITH_ME': "I'm different than other people in my category. Does that mean something is wrong with me?",
     'WHY_TWO_SWABS_ANS_2': "<P>Each tube is used for <strong>one sample</strong>. The tube has two swabs in it because one is a backup in case the DNA does not amplify on the first swab.</p>"
-                                "<p>Here's a video of Rob Knight talking about swab handling:</p>",
+                           "<p>Here's a video of Rob Knight talking about swab handling:</p>"
+                           "<iframe src='%(swab_handling)s' width=''500'' height=''281'' frameborder=''0'' webkitallowfullscreen='' mozallowfullscreen='' allowfullscreen=''></iframe>" % {'swab_handling': media_locale['SWAB_HANDLING']},
     'MISSING_METADATA_ANS': 'Metadata are information describing your age, gender, diet, etc. Missing metadata mean that this person did not provide us with this information.',
     'WHERE_SEND_SAMPLE': 'Where do I send my sample?',
     'VARIABLE': 'TEXT',
