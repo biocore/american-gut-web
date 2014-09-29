@@ -1,5 +1,7 @@
 {% extends sitebase.html %}
 {% block content %}
+{% from amgut import text_locale %}
+{% set tl = text_locale['portal.html'] %}
 <h2>Hi {{user_name}}! Please follow the steps below.</h2>
 
 {% if errmsg %}
