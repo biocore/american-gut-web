@@ -8,9 +8,9 @@
       <div class="separator"></div>
       <h3>{% raw tl['WATCH_VIDEOS'] %}</h3>
       <div class="videos clearfix">
-      <div class="video"><iframe src="{{media_locale['steps_video']}}" width="330" height="200" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe> <p>{% raw tl['STEPS_TO_FOLLOW'] %}</p></div>
-      <div class="video"><iframe src="http://player.vimeo.com/video/63926337" width="330" height="200" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe> <p>{% raw tl['LOG_FOOD']%}</p></div>
-      <div class="video"><iframe src="http://player.vimeo.com/video/63931218" width="330" height="200" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe> <p>{% raw tl['ADD_PARTICIPANT'] %}</p></div>
+      <div class="video"><iframe src="{{media_locale['STEPS_VIDEO']}}" width="330" height="200" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe> <p>{% raw tl['STEPS_TO_FOLLOW'] %}</p></div>
+      <div class="video"><iframe src="media_locale['FOOD_LOG']" width="330" height="200" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe> <p>{% raw tl['LOG_FOOD']%}</p></div>
+      <div class="video"><iframe src="media_locale['ADD_PARTICIPANT']" width="330" height="200" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe> <p>{% raw tl['ADD_PARTICIPANT'] %}</p></div>
       </div>
       <br />
       <div class="separator"></div>
@@ -72,15 +72,15 @@
       <h3 class="faq_header" id="faq3">{% raw tl['LOG_IN_WHAT_NOW'] %}</h3>
       <div class="faq_content">
           <p>{% raw tl['LOG_IN_WHAT_NOW_ANS_1'] %}</p>
-          <img src="/static/img/add_participant.png">
+          <img src="{{media_locale['ADD_PARTICIPANT_IMG_1']}}">
           {% raw tl['LOG_IN_WHAT_NOW_ANS_2'] %}
-          <img src="/static/img/add_participant_menu.png"/>
+          <img src="{{media_locale['ADD_PARTICIPANT_IMG_MENU']}}"/>
           <p>{% raw tl['LOG_IN_WHAT_NOW_ANS_3'] %}</p>
-          <img src="/static/img/log_sample_options.png"/>
+          <img src="{{media_locale['ADD_SAMPLE_OPTS']}}"/>
           <p>{% raw tl['LOG_IN_WHAT_NOW_ANS_4'] %}</p>
-          <img src="/static/img/add_sample_highlight.png"/>
+          <img src="{{media_locale['ADD_SAMPLE_HIGHLIGHT']}}"/>
           <p>{% raw tl['LOG_IN_WHAT_NOW_ANS_5'] %}</p>
-          <img src="/static/img/add_sample_overview.png"/>
+          <img src="{{media_locale['ADD_SAMPLE_OVERVIEW']}}"/>
       </div>
       <div class="separator"></div>
       <h3 class="faq_header" id="faq4">{% raw tl['TAKES_SIX_MONTHS'] %}</h3>
@@ -91,7 +91,7 @@
       <h3 class="faq_header" id="faq5">{% raw tl['WHY_TWO_SWABS'] %}</h3>
       <div class="faq_content">
       <p>{% raw tl['WHY_TWO_SWABS_ANS_1'] %}</p>
-      <img src="/static/img/sample_barcode.jpg"/>
+      <img src="{{media_locale['SAMPLE_BARCODE']}}"/>
       {% raw tl['WHY_TWO_SWABS_ANS_2'] %}
       </div>
       <div class="separator"></div>
