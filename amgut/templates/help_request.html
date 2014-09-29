@@ -1,7 +1,9 @@
 {% extends sitebase.html %}
 {% block content %}
-<h2>{% raw text_locale['CONTACT_HEADER'] %}</h2>
-<h4>{% raw text_locale['RESPONSE_TIMING'] %}</h4>
+{% from amgut import text_locale %}
+{% set tl = tl['help_request.html'] %}
+<h2>{% raw tl['CONTACT_HEADER'] %}</h2>
+<h4>{% raw tl['RESPONSE_TIMING'] %}</h4>
 
 <form id="help_request" name="help_request" action="/authed/help_request/" method="post">
     <table width="100%">
@@ -11,13 +13,13 @@
             <div class="lefta">
                 <table>
                     <tr>
-                        <td>{% raw text_locale['FIRST_NAME'] %}</td><td><input type="text" id="first_name" name="first_name"/></td>
+                        <td>{% raw tl['FIRST_NAME'] %}</td><td><input type="text" id="first_name" name="first_name"/></td>
                     </tr>
                     <tr>
-                        <td>{% raw text_locale['LAST_NAME'] %}</td><td><input type="text" id="last_name" name="last_name"/></td>
+                        <td>{% raw tl['LAST_NAME'] %}</td><td><input type="text" id="last_name" name="last_name"/></td>
                     </tr>
                     <tr>
-                        <td>{% raw text_locale['EMAIL_ADDRESS'] %}</td><td><input type="text" id="email_address" name="email_address"/></td>
+                        <td>{% raw tl['EMAIL_ADDRESS'] %}</td><td><input type="text" id="email_address" name="email_address"/></td>
                     </tr>
                 </table>
             </div>
@@ -26,7 +28,7 @@
         </tr>
     </table>
     <br/> <br/>
-    {% raw text_locale['PROBLEM_PROMPT'] %}<br/>
+    {% raw tl['PROBLEM_PROMPT'] %}<br/>
     <textarea rows="4" cols="50" style="resize:none" id="message_body" name="message_body"/></textarea>
     <br />
     <br />

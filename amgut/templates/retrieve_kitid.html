@@ -33,29 +33,32 @@ function validateKitRequest() {
 {% end %}
 
 {% block content %}
+{% from amgut import text_locale %}
+{% set tl = text_locale['retrieve_kitid.html'] %}
+
 <div class="forgotwrapper" style="position:absolute; top:15px; left:275px; padding:15px;">
 <hr/>
 <br/>
 {% if output == 'form' %}
  {% if message %}
-<h2 style="color:red;">This email address is not in our system</h2>
+ <h2 style="color:red;">{% raw tl['UNKNOWN_EMAIL'] %}</h2>
  {% end %}
 <form id="get_kit" name="get_kit" method="post" action="/retrieve_kitid/">
     <table>
-    <tr><td><h2>Please Enter Your Email</h2></td></tr>
-    <tr><td>E-mail:</td><td><input type="text" id="email" name="email" /></td></tr>
+        <tr><td><h2>{% raw tl['ENTER_EMAIL'] %}</h2></td></tr>
+        <tr><td>{% raw tl['EMAIL_PROMPT'] %}</td><td><input type="text" id="email" name="email" /></td></tr>
     </table>
-    <input type="button" name="submit_button" id="submit_button" value="Send Kit ID Email" onclick="validateKitRequest()">
+    <input type="button" name="submit_button" id="submit_button" value="{% raw tl['SEND_EMAIL'] %}" onclick="validateKitRequest()">
 </form>
 
 {% elif output == 'success' %}
-<p>Your kit ID has been emailed to you. Please  check your email</p>
+<p>{% raw tl['EMAIL_SUCCESS'] %}</p>
 
 {% elif output == 'noemail' %}
-Mail can be sent only from microbio.me domain.<br><br>{{message}}
+{% raw tl['EMAIL_CANTSEND'] %}<br><br>{{message}}
 
 {% elif output == 'exception' %}
-<p>There was a problem sending you the kit ID. Please contact us directly at <a href=\"mailto:info@americangut.org\"> info@americangut.org</a>.</p>
+<p>{% raw tl['EMAIL_EXCEPTION'] %}</p>
 
 {% else %}
 ERROR
