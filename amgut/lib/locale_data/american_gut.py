@@ -56,7 +56,7 @@ _FORGOT_PASSWORD = {'ENTER_ID_EMAIL': 'Enter your Kit ID and email',
 text_locale = {
     'FAQ.html': _FAQ,
     'forgot_password.html': _FORGOT_PASSWORD,
-    'help_request.html': _HELP_REQUEST
+    'help_request.html': _HELP_REQUEST,
     'sample_overview.html': _SAMPLE_OVERVIEW,
     'taxa_summary.html': _TAXA_SUMMARY,
     'construction.html': _CONSTRUCTION
@@ -64,7 +64,7 @@ text_locale = {
 
 # Any media specific localizations
 media_locale = {'LOGO': '/static/img/ag_logo.jpg',
-                'HELP_EMAIL': 'info@americangut.org'}
+                'HELP_EMAIL': 'info@americangut.org',
                 'PROJECT_TITLE': 'American Gut Project',
                 'FAVICON': '/static/img/favicon.ico',
                 'FUNDRAZR_URL': 'https://fundrazr.com/campaigns/4Tqx5',
