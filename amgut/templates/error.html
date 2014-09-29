@@ -1,6 +1,8 @@
 {% autoescape None %}
-    <h1>AN ERROR HAS OCCURED!</h1>
-    <p>Please copy the following into an email and send this information, along with the url you were trying to access, to <a href="mailto:qiita.help@gmail.com">qiita.help@gmail.com</a></p>
+    {% from amgut import text_locale %}
+    {% set tl = text_locale['error.html'] %}
+    <h1>{% raw tl['ERROR_OCCURED'] %}</h1>
+    <p>{% raw tl['ERROR_CONTACT'] %}</p>
     <h2>Error</h2>
     <p>{{error}}</p>
     <h2>Traceback</h2>

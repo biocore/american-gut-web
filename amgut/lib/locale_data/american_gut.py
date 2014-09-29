@@ -11,9 +11,35 @@ from amgut.lib.config_manager import AMGUT_CONFIG
 # -----------------------------------------------------------------------------
 # Any media specific localizations
 media_locale = {
-    'logo': '/static/img/ag_logo.jpg',
-    'steps_video': "http://player.vimeo.com/video/63542787",
-    'faq_ambiguous_pass': '/static/img/creds_example.png'
+    'LOGO': '/static/img/ag_logo.jpg',
+    'STEPS_VIDEO': "http://player.vimeo.com/video/63542787",
+    'FAQ_AMBIGUOUS_PASS': '/static/img/creds_example.png',
+    'HELP_EMAIL': 'info@americangut.org',
+    'PROJECT_TITLE': AMGUT_CONFIG.project_name,
+    'FAVICON': '/static/img/favicon.ico',
+    'FUNDRAZR_URL': 'https://fundrazr.com/campaigns/4Tqx5',
+    'NAV_PARTICIPANT_RESOURCES': 'Participant resources',
+    'NAV_HOME': 'Home',
+    'NAV_MICROBIOME_101': '%s 101' % AMGUT_CONFIG.project_shorthand,
+    'NAV_FAQ': 'FAQ',
+    'NAV_MICROBIOME_FAQ': 'Human Microbiome FAQ',
+    'NAV_ADDENDUM': 'How do I interpret my results?',
+    'NAV_PRELIM_RESULTS': 'Preliminary results!',
+    'NAV_CHANGE_PASSWORD': 'Change Password',
+    'NAV_CONTACT_US': 'Contact Us',
+    'NAV_LOGOUT': 'Log out',
+    'NAV_HUMAN_SAMPLES': 'Human Samples',
+    'NAV_RECEIVED': '(Received)',
+    'NAV_ADD_HUMAN': 'Add Human Source',
+    'NAV_ANIMAL_SAMPLES': 'Animal Samples',
+    'NAV_ADD_ANIMAL': 'Add Animal Source',
+    'NAV_ENV_SAMPLES': 'Environmental Samples',
+    'NAV_LOG_SAMPLE': 'Log Sample',
+    'NAV_JOIN_PROJECT': 'Join The Project',
+    'NAV_KIT_INSTRUCTIONS': 'Kit Instructions',
+    'NAV_PARTICIPANT_LOGIN': 'Participant Log In',
+    'NAV_FORGOT_KITID': 'I forgot my kit ID',
+    'NAV_FORGOT_PASSWORD': 'I forgot my password'
 }
 
 # Template specific dicts
@@ -46,7 +72,7 @@ _FAQ = {
     'BETTER_OR_WORSE_ANS': 'Right now, you can\xe2\x80\x99t. We\xe2\x80\x99re still trying to understand what constitutes a normal or average gut microbiome, and we have a lot to learn about the functions of many of the microbes that inhabit the gut. Therefore, it\xe2\x80\x99s tough to know what combinations of microbes are best for nutrition and health. That\xe2\x80\x99s one reason collecting data from so many people is important\xe2\x80\x94hopefully we can start to learn more about this.',
     'LOOK_BELOW': "If you're still experiencing issues, look for your problem in the FAQ below",
     'PASSWORD_SAME_VERIFICATION_ANS': 'No. Your <strong>password</strong> is printed on the sheet that you received with your kit in the mail. That sheet looks like this:</p>'
-                                '<img src="%(faq_ambiguous_pass)s"/><p>Your <strong>verification code</strong> is emailed to you. Look for the email: <br /><br /><strong>FROM:</strong>  %(project)s (info@americangut.org)<br /><strong>SUBJECT:</strong>  %(shorthand)s Kit ID & Verification Code' % {"shorthand": AMGUT_CONFIG.project_shorthand, "project": AMGUT_CONFIG.project_name, "faq_ambiguous_pass": media_locale['faq_ambiguous_pass']},
+                                '<img src="%(FAQ_AMBIGUOUS_PASS)s"/><p>Your <strong>verification code</strong> is emailed to you. Look for the email: <br /><br /><strong>FROM:</strong>  %(project)s (info@americangut.org)<br /><strong>SUBJECT:</strong>  %(shorthand)s Kit ID & Verification Code' % {"shorthand": AMGUT_CONFIG.project_shorthand, "project": AMGUT_CONFIG.project_name, "FAQ_AMBIGUOUS_PASS": media_locale['FAQ_AMBIGUOUS_PASS']},
     'TAKES_SIX_MONTHS_ANS': 'Yes. It takes about 8 weeks for extractions, 8 weeks for the remainder of the processing, and 2 weeks to do the actual sequencing. This is before any analysis and if everything goes as planned, with no delays - equipment down, run failures, reagents or other consumables back ordered. Things do sometimes go wrong, so we say up to 6 months.',
     'PARTICIPATE_WITH_DIAGNOSIS_ANS': 'Of course! The only exclusion criteria are: you must be more than 6 weeks old and cannot be a convicted felon. Please keep in mind that, for legal and ethical reasons, the %(project)s does not provide medically actionable results or advice.' % {"project": AMGUT_CONFIG.project_name},
     'HOW_PROCESS_SAMPLES': 'How are the samples and data processed?',
@@ -61,7 +87,7 @@ _FAQ = {
                                 '<p>We should also mention that since we are only interested in your microbes, we do not sequence human genomic DNA in our typical analyses. Where it is possible for human DNA to be sequenced (e.g., the Beyond Bacteria kits), we remove the human DNA using the same bioinformatics approaches undertaken in the NIH-funded Human Microbiome Project and approved by NIH bioethicists. Additionally, there is so little human DNA in fecal, skin and mucus samples that the chances of us being able to sequence your entire human genome are almost none, even if we tried.',
     'FECAL_NO_RESULTS_ANS': 'On any given sequencing run (not just the %(shorthand)s), a small percentage of the samples fail for unknown reasons -- our methods are good but not perfect. This is one of the reasons the sample kits have two Q-tips. It allows us to perform a second microbial DNA extraction and re-sequence if the first attempt failed. We will be doing this for all of the samples that failed. If there was a technical problem with the sample itself (e.g. not enough microbes on the swab) that inhibits us from producing data for you, we will be re-contacting you about collecting another sample.' % {"shorthand": AMGUT_CONFIG.project_shorthand},
     'MULTIPLE_KITS_DIFFERENT_TIMES_ANS': 'For best results, we recommend that you mail each sample within 24 hours of collection.',
-    'STEPS_TO_FOLLOW': '<a href="%(video)s">%(shorthand)s - Steps to Follow When Your Kit Arrives</a> from <a href="http://vimeo.com/user16100300">shelley schlender</a> on <a href="http://vimeo.com">Vimeo</a>.' % {"shorthand": AMGUT_CONFIG.project_shorthand, "video": media_locale["steps_video"]},
+    'STEPS_TO_FOLLOW': '<a href="%(video)s">%(shorthand)s - Steps to Follow When Your Kit Arrives</a> from <a href="http://vimeo.com/user16100300">shelley schlender</a> on <a href="http://vimeo.com">Vimeo</a>.' % {"shorthand": AMGUT_CONFIG.project_shorthand, "video": media_locale["STEPS_VIDEO"]},
     'WHY_TWO_SWABS': 'Why are there 2 swabs inside the tube?',
     'MULTIPLE_KITS_DIFFERENT_TIMES': ' have a 2+ sample kit, and would like to collect and send them in at different times',
     'FOOD_DIARY': 'Why am I asked for a seven-day food diary? Do I really need to fill the survey?',
@@ -116,6 +142,12 @@ _FAQ = {
 }
 
 
+_FAQ = {'FAQ_0_WHAT_IS_A_GUT': 'asdasdasd'}
+_TAXA_SUMMARY = {'RESOLUTION_NOTE': "Note: Where there are blanks in the table below, the taxonomy could not be resolved in finer detail.",
+                 'PERCENTAGES_NOTE': "Note: The percentages listed represent the relative abundance of each taxon. This summary is based off of normalized data. Because of limitations in the way the samples are processed, we cannot reliably obtain species level resolution. As such, the data shown are collapsed at the genus level.",
+                 'DOWNLOAD_LINK': "Download the table"}
+
+
 _HELP_REQUEST = {
     'CONTACT_HEADER': "Contact the %(shorthand)s" % {"shorthand": AMGUT_CONFIG.project_shorthand},
     'RESPONSE_TIMING': "We will send a response to the email address you supply within 24 hours.",
@@ -125,8 +157,65 @@ _HELP_REQUEST = {
     'PROBLEM_PROMPT': "Enter information related to your problem"
 }
 
+_DB_ERROR = {
+    'HEADER': 'Oops! There seems to be a database error.',
+    'MESSAGE': 'Please help us to debug by emailing us at <a href="mailto:%(help_email)s">%(help_email)s</a> and tell us exactly what happend before you got this error.',
+    'SIGNOFF': 'Thanks, <br /> The American Gut Team'
+}
+
+_SAMPLE_OVERVIEW = {
+    'BARCODE_RECEIVED': 'Sample %(barcode)s. This sample has been received by the sequencing center!',
+    'DISPLAY_BARCODE': 'Sample %(barcode)s',
+    'RESULTS_PDF_LINK': 'Click this link to visualize sample %(barcode)s in the context of other microbiomes!',
+    'SAMPLE_NOT_PROCESSED': 'This sample has not yet been processed. Please check back later.',
+    'DATA_VIS_TITLE': 'Data Visualization',
+    'TAXA_SUM_TITLE': 'Taxa Summary',
+    'VIEW_TAXA_SUMMARY': 'View Taxa Summary',
+    'SAMPLE_STATUS': 'Sample Status',
+    'SAMPLE_SITE': 'Sample Site',
+    'SAMPLE_DATE': 'Sample Date',
+    'SAMPLE_TIME': 'Sample Time',
+    'SAMPLE_NOTES': 'Notes',
+    'REMOVE_BARCODE': 'Remove barcode %(barcode)s'
+}
+_CONSTRUCTION = {
+    'WELCOME': 'Welcome - you have reached the participant login page for the American Gut Project. Thanks again for joining the study - we appreciate your support. This is our first citizen science project so we are still working out some kinks. A few things:',
+    'MAIN_TEXT': '<li>We are making final changes and additions to the online consent form you will sign and the questionnaire you will be asked to fill out. The American Gut developers team is working double-time to get this done, as are a lot of other people in our lab at University of Colorado. So please come back to this page in a few days.</li><li>When the site is live, you will be able to log in and sign the consent form. Please, do not take your sample and mail back to us before you sign the online consent form. If you have any questions e-mail <a href="mailto:%(help_email)s">us</a>.</li><li>Since we will be asking you for a week\'s worth of dietary info in the questionnaire, it would be great if you could get a head start on that now. Note we ask that you take your sample AFTER you have recorded your dietary info for a week. There are a number of FREE online dietary tools out there - we recommend Calorie Count. Note we will be asking questions about your carb, protein, fat, alcohol, and fiber intake, (as a percentage of your total intake) as well as some info on types of food. So, use a tool that allows you to enter as much detail as possible.</li>',
+    'FOOTER': 'Again, we appreciate your patience. Everyone is working hard on our end to make this project as interesting as possible for everyone. If you have any questions, please email us at %(help_email)s.'
+}
+
+_FORGOT_PASSWORD = {'ENTER_ID_EMAIL': 'Enter your Kit ID and email',
+                    'KIT_ID': 'Kit ID:',
+                    'EMAIL': 'E-mail',
+                    'EMAIL_RESET_PASSWORD': 'You will receive an email shortly with instructions to reset your password. Please check your email because you need to reset your password within two hours.',
+                    'EMAIL_FAILED': '<p>There was a problem sending you the password reset code. Please contact us directly at <a href=\"mailto:%(help_email)s\" target=\"_blank\">%(help_email)s</a>.</p><p>Email contained: </p><p>{{message}}</p>',
+                    'NO_RECORD': '<p style="color:red;">This information does not match our records</p><p>Please email <a href="mailto:%(help_email)s">directly</a> for further assistance<p>',
+                    'SEND_EMAIL': 'Send email'}
+
+_ERROR = {
+    'ERROR_OCCURED': 'AN ERROR HAS OCCURED!',
+    'ERROR_CONTACT': 'Please copy the following into an email and send this information, along with the url you were trying to access, to <a href="mailto:info@americangut.org">info@americangut.org</a>'
+    }
+
+_RETREIVE_KITID = {
+    'UNKNOWN_EMAIL': 'This email address is not in our system',
+    'ENTER_EMAIL': 'Please Enter Your Email',
+    'SEND_EMAIL': 'Send Kit ID Email',
+    'EMAIL_SUCCESS': 'Your kit ID has been emailed to you. Please check your email.',
+    'EMAIL_CANTSEND': 'Mail can be sent only from microbio.me domain.',
+    'EMAIL_EXCEPTION': 'There was a problem sending you the kit ID. Please contact us directly at <a href=\"mailto:info@americangut.org\">info@americangut.org</a>.',
+    'EMAIL_PROMPT': 'Email:'
+    }
+
 # Actual text locale
 text_locale = {
     'FAQ.html': _FAQ,
-    'help_request.html': _HELP_REQUEST
+    'db_error.html': _DB_ERROR,
+    'retrieve_kitid.html': _RETREIVE_KITID,
+    'error.html': _ERROR,
+    'forgot_password.html': _FORGOT_PASSWORD,
+    'help_request.html': _HELP_REQUEST,
+    'sample_overview.html': _SAMPLE_OVERVIEW,
+    'taxa_summary.html': _TAXA_SUMMARY,
+    'construction.html': _CONSTRUCTION
     }

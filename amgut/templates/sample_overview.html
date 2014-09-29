@@ -1,59 +1,62 @@
 {% extends sitebase.html %}
 {% block content %}
+{% from amgut import text_locale %}
+{% set tl = text_locale['sample_overview.html'] %}
+{% set fmt = {'barcode': barcode} %}
 
 {% if status == 'Received' %}
-<h2>Sample {{ barcode }}. This sample has been received by the sequencing center!</h2>
+<h2>{% raw tl['BARCODE_RECEIVED'] % fmt %}</h2>
 {% else %}
-<h2>Sample {{ barcode }}</h2>
+<h2>{% raw tl['DISPLAY_BARCODE'] % fmt %}</h2>
 {% end %}
 
 <div class="overview_wrapper">
     <div class="overview">
         <table class="list" id="survey" style="background:{{ bgcolor }}; text-align:right">
             <tr>
-                <td>Data Visualization</td>
+                <td>{% raw tl['DATA_VIS_TITLE'] %}</td>
 {% if barcode_pdf %}
-                <td><a href="{{ barcode_pdf }}" title="Click this link to visualize sample {{ barcode }} in the context of other microbiomes!" target="blank">{{ barcode }}.pdf</a>
+                <td><a href="{{ barcode_pdf }}" title="{% raw tl['RESULTS_PDF_LINK'] % fmt %}" target="blank">{{ barcode }}.pdf</a>
 {% else %}
-                <td>This sample has not yet been processed. Please check back later.</td>
+                <td>{% raw tl['SAMPLE_NOT_PROCESSED'] %}</td>
 {% end %}
             </tr>
 
             <tr>
-                <td>Taxa Summary</td>
+                <td>{% raw tl['TAXA_SUM_TITLE'] %}</td>
 {% if barcode_txt %}
                 <td>
                     <form action="/taxa_summaries/{{barcode}}">
-                        <input type="submit" name="taxa_summary" value="View Taxa Summary">
+                        <input type="submit" name="taxa_summary" value="{% raw tl['VIEW_TAXA_SUMMARY'] %}">
                     </form>
                 </td>
 {% else %}
-                <td>This sample has not yet been processed. Please check back later.</td>
+                <td>{% raw tl['SAMPLE_NOT_PROCESSED'] %}</td>
 {% end %}
             </tr>
 
             <tr>
-                <td style="width: 150px;">Sample Status</td>
+                <td style="width: 150px;">{% raw tl['SAMPLE_STATUS'] %}</td>
                 <td>{{ status }}</td>
             </tr>
 
             <tr>
-                <td style="width: 150px;">Sample Site</td>
+                <td style="width: 150px;">{% raw tl['SAMPLE_SITE'] %}</td>
                 <td>{{ sample_origin }}</td>
             </tr>
 
             <tr>
-                <td>Sample Date</td>
+                <td>{% raw tl['SAMPLE_DATE'] %}</td>
                 <td>{{ sample_date }}</td>
             </tr>
 
             <tr>
-                <td>Sample Time</td>
+                <td>{% raw tl['SAMPLE_TIME'] %}</td>
                 <td>{{ sample_time }}</td>
             </tr>
 
             <tr>
-                <td>Notes</td>
+                <td>{% raw tl['SAMPLE_NOTES'] %}</td>
                 <td>
                     <div class="notescroll">
                         {{ notes }}
@@ -66,7 +69,7 @@
                 <td colspan="2">
                     <form action="/authed/sample_overview/" method="post" id="remove_sample_{{ barcode }}">
                         <input type="hidden" name="remove" value="{{ barcode }}">
-                        <input type="submit" value="Remove barcode {{ barcode }}"/>
+                        <input type="submit" value="{% raw tl['REMOVE_BARCODE'] %}"/>
                     </form>
                 </td>
             </tr>

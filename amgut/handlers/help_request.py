@@ -1,6 +1,5 @@
 from tornado.web import authenticated
 
-from amgut import text_locale, media_locale
 from amgut.lib.mail import send_email
 from amgut.handlers.base_handlers import BaseHandler
 
@@ -8,14 +7,10 @@ from amgut.handlers.base_handlers import BaseHandler
 class HelpRequestHandler(BaseHandler):
     @authenticated
     def get(self):
-        page = 'help_request.html'
-        self.render(page, skid=self.current_user, result='',
-                    text_locale=text_locale[page],
-                    media_locale=media_locale)
+        self.render('help_request.html', skid=self.current_user, result='')
 
     @authenticated
     def post(self):
-        page = 'help_request.html'
         email_address = self.get_argument('email_address')
         skid = self.current_user[-2:]  # last two letters of kit id
         first_name = self.get_argument('first_name')
@@ -41,6 +36,5 @@ class HelpRequestHandler(BaseHandler):
                           "contact us directly at "
                           "<a href='mailto:info@americangut.org'>info@americangut.org</a>")
 
-            self.render(page, skid=self.current_user, result=result,
-                        text_locale=text_locale[page],
-                        media_locale=media_locale)
+            self.render('help_request.html', skid=self.current_user,
+                        result=result)
