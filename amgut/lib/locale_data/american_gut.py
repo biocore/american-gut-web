@@ -23,6 +23,13 @@ _HELP_REQUEST = {
     'EMAIL_ADDRESS': "Email address",
     'PROBLEM_PROMPT': "Enter information related to your problem"
 }
+
+_DB_ERROR = {
+    'HEADER': 'Oops! There seems to be a database error.',
+    'MESSAGE': 'Please help us to debug by emailing us at <a href="mailto:%(help_email)s">%(help_email)s</a> and tell us exactly what happend before you got this error.',
+    'SIGNOFF': 'Thanks, <br /> The American Gut Team'
+}
+
 _SAMPLE_OVERVIEW = {
     'BARCODE_RECEIVED': 'Sample %(barcode)s. This sample has been received by the sequencing center!',
     'DISPLAY_BARCODE': 'Sample %(barcode)s',
@@ -70,6 +77,7 @@ _RETREIVE_KITID = {
 # Actual text locale
 text_locale = {
     'FAQ.html': _FAQ,
+    'db_error.html': _DB_ERROR,
     'retrieve_kitid.html': _RETREIVE_KITID,
     'error.html': _ERROR,
     'forgot_password.html': _FORGOT_PASSWORD,
