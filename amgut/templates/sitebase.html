@@ -1,4 +1,5 @@
 {% from future.utils import viewitems %}
+{% from amgut import media_locale %}
 {% from amgut.util import AG_DATA_ACCESS %}
 {% set human_participants, animal_participants, environmental_samples, kit_verified = AG_DATA_ACCESS.get_menu_items(skid) %}
 <!DOCTYPE html>
@@ -34,7 +35,7 @@
                             <li><a href="/faq/" target="_blank"><span>{% raw media_locale['NAV_FAQ'] %}</span></a></li>
                             <li><a href="/static/img/FAQ_Human_Microbiome.pdf" target="_blank"><span>{% raw media_locale['NAV_MICROBIOME_FAQ'] %}</span></a></li>
                             <li><a href="/authed/addendum/" target="_blank"><span>{% raw media_locale['NAV_ADDENDUM'] %}</span></a></li>
-                            <li class="last"><a href="http://goo.gl/Jdh1cZ" target="_blank"><span>{% raw media_locale['NAV_PRELIM_RESULTS'] %}</span></a></li>
+                            <li class="last"><a href="/static/img/mod1_main.pdf" target="_blank"><span>{% raw media_locale['NAV_PRELIM_RESULTS'] %}</span></a></li>
                         </ul>
                     </li>
                     <li><a href="/authed/change_password/"><span>{% raw media_locale['NAV_CHANGE_PASSWORD'] %}</span></a></li>
