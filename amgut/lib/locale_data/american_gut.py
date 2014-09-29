@@ -47,18 +47,24 @@ _FORGOT_PASSWORD = {'ENTER_ID_EMAIL': 'Enter your Kit ID and email',
                     'NO_RECORD': '<p style="color:red;">This information does not match our records</p><p>Please email <a href="mailto:%(help_email)s">directly</a> for further assistance<p>',
                     'SEND_EMAIL': 'Send email'}
 
+_ERROR = {
+    'ERROR_OCCURED': 'AN ERROR HAS OCCURED!',
+    'ERROR_CONTACT': 'Please copy the following into an email and send this information, along with the url you were trying to access, to <a href="mailto:info@americangut.org">info@americangut.org</a>'
+    }
+
 # Actual text locale
 text_locale = {
     'FAQ.html': _FAQ,
+    'error.html': _ERROR,
     'forgot_password.html': _FORGOT_PASSWORD,
-    'help_request.html': _HELP_REQUEST
+    'help_request.html': _HELP_REQUEST,
     'sample_overview.html': _SAMPLE_OVERVIEW,
     'taxa_summary.html': _TAXA_SUMMARY
     }
 
 # Any media specific localizations
 media_locale = {'LOGO': '/static/img/ag_logo.jpg',
-                'HELP_EMAIL': 'info@americangut.org'}
+                'HELP_EMAIL': 'info@americangut.org',
                 'PROJECT_TITLE': 'American Gut Project',
                 'FAVICON': '/static/img/favicon.ico',
                 'FUNDRAZR_URL': 'https://fundrazr.com/campaigns/4Tqx5',
