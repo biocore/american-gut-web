@@ -1,3 +1,4 @@
+{% from amgut import media_locale %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,11 +6,11 @@
 <meta HTTP-EQUIV="REFRESH" content="0; url=nojs.html">
 </noscript>
 <meta charset="utf-8">
-<title>American Gut</title>
+<title>{% raw media_locale['PROJECT_TITLE'] %}</title>
 <link rel="stylesheet" type="text/css" href="/static/css/americangut.css">
 <link rel="stylesheet" type="text/css" href="/static/css/menu.css">
 <link rel="stylesheet" type="text/css" href="/static/vendor/css/ui-lightness/jquery-ui-1.10.1.custom.min.css">
-<link rel="icon" type="image/ico" href="/static/img/favicon.ico">
+<link rel="icon" type="image/ico" href="{% raw media_locale['FAVICON'] %}">
 
 <script type="text/javascript" src="/static/js/qiime.js"></script>
 <script src="/static/vendor/js/jquery-1.11.1.min.js"></script>
@@ -68,20 +69,20 @@ function toggleSection(section_name)
     <!-- Header logo -->
     <div class="wrapper clearfix" style="position:absolute; top:10px; left:50px; right:50px; opacity:0.9;">
         <div class="header clearfix">
-            <img id="logo" src="/static/img/ag_logo.jpg">
+            <img id="logo" src="{% raw media_locale['LOGO'] %}">
         </div>
         <br>
         <div class="left menuwrapper">
             <div id="cssmenu">
                 <ul>
-                    <li><a href="/faq/#faq0">American Gut 101</a></li>
-                    <li><a href="https://fundrazr.com/campaigns/4Tqx5" target="_blank">Join the Project</a></li>
-                    <li><a href="http://goo.gl/Jdh1cZ" target="_blank">Preliminary Results</a></li>
-                    <li><a href="img/FAQ_Human_Microbiome.pdf" target="_blank">Human Microbiome FAQ</a></li>
-                    <li class="has-sub"><a><span>Participant Resources</span></a>
+                    <li><a href="/faq/#faq0">{% raw media_locale['NAV_MICROBIOME_101'] %}</a></li>
+                    <li><a href="{% raw media_locale['FUNDRAZR_URL'] %}" target="_blank">{% raw media_locale['NAV_JOIN_PROJECT'] %}</a></li>
+                    <li><a href="/static/img/mod1_main.pdf" target="_blank">{% raw media_locale['NAV_PRELIM_RESULTS'] %}</a></li>
+                    <li><a href="/static/img/FAQ_Human_Microbiome.pdf" target="_blank">{% raw media_locale['NAV_MICROBIOME_FAQ'] %}</a></li>
+                    <li class="has-sub"><a><span>{% raw media_locale['NAV_PARTICIPANT_RESOURCES'] %}</span></a>
                         <ul>
-                            <li><a href="/faq/">FAQ</a></li>
-                            <li><a href="img/full_instructions.pdf" target="_blank">Kit Instructions</a></li>
+                            <li><a href="/faq/">{% raw media_locale['NAV_FAQ'] %}</a></li>
+                            <li><a href="/static/img/full_instructions.pdf" target="_blank">{% raw media_locale['NAV_KIT_INSTRUCTIONS'] %}</a></li>
                             <li><a href="international_shipping/lan=en">International Shipping</a></li>
                             <li class="last"><a  href="international_shipping/lan=es">International Shipping (Espa&ntilde;ol)</a></li>
                         </ul>
@@ -90,7 +91,7 @@ function toggleSection(section_name)
             </div>
             <div id="cssmenu">
             <!-- Login form div -->
-                <h3 style="margin-left:5px;">Participant Log In</h3>
+                <h3 style="margin-left:5px;">{% raw media_locale['NAV_PARTICIPANT_LOGIN'] %}</h3>
                 <table width="100%">
                     <tr width="100%">
                         <td width="30%"></td>
@@ -101,8 +102,8 @@ function toggleSection(section_name)
                                   <tr><td>Kit ID</td><td><input type="text" id="skid" name="skid"></td></tr>
                                   <tr><td>Password</td><td><input type="password" id="password" name="password"></td></tr>
                                   <tr><td colspan="2"><input type="submit" value="Log In"></tr> 
-                                    <tr><td colspan="2"><a href="/retrieve_kitid/" class="small_link">I forgot my Kit ID</a></td></tr>
-                                    <tr><td colspan="2"><a href="/forgot_password/" class="small_link">I forgot my password</a></td></tr>
+                                      <tr><td colspan="2"><a href="/retrieve_kitid/" class="small_link">{% raw media_locale['NAV_FORGOT_KITID'] %}</a></td></tr>
+                                      <tr><td colspan="2"><a href="/forgot_password/" class="small_link">{% raw media_locale['NAV_FORGOT_PASSWORD'] %}</a></td></tr>
                                 </table>
                             </form>
                         </td>

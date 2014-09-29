@@ -28,4 +28,30 @@ text_locale = {
     }
 
 # Any media specific localizations
-media_locale = {'logo': '/static/img/ag_logo.jpg'}
+media_locale = {'LOGO': '/static/img/ag_logo.jpg',
+                'PROJECT_TITLE': 'American Gut Project',
+                'FAVICON': '/static/img/favicon.ico',
+                'FUNDRAZR_URL': 'https://fundrazr.com/campaigns/4Tqx5',
+                'NAV_PARTICIPANT_RESOURCES': 'Participant resources',
+                'NAV_HOME': 'Home',
+                'NAV_MICROBIOME_101': 'American Gut 101',
+                'NAV_FAQ': 'FAQ',
+                'NAV_MICROBIOME_FAQ': 'Human Microbiome FAQ',
+                'NAV_ADDENDUM': 'How do I interpret my results?',
+                'NAV_PRELIM_RESULTS': 'Preliminary results!',
+                'NAV_CHANGE_PASSWORD': 'Change Password',
+                'NAV_CONTACT_US': 'Contact Us',
+                'NAV_LOGOUT': 'Log out',
+                'NAV_HUMAN_SAMPLES': 'Human Samples',
+                'NAV_RECEIVED': '(Received)',
+                'NAV_ADD_HUMAN': 'Add Human Source',
+                'NAV_ANIMAL_SAMPLES': 'Animal Samples',
+                'NAV_ADD_ANIMAL': 'Add Animal Source',
+                'NAV_ENV_SAMPLES': 'Environmental Samples',
+                'NAV_LOG_SAMPLE': 'Log Sample',
+                'NAV_JOIN_PROJECT': 'Join The Project',
+                'NAV_KIT_INSTRUCTIONS': 'Kit Instructions',
+                'NAV_PARTICIPANT_LOGIN': 'Participant Log In',
+                'NAV_FORGOT_KITID': 'I forgot my kit ID',
+                'NAV_FORGOT_PASSWORD': 'I forgot my password'
+                }
