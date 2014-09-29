@@ -30,6 +30,13 @@ _DB_ERROR = {
     'SIGNOFF': 'Thanks, <br /> The American Gut Team'
 }
 
+_PARTICIPANT_OVERVIEW = {
+    'COMPLETED_CONSENT': 'Completed consent',
+    'COMPLETED_SURVEY': 'Completed survey',
+    'SAMPLES_ASSIGNED': 'Samples assigned',
+    'OVERVIEW_FOR_PARTICPANT': 'Overview for participant'
+}
+
 _SAMPLE_OVERVIEW = {
     'BARCODE_RECEIVED': 'Sample %(barcode)s. This sample has been received by the sequencing center!',
     'DISPLAY_BARCODE': 'Sample %(barcode)s',
@@ -102,6 +109,7 @@ text_locale = {
     'error.html': _ERROR,
     'forgot_password.html': _FORGOT_PASSWORD,
     'help_request.html': _HELP_REQUEST,
+    'participant_overview.html': _PARTICIPANT_OVERVIEW,
     'sample_overview.html': _SAMPLE_OVERVIEW,
     'taxa_summary.html': _TAXA_SUMMARY,
     'construction.html': _CONSTRUCTION,
