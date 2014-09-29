@@ -8,3 +8,11 @@ from __future__ import division
 #
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
+
+
+# Actual text locale
+text_locale = {}
+
+# Any media specific localizations
+media_locale = {'LOGO': '/static/img/british_gut_logo.jpg',
+                'PROJECT_TITLE': 'British Gut Project'}
