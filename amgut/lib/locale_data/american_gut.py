@@ -370,7 +370,7 @@ _CHANGE_PASS_VERIFY = {
     'SUCCESS': 'Your password has been changed',
     'NO_EMAIL_1': 'Could not send Email',
     'NO_EMAIL_2': 'We attempted to email the message below:',
-    'NO_EMAIL_3': 'This is a courtesy email to confirm that you have changed your password for your kit with ID %(kitid)s If you did not request this change, please email us immediately at info@americangut.org.'
+    'NO_EMAIL_3': 'This is a courtesy email to confirm that you have changed your password for your kit with ID %(kitid)s If you did not request this change, please email us immediately at %(help_email)s.'
 }
 
 # Actual text locale
