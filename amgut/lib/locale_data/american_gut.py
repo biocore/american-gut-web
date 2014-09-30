@@ -360,7 +360,7 @@ _ADDENDUM = {
     'MAJOR_PHYLA_TENERICUTES_TEXT': 'A phylum of Gram-negative bacteria without a cell wall (<em>tener</em> - soft, <em>cutis</em> - skin) which are organized in a single class. Nutritionally, they represent variable pathways ranging from aerobic and anaerobic fermenters to commensals to strict pathogens of vertebrates (e.g., fish, cattle, wildlife). Among the best studied are Mycoplasmas with a fried egg-like shape and <em>Mycoplasma pneumoniae</em> is one of the best known examples of human pathogens causing pneumonia, bronchitis, and other respiratory conditions.',
     'MAJOR_PHYLA_CYANOBACTERIA_HEADER': 'Cyanobacteria',
     'MAJOR_PHYLA_CYANOBACTERIA_TEXT': 'A phylum of photosynthetic (plant-like) bacteria. The name comes from their blue pigment (in Greek <em>kyanos</em> - blue). They can grow as single cells or form filamentous colonies. They are extremely successful in every imaginable environment including places where other organisms are extremely limited like hot springs or cold Antarctic bare rocks. Through their incredible diversity and abundance, they contribute significantly to the global cycle of oxygen.',
-    'MAJOR_PHYA_FUSOBACTERIA_HEADER': 'Fusobacteria',
+    'MAJOR_PHYLA_FUSOBACTERIA_HEADER': 'Fusobacteria',
     'MAJOR_PHYLA_FUSOBACTERIA_TEXT': 'A phylum of rod-shaped Gram-negative bacteria. Known primarily as fermentative species but some can be pathogens. Can occur in anoxic (no oxygen) sediments as well as intestinal habitats of animals including humans.',
     'CONTRIB': 'Contributors',
     'SUPPORTERS': 'Supporters',
@@ -371,6 +371,7 @@ _ADDENDUM = {
 # Actual text locale
 text_locale = {
     'FAQ.html': _FAQ,
+    'addendum.html': _ADDENDUM,
     'db_error.html': _DB_ERROR,
     'retrieve_kitid.html': _RETREIVE_KITID,
     'add_sample.html': _ADD_SAMPLE,
