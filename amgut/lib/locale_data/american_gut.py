@@ -50,6 +50,7 @@ media_locale = {
     'NAV_PARTICIPANT_LOGIN': 'Participant Log In',
     'NAV_FORGOT_KITID': 'I forgot my kit ID',
     'NAV_FORGOT_PASSWORD': 'I forgot my password',
+    'NAV_INTERNATIONAL': 'International shipping',
     'ADDENDUM_CERT_TITLE': '/static/img/Michael_Pollan_mod-01.png',
     'ADDENDUM_CERT_NAME': '/static/img/Michael_Pollan_mod-01b.png',
     'ADDENDUM_CERT_HEADER': '/static/img/Michael_Pollan_mod-02.png',
@@ -68,7 +69,8 @@ media_locale = {
     'ADDENDUM_PCOA_AGES_POPS': '/static/img/PCoA2.png',
     'ADDENDUM_PCOA_AG_POPULATION': '/static/img/PCoA3.png',
     'PORTAL_DIET_QUESTIONS': '/static/img/diet_questions.png',
-    'PORTAL_SHIPPING': '/static/img/shipping.png'
+    'PORTAL_SHIPPING': '/static/img/shipping.png',
+    'INTERNATIONAL_SHIPPING': '/static/img/shipping.png'
 }
 
 # Template specific dicts
@@ -319,6 +321,16 @@ _MAP = {
     'MAP_SAMPLE': ' Sample(s) Logged',
 }
 
+_INTERNATIONAL = {
+    'PAGE_TITLE': '%(shorthand)s International Shipping Instructions' % {'shorthand': AMGUT_CONFIG.project_shorthand},
+    'INT_PARTICIPANTS': 'International Participants:',
+    'INSTRUCTIONS_1': 'In order to comply with amended federal and IATA regulations, we are requesting that international participants return their sample tubes through FedEx International and that international participants follow the additional safely requirements for shipping human swab samples to the United States. Your airway bill must clearly identify the package as containing "human exempt specimens". The samples will additionally need to be packaged within a secondary containment to ensure that they can safely enter the United States.',
+    'INSTRUCTIONS_2': 'For shipment, you will need to use regular tape to seal the plastic tube that contains the swab, then place the swab in the provided brown mailing envelope and place the brown envelope inside a Tyvek/plastic mailer, <strong>which can be acquired free of charge from FedEx</strong>, when shipping the package, prior to FedEx shipment.',
+    'INSTRUCTIONS_3': 'If you do not follow these directions the sample will be destroyed by United States Customs at the port of entry into the United States.',
+    'YOUR_SAMPLES': 'Your samples',
+    'YOUR_SAMPLES_LIST': '<li>Are considered dried specimens</li><li>Must be shipped via FedEx</li><li>Must have tape to sealing the plastic tube that contains the swab</li><li>Must be placed in a buff mailing envelope with the buff envelope placed inside a Tyvek/plastic mailer prior to FedEx shipment</li><li>Must be shipped with an airway bill and must be labeled with the complete address of the sender and complete address of recipient, and with the words "Human exempt sample(s)"</li>'
+}
+
 _FORGOT_PASSWORD = {'ENTER_ID_EMAIL': 'Enter your Kit ID and email',
                     'KIT_ID': 'Kit ID:',
                     'EMAIL': 'E-mail',
@@ -545,6 +557,20 @@ _PORTAL = {
 'RESULTS_READY_TEXT_3': 'You will be able to view your results here on this website once they are available.'
 }
 
+_CHANGE_PASS_VERIFY = {
+    'TITLE': 'Please enter new password',
+    'NEW_PASSWORD': 'New Passord',
+    'HELP_NEW_PASSWORD': 'The new password you would like to use to log in from now on.',
+    'CONFIRM_PASSWORD': 'Confirm Password',
+    'HELP_CONFIRM_PASSWORD': "Repeat your New Password again, exactly as before. We ask you to repeat it here so that you don't accidentally change your password to something you did not intend.",
+    'BUTTON_TEXT': 'Change Password',
+    'NO_VALID_CODE': 'Your password change code is not valid. If you wish to change your password please <a href="/forgot_password/">start over</a>',
+    'SUCCESS': 'Your password has been changed',
+    'NO_EMAIL_1': 'Could not send Email',
+    'NO_EMAIL_2': 'We attempted to email the message below:',
+    'NO_EMAIL_3': 'This is a courtesy email to confirm that you have changed your password for your kit with ID %(kitid)s If you did not request this change, please email us immediately at %(help_email)s.'
+}
+
 # Actual text locale
 text_locale = {
     '404.html': _404,
@@ -557,11 +583,13 @@ text_locale = {
     'error.html': _ERROR,
     'forgot_password.html': _FORGOT_PASSWORD,
     'help_request.html': _HELP_REQUEST,
+    'international.html': _INTERNATIONAL,
     'new_participant.html': _NEW_PARTICIPANT,
     'add_sample_overview.html': _ADD_SAMPLE_OVERIVIEW,
     'participant_overview.html': _PARTICIPANT_OVERVIEW,
     'sample_overview.html': _SAMPLE_OVERVIEW,
     'taxa_summary.html': _TAXA_SUMMARY,
     'map.html': _MAP,
-    'register_user.html': _REGISTER_USER
+    'register_user.html': _REGISTER_USER,
+    'chage_pass_verify.html': _CHANGE_PASS_VERIFY
     }
