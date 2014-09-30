@@ -296,6 +296,7 @@ _NEW_PARTICIPANT = {
     'PARTICIPANT_PARENT_1': 'Name of parent/guardian 1',
     'PARTICIPANT_PARENT_2': 'Name of parent/guardian 2',
     'PARTICIPANT_DECEASED_PARENTS': 'One or both parents are deceased or unable to consent.'
+}
 
 _MAP = {
     'MAP_TITLE': 'Map Key',
