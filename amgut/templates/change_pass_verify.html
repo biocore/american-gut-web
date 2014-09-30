@@ -103,9 +103,9 @@ $(document).ready(function(){
 <br/>
 
 {% set tl = text_locale['chage_pass_verify.html'] %}
-{% if result == 'valid' %}
 {% set fmt = {'kitid': kitid,
               'help_email': media_locale['HELP_EMAIL']} %}
+{% if result == 'valid' %}
 <form id="reset_password" name="reset_password" method="post" action="/change_pass_verify/">
     <table>
     <tr><td><h2>{% raw tl['TITLE'] %}</h2></td></tr>
@@ -123,14 +123,14 @@ $(document).ready(function(){
 
 {% elif result == 'notvalid' %}
     <p>{% raw tl['NO_VALID_CODE'] %}</p>
-
+    
 {% elif result == 4 %}
     <p>{% raw tl['SUCCESS'] %}</p>
 
 {% elif result == 5 %}
     <h2>{% raw tl['NO_EMAIL_1'] %}</h2>
     <p>{% raw tl['NO_EMAIL_2'] %}<p>
-    <p>{% raw tl['NO_EMAIL_3'] % (kitid, help_email) %}<p>
+    <p>{% raw tl['NO_EMAIL_3'] % fmt %}<p>
 
 {% end %} <!-- end is_valid_passcode -->
 {% end %}
