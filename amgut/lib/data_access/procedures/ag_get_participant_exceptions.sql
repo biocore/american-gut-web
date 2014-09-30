@@ -12,7 +12,7 @@ BEGIN
 
     open results_ for
         SELECT  participant_name
-        from    ag_bruce_waynes
+        from    ag_participant_exceptions
         where   ag_login_id = ag_login_id_;
     return results_;
 end;
