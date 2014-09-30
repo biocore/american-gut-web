@@ -9,7 +9,6 @@ from __future__ import division
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
 import importlib
-from sys import argv
 from os import mkdir
 from os.path import join
 
@@ -23,11 +22,12 @@ def _write_file_dict(basefolder, name, outdict):
         for variable, name in viewitems(outdict):
             f.write("%s\t%s\n" % (variable, name))
 
+
 @click.command()
 @click.option('--basefolder', type=click.Path(exists=True),
               help='Base folder to write out files to')
 @click.option('--module', required=True,
-            help='The locale to load, e.g. american_gut')
+              help='The locale to load, e.g. american_gut')
 def write_locale(module, basefolder=None):
     # import the module given
     current_locale_module = '.'.join(['amgut.lib.locale_data', module])
