@@ -546,6 +546,84 @@ _PORTAL = {
 'RESULTS_READY_TEXT_3': 'You will be able to view your results here on this website once they are available.'
 }
 
+# sourced from 12-0582_-_american_gut_questionnaire_amended_09012014__irb_appd_09.19.14
+_NO_RESPONSE_CHOICE = "Unspecified"
+_YES_NO_CHOICES = [_NO_RESPONSE_CHOICE, 'Yes', 'No']
+_FREQUENCY_CHOICES = [_NO_RESPONSE_CHOICE, 'Never', 'Rarely (a few times/month)', 'Occasionally (1-2 times/week)', 'Regularly (3-5 times/week)', 'Daily']
+_SURVEY_MAIN = {
+    'GENERAL_DIET_QUESTION_1': 'How would you classify your diet?',
+    'GENERAL_DIET_QUESTION_1_CHOICES': [_NO_RESPONSE_CHOICE, 'Omnivore', 'Omnivore but do not eat red meat', 'Vegetarian', 'Vegetarian but eat seafood', 'Vegan'],
+
+    'GENERAL_DIET_QUESTION_2': 'Are you taking a daily multivitamin?',
+    'GENERAL_DIET_QUESTION_2_CHOICES': _YES_NO_CHOICES,
+
+    'GENERAL_DIET_QUESTION_3': 'How frequently do you take a probiotic?',
+    'GENERAL_DIET_QUESTION_3_CHOICES': _FREQUENCY_CHOICES,
+
+    'GENERAL_DIET_QUESTION_4': 'How frequently do you take Vitamin B complex, folate or folic acid?',
+    'GENERAL_DIET_QUESTION_4_CHOICES': _FREQUENCY_CHOICES,
+
+    'GENERAL_DIET_QUESTION_5': 'How frequently do you take Vitamin D supplement?',
+    'GENERAL_DIET_QUESTION_5_CHOICES': _FREQUENCY_CHOICES,
+
+    'GENERAL_DIET_QUESTION_6': 'Are you taking any other nutritional/herbal supplements?',
+    'GENERAL_DIET_QUESTION_6_CHOICES': _YES_NO_CHOICES,
+
+    'GENERAL_DIET_QUESTION_7': 'Are you lactose intolerant?',
+    'GENERAL_DIET_QUESTION_7_CHOICES': _YES_NO_CHOICES,
+
+    'GENERAL_DIET_QUESTION_8': 'Are you gluten intolerant?',
+    'GENERAL_DIET_QUESTION_8_CHOICES': [_NO_RESPONCE_CHOICE, 'I was diagnosed with celiac disease', 'I was diagnosed with gluten allergy (anti-gluten IgG), but not celiac disease', 'I do not eat gluten because it makes me feel bad', 'No'],
+
+    'GENERAL_DIET_QUESTION_9': 'I am allergic to __________ (mark all that apply)',
+    'GENERAL_DIET_QUESTION_9_CHOICES': ['Peanuts', 'Tree nuts', 'Shellfish', 'Other'],
+
+    'GENERAL_DIET_QUESTION_10': 'Do you eat a paleo, modified paleo, primal, FODMAP, Westen-Price, or other low-grain, low processed food diet?',
+    'GENERAL_DIET_QUESTION_10_CHOICES': _YES_NO_CHOICES,
+
+    'GENERAL_DIET_QUESTION_11': ,
+    'GENERAL_DIET_QUESTION_11_CHOICES': ,
+
+    'GENERAL_DIET_QUESTION_12': ,
+    'GENERAL_DIET_QUESTION_12_CHOICES': ,
+
+    'GENERAL_DIET_QUESTION_13': ,
+    'GENERAL_DIET_QUESTION_13_CHOICES': ,
+
+    'GENERAL_DIET_QUESTION_14': ,
+    'GENERAL_DIET_QUESTION_14_CHOICES': ,
+
+    'GENERAL_DIET_QUESTION_15': ,
+    'GENERAL_DIET_QUESTION_15_CHOICES': ,
+
+    'GENERAL_DIET_QUESTION_16': ,
+    'GENERAL_DIET_QUESTION_16_CHOICES': ,
+
+    'GENERAL_DIET_QUESTION_17': ,
+    'GENERAL_DIET_QUESTION_17_CHOICES': ,
+
+    'GENERAL_DIET_QUESTION_18': ,
+    'GENERAL_DIET_QUESTION_18_CHOICES': ,
+
+    'GENERAL_DIET_QUESTION_19': ,
+    'GENERAL_DIET_QUESTION_19_CHOICES': ,
+
+    'GENERAL_DIET_QUESTION_20': ,
+    'GENERAL_DIET_QUESTION_20_CHOICES': ,
+
+    'GENERAL_DIET_QUESTION_21': ,
+    'GENERAL_DIET_QUESTION_21_CHOICES': ,
+
+    'GENERAL_DIET_QUESTION_22': ,
+    'GENERAL_DIET_QUESTION_22_CHOICES': ,
+
+    'GENERAL_DIET_QUESTION_23': ,
+    'GENERAL_DIET_QUESTION_23_CHOICES': ,
+    'SUPP_QUESTION_1': 'foo'
+    }
+
+
+
 # Actual text locale
 text_locale = {
     '404.html': _404,
