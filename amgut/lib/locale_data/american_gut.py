@@ -9,6 +9,7 @@ from amgut.lib.config_manager import AMGUT_CONFIG
 #
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
+
 # Any media specific localizations
 media_locale = {
     'LOGO': '/static/img/ag_logo.jpg',
@@ -172,6 +173,11 @@ _DB_ERROR = {
     'SIGNOFF': 'Thanks, <br /> The American Gut Team'
 }
 
+_404 = {
+    'MAIN_WARNING': '404: Page not found!',
+    'HELP_TEXT': 'Click <a href="mailto:%(help_email)s">HERE</a> to email us about the issue. Please include the URL you were trying to access:' % {'help_email': media_locale['HELP_EMAIL']}
+}
+
 _PARTICIPANT_OVERVIEW = {
     'COMPLETED_CONSENT': 'Completed consent',
     'COMPLETED_SURVEY': 'Completed survey',
@@ -266,6 +272,7 @@ _REGISTER_USER = {
 
 # Actual text locale
 text_locale = {
+    '404.html': _404,
     'FAQ.html': _FAQ,
     'db_error.html': _DB_ERROR,
     'retrieve_kitid.html': _RETREIVE_KITID,
