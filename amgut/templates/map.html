@@ -1,3 +1,5 @@
+{% from amgut import text_locale %}
+{% set tl = text_locale['map.html'] %}
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <script type="text/javascript" src="/static/js/map.js"></script>
 <script type="text/javascript">
@@ -10,14 +12,14 @@
 
 <div style="position:absolute; bottom: 30px; left:50px; opacity:0.9; width:260px;">
     <div class="left menuheader" style="margin-top:10px;">
-        <p>Map Key</p>
+        <p>{% raw tl['MAP_TITLE'] %}</p>
     </div>
 
     <div class="left keywrapper">
         <ul class="key">
-            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|00B2FF"/> Participant</li>
-            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|ffff00"/> Kit Verified</li>
-            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|00ff00"/> Sample(s) Logged</li>
+            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|00B2FF"/>{% raw tl['MAP_PARTICIPANT'] %}</li>
+            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|ffff00"/>{% raw tl['MAP_KIT'] %}</li>
+            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|00ff00"/>{% raw tl['MAP_SAMPLE'] %}</li>
         </ul>
     </div>
 </div>

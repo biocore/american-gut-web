@@ -7,8 +7,10 @@ $(document).ready(function() {
 </script>
 {% end %}
 {%block content%}
-<h1>404: Page not found!</h1>
-Click <a href="mailto:info@americangut.org">HERE</a> to email us about the issue. Please include the URL you were trying to acess:
+{% from amgut import text_locale %}
+{% set tl = text_locale['404.html'] %}
+<h1>{% raw tl['MAIN_WARNING'] %}</h1>
+{% raw tl['HELP_TEXT'] %}
 
 <div id='badurl'></div>
 {% end %}
