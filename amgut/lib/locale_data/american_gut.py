@@ -204,5 +204,7 @@ media_locale = {'LOGO': '/static/img/ag_logo.jpg',
                 'NAV_KIT_INSTRUCTIONS': 'Kit Instructions',
                 'NAV_PARTICIPANT_LOGIN': 'Participant Log In',
                 'NAV_FORGOT_KITID': 'I forgot my kit ID',
-                'NAV_FORGOT_PASSWORD': 'I forgot my password'
+                'NAV_FORGOT_PASSWORD': 'I forgot my password',
+                'PORTAL_DIET_QUESTIONS': '/static/img/diet_questions.png',
+                'PORTAL_SHIPPING': '/static/img/shipping.png'
                 }
