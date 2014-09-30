@@ -49,6 +49,7 @@ media_locale = {
     'NAV_KIT_INSTRUCTIONS': 'Kit Instructions',
     'NAV_PARTICIPANT_LOGIN': 'Participant Log In',
     'NAV_FORGOT_KITID': 'I forgot my kit ID',
+    'NAV_INTERNATIONAL': 'International Shipping',
     'NAV_FORGOT_PASSWORD': 'I forgot my password',
     'ADDENDUM_CERT_TITLE': '/static/img/Michael_Pollan_mod-01.png',
     'ADDENDUM_CERT_NAME': '/static/img/Michael_Pollan_mod-01b.png',
@@ -226,6 +227,16 @@ _SAMPLE_OVERVIEW = {
     'SAMPLE_TIME': 'Sample Time',
     'SAMPLE_NOTES': 'Notes',
     'REMOVE_BARCODE': 'Remove barcode %(barcode)s'
+}
+
+_INTERNATIONAL = {
+    'PAGE_TITLE': '%(shorthand)s International Shipping Instructions' % {'shorthand': AMGUT_CONFIG.project_shorthand},
+    'INT_PARTICIPANTS': 'International Participants:',
+    'INSTRUCTIONS_1': 'In order to comply with amended federal and IATA regulations, we are requesting that international participants return their sample tubes through FedEx International and that international participants follow the additional safely requirements for shipping human swab samples to the United States. Your airway bill must clearly identify the package as containing "human exempt specimens". The samples will additionally need to be packaged within a secondary containment to ensure that they can safely enter the United States.',
+    'INSTRUCTIONS_2': 'For shipment, you will need to use regular tape to seal the plastic tube that contains the swab, then place the swab in the provided brown mailing envelope and place the brown envelope inside a Tyvek/plastic mailer, <strong>which can be acquired free of charge from FedEx</strong>, when shipping the package, prior to FedEx shipment.',
+    'INSTRUCTIONS_3': 'If you do not follow these directions the sample will be destroyed by United States Customs at the port of entry into the United States.',
+    'YOUR_SAMPLES': 'Your samples',
+    'YOUR_SAMPLES_LIST': '<li>Are considered dried specimens</li><li>Must be shipped via FedEx</li><li>Must have tape to sealing the plastic tube that contains the swab</li><li>Must be placed in a buff mailing envelope with the buff envelope placed inside a Tyvek/plastic mailer prior to FedEx shipment</li><li>Must be shipped with an airway bill and must be labeled with the complete address of the sender and complete address of recipient, and with the words "Human exempt sample(s)"</li>'
 }
 
 _NEW_PARTICIPANT = {
@@ -558,6 +569,7 @@ text_locale = {
     'forgot_password.html': _FORGOT_PASSWORD,
     'help_request.html': _HELP_REQUEST,
     'new_participant.html': _NEW_PARTICIPANT,
+    'international.html': _INTERNATIONAL,
     'add_sample_overview.html': _ADD_SAMPLE_OVERIVIEW,
     'participant_overview.html': _PARTICIPANT_OVERVIEW,
     'sample_overview.html': _SAMPLE_OVERVIEW,
