@@ -37,6 +37,15 @@ _PARTICIPANT_OVERVIEW = {
     'OVERVIEW_FOR_PARTICPANT': 'Overview for participant'
 }
 
+_ADD_SAMPLE_OVERIVIEW = {
+    'ADD_SAMPLE_TITLE': 'Choose your sample source ',
+    'ADD_SAMPLE_TITLE_HELP': 'The sample source is the person, animal or environment that the sample you are currently logging came from. If you took the sample from yourself, you should select yourself as the sample source.',
+    'ENVIRONMENTAL': 'Environmental',
+    'ADD_SAMPLE_1': 'If you don\'t see the sample source you want here, you need to add it. You can do this in ',
+    'ADD_SAMPLE_2': 'Step 2',
+    'ADD_SAMPLE_3': ' on the main page when you log in.',
+}
+
 _SAMPLE_OVERVIEW = {
     'BARCODE_RECEIVED': 'Sample %(barcode)s. This sample has been received by the sequencing center!',
     'DISPLAY_BARCODE': 'Sample %(barcode)s',
@@ -109,6 +118,7 @@ text_locale = {
     'error.html': _ERROR,
     'forgot_password.html': _FORGOT_PASSWORD,
     'help_request.html': _HELP_REQUEST,
+    'add_sample_overview.html': _ADD_SAMPLE_OVERIVIEW,
     'participant_overview.html': _PARTICIPANT_OVERVIEW,
     'sample_overview.html': _SAMPLE_OVERVIEW,
     'taxa_summary.html': _TAXA_SUMMARY,

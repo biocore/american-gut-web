@@ -1,7 +1,9 @@
 {% extends sitebase.html %}
 {% block content %}
+{% from amgut import text_locale %}
+{% set tl = text_locale['add_sample_overview.html'] %}
 
-<h2>Choose your sample source <a href="#" class="help" title="The sample source is the person, animal or environment that the sample you are currently logging came from. If you took the sample from yourself, you should select yourself as the sample source.">(?)</a></h2>
+<h2>{% raw tl['ADD_SAMPLE_TITLE'] %}<a href="#" class="help" title="{% raw tl['ADD_SAMPLE_TITLE_HELP'] %}">(?)</a></h2>
 <div id="source_icons_list">
 
 {% for hp in human_participants %}
@@ -17,12 +19,12 @@
     </a>
 {% end %}
     <a href="/authed/add_sample_general/">
-        <div class="source_icon"><div style="background-image:url('/static/img/environmental_transp.png');  background-repeat:no-repeat; background-position:0% 0%;"><h2>Environmental</h2></div></div></a>
+        <div class="source_icon"><div style="background-image:url('/static/img/environmental_transp.png');  background-repeat:no-repeat; background-position:0% 0%;"><h2>{% raw tl['ENVIRONMENTAL'] %}</h2></div></div></a>
     </a>
 </div>
 <br />
 <br />
-<h2 class="msg">If you don't see the sample source you want here, you need to add it. You can do this in <a href="/authed/portal/">Step 2</a> on the main page when you log in.</h2>
+<h2 class="msg">{% raw tl['ADD_SAMPLE_1'] %}<a href="/authed/portal/">{% raw tl['ADD_SAMPLE_2'] %}</a>{% raw tl['ADD_SAMPLE_3'] %}</h2>
 
 
 {% end %}
