@@ -111,7 +111,6 @@ _FAQ = {
                            "<iframe src='%(swab_handling)s' width=''500'' height=''281'' frameborder=''0'' webkitallowfullscreen='' mozallowfullscreen='' allowfullscreen=''></iframe>" % {'swab_handling': media_locale['SWAB_HANDLING']},
     'MISSING_METADATA_ANS': 'Metadata are information describing your age, gender, diet, etc. Missing metadata mean that this person did not provide us with this information.',
     'WHERE_SEND_SAMPLE': 'Where do I send my sample?',
-    'VARIABLE': 'TEXT',
     'LOG_IN_WHAT_NOW': "I'm logged in, what do I do now?",
     'LOG_IN_WHAT_NOW_ANS_2': '<p>During this workflow you (or whomever is being sampled) will:</p>'
                                 '<ol>   <li>Add a participant</li><li>Provide electronic consent</li><li>Answer survey questions (including the diet questions covered by the food diary)</li><li>Upon completion, become eligible to log samples</li>          </ol><p>When participants are eligible,  you will then see their name under the corresponding menu on the left, in this example we have just added the participant "Test":</p>'
@@ -216,7 +215,6 @@ _CONSTRUCTION = {
 }
 
 _NEW_PARTICIPANT = {
-    'VARIABLE': 'TEXT',
     'ADD_HUMAN_TITLE': 'Add a New Human Source',
     'ADD_HUMAN_HELP_SUGGESTION': 'If you need help with the website, please use the contact mechanism in the menu to the left. Please do not email the people listed in this form for help, unless it has to do with an injury. ',
     'CONSENT_TITLE': 'CONSENT TO PARTICIPATE IN A RESEARCH STUDY',
