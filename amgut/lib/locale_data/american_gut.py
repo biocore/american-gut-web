@@ -58,6 +58,13 @@ _CONSTRUCTION = {
     'FOOTER': 'Again, we appreciate your patience. Everyone is working hard on our end to make this project as interesting as possible for everyone. If you have any questions, please email us at %(help_email)s.'
 }
 
+_MAP = {
+    'MAP_TITLE': 'Map Key',
+    'MAP_PARTICIPANT': ' Participant',
+    'MAP_KIT': ' Kit Verified',
+    'MAP_SAMPLE': '  Sample(s) Logged',
+}
+
 _FORGOT_PASSWORD = {'ENTER_ID_EMAIL': 'Enter your Kit ID and email',
                     'KIT_ID': 'Kit ID:',
                     'EMAIL': 'E-mail',
@@ -113,6 +120,7 @@ text_locale = {
     'sample_overview.html': _SAMPLE_OVERVIEW,
     'taxa_summary.html': _TAXA_SUMMARY,
     'construction.html': _CONSTRUCTION,
+    'map.html': _MAP,
     'register_user.html': _REGISTER_USER
     }
 
