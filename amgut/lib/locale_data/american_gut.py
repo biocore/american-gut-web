@@ -296,6 +296,12 @@ _NEW_PARTICIPANT = {
     'PARTICIPANT_PARENT_1': 'Name of parent/guardian 1',
     'PARTICIPANT_PARENT_2': 'Name of parent/guardian 2',
     'PARTICIPANT_DECEASED_PARENTS': 'One or both parents are deceased or unable to consent.'
+
+_MAP = {
+    'MAP_TITLE': 'Map Key',
+    'MAP_PARTICIPANT': ' Participant',
+    'MAP_KIT': ' Kit Verified',
+    'MAP_SAMPLE': ' Sample(s) Logged',
 }
 
 _FORGOT_PASSWORD = {'ENTER_ID_EMAIL': 'Enter your Kit ID and email',
@@ -369,5 +375,6 @@ text_locale = {
     'sample_overview.html': _SAMPLE_OVERVIEW,
     'taxa_summary.html': _TAXA_SUMMARY,
     'construction.html': _CONSTRUCTION,
+    'map.html': _MAP,
     'register_user.html': _REGISTER_USER
     }
