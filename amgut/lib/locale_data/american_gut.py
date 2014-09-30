@@ -340,7 +340,7 @@ _CHANGE_PASS_VERIFY = {
     'CONFIRM_PASS_TITLE': "Repeat your New Password again, exactly as before. We ask you to repeat it here so that you don't accidentally change your password to something you did not intend.",
     'INVALID': "Your password change code is not valid. If you wish to change your password please <a href='/forgot_password/'>start over</a>",
     'CHANGED': 'Your password has been changed',
-    'NO_EMAIL': "<h2> Could not send Email </h2><p> We attempted to email the message below: <p><p>This is a courtesy email to confirm that you have changed your password for your kit with ID  {{kitid}} If you did not request this change, please email us immediately at info@americangut.org.' <p>",
+    'NO_EMAIL': "<h2> Could not send Email </h2><p> We attempted to email the message below: <p><p>This is a courtesy email to confirm that you have changed your password for your kit with ID  {{kitid}} If you did not request this change, please email us immediately at %(help_email).' <p>" % {'help_email': media_locale['HELP_EMAIL']},
     'CHANGE_PASS': 'Change password'
 }
 
