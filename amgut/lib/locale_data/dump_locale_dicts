@@ -24,24 +24,20 @@ def _write_file_dict(basefolder, name, outdict):
 
 
 @click.command()
-@click.option('--basefolder', type=click.Path(exists=True),
-              help='Base folder to write out files to')
-@click.option('--module', required=True,
+@click.option('--basefolder', type=click.Path(exists=True, file_okay=False),
+              default='.', help='Base folder to write out files')
+@click.option('--locale', required=True, type=str,
               help='The locale to load, e.g. american_gut')
-def write_locale(module, basefolder=None):
+def write_locale(locale, basefolder='.'):
     # import the module given
-    current_locale_module = '.'.join(['amgut.lib.locale_data', module])
+    current_locale_module = '.'.join(['amgut.lib.locale_data', locale])
     try:
         current_locale = importlib.import_module(current_locale_module)
     except ImportError:
         raise ImportError("Cannot import locale! %s" % current_locale_module)
 
     # make a folder to hold all the files
-    basedir = None
-    if basefolder is None:
-        basedir = module
-    else:
-        basedir = join(basefolder, module)
+    basedir = join(basefolder, locale)
     mkdir(basedir)
 
     # export media_locale dict to file
@@ -50,6 +46,7 @@ def write_locale(module, basefolder=None):
     # export all page dicts to file
     for page, pagedict in viewitems(current_locale.text_locale):
         _write_file_dict(basedir, page, pagedict)
+
 
 if __name__ == "__main__":
     write_locale()
