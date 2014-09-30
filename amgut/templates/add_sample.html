@@ -1,5 +1,7 @@
 {% extends sitebase.html %}
 {% block content %}
+{% from amgut import text_locale %}
+{% set tl = text_locale['add_sample.html'] %}
 
 <script>
   $(function() {
@@ -22,7 +24,7 @@
   });
 </script>
 
-<h2>Log a new sample for {{ participant_name }}</h2>
+<h2>{% raw tl['NEW_SAMPLE_TITLE'] %} {{ participant_name }}</h2>
 
 <form id="add_sample" name="add_sample" method="post" action="/authed/add_sample_human/">
     <input type="hidden" name="participant_name" value="{{ participant_name }}"/>
@@ -37,14 +39,14 @@
                        <col span="1" style="width: 50%;">
                 </colgroup>
                 <tr>
-                    <td>Choose the barcode from your kit that corresponds to the sample you are logging.</p>
-                    <p>It is very important that the sample barcode matches <strong>exactly</strong> for downstream analysis steps.</td>
+                    <td>{% raw tl['NEW_SAMPLE_DESCRIPTION_1'] %}</p>
+                    <p>{% raw tl['NEW_SAMPLE_DESCRIPTION_2'] %}</td>
                     <td>
     {% raw form.barcode(tabindex=1) %}
                     </td>
                 </tr>
                 <tr>
-                    <td>Site Sampled</td>
+                    <td>{% raw tl['SITE_SAMPLED'] %}</td>
                     <td>
                         <div id="sample_site_div" class="">
     {% raw form.sample_site(tabindex=2) %}
@@ -52,19 +54,19 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Date</td>
+                    <td>{% raw tl['DATE'] %}</td>
                     <td>
-    {% raw form.sample_date(tabindex=3) %} mm/dd/yyyy (Example: 05/07/2013)
+    {% raw form.sample_date(tabindex=3) %}{% raw tl['DATE_EXAMPLE'] %}
                     </td>
                 </tr>
                 <tr>
-                    <td>Time</td>
+                    <td>{% raw tl['TIME'] %}</td>
                     <td>
-    {% raw form.sample_time(tabindex=4) %} hh:mm AM/PM (Example: 04:35 PM)
+    {% raw form.sample_time(tabindex=4) %}{% raw tl['TIME_EXAMPLE'] %}
                     </td>
                 </tr>
                 <tr>
-                    <td>Additional Notes (optional)</td>
+                    <td>{% raw tl['NOTES'] %}</td>
                     <td>
     {% raw form.notes(tabindex=5, style="width:300px;") %}
                     </td>
