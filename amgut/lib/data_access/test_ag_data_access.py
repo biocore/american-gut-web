@@ -390,15 +390,15 @@ class TestAGDataAccess(TestCase):
         data = self.data_access.getMapMarkers()
         self.assertNotEqual(len(data), 0)
 
-    def test_addBruceWayne(self):
-        self.data_access.addBruceWayne('d8592c747da12135e0408a80115d6401',
-                                       'random kid')
+    def test_addParticipantException(self):
+        self.data_access.addParticipantException(
+            'd8592c747da12135e0408a80115d6401', 'random kid')
         data = self.data_access.getParticipantExceptions(
             'd8592c747da12135e0408a80115d6401')
         self.assertTrue('random kid' in data)
         cur = self.con.cursor()
-        cur.execute('delete from ag_bruce_waynes where  ag_login_id = %s and '
-                    'participant_name = %s',
+        cur.execute('delete from ag_participant_exceptions where '
+                    'ag_login_id = %s and participant_name = %s',
                     ('d8592c747da12135e0408a80115d6401', 'random kid',))
         self.con.commit()
 
