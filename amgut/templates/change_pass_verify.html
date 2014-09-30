@@ -1,14 +1,14 @@
 {% extends no_auth_sitebase.html %}
 {% block head %}
-<script type="text/javascript"> 
+<script type="text/javascript">
 function validatePassRequest() {
-    for(var i = 0; i < document.resetpass_request.length; i++) 
+    for(var i = 0; i < document.resetpass_request.length; i++)
     {
         document.resetpass_request[i].className = document.resetpass_request[i].className.replace(/(?:^|\s)highlight(?!\S)/ , '');
     }
-    
+
     var valid = true;
-    
+
     if(!validateEmail(document.resetpass_request.email.value))
     {
         document.resetpass_request.email.className += " highlight"
@@ -36,30 +36,30 @@ function validatePasswords()
     {
         document.reset_password.confirm_password.className += " highlight"
         valid = false;
-    }    
+    }
     if(valid)
         $('#reset_password').submit();
 }
 </script>
 
 
-<script type="text/javascript"> 
+<script type="text/javascript">
 $(document).ready(function(){
 
     $("ul.subnav").parent().append("<span></span>"); //Only shows drop down trigger when js is enabled - Adds empty span tag after ul.subnav
-    
+
     $("ul.topnav li span").click(function() { //When trigger is clicked...
-        
+
         //Following events are applied to the subnav itself (moving subnav up and down)
         $(this).parent().find("ul.subnav").slideDown('fast').show(); //Drop down the subnav on click
 
         $(this).parent().hover(function() {
-        }, function(){  
+        }, function(){
             $(this).parent().find("ul.subnav").slideUp('slow'); //When the mouse hovers out of the subnav, move it back up
         });
 
         //Following events are applied to the trigger (Hover events for the trigger)
-        }).hover(function() { 
+        }).hover(function() {
             $(this).addClass("subhover"); //On hover over, add class "subhover"
         }, function(){  //On Hover Out
             $(this).removeClass("subhover"); //On hover out, remove class "subhover"
@@ -102,32 +102,33 @@ $(document).ready(function(){
 <br/>
 
 {% if result == 'valid' %}
+{% set tl = text_locale['chage_pass_verify.html'] %}
+{% set fmt = {'kitid': kitid} %}
 <form id="reset_password" name="reset_password" method="post" action="/change_pass_verify/">
     <table>
-    <tr><td><h2>Please enter new password</h2></td></tr>
-    <tr><td>New Passord:</td><td><input type="password" id="new_password" name="new_password" /></td>
-    <td><a href="#" class="help" title="The new password you would like to use to log in from now on.">(?)</a></td>
+    <tr><td><h2>{% raw tl['TITLE'] %}</h2></td></tr>
+    <tr><td>{% raw tl['NEW_PASSWORD'] %}:</td><td><input type="password" id="new_password" name="new_password" /></td>
+    <td><a href="#" class="help" title="{% raw tl['HELP_NEW_PASSWORD'] %}">(?)</a></td>
     </tr>
-    <tr><td>Confrim Password:</td><td><input type="password" id="confirm_password" name="confirm_password"/></td>
-    <td><a href="#" class="help" title="Repeat your New Password again, exactly as before. We ask you to repeat it here so that you don't accidentally change your password to something you did not intend.">(?)</a></td>
+    <tr><td>{% raw tl['CONFIRM_PASSWORD'] %}:</td><td><input type="password" id="confirm_password" name="confirm_password"/></td>
+    <td><a href="#" class="help" title="{% raw tl['HELP_CONFIRM_PASSWORD'] %}">(?)</a></td>
     </tr>
     </table>
     <input type="hidden" id="kitid" name="kitid" value={{kitid}} >
     <input type="hidden" id="email" name="email" value={{email}} >
-     <input type="button" name="submit_button" id="submit_button" value="Change Password" onclick="validatePasswords()">
+    <input type="button" name="submit_button" id="submit_button" value="{% raw tl['BUTTON_TEXT'] %}" onclick="validatePasswords()">
     </form>
 
 {% elif result == 'notvalid' %}
-    <p>Your password change code is not valid. If you wish to change your password please <a href="/forgot_password/">start over</a></p>
+    <p>{% raw tl['NO_VALID_CODE'] %}</p>
 
 {% elif result == 4 %}
-    <p>Your password has been changed</p>
+    <p>{% raw tl['SUCCESS'] %}</p>
 
 {% elif result == 5 %}
-    <h2> Could not send Email </h2>
-    <p> We attempted to email the message below: <p>
-    <p>This is a courtesy email to confirm that you have changed your password for your kit with ID  {{kitid}}
-        If you did not request this change, please email us immediately at info@americangut.org.' <p>
+    <h2>{% raw tl['NO_EMAIL_1'] %}</h2>
+    <p>{% raw tl['NO_EMAIL_2'] %}<p>
+    <p>{% raw tl['NO_EMAIL_3'] % kitid %}<p>
 
 {% end %} <!-- end is_valid_passcode -->
 {% end %}
