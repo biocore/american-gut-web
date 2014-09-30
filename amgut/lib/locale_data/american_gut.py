@@ -50,6 +50,7 @@ media_locale = {
     'NAV_PARTICIPANT_LOGIN': 'Participant Log In',
     'NAV_FORGOT_KITID': 'I forgot my kit ID',
     'NAV_FORGOT_PASSWORD': 'I forgot my password',
+    'NAV_INTERNATIONAL': 'International shipping',
     'ADDENDUM_CERT_TITLE': '/static/img/Michael_Pollan_mod-01.png',
     'ADDENDUM_CERT_NAME': '/static/img/Michael_Pollan_mod-01b.png',
     'ADDENDUM_CERT_HEADER': '/static/img/Michael_Pollan_mod-02.png',
