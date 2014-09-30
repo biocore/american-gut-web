@@ -1,14 +1,13 @@
 {%extends sitebase.html%}
 {%block content%}
+{% from amgut import text_locale %}
+{% set tl = text_locale['new_participant_overview.html'] %}
 
-<script>
-    alert('You will not be able to save your progress during this survey. Please make sure that you have the appropriate 7 day diet information already completed before starting this survey.')
-</script>
-<h2>Add a New Human Sample Source</h2>
-<p class="note">You have entered the add human source workflow. During this workflow you will add a human source that represents whoever is being sampled, ask for consent and then ask survey questions, including the diet questions covered by the food diary.</p>
-<p class="note">Once you have added a human source, you will then see the name of that source in the left menu, and you will also have an option for adding a sample to that source. When you click that, you will be able to select the appropriate barcode and add sample metadata.</p>
+<h2>{% raw tl['ADD_NEW'] %}</h2>
+<p class="note">{% raw tl['EXPLANATION'] %}</p>
+<p class="note">{% raw tl['ONCE_ADDED'] %}</p>
 <form action="/authed/new_participant/">
-    <input tabindex="1" type="submit" value="Continue" id="submit_form">
+    <input tabindex="1" type="submit" value="{% raw tl['CONTINUE'] %}" id="submit_form">
 </form>
 <br />
 <br />
