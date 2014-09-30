@@ -757,8 +757,8 @@ class AGDataAccess(object):
                                            cannot_geocode])
         self.connection.commit()
 
-    def addBruceWayne(self, ag_login_id, participant_name):
-        self.connection.cursor().callproc('ag_insert_bruce_wayne',
+    def addParticipantException(self, ag_login_id, participant_name):
+        self.connection.cursor().callproc('ag_insert_participant_exception',
                                           [ag_login_id, participant_name])
         self.connection.commit()
 
