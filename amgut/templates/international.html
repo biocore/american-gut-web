@@ -1,65 +1,20 @@
 {% extends no_auth_sitebase.html %}
 {% block content %}
+{% from amgut import text_locale %}
+{% set tl = text_locale['international.html'] %}
+<h2>{% raw tl['PAGE_TITLE'] %}</h2>
+<div class="faq_wrapper">
+    <div class="faq">
+        <h3>{% raw tl['INT_PARTICIPANTS'] %}</h3>
+        <p>{% raw tl['INSTRUCTIONS_1'] %}</p>
+        <p>{% raw tl['INSTRUCTIONS_2'] %}</p>
+        <p>{% raw tl['INSTRUCTIONS_3'] %}</p>
 
-<html lang="{{language}}">
-{% if language == 'en' %}
-    <h2>American Gut International Shipping Instructions</h2>
-        <div class="faq_wrapper">
-            <div class="faq">
-                <h3>International Participants:</h3>
-                <p>In order to comply with amended federal and IATA regulations, we are requesting that international participants return their sample tubes through FedEx International and that international participants follow the additional safely requirements for shipping human swab samples to the United States. Your airway bill must clearly identify the package as containing "human exempt specimens". The samples will additionally need to be packaged within a secondary containment to ensure that they can safely enter the United States.
-                <br/>
-                <br/>
-                For shipment, you will need to use regular tape to seal the plastic tube that contains the swab, then place the swab in the provided brown mailing envelope and place the brown envelope inside a Tyvek/plastic mailer, <strong>which can be acquired free of charge from FedEx</strong>, when shipping the package, prior to FedEx shipment.
-                <br/>
-                <br/>
-                If you do not follow these directions the sample will be destroyed by United States Customs at the port of entry into the United States.</p>
-
-                <h3>Your samples</h3>
-                <ul class="shipping">
-                <li>Are considered dried specimens</li>
-                <li>Must be shipped via FedEx</li>
-                <li>Must have tape to sealing the plastic tube that contains the swab</li>
-                <li>Must be placed in a buff mailing envelope with the buff envelope placed inside a Tyvek/plastic mailer prior to FedEx shipment</li>
-                <li>Must be shipped with an airway bill and must be labeled with the complete address of the sender and complete address of recipient, and with the words "Human exempt sample(s)"</li>
-                </ul>
-            </div>
-            <br/>
-            <br/>
-            <img src="/static/img/shipping.png"/>
-            <br/>
-            <br/>
-            <br/>
-        </div>
-{% else %}
-    <h2>Env&iacute;os internacionales para American Gut</h2>
-        <div class="faq_wrapper">
-            <div class="faq">
-                <h3>Participantes Internacionales:</h3>
-                <p>Con el objetivo de cumplir con la normativa federal y regulaciones de la IATA, estamos solicitando a nuestros participantes internacionales que reenv&iacute;en sus muestras por FedEx International y adem&aacute;s que sigan los requerimientos que explicamos m&aacute;s abajo para enviar muestras humanas a los Estados Unidos de Am&eacute;rica. Para ello, necesitar&aacute;s usar un impreso a&eacute;reo (airway bill) para el env&iacute;o, especificando claramente que el paquete contiene “espec&iacute;menes humanos exentos” (human exempt specimens). Adem&aacute;s, las muestras necesitar&aacute;n estar empaquetadas en un contenedor secundario, para garantizar con seguridad que puedan entra a los Estados Unidos de Am&eacute;rica.
-                <br/>
-                <br/>
-                Para el env&iacute;o, necesitar&aacute;s usar una tira de cinta adhesiva en la tapa del tubo con tu muestra. Luego deber&aacute;s colocar tu muestra en el sobre manila que se te hizo llegar con tu Kit y una vez dentro, deber&aacute;s colocar este sobre en la bolsa de pl&aacute;stico tyvek para env&iacute;os. Esta bolsa puede ser adquirida de manera gratuita en la sucursal de FedEx, al momento de enviar el paquete.
-                <br/>
-                <br/>
-                Si no sigues estas instrucciones tu muestra ser&aacute; destruida por los agentes de aduana en el puerto de entrada a los Estados Unidos de Am&eacute;rica.
-
-                <h3>Tus muestras:</h3>
-                <ul class="shipping">
-                <li>Son consideradas espec&iacute;menes deshidratados/secos.</li>
-                <li>Deben ser enviadas v&iacute;a FedEx.</li>
-                <li>Deben tener una tira de cinta adhesiva en la tapa del tubo.</li>
-                <li>Deben estar dentro del sobre manila que se te hizo llegar con tu Kit y a su vez este debe estar dentro de un sobre de pl&aacute;stico tyvek.</li>
-                <li>Deben ser enviadas con una gu&iacute;a a&eacute;rea, esta gu&iacute;a deber&aacute; estar etiquetada con tu direcci&oacute;n completa, la direcci&oacute;n completa del destinatario y las palabras “Human exempt sample(s)”.</li>
-                </ul>
-            </div>
-            <br/>
-            <br/>
-            <img src="/static/img/shipping_es.png"/>
-            <br/>
-            <br/>
-            <br/>
-        </div>
-{% end %}
-<html>
+        <h3>{% raw tl['YOUR_SAMPLES'] %}</h3>
+        <ul class="shipping">
+        {% raw tl['YOUR_SAMPLES_LIST'] %}
+        </ul>
+    </div>
+    <p><img src="{{media_locale['PORTAL_SHIPPING']}}"/></p>
+</div>
 {% end %}
