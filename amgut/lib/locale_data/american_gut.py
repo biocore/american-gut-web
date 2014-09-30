@@ -228,6 +228,13 @@ _SAMPLE_OVERVIEW = {
     'REMOVE_BARCODE': 'Remove barcode %(barcode)s'
 }
 
+_NEW_PARTICIPANT_OVERVIEW = {
+    'ADD_NEW': 'Add a New Human Sample Source',
+    'EXPLANATION': 'You have entered the add human source workflow. During this workflow you will add a human source that represents whoever is being sampled. You be asked for consent to join the project and then asked survey questions.',
+    'ONCE_ADDED': 'Once you have added a human source, you will then see the name of that source in the left menu, and you will also have an option for adding a sample to that source. When you click that, you will be able to select the appropriate barcode and add sample metadata.',
+    'CONTINUE': 'Continue'
+}
+
 _NEW_PARTICIPANT = {
     'ADD_HUMAN_TITLE': 'Add a New Human Source',
     'ADD_HUMAN_HELP_SUGGESTION': 'If you need help with the website, please use the contact mechanism in the menu to the left. Please do not email the people listed in this form for help, unless it has to do with an injury. ',
@@ -550,6 +557,7 @@ _PORTAL = {
 text_locale = {
     '404.html': _404,
     'FAQ.html': _FAQ,
+    'new_participant_overview.html': _NEW_PARTICIPANT_OVERVIEW,
     'addendum.html': _ADDENDUM,
     'portal.html': _PORTAL,
     'db_error.html': _DB_ERROR,
