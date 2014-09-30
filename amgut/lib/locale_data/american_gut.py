@@ -49,8 +49,7 @@ media_locale = {
     'NAV_KIT_INSTRUCTIONS': 'Kit Instructions',
     'NAV_PARTICIPANT_LOGIN': 'Participant Log In',
     'NAV_FORGOT_KITID': 'I forgot my kit ID',
-    'NAV_FORGOT_PASSWORD': 'I forgot my password',
-    'HELP_EMAIL': 'info@americangut.org'
+    'NAV_FORGOT_PASSWORD': 'I forgot my password'
 }
 
 # Template specific dicts
