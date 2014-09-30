@@ -62,7 +62,7 @@ _MAP = {
     'MAP_TITLE': 'Map Key',
     'MAP_PARTICIPANT': ' Participant',
     'MAP_KIT': ' Kit Verified',
-    'MAP_SAMPLE': '  Sample(s) Logged',
+    'MAP_SAMPLE': ' Sample(s) Logged',
 }
 
 _FORGOT_PASSWORD = {'ENTER_ID_EMAIL': 'Enter your Kit ID and email',
