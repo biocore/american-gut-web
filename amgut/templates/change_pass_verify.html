@@ -102,8 +102,8 @@ $(document).ready(function(){
 
 <br/>
 
-{% if result == 'valid' %}
 {% set tl = text_locale['chage_pass_verify.html'] %}
+{% if result == 'valid' %}
 {% set fmt = {'kitid': kitid,
               'help_email': media_locale['HELP_EMAIL']} %}
 <form id="reset_password" name="reset_password" method="post" action="/change_pass_verify/">
