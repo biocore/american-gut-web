@@ -560,6 +560,20 @@ _PORTAL = {
     'RESULTS_READY_TEXT_3': 'You will be able to view your results here on this website once they are available.'
 }
 
+_CHANGE_PASS_VERIFY = {
+    'TITLE': 'Please enter new password',
+    'NEW_PASSWORD': 'New Passord',
+    'HELP_NEW_PASSWORD': 'The new password you would like to use to log in from now on.',
+    'CONFIRM_PASSWORD': 'Confirm Password',
+    'HELP_CONFIRM_PASSWORD': "Repeat your New Password again, exactly as before. We ask you to repeat it here so that you don't accidentally change your password to something you did not intend.",
+    'BUTTON_TEXT': 'Change Password',
+    'NO_VALID_CODE': 'Your password change code is not valid. If you wish to change your password please <a href="/forgot_password/">start over</a>',
+    'SUCCESS': 'Your password has been changed',
+    'NO_EMAIL_1': 'Could not send Email',
+    'NO_EMAIL_2': 'We attempted to email the message below:',
+    'NO_EMAIL_3': 'This is a courtesy email to confirm that you have changed your password for your kit with ID %(kitid)s If you did not request this change, please email us immediately at %(help_email)s.'
+}
+
 # Actual text locale
 text_locale = {
     '404.html': _404,
@@ -580,5 +594,6 @@ text_locale = {
     'sample_overview.html': _SAMPLE_OVERVIEW,
     'taxa_summary.html': _TAXA_SUMMARY,
     'map.html': _MAP,
-    'register_user.html': _REGISTER_USER
+    'register_user.html': _REGISTER_USER,
+    'chage_pass_verify.html': _CHANGE_PASS_VERIFY
     }
