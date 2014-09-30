@@ -332,6 +332,18 @@ _FORGOT_PASSWORD = {'ENTER_ID_EMAIL': 'Enter your Kit ID and email',
                     'NO_RECORD': '<p style="color:red;">This information does not match our records</p><p>Please email <a href="mailto:%(help_email)s">directly</a> for further assistance<p>',
                     'SEND_EMAIL': 'Send email'}
 
+_CHANGE_PASS_VERIFY = {
+    'ENTER_PASS': 'Please enter new password',
+    'NEW_PASS': 'New Password:',
+    'NEW_PASS_TITLE': 'The new password you would like to use to log in from now on.',
+    'CONFIRM_PASS': 'Confirm Password:',
+    'CONFIRM_PASS_TITLE': "Repeat your New Password again, exactly as before. We ask you to repeat it here so that you don't accidentally change your password to something you did not intend.",
+    'INVALID': "Your password change code is not valid. If you wish to change your password please <a href='/forgot_password/'>start over</a>",
+    'CHANGED': 'Your password has been changed',
+    'NO_EMAIL': "<h2> Could not send Email </h2><p> We attempted to email the message below: <p><p>This is a courtesy email to confirm that you have changed your password for your kit with ID  {{kitid}} If you did not request this change, please email us immediately at %(help_email).' <p>" % {'help_email': media_locale['HELP_EMAIL']},
+    'CHANGE_PASS': 'Change password'
+}
+
 _ERROR = {
     'ERROR_OCCURED': 'AN ERROR HAS OCCURED!',
     'ERROR_CONTACT': 'Please copy the following into an email and send this information, along with the url you were trying to access, to <a href="mailto:info@americangut.org">info@americangut.org</a>'
@@ -343,7 +355,7 @@ _RETREIVE_KITID = {
     'SEND_EMAIL': 'Send Kit ID Email',
     'EMAIL_SUCCESS': 'Your kit ID has been emailed to you. Please check your email.',
     'EMAIL_CANTSEND': 'Mail can be sent only from microbio.me domain.',
-    'EMAIL_EXCEPTION': 'There was a problem sending you the kit ID. Please contact us directly at <a href=\"mailto:info@americangut.org\">info@americangut.org</a>.',
+    'EMAIL_EXCEPTION': 'There was a problem sending you the kit ID. Please contact us directly at <a href="%(help_email)s">%(help_email)s</a>.' % {'help_email': media_locale['HELP_EMAIL']},
     'EMAIL_PROMPT': 'Email:'
     }
 
@@ -562,6 +574,7 @@ text_locale = {
     'add_sample.html': _ADD_SAMPLE,
     'error.html': _ERROR,
     'forgot_password.html': _FORGOT_PASSWORD,
+    'change_pass_verify.html': _CHANGE_PASS_VERIFY,
     'help_request.html': _HELP_REQUEST,
     'new_participant.html': _NEW_PARTICIPANT,
     'add_sample_overview.html': _ADD_SAMPLE_OVERIVIEW,
