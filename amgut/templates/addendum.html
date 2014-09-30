@@ -126,13 +126,13 @@
                         <a href = '#top'
                            name = 'certif'>
                             <img class = 'certificate' 
-                                 src = '/static/img/Michael_Pollan_mod-01.png'
+                                 src = '{% raw media_locale['ADDENDUM_CERT_TITLE'] %}'
                                  alt = '{% raw tl['MOD01ALT'] %}'/>
                         </a>
                         <br>
                         <a href = 'http://en.wikipedia.org/wiki/Michael_Pollan'>
                             <img class = 'certificate'
-                                 src = '/static/img/Michael_Pollan_mod-01b.png'
+                                 src = '{% raw media_locale['ADDENDUM_CERT_NAME'] %}'
                                  alt = '{% raw tl['MOD01bALT'] %}'/>
                         </a>
                     </td>
@@ -147,7 +147,7 @@
                     <td colspan = '6'>
                         <a href = '#taxcharts'>
                             <img class = 'certificate' 
-                                 src = '/static/img/Michael_Pollan_mod-02.png'
+                                 src = '{% raw media_locale['ADDENDUM_CERT_HEADER'] %}'
                                  alt = "{% raw tl['MOD02ALT'] %}"/>
                     </td>
                     <td></td>
@@ -156,28 +156,28 @@
                     <td></td>
                     <td rowspan = '3'>
                         <a href = '#barcharts'>
-                            <img src = '/static/img/Michael_Pollan_mod-11.png'
+                            <img src = '{% raw media_locale['ADDENDUM_CERT_BARCHART'] %}'
                                  alt = '{% raw tl['MOD11ALT'] %}'
                                  class = 'certificate' />
                         </a>                                       
                     </td>
                     <td rowspan = '2'>
                         <a href = '#phyla'>
-                            <img src = '/static/img/Michael_Pollan_mod-12.png'
+                            <img src = '{% raw media_locale['ADDENDUM_CERT_BARCHART_LEGEND'] %}'
                                  alt = '{% raw tl['MOD12ALT'] %}'
                                  class = 'certificate' />
                         </a>
                     </td>
                     <td colspan = '1'>
                         <a href = '#abundant'>
-                            <img src = '/static/img/Michael_Pollan_mod-13.png'
+                            <img src = '{% raw media_locale['ADDENDUM_CERT_ABUNDANT_MICROBES'] %}'
                                  alt = '{% raw tl['MOD13ALT'] %}'
                                  class = 'certificate' />
                         </a>
                     </td>
                     <td colspan = '2'>
                         <a href = '#enriched'>
-                            <img src = '/static/img/Michael_Pollan_mod-14.png'
+                            <img src = '{% raw media_locale['ADDENDUM_CERT_ENRICHED_MICROBES'] %}'
                                  alt = '{% raw tl['MOD14ALT'] %}'
                                  class = 'certificate' />
                         </a>
@@ -188,7 +188,7 @@
                     <td></td>
                     <td colspan = '3'>
                         <a href = '#rare'>
-                            <img src = '/static/img/Michael_Pollan_mod-15.png'
+                            <img src = '{% raw media_locale['ADDENDUM_CERT_RARE_MICROBES'] %}'
                                  alt = '{% raw tl['MOD15ALT'] %}'
                                  class = 'certificate' />
                         </a>
@@ -204,15 +204,15 @@
                     <td></td>
                     <td colspan = '3'>
                         <a href = '#Bdiv'>
-                            <img src = '/static/img/Michael_Pollan_mod-03.png'
+                            <img src = '{% raw media_locale['ADDENDUM_CERT_HEADER_PCOA'] %}'
                                  alt = '{% raw tl['MOD03ALT'] %}'
                                  class = 'certificate'/>
                         </a>
                     </td>
                     <td colspan = '2'>
-                        <a href = 'http://americangut.org/wordpress/wp-content/uploads/2013/09/module1_Sept_16_small.pdf'>
-                        <img src = '/static/img/Michael_Pollan_mod-04.png'
-                             class = 'certificate' /></a>
+                        <a href = '#Bdiv'>
+                            <img src = '{% raw media_locale['ADDENDUM_CERT_PCOA_LEGEND'] %}'
+                                 class = 'certificate' /></a>
                     </td>
                     <td></td>
                 </tr>
@@ -220,21 +220,21 @@
                     <td></td>
                     <td colspan = '1'>
                         <a href = '#bodysites'>
-                            <img src = '/static/img/Michael_Pollan_mod-08.png'
+                            <img src = '{% raw media_locale['ADDENDUM_CERT_PCOA_BODYSITES'] %}'
                                  alt = '{% raw tl['MOD08ALT'] %}'
                                  class = 'certificate' />
                         </a>
                     </td>
                     <td colspan = '2'>
                         <a href = '#ages'>
-                            <img src = '/static/img/Michael_Pollan_mod-09.png'
+                            <img src = '{% raw media_locale['ADDENDUM_CERT_PCOA_AGES_POP'] %}'
                                  alt = '{% raw tl['MOD09ALT'] %}'
                                  class = 'certificate' />
                         </a>
                     </td>
                     <td colspan = '2'>
                         <a href = '#AGP'>
-                            <img src = '/static/img/Michael_Pollan_mod-10.png'
+                            <img src = '{% raw media_locale['ADDENDUM_CERT_PCOA_AG_POPULATION'] %}'
                                  alt = '{% raw tl['MOD10ALT'] %}'
                                  class = 'certificate' />
                         </a>
@@ -283,7 +283,7 @@
             <p><a href = '#top'>{% raw tl['TOP'] %}</a></p>
             
             <a name = 'barcharts'><h3>{% raw tl['TAX_BARCHART'] %}</h3></a>
-            <img src = '/static/img/TaxFig.png'
+            <img src = '{% raw media_locale['ADDENDUM_TAX_BARCHART'] %}'
                  alt = '{% raw tl['TAX_BARCHART'] %}'/>
             <p>{% raw tl['TAX_BARCHART_TEXT_1'] %}</p>
             <p>{% raw tl['TAX_BARCHART_TEXT_2'] %}</p>
@@ -331,19 +331,19 @@
             <p>{% raw tl['COMPARE_TEXT_2'] %}</p>
 
             <a name = 'bodysites'><h3>{% raw tl['DIFFERENT_BODY_SITES'] %}</h3></a>
-            <img src = "/static/img/PCoA1.png" alt = "{% raw tl['DIFFERENT_BODY_SITES_ALT'] %}"/>
+            <img src = "{% raw media_locale['ADDENDUM_PCOA_BODYSITES'] %}" alt = "{% raw tl['DIFFERENT_BODY_SITES_ALT'] %}"/>
             <p>{% raw tl['DIFFERENT_BODY_SITES_TEXT'] %}</p>
 
             <p><a href = '#certif'>{% raw tl['TOP'] %}</a></p>
 
             <a name = 'ages'><h3>{% raw tl['DIFFERENT_AGES_POPS'] %}</h3></a>
-            <img src = "/static/img/PCoA2.png" alt = "{% raw tl['DIFFERENT_AGES_POPS_ALT'] %}"/>
+            <img src = "{% raw media_locale['ADDENDUM_PCOA_AGES_POPS'] %}" alt = "{% raw tl['DIFFERENT_AGES_POPS_ALT'] %}"/>
             <p>{% raw tl['DIFFERENT_AGES_POPS_TEXT'] %}</p>
 
             <p><a href = '#certif'>{% raw tl['TOP'] %}</a></p>
 
             <a name = 'AGP'><h3>{% raw tl['AG_POPULATION'] %}</h3></a>
-            <img src = "/static/img/PCoA3.png" alt = "{% raw tl['AG_POPULATION_ALT'] %}"/>
+            <img src = "{% raw media_locale['ADDENDUM_PCOA_AG_POPULATION'] %}" alt = "{% raw tl['AG_POPULATION_ALT'] %}"/>
             <p>{% raw tl['AG_POPULATION_TEXT'] %}</p>
 
             <p><a href = '#certif'>{% raw tl['TOP'] %}</a></p>

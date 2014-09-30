@@ -48,7 +48,24 @@ media_locale = {
     'NAV_KIT_INSTRUCTIONS': 'Kit Instructions',
     'NAV_PARTICIPANT_LOGIN': 'Participant Log In',
     'NAV_FORGOT_KITID': 'I forgot my kit ID',
-    'NAV_FORGOT_PASSWORD': 'I forgot my password'
+    'NAV_FORGOT_PASSWORD': 'I forgot my password',
+    'ADDENDUM_CERT_TITLE': '/static/img/Michael_Pollan_mod-01.png',
+    'ADDENDUM_CERT_NAME': '/static/img/Michael_Pollan_mod-01b.png',
+    'ADDENDUM_CERT_HEADER': '/static/img/Michael_Pollan_mod-02.png',
+    'ADDENDUM_CERT_BARCHART': '/static/img/Michael_Pollan_mod-11.png',
+    'ADDENDUM_CERT_BARCHART_LEGEND': '/static/img/Michael_Pollan_mod-12.png',
+    'ADDENDUM_CERT_ABUNDANT_MICROBES': '/static/img/Michael_Pollan_mod-13.png',
+    'ADDENDUM_CERT_ENRICHED_MICROBES': '/static/img/Michael_Pollan_mod-14.png',
+    'ADDENDUM_CERT_RARE_MICROBES': '/static/img/Michael_Pollan_mod-15.png',
+    'ADDENDUM_CERT_HEADER_PCOA': '/static/img/Michael_Pollan_mod-03.png',
+    'ADDENDUM_CERT_PCOA_LEGEND': '/static/img/Michael_Pollan_mod-04.png',
+    'ADDENDUM_CERT_PCOA_BODYSITES': '/static/img/Michael_Pollan_mod-08.png',
+    'ADDENDUM_CERT_PCOA_AGES_POP': '/static/img/Michael_Pollan_mod-09.png',
+    'ADDENDUM_CERT_PCOA_AG_POPULATION': '/static/img/Michael_Pollan_mod-10.png',
+    'ADDENDUM_TAX_BARCHART': '/static/img/TaxFig.png',
+    'ADDENDUM_PCOA_BODYSITES': '/static/img/PCoA1.png',
+    'ADDENDUM_PCOA_AGES_POPS': '/static/img/PCoA2.png',
+    'ADDENDUM_PCOA_AG_POPULATION': '/static/img/PCoA3.png'
 }
 
 # Template specific dicts
@@ -281,7 +298,7 @@ _ADDENDUM = {
     'MOD09ALT': 'PCoA of diets and age',
     'MOD10ALT': 'PCoA of American Gut Data',
     'RESULTS_CAPTION': 'Your certificate is designed to help you determine what was found in your sample, and how you compare to other people. Click on a graph or table to learn more.',
-    'SAMPLE_TITLE': 'What\'s in your American Gut sample?',
+    'SAMPLE_TITLE': 'What\'s in your %(PROJECT_TITLE)s sample?' % media_locale,
     'TAXONOMY': 'Taxonomy',
     'TAXONOMY_INTRO': 'Taxonomy is a system scientists use to describe all life on the planet. Taxonomy is commonly referred to as an organism&apos;s scientific name. This name allows us to understand how closely related two organisms are to each other. There are seven major levels of taxonomy that go from less specific to more specific. The phylum level represents very broad range of organisms that have <strong>evolved over hundreds of millions of years</strong> whereas the species level represents only a small subset of them that are <strong>much more closely related</strong>. Typically, names at the genus and species levels are written in <em>italics</em> or are <u>underlined</u> (in our tables, they are <em>italicized</em>). For instance, here is the list of taxonomic levels and names for humans and chimpanzees:',
     'HUMAN_TAXONOMY': 'Human',
