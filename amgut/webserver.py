@@ -35,6 +35,7 @@ from amgut.handlers.retrieve_kitid import KitIDHandler
 from amgut.handlers.forgot_password import ForgotPasswordHandler
 from amgut.handlers.add_sample_overview import AddSampleOverviewHandler
 from amgut.handlers.change_pass_verify import ChangePassVerifyHandler
+from amgut.handlers.change_password import ChangePasswordHandler
 
 define("port", default=8888, help="run on the given port", type=int)
 
@@ -71,6 +72,7 @@ class QiimeWebApplication(Application):
             (r"/authed/add_sample_human/", AddHumanSampleHandler),
             (r"/authed/add_sample_animal/", AddAnimalSampleHandler),
             (r"/authed/add_sample_general/", AddGeneralSampleHandler),
+            (r"/authed/change_password/", ChangePasswordHandler),
             (r"/faq/", FAQHandler),
             (r"/participants/(.*)", ParticipantOverviewHandler),
             (r"/international_shipping/", InternationalHandler),
