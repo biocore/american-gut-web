@@ -8,7 +8,7 @@ from uuid import uuid4
 from amgut.util import AG_DATA_ACCESS
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.lib.human_survey_supp import (
-    responses_map,  key_map, question_group, group_order, question_type,
+    responses_map, key_map, question_group, group_order, question_type,
     supplemental_map)
 from amgut import r_server, text_locale
 
@@ -17,6 +17,14 @@ tl = text_locale['human_survey.html']
 
 
 def make_human_survey_class(group):
+    """Creates a form class for a group of questions
+
+    The top-level attributes of the generated class correspond to the question_ids from
+    amgut.lib.human_survey_supp structures
+
+    Select fields are generated for questions that require a single response, and sets
+    of checkboxes for questions that can have multiple responses
+    """
     attrs = {}
     for idx in sorted(question_group[group]):
         question_id = key_map[idx]
