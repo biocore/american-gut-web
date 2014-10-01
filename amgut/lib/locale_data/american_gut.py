@@ -574,6 +574,431 @@ _CHANGE_PASS_VERIFY = {
     'NO_EMAIL_3': 'This is a courtesy email to confirm that you have changed your password for your kit with ID %(kitid)s If you did not request this change, please email us immediately at %(help_email)s.'
 }
 
+# helper tuples for the survey questions
+_NO_RESPONSE_CHOICE = "Unspecified"
+_YES_NO_CHOICES = (_NO_RESPONSE_CHOICE, 'Yes', 'No')
+_YES_NO_NOTSURE_CHOICES = (_NO_RESPONSE_CHOICE, 'Yes', 'No', 'Not sure')
+_FREQUENCY_MONTH_CHOICES = (_NO_RESPONSE_CHOICE,
+                            'Never',
+                            'Rarely (a few times/month)',
+                            'Occasionally (1-2 times/week)',
+                            'Regularly (3-5 times/week)',
+                            'Daily')
+_FREQUENCY_WEEK_CHOICES = (_NO_RESPONSE_CHOICE,
+                           'Never',
+                           'Rarely (less than once/week)',
+                           'Occasionally (1-2 times/week)',
+                           'Regularly (3-5 times/week)',
+                           'Daily')
+
+# sourced from 12-0582_-_american_gut_questionnaire_amended_09012014__irb_appd_09.19.14
+_HUMAN_SURVEY = {
+    # Personal information
+    'PERSONAL_PROMPT_NAME': 'Name:',
+    'PERSONAL_PROMPT_GENDER': 'Gender:',
+    'PERSONAL_PROMPT_HEIGHT': 'Height',
+    'PERSONAL_PROMPT_COUNTRY_OF_BIRTH': 'Country of birth:',
+    'PERSONAL_PROMPT_TODAYSDATE': 'Today\'s date:',
+    'PERSONAL_PROMPT_BIRTHDATE': 'Birth date:',
+    'PERSONAL_PROMPT_WEIGHT': 'Weight:',
+    'PERSONAL_PROMPT_ZIP': 'Current ZIP code:',
+
+    # General diet information
+    'GENERAL_DIET_TITLE': 'General Diet Information',
+    'GENERAL_DIET_QUESTION_0': 'How would you classify your diet?',
+    'GENERAL_DIET_QUESTION_0_CHOICES': (_NO_RESPONSE_CHOICE,
+                                        'Omnivore',
+                                        'Omnivore but do not eat red meat',
+                                        'Vegetarian',
+                                        'Vegetarian but eat seafood',
+                                        'Vegan'),
+
+    'GENERAL_DIET_QUESTION_1': 'Are you taking a daily multivitamin?',
+    'GENERAL_DIET_QUESTION_1_CHOICES': _YES_NO_CHOICES,
+
+    'GENERAL_DIET_QUESTION_2': 'How frequently do you take a probiotic?',
+    'GENERAL_DIET_QUESTION_2_CHOICES': _FREQUENCY_MONTH_CHOICES,
+
+    'GENERAL_DIET_QUESTION_3': 'How frequently do you take Vitamin B complex, folate or folic acid?',
+    'GENERAL_DIET_QUESTION_3_CHOICES': _FREQUENCY_MONTH_CHOICES,
+
+    'GENERAL_DIET_QUESTION_4': 'How frequently do you take Vitamin D supplement?',
+    'GENERAL_DIET_QUESTION_4_CHOICES': _FREQUENCY_MONTH_CHOICES,
+
+    'GENERAL_DIET_QUESTION_5': 'Are you taking any other nutritional/herbal supplements?',
+    'GENERAL_DIET_QUESTION_5_CHOICES': _YES_NO_CHOICES,
+
+    'GENERAL_DIET_QUESTION_6': 'Are you lactose intolerant?',
+    'GENERAL_DIET_QUESTION_6_CHOICES': _YES_NO_CHOICES,
+
+    'GENERAL_DIET_QUESTION_7': 'Are you gluten intolerant?',
+    'GENERAL_DIET_QUESTION_7_CHOICES': (_NO_RESPONSE_CHOICE,
+                                        'I was diagnosed with celiac disease',
+                                        'I was diagnosed with gluten allergy (anti-gluten IgG), but not celiac disease',
+                                        'I do not eat gluten because it makes me feel bad',
+                                        'No'),
+
+    'GENERAL_DIET_QUESTION_8': 'I am allergic to __________ (mark all that apply)',
+    'GENERAL_DIET_QUESTION_8_CHOICES': (_NO_RESPONSE_CHOICE,
+                                        'Peanuts',
+                                        'Tree nuts',
+                                        'Shellfish',
+                                        'Other',
+                                        'I have no food allergies that I know of.'),
+
+    'GENERAL_DIET_QUESTION_9': 'Do you eat a paleo, modified paleo, primal, FODMAP, Westen-Price, or other low-grain, low processed food diet?',
+    'GENERAL_DIET_QUESTION_9_CHOICES': _YES_NO_CHOICES,
+
+    'GENERAL_DIET_QUESTION_10': 'Do you eat meat/dairy products from animals treated with antibiotics?',
+    'GENERAL_DIET_QUESTION_10_CHOICES': _YES_NO_NOTSURE_CHOICES,
+
+    'GENERAL_DIET_QUESTION_11': 'Do you follow any other special diet restrictions other than those indicated above?',
+    'GENERAL_DIET_QUESTION_11_CHOICES': _YES_NO_CHOICES,
+
+    'GENERAL_DIET_QUESTION_12': 'What is your drinking water source at home?',
+    'GENERAL_DIET_QUESTION_12_CHOICES': (_NO_RESPONSE_CHOICE,
+                                         'City',
+                                         'Well',
+                                         'Bottled',
+                                         'Filtered',
+                                         'Not sure'),
+
+    # General information
+    'GENERAL_TITLE': 'General Information',
+    'GENERAL_QUESTION_13': 'What is your race/ethnicity?',
+    'GENERAL_QUESTION_13_CHOICES': (_NO_RESPONSE_CHOICE,
+                                    'Caucasian',
+                                    'Asian or Pacific Islander',
+                                    'African American',
+                                    'Hispanic',
+                                    'Other'),
+
+    'GENERAL_QUESTION_14': 'When did you move to current state of residence?',
+    'GENERAL_QUESTION_14_CHOICES': (_NO_RESPONSE_CHOICE,
+                                    'Within the past month',
+                                    'Within the past 3 months',
+                                    'Within the past 6 months',
+                                    'Within the past year',
+                                    'I have lived in my current state of residence for more than a year.'),
+
+    'GENERAL_QUESTION_15': 'I have traveled outside of the United States in the past _________.',
+    'GENERAL_QUESTION_15_CHOICES': (_NO_RESPONSE_CHOICE,
+                                    'Month',
+                                    '3 months',
+                                    '6 months',
+                                    '1 year',
+                                    'I have not been outside of the United States in the past year.'),
+
+    'GENERAL_QUESTION_16': 'How many non-family roommates do you have?',
+    'GENERAL_QUESTION_16_CHOICES': (_NO_RESPONSE_CHOICE,
+                                    'None',
+                                    'One',
+                                    'Two',
+                                    'Three',
+                                    'More than three'),
+
+    'GENERAL_QUESTION_17': 'Are any of your roommates participating in this study?',
+    'GENERAL_QUESTION_17_CHOICES': _YES_NO_NOTSURE_CHOICES,
+
+    'GENERAL_QUESTION_18': 'Are you related to or live with any of the other participants in this study?',
+    'GENERAL_QUESTION_18_CHOICES': _YES_NO_NOTSURE_CHOICES,
+
+    'GENERAL_QUESTION_19': 'Do you have a dog(s)?',
+    'GENERAL_QUESTION_19_CHOICES': _YES_NO_CHOICES,
+
+    'GENERAL_QUESTION_20': 'Do you have a cat(s)?',
+    'GENERAL_QUESTION_20_CHOICES': _YES_NO_CHOICES,
+
+    'GENERAL_QUESTION_21': 'Which is your dominant hand?',
+    'GENERAL_QUESTION_21_CHOICES': (_NO_RESPONSE_CHOICE,
+                                    'I am right handed',
+                                    'I am left handed',
+                                    'I am ambidextrous'),
+
+    'GENERAL_QUESTION_22': 'What is your highest level of education?',
+    'GENERAL_QUESTION_22_CHOICES': (_NO_RESPONSE_CHOICE,
+                                    'Did not complete high school',
+                                    'High School or GED equilivant',
+                                    'Some college or technical school',
+                                    'Associate\'s degree',
+                                    'Bachelor\'s degree',
+                                    'Some graduate school or professional',
+                                    'Graduate or Professional degree'),
+
+    # General lifestyle and hygiene information
+    'LIFESTYLE_HYGIENE_TITLE': 'General Lifestyle and Hygiene Information',
+    'LIFESTYLE_HYGIENE_QUESTION_23': 'How often do you exercise?',
+    'LIFESTYLE_HYGIENE_QUESTION_23_CHOICES': _FREQUENCY_MONTH_CHOICES,
+
+    'LIFESTYLE_HYGIENE_QUESTION_24': 'Do you generally exercise indoors or outdoors?',
+    'LIFESTYLE_HYGIENE_QUESTION_24_CHOICES': (_NO_RESPONSE_CHOICE,
+                                              'Indoors',
+                                              'Outdoors',
+                                              'Both',
+                                              'Depends on the season',
+                                              'None of the above'),
+
+    'LIFESTYLE_HYGIENE_QUESTION_25': 'Do you bite your fingernails?',
+    'LIFESTYLE_HYGIENE_QUESTION_25_CHOICES': _YES_NO_CHOICES,
+
+    'LIFESTYLE_HYGIENE_QUESTION_26': 'How often do you use a swimming pool/hot tub?',
+    'LIFESTYLE_HYGIENE_QUESTION_26_CHOICES': _FREQUENCY_MONTH_CHOICES,
+
+    'LIFESTYLE_HYGIENE_QUESTION_27': 'How often do you smoke cigarettes?',
+    'LIFESTYLE_HYGIENE_QUESTION_27_CHOICES': _FREQUENCY_MONTH_CHOICES,
+
+    'LIFESTYLE_HYGIENE_QUESTION_28': 'How often do you drink alcohol?',
+    'LIFESTYLE_HYGIENE_QUESTION_28_CHOICES': _FREQUENCY_MONTH_CHOICES,
+
+    'LIFESTYLE_HYGIENE_QUESTION_29': 'What type(s) of alcohol do you typically consume (select all that apply)?',
+    'LIFESTYLE_HYGIENE_QUESTION_29_CHOICES': (_NO_RESPONSE_CHOICE,
+                                              'Beer/Cider',
+                                              'Sour beers',
+                                              'White wine',
+                                              'Red wine',
+                                              'Spirits/hard alcohol'),
+
+    'LIFESTYLE_HYGIENE_QUESTION_30': 'How often do you brush your teeth?',
+    'LIFESTYLE_HYGIENE_QUESTION_30_CHOICES': _FREQUENCY_MONTH_CHOICES,
+
+    'LIFESTYLE_HYGIENE_QUESTION_31': 'How often do you floss your teeth?',
+    'LIFESTYLE_HYGIENE_QUESTION_31_CHOICES': _FREQUENCY_MONTH_CHOICES,
+
+    'LIFESTYLE_HYGIENE_QUESTION_32': 'How often do you wear facial cosmetics?',
+    'LIFESTYLE_HYGIENE_QUESTION_32_CHOICES': _FREQUENCY_MONTH_CHOICES,
+
+    'LIFESTYLE_HYGIENE_QUESTION_33': 'Do you use deodorant or antiperspirant (antiperspirants generally contain aluminum)?',
+    'LIFESTYLE_HYGIENE_QUESTION_33_CHOICES': (_NO_RESPONSE_CHOICE,
+                                              'I use deodorant',
+                                              'I use an antiperspirant',
+                                              'Not sure, but I use some form of deodorant/antiperspirant',
+                                              'I do not use deodorant or an antiperspirant'),
+
+    'LIFESTYLE_HYGIENE_QUESTION_34': 'Approximately how many hours of sleep to you get in an average night?',
+    'LIFESTYLE_HYGIENE_QUESTION_34_CHOICES': (_NO_RESPONSE_CHOICE,
+                                              'Less than 5 hours',
+                                              '5-6 hours',
+                                              '6-7 hours',
+                                              '7-8 hours',
+                                              '8 or more hours'),
+
+    'LIFESTYLE_HYGIENE_QUESTION_35': 'Do you use fabric softener when drying your clothes?',
+    'LIFESTYLE_HYGIENE_QUESTION_35_CHOICES': _YES_NO_CHOICES,
+
+    # General health information
+    'HEALTH_TITLE': 'General Health Information',
+    'HEALTH_QUESTION_36': 'How many times do you have a bowel movement in an average day?',
+    'HEALTH_QUESTION_36_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Less than one',
+                                   'One',
+                                   'Two',
+                                   'Three',
+                                   'Four',
+                                   'Five or more'),
+
+    'HEALTH_QUESTION_37': 'Describe the quality of your bowel movements:',
+    'HEALTH_QUESTION_37_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'I tend to be constipated (have difficulty passing stool)',
+                                   'I tend to have diarrhea (watery stool)',
+                                   'I tend to have normal formed stool',
+                                   'I don\'t know, I do not have a point of reference'),
+
+    'HEALTH_QUESTION_38': 'I have taken antibiotics in the last ____________.',
+    'HEALTH_QUESTION_38_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Week',
+                                   'Month',
+                                   '6 months',
+                                   'Year',
+                                   'I have not taken antibiotics in the past year.'),
+
+    'HEALTH_QUESTION_39': 'I have received a flu vaccine in the last ____________.',
+    'HEALTH_QUESTION_39_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Week',
+                                   'Month',
+                                   '6 months',
+                                   'Year',
+                                   'I have not gotten the flu vaccine in the past year.'),
+
+    'HEALTH_QUESTION_40': 'Are you currently using some form of hormonal birth control?',
+    'HEALTH_QUESTION_40_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Yes, I am taking the "pill"',
+                                   'Yes, I use an injected contraceptive (DMPA)',
+                                   'Yes, I use a contraceptive patch (Ortho-Evra)',
+                                   'Yes, I use the NuvaRing',
+                                   'Yes, I use a hormonal IUD (Mirena)',
+                                   'No'),
+
+    'HEALTH_QUESTION_41': 'Are you currently pregnant?',
+    'HEALTH_QUESTION_41_CHOICES': _YES_NO_NOTSURE_CHOICES,
+
+    'HEALTH_QUESTION_42': 'My weight has _________ within the last 6 months.',
+    'HEALTH_QUESTION_42_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Increased more than 10 pounds',
+                                   'Decreased more than 10 pounds',
+                                   'Remained stable'),
+
+    'HEALTH_QUESTION_43': 'Have you had your tonsils removed?',
+    'HEALTH_QUESTION_43_CHOICES': _YES_NO_NOTSURE_CHOICES,
+
+    'HEALTH_QUESTION_44': 'Have you had you appendix removed?',
+    'HEALTH_QUESTION_44_CHOICES': _YES_NO_NOTSURE_CHOICES,
+
+    'HEALTH_QUESTION_45': 'Have you had chickenpox?',
+    'HEALTH_QUESTION_45_CHOICES': _YES_NO_NOTSURE_CHOICES,
+
+    'HEALTH_QUESTION_46': 'Do you currently take prescription medication for facial acne?',
+    'HEALTH_QUESTION_46_CHOICES': _YES_NO_CHOICES,
+
+    'HEALTH_QUESTION_47': 'Do you use over the counter products to control facial acne?',
+    'HEALTH_QUESTION_47_CHOICES': _YES_NO_CHOICES,
+
+    'HEALTH_QUESTION_48': 'Do you currently take over the counter or prescription medication for other conditions?',
+    'HEALTH_QUESTION_48_CHOICES': _YES_NO_CHOICES,
+
+    'HEALTH_QUESTION_49': 'Were you born via Caesarean section (C-section)?',
+    'HEALTH_QUESTION_49_CHOICES': _YES_NO_NOTSURE_CHOICES,
+
+    'HEALTH_QUESTION_50': 'How were you fed as an infant?',
+    'HEALTH_QUESTION_50_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Primarily breast milk',
+                                   'Primarily infant formula',
+                                   'A mixture of breast milk and formula',
+                                   'Not sure'),
+
+    'HEALTH_QUESTION_51': 'Have you been diagnosed with any of the following conditions (check all that apply)?',
+    'HEALTH_QUESTION_51_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'I choose not to answer',
+                                   'I do not have any of the conditions listed below',
+                                   'ADD/ADHD',
+                                   'Alzheimer\'s Disease/Dementia',
+                                   'Asthma, Cystic Fibrosis or Lung Disease',
+                                   'Autism or Autism Spectrum Disorder',
+                                   'Autoimmune disease (i.e. Lupus, RA, MS, Hashimoto\'s thyroiditis), not including IBD (irritable bowel disease) or type I diabetes',
+                                   'Candida or fungal overgrowth in the gut',
+                                   'Clostridium difficile (C. diff) infection',
+                                   'Coronary artery Disease, heart disease, heart attack, stroke',
+                                   'Depression, bipolar disorder or schizophrenia',
+                                   'Diabetes',
+                                   'Epilepsy or seizure disorder',
+                                   'Irritable Bowel Syndrome (IBS)',
+                                   'Inflammatory Bowel Disease (IBD)',
+                                   'Migraines',
+                                   'Kidney Disease',
+                                   'Liver Disease',
+                                   'Phenylketonuria',
+                                   'Small Intestinal Bacterial Overgrowth (SIBO)',
+                                   'Skin Condition',
+                                   'Thyroid Disease',
+                                   'Other'),
+
+    'HEALTH_QUESTION_52': 'For the conditions you checked in question 51, was the condition',
+    'HEALTH_QUESTION_52_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Diagnosed by a medical professional (doctor, physician assistant)',
+                                   'Diagnosed by an alternative medicine practitioner',
+                                   'Self-diagnosed'),
+
+    'HEALTH_QUESTION_53': 'Are you willing to be contacted to answer additional questions about the conditions listed above?',
+    'HEALTH_QUESTION_53_CHOICES': _YES_NO_CHOICES,
+
+    'HEALTH_QUESTION_54': 'Do you have seasonal allergies?',
+    'HEALTH_QUESTION_54_CHOICES': _YES_NO_CHOICES,
+
+    'HEALTH_QUESTION_55': 'Do you have any of the following non-food allergies? (mark all that apply)',
+    'HEALTH_QUESTION_55_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Drug (e.g. Penicillin)',
+                                   'Pet dander',
+                                   'Beestings',
+                                   'Poison ivy/oak',
+                                   'Sun'),
+
+    # Detailed Dietary information
+    'DETAILED_DIET_TITLE': 'Detailed Dietary information',
+    'DETAILED_DIET_QUESTION_56': 'Are you an infant who receives most of their nutrition from breast milk or formula, or an adult who receives most (more than 75% of daily calories) of their nutrition from adult nutritional shakes (i.e. Ensure)?',
+    'DETAILED_DIET_QUESTION_56_CHOICES': (_NO_RESPONSE_CHOICE,
+                                          'Yes',
+                                          'No',
+                                          'I eat both solid food and formula/breast milk'),
+
+    'DETAILED_DIET_QUESTION_57': 'In an average week, how often do you consume meat/eggs?',
+    'DETAILED_DIET_QUESTION_57_CHOICES': _FREQUENCY_WEEK_CHOICES,
+
+    'DETAILED_DIET_QUESTION_58': 'In an average week, how often do you cook and consume home cooked meals? (Exclude ready-to-eat meals like boxed macaroni and cheese, ramen noodles, lean cuisine)',
+    'DETAILED_DIET_QUESTION_58_CHOICES': _FREQUENCY_WEEK_CHOICES,
+
+    'DETAILED_DIET_QUESTION_59': 'In an average week, how often do you consume ready-to-eat meals (i.e macaroni and cheese, ramen noodles, lean cuisine)?',
+    'DETAILED_DIET_QUESTION_59_CHOICES': _FREQUENCY_WEEK_CHOICES,
+
+    'DETAILED_DIET_QUESTION_60': 'In an average week, how often do you eat food prepared at a restaurant, including carry-out/take-out?',
+    'DETAILED_DIET_QUESTION_60_CHOICES': _FREQUENCY_WEEK_CHOICES,
+
+    'DETAILED_DIET_QUESTION_61': 'In an average week, how often do you eat at least 2 servings of whole grains in a day?',
+    'DETAILED_DIET_QUESTION_61_CHOICES': _FREQUENCY_WEEK_CHOICES,
+
+    'DETAILED_DIET_QUESTION_62': 'In an average week, how often to you consume at least 2-3 servings of fruit in a day?',
+    'DETAILED_DIET_QUESTION_62_CHOICES': _FREQUENCY_WEEK_CHOICES,
+
+    'DETAILED_DIET_QUESTION_63': 'In an average week, how often do you consume at least 2-3 servings of vegetables, including potatoes in a day?',
+    'DETAILED_DIET_QUESTION_63_CHOICES': _FREQUENCY_WEEK_CHOICES,
+
+    'DETAILED_DIET_QUESTION_64': 'How often do you consume one or more servings of fermented vegetables in or plant products a day in an average week?',
+    'DETAILED_DIET_QUESTION_64_CHOICES': _FREQUENCY_WEEK_CHOICES,
+
+    'DETAILED_DIET_QUESTION_65': 'In an average week, how often do you consume at least 2 servings of milk or cheese a day?',
+    'DETAILED_DIET_QUESTION_65_CHOICES': _FREQUENCY_WEEK_CHOICES,
+
+    'DETAILED_DIET_QUESTION_66': 'In an average week, how often do you consume milk substitutes (soy milk, lactose free milk, almond milk, etc.)?',
+    'DETAILED_DIET_QUESTION_66_CHOICES': _FREQUENCY_WEEK_CHOICES,
+
+    'DETAILED_DIET_QUESTION_67': 'How often do you eat frozen desserts (ice cream/gelato/milkshakes, sherbet/sorbet, frozen yogurt, etc.)?',
+    'DETAILED_DIET_QUESTION_67_CHOICES': _FREQUENCY_WEEK_CHOICES,
+
+    'DETAILED_DIET_QUESTION_68': 'In an average week, how often do you eat red meat?',
+    'DETAILED_DIET_QUESTION_68_CHOICES': _FREQUENCY_WEEK_CHOICES,
+
+    'DETAILED_DIET_QUESTION_69': 'In an average week, how often do you consume higher fat red meats like prime rib, T-bone steak, hamburger, ribs, bacon, etc.?',
+    'DETAILED_DIET_QUESTION_69_CHOICES': _FREQUENCY_WEEK_CHOICES,
+
+    'DETAILED_DIET_QUESTION_70': 'How many days in an average week do you consume chicken or turkey at least once a day?',
+    'DETAILED_DIET_QUESTION_70_CHOICES': _FREQUENCY_WEEK_CHOICES,
+
+    'DETAILED_DIET_QUESTION_71': 'How many days in an average week do you consume seafood (fish, shrimp, lobster, crab, etc.)?',
+    'DETAILED_DIET_QUESTION_71_CHOICES': _FREQUENCY_WEEK_CHOICES,
+
+    'DETAILED_DIET_QUESTION_72': 'How many days in an average week do you consume salted snacks (potato chips, nacho chips, corn chips, popcorn with butter, French fries etc.)?',
+    'DETAILED_DIET_QUESTION_72_CHOICES': _FREQUENCY_WEEK_CHOICES,
+
+    'DETAILED_DIET_QUESTION_73': 'How many days in an average week do you consume sugary sweets (cake, cookies, pastries, donuts, muffins, chocolate etc.) at least once a day',
+    'DETAILED_DIET_QUESTION_73_CHOICES': _FREQUENCY_WEEK_CHOICES,
+
+    'DETAILED_DIET_QUESTION_74': 'Cook with olive oil?',
+    'DETAILED_DIET_QUESTION_74_CHOICES': _FREQUENCY_WEEK_CHOICES,
+
+    'DETAILED_DIET_QUESTION_75': 'Consume whole eggs (does not include egg beaters or just egg whites).',
+    'DETAILED_DIET_QUESTION_75_CHOICES': _FREQUENCY_WEEK_CHOICES,
+
+    'DETAILED_DIET_QUESTION_76': 'Drink 16 ounces or more of sugar sweetened beverages such as non-diet soda or fruit drink/punch (however, not including 100 % fruit juice) in a day?',
+    'DETAILED_DIET_QUESTION_76_CHOICES': _FREQUENCY_WEEK_CHOICES,
+
+    'DETAILED_DIET_QUESTION_77': 'Consume at least 1L (~32 ounces) of water in a day?',
+    'DETAILED_DIET_QUESTION_77_CHOICES': _FREQUENCY_WEEK_CHOICES,
+
+    # Supplemental questions
+    'SUPPLEMENTAL_DIET': 'Dietary Supplements/Dietary Restrictions:',
+    'SUPPLEMENTAL_RICE': 'Race/ethnicity:',
+    'SUPPLEMENTAL_MEDICATION': 'Over the counter and prescription medication:',
+    'SUPPLEMENTAL_TRAVEL': 'Travel:',
+    'SUPPLEMENTAL_RELATIONSHIP': 'What is your relationship to other people in this study who have voluntarily told you of their participation (e.g. partner, children, roommates)?  For children, please specify whether or not you are genetically related.  Note that we will only use information that both parties provide.',
+    'SUPPLEMENTAL_PETS': 'Pets',
+    'SUPPLEMENTAL_PETS_INOUTDOOR': 'Indoor/outdoor or confined (cage/tank):',
+    'SUPPLEMENTAL_PETS_CONTACT': 'Contact extent:',
+    'SUPPLEMENTAL_ANTIBIOTICS': 'Antibiotic/s:',
+    'SUPPLEMENTAL_ANTIBIOTICS_NAME': 'Name:',
+    'SUPPLEMENTAL_ANTIBIOTICS_TREATMENT': 'Treatment for:',
+    'SUPPLEMENTAL_PREGNANCY': 'Pregnancy due date:',
+    'SUPPLEMENTAL_OTHER_CONDITIONS': 'Other conditions you suffer from that were not listed in the diagnosed conditions question',
+    'SUPPLEMENTAL_OPEN_COMMENT': 'Please write anything else about yourself that you think could affect your personal microorganisms.'
+}
+
 _SURVEY_MAIN = {
     'TITLE': 'Survey',
     'ONCE_YOU_START': 'Once you start this survey, you must complete it. Your answers will <strong>not</strong> be saved unless you complete the entire survey. It is <strong>very important</strong> to start your food diary before you start the survey. There are a number of FREE online dietary tools out there - we recommend <a href="http://www.fitday.com/" target="_blank" class="help">FitDay</a> and <a href="http://caloriecount.about.com/" class="help">Calorie Count</a>. Note we will be asking questions about your carb, protein, fat, alcohol, and fiber intake, (as a percentage of your total intake) as well as some info on types of food. So, use a tool that allows you to enter as much detail as possible.',
@@ -602,6 +1027,7 @@ text_locale = {
     'sample_overview.html': _SAMPLE_OVERVIEW,
     'taxa_summary.html': _TAXA_SUMMARY,
     'map.html': _MAP,
+    'human_survey.html': _HUMAN_SURVEY,
     'register_user.html': _REGISTER_USER,
     'chage_pass_verify.html': _CHANGE_PASS_VERIFY,
     'survey_main.html': _SURVEY_MAIN
