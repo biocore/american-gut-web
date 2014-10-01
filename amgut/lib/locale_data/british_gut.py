@@ -247,7 +247,7 @@ _FAQ = {
     'WHEN_RESULTS_NON_FECAL': "I sent in a non-faecal sample and have not received any results, when should I expect results?",
     'WHEN_RESULTS_NON_FECAL_ANS': "The vast majority of the samples we've received are fecal, which was why we prioritized those samples. Much of the analysis and results infrastructure we've put in place is applicable to other sample types, but we do still need to assess what specific representations of the data make the most sense to return to participants. We apologize for the delay. Our tentative goal for skin and oral samples is January 1st, 2014, and environmental samples sometime during the first quarter of 2014.",
     'WHERE_SEND_SAMPLE': "Where do I send my sample?",
-    'WHERE_SEND_SAMPLE_ANS': '<p>This is the shipping address:</p>%(project_name)s<br>'
+    'WHERE_SEND_SAMPLE_ANS': '<p>This is the shipping address:</p>%(project_name)s<br/>Department of Twin Research, Kings College London,<br/>St Thomas’ Hospital Campus, 3rd Floor South Wing Block D<br/>Westminster Bridge Road, London SE1 7EH'
                              '<p>If you are shipping internationally, please see the <a href="/international_shipping/">international shipping instructions</a>.' % {'project_name': AMGUT_CONFIG.project_name},
     'WHO_MICHAEL_POLLAN': "Who is Michael Pollan?",
     'WHO_MICHAEL_POLLAN_ANS': 'Michael Pollan is a New York Times Best Seller for his books on diet and nutrition. Further information about Michael can be found <a href="http://michaelpollan.com/">here</a>.',
@@ -495,7 +495,7 @@ _PORTAL = {
     'DOMESTIC_HEADER_1': "Domestic Shipping",
     'DOMESTIC_TEXT_1': "Shipping within the US should be less than $1.50, but we recommend taking the sample to the post office to get the proper postage. Getting the postage right on the first try is important since samples that spend a long time in transit will likely not produce the highest quality results.",
     'DOMESTIC_TEXT_2': "This is the shipping address:",
-    'DOMESTIC_TEXT_3': "%(project_name)s<br />Knight Lab, JSCBB<br />596 UCB<br />Boulder, CO 80309" % {'project_name': AMGUT_CONFIG.project_name},
+    'DOMESTIC_TEXT_3': "%(project_name)s<br />Department of Twin Research, Kings College London<br />St Thomas’ Hospital Campus, 3rd Floor South Wing Block D<br />Westminster Bridge Road, London SE1 7EH" % {'project_name': AMGUT_CONFIG.project_name},
     'GREETING': "Hi %(user_name)s! Please follow the steps below.",
     'INTERNATIONAL_HEADER_1': "International Shipping",
     'INTERNATIONAL_HEADER_2': "Your samples",
