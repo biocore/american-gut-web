@@ -574,7 +574,7 @@ _CHANGE_PASS_VERIFY = {
     'NO_EMAIL_3': 'This is a courtesy email to confirm that you have changed your password for your kit with ID %(kitid)s If you did not request this change, please email us immediately at %(help_email)s.'
 }
 
-# sourced from 12-0582_-_american_gut_questionnaire_amended_09012014__irb_appd_09.19.14
+# helper tuples for the survey questions
 _NO_RESPONSE_CHOICE = "Unspecified"
 _YES_NO_CHOICES = (_NO_RESPONSE_CHOICE, 'Yes', 'No')
 _YES_NO_NOTSURE_CHOICES = (_NO_RESPONSE_CHOICE, 'Yes', 'No', 'Not sure')
@@ -590,9 +590,27 @@ _FREQUENCY_WEEK_CHOICES = (_NO_RESPONSE_CHOICE,
                            'Occasionally (1-2 times/week)',
                            'Regularly (3-5 times/week)',
                            'Daily')
-_SURVEY_MAIN = {
+
+# sourced from 12-0582_-_american_gut_questionnaire_amended_09012014__irb_appd_09.19.14
+_HUMAN_SURVEY = {
+    # Personal information
+    'PERSONAL_PROMPT_NAME': 'Name:',
+    'PERSONAL_PROMPT_GENDER': 'Gender:',
+    'PERSONAL_PROMPT_HEIGHT': 'Height',
+    'PERSONAL_PROMPT_COUNTRY_OF_BIRTH': 'Country of birth:',
+    'PERSONAL_PROMPT_TODAYSDATE': 'Today\'s date:',
+    'PERSONAL_PROMPT_BIRTHDATE': 'Birth date:',
+    'PERSONAL_PROMPT_WEIGHT': 'Weight:',
+    'PERSONAL_PROMPT_ZIP': 'Current ZIP code:',
+
+    # General diet information
     'GENERAL_DIET_QUESTION_0': 'How would you classify your diet?',
-    'GENERAL_DIET_QUESTION_0_CHOICES': (_NO_RESPONSE_CHOICE, 'Omnivore', 'Omnivore but do not eat red meat', 'Vegetarian', 'Vegetarian but eat seafood', 'Vegan'),
+    'GENERAL_DIET_QUESTION_0_CHOICES': (_NO_RESPONSE_CHOICE,
+                                        'Omnivore',
+                                        'Omnivore but do not eat red meat',
+                                        'Vegetarian',
+                                        'Vegetarian but eat seafood',
+                                        'Vegan'),
 
     'GENERAL_DIET_QUESTION_1': 'Are you taking a daily multivitamin?',
     'GENERAL_DIET_QUESTION_1_CHOICES': _YES_NO_CHOICES,
@@ -600,10 +618,10 @@ _SURVEY_MAIN = {
     'GENERAL_DIET_QUESTION_2': 'How frequently do you take a probiotic?',
     'GENERAL_DIET_QUESTION_2_CHOICES': _FREQUENCY_MONTH_CHOICES,
 
-    'GENERAL_DIET_QUESTION_3': 'How frequently do you take  Vitamin B complex, folate or folic acid?',
+    'GENERAL_DIET_QUESTION_3': 'How frequently do you take Vitamin B complex, folate or folic acid?',
     'GENERAL_DIET_QUESTION_3_CHOICES': _FREQUENCY_MONTH_CHOICES,
 
-    'GENERAL_DIET_QUESTION_4': 'How frequently do you take  Vitamin D supplement?',
+    'GENERAL_DIET_QUESTION_4': 'How frequently do you take Vitamin D supplement?',
     'GENERAL_DIET_QUESTION_4_CHOICES': _FREQUENCY_MONTH_CHOICES,
 
     'GENERAL_DIET_QUESTION_5': 'Are you taking any other nutritional/herbal supplements?',
@@ -644,6 +662,7 @@ _SURVEY_MAIN = {
                                          'Filtered',
                                          'Not sure'),
 
+    # General information
     'GENERAL_QUESTION_13': 'What is your race/ethnicity?',
     'GENERAL_QUESTION_13_CHOICES': (_NO_RESPONSE_CHOICE,
                                     'Caucasian',
@@ -704,6 +723,7 @@ _SURVEY_MAIN = {
                                     'Some graduate school or professional',
                                     'Graduate or Professional degree'),
 
+    # General lifestyle and hygiene information
     'LIFESTYLE_HYGIENE_QUESTION_23': 'How often do you exercise?',
     'LIFESTYLE_HYGIENE_QUESTION_23_CHOICES': _FREQUENCY_MONTH_CHOICES,
 
@@ -762,6 +782,7 @@ _SURVEY_MAIN = {
     'LIFESTYLE_HYGIENE_QUESTION_35': 'Do you use fabric softener when drying your clothes?',
     'LIFESTYLE_HYGIENE_QUESTION_35_CHOICES': _YES_NO_CHOICES,
 
+    # General health information
     'HEALTH_QUESTION_36': 'How many times do you have a bowel movement in an average day?',
     'HEALTH_QUESTION_36_CHOICES': (_NO_RESPONSE_CHOICE,
                                    'Less than one',
@@ -830,7 +851,7 @@ _SURVEY_MAIN = {
     'HEALTH_QUESTION_48': 'Do you currently take over the counter or prescription medication for other conditions?',
     'HEALTH_QUESTION_48_CHOICES': _YES_NO_CHOICES,
 
-    'HEALTH_QUESTION_49': 'Were you born via cesarean section (C-section)?',
+    'HEALTH_QUESTION_49': 'Were you born via Caesarean section (C-section)?',
     'HEALTH_QUESTION_49_CHOICES': _YES_NO_NOTSURE_CHOICES,
 
     'HEALTH_QUESTION_50': 'How were you fed as an infant?',
@@ -886,13 +907,14 @@ _SURVEY_MAIN = {
                                    'Poison ivy/oak',
                                    'Sun'),
 
+    # Detailed Dietary information
     'DETAILED_DIET_QUESTION_56': 'Are you an infant who receives most of their nutrition from breast milk or formula, or an adult who receives most (more than 75% of daily calories) of their nutrition from adult nutritional shakes (i.e. Ensure)?',
     'DETAILED_DIET_QUESTION_56_CHOICES': (_NO_RESPONSE_CHOICE,
                                           'Yes',
                                           'No',
                                           'I eat both solid food and formula/breast milk'),
 
-    'DETAILED_DIET_QUESTION_57': 'In  an average week, how often do you consume meat/eggs?',
+    'DETAILED_DIET_QUESTION_57': 'In an average week, how often do you consume meat/eggs?',
     'DETAILED_DIET_QUESTION_57_CHOICES': _FREQUENCY_WEEK_CHOICES,
 
     'DETAILED_DIET_QUESTION_58': 'In an average week, how often do you cook and consume home cooked meals? (Exclude ready-to-eat meals like boxed macaroni and cheese, ramen noodles, lean cuisine)',
@@ -954,7 +976,23 @@ _SURVEY_MAIN = {
 
     'DETAILED_DIET_QUESTION_77': 'Consume at least 1L (~32 ounces) of water in a day?',
     'DETAILED_DIET_QUESTION_77_CHOICES': _FREQUENCY_WEEK_CHOICES,
- }
+
+    # Supplemental questions
+    'SUPPLEMENTAL_DIET': 'Dietary Supplements/Dietary Restrictions:',
+    'SUPPLEMENTAL_RICE': 'Race/ethnicity:',
+    'SUPPLEMENTAL_MEDICATION': 'Over the counter and prescription medication:',
+    'SUPPLEMENTAL_TRAVEL': 'Travel:',
+    'SUPPLEMENTAL_RELATIONSHIP': 'What is your relationship to other people in this study who have voluntarily told you of their participation (e.g. partner, children, roommates)?  For children, please specify whether or not you are genetically related.  Note that we will only use information that both parties provide.',
+    'SUPPLEMENTAL_PETS': 'Pets',
+    'SUPPLEMENTAL_PETS_INOUTDOOR': 'Indoor/outdoor or confined (cage/tank):',
+    'SUPPLEMENTAL_PETS_CONTACT': 'Contact extent:',
+    'SUPPLEMENTAL_ANTIBIOTICS': 'Antibiotic/s:',
+    'SUPPLEMENTAL_ANTIBIOTICS_NAME': 'Name:',
+    'SUPPLEMENTAL_ANTIBIOTICS_TREATMENT': 'Treatment for:',
+    'SUPPLEMENTAL_PREGNANCY': 'Pregnancy due date:',
+    'SUPPLEMENTAL_OTHER_CONDITIONS': 'Other conditions you suffer from that were not listed in the diagnosed conditions question',
+    'SUPPLEMENTAL_OPEN_COMMENT': 'Please write anything else about yourself that you think could affect your personal microorganisms.'
+}
 
 
 
