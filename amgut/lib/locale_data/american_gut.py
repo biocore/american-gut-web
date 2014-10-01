@@ -11,6 +11,7 @@ from amgut.lib.config_manager import AMGUT_CONFIG
 # -----------------------------------------------------------------------------
 
 # Any media specific localizations
+HELP_EMAIL = "info@americangut.org"
 media_locale = {
     'LOGO': '/static/img/ag_logo.jpg',
     'STEPS_VIDEO': "http://player.vimeo.com/video/63542787",
@@ -23,7 +24,7 @@ media_locale = {
     'FAQ_AMBIGUOUS_PASS': '/static/img/creds_example.png',
     'SAMPLE_BARCODE': '/static/img/sample_barcode.jpg',
     'SWAB_HANDLING': 'http://player.vimeo.com/video/62393487',
-    'HELP_EMAIL': 'info@americangut.org',
+    'HELP_EMAIL': HELP_EMAIL,
     'PROJECT_TITLE': AMGUT_CONFIG.project_name,
     'FAVICON': '/static/img/favicon.ico',
     'FUNDRAZR_URL': 'https://fundrazr.com/campaigns/4Tqx5',
@@ -68,7 +69,8 @@ media_locale = {
     'ADDENDUM_PCOA_AGES_POPS': '/static/img/PCoA2.png',
     'ADDENDUM_PCOA_AG_POPULATION': '/static/img/PCoA3.png',
     'PORTAL_DIET_QUESTIONS': '/static/img/diet_questions.png',
-    'PORTAL_SHIPPING': '/static/img/shipping.png'
+    'PORTAL_SHIPPING': '/static/img/shipping.png',
+    'EMAIL_ERROR': "There was a problem sending your email. Please contact us directly at <a href='mailto:%(help_email)s'>%(help_email)s</a>" % {'help_email': HELP_EMAIL}
 }
 
 # Template specific dicts

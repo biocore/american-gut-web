@@ -1,6 +1,9 @@
 from amgut.lib.mail import send_email
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.util import AG_DATA_ACCESS
+from amgut.lib.config_manager import AMGUT_CONFIG
+from amgut import media_locale
+
 
 
 class KitIDHandler(BaseHandler):
@@ -14,12 +17,15 @@ class KitIDHandler(BaseHandler):
             kitids = AG_DATA_ACCESS.getAGKitIDsByEmail(email)
         try:
             if len(kitids) > 0:
-                MESSAGE = ('Your American Gut Kit IDs are %s. You are '
+                MESSAGE = ('Your %(shorthand)s Kit IDs are %(ids)s. You are '
                            'receiving this email because you requested your '
-                           'Kit ID from the American Gut web page If you did '
+                           'Kit ID from the %(shorthand)s web page If you did '
                            'not request your Kit ID please email '
-                           'info@americangut.org Thank you,\n The American '
-                           'Gut Team\n' % ", ".join(kitids))
+                           '%(help_email)s Thank you,\n The '
+                           '%(shorthand)s Team\n' %
+                           {'ids': ", ".join(kitids),
+                            'help_email': media_locale['HELP_EMAIL'],
+                            'shorthand': AMGUT_CONFIG.project_shorthand})
                 try:
                     send_email(MESSAGE, 'American Gut Kit ID', email)
                     self.render('retrieve_kitid.html', message='',

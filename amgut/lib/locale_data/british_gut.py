@@ -12,6 +12,8 @@ from amgut.lib.config_manager import AMGUT_CONFIG
 
 
 # Any media specific localizations
+HELP_EMAIL = "info@britishgut.org"
+
 media_locale = {
     'ADDENDUM_CERT_ABUNDANT_MICROBES': "/static/img/Michael_Pollan_mod-13.png",
     'ADDENDUM_CERT_BARCHART': "/static/img/Michael_Pollan_mod-11.png",
@@ -38,7 +40,7 @@ media_locale = {
     'FAQ_AMBIGUOUS_PASS': "/static/img/creds_example.png",
     'FAVICON': "/static/img/favicon.ico",
     'FUNDRAZR_URL': "https://fundrazr.com/campaigns/4Tqx5",
-    'HELP_EMAIL': "info@britishgut.org",
+    'HELP_EMAIL': HELP_EMAIL,
     'LOGO': '/static/img/british_gut_logo.jpg',
     'LOG_SAMPLE_OPTS': "/static/img/log_sample_options.png",
     'NAV_ADDENDUM': "How do I interpret my results?",
@@ -70,6 +72,7 @@ media_locale = {
     'SAMPLE_BARCODE': "/static/img/sample_barcode.jpg",
     'STEPS_VIDEO': "http://player.vimeo.com/video/63542787",
     'SWAB_HANDLING': "http://player.vimeo.com/video/62393487",
+    'EMAIL_ERROR': "There was a problem sending your email. Please contact us directly at <a href='mailto:%(help_email)s'>%(help_email)s</a>" % {'help_email': HELP_EMAIL}
 }
 
 _NEW_PARTICIPANT = {

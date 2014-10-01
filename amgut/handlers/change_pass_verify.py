@@ -3,6 +3,7 @@ from urllib import unquote
 from amgut.lib.mail import send_email
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.util import AG_DATA_ACCESS
+from amgut import media_locale
 
 
 class ChangePassVerifyHandler(BaseHandler):
@@ -48,7 +49,8 @@ class ChangePassVerifyHandler(BaseHandler):
         MESSAGE = ('This is a courtesy email to confirm that you have '
                    'changed your password for your kit with ID %s. '
                    'If you did not request this change, please email us '
-                   'immediately at info@americangut.org.' % supplied_kit_id)
+                   'immediately at %s' % (supplied_kit_id,
+                                          media_locale['HELP_EMAIL']))
         try:
             send_email(MESSAGE, 'American Gut Password Reset', email)
             self.render('change_pass_verify.html', email='', kitid='',

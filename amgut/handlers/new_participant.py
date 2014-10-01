@@ -3,6 +3,7 @@ from tornado.web import authenticated
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.util import AG_DATA_ACCESS
 from amgut.lib.mail import send_email
+from amgut import media_locale
 
 
 MESSAGE_TEMPLATE = """Contact: %s
@@ -79,10 +80,7 @@ class NewParticipantHandler(BaseHandler):
                     alert_message = ("Your message has been sent."
                                      " We will reply shortly")
                 except:
-                    alert_message = ("There was a problem sending your email."
-                                     " Please contact us directly at "
-                                     "<a href='mailto:info@americangut.org'>"
-                                     "info@americangut.org</a>")
+                    alert_message = media_locale['EMAIL_ERROR']
 
                 self.redirect("/authed/portal/?errmsg=%s" % alert_message)
 

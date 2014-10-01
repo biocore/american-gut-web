@@ -2,6 +2,7 @@ from tornado.web import authenticated
 
 from amgut.lib.mail import send_email
 from amgut.handlers.base_handlers import BaseHandler
+from amgut import media_locale
 
 
 class HelpRequestHandler(BaseHandler):
@@ -32,9 +33,7 @@ class HelpRequestHandler(BaseHandler):
                 send_email(MESSAGE, SUBJECT, sender=email_address)
                 result = 'Your message has been sent. We will reply shortly'
             except:
-                result = ("There was a problem sending your email. Please "
-                          "contact us directly at "
-                          "<a href='mailto:info@americangut.org'>info@americangut.org</a>")
+                result = media_locale['EMAIL_ERROR']
 
             self.render('help_request.html', skid=self.current_user,
                         result=result)
