@@ -1014,6 +1014,7 @@ text_locale = {
     'sample_overview.html': _SAMPLE_OVERVIEW,
     'taxa_summary.html': _TAXA_SUMMARY,
     'map.html': _MAP,
+    'human_survey.html': _HUMAN_SURVEY,
     'register_user.html': _REGISTER_USER,
     'chage_pass_verify.html': _CHANGE_PASS_VERIFY
     }
