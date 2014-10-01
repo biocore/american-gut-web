@@ -2,15 +2,14 @@ from __future__ import division
 
 import smtplib
 from email.mime.text import MIMEText
-
-
-FROM_EMAIL = 'info@americangut.org'
+from amgut.lib.locale_data.american_gut import media_locale
 
 
 def send_email(message, subject, recipient='americangut@gmail.com',
-               sender=FROM_EMAIL):
+               sender=None):
     """Send an email from your local host """
-
+    if sender is None:
+        sender = media_locale['HELP_EMAIL']
     # Create a text/plain message
     msg = MIMEText(message)
 
