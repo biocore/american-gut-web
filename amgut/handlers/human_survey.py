@@ -41,36 +41,26 @@ surveys = [make_human_survey_class(group) for group in group_order]
 
 class HumanSurveyHandler(BaseHandler):
     @authenticated
-    def get(self):
-        page_number = 0
-        human_survey_id = str(uuid4())
-        self.set_secure_cookie('human_survey_id', human_survey_id)
-
-        # TODO: populate the next form page from database values, if they
-        # exist
-        the_form = surveys[page_number]()
-        title = tl[group_order[page_number]+'_TITLE']
-        self.render('human_survey.html', the_form=the_form,
-                    TITLE=title, skid=self.current_user,
-                    supplemental_map=supplemental_map,
-                    page_number=page_number)
-
-    @authenticated
     def post(self):
         human_survey_id = self.get_secure_cookie('human_survey_id')
         page_number = int(self.get_argument('page_number'))
 
         if human_survey_id is None:
-            # it should not be possible to get here, unless someone is posting
-            # data to the page using a different interface
-            self.clear_cookie('human_survey_id')
-            return
+            if page_number == -1:
+                human_survey_id = str(uuid4())
+                self.set_secure_cookie('human_survey_id', human_survey_id)
+            else:
+                # it should not be possible to get here, unless someone is
+                # posting data to the page using a different interface
+                self.clear_cookie('human_survey_id')
+                return
 
         next_page_number = page_number + 1
 
-        form_data = surveys[page_number]()
-        form_data.process(data=self.request.arguments)
-        r_server.hset(human_survey_id, page_number, dumps(form_data.data))
+        if page_number >= 0:
+            form_data = surveys[page_number]()
+            form_data.process(data=self.request.arguments)
+            r_server.hset(human_survey_id, page_number, dumps(form_data.data))
 
         # if this is not the last page, render the next page
         if next_page_number < len(surveys):
@@ -83,10 +73,9 @@ class HumanSurveyHandler(BaseHandler):
             self.render('human_survey.html', the_form=the_form,
                         skid=self.current_user, TITLE=title,
                         supplemental_map=supplemental_map,
-                        page_number=next_page_number)
+                        page_number=next_page_number,
+                        progress=int(100.0*(page_number+2)/len(group_order)))
         else:
             # TODO: insert into database
             self.clear_cookie('human_survey_id')
-            self.clear_cookie('human_survey_page_number')
-            self.render('portal.html', msg="hopefully success",
-                        skid=self.current_user)
+            # TODO: redirect to portal or something
