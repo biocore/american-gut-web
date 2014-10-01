@@ -19,7 +19,7 @@ from future.utils import viewitems
 def _write_file_dict(basefolder, name, outdict):
     with open(join(basefolder, "%s.txt" % name), 'w') as f:
         f.write("VARIABLE\tTEXT\n")
-        for variable, name in viewitems(outdict):
+        for variable, name in sorted(viewitems(outdict)):
             f.write("%s\t%s\n" % (variable, name))
 
 
