@@ -994,6 +994,14 @@ _HUMAN_SURVEY = {
     'SUPPLEMENTAL_OPEN_COMMENT': 'Please write anything else about yourself that you think could affect your personal microorganisms.'
 }
 
+_SURVEY_MAIN = {
+    'TITLE': 'Survey',
+    'ONCE_YOU_START': 'Once you start this survey, you must complete it. Your answers will <strong>not</strong> be saved unless you complete the entire survey. It is <strong>very important</strong> to start your food diary before you start the survey. There are a number of FREE online dietary tools out there - we recommend <a href="http://www.fitday.com/" target="_blank" class="help">FitDay</a> and <a href="http://caloriecount.about.com/" class="help">Calorie Count</a>. Note we will be asking questions about your carb, protein, fat, alcohol, and fiber intake, (as a percentage of your total intake) as well as some info on types of food. So, use a tool that allows you to enter as much detail as possible.',
+    'TIME_COMMITMENT': 'We anticipate that participant time commitment for completing the questionnaire online will take no more than <strong>45 minutes</strong>; and completing the food diary should take no more than 10 minutes/day.',
+    'TYPES_OF_QUESTIONS': 'You will be asked questions about your general personal information (name, age, sex, height, weight, ethnicity, place of birth, and current ZIP code). We will ask if you recently moved and where you moved from. We will ask questions about general diet information (including whether you follow a special diet, if you have food allergies, whether you have cultural or religious food restrictions). Other questions address whether you have pets and the type of contact you have with these pets and your relationship to other people in this study.  There is a section on health information including a history of allergies/asthma, if you suffer from migraines and if you have a history of irritable bowel disease.',
+    'YOU_MAY_DECLINE': 'You may decline to answer any question by not selecting an answer.'
+}
+
 # Actual text locale
 text_locale = {
     '404.html': _404,
@@ -1016,5 +1024,6 @@ text_locale = {
     'map.html': _MAP,
     'human_survey.html': _HUMAN_SURVEY,
     'register_user.html': _REGISTER_USER,
-    'chage_pass_verify.html': _CHANGE_PASS_VERIFY
-    }
+    'chage_pass_verify.html': _CHANGE_PASS_VERIFY,
+    'survey_main.html': _SURVEY_MAIN
+}
