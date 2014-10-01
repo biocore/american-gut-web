@@ -28,6 +28,7 @@ handler #}
 
 <table>
     <form action='/authed/human_survey/' id="human_survey" method="POST">
+    <input type="hidden" name="page_number" value="{{page_number}}">
     {% for form_item in the_form %}
         {% set kwargs = {} %}
         {% if form_item.id in supplemental_map %}

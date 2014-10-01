@@ -45,8 +45,6 @@ class HumanSurveyHandler(BaseHandler):
         page_number = 0
         human_survey_id = str(uuid4())
         self.set_secure_cookie('human_survey_id', human_survey_id)
-        self.set_secure_cookie('human_survey_page_number',
-                               str(page_number))
 
         # TODO: populate the next form page from database values, if they
         # exist
@@ -54,30 +52,25 @@ class HumanSurveyHandler(BaseHandler):
         title = tl[group_order[page_number]+'_TITLE']
         self.render('human_survey.html', the_form=the_form,
                     TITLE=title, skid=self.current_user,
-                    supplemental_map=supplemental_map)
+                    supplemental_map=supplemental_map,
+                    page_number=page_number)
 
     @authenticated
     def post(self):
         human_survey_id = self.get_secure_cookie('human_survey_id')
-        page_number = self.get_secure_cookie(
-            'human_survey_page_number')
+        page_number = int(self.get_argument('page_number'))
 
-        if human_survey_id is None or page_number is None:
+        if human_survey_id is None:
             # it should not be possible to get here, unless someone is posting
             # data to the page using a different interface
             self.clear_cookie('human_survey_id')
-            self.clear_cookie('human_survey_page_number')
             return
-
-        # if we were able to get the cookie, it will come back as str, so need
-        # to cast to int
-        page_number = int(page_number)
 
         next_page_number = page_number + 1
 
         form_data = surveys[page_number]()
         form_data.process(data=self.request.arguments)
-        r_server.rpush(human_survey_id, dumps(form_data.data))
+        r_server.hset(human_survey_id, page_number, dumps(form_data.data))
 
         # if this is not the last page, render the next page
         if next_page_number < len(surveys):
@@ -89,7 +82,8 @@ class HumanSurveyHandler(BaseHandler):
             title = tl[group_order[next_page_number]+'_TITLE']
             self.render('human_survey.html', the_form=the_form,
                         skid=self.current_user, TITLE=title,
-                        supplemental_map=supplemental_map)
+                        supplemental_map=supplemental_map,
+                        page_number=next_page_number)
         else:
             # TODO: insert into database
             self.clear_cookie('human_survey_id')
