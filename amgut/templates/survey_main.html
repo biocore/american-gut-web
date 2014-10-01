@@ -1,15 +1,17 @@
 {% extends sitebase.html %}
 {% block content %}
-<h2>Survey</h2>
+{% from amgut import text_locale %}
+{% set tl = text_locale['survey_main.html'] %}
+<h2>{% raw tl['TITLE'] %}</h2>
 <table>
     <tr>
         <td width="10%"></td>
         <td>
             <div class="lefta">
-                <p>Once you start this survey, you must complete it. Your answers will <strong>not</strong> be saved unless you complete the entire survey. It is <strong>very important</strong> to start your food diary before you start the survey. There are a number of FREE online dietary tools out there – we recommend <a href="http://www.fitday.com/" target="_blank" class="help">FitDay</a> and <a href="http://caloriecount.about.com/" class="help">Calorie Count</a>. Note we will be asking questions about your carb, protein, fat, alcohol, and fiber intake, (as a percentage of your total intake) as well as some info on types of food. So, use a tool that allows you to enter as much detail as possible.</p>
-                <p>We anticipate that participant time commitment for completing the questionnaire online will take no more than <strong>45 minutes</strong>; and completing the food diary should take no more than 10 minutes/day.</p>
-                <p>You will be asked questions about your general personal information (name, age, sex, height, weight, ethnicity, place of birth current ZIP code). We will ask if you recently moved and where you moved from. We will ask questions about general diet information (including whether you follow a special diet, if you have food allergies, whether you have cultural or religious food restrictions). Other questions address whether you have pets and the type of contact you have with these pets and your relationship to other people in this study.  There is a section on health information including a history of allergies/asthma, if you suffer from migraines and if you have a history of irritable bowel disease.</p>
-                <p><h4>You may decline to answer any question by not selecting an answer.</h4></p>
+                <p>{% raw tl['ONCE_YOU_START'] %}</p>
+                <p>{% raw tl['TIME_COMMITMENT'] %}</p>
+                <p>{% raw tl['TYPES_OF_QUESTIONS'] %}</p>
+                <p><h4>{% raw tl['YOU_MAY_DECLINE'] %}</h4></p>
             </div>
         </td>
         <td width="10%"></td>
