@@ -309,7 +309,26 @@ _ADD_SAMPLE = {
     'SITE_SAMPLED': 'Site Sampled',
 }
 
-_REGISTER_USER = {}
+_REGISTER_USER = {
+    'ADDRESS': "Address",
+    'CITY': "City",
+    'COUNTRY': "Country",
+    'EMAIL': "Email",
+    'ENTER_ADDRESS': "Please enter your address",
+    'ENTER_CITY': "Please enter your city",
+    'ENTER_COUNTRY': "Please enter your country",
+    'ENTER_EMAIL': "Please enter your email",
+    'ENTER_NAME': "Please enter your name",
+    'ENTER_STATE': "Please enter your state",
+    'ENTER_ZIP': "Please enter your postcode",
+    'NAME': "Name",
+    'REQUIRED_EMAIL': "You must supply a valid email",
+    'REQUIRED_ZIP': "Your postcode must consist of at least 6 characters",
+    'STATE': "State",
+    'SUBMIT': "Submit My Information",
+    'ZIP': "Postcode",
+}
+
 _ADDENDUM = {
     'ABUNDANT': "Abundant Microbes",
     'AG_POPULATION': "The American Gut Population",
