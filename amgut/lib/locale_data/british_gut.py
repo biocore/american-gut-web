@@ -116,7 +116,13 @@ _SAMPLE_OVERVIEW = {}
 _NEW_PARTICIPANT_OVERVIEW = {}
 _INTERNATIONAL = {}
 _NEW_PARTICIPANT = {}
-_MAP = {}
+_MAP = {
+    'MAP_TITLE': "Map Key",
+    'MAP_KIT': "Kit Verified",
+    'MAP_PARTICIPANT': "Participant",
+    'MAP_SAMPLE': "Sample(s) Logged",
+}
+
 _FORGOT_PASSWORD = {
     'EMAIL_FAILED': '<p>There was a problem sending you the password reset code. Please contact us directly at <a href="mailto:info@americangut.org" target="_blank">info@americangut.org</a>.</p><p>Email contained: </p>',
     'EMAIL_RESET_PASSWORD': "You will receive an email shortly with instructions to reset your password. Please check your email because you need to reset your password within two hours.",
