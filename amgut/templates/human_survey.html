@@ -14,8 +14,11 @@ function toggle_div(div_id, form_item_id, indices) {
 
 $(document).ready(function() {
     $("div[id^=supp_]").hide();
-});
 
+    $( "#progressbar" ).progressbar({
+      value: {{ progress }}
+    });
+});
 </script>
 {% end %}
 {% block content %}
@@ -55,5 +58,9 @@ handler #}
     </tr>
     </form>
 </table>
+<br />
+<div id="progressbar"></div>
+<br />
+<br />
 
 {% end %}
