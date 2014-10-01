@@ -21,7 +21,9 @@ group_order = ['GENERAL_DIET', 'GENERAL', 'LIFESTYLE_HYGIENE', 'HEALTH',
 
 question_idx = re.compile('([0-9]+)')
 for text_key, values in viewitems(text_locale['human_survey.html']):
-    if text_key.startswith('SUPPLEMENT') or text_key.startswith('PERSONAL'):
+    if (text_key.startswith('SUPPLEMENT')
+            or text_key.startswith('PERSONAL')
+            or text_key.endswith('TITLE')):
         continue
 
     idx = int(question_idx.search(text_key).group(1))
