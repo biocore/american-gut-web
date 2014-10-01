@@ -295,7 +295,15 @@ _ERROR = {
     'ERROR_CONTACT': 'Please copy the following into an email and send this information, along with the url you were trying to access, to <a href="mailto:info@americangut.org">info@americangut.org</a>'
 }
 
-_RETREIVE_KITID = {}
+_RETREIVE_KITID = {
+    'EMAIL_CANTSEND': "Mail can be sent only from microbio.me domain.",
+    'EMAIL_EXCEPTION': 'There was a problem sending you the kit ID. Please contact us directly at <a href="mailto:%(HELP_EMAIL)s">%(HELP_EMAIL)s</a>.' % media_locale,
+    'EMAIL_PROMPT': "Email:",
+    'EMAIL_SUCCESS': "Your kit ID has been emailed to you. Please check your email.",
+    'ENTER_EMAIL': "Please Enter Your Email",
+    'SEND_EMAIL': "Send Kit ID Email",
+    'UNKNOWN_EMAIL': "This email address is not in our system        ",
+}
 
 _ADD_SAMPLE = {
     'DATE': 'Date',
