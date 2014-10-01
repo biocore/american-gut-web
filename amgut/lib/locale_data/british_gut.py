@@ -262,7 +262,21 @@ _ADD_SAMPLE_OVERIVIEW = {
     'ADD_SAMPLE_TITLE_HELP': 'The sample source is the person, animal or environment that the sample you are currently logging came from. If you took the sample from yourself, you should select yourself as the sample source.',
     }
 
-_SAMPLE_OVERVIEW = {}
+_SAMPLE_OVERVIEW = {
+    'BARCODE_RECEIVED': "Sample %(barcode)s. This sample has been received by the sequencing center!",
+    'DATA_VIS_TITLE': "Data Visualisation",
+    'DISPLAY_BARCODE': "Sample %(barcode)s",
+    'REMOVE_BARCODE': "Remove barcode %(barcode)s",
+    'RESULTS_PDF_LINK': "Click this link to visualise sample %(barcode)s in the context of other microbiomes!",
+    'SAMPLE_DATE': "Sample Date",
+    'SAMPLE_NOTES': "Notes",
+    'SAMPLE_NOT_PROCESSED': "This sample has not yet been processed. Please check back later.",
+    'SAMPLE_SITE': "Sample Site",
+    'SAMPLE_STATUS': "Sample Status",
+    'SAMPLE_TIME': "Sample Time",
+    'TAXA_SUM_TITLE': "Taxa Summary",
+    'VIEW_TAXA_SUMMARY': "View Taxa Summary",
+}
 
 _NEW_PARTICIPANT_OVERVIEW = {
     'ADD_NEW': "Add a New Human Sample Source",
