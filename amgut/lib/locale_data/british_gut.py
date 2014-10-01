@@ -110,8 +110,21 @@ _NEW_PARTICIPANT_OVERVIEW = {}
 _INTERNATIONAL = {}
 _NEW_PARTICIPANT = {}
 _MAP = {}
-_FORGOT_PASSWORD = {}
-_ERROR = {}
+_FORGOT_PASSWORD = {
+    'EMAIL_FAILED': '<p>There was a problem sending you the password reset code. Please contact us directly at <a href="mailto:info@americangut.org" target="_blank">info@americangut.org</a>.</p><p>Email contained: </p>',
+    'EMAIL_RESET_PASSWORD': "You will receive an email shortly with instructions to reset your password. Please check your email because you need to reset your password within two hours.",
+    'KIT_ID': "Kit ID:",
+    'ENTER_ID_EMAIL': "Enter your Kit ID and email",
+    'NO_RECORD': '<p style="color:red;">This information does not match our records</p><p>Please email <a href="mailto:info@americangut.org">directly</a> for further assistance<p>',
+    'SEND_EMAIL': "Send email",
+    'EMAIL': "E-mail"
+}
+
+_ERROR = {
+    'ERROR_OCCURED': "AN ERROR HAS OCCURED!",
+    'ERROR_CONTACT': 'Please copy the following into an email and send this information, along with the url you were trying to access, to <a href="mailto:info@americangut.org">info@americangut.org</a>'
+}
+
 _RETREIVE_KITID = {}
 
 _ADD_SAMPLE = {
