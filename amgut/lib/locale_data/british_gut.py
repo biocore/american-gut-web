@@ -11,9 +11,6 @@ from __future__ import division
 
 
 # Any media specific localizations
-media_locale = {'LOGO': '/static/img/british_gut_logo.jpg',
-                'PROJECT_TITLE': 'British Gut Project'}
-
 media_locale = {
     'ADDENDUM_CERT_ABUNDANT_MICROBES': "/static/img/Michael_Pollan_mod-13.png",
     'ADDENDUM_CERT_BARCHART': "/static/img/Michael_Pollan_mod-11.png",
@@ -41,7 +38,7 @@ media_locale = {
     'FAVICON': "/static/img/favicon.ico",
     'FUNDRAZR_URL': "https://fundrazr.com/campaigns/4Tqx5",
     'HELP_EMAIL': "info@britishgut.org",
-    'LOGO': "/static/img/ag_logo.jpg",
+    'LOGO': '/static/img/british_gut_logo.jpg',
     'LOG_SAMPLE_OPTS': "/static/img/log_sample_options.png",
     'NAV_ADDENDUM': "How do I interpret my results?",
     'NAV_ADD_ANIMAL': "Add Animal Source",
@@ -291,7 +288,6 @@ _NEW_PARTICIPANT_OVERVIEW = {
 }
 
 _INTERNATIONAL = {}
-_NEW_PARTICIPANT = {}
 _MAP = {
     'MAP_TITLE': "Map Key",
     'MAP_KIT': "Kit Verified",
@@ -476,7 +472,7 @@ _PORTAL = {
     'LOG_SAMPLE_HEADER_1': "Logging Samples",
     'LOG_SAMPLE_TAB': "Log a Sample",
     'LOG_SAMPLE_TEXT_1': "Please write the sample site, date, and time on the sampling tube.",
-    'LOG_SAMPLE_TEXT_2': "After writing the information on the sampling tube tube, <a href="/authed/add_sample_overview/">log the sample</a> in our system.",
+    'LOG_SAMPLE_TEXT_2': 'After writing the information on the sampling tube tube, <a href="/authed/add_sample_overview/">log the sample</a> in our system.',
     'MAILING_HEADER_1': "Mailing samples",
     'MAILING_TEXT_1': "Once you have added a <a href=\"#\" onclick=\"selectTab('source')\">sample source, completed the relevant survey</a> (if applicable), <a href=\"#\" onclick=\"selectTab('sample')\">taken</a> and <a href=\"#\" onclick=\"selectTab('log')\">logged your samples</a>, you should then mail the samples back to us.",
     'MAILING_TEXT_2': "Wrap the sample tube in absorbent tissue, such as facial tissue or paper towels, and mail it back as soon as possible. The absorbent tissue will help to keep the relative humidity within the package low.",
