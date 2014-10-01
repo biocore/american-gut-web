@@ -99,7 +99,19 @@ _MAP = {}
 _FORGOT_PASSWORD = {}
 _ERROR = {}
 _RETREIVE_KITID = {}
-_ADD_SAMPLE = {}
+
+_ADD_SAMPLE = {
+    'DATE': 'Date',
+    'DATE_EXAMPLE': 'mm/dd/yyyy (Example: May 7th, 2013 is 05/07/2013)',
+    'TIME': 'Time',
+    'NEW_SAMPLE_DESCRIPTION_1': 'Choose the barcode from your kit that corresponds to the sample you are logging.',
+    'NOTES': 'Additional Notes (optional)',
+    'NEW_SAMPLE_DESCRIPTION_2': 'It is very important that the sample barcode matches <strong>exactly</strong> for downstream analysis steps.',
+    'NEW_SAMPLE_TITLE': 'Log a new sample for',
+    'TIME_EXAMPLE': 'hh:mm AM/PM (Example: 04:35 PM)',
+    'SITE_SAMPLED': 'Site Sampled',
+}
+
 _REGISTER_USER = {}
 _ADDENDUM = {}
 _PORTAL = {}
