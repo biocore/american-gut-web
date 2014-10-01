@@ -226,7 +226,12 @@ _FAQ = {
     'WHY_TWO_SWABS_ANS_2': "<P>Each tube is used for <strong>one sample</strong>. The tube has two swabs in it because one is a backup in case the DNA does not amplify on the first swab.</p><p>Here's a video of Rob Knight talking about swab handling:</p><iframe src='http://player.vimeo.com/video/62393487' width=''500'' height=''281'' frameborder=''0'' webkitallowfullscreen='' mozallowfullscreen='' allowfullscreen=''></iframe>"
 }
 
-_TAXA_SUMMARY = {}
+_TAXA_SUMMARY = {
+    'DOWNLOAD_LINK': "Download the table",
+    'PERCENTAGES_NOTE': "Note: The percentages listed represent the relative abundance of each taxon. This summary is based off of normalised data. Because of limitations in the way the samples are processed, we cannot reliably obtain species level resolution. As such, the data shown are collapsed at the genus level.",
+    'RESOLUTION_NOTE': "Note: Where there are blanks in the table below, the taxonomy could not be resolved in finer detail."
+}
+
 _HELP_REQUEST = {
     'FIRST_NAME': "First name",
     'LAST_NAME': "Last name",
