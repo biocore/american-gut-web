@@ -83,7 +83,14 @@ _FAQ = {
 }
 
 _TAXA_SUMMARY = {}
-_HELP_REQUEST = {}
+_HELP_REQUEST = {
+    'FIRST_NAME': "First name",
+    'LAST_NAME': "Last name",
+    'PROBLEM_PROMPT': "Enter information related to your problem",
+    'CONTACT_HEADER': "Contact the British Gut",
+    'RESPONSE_TIMING': "We will send a response to the email address you supply within 24 hours.",
+    'EMAIL_ADDRESS': "Email address        ",
+}
 _DB_ERROR = {
     'HEADER': "Oops! There seems to be a database error.",
     'MESSAGE': 'Please help us to debug by emailing us at <a href="mailto:%(help_email)s">%(help_email)s</a> and tell us exactly what happend before you got this error.',
