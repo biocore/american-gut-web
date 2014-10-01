@@ -994,8 +994,6 @@ _HUMAN_SURVEY = {
     'SUPPLEMENTAL_OPEN_COMMENT': 'Please write anything else about yourself that you think could affect your personal microorganisms.'
 }
 
-
-
 # Actual text locale
 text_locale = {
     '404.html': _404,
