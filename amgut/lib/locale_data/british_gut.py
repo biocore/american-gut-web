@@ -84,7 +84,12 @@ _FAQ = {
 
 _TAXA_SUMMARY = {}
 _HELP_REQUEST = {}
-_DB_ERROR = {}
+_DB_ERROR = {
+    'HEADER': "Oops! There seems to be a database error.",
+    'MESSAGE': 'Please help us to debug by emailing us at <a href="mailto:%(help_email)s">%(help_email)s</a> and tell us exactly what happend before you got this error.',
+    'SIGNOFF': "Thanks, <br /> The American Gut Team",
+}
+
 _404 = {
     'HELP_TEXT': 'Click <a href="mailto:info@americangut.org">HERE</a> to email us about the issue. Please include the URL you were trying to access:',
     'MAIN_WARNING': '404: Page not found!'
