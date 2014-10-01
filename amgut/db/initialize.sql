@@ -1,0 +1,1 @@
+-- Initializes the database with some controlled data
