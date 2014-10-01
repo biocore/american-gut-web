@@ -590,6 +590,11 @@ _FREQUENCY_WEEK_CHOICES = (_NO_RESPONSE_CHOICE,
                            'Occasionally (1-2 times/week)',
                            'Regularly (3-5 times/week)',
                            'Daily')
+_DIAGNOSIS_CHOICE = (_NO_RESPONSE_CHOICE,
+                     'I do not have this condition',
+                     'Diagnosed by a medical professional (doctor, physician assistant)',
+                     'Diagnosed by an alternative medicine practitioner',
+                     'Self-diagnosed')
 
 # sourced from 12-0582_-_american_gut_questionnaire_amended_09012014__irb_appd_09.19.14
 _HUMAN_SURVEY = {
@@ -865,37 +870,68 @@ _HUMAN_SURVEY = {
                                    'A mixture of breast milk and formula',
                                    'Not sure'),
 
-    'HEALTH_QUESTION_51': 'Have you been diagnosed with any of the following conditions (check all that apply)?',
-    'HEALTH_QUESTION_51_CHOICES': (_NO_RESPONSE_CHOICE,
-                                   'I choose not to answer',
-                                   'I do not have any of the conditions listed below',
-                                   'ADD/ADHD',
-                                   'Alzheimer\'s Disease/Dementia',
-                                   'Asthma, Cystic Fibrosis or Lung Disease',
-                                   'Autism or Autism Spectrum Disorder',
-                                   'Autoimmune disease (i.e. Lupus, RA, MS, Hashimoto\'s thyroiditis), not including IBD (irritable bowel disease) or type I diabetes',
-                                   'Candida or fungal overgrowth in the gut',
-                                   'Clostridium difficile (C. diff) infection',
-                                   'Coronary artery Disease, heart disease, heart attack, stroke',
-                                   'Depression, bipolar disorder or schizophrenia',
-                                   'Diabetes',
-                                   'Epilepsy or seizure disorder',
-                                   'Irritable Bowel Syndrome (IBS)',
-                                   'Inflammatory Bowel Disease (IBD)',
-                                   'Migraines',
-                                   'Kidney Disease',
-                                   'Liver Disease',
-                                   'Phenylketonuria',
-                                   'Small Intestinal Bacterial Overgrowth (SIBO)',
-                                   'Skin Condition',
-                                   'Thyroid Disease',
-                                   'Other'),
+    'HEALTH_QUESTION_51.03': 'Have you ever been diagnosed with ADD/ADHD?',
+    'HEALTH_QUESTION_51.03_CHOICES': _DIAGNOSIS_CHOICE,
 
-    'HEALTH_QUESTION_52': 'For the conditions you checked in question 51, was the condition',
-    'HEALTH_QUESTION_52_CHOICES': (_NO_RESPONSE_CHOICE,
-                                   'Diagnosed by a medical professional (doctor, physician assistant)',
-                                   'Diagnosed by an alternative medicine practitioner',
-                                   'Self-diagnosed'),
+    'HEALTH_QUESTION_51.04': 'Have you ever been diagnosed with Alzheimer\'s Disease/Dementia?',
+    'HEALTH_QUESTION_51.04_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.05': 'Have you ever been diagnosed with Asthma, Cystic Fibrosis or Lung Disease?',
+    'HEALTH_QUESTION_51.05_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.06': 'Have you ever been diagnosed with Autism or Autism Spectrum Disorder?',
+    'HEALTH_QUESTION_51.06_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.07': 'Have you ever been diagnosed with Autoimmune disease (i.e. Lupus, RA, MS, Hashimoto\'s thyroiditis), not including IBD (irritable bowel disease) or type I diabetes?',
+    'HEALTH_QUESTION_51.07_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.08': 'Have you ever been diagnosed with Candida or fungal overgrowth in the gut?',
+    'HEALTH_QUESTION_51.08_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.09': 'Have you ever been diagnosed with Clostridium difficile (C. diff) infection?',
+    'HEALTH_QUESTION_51.09_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.10': 'Have you ever been diagnosed with coronary artery disease, heart disease, heart attack, stroke?',
+    'HEALTH_QUESTION_51.10_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.11': 'Have you ever been diagnosed with depression, bipolar disorder or schizophrenia?',
+    'HEALTH_QUESTION_51.11_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.12': 'Have you ever been diagnosed with diabetes?',
+    'HEALTH_QUESTION_51.12_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.13': 'Have you ever been diagnosed with epilepsy or seizure disorder?',
+    'HEALTH_QUESTION_51.13_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.14': 'Have you ever been diagnosed with irritable bowel syndrome (IBS)?',
+    'HEALTH_QUESTION_51.14_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.15': 'Have you ever been diagnosed with inflammatory bowel disease (IBD)?',
+    'HEALTH_QUESTION_51.15_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.16': 'Have you ever been diagnosed with migraines?',
+    'HEALTH_QUESTION_51.16_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.17': 'Have you ever been diagnosed with kidney disease?',
+    'HEALTH_QUESTION_51.17_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.18': 'Have you ever been diagnosed with liver disease?',
+    'HEALTH_QUESTION_51.18_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.19': 'Have you ever been diagnosed with phenylketonuria?',
+    'HEALTH_QUESTION_51.19_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.20': 'Have you ever been diagnosed with small intestinal bacterial overgrowth (SIBO)?',
+    'HEALTH_QUESTION_51.20_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.21': 'Have you ever been diagnosed with skin Condition?',
+    'HEALTH_QUESTION_51.21_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.22': 'Have you ever been diagnosed with thyroid Disease?',
+    'HEALTH_QUESTION_51.22_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.23': 'Have you ever been diagnosed with any other relevant condition?',
+    'HEALTH_QUESTION_51.23_CHOICES': _DIAGNOSIS_CHOICE,
 
     'HEALTH_QUESTION_53': 'Are you willing to be contacted to answer additional questions about the conditions listed above?',
     'HEALTH_QUESTION_53_CHOICES': _YES_NO_CHOICES,
