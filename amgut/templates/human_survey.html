@@ -1,0 +1,22 @@
+{% extends sitebase.html %}
+{% block content %}
+{% from amgut import text_locale %}
+{% from amgut.lib import 
+{% set tl = amgut['human_survey.html'] %}
+
+{# Note that TITLE is linked to a locale, but is set from the human_survey
+handler #}
+<h1>{{ TITLE }}</h1>
+
+<table>
+    <form action='/human_survey/' id="human_survey" method="POST">
+    {% for form_item in the_form %}
+        <tr>
+            <td>{% raw tl[form_item.label()] %}</td>
+            <td>{% raw form_item() %}</td>
+        </tr>
+    {% end %}
+    </form>
+</table>
+
+{% end %}
