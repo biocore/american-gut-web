@@ -1,11 +1,23 @@
 import re
+from collections import defaultdict
 from future.utils import viewitems
 from amgut import text_locale
 
-question_map = {}  # {idx: actual question} or {int: str}
-responses_map = {}  # {idx: possible choices} or {int: tuple}
-key_map = {}  # {idx: key of question} or {int: str}
-question_group = {}  # {idx: question group} or {int : str}
+# {idx: actual question} or {int: str}
+question_map = {}
+
+# {idx: possible choices} or {int: tuple}
+responses_map = {}
+
+# {idx: key of question} or {int: str}
+key_map = {}
+
+# {question group: idx} or {str: list of int}
+question_group = defaultdict(list)
+
+# the question group order according to the approved questionnaire
+group_order = ['GENERAL_DIET', 'GENERAL', 'LIFESTYLE_HYGIENE', 'HEALTH',
+               'DETAILED_DIET']
 
 question_idx = re.compile('([0-9]+)')
 for text_key, values in viewitems(text_locale['human_survey.html']):
@@ -19,7 +31,7 @@ for text_key, values in viewitems(text_locale['human_survey.html']):
         question_map[idx] = values
         key_map[idx] = text_key
         group = text_key.split('_QUESTION_', 1)[0]
-        question_group[idx] = group
+        question_group[group].append(idx)
 
 # some responses trigger supplemental questions. This structure provides an
 # association between the question, what responses trigger, and what ID is
