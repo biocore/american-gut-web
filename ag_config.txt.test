@@ -1,0 +1,49 @@
+# WARNING!!!! DO NOT MODIFY THIS FILE
+# IF YOU NEED TO PROVIDE YOUR OWN CONFIGURATION, COPY THIS FILE AND EDIT THE COPY
+
+# ------------------------------ Main settings --------------------------------
+
+[main]
+
+# Change to FALSE in a production system
+TEST_ENVIRONMENT = TRUE
+
+# Path to the base directory where the data files are going to be stored
+BASE_DATA_DIR = /tmp/
+
+#What project this is going to be using for translations
+locale = american_gut
+
+#The full name of the project, for template purposes
+name = American Gut Project
+
+#The shorthand name of hte project, for template purposes. May be the same as the full name
+shorthand = American Gut
+
+
+# ----------------------------- Postgres settings -----------------------------
+
+[postgres]
+
+# The user name to connect to the database
+USER = postgres
+
+#The password of the user. Uncomment to set.
+PASSWORD = 
+
+# The database to connect to
+DATABASE = ag
+
+# The host where the database lives on
+HOST = localhost
+
+# The port to connect to the database
+PORT = 5432
+
+# ----------------------------- Test settings -----------------------------
+
+[test]
+
+#data for tests
+GOODPASSWORD = newpass
+BADPASSWORD = oldpass
