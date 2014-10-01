@@ -227,7 +227,20 @@ _ADDENDUM = {
 }
 
 _PORTAL = {}
-_CHANGE_PASS_VERIFY = {}
+_CHANGE_PASS_VERIFY = {
+    'CONFIRM_PASSWORD': "Confirm Password",
+    'SUCCESS': "Your password has been changed",
+    'TITLE': "Please enter new password",
+    'NEW_PASSWORD': "New Password",
+    'HELP_NEW_PASSWORD': "The new password you would like to use to log in from now on.",
+    'NO_EMAIL_3': "This is a courtesy email to confirm that you have changed your password for your kit with ID %(kitid)s If you did not request this change, please email us immediately at %(help_email)s.",
+    'NO_EMAIL_2': "We attempted to email the message below:",
+    'NO_EMAIL_1': "Could not send Email",
+    'BUTTON_TEXT': "Change Password",
+    'HELP_CONFIRM_PASSWORD': "Repeat your New Password again, exactly as before. We ask you to repeat it here so that you don't accidentally change your password to something you did not intend.",
+    'NO_VALID_CODE': 'Your password change code is not valid. If you wish to change your password please <a href="/forgot_password/">start over</a>',
+}
+
 _SURVEY_MAIN = {}
 
 # Actual text locale
