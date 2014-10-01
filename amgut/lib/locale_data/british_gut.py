@@ -89,8 +89,17 @@ _404 = {
     'HELP_TEXT': 'Click <a href="mailto:info@americangut.org">HERE</a> to email us about the issue. Please include the URL you were trying to access:',
     'MAIN_WARNING': '404: Page not found!'
 }
+
 _PARTICIPANT_OVERVIEW = {}
-_ADD_SAMPLE_OVERIVIEW = {}
+_ADD_SAMPLE_OVERIVIEW = {
+    'ENVIRONMENTAL': 'Environmental',
+    'ADD_SAMPLE_3': 'on the main page when you log in.',
+    'ADD_SAMPLE_2': 'Step 2',
+    'ADD_SAMPLE_1': 'If you don\'t see the sample source you want here, you need to add it. You can do this in ',
+    'ADD_SAMPLE_TITLE': 'Choose your sample source ',
+    'ADD_SAMPLE_TITLE_HELP': 'The sample source is the person, animal or environment that the sample you are currently logging came from. If you took the sample from yourself, you should select yourself as the sample source.',
+    }
+
 _SAMPLE_OVERVIEW = {}
 _NEW_PARTICIPANT_OVERVIEW = {}
 _INTERNATIONAL = {}
