@@ -257,7 +257,14 @@ _ADD_SAMPLE_OVERIVIEW = {
     }
 
 _SAMPLE_OVERVIEW = {}
-_NEW_PARTICIPANT_OVERVIEW = {}
+
+_NEW_PARTICIPANT_OVERVIEW = {
+    'ADD_NEW': "Add a New Human Sample Source",
+    'CONTINUE': "Continue",
+    'EXPLANATION': "You have entered the add human source workflow. During this workflow you will add a human source that represents whoever is being sampled. You be asked for consent to join the project and then asked survey questions.",
+    'ONCE_ADDED': "Once you have added a human source, you will then see the name of that source in the left menu, and you will also have an option for adding a sample to that source. When you click that, you will be able to select the appropriate barcode and add sample metadata."
+}
+
 _INTERNATIONAL = {}
 _NEW_PARTICIPANT = {}
 _MAP = {
