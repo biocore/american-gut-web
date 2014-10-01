@@ -6,6 +6,7 @@ from tornado.escape import json_encode
 from amgut.util import AG_DATA_ACCESS
 from amgut.lib.mail import send_email
 from amgut.handlers.base_handlers import BaseHandler
+from amgut.lib.locale_data.american_gut import media_locale
 
 # login code modified from https://gist.github.com/guillaumevincent/4771570
 
@@ -85,7 +86,8 @@ class AuthRegisterHandoutHandler(BaseHandler):
         except:
             result = ("There was a problem sending your email. Please "
                       "contact us directly at "
-                      "<a href='mailto:info@americangut.org'>info@americangut.org</a>")
+                      "<a href='mailto:%(help_email)s'>%(help_email)s</a>" %
+                      {'help_email': media_locale['HELP_EMAIL']})
 
             self.render('help_request.html', skid=skid, result=result)
 

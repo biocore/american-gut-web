@@ -1,6 +1,7 @@
 from amgut.lib.mail import send_email
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.util import AG_DATA_ACCESS
+from amgut.lib.locale_data.american_gut import media_locale
 
 
 class KitIDHandler(BaseHandler):
@@ -18,8 +19,9 @@ class KitIDHandler(BaseHandler):
                            'receiving this email because you requested your '
                            'Kit ID from the American Gut web page If you did '
                            'not request your Kit ID please email '
-                           'info@americangut.org Thank you,\n The American '
-                           'Gut Team\n' % ", ".join(kitids))
+                           '%s Thank you,\n The American '
+                           'Gut Team\n' % (", ".join(kitids),
+                                           media_locale["HELP_EMAIL"]))
                 try:
                     send_email(MESSAGE, 'American Gut Kit ID', email)
                     self.render('retrieve_kitid.html', message='',
