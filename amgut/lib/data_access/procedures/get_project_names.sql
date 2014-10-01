@@ -1,7 +1,5 @@
 SET client_encoding TO 'UTF8';
 
-\set ON_ERROR_STOP ON
-
 
 CREATE OR REPLACE FUNCTION get_project_names ( 
 proj_names_ refcursor

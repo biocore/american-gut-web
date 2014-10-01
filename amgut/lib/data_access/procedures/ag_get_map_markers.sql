@@ -1,7 +1,5 @@
 SET client_encoding TO 'UTF8';
 
-\set ON_ERROR_STOP ON
-
 
 CREATE OR REPLACE FUNCTION ag_get_map_markers (
     results_ in refcursor
