@@ -604,6 +604,7 @@ _HUMAN_SURVEY = {
     'PERSONAL_PROMPT_ZIP': 'Current ZIP code:',
 
     # General diet information
+    'GENERAL_DIET_TITLE': 'General Diet Information',
     'GENERAL_DIET_QUESTION_0': 'How would you classify your diet?',
     'GENERAL_DIET_QUESTION_0_CHOICES': (_NO_RESPONSE_CHOICE,
                                         'Omnivore',
@@ -663,6 +664,7 @@ _HUMAN_SURVEY = {
                                          'Not sure'),
 
     # General information
+    'GENERAL_TITLE': 'General Information',
     'GENERAL_QUESTION_13': 'What is your race/ethnicity?',
     'GENERAL_QUESTION_13_CHOICES': (_NO_RESPONSE_CHOICE,
                                     'Caucasian',
@@ -724,6 +726,7 @@ _HUMAN_SURVEY = {
                                     'Graduate or Professional degree'),
 
     # General lifestyle and hygiene information
+    'LIFESTYLE_HYGIENE_TITLE': 'General Lifestyle and Hygiene Information',
     'LIFESTYLE_HYGIENE_QUESTION_23': 'How often do you exercise?',
     'LIFESTYLE_HYGIENE_QUESTION_23_CHOICES': _FREQUENCY_MONTH_CHOICES,
 
@@ -783,6 +786,7 @@ _HUMAN_SURVEY = {
     'LIFESTYLE_HYGIENE_QUESTION_35_CHOICES': _YES_NO_CHOICES,
 
     # General health information
+    'HEALTH_TITLE': 'General Health Information',
     'HEALTH_QUESTION_36': 'How many times do you have a bowel movement in an average day?',
     'HEALTH_QUESTION_36_CHOICES': (_NO_RESPONSE_CHOICE,
                                    'Less than one',
@@ -908,6 +912,7 @@ _HUMAN_SURVEY = {
                                    'Sun'),
 
     # Detailed Dietary information
+    'DETAILED_DIET_TITLE': 'Detailed Dietary information',
     'DETAILED_DIET_QUESTION_56': 'Are you an infant who receives most of their nutrition from breast milk or formula, or an adult who receives most (more than 75% of daily calories) of their nutrition from adult nutritional shakes (i.e. Ensure)?',
     'DETAILED_DIET_QUESTION_56_CHOICES': (_NO_RESPONSE_CHOICE,
                                           'Yes',
