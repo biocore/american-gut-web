@@ -16,6 +16,7 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 import click
 
 from amgut.lib.config_manager import AMGUT_CONFIG
+from amgut.lib.util import LAYOUT_FP, INITIALIZE_FP, POPULATE_FP
 
 
 def _check_db_exists(db, cursor):
@@ -35,7 +36,7 @@ def _check_db_exists(db, cursor):
 
 @click.command()
 def create_test_db():
-    r""""""
+    r"""Creates the american gut test database"""
     if not AMGUT_CONFIG.test_environment:
         raise ValueError("The configuration file in use is not set up for a "
                          "test environment")
@@ -72,21 +73,18 @@ def create_test_db():
             cur.execute(f.read())
 
     print("Building SQL layout")
-    layout_fp = join(dirname(abspath(__file__)), "ag.sql")
-    with open(layout_fp) as f:
+    with open(LAYOUT_FP) as f:
         cur.execute(f.read())
 
     # The following lines are commented out because the initialize.sql and
     # populate_test.sql files are empty, so psycopg2 fails. Once this files
     # have data, those lines should be executed
     print("Initializing the test database")
-    # initialize_fp = join(dirname(abspath(__file__)), "initialize.sql")
-    # with open(initialize_fp) as f:
+    # with open(INITIALIZE_FP) as f:
     #     cur.execute(f.read)
 
     print("Initializing the test database")
-    # populate_fp = join(dirname(abspath(__file__)), "populate_test.sql")
-    # with open(populate_fp) as f:
+    # with open(POPULATE_FP) as f:
     #     cur.execute(f.read)
 
     conn.commit()

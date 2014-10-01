@@ -32,7 +32,7 @@ USER = postgres
 PASSWORD = 
 
 # The database to connect to
-DATABASE = ag
+DATABASE = ag_test
 
 # The host where the database lives on
 HOST = localhost
