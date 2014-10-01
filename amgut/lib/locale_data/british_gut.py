@@ -15,4 +15,8 @@ text_locale = {}
 
 # Any media specific localizations
 media_locale = {'LOGO': '/static/img/british_gut_logo.jpg',
-                'PROJECT_TITLE': 'British Gut Project'}
+                'LATITUDE': 54.5,
+                'LONGITUDE': -3.5,
+                'ZOOM': 6,
+                'PROJECT_TITLE': 'British Gut Project',
+                'PROJECT_SHORTHAND': 'British Gut'}
