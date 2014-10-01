@@ -246,7 +246,13 @@ _404 = {
     'MAIN_WARNING': '404: Page not found!'
 }
 
-_PARTICIPANT_OVERVIEW = {}
+_PARTICIPANT_OVERVIEW = {
+    'COMPLETED_CONSENT': "Completed consent",
+    'COMPLETED_SURVEY': "Completed survey",
+    'OVERVIEW_FOR_PARTICPANT': "Overview for participant",
+    'SAMPLES_ASSIGNED': "Samples assigned        ",
+}
+
 _ADD_SAMPLE_OVERIVIEW = {
     'ENVIRONMENTAL': 'Environmental',
     'ADD_SAMPLE_3': 'on the main page when you log in.',
