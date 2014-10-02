@@ -12,6 +12,9 @@ from __future__ import division
 
 # Any media specific localizations
 media_locale = {
+    'LATITUDE': 54.5,
+    'LONGITUDE': -3.5,
+    'ZOOM': 6,
     'ADDENDUM_CERT_ABUNDANT_MICROBES': "/static/img/Michael_Pollan_mod-13.png",
     'ADDENDUM_CERT_BARCHART': "/static/img/Michael_Pollan_mod-11.png",
     'ADDENDUM_CERT_BARCHART_LEGEND': "/static/img/Michael_Pollan_mod-12.png",
