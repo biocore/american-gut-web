@@ -13,6 +13,7 @@ from amgut.lib.config_manager import AMGUT_CONFIG
 # Any media specific localizations
 media_locale = {
     'LOGO': '/static/img/ag_logo.jpg',
+    'ANALYTICS_ID': 'UA-55353353-1',
     'LATITUDE': 39.83,
     'LONGITUDE': -99.89,
     'ZOOM': 4,

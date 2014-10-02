@@ -12,6 +12,7 @@ from __future__ import division
 
 # Any media specific localizations
 media_locale = {
+    'ANALYTICS_ID': 'UA-55353353-1',
     'LATITUDE': 54.5,
     'LONGITUDE': -3.5,
     'ZOOM': 6,
