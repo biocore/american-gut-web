@@ -83,7 +83,9 @@ function toggleSection(section_name)
                         <ul>
                             <li><a href="/faq/">{% raw media_locale['NAV_FAQ'] %}</a></li>
                             <li><a href="/static/img/full_instructions.pdf" target="_blank">{% raw media_locale['NAV_KIT_INSTRUCTIONS'] %}</a></li>
-                            <li class="last"><a href="/international_shipping/">{% raw media_locale['NAV_INTERNATIONAL'] %}</a></li>
+                            {% if 'NAV_INTERNATIONAL' in media_locale %}
+                                <li class="last"><a href="/international_shipping/">{% raw media_locale['NAV_INTERNATIONAL'] %}</a></li>
+                            {% end %}
                         </ul>
                     </li>
                 </ul>
