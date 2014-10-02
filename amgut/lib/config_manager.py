@@ -13,7 +13,16 @@ from functools import partial
 from future import standard_library
 with standard_library.hooks():
     from configparser import (ConfigParser, NoOptionError,
-                              MissingSectionHeaderError)
+                              Error as ConfigParser_Error)
+
+
+class MissingConfigSection(ConfigParser_Error):
+    """Exception when the config file is missing a required section"""
+    def __init__(self, section):
+        super(MissingConfigSection, self).__init__('Missing section(s): %r' %
+                                                   (section,))
+        self.section = section
+        self.args = (section,)
 
 
 class ConfigurationManager(object):
@@ -68,7 +77,8 @@ class ConfigurationManager(object):
                                                    '../ag_config.txt')
 
         if not isfile(conf_fp):
-            raise IOError("The configuration file %s is not an existing file")
+            raise IOError("The configuration file '%s' is not an "
+                          "existing file" % conf_fp)
 
         # Parse the configuration file
         config = ConfigParser()
@@ -76,9 +86,10 @@ class ConfigurationManager(object):
             config.readfp(conf_file)
 
         _expected_sections = {'main', 'postgres', 'test', 'redis'}
-        if set(config.sections()) != _expected_sections:
-            missing = _expected_sections - set(config.sections())
-            raise MissingSectionHeaderError("Missing: %r" % missing)
+
+        missing = _expected_sections - set(config.sections())
+        if missing:
+            raise MissingConfigSection(', '.join(missing))
 
         self._get_main(config)
         self._get_postgres(config)
