@@ -28,6 +28,8 @@ class SQLConnectionHandler(object):
         else:
             self._connection = con
 
+        self.execute('set search_path to ag, public')
+
     def __del__(self):
         self._connection.close()
 
