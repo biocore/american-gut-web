@@ -1176,5 +1176,6 @@ text_locale = {
     'human_survey.html': _HUMAN_SURVEY,
     'register_user.html': _REGISTER_USER,
     'chage_pass_verify.html': _CHANGE_PASS_VERIFY,
-    'survey_main.html': _SURVEY_MAIN
+    'survey_main.html': _SURVEY_MAIN,
+    'animal_survey.html': _ANIMAL_SURVEY
 }
