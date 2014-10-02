@@ -1,4 +1,5 @@
-from wtforms import Form, SelectField, SelectMultipleField, widgets
+from wtforms import (Form, SelectField, SelectMultipleField, widgets,
+                     TextAreaField)
 from tornado.web import authenticated
 from future.utils import viewitems
 from natsort import natsorted
@@ -44,7 +45,17 @@ def make_human_survey_class(group):
     return type('HumanSurvey', (Form,), attrs)
 
 
+def make_supplemental_forms():
+    forms = {}
+    for key in tl:
+        if key.startswith('SUPPLEMENTAL'):
+            attrs = {key: TextAreaField(key)}
+            forms[key] = type('SupplementalForm', (Form,), attrs)
+    return forms
+
+
 surveys = [make_human_survey_class(group) for group in group_order]
+supplementals = make_supplemental_forms()
 
 
 class HumanSurveyHandler(BaseHandler):
@@ -78,9 +89,12 @@ class HumanSurveyHandler(BaseHandler):
             # exist
             the_form = surveys[next_page_number]()
             title = tl[group_order[next_page_number]+'_TITLE']
+
+            supplemental_instances = {k: s() for k, s in supplementals.items()}
             self.render('human_survey.html', the_form=the_form,
                         skid=self.current_user, TITLE=title,
                         supplemental_map=supplemental_map,
+                        supplementals=supplemental_instances,
                         page_number=next_page_number,
                         progress=int(100.0*(page_number+2)/len(group_order)))
         else:
