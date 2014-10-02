@@ -3,7 +3,8 @@ from tornado.web import authenticated
 from future.utils import viewitems
 from natsort import natsorted
 from json import loads, dumps
-from uuid import uuid4
+import os
+import binascii
 
 from amgut.util import AG_DATA_ACCESS
 from amgut.handlers.base_handlers import BaseHandler
@@ -55,7 +56,8 @@ class HumanSurveyHandler(BaseHandler):
 
         if human_survey_id is None:
             if page_number == -1:
-                human_survey_id = str(uuid4())
+                # http://wyattbaldwin.com/2014/01/09/generating-random-tokens-in-python/
+                human_survey_id = binascii.hexlify(os.urandom(8))
                 self.set_secure_cookie('human_survey_id', human_survey_id)
             else:
                 # it should not be possible to get here, unless someone is
@@ -85,5 +87,9 @@ class HumanSurveyHandler(BaseHandler):
                         progress=int(100.0*(page_number+2)/len(group_order)))
         else:
             # TODO: insert into database
-            self.clear_cookie('human_survey_id')
+            # TODO: store in the database a connection between human_survey_id and this specific participant
             # TODO: redirect to portal or something
+
+            # note: human_survey_id is used on the subsequent render
+            self.render('human_survey_completed.html', skid=self.current_user)
+
