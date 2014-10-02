@@ -47,6 +47,7 @@ setup(name='American Gut participant UI',
                     'amgut.lib.data_access': [],
                     'amgut.handlers': []},
       extras_require={'test': ["nose >= 0.10.1", "pep8"]},
-      install_requires=['psycopg2', 'tornado==3.1.1', 'WTForms==2.0.1'],
+      install_requires=['psycopg2', 'tornado==3.1.1', 'WTForms==2.0.1',
+                        'redis'],
       classifiers=classifiers
       )
