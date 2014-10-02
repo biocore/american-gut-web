@@ -7,6 +7,16 @@
 <head>
     <meta charset="utf-8">
     <title>{% raw media_locale['PROJECT_TITLE'] %}</title>
+    <script>
+      //google analytics code
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', '{{media_locale["ANALYTICS_ID"]}}', 'auto');
+      ga('send', 'pageview');
+    </script>
     <script src="/static/vendor/js/jquery-1.11.1.min.js"></script>
     <script src="/static/vendor/js/jquery-ui-1.10.1.custom.min.js"></script>
     <script src="/static/vendor/js/jquery.ui.timepicker.js"></script>
