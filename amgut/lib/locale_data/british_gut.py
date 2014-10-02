@@ -52,7 +52,6 @@ media_locale = {
     'NAV_FORGOT_PASSWORD': "I forgot my password",
     'NAV_HOME': "Home",
     'NAV_HUMAN_SAMPLES': "Human Samples",
-    #'NAV_INTERNATIONAL': "International Shipping",
     'NAV_JOIN_PROJECT': "Join The Project",
     'NAV_KIT_INSTRUCTIONS': "Kit Instructions",
     'NAV_LOGOUT': "Log out",
