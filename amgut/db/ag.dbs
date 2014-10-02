@@ -20730,6 +20730,9 @@ AS $function$xpath_exists$function$
 				<column name="ag_login_id" />
 				<column name="participant_name" />
 			</index>
+			<index name="pk_ag_human_survey" unique="UNIQUE" >
+				<column name="participant_name" />
+			</index>
 			<fk name="fk_ag_hum_surv_to_ag_login" to_schema="public" to_table="ag_login" >
 				<fk_column name="ag_login_id" pk="ag_login_id" />
 			</fk>
@@ -20786,7 +20789,7 @@ AS $function$xpath_exists$function$
 				<defo>uuid_generate_v4()</defo>
 			</column>
 			<column name="ag_kit_id" type="uuid" length="2147483647" jt="1111" />
-			<column name="barcode" type="varchar" length="50" jt="12" mandatory="y" />
+			<column name="barcode" type="varchar" jt="12" mandatory="y" />
 			<column name="sample_barcode_file" type="varchar" length="500" jt="12" />
 			<column name="sample_barcode_file_md5" type="varchar" length="50" jt="12" />
 			<column name="site_sampled" type="varchar" length="200" jt="12" />
@@ -20812,6 +20815,12 @@ AS $function$xpath_exists$function$
 			<index name="ix_ag_kit_bc_kit" unique="NORMAL" >
 				<column name="ag_kit_id" />
 			</index>
+			<fk name="fk_ag_kit_barcodes" to_schema="public" to_table="ag_kit" >
+				<fk_column name="ag_kit_id" pk="ag_kit_id" />
+			</fk>
+			<fk name="fk_ag_kit_barcodes_0" to_schema="public" to_table="barcode" >
+				<fk_column name="barcode" pk="barcode" />
+			</fk>
 		</table>
 		<table name="ag_login" >
 			<column name="ag_login_id" type="uuid" length="2147483647" jt="1111" mandatory="y" >
@@ -20842,6 +20851,12 @@ AS $function$xpath_exists$function$
 		<table name="ag_participant_exceptions" >
 			<column name="ag_login_id" type="uuid" length="2147483647" jt="1111" />
 			<column name="participant_name" type="varchar" length="200" jt="12" />
+			<index name="idx_ag_participant_exceptions" unique="NORMAL" >
+				<column name="ag_login_id" />
+			</index>
+			<fk name="fk_ag_participant_exceptions" to_schema="public" to_table="ag_login" >
+				<fk_column name="ag_login_id" pk="ag_login_id" />
+			</fk>
 		</table>
 		<table name="ag_survey_answer" >
 			<column name="ag_login_id" type="uuid" length="2147483647" jt="1111" mandatory="y" />
@@ -20879,6 +20894,12 @@ AS $function$xpath_exists$function$
 			<column name="participant_name" type="varchar" length="200" jt="12" />
 			<column name="item_name" type="varchar" length="50" jt="12" mandatory="y" />
 			<column name="item_value" type="varchar" length="1000" jt="12" />
+			<index name="idx_ag_survey_multiples_backup" unique="NORMAL" >
+				<column name="ag_login_id" />
+			</index>
+			<index name="idx_ag_survey_multiples_backup_0" unique="NORMAL" >
+				<column name="participant_name" />
+			</index>
 		</table>
 		<table name="american_gut_consent" >
 			<column name="participant_name" type="varchar" length="200" jt="12" />
@@ -20891,7 +20912,7 @@ AS $function$xpath_exists$function$
 			<column name="deceased_parent" type="varchar" length="10" jt="12" />
 		</table>
 		<table name="barcode" >
-			<column name="barcode" type="char" length="9" jt="1" mandatory="y" />
+			<column name="barcode" type="varchar" jt="12" mandatory="y" />
 			<column name="create_date_time" type="timestamp" length="29" decimal="6" jt="93" >
 				<defo>(&#039;now&#039;::text)::timestamp without time zone</defo>
 			</column>
@@ -20928,6 +20949,136 @@ AS $function$xpath_exists$function$
 				<column name="controlled_vocab_id" />
 			</index>
 		</table>
+		<table name="human_survey_group_question" >
+			<column name="human_survey_group" type="integer" jt="4" mandatory="y" />
+			<column name="human_survey_question_id" type="bigint" jt="-5" mandatory="y" />
+			<index name="pk_human_survey_group_question" unique="PRIMARY_KEY" >
+				<column name="human_survey_group" />
+				<column name="human_survey_question_id" />
+			</index>
+			<index name="idx_human_survey_group_question" unique="NORMAL" >
+				<column name="human_survey_group" />
+			</index>
+			<index name="idx_human_survey_group_question_0" unique="NORMAL" >
+				<column name="human_survey_question_id" />
+			</index>
+			<fk name="fk_human_survey_group_question" to_schema="public" to_table="human_survey_question_group" >
+				<fk_column name="human_survey_group" pk="group_order" />
+			</fk>
+			<fk name="fk_human_survey_group_question_0" to_schema="public" to_table="human_survey_question" >
+				<fk_column name="human_survey_question_id" pk="human_survey_question_id" />
+			</fk>
+		</table>
+		<table name="human_survey_question" >
+			<comment>Stores the human survey questions</comment>
+			<column name="human_survey_question_id" type="bigserial" jt="-5" mandatory="y" >
+				<comment><![CDATA[The unique question ID]]></comment>
+			</column>
+			<column name="american" type="varchar" jt="12" >
+				<comment><![CDATA[The american english version of the question]]></comment>
+			</column>
+			<column name="british" type="varchar" jt="12" >
+				<comment><![CDATA[The british english version of the question]]></comment>
+			</column>
+			<index name="pk_human_survey_question" unique="PRIMARY_KEY" >
+				<column name="human_survey_question_id" />
+			</index>
+		</table>
+		<table name="human_survey_question_group" >
+			<column name="group_order" type="integer" jt="4" mandatory="y" >
+				<comment><![CDATA[The order that this group will be displayed in]]></comment>
+			</column>
+			<column name="american_name" type="varchar" jt="12" >
+				<comment><![CDATA[The american english version of the question group's name]]></comment>
+			</column>
+			<column name="british_name" type="varchar" jt="12" />
+			<index name="pk_human_survey_question_group" unique="PRIMARY_KEY" >
+				<column name="group_order" />
+			</index>
+		</table>
+		<table name="human_survey_question_response" >
+			<comment>Maps questions to responses</comment>
+			<column name="human_survey_question_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="response" type="varchar" jt="12" mandatory="y" />
+			<index name="pk_question_response" unique="PRIMARY_KEY" >
+				<column name="human_survey_question_id" />
+				<column name="response" />
+			</index>
+			<index name="idx_question_response" unique="UNIQUE" >
+				<column name="response" />
+			</index>
+			<index name="idx_question_response_0" unique="UNIQUE" >
+				<column name="human_survey_question_id" />
+			</index>
+			<fk name="fk_question_response" to_schema="public" to_table="human_survey_response" >
+				<fk_column name="response" pk="american" />
+			</fk>
+			<fk name="fk_question_response_0" to_schema="public" to_table="human_survey_question" >
+				<fk_column name="human_survey_question_id" pk="human_survey_question_id" />
+			</fk>
+		</table>
+		<table name="human_survey_question_response_type" >
+			<comment>Stores the type of response for each question</comment>
+			<column name="human_survey_question_id" type="bigint" jt="-5" />
+			<column name="human_survey_response_type" type="varchar" jt="12" mandatory="y" />
+			<index name="idx_human_survey_response_type" unique="NORMAL" >
+				<column name="human_survey_question_id" />
+			</index>
+			<index name="idx_human_survey_question_response_type" unique="NORMAL" >
+				<column name="human_survey_response_type" />
+			</index>
+			<fk name="fk_human_survey_response_type" to_schema="public" to_table="human_survey_question" >
+				<fk_column name="human_survey_question_id" pk="human_survey_question_id" />
+			</fk>
+			<fk name="fk_human_survey_question_response_type" to_schema="public" to_table="human_survey_response_types" >
+				<fk_column name="human_survey_response_type" pk="human_survey_response_type" />
+			</fk>
+		</table>
+		<table name="human_survey_question_triggered_by" >
+			<comment>Which responses to the question trigger the appearance of this question</comment>
+			<column name="human_survey_question_id" type="bigint" jt="-5" >
+				<comment><![CDATA[The ID of the question that is triggered]]></comment>
+			</column>
+			<column name="trigger_question" type="bigint" jt="-5" >
+				<comment><![CDATA[The question that might trigger the appearance of this question]]></comment>
+			</column>
+			<column name="trigger_response" type="varchar" jt="12" >
+				<comment><![CDATA[The response to the trigger_question that will cause the appearance of this question]]></comment>
+			</column>
+			<index name="idx_human_survey_question_triggered_by" unique="NORMAL" >
+				<column name="human_survey_question_id" />
+			</index>
+			<index name="idx_human_survey_question_triggered_by_0" unique="NORMAL" >
+				<column name="trigger_question" />
+			</index>
+			<index name="idx_human_survey_question_triggered_by_1" unique="NORMAL" >
+				<column name="trigger_response" />
+			</index>
+			<fk name="fk_human_survey_question_triggered_by" to_schema="public" to_table="human_survey_question" >
+				<fk_column name="human_survey_question_id" pk="human_survey_question_id" />
+			</fk>
+			<fk name="fk_human_survey_question_triggered_by_0" to_schema="public" to_table="human_survey_question_response" >
+				<fk_column name="trigger_question" pk="human_survey_question_id" />
+			</fk>
+			<fk name="fk_human_survey_question_triggered_by_1" to_schema="public" to_table="human_survey_question_response" >
+				<fk_column name="trigger_response" pk="response" />
+			</fk>
+		</table>
+		<table name="human_survey_response" >
+			<comment>Stores every possible predictable response on the human survey</comment>
+			<column name="american" type="varchar" jt="12" mandatory="y" />
+			<column name="british" type="varchar" jt="12" />
+			<index name="pk_human_survey_response" unique="PRIMARY_KEY" >
+				<column name="american" />
+			</index>
+		</table>
+		<table name="human_survey_response_types" >
+			<comment>Stores every possible type of response.  The response type will be processed in python to determine how the question is represented in the interface.</comment>
+			<column name="human_survey_response_type" type="varchar" jt="12" mandatory="y" />
+			<index name="pk_human_survey_response_types" unique="PRIMARY_KEY" >
+				<column name="human_survey_response_type" />
+			</index>
+		</table>
 		<table name="plate" >
 			<column name="plate_id" type="bigint" length="19" jt="-5" mandatory="y" />
 			<column name="plate" type="varchar" length="50" jt="12" />
@@ -20938,7 +21089,19 @@ AS $function$xpath_exists$function$
 		</table>
 		<table name="plate_barcode" >
 			<column name="plate_id" type="bigint" length="19" jt="-5" mandatory="y" />
-			<column name="barcode" type="char" length="9" jt="1" mandatory="y" />
+			<column name="barcode" type="varchar" jt="12" mandatory="y" />
+			<index name="idx_plate_barcode" unique="NORMAL" >
+				<column name="barcode" />
+			</index>
+			<index name="idx_plate_barcode_0" unique="NORMAL" >
+				<column name="plate_id" />
+			</index>
+			<fk name="fk_plate_barcode" to_schema="public" to_table="barcode" >
+				<fk_column name="barcode" pk="barcode" />
+			</fk>
+			<fk name="fk_plate_barcode_0" to_schema="public" to_table="plate" >
+				<fk_column name="plate_id" pk="plate_id" />
+			</fk>
 		</table>
 		<table name="project" >
 			<column name="project_id" type="bigint" length="19" jt="-5" mandatory="y" />
@@ -20981,31 +21144,36 @@ AS $function$xpath_exists$function$
 	</schema>
 	<connector name="PostgreSQL" database="PostgreSQL" driver_class="org.postgresql.Driver" driver_jar="postgresql-9.2-1003.jdbc3.jar" host="webdev-kl4.colorado.edu" port="5432" instance="ag" user="americangut" schema_mapping="" />
 	<layout id="Layout2861625" name="public" joined_routing="y" show_relation_columns="y" >
-		<entity schema="public" name="ag_animal_survey" color="f7e2c6" x="990" y="570" />
-		<entity schema="public" name="ag_handout_kits" color="cef7c6" x="285" y="570" />
-		<entity schema="public" name="ag_import_stats_tmp" color="cef7c6" x="525" y="780" />
-		<entity schema="public" name="ag_kit" color="f7e2c6" x="1185" y="975" />
-		<entity schema="public" name="ag_kit_barcodes" color="cef7c6" x="45" y="780" />
-		<entity schema="public" name="ag_login" color="f7e2c6" x="810" y="690" />
-		<entity schema="public" name="ag_map_markers" color="cef7c6" x="120" y="600" />
-		<entity schema="public" name="ag_survey_answer" color="f7e2c6" x="780" y="975" />
-		<entity schema="public" name="ag_survey_multiples" color="f7e2c6" x="990" y="975" />
-		<entity schema="public" name="american_gut_consent" color="c6d9f7" x="1635" y="705" />
-		<entity schema="public" name="barcode" color="c6c6f7" x="1200" y="105" />
-		<entity schema="public" name="barcode_exceptions" color="c6c6f7" x="990" y="210" />
-		<entity schema="public" name="controlled_vocab_values" color="c6c6f7" x="990" y="330" />
-		<entity schema="public" name="controlled_vocabs" color="c6c6f7" x="780" y="330" />
-		<entity schema="public" name="plate" color="c6d9f7" x="1830" y="705" />
-		<entity schema="public" name="plate_barcode" color="c6d9f7" x="1635" y="570" />
-		<entity schema="public" name="project" color="c6d9f7" x="1830" y="570" />
-		<entity schema="public" name="project_barcode" color="c6d9f7" x="1830" y="930" />
-		<entity schema="public" name="zipcodes" color="c6c6f7" x="1200" y="330" />
-		<entity schema="public" name="ag_human_survey" color="c6d9f7" x="1440" y="705" >
-			<column name="ag_login_id" />
-			<column name="participant_name" />
-		</entity>
-		<entity schema="public" name="ag_participant_exceptions" color="cef7c6" x="525" y="645" />
-		<entity schema="public" name="ag_survey_multiples_backup" color="cef7c6" x="285" y="780" />
+		<entity schema="public" name="ag_handout_kits" color="cef7c6" x="210" y="510" />
+		<entity schema="public" name="ag_import_stats_tmp" color="cef7c6" x="450" y="720" />
+		<entity schema="public" name="ag_login" color="f7e2c6" x="735" y="630" />
+		<entity schema="public" name="ag_map_markers" color="cef7c6" x="45" y="540" />
+		<entity schema="public" name="ag_survey_answer" color="f7e2c6" x="705" y="915" />
+		<entity schema="public" name="barcode_exceptions" color="c6c6f7" x="915" y="150" />
+		<entity schema="public" name="controlled_vocab_values" color="c6c6f7" x="915" y="270" />
+		<entity schema="public" name="controlled_vocabs" color="c6c6f7" x="705" y="270" />
+		<entity schema="public" name="zipcodes" color="c6c6f7" x="1125" y="270" />
+		<entity schema="public" name="ag_participant_exceptions" color="f7e2c6" x="1110" y="540" />
+		<entity schema="public" name="american_gut_consent" color="c6d9f7" x="1560" y="645" />
+		<entity schema="public" name="ag_survey_multiples_backup" color="cef7c6" x="210" y="720" />
+		<entity schema="public" name="ag_human_survey" color="c6d9f7" x="1365" y="645" />
+		<entity schema="public" name="ag_animal_survey" color="f7e2c6" x="915" y="510" />
+		<entity schema="public" name="ag_survey_multiples" color="f7e2c6" x="930" y="975" />
+		<entity schema="public" name="ag_kit" color="f7e2c6" x="1140" y="915" />
+		<entity schema="public" name="ag_kit_barcodes" color="f7e2c6" x="765" y="1110" />
+		<entity schema="public" name="barcode" color="c6c6f7" x="1125" y="45" />
+		<entity schema="public" name="plate" color="c6d9f7" x="1560" y="510" />
+		<entity schema="public" name="plate_barcode" color="c6d9f7" x="1365" y="510" />
+		<entity schema="public" name="project_barcode" color="c6d9f7" x="1365" y="390" />
+		<entity schema="public" name="project" color="c6d9f7" x="1560" y="390" />
+		<entity schema="public" name="human_survey_question_group" color="a8c4ef" x="210" y="1590" />
+		<entity schema="public" name="human_survey_group_question" color="ffcccc" x="465" y="1590" />
+		<entity schema="public" name="human_survey_question" color="a8c4ef" x="465" y="1770" />
+		<entity schema="public" name="human_survey_question_response" color="ffcccc" x="720" y="1755" />
+		<entity schema="public" name="human_survey_question_triggered_by" color="a8c4ef" x="690" y="1650" />
+		<entity schema="public" name="human_survey_response" color="a8c4ef" x="720" y="1860" />
+		<entity schema="public" name="human_survey_question_response_type" color="ffcccc" x="720" y="1950" />
+		<entity schema="public" name="human_survey_response_types" color="ffffff" x="1020" y="1965" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by : 
    american_gut_consent</comment>
@@ -21014,14 +21182,14 @@ AS $function$xpath_exists$function$
 			<entity schema="public" name="ag_kit" />
 			<entity schema="public" name="ag_animal_survey" />
 			<entity schema="public" name="ag_login" />
-			<callout x="795" y="510" pointer="SV" />
-		</group>
-		<group name="ag_survey_multiples_backup" color="f2faf0" >
-			<entity schema="public" name="ag_survey_multiples_backup" />
+			<entity schema="public" name="ag_participant_exceptions" />
 			<entity schema="public" name="ag_kit_barcodes" />
+		</group>
+		<group name="disconnected tables" color="f2faf0" >
+			<comment>These tables are not connected to any other table in the database by foreign key or anything else...</comment>
+			<entity schema="public" name="ag_survey_multiples_backup" />
 			<entity schema="public" name="ag_import_stats_tmp" />
 			<entity schema="public" name="ag_handout_kits" />
-			<entity schema="public" name="ag_participant_exceptions" />
 			<entity schema="public" name="ag_map_markers" />
 		</group>
 		<group name="american_gut_consent" color="f0f4fa" >
@@ -21040,7 +21208,16 @@ AS $function$xpath_exists$function$
 			<entity schema="public" name="zipcodes" />
 			<entity schema="public" name="barcode_exceptions" />
 			<entity schema="public" name="barcode" />
-			<callout x="795" y="45" pointer="SV" />
+		</group>
+		<group name="human_survey_questions" color="c4e0f9" >
+			<entity schema="public" name="human_survey_question_response_type" />
+			<entity schema="public" name="human_survey_response" />
+			<entity schema="public" name="human_survey_response_types" />
+			<entity schema="public" name="human_survey_group_question" />
+			<entity schema="public" name="human_survey_question" />
+			<entity schema="public" name="human_survey_question_triggered_by" />
+			<entity schema="public" name="human_survey_question_group" />
+			<entity schema="public" name="human_survey_question_response" />
 		</group>
 	</layout>
 </project>
