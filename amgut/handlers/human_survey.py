@@ -60,7 +60,6 @@ def make_human_survey_class(group):
 
 
 surveys = [make_human_survey_class(group) for group in group_order]
-surveys.insert(0, PersonalPrompts)
 
 class HumanSurveyHandler(BaseHandler):
     @authenticated
@@ -86,10 +85,19 @@ class HumanSurveyHandler(BaseHandler):
             form_data.process(data=self.request.arguments)
             r_server.hset(human_survey_id, page_number, dumps(form_data.data))
 
-        # if this is not the last page, render the next page
-        if next_page_number < len(surveys):
+        progress = int(100.0*(page_number+2)/(len(group_order) + 1))
+        if next_page_number == 0:
             self.set_secure_cookie('human_survey_page_number',
                                    str(next_page_number))
+            the_form = PersonalPrompts()
+            self.render('human_survey.html', the_form=the_form,
+                        skid=self.current_user, TITLE='',
+                        supplemental_map=supplemental_map,
+                        page_number=next_page_number,
+                        progress=progress)
+
+        # if this is not the last page, render the next page
+        elif next_page_number < len(surveys):
             # TODO: populate the next form page from database values, if they
             # exist
             the_form = surveys[next_page_number]()
@@ -98,12 +106,14 @@ class HumanSurveyHandler(BaseHandler):
                         skid=self.current_user, TITLE=title,
                         supplemental_map=supplemental_map,
                         page_number=next_page_number,
-                        progress=int(100.0*(page_number+2)/len(group_order)))
+                        progress=progress)
         else:
             # TODO: insert into database
             # TODO: store in the database a connection between human_survey_id and this specific participant
             # TODO: redirect to portal or something
 
-            # note: human_survey_id is used on the subsequent render
-            self.render('human_survey_completed.html', skid=self.current_user)
+            # only get the cookie if you complete the survey
+            self.clear_cookie('human_survey_id')
+            self.set_secure_cookie('completed_survey_id', human_survey_id)
+            self.redirect('/authed/human_survey_completed/')
 

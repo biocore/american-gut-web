@@ -711,6 +711,14 @@ _CHANGE_PASS_VERIFY = {
     'NO_VALID_CODE': 'Your password change code is not valid. If you wish to change your password please <a href="/forgot_password/">start over</a>',
 }
 
+_HUMAN_SURVEY_COMPLETED = {
+    'COMPLETED_HEADER': 'Congratulations!',
+    'COMPLETED_TEXT': 'You are now an enrolled participant in the %(PROJECT_TITLE)s!' % media_locale,
+    'AVAILABLE_SURVEYS': 'Below are a few additional surveys that you may be interested in completing. There is no requirement to take these surveys, and your decision does not affect your involvement in the project in anyway.',
+    'SURVEY_ASD': '<a href="http://www.anl.gov/contributors/jack-gilbert">Dr. Jack Gilbert</a> is exploring the relationship between gut dysbiosis and Autism Spectrum Disorders, and in conjunction with the American Gut Project, we started an ASD-Cohort study. This additional survey contains questions specific to that cohort, but it is open to any participant to take if they so choose. Please click <a href="%s">here</a> to take the ASD-Cohort survey.',
+    'SURVEY_VIOSCREEN': 'The American Gut Project and its sister projects are very interested in diet. If you\'d like to provide additional detail about your diet, please click <a href="%s">here</a> to take a detailed diet survey (known as an Food Frequency Questionnaire). This is a validated FFQ, and is the one used by the Mayo Clinic.'
+}
+
 _SURVEY_MAIN = {}
 
 # Actual text locale
