@@ -199,7 +199,7 @@ _FAQ = {
     'ONLY_FECAL_RESULTS': "I sent more than one kind of sample, but I only received data for my faecal sample. What happened to my other samples?",
     'ONLY_FECAL_RESULTS_ANS': 'We have only sent out results for faecal samples and are in the process of evaluating how best to present the other sample types. Please see <a href="#faq12">the previous question </a>',
     'PARTICIPATE_WITH_DIAGNOSIS': "Can I participate in the project if I am diagnosed with ...?",
-    'PARTICIPATE_WITH_DIAGNOSIS_ANS': "Of course! The only exclusion criteria are: you must be more than 6 weeks old and cannot be a convicted felon. Please keep in mind that, for legal and ethical reasons, the American Gut Project does not provide medically actionable results or advice.",
+    'PARTICIPATE_WITH_DIAGNOSIS_ANS': "Of course! The only exclusion criteria are: you must be more than 3 months old and cannot be in prison. Please keep in mind that, for legal and ethical reasons, the American Gut Project does not provide medically actionable results or advice.",
     'PASSWORD_DOESNT_WORK': "My password doesn't work!",
     'PASSWORD_DOESNT_WORK_ANS': '<p>The passwords have some ambiguous characters in them, so we have this guide to help you decipher which characters are in your password.</p><p class="ambig">abcdefghijklmnopqrstuvwxyz<br>ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>1234567890<br>1 = the number 1<br>l = the letter l as in Lima<br>0 = the number 0<br>O = the letter O as in Oscar<br>g = the letter g as in golf<br>q = the letter q as in quebec</p>',
     'PASSWORD_SAME_VERIFICATION': "Is my password the same as my verification code?",
