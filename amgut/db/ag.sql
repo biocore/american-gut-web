@@ -25,32 +25,6 @@ CREATE TABLE public.ag_import_stats_tmp (
 	barcode_diff         bigint  
  );
 
-CREATE TABLE public.ag_kit_barcodes ( 
-	ag_kit_barcode_id    uuid DEFAULT uuid_generate_v4() NOT NULL,
-	ag_kit_id            uuid  ,
-	barcode              varchar(50)  NOT NULL,
-	sample_barcode_file  varchar(500)  ,
-	sample_barcode_file_md5 varchar(50)  ,
-	site_sampled         varchar(200)  ,
-	sample_date          varchar(20)  ,
-	participant_name     varchar(200)  ,
-	sample_time          varchar(100)  ,
-	notes                varchar(2000)  ,
-	environment_sampled  varchar(100)  ,
-	moldy                char(1)  ,
-	overloaded           char(1)  ,
-	other                char(1)  ,
-	other_text           varchar(2000)  ,
-	date_of_last_email   varchar(20)  ,
-	results_ready        varchar(1)  ,
-	withdrawn            varchar(1)  ,
-	refunded             varchar(1)  ,
-	CONSTRAINT ag_kit_barcodes_pkey PRIMARY KEY ( ag_kit_barcode_id ),
-	CONSTRAINT ag_kit_barcodes_barcode_key UNIQUE ( barcode ) 
- );
-
-CREATE INDEX ix_ag_kit_bc_kit ON public.ag_kit_barcodes ( ag_kit_id );
-
 CREATE TABLE public.ag_login ( 
 	ag_login_id          uuid DEFAULT uuid_generate_v4() NOT NULL,
 	email                varchar(100)  ,
@@ -77,8 +51,11 @@ CREATE TABLE public.ag_map_markers (
 
 CREATE TABLE public.ag_participant_exceptions ( 
 	ag_login_id          uuid  ,
-	participant_name     varchar(200)  
+	participant_name     varchar(200)  ,
+	CONSTRAINT fk_ag_participant_exceptions FOREIGN KEY ( ag_login_id ) REFERENCES public.ag_login( ag_login_id )    
  );
+
+CREATE INDEX idx_ag_participant_exceptions ON public.ag_participant_exceptions ( ag_login_id );
 
 CREATE TABLE public.ag_survey_answer ( 
 	ag_login_id          uuid  NOT NULL,
@@ -106,6 +83,10 @@ CREATE TABLE public.ag_survey_multiples_backup (
 	item_value           varchar(1000)  
  );
 
+CREATE INDEX idx_ag_survey_multiples_backup ON public.ag_survey_multiples_backup ( ag_login_id );
+
+CREATE INDEX idx_ag_survey_multiples_backup_0 ON public.ag_survey_multiples_backup ( participant_name );
+
 CREATE TABLE public.american_gut_consent ( 
 	participant_name     varchar(200)  ,
 	contact_code         varchar(200)  ,
@@ -118,7 +99,7 @@ CREATE TABLE public.american_gut_consent (
  );
 
 CREATE TABLE public.barcode ( 
-	barcode              char(9)  NOT NULL,
+	barcode              varchar  NOT NULL,
 	create_date_time     timestamp DEFAULT ('now'::text)::timestamp without time zone ,
 	status               varchar(100)  ,
 	scan_date            varchar(20)  ,
@@ -148,8 +129,14 @@ CREATE TABLE public.plate (
 
 CREATE TABLE public.plate_barcode ( 
 	plate_id             bigint  NOT NULL,
-	barcode              char(9)  NOT NULL
+	barcode              varchar  NOT NULL,
+	CONSTRAINT fk_plate_barcode FOREIGN KEY ( barcode ) REFERENCES public.barcode( barcode )    ,
+	CONSTRAINT fk_plate_barcode_0 FOREIGN KEY ( plate_id ) REFERENCES public.plate( plate_id )    
  );
+
+CREATE INDEX idx_plate_barcode ON public.plate_barcode ( barcode );
+
+CREATE INDEX idx_plate_barcode_0 ON public.plate_barcode ( plate_id );
 
 CREATE TABLE public.project ( 
 	project_id           bigint  NOT NULL,
@@ -164,6 +151,55 @@ CREATE TABLE public.project_barcode (
 	CONSTRAINT fk_pb_to_barcode FOREIGN KEY ( barcode ) REFERENCES public.barcode( barcode )    ,
 	CONSTRAINT fk_pb_to_project FOREIGN KEY ( project_id ) REFERENCES public.project( project_id )    
  );
+
+CREATE TABLE public.survey_question ( 
+	survey_question_id   bigserial  NOT NULL,
+	american             varchar  ,
+	british              varchar  ,
+	CONSTRAINT pk_human_survey_question PRIMARY KEY ( survey_question_id )
+ );
+
+COMMENT ON TABLE public.survey_question IS 'Stores the human survey questions';
+
+COMMENT ON COLUMN public.survey_question.survey_question_id IS 'The unique question ID';
+
+COMMENT ON COLUMN public.survey_question.american IS 'The american english version of the question';
+
+COMMENT ON COLUMN public.survey_question.british IS 'The british english version of the question';
+
+CREATE TABLE public.survey_question_group ( 
+	survey_type          varchar  NOT NULL,
+	group_order          integer  NOT NULL,
+	american_name        varchar  ,
+	british_name         varchar  ,
+	CONSTRAINT idx_human_survey_question_group UNIQUE ( american_name ) ,
+	CONSTRAINT idx_human_survey_question_group_0 UNIQUE ( british_name ) ,
+	CONSTRAINT pk_human_survey_question_group PRIMARY KEY ( group_order, survey_type )
+ );
+
+CREATE INDEX idx_human_survey_question_group_1 ON public.survey_question_group ( survey_type );
+
+COMMENT ON COLUMN public.survey_question_group.survey_type IS 'human, animal, etc';
+
+COMMENT ON COLUMN public.survey_question_group.group_order IS 'The order that this group will be displayed in';
+
+COMMENT ON COLUMN public.survey_question_group.american_name IS 'The american english version of the question group`s name';
+
+CREATE TABLE public.survey_response ( 
+	american             varchar  NOT NULL,
+	british              varchar  ,
+	CONSTRAINT pk_human_survey_response PRIMARY KEY ( american ),
+	CONSTRAINT idx_human_survey_response UNIQUE ( british ) 
+ );
+
+COMMENT ON TABLE public.survey_response IS 'Stores every possible predictable response on the human survey';
+
+CREATE TABLE public.survey_response_types ( 
+	survey_response_type varchar  NOT NULL,
+	CONSTRAINT pk_human_survey_response_types PRIMARY KEY ( survey_response_type )
+ );
+
+COMMENT ON TABLE public.survey_response_types IS 'Stores every possible type of response.  The response type will be processed in python to determine how the question is represented in the interface.';
 
 CREATE TABLE public.zipcodes ( 
 	zipcode              varchar(5)  NOT NULL,
@@ -317,6 +353,7 @@ CREATE TABLE public.ag_human_survey (
 	participant_email    varchar(300)  ,
 	participant_name_u   varchar(400)  ,
 	CONSTRAINT ag_human_survey_pkey PRIMARY KEY ( ag_login_id, participant_name ),
+	CONSTRAINT pk_ag_human_survey UNIQUE ( participant_name ) ,
 	CONSTRAINT fk_ag_hum_surv_to_ag_login FOREIGN KEY ( ag_login_id ) REFERENCES public.ag_login( ag_login_id )    
  );
 
@@ -339,6 +376,34 @@ CREATE TABLE public.ag_kit (
 
 CREATE INDEX ix_ag_kit_login ON public.ag_kit ( ag_login_id );
 
+CREATE TABLE public.ag_kit_barcodes ( 
+	ag_kit_barcode_id    uuid DEFAULT uuid_generate_v4() NOT NULL,
+	ag_kit_id            uuid  ,
+	barcode              varchar  NOT NULL,
+	sample_barcode_file  varchar(500)  ,
+	sample_barcode_file_md5 varchar(50)  ,
+	site_sampled         varchar(200)  ,
+	sample_date          varchar(20)  ,
+	participant_name     varchar(200)  ,
+	sample_time          varchar(100)  ,
+	notes                varchar(2000)  ,
+	environment_sampled  varchar(100)  ,
+	moldy                char(1)  ,
+	overloaded           char(1)  ,
+	other                char(1)  ,
+	other_text           varchar(2000)  ,
+	date_of_last_email   varchar(20)  ,
+	results_ready        varchar(1)  ,
+	withdrawn            varchar(1)  ,
+	refunded             varchar(1)  ,
+	CONSTRAINT ag_kit_barcodes_pkey PRIMARY KEY ( ag_kit_barcode_id ),
+	CONSTRAINT ag_kit_barcodes_barcode_key UNIQUE ( barcode ) ,
+	CONSTRAINT fk_ag_kit_barcodes FOREIGN KEY ( ag_kit_id ) REFERENCES public.ag_kit( ag_kit_id )    ,
+	CONSTRAINT fk_ag_kit_barcodes_0 FOREIGN KEY ( barcode ) REFERENCES public.barcode( barcode )    
+ );
+
+CREATE INDEX ix_ag_kit_bc_kit ON public.ag_kit_barcodes ( ag_kit_id );
+
 CREATE TABLE public.controlled_vocab_values ( 
 	vocab_value_id       bigint  NOT NULL,
 	controlled_vocab_id  bigint  NOT NULL,
@@ -348,4 +413,68 @@ CREATE TABLE public.controlled_vocab_values (
 	CONSTRAINT controlled_vocab_values_pkey PRIMARY KEY ( vocab_value_id ),
 	CONSTRAINT fk_cont_vcb_values_cont_vcbs FOREIGN KEY ( controlled_vocab_id ) REFERENCES public.controlled_vocabs( controlled_vocab_id )    
  );
+
+CREATE TABLE public.survey_group_question ( 
+	survey_group         integer  NOT NULL,
+	survey_question_id   bigint  NOT NULL,
+	CONSTRAINT pk_human_survey_group_question PRIMARY KEY ( survey_group, survey_question_id ),
+	CONSTRAINT fk_human_survey_group_question FOREIGN KEY ( survey_group ) REFERENCES public.survey_question_group( group_order )    ,
+	CONSTRAINT fk_human_survey_group_question_0 FOREIGN KEY ( survey_question_id ) REFERENCES public.survey_question( survey_question_id )    
+ );
+
+CREATE INDEX idx_human_survey_group_question ON public.survey_group_question ( survey_group );
+
+CREATE INDEX idx_human_survey_group_question_0 ON public.survey_group_question ( survey_question_id );
+
+CREATE TABLE public.survey_question_response ( 
+	survey_question_id   bigint  NOT NULL,
+	response             varchar  NOT NULL,
+	display_index        serial  ,
+	CONSTRAINT pk_question_response PRIMARY KEY ( survey_question_id, response ),
+	CONSTRAINT idx_question_response UNIQUE ( response ) ,
+	CONSTRAINT idx_question_response_0 UNIQUE ( survey_question_id ) ,
+	CONSTRAINT idx_human_survey_question_response UNIQUE ( display_index ) ,
+	CONSTRAINT fk_question_response FOREIGN KEY ( response ) REFERENCES public.survey_response( american )    ,
+	CONSTRAINT fk_question_response_0 FOREIGN KEY ( survey_question_id ) REFERENCES public.survey_question( survey_question_id )    
+ );
+
+COMMENT ON TABLE public.survey_question_response IS 'Maps questions to responses';
+
+COMMENT ON COLUMN public.survey_question_response.display_index IS 'The display order of this response';
+
+CREATE TABLE public.survey_question_response_type ( 
+	survey_question_id   bigint  ,
+	survey_response_type varchar  NOT NULL,
+	CONSTRAINT fk_human_survey_response_type FOREIGN KEY ( survey_question_id ) REFERENCES public.survey_question( survey_question_id )    ,
+	CONSTRAINT fk_human_survey_question_response_type FOREIGN KEY ( survey_response_type ) REFERENCES public.survey_response_types( survey_response_type )    
+ );
+
+CREATE INDEX idx_human_survey_response_type ON public.survey_question_response_type ( survey_question_id );
+
+CREATE INDEX idx_human_survey_question_response_type ON public.survey_question_response_type ( survey_response_type );
+
+COMMENT ON TABLE public.survey_question_response_type IS 'Stores the type of response for each question';
+
+CREATE TABLE public.survey_question_triggered_by ( 
+	survey_question_id   bigint  ,
+	trigger_question     bigint  ,
+	trigger_response     varchar  ,
+	CONSTRAINT fk_human_survey_question_triggered_by FOREIGN KEY ( survey_question_id ) REFERENCES public.survey_question( survey_question_id )    ,
+	CONSTRAINT fk_human_survey_question_triggered_by_0 FOREIGN KEY ( trigger_question ) REFERENCES public.survey_question_response( survey_question_id )    ,
+	CONSTRAINT fk_human_survey_question_triggered_by_1 FOREIGN KEY ( trigger_response ) REFERENCES public.survey_question_response( response )    
+ );
+
+CREATE INDEX idx_human_survey_question_triggered_by ON public.survey_question_triggered_by ( survey_question_id );
+
+CREATE INDEX idx_human_survey_question_triggered_by_0 ON public.survey_question_triggered_by ( trigger_question );
+
+CREATE INDEX idx_human_survey_question_triggered_by_1 ON public.survey_question_triggered_by ( trigger_response );
+
+COMMENT ON TABLE public.survey_question_triggered_by IS 'Which responses to the question trigger the appearance of this question';
+
+COMMENT ON COLUMN public.survey_question_triggered_by.survey_question_id IS 'The ID of the question that is triggered';
+
+COMMENT ON COLUMN public.survey_question_triggered_by.trigger_question IS 'The question that might trigger the appearance of this question';
+
+COMMENT ON COLUMN public.survey_question_triggered_by.trigger_response IS 'The response to the trigger_question that will cause the appearance of this question';
 
