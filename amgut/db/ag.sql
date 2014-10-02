@@ -1,5 +1,3 @@
-CREATE SCHEMA public;
-
 CREATE TABLE public.ag_handout_kits ( 
 	kit_id               varchar(9)  ,
 	password             varchar(11)  ,

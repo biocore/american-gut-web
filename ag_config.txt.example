@@ -3,34 +3,48 @@
 
 # ------------------------------ Main settings --------------------------------
 [main]
-#The full name of the project, for template purposes
-name = American Gut Project
-
-#The shorthand name of hte project, for template purposes. May be the same as the full name
-shorthand = American Gut
-
-#What project this is going to be using for translations
-LOCALE = american_gut
-
 # Change to FALSE in a production system
 TEST_ENVIRONMENT = TRUE
 
 # Path to the base directory where the data files are going to be stored
-BASE_DATA_DIR = /path/to/base/directory
+BASE_DATA_DIR =
+
+LOCALE = american_gut
+name = American Gut Project
+shorthand = American Gut
 
 # ----------------------------- Postgres settings -----------------------------
 [postgres]
 # The user name to connect to the database
-USER = postgres
+USER =
 
-#The password of the user. Uncomment to set.
-#PASSWORD = 
+#The password of the user.
+PASSWORD =
 
 # The database to connect to
 DATABASE = ag
 
 # The host where the database lives on
-HOST = localhost
+HOST =
 
 # The port to connect to the database
 PORT = 5432
+
+# ----------------------------- Redis settings --------------------------------
+[redis]
+# The host on which redis is running
+HOST =
+
+# The port that redis is running on
+PORT = 6379
+
+# The ID of the redis database
+DB_ID = 0
+
+# ----------------------------- Test settings ---------------------------------
+[test]
+#data for tests 
+GOODPASSWORD =
+
+BADPASSWORD = oldpass
+
