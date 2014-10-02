@@ -662,7 +662,7 @@ _PORTAL = {
     'RESULTS_TEXT_2': "Sequencing and data analysis can take up to 6 months, please be patient! We will let you know as soon as your samples have been sequenced and analyzed.",
     'SAMPLE_SOURCE_HEADER_1': "Sample Source",
     'SAMPLE_SOURCE_TEXT_1': "There are three different sample sources that you can choose from for the %(project)s. The sources are human, animal and environmental. The buttons below will allow you to add a new sample source.",
-    'SAMPLE_SOURCE_TEXT_2': "If you add a <strong>human</strong> source, you will need to have a completed 7 day food diary for that human. If you add a <strong>human</strong> or <strong>animal</strong> source, you will be asked to complete a survey",
+    'SAMPLE_SOURCE_TEXT_2': "If you add a <strong>human</strong> or <strong>animal</strong> source, you will be asked to complete a survey",
     'SAMPLE_SOURCE_TYPE_ANIMAL': "Animal",
     'SAMPLE_SOURCE_TYPE_ENVIRONMENTAL': "Environmental",
     'SAMPLE_SOURCE_TYPE_HUMAN': "Human",
@@ -682,8 +682,7 @@ _PORTAL = {
     'SURVEY_TEXT_1': "If you are taking a human or animal sample, we ask that you complete a survey.",
     'SURVEY_TEXT_2': "The survey will take <strong>30-45 minutes</strong> for a human subject, or <strong>10 minutes</strong> for an animal subject. You <strong>cannot</strong> save in the middle of the survey, so please set aside enough time to complete the entire survey.",
     'SURVEY_TEXT_3': "If you are taking a human sample, the survey includes demographic, lifestyle, medical and diet questions. All survey questions are optional.",
-    'SURVEY_TEXT_4': 'The 7 day food diary is used when answering the human survey, so please be sure to have that ready <strong>before</strong> starting the survey. We strongly recommend using <a href="http://caloriecount.about.com/">CalorieCount</a> to record dietary intake, though you are free to use whatever method you find most convenient. A screenshot of the dietary questions is shown below, <strong>please make sure to use a tool that will allow you to accurately answer these questions</strong>.',
-    'SURVEY_TEXT_5': 'Additionally, <a href="http://titojankowski.com">Tito Jankowski</a> has compiled a <a href="http://titojankowski.com/american-gut-how-to/">comprehensive guide</a> on how to do this if you are a <a href="http://www.myfitnesspal.com">MyFitnessPal</a> user.',
+    'SURVEY_TEXT_4': 'The diet questions do not require a food diary, but please be prepared to answer questions about your eating habits. A screenshot of the dietary questions is shown below.',
     'TAKE_SAMPLE_TAB': "Take a Sample",
     'VERIFICATION_CODE_ERROR': "The kit verification code you entered does not match our records. Please double-check the code you entered. If you continue to experience difficulties, please <a href=/authed/help_request/>contact us</a>.",
     'VERIFICATION_CODE_PROMPT': 'Please enter the verification code sent to your email address <a href="#" class="help" title="If you did not recieve a verification code in your email from %(project_shorthand)s, please check your spam folder. If you still can not find it, contact %(help_email)s">(?)</a>' % {'project_shorthand': AMGUT_CONFIG.project_shorthand, 'help_email': media_locale['HELP_EMAIL']},
@@ -711,6 +710,15 @@ _CHANGE_PASS_VERIFY = {
     'NO_VALID_CODE': 'Your password change code is not valid. If you wish to change your password please <a href="/forgot_password/">start over</a>',
 }
 
+_SURVEY_MAIN = {
+    'TITLE': 'Survey',
+    'ONCE_YOU_START': 'Once you start this survey, you must complete it. Your answers will <strong>not</strong> be saved unless you complete the entire survey.',
+    'TIME_COMMITMENT': 'We anticipate that participant time commitment for completing the questionnaire online will take no more than <strong>45 minutes</strong>.',
+    'TYPES_OF_QUESTIONS': 'You will be asked questions about your general personal information (name, age, sex, height, weight, ethnicity, place of birth, and current ZIP or equivalent code). We will ask if you recently moved and where you moved from. We will ask questions about general diet information (including whether you follow a special diet, if you have food allergies, whether you have cultural or religious food restrictions). Other questions address whether you have pets and the type of contact you have with these pets and your relationship to other people in this study. There is a section on health information including a history of allergies/asthma, if you suffer from migraines and if you have a history of irritable bowel disease.',
+    'YOU_MAY_DECLINE': 'You may decline to answer any question by not selecting an answer.',
+    'OTHER_SURVEYS': 'Following the questionnaire, you will be presented with a few other focused surveys. Those surveys are optional but your responses could help improve our understanding of the microbiome.'
+}
+
 _HUMAN_SURVEY_COMPLETED = {
     'COMPLETED_HEADER': 'Congratulations!',
     'COMPLETED_TEXT': 'You are now an enrolled participant in the %(PROJECT_TITLE)s!' % media_locale,
@@ -718,8 +726,6 @@ _HUMAN_SURVEY_COMPLETED = {
     'SURVEY_ASD': '<a href="http://www.anl.gov/contributors/jack-gilbert">Dr. Jack Gilbert</a> is exploring the relationship between gut dysbiosis and Autism Spectrum Disorders, and in conjunction with the American Gut Project, we started an ASD-Cohort study. This additional survey contains questions specific to that cohort, but it is open to any participant to take if they so choose. Please click <a href="%s">here</a> to take the ASD-Cohort survey.',
     'SURVEY_VIOSCREEN': 'The American Gut Project and its sister projects are very interested in diet. If you\'d like to provide additional detail about your diet, please click <a href="%s">here</a> to take a detailed diet survey (known as an Food Frequency Questionnaire). This is a validated FFQ, and is the one used by the Mayo Clinic.'
 }
-
-_SURVEY_MAIN = {}
 
 # Actual text locale
 text_locale = {
