@@ -90,8 +90,9 @@ class HumanSurveyHandler(BaseHandler):
             self.set_secure_cookie('human_survey_page_number',
                                    str(next_page_number))
             the_form = PersonalPrompts()
+            title = tl['PERSONAL_PROMPT_TITLE']
             self.render('human_survey.html', the_form=the_form,
-                        skid=self.current_user, TITLE='',
+                        skid=self.current_user, TITLE=title,
                         supplemental_map=supplemental_map,
                         page_number=next_page_number,
                         progress=progress)
