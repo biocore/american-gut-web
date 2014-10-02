@@ -10,6 +10,7 @@ from functools import partial
 
 from psycopg2 import connect
 
+from amgut import media_locale
 from amgut.lib.config_manager import AMGUT_CONFIG
 
 
@@ -83,3 +84,20 @@ def ag_test_checker():
                 super(DecoratedClass, self).tearDown()
         return DecoratedClass
     return class_modifier
+
+
+def survey_vioscreen(survey_id):
+    """Return a formatted text block and URL for the external survey"""
+    url = media_locale['SURVEY_VIOSCREEN_URL'] % {'survey_id': survey_id}
+    embedded_text = media_locale['SURVEY_VIOSCREEN']
+    return embedded_text % url
+
+
+def survey_asd(survey_id):
+    """Return a formatted text block and URL for the external survey"""
+    url = media_locale['SURVEY_ASD_URL'] % {'survey_id': survey_id}
+    embedded_text = media_locale['SURVEY_ASD']
+    return embedded_text % url
+
+
+external_surveys = (survey_vioscreen, survey_asd)
