@@ -5,11 +5,15 @@
 #
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
+from json import loads
 from os.path import abspath, join, dirname
 from functools import partial
 
+from future.utils import viewitems
 from psycopg2 import connect
 
+from amgut import r_server
+from amgut.lib.human_survey_supp import question_type, supplemental_map
 from amgut.lib.config_manager import AMGUT_CONFIG
 
 
@@ -83,3 +87,50 @@ def ag_test_checker():
                 super(DecoratedClass, self).tearDown()
         return DecoratedClass
     return class_modifier
+
+def store_survey(human_survey_id):
+    """Store the survey"""
+    class response_director(object):
+        def __init__(self):
+            self._single = {}
+            self._multiple = {}
+            self._text = {}
+
+            self._setters = {'SINGLE': self._single_store,
+                             'MULTIPLE': self._multiple_store,
+                             'TEXT': self._text_store}
+
+        def __setitem__(self, key, value):
+            self._setters[question_type[key]](key, value)
+
+        def _single_store(self, key, value):
+            self._single[key] = value
+
+        def _multiple_store(self, key, value):
+            self._multiple[key] = value
+
+        def _text_store(self, key, value):
+            self._text[key] = value
+
+    data = r_server.hgetall(human_survey_id)
+    to_store = response_director()
+
+    for page in data:
+        page_data = loads(data[page])
+        questions = page_data['questions']
+        supplemental = page_data['supplemental']
+
+        for quest, resps in viewitems(questions):
+            resps = set([int(i) for i in resps])
+
+            if quest in supplemental_map:
+                indices, supp_key = supplemental_map[quest]
+
+                if set(indices).intersection(resps):
+                    to_store[supp_key] = supplemental[supp_key]
+                else:
+                    to_store[supp_key] = None
+
+            to_store[quest] = resps
+
+    # TODO: serialize and dump into the database
