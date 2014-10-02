@@ -70,7 +70,29 @@ media_locale = {
     'ADDENDUM_PCOA_AG_POPULATION': '/static/img/PCoA3.png',
     'PORTAL_DIET_QUESTIONS': '/static/img/diet_questions.png',
     'PORTAL_SHIPPING': '/static/img/shipping.png',
-    'EMAIL_ERROR': "There was a problem sending your email. Please contact us directly at <a href='mailto:%(help_email)s'>%(help_email)s</a>" % {'help_email': HELP_EMAIL}
+    'EMAIL_ERROR': "There was a problem sending your email. Please contact us directly at <a href='mailto:%(help_email)s'>%(help_email)s</a>" % {'help_email': HELP_EMAIL},
+    'EMAIL_SENT': 'Your message has been sent. We will reply shortly',
+    'SHIPPING_ADDRESS': "American Gut Project<br>Knight Lab, JSCBB<br>596 UCB<br>Boulder, CO 80309",
+}
+
+_HANDLERS = {
+    'PARTICIPANT_EXISTS': 'Participant %s already exists!',
+    'SUCCESSFULLY_ADDED': "Successfully added %s!",
+    'AUTH_REGISTER_SUBJECT': "%(project_shorthand)s Verification Code" % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
+    'AUTH_REGISTER_PGP': "\n\nFor the PGP cohort, we are requesting that you collect one sample from each of the following sites:\n\nLeft hand\nRight hand\nForehead\nMouth\nFecal\n\nThis is important to ensure that we have the same types of samples for all PGP participants which, in turn, could be helpful in downstream analysis when looking for relationships between the microbiome and the human genome\n\n.",
+    'AUTH_REGISTER_BODY': "Thank you for registering with the %(project_name)s! Your verification code is:\n\n{0}\n\nYou will need this code to verifiy your kit on the %(project_shorthand)s webstite. To get started, please log into:\n\nhttp://microbio.me/BritishGut\n\nEnter the kit_id and password found inside your kit, verify the contents of your kit, and enter the verification code found in this email.{1}\n\nSincerely,\nThe %(project_shorthand)s Team" % {'project_shorthand': AMGUT_CONFIG.project_shorthand, 'project_name': AMGUT_CONFIG.project_name},
+    'KIT_REG_SUCCESS': 'Kit registered successfully.',
+    'INVALID_KITID': "Invalid Kit ID or Password",
+    'ADD_KIT_ERROR': "Could not add kit to database.  Did you hit the back button while registering and press 'register user' again?",
+    'ADD_BARCODE_ERROR': "Could not add barcode to database. Did you hit the back button while registering and press 'register user' again?",
+    'CHANGE_PASS_BODY': 'This is a courtesy email to confirm that you have changed your password for your kit with ID %s. If you did not request this change, please email us immediately at {0}'.format(media_locale['HELP_EMAIL']),
+    'CHANGE_PASS_SUBJECT': '%(project_shorthand)s Password Reset' % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
+    'RESET_PASS_BODY': 'The password on American Gut Kit ID %s  has been reset please click the link below within two hours\nhttp://microbio.me/americangut/change_pass_verify/?email=%s;kitid=%s;passcode=%s',
+    'MINOR_PARENTAL_BODY': "Thank you for your interest in this study. Because of your status as a minor, we will contact you within 24 hours to verify parent/guardian consent.",
+    'MESSAGE_SENT': "Your message has been sent. We will reply shortly",
+    'KIT_IDS_BODY': 'Your {1} Kit IDs are %s. You are receiving this email because you requested your Kit ID from the {1} web page If you did not request your Kit ID please email {0} Thank you,\n The {1} Team\n'.format(media_locale['HELP_EMAIL'], AMGUT_CONFIG.project_shorthand),
+    'KIT_IDS_SUBJECT': '%(shorthand)s Kit ID' % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
+    'BARCODE_ERROR': "ERROR: No barcode was requested"
 }
 
 # Template specific dicts
@@ -178,7 +200,7 @@ _FAQ = {
     'ANOTHER_COPY_RESULTS': 'Can I get another copy of my results?',
     'NOT_A_BUSINESS': 'We are not a business',
     'WHERE_SEND_SAMPLE_ANS': '<p>This is the shipping address:</p>'
-                                'American Gut Project<br>Knight Lab, JSCBB<br>596 UCB<br>Boulder, CO 80309<p>If you are shipping internationally, please see the <a href="/international_shipping/">international shipping instructions</a>.'
+                              '%(address)s<p>If you are shipping internationally, please see the <a href="/international_shipping/">international shipping instructions</a>.' % {'address': media_locale['SHIPPING_ADDRESS']}
 }
 
 
@@ -404,7 +426,7 @@ _REGISTER_USER = {
 
 _ADDENDUM = {
     'TITLE': 'American Gut Addendum',
-    'INTRO': 'We&apos;d like to note that in general these data allow you to understand how similar or different you are to other people in terms of the bacterial composition of the sample you sent. The information about the microbes is at as fine level of a taxonomic resolution as we were able to achieve with our sequencing methods, and varies for different groups of microbes. Currently, we cannot tell you what it means if you have more or less of a certain bacteria than other people. Gut microbiome research is still new, and we have a lot to learn. Your participation in the American Gut Project will allow us to learn more, and we hope to update you with new findings as they emerge.',
+    'INTRO': 'We\'d like to note that in general these data allow you to understand how similar or different you are to other people in terms of the bacterial composition of the sample you sent. The information about the microbes is at as fine level of a taxonomic resolution as we were able to achieve with our sequencing methods, and varies for different groups of microbes. Currently, we cannot tell you what it means if you have more or less of a certain bacteria than other people. Gut microbiome research is still new, and we have a lot to learn. Your participation in the American Gut Project will allow us to learn more, and we hope to update you with new findings as they emerge.',
     'LEARN_MORE': 'Learn more about your certificate by clicking on a plot or table',
     'MOD01ALT': 'Your American Gut Sample',
     'MOD01bALT': 'Michael Pollan',
@@ -421,7 +443,7 @@ _ADDENDUM = {
     'RESULTS_CAPTION': 'Your certificate is designed to help you determine what was found in your sample, and how you compare to other people. Click on a graph or table to learn more.',
     'SAMPLE_TITLE': 'What\'s in your %(PROJECT_TITLE)s sample?' % media_locale,
     'TAXONOMY': 'Taxonomy',
-    'TAXONOMY_INTRO': 'Taxonomy is a system scientists use to describe all life on the planet. Taxonomy is commonly referred to as an organism&apos;s scientific name. This name allows us to understand how closely related two organisms are to each other. There are seven major levels of taxonomy that go from less specific to more specific. The phylum level represents very broad range of organisms that have <strong>evolved over hundreds of millions of years</strong> whereas the species level represents only a small subset of them that are <strong>much more closely related</strong>. Typically, names at the genus and species levels are written in <em>italics</em> or are <u>underlined</u> (in our tables, they are <em>italicized</em>). For instance, here is the list of taxonomic levels and names for humans and chimpanzees:',
+    'TAXONOMY_INTRO': 'Taxonomy is a system scientists use to describe all life on the planet. Taxonomy is commonly referred to as an organism\'s scientific name. This name allows us to understand how closely related two organisms are to each other. There are seven major levels of taxonomy that go from less specific to more specific. The phylum level represents very broad range of organisms that have <strong>evolved over hundreds of millions of years</strong> whereas the species level represents only a small subset of them that are <strong>much more closely related</strong>. Typically, names at the genus and species levels are written in <em>italics</em> or are <u>underlined</u> (in our tables, they are <em>italicized</em>). For instance, here is the list of taxonomic levels and names for humans and chimpanzees:',
     'HUMAN_TAXONOMY': 'Human',
     'HUMAN_TAXONOMY_KINGDOM': 'Kingdom: Animalia',
     'HUMAN_TAXONOMY_PHYLUM': 'Phylum: Chordata',
@@ -472,7 +494,7 @@ _ADDENDUM = {
     'RARE_TEXT_1': 'This sample included the following rare taxa: Genus <em>Varibaculum</em>, Genus <em>Neisseria</em>, Genus <em>Campylobacter</em>, Unclassified Order ML615J-28.',
     'RARE_TEXT_2': 'This line shows four microbes that you have that are not commonly found in the type of sample you provided. Some other people may have them, but most people do not.',
     'YOUR_COMPARE': 'How do your gut microbes compare to others?',
-    'COMPARE_TEXT_1': 'Here, we present three Principle Coordinates Plots. Each point on these plots represents the bacterial composition of one sample from one person. We take all of the information about the abundances of all the bacteria in each sample and compare them to each other using this type of plot. When two points are very close to each other, it means that the types of bacteria in those two samples are very similar. Points that are farther apart represent samples that are less similar to each other. The axes mean nothing in this context. It doesn&apos;t matter how high or low a point is on the plot. The only thing that matters is how close it is to other points.',
+    'COMPARE_TEXT_1': 'Here, we present three Principle Coordinates Plots. Each point on these plots represents the bacterial composition of one sample from one person. We take all of the information about the abundances of all the bacteria in each sample and compare them to each other using this type of plot. When two points are very close to each other, it means that the types of bacteria in those two samples are very similar. Points that are farther apart represent samples that are less similar to each other. The axes mean nothing in this context. It doesn\'t matter how high or low a point is on the plot. The only thing that matters is how close it is to other points.',
     'COMPARE_TEXT_2': 'The large point represents your sample on each plot. This allows you to see how similar (close to) or different (far from) your sample is from others.',
     'DIFFERENT_BODY_SITES': 'DIfferent Body Sites',
     'DIFFERENT_BODY_SITES_ALT': 'PCoA by body site for AGP and HMP',
@@ -489,7 +511,7 @@ _ADDENDUM = {
     'MAJOR_PHYLA_BACTEROIDETES_HEADER': 'Bacteroidetes',
     'MAJOR_PHYLA_BACTEROIDETES_TEXT': 'A phylum of Gram-negative bacteria, rod-shaped, present in all sorts of environments such as soil, sediments, and fresh and marine waters. Most are saprophytic and involved in carbon cycling. Often abundant in nutrient-rich habitats and so they are a major component of animal guts where they can act as degraders of complex carbohydrates and proteins but also as pathogens. Their representatives are organized within 4 major classes among which the genus <em>Bacteroides</em> in the class of Bacteroidia is the most prevalent and the most studied. Bacteroidetes together with Firmicutes make up the majority of gut bacteria. The ratio of these two types of bacteria (specifically the dominance of Firmicutes over Bacteroidetes) may be linked to obesity.',
     'MAJOR_PHYLA_PROTEOBACTERIA_HEADER': 'Proteobacteria',
-    'MAJOR_PHYLA_PROTEOBACTERIA_TEXT': 'A phylum of Gram-negative bacteria. They are named after a Greek God Proteus to illustrate their variety of forms. They are organized in 6 recognized classes and represent all types of metabolisms ranging from heterotrophic to photosynthetic to chemoautotrophic.  They include many well-known pathogens (e.g., <em>Escherichia</em>, <em>Helicobacter</em>, <em>Salmonella</em>, <em>Vibrio</em>) as well as free-living types that can fix nitrogen (convert nitrogen present in the atmosphere into ammonia, a form of nitrogen available for plants&apos; uptake).',
+    'MAJOR_PHYLA_PROTEOBACTERIA_TEXT': 'A phylum of Gram-negative bacteria. They are named after a Greek God Proteus to illustrate their variety of forms. They are organized in 6 recognized classes and represent all types of metabolisms ranging from heterotrophic to photosynthetic to chemoautotrophic.  They include many well-known pathogens (e.g., <em>Escherichia</em>, <em>Helicobacter</em>, <em>Salmonella</em>, <em>Vibrio</em>) as well as free-living types that can fix nitrogen (convert nitrogen present in the atmosphere into ammonia, a form of nitrogen available for plants\' uptake).',
     'MAJOR_PHYLA_ACTINOBACTERIA_HEADER': 'Actinobacteria',
     'MAJOR_PHYLA_ACTINOBACTERIA_TEXT': 'A phylum of Gram-positive bacteria both terrestrial and aquatic. They are mostly recognized as excellent decomposers of resilient organic compounds such as cellulose or chitin. Although some can be plant and animal pathogens, others are more known as producers of antibiotics (e.g. Streptomyces).  In their body form, many resemble fungi by forming mycelial-like filaments.',
     'MAJOR_PHYLA_VERRUCOMICROBIA_HEADER': 'Verrucomicrobia',
@@ -558,7 +580,7 @@ _PORTAL = {
     'DOMESTIC_HEADER_1': 'Domestic Shipping',
     'DOMESTIC_TEXT_1': 'Shipping within the US should be less than $1.50, but we recommend taking the sample to the post office to get the proper postage. Getting the postage right on the first try is important since samples that spend a long time in transit will likely not produce the highest quality results.',
     'DOMESTIC_TEXT_2': 'This is the shipping address:',
-    'DOMESTIC_TEXT_3': 'American Gut Project<br />Knight Lab, JSCBB<br />596 UCB<br />Boulder, CO 80309',
+    'DOMESTIC_TEXT_3': media_locale['SHIPPING_ADDRESS'],
     'INTERNATIONAL_HEADER_1': 'International Shipping',
     'INTERNATIONAL_TEXT_1': 'In order to comply with amended federal and IATA regulations, we are requesting that international participants return their sample tubes through FedEx International and that international participants follow the additional safely requirements for shipping human swab samples to the United States. Your airway bill must clearly identify the package as containing "human exempt specimens". The samples will additionally need to be packaged within a secondary containment to ensure that they can safely enter the United States.',
     'INTERNATIONAL_TEXT_2': 'For shipment, you will need to use clear tape to secure the sample swabs to the sample tube, then place the sample tube in the provided buff mailing envelope. Then place the buff envelope inside a Tyvek/plastic mailer, <strong>which can be acquired free of charge from FedEx</strong>, when shipping the sample, prior to FedEx shipment.',
@@ -1044,5 +1066,6 @@ text_locale = {
     'human_survey.html': _HUMAN_SURVEY,
     'register_user.html': _REGISTER_USER,
     'chage_pass_verify.html': _CHANGE_PASS_VERIFY,
-    'survey_main.html': _SURVEY_MAIN
+    'survey_main.html': _SURVEY_MAIN,
+    'handlers': _HANDLERS
 }
