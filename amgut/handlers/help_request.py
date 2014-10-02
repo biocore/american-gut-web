@@ -31,7 +31,7 @@ class HelpRequestHandler(BaseHandler):
 
             try:
                 send_email(MESSAGE, SUBJECT, sender=email_address)
-                result = 'Your message has been sent. We will reply shortly'
+                result = media_locale["EMAIL_SENT"]
             except:
                 result = media_locale['EMAIL_ERROR']
 

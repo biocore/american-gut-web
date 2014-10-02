@@ -5,6 +5,7 @@ from tornado.web import authenticated
 
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.lib.config_manager import AMGUT_CONFIG
+from amgut import text_locale
 
 
 class TaxaSummaryHandler(BaseHandler):
@@ -12,8 +13,9 @@ class TaxaSummaryHandler(BaseHandler):
     def get(self, barcode):
         # nothing else to do
         if barcode is None:
+            tl = text_locale['handlers']
             self.render('taxa_summary.html', skid=self.current_user,
-                        loginerror="ERROR: No barcode was requested")
+                        loginerror=tl["BARCODE_ERROR"])
             return
 
         # we need this path to access the filesystem

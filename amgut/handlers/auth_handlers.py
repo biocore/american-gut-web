@@ -6,7 +6,7 @@ from tornado.escape import json_encode
 from amgut.util import AG_DATA_ACCESS
 from amgut.lib.mail import send_email
 from amgut.handlers.base_handlers import BaseHandler
-from amgut import media_locale
+from amgut import media_locale, text_locale
 
 # login code modified from https://gist.github.com/guillaumevincent/4771570
 
@@ -22,6 +22,7 @@ class AuthRegisterHandoutHandler(BaseHandler):
     @authenticated
     def post(self):
         skid = self.current_user
+        tl=text_locale['handlers']
         info = {}
         for info_column in ("email", "participantname", "address", "city",
                             "state", "zip", "country"):
@@ -57,32 +58,18 @@ class AuthRegisterHandoutHandler(BaseHandler):
                 return
 
         # Email the verification code
-        subject = "American Gut Verification Code"
+        subject = tl['AUTH_SUBJECT']
         addendum = ''
         if skid.startswith('PGP_'):
-            addendum = ("\n\nFor the PGP cohort, we are requesting that you "
-                        "collect one sample from each of the following sites:"
-                        "\n\nLeft hand\nRight hand\nForehead\nMouth\nFecal\n\n"
-                        "This is important to ensure that we have the same "
-                        "types of samples for all PGP participants which, in "
-                        "turn, could be helpful in downstream analysis when "
-                        "looking for relationships between the microbiome and "
-                        "the human genome\n\n.")
+            addendum = tl['AUTH_REGISTER_PGP']
 
-        body = ("Thank you for registering with the American Gut Project! Your"
-                " verification code is:\n\n{0}\n\nYou will need this code to "
-                "verifiy your kit on the American Gut webstite. To get "
-                "started, please log into:\n\nhttp://microbio.me/AmericanGut"
-                "\n\nEnter the kit_id and password found inside your kit, "
-                "verify the contents of your kit, and enter the verification "
-                "code found in this email.{1}"
-                "\n\nSincerely,\nThe American Gut Team".format(
-                    kitinfo['kit_verification_code'], addendum))
+        body = tl['AUTH_REGISTER_BODY'].format(
+            kitinfo['kit_verification_code'], addendum)
 
-        result = 'Kit registered successfully.'
+        result = tl['KIT_REG_SUCCESS']
         try:
-            send_email(MESSAGE, subject, recipient=info['email'],
-                       sender='americangut@gmail.com')
+            send_email(body, subject, recipient=info['email'],
+                       sender=media_locale['HELP_EMAIL'])
         except:
             result = media_locale['EMAIL_ERROR']
 
@@ -96,6 +83,7 @@ class AuthLoginHandler(BaseHandler):
     def post(self):
         skid = self.get_argument("skid", "").strip()
         password = self.get_argument("password", "")
+        tl = text_locale['handlers']
         login = AG_DATA_ACCESS.authenticateWebAppUser(skid, password)
         if login:
             # everything good so log in
@@ -110,7 +98,7 @@ class AuthLoginHandler(BaseHandler):
                 self.redirect('/auth/register/')
                 return
             else:
-                msg = "Invalid Kit ID or Password"
+                msg = tl['INVALID_KITID']
                 latlongs_db = AG_DATA_ACCESS.getMapMarkers()
                 self.render("index.html", user=None, loginerror=msg,
                             latlongs_db=latlongs_db)

@@ -1,6 +1,7 @@
 from tornado.web import RequestHandler
 
 from amgut.util import AG_DATA_ACCESS
+from amgut import text_locale
 
 
 class BaseHandler(RequestHandler):
@@ -48,13 +49,10 @@ class NoPageHandler(BaseHandler):
 class DBErrorHandler(BaseHandler):
     def get(self):
         err = self.get_argument('err')
-
+        tl = text_locale['handlers']
         errors = {
-            "regkit": "Could not add kit to database.  Did you hit the back "
-            "button while registering and press 'register user' again?",
-
-            "regbarcode": "Could not add barcode to database. Did you hit the "
-            "back button while registering and press 'register user' again?"
+            "regkit": tl['ADD_KIT_ERROR'],
+            "regbarcode": tl['ADD_BARCODE_ERROR']
         }
         if err not in errors:
             raise ValueError('DB Error not found: %s' % err)
