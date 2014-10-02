@@ -26,7 +26,7 @@
                 <td>{% raw tl['TAXA_SUM_TITLE'] %}</td>
 {% if barcode_txt %}
                 <td>
-                    <form action="/taxa_summaries/{{barcode}}">
+                    <form action="{% raw media_locale['SITEBASE'] %}/taxa_summaries/{{barcode}}">
                         <input type="submit" name="taxa_summary" value="{% raw tl['VIEW_TAXA_SUMMARY'] %}">
                     </form>
                 </td>
@@ -67,7 +67,7 @@
 {% if status != 'Received' %}
             <tr>
                 <td colspan="2">
-                    <form action="/authed/sample_overview/" method="post" id="remove_sample_{{ barcode }}">
+                    <form action="{% raw media_locale['SITEBASE'] %}/authed/sample_overview/" method="post" id="remove_sample_{{ barcode }}">
                         <input type="hidden" name="remove" value="{{ barcode }}">
                         <input type="submit" value="{% raw tl['REMOVE_BARCODE'] %}"/>
                     </form>

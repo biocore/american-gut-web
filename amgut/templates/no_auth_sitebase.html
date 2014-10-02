@@ -85,16 +85,16 @@
         <div class="left menuwrapper">
             <div id="cssmenu">
                 <ul>
-                    <li><a href="/faq/#faq0">{% raw media_locale['NAV_MICROBIOME_101'] %}</a></li>
+                    <li><a href="{% raw media_locale['SITEBASE'] %}/faq/#faq0">{% raw media_locale['NAV_MICROBIOME_101'] %}</a></li>
                     <li><a href="{% raw media_locale['FUNDRAZR_URL'] %}" target="_blank">{% raw media_locale['NAV_JOIN_PROJECT'] %}</a></li>
                     <li><a href="{% raw media_locale['SITEBASE'] %}/static/img/mod1_main.pdf" target="_blank">{% raw media_locale['NAV_PRELIM_RESULTS'] %}</a></li>
                     <li><a href="{% raw media_locale['SITEBASE'] %}/static/img/FAQ_Human_Microbiome.pdf" target="_blank">{% raw media_locale['NAV_MICROBIOME_FAQ'] %}</a></li>
                     <li class="has-sub"><a><span>{% raw media_locale['NAV_PARTICIPANT_RESOURCES'] %}</span></a>
                         <ul>
-                            <li><a href="/faq/">{% raw media_locale['NAV_FAQ'] %}</a></li>
+                            <li><a href="{% raw media_locale['SITEBASE'] %}/faq/">{% raw media_locale['NAV_FAQ'] %}</a></li>
                             <li><a href="{% raw media_locale['SITEBASE'] %}/static/img/full_instructions.pdf" target="_blank">{% raw media_locale['NAV_KIT_INSTRUCTIONS'] %}</a></li>
                             {% if 'NAV_INTERNATIONAL' in media_locale %}
-                                <li class="last"><a href="/international_shipping/">{% raw media_locale['NAV_INTERNATIONAL'] %}</a></li>
+                                <li class="last"><a href="{% raw media_locale['SITEBASE'] %}/international_shipping/">{% raw media_locale['NAV_INTERNATIONAL'] %}</a></li>
                             {% end %}
                         </ul>
                     </li>
@@ -108,13 +108,13 @@
                         <td width="30%"></td>
                         <td width="30%">
                             <div style="color:red">{{loginerror}}</div>
-                            <form method="post" action="/auth/login/">
+                            <form method="post" action="{% raw media_locale['SITEBASE'] %}/auth/login/">
                                 <table width="100%">
                                   <tr><td>Kit ID</td><td><input type="text" id="skid" name="skid"></td></tr>
                                   <tr><td>Password</td><td><input type="password" id="password" name="password"></td></tr>
                                   <tr><td colspan="2"><input type="submit" value="Log In"></tr> 
-                                      <tr><td colspan="2"><a href="/retrieve_kitid/" class="small_link">{% raw media_locale['NAV_FORGOT_KITID'] %}</a></td></tr>
-                                      <tr><td colspan="2"><a href="/forgot_password/" class="small_link">{% raw media_locale['NAV_FORGOT_PASSWORD'] %}</a></td></tr>
+                                      <tr><td colspan="2"><a href="{% raw media_locale['SITEBASE'] %}/retrieve_kitid/" class="small_link">{% raw media_locale['NAV_FORGOT_KITID'] %}</a></td></tr>
+                                      <tr><td colspan="2"><a href="{% raw media_locale['SITEBASE'] %}/forgot_password/" class="small_link">{% raw media_locale['NAV_FORGOT_PASSWORD'] %}</a></td></tr>
                                 </table>
                             </form>
                         </td>

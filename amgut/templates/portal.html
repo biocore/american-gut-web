@@ -42,7 +42,7 @@
             <div class="middle_content centered">
                 <h2>{% raw tl['VERIFICATION_HEADER_2'] %}</h2>
                 <div class="lefta clearfix formdiv" id="verification_div">
-                    <form name="verification_submit" id="verification_submit" method="post" action="/authed/portal/">
+                    <form name="verification_submit" id="verification_submit" method="post" action="{% raw media_locale['SITEBASE'] %}/authed/portal/">
                         <h3>Kit ID: {{ skid }}</h3>
                         <h4>{% raw tl['VERIFICATION_CODE_PROMPT'] % fmt %}</a></h4>
     {% if kit_ver_error %}
@@ -74,8 +74,8 @@
             <p class="portal_blurb">{% raw tl['SAMPLE_SOURCE_TEXT_1'] % fmt %}</p>
             <p class="portal_blurb">{% raw tl['SAMPLE_SOURCE_TEXT_2']%}</p>
             <div id="source_icons">
-                <a href="/authed/new_participant_overview.html"><div class="source_icon"><img src="{% raw media_locale['SITEBASE'] %}/static/img/human.png"><div>{% raw tl['SAMPLE_SOURCE_TYPE_HUMAN'] %}</div></div></a>
-                <a href="/authed/animal_survey.html"><div class="source_icon"><img src="{% raw media_locale['SITEBASE'] %}/static/img/animal.png"><div>{% raw tl['SAMPLE_SOURCE_TYPE_ANIMAL'] %}</div></div></a>
+                <a href="{% raw media_locale['SITEBASE'] %}/authed/new_participant_overview.html"><div class="source_icon"><img src="{% raw media_locale['SITEBASE'] %}/static/img/human.png"><div>{% raw tl['SAMPLE_SOURCE_TYPE_HUMAN'] %}</div></div></a>
+                <a href="{% raw media_locale['SITEBASE'] %}/authed/animal_survey.html"><div class="source_icon"><img src="{% raw media_locale['SITEBASE'] %}/static/img/animal.png"><div>{% raw tl['SAMPLE_SOURCE_TYPE_ANIMAL'] %}</div></div></a>
                 <a href="" onclick="document.forms['add_sample_general'].submit(); return false;"><div class="source_icon"><img src="{% raw media_locale['SITEBASE'] %}/static/img/environmental.png"><div>{% raw tl['SAMPLE_SOURCE_TYPE_ENVIRONMENTAL'] %}</div></div></a>
             </div>
             <br />
@@ -155,7 +155,7 @@
             <ul>
     {% for result in results %}
                 <li>
-                    <form action="/authed/sample_overview/" method="post" id="sample_overview2_{{ result['barcode'] }}">
+                    <form action="{% raw media_locale['SITEBASE'] %}/authed/sample_overview/" method="post" id="sample_overview2_{{ result['barcode'] }}">
                         <input type="hidden" name="barcode" id="barcode" value="{{ result['barcode'] }}"/>
                     </form>
                     <a href="" onclick="document.forms['sample_overview2_{{ result['barcode'] }}'].submit(); return false;">{{ result['barcode'] }} ({{ escape(result['participant_name']) }})</a>

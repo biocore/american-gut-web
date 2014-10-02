@@ -38,19 +38,19 @@
         <div class="left menuwrapper">  <!-- Side Menu -->
             <div id="cssmenu">
                 <ul>
-                    <li class="active"><a href="/authed/portal/"><span>{% raw media_locale['NAV_HOME'] %}</span></a></li>
+                    <li class="active"><a href="{% raw media_locale['SITEBASE'] %}/authed/portal/"><span>{% raw media_locale['NAV_HOME'] %}</span></a></li>
                     <li class="has-sub"><a><span>{% raw media_locale['NAV_PARTICIPANT_RESOURCES'] %}</span></a>
                         <ul>
-                            <li><a href="/faq/#faq0" target="_blank"><span>{% raw media_locale['NAV_MICROBIOME_101'] %}</span></a></li>
-                            <li><a href="/faq/" target="_blank"><span>{% raw media_locale['NAV_FAQ'] %}</span></a></li>
+                            <li><a href="{% raw media_locale['SITEBASE'] %}/faq/#faq0" target="_blank"><span>{% raw media_locale['NAV_MICROBIOME_101'] %}</span></a></li>
+                            <li><a href="{% raw media_locale['SITEBASE'] %}/faq/" target="_blank"><span>{% raw media_locale['NAV_FAQ'] %}</span></a></li>
                             <li><a href="{% raw media_locale['SITEBASE'] %}/static/img/FAQ_Human_Microbiome.pdf" target="_blank"><span>{% raw media_locale['NAV_MICROBIOME_FAQ'] %}</span></a></li>
-                            <li><a href="/authed/addendum/" target="_blank"><span>{% raw media_locale['NAV_ADDENDUM'] %}</span></a></li>
+                            <li><a href="{% raw media_locale['SITEBASE'] %}/authed/addendum/" target="_blank"><span>{% raw media_locale['NAV_ADDENDUM'] %}</span></a></li>
                             <li class="last"><a href="{% raw media_locale['SITEBASE'] %}/static/img/mod1_main.pdf" target="_blank"><span>{% raw media_locale['NAV_PRELIM_RESULTS'] %}</span></a></li>
                         </ul>
                     </li>
-                    <li><a href="/authed/change_password/"><span>{% raw media_locale['NAV_CHANGE_PASSWORD'] %}</span></a></li>
-                    <li><a href="/authed/help_request/"><span>{% raw media_locale['NAV_CONTACT_US'] %}</span></a></li>
-                    <li class="last"><a href="/auth/logout/"><span>{% raw media_locale['NAV_LOGOUT'] %}</span></a></li>
+                    <li><a href="{% raw media_locale['SITEBASE'] %}/authed/change_password/"><span>{% raw media_locale['NAV_CHANGE_PASSWORD'] %}</span></a></li>
+                    <li><a href="{% raw media_locale['SITEBASE'] %}/authed/help_request/"><span>{% raw media_locale['NAV_CONTACT_US'] %}</span></a></li>
+                    <li class="last"><a href="{% raw media_locale['SITEBASE'] %}/auth/logout/"><span>{% raw media_locale['NAV_LOGOUT'] %}</span></a></li>
                 </ul>
             </div>
             <div id="cssmenu">
@@ -60,7 +60,7 @@
 {% for hp, sitebase_barcodes in viewitems(human_participants) %}
                             <li class="has-sub">
                                 <a onclick="document.forms['participant_overview_{{hp}}'].submit(); return false;">
-                                    <form action="/participants/{{hp}}" method="post" id="participant_overview_{{hp}}">
+                                    <form action="{% raw media_locale['SITEBASE'] %}/participants/{{hp}}" method="post" id="participant_overview_{{hp}}">
                                         <input type="hidden" name="participant_type" value="human"/>
                                         <span>{{hp}}</span>
                                     </form>
@@ -68,7 +68,7 @@
                                 <ul>
     {% for sitebase_barcode in sitebase_barcodes %}
                                     <li>
-                                        <a href="/authed/sample_overview/?barcode={{sitebase_barcode['barcode']}}" 
+                                        <a href="{% raw media_locale['SITEBASE'] %}/authed/sample_overview/?barcode={{sitebase_barcode['barcode']}}" 
         {% if sitebase_barcode['status'] == 'Received' %}
             style="color:#0B0;"
         {% end %}
@@ -86,7 +86,7 @@
                             </li>
 {%end%}
 {% if kit_verified %}
-                            <li><a href="/authed/new_participant_overview/"><span><strong>{% raw media_locale['NAV_ADD_HUMAN'] %}</strong></span></a></li>
+                            <li><a href="{% raw media_locale['SITEBASE'] %}/authed/new_participant_overview/"><span><strong>{% raw media_locale['NAV_ADD_HUMAN'] %}</strong></span></a></li>
 {% end %}
                         </ul>
                     </li> <!-- end list of participants-->
@@ -96,14 +96,14 @@
                         <ul>
 {% for ap, sitebase_barcodes in viewitems(animal_participants) %}
                             <li class="last">
-                                <a href="/authed/add_sample_animal/?participant_name={{ap}}">
+                                <a href="{% raw media_locale['SITEBASE'] %}/authed/add_sample_animal/?participant_name={{ap}}">
                                     <span>{{ap}}</span>
                                 </a>
                             </li>
                             <ul>
     {% for sitebase_barcode in sitebase_barcodes %}
                                 <li>
-                                    <a href="/authed/sample_overview/?barcode={{sitebase_barcode['barcode']}}"
+                                    <a href="{% raw media_locale['SITEBASE'] %}/authed/sample_overview/?barcode={{sitebase_barcode['barcode']}}"
         {% if sitebase_barcode['status'] == 'Received' %}
             style="color:#0B0;"
         {% end %}
@@ -120,7 +120,7 @@
                             </ul>
 {%end%}
 {% if kit_verified %}
-                            <li><a href="/add_animal/"><span><strong>{% raw media_locale['NAV_ADD_ANIMAL'] %}</strong></span></a></li>
+                            <li><a href="{% raw media_locale['SITEBASE'] %}/add_animal/"><span><strong>{% raw media_locale['NAV_ADD_ANIMAL'] %}</strong></span></a></li>
 {% end %}
                         </ul>
                     </li> <!-- end list of animal participants -->
@@ -129,7 +129,7 @@
                         <ul>
 {% for sitebase_barcode in environmental_samples %}
                             <li>
-                                <a href="/authed/sample_overview/?barcode={{sitebase_barcode['barcode']}}"
+                                <a href="{% raw media_locale['SITEBASE'] %}/authed/sample_overview/?barcode={{sitebase_barcode['barcode']}}"
     {% if sitebase_barcode['status'] == 'Received' %}
         style="color:#0B0;"
     {% end %}
@@ -146,7 +146,7 @@
                         </ul>
                     </li>
 {% if kit_verified %}
-                    <li class="last"><a href="/authed/add_sample_overview/"><strong>{% raw media_locale['NAV_LOG_SAMPLE'] %}</strong></a></li>
+                    <li class="last"><a href="{% raw media_locale['SITEBASE'] %}/authed/add_sample_overview/"><strong>{% raw media_locale['NAV_LOG_SAMPLE'] %}</strong></a></li>
 {% end %}
                 </ul>
             </div>

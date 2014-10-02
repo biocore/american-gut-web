@@ -7,24 +7,24 @@
 <div id="source_icons_list">
 
 {% for hp in human_participants %}
-    <a href="/authed/add_sample_animal/?participant_name={{ap}}">
+    <a href="{% raw media_locale['SITEBASE'] %}/authed/add_sample_animal/?participant_name={{ap}}">
         <div class="source_icon"><div style="background-image:url('/static/img/human_transp.png');  background-repeat:no-repeat; background-position:0% 0%;"><h2>{{hp}}</h2></div></div>
     </a>
 
 {% end %}
 
 {% for ap in animal_participants %}
-    <a href="/authed/add_sample_animal/?participant_name={{ap}}">
+    <a href="{% raw media_locale['SITEBASE'] %}/authed/add_sample_animal/?participant_name={{ap}}">
         <div class="source_icon"><div style="background-image:url('/static/img/animal_transp.png'); background-repeat:no-repeat; background-position:0% 0%;"><h2>{{ap}}</h2></div></div>
     </a>
 {% end %}
-    <a href="/authed/add_sample_general/">
+    <a href="{% raw media_locale['SITEBASE'] %}/authed/add_sample_general/">
         <div class="source_icon"><div style="background-image:url('/static/img/environmental_transp.png');  background-repeat:no-repeat; background-position:0% 0%;"><h2>{% raw tl['ENVIRONMENTAL'] %}</h2></div></div></a>
     </a>
 </div>
 <br />
 <br />
-<h2 class="msg">{% raw tl['ADD_SAMPLE_1'] %}<a href="/authed/portal/">{% raw tl['ADD_SAMPLE_2'] %}</a>{% raw tl['ADD_SAMPLE_3'] %}</h2>
+<h2 class="msg">{% raw tl['ADD_SAMPLE_1'] %}<a href="{% raw media_locale['SITEBASE'] %}/authed/portal/">{% raw tl['ADD_SAMPLE_2'] %}</a>{% raw tl['ADD_SAMPLE_3'] %}</h2>
 
 
 {% end %}

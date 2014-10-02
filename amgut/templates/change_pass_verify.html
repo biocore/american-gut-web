@@ -39,7 +39,7 @@
 {% set fmt = {'kitid': kitid,
               'help_email': media_locale['HELP_EMAIL']} %}
 {% if result == 'valid' %}
-<form id="reset_password" name="reset_password" method="post" action="/change_pass_verify/">
+<form id="reset_password" name="reset_password" method="post" action="{% raw media_locale['SITEBASE'] %}/change_pass_verify/">
     <table>
     <tr><td><h2>{% raw tl['TITLE'] %}</h2></td></tr>
     <tr><td>{% raw tl['NEW_PASSWORD'] %}:</td><td><input type="password" id="new_password" name="new_password" /></td>
