@@ -13,7 +13,7 @@ from amgut.lib.config_manager import AMGUT_CONFIG
 # Any media specific localizations
 HELP_EMAIL = "info@americangut.org"
 
-_SITEBASE = '/AmericanGut'
+_SITEBASE = ''
 
 media_locale = {
     'SITEBASE': _SITEBASE,

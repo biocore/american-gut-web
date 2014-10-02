@@ -2,7 +2,7 @@
 {% block content %}
 {% from amgut import text_locale, media_locale %}
 {% set tl = text_locale['portal.html'] %}
-{% set fmt = {'help_email': media_locale['HELP_EMAIL'], 
+{% set fmt = {'help_email': media_locale['HELP_EMAIL'],
               'project': media_locale['PROJECT_TITLE'],
               'user_name': user_name} %}
 <h2>{% raw tl['GREETING'] % fmt %}</h2>
@@ -16,19 +16,19 @@
     <ul class="workflow_menu">
 
 {% if kit_verified %}
-<li id="verify_tab" class="unselected disabled" style="background-image: url('/static/img/1.png');padding-bottom:0px;">{% raw tl['VERIFY_TAB'] %}<br><br><img src="{% raw media_locale['SITEBASE'] %}/static/img/verify.png"/></li>
-<li id="source_tab" class="selected" style="background-image: url('/static/img/2.png');"><a href="#" onclick="selectTab('source')">{% raw tl['ADD_SOURCE_TAB'] %}<br><img src="{% raw media_locale['SITEBASE'] %}/static/img/source.png"/></a></li>
-<li id="sample_tab" class="unselected" style="background-image: url('/static/img/3.png');"><a href="#" onclick="selectTab('sample')">{% raw tl['TAKE_SAMPLE_TAB'] %}<br><br><img src="{% raw media_locale['SITEBASE'] %}/static/img/sample.png"/></a></li>
-<li id="log_tab" class="unselected" style="background-image: url('/static/img/4.png');"><a href="#" onclick="selectTab('log')">{% raw tl['LOG_SAMPLE_TAB'] %}<br><br><img src="{% raw media_locale['SITEBASE'] %}/static/img/log.png"/></a></li>
-<li id="mail_tab" class="unselected" style="background-image: url('/static/img/5.png');"><a href="#" onclick="selectTab('mail')">{% raw tl['MAIL_TAB'] %}<br><img src="{% raw media_locale['SITEBASE'] %}/static/img/mail.png"/></a></li>
-<li id="results_tab" class="unselected" style="background-image: url('/static/img/6.png');"><a href="#" onclick="selectTab('results')">{% raw tl['SEQ_TAB'] %}<br><img src="{% raw media_locale['SITEBASE'] %}/static/img/results.png"/></a></li>
+<li id="verify_tab" class="unselected disabled" style="background-image: url({% raw media_locale['SITEBASE'] %} + '/static/img/1.png');padding-bottom:0px;">{% raw tl['VERIFY_TAB'] %}<br><br><img src="{% raw media_locale['SITEBASE'] %}/static/img/verify.png"/></li>
+<li id="source_tab" class="selected" style="background-image: url({% raw media_locale['SITEBASE'] %} + '/static/img/2.png');"><a href="#" onclick="selectTab('source')">{% raw tl['ADD_SOURCE_TAB'] %}<br><img src="{% raw media_locale['SITEBASE'] %}/static/img/source.png"/></a></li>
+<li id="sample_tab" class="unselected" style="background-image: url({% raw media_locale['SITEBASE'] %} + '/static/img/3.png');"><a href="#" onclick="selectTab('sample')">{% raw tl['TAKE_SAMPLE_TAB'] %}<br><br><img src="{% raw media_locale['SITEBASE'] %}/static/img/sample.png"/></a></li>
+<li id="log_tab" class="unselected" style="background-image: url({% raw media_locale['SITEBASE'] %} + '/static/img/4.png');"><a href="#" onclick="selectTab('log')">{% raw tl['LOG_SAMPLE_TAB'] %}<br><br><img src="{% raw media_locale['SITEBASE'] %}/static/img/log.png"/></a></li>
+<li id="mail_tab" class="unselected" style="background-image: url({% raw media_locale['SITEBASE'] %} + '/static/img/5.png');"><a href="#" onclick="selectTab('mail')">{% raw tl['MAIL_TAB'] %}<br><img src="{% raw media_locale['SITEBASE'] %}/static/img/mail.png"/></a></li>
+<li id="results_tab" class="unselected" style="background-image: url({% raw media_locale['SITEBASE'] %} + '/static/img/6.png');"><a href="#" onclick="selectTab('results')">{% raw tl['SEQ_TAB'] %}<br><img src="{% raw media_locale['SITEBASE'] %}/static/img/results.png"/></a></li>
 {% else %}
-<li id="verify_tab" class="selected" style="background-image: url('/static/img/1.png');padding-bottom:0px;">{% raw tl['VERIFY_TAB'] %}<br><br><img src="{% raw media_locale['SITEBASE'] %}/static/img/verify.png"/></li>
-<li id="source_tab" class="unselected disabled" style="background-image: url('/static/img/2.png');"><a href="#">{% raw tl['ADD_SOURCE_TAB'] %}<br><img src="{% raw media_locale['SITEBASE'] %}/static/img/source.png"/></a></li>
-<li id="sample_tab" class="unselected disabled" style="background-image: url('/static/img/3.png');"><a href="#">{% raw tl['TAKE_SAMPLE_TAB'] %}<br><br><img src="{% raw media_locale['SITEBASE'] %}/static/img/sample.png"/></a></li>
-<li id="log_tab" class="unselected disabled" style="background-image: url('/static/img/4.png');"><a href="#">{% raw tl['LOG_SAMPLE_TAB'] %}<br><br><img src="{% raw media_locale['SITEBASE'] %}/static/img/log.png"/></a></li>
-<li id="mail_tab" class="unselected disabled" style="background-image: url('/static/img/5.png');"><a href="#">{% raw tl['MAIL_TAB'] %}<br><img src="{% raw media_locale['SITEBASE'] %}/static/img/mail.png"/></a></li>
-<li id="results_tab" class="unselected disabled" style="background-image: url('/static/img/6.png');"><a href="#">{% raw tl['SEQ_TAB'] %}<br><img src="{% raw media_locale['SITEBASE'] %}/static/img/results.png"/></a></li>
+<li id="verify_tab" class="selected" style="background-image: url({% raw media_locale['SITEBASE'] %} + '/static/img/1.png');padding-bottom:0px;">{% raw tl['VERIFY_TAB'] %}<br><br><img src="{% raw media_locale['SITEBASE'] %}/static/img/verify.png"/></li>
+<li id="source_tab" class="unselected disabled" style="background-image: url({% raw media_locale['SITEBASE'] %} + '/static/img/2.png');"><a href="#">{% raw tl['ADD_SOURCE_TAB'] %}<br><img src="{% raw media_locale['SITEBASE'] %}/static/img/source.png"/></a></li>
+<li id="sample_tab" class="unselected disabled" style="background-image: url({% raw media_locale['SITEBASE'] %} + '/static/img/3.png');"><a href="#">{% raw tl['TAKE_SAMPLE_TAB'] %}<br><br><img src="{% raw media_locale['SITEBASE'] %}/static/img/sample.png"/></a></li>
+<li id="log_tab" class="unselected disabled" style="background-image: url({% raw media_locale['SITEBASE'] %} + '/static/img/4.png');"><a href="#">{% raw tl['LOG_SAMPLE_TAB'] %}<br><br><img src="{% raw media_locale['SITEBASE'] %}/static/img/log.png"/></a></li>
+<li id="mail_tab" class="unselected disabled" style="background-image: url({% raw media_locale['SITEBASE'] %} + '/static/img/5.png');"><a href="#">{% raw tl['MAIL_TAB'] %}<br><img src="{% raw media_locale['SITEBASE'] %}/static/img/mail.png"/></a></li>
+<li id="results_tab" class="unselected disabled" style="background-image: url({% raw media_locale['SITEBASE'] %} + '/static/img/6.png');"><a href="#">{% raw tl['SEQ_TAB'] %}<br><img src="{% raw media_locale['SITEBASE'] %}/static/img/results.png"/></a></li>
 {% end %}
     </ul>
 

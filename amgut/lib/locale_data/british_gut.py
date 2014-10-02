@@ -15,7 +15,7 @@ from amgut.lib.config_manager import AMGUT_CONFIG
 # Any media specific localizations
 HELP_EMAIL = "info@britishgut.org"
 
-_SITEBASE = '/BritishGut'
+_SITEBASE = ''
 
 media_locale = {
     'SITEBASE': _SITEBASE,
@@ -263,8 +263,8 @@ _FAQ = {
     'PASSWORD_DOESNT_WORK': "My password doesn't work!",
     'PASSWORD_DOESNT_WORK_ANS': '<p>The passwords have some ambiguous characters in them, so we have this guide to help you decipher which characters are in your password.</p><p class="ambig">abcdefghijklmnopqrstuvwxyz<br>ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>1234567890<br>1 = the number 1<br>l = the letter l as in Lima<br>0 = the number 0<br>O = the letter O as in Oscar<br>g = the letter g as in golf<br>q = the letter q as in quebec</p>',
     'PASSWORD_SAME_VERIFICATION': "Is my password the same as my verification code?",
-    'PASSWORD_SAME_VERIFICATION_ANS': 'No. Your <strong>password</strong> is printed on the sheet that you received with your kit in the mail. That sheet looks like this:</p><img src="/static/img/creds_example.png"/>'
-                                      '<p>Your <strong>verification code</strong> is emailed to you. Look for the email: <br /><br /><strong>FROM:</strong>  %(project_name)s (%(help_email)s)<br /><strong>SUBJECT:</strong>  %(project_shorthand)s Kit ID & Verification Code' % {'project_shorthand': AMGUT_CONFIG.project_shorthand, 'project_name': AMGUT_CONFIG.project_name, 'help_email': media_locale['HELP_EMAIL']},
+    'PASSWORD_SAME_VERIFICATION_ANS': 'No. Your <strong>password</strong> is printed on the sheet that you received with your kit in the mail. That sheet looks like this:</p><img src="%(sitebase)s/static/img/creds_example.png"/>'
+                                      '<p>Your <strong>verification code</strong> is emailed to you. Look for the email: <br /><br /><strong>FROM:</strong>  %(project_name)s (%(help_email)s)<br /><strong>SUBJECT:</strong>  %(project_shorthand)s Kit ID & Verification Code' % {'sitebase': media_locale['SITEBASE'], 'project_shorthand': AMGUT_CONFIG.project_shorthand, 'project_name': AMGUT_CONFIG.project_name, 'help_email': media_locale['HELP_EMAIL']},
     'PROJECT_101': "%(project_shorthand)s 101" % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
     'RAW_DATA': "How can I get the raw data?",
     'RAW_DATA_ANS_1': '<P>The raw data can be fetched from the <a href=http://www.ebi.ac.uk/>European Bioinformatics Institute</a>. EBI is part of <a href=http://www.insdc.org/>The International Nucleotide Sequence Database Collaboration</a> and is a public warehouse for sequence data. The deposited %(project_name)s accessions so far are:<ol><li style="list-style-type:square"><a href="http://www.ebi.ac.uk/ena/data/view/ERP003819&display=html">ERP003819</a></li><li style="list-style-type:square"><a href="http://www.ebi.ac.uk/ena/data/view/ERP003822&display=html">ERP003822</a></li><li style="list-style-type:square"><a href="http://www.ebi.ac.uk/ena/data/view/ERP003820&display=html">ERP003820</a></li><li style="list-style-type:square"><a href="http://www.ebi.ac.uk/ena/data/view/ERP003821&display=html">ERP003821</a></li><li style="list-style-type:square"><a href="http://www.ebi.ac.uk/ena/data/view/ERP005367&display=html">ERP005367</a></li><li style="list-style-type:square"><a href="http://www.ebi.ac.uk/ena/data/view/ERP005366&display=html">ERP005366</a></li><li style="list-style-type:square"><a href="http://www.ebi.ac.uk/ena/data/view/ERP005361&display=html">ERP005361</a></li><li style="list-style-type:square"><a href="http://www.ebi.ac.uk/ena/data/view/ERP005362&display=html">ERP005362</a></li></ol>' % {'project_name': AMGUT_CONFIG.project_name},
