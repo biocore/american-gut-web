@@ -82,8 +82,6 @@ class HumanSurveyHandler(BaseHandler):
         if page_number >= 0:
             form_data = surveys[page_number]()
             form_data.process(data=self.request.arguments)
-            print form_data
-            print human_survey_id, page_number
             r_server.hset(human_survey_id, page_number, dumps(form_data.data))
 
         # if this is not the last page, render the next page
