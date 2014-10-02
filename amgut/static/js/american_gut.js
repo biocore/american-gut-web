@@ -725,7 +725,7 @@ function validateSurvey3() {
     $('#survey_3').submit();
 }
 
-function validateSurvey1() {
+function validateSurvey0() {
     survey_form = document.getElementById('human_survey');
     for(var i = 0; i < survey_form.length; i++) 
     {
