@@ -1,4 +1,5 @@
-from wtforms import Form, SelectField, SelectMultipleField, widgets
+from wtforms import (Form, SelectField, SelectMultipleField, widgets,
+                     TextField, DateField, RadioField)
 from tornado.web import authenticated
 from future.utils import viewitems
 from natsort import natsorted
@@ -14,6 +15,19 @@ from amgut import r_server, text_locale
 
 
 tl = text_locale['human_survey.html']
+
+
+class PersonalPrompts(Form):
+    PERSONAL_PROMPT_NAME = TextField()
+    PERSONAL_PROMPT_GENDER = RadioField(choices=[(0, 'Female'),
+                                                 (1, 'Male'),
+                                                 (2, 'Other')])
+    PERSONAL_PROMPT_HEIGHT = TextField()
+    PERSONAL_PROMPT_COUNTRY_OF_BIRTH = TextField()
+    PERSONAL_PROMPT_TODAYSDATE = DateField(format="%m/%d/%Y")
+    PERSONAL_PROMPT_BIRTHDATE = DateField(format="%m/%Y")
+    PERSONAL_PROMPT_WEIGHT = TextField()
+    PERSONAL_PROMPT_ZIP = TextField()
 
 
 def make_human_survey_class(group):
@@ -45,7 +59,7 @@ def make_human_survey_class(group):
 
 
 surveys = [make_human_survey_class(group) for group in group_order]
-
+surveys.insert(0, PersonalPrompts)
 
 class HumanSurveyHandler(BaseHandler):
     @authenticated
@@ -68,6 +82,8 @@ class HumanSurveyHandler(BaseHandler):
         if page_number >= 0:
             form_data = surveys[page_number]()
             form_data.process(data=self.request.arguments)
+            print form_data
+            print human_survey_id, page_number
             r_server.hset(human_survey_id, page_number, dumps(form_data.data))
 
         # if this is not the last page, render the next page
