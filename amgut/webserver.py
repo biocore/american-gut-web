@@ -1,6 +1,7 @@
 from os.path import dirname, join
 from base64 import b64encode
 from uuid import uuid4
+from datetime import datetime
 
 from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
@@ -46,7 +47,7 @@ STATIC_PATH = join(DIRNAME, "static")
 TEMPLATE_PATH = join(DIRNAME, "templates")  # base folder for webpages
 RES_PATH = join(DIRNAME, "results")
 COOKIE_SECRET = b64encode(uuid4().bytes + uuid4().bytes)
-DEBUG = True
+DEBUG = False
 
 
 class QiimeWebApplication(Application):
@@ -97,6 +98,9 @@ class QiimeWebApplication(Application):
 
 
 def main():
+    options.log_file_prefix = ("AMGUT_%d_%s.log" %
+                               (options.port, str(datetime.now())))
+    options.logging = 'warning'
     parse_command_line()
     http_server = HTTPServer(QiimeWebApplication())
     http_server.listen(options.port)
