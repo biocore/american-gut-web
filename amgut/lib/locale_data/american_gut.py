@@ -746,9 +746,18 @@ _ANIMAL_SURVEY = {
     'SUPPLEMENTAL_COMMENTS': 'Please write anything else about this animal that you think might affect its microorganisms.'
 }
 
+_HUMAN_SURVEY_COMPLETED = {
+    'COMPLETED_HEADER': 'asdasdasdsad',
+    'COMPLETED_TEXT': 'a123123123123',
+    'AVAILABLE_SURVEYS': '12wdasdasf',
+    'SURVEY_ASD': 'asdasdsa %s asasd',
+    'SURVEY_VIOSCREEN': 'asdasd1231231231sa %s asasd'
+}
+
 # sourced from 12-0582_-_american_gut_questionnaire_amended_09012014__irb_appd_09.19.14
 _HUMAN_SURVEY = {
     # Personal information
+    'PERSONAL_PROMPT_TITLE': 'Personal information',
     'PERSONAL_PROMPT_NAME': 'Name:',
     'PERSONAL_PROMPT_GENDER': 'Gender:',
     'PERSONAL_PROMPT_HEIGHT': 'Height',
@@ -1214,6 +1223,7 @@ text_locale = {
     'taxa_summary.html': _TAXA_SUMMARY,
     'map.html': _MAP,
     'human_survey.html': _HUMAN_SURVEY,
+    'human_survey_completed.html': _HUMAN_SURVEY_COMPLETED,
     'register_user.html': _REGISTER_USER,
     'chage_pass_verify.html': _CHANGE_PASS_VERIFY,
     'survey_main.html': _SURVEY_MAIN,
