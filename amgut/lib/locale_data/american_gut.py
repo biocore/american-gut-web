@@ -746,9 +746,18 @@ _ANIMAL_SURVEY = {
     'SUPPLEMENTAL_COMMENTS': 'Please write anything else about this animal that you think might affect its microorganisms.'
 }
 
+_HUMAN_SURVEY_COMPLETED = {
+    'COMPLETED_HEADER': 'Congratulations!',
+    'COMPLETED_TEXT': 'You are now an enrolled participant in the %(PROJECT_TITLE)s!' % media_locale,
+    'AVAILABLE_SURVEYS': 'Below are a few additional surveys that you may be interested in completing. There is no requirement to take these surveys, and your decision does not affect your involvement in the project in anyway.',
+    'SURVEY_ASD': '<a href="http://www.anl.gov/contributors/jack-gilbert">Dr. Jack Gilbert</a> is exploring the relationship between gut dysbiosis and Autism Spectrum Disorders, and in conjunction with the American Gut Project, we started an ASD-Cohort study. This additional survey contains questions specific to that cohort, but it is open to any participant to take if they so choose. Please click <a href="%s">here</a> to take the ASD-Cohort survey.',
+    'SURVEY_VIOSCREEN': 'The American Gut Project and its sister projects are very interested in diet. If you\'d like to provide additional detail about your diet, please click <a href="%s">here</a> to take a detailed diet survey (known as an Food Frequency Questionnaire). This is a validated FFQ, and is the one used by the Mayo Clinic.'
+}
+
 # sourced from 12-0582_-_american_gut_questionnaire_amended_09012014__irb_appd_09.19.14
 _HUMAN_SURVEY = {
     # Personal information
+    'PERSONAL_PROMPT_TITLE': 'Personal information',
     'PERSONAL_PROMPT_NAME': 'Name:',
     'PERSONAL_PROMPT_GENDER': 'Gender:',
     'PERSONAL_PROMPT_HEIGHT': 'Height',
@@ -1214,6 +1223,7 @@ text_locale = {
     'taxa_summary.html': _TAXA_SUMMARY,
     'map.html': _MAP,
     'human_survey.html': _HUMAN_SURVEY,
+    'human_survey_completed.html': _HUMAN_SURVEY_COMPLETED,
     'register_user.html': _REGISTER_USER,
     'chage_pass_verify.html': _CHANGE_PASS_VERIFY,
     'survey_main.html': _SURVEY_MAIN,

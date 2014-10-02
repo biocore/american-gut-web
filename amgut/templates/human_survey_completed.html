@@ -1,0 +1,19 @@
+{% extends sitebase.html %}
+{% block content %}
+{% from amgut import text_locale %}
+{% set tl = text_locale['human_survey_completed.html'] %}
+
+<h2>{% raw tl['COMPLETED_HEADER'] %}</h2>
+<p>{% raw tl['COMPLETED_TEXT'] %}</p>
+<p>{% raw tl['AVAILABLE_SURVEYS'] %}</p>
+
+{% for payload in surveys %}
+    <p>{% raw payload %}</p>
+{% end %}
+
+<form action='/authed/human_survey_completed/' id="human_survey_completed" method="POST">
+    <input type="hidden" name="go_home" value="Done">
+    <input type="submit" value="Back to portal"></td>
+</form>
+
+{% end %}

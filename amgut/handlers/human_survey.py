@@ -4,7 +4,8 @@ from tornado.web import authenticated
 from future.utils import viewitems
 from natsort import natsorted
 from json import loads, dumps
-from uuid import uuid4
+import os
+import binascii
 
 from amgut.util import AG_DATA_ACCESS
 from amgut.handlers.base_handlers import BaseHandler
@@ -59,7 +60,6 @@ def make_human_survey_class(group):
 
 
 surveys = [make_human_survey_class(group) for group in group_order]
-surveys.insert(0, PersonalPrompts)
 
 class HumanSurveyHandler(BaseHandler):
     @authenticated
@@ -69,7 +69,8 @@ class HumanSurveyHandler(BaseHandler):
 
         if human_survey_id is None:
             if page_number == -1:
-                human_survey_id = str(uuid4())
+                # http://wyattbaldwin.com/2014/01/09/generating-random-tokens-in-python/
+                human_survey_id = binascii.hexlify(os.urandom(8))
                 self.set_secure_cookie('human_survey_id', human_survey_id)
             else:
                 # it should not be possible to get here, unless someone is
@@ -84,10 +85,20 @@ class HumanSurveyHandler(BaseHandler):
             form_data.process(data=self.request.arguments)
             r_server.hset(human_survey_id, page_number, dumps(form_data.data))
 
-        # if this is not the last page, render the next page
-        if next_page_number < len(surveys):
+        progress = int(100.0*(page_number+2)/(len(group_order) + 1))
+        if next_page_number == 0:
             self.set_secure_cookie('human_survey_page_number',
                                    str(next_page_number))
+            the_form = PersonalPrompts()
+            title = tl['PERSONAL_PROMPT_TITLE']
+            self.render('human_survey.html', the_form=the_form,
+                        skid=self.current_user, TITLE=title,
+                        supplemental_map=supplemental_map,
+                        page_number=next_page_number,
+                        progress=progress)
+
+        # if this is not the last page, render the next page
+        elif next_page_number < len(surveys):
             # TODO: populate the next form page from database values, if they
             # exist
             the_form = surveys[next_page_number]()
@@ -96,8 +107,14 @@ class HumanSurveyHandler(BaseHandler):
                         skid=self.current_user, TITLE=title,
                         supplemental_map=supplemental_map,
                         page_number=next_page_number,
-                        progress=int(100.0*(page_number+2)/len(group_order)))
+                        progress=progress)
         else:
             # TODO: insert into database
-            self.clear_cookie('human_survey_id')
+            # TODO: store in the database a connection between human_survey_id and this specific participant
             # TODO: redirect to portal or something
+
+            # only get the cookie if you complete the survey
+            self.clear_cookie('human_survey_id')
+            self.set_secure_cookie('completed_survey_id', human_survey_id)
+            self.redirect('/authed/human_survey_completed/')
+
