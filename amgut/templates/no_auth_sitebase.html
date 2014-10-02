@@ -2,66 +2,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<noscript>
-<meta HTTP-EQUIV="REFRESH" content="0; url=nojs.html">
-</noscript>
-<meta charset="utf-8">
-<title>{% raw media_locale['PROJECT_TITLE'] %}</title>
-<link rel="stylesheet" type="text/css" href="/static/css/americangut.css">
-<link rel="stylesheet" type="text/css" href="/static/css/menu.css">
-<link rel="stylesheet" type="text/css" href="/static/vendor/css/ui-lightness/jquery-ui-1.10.1.custom.min.css">
-<link rel="icon" type="image/ico" href="{% raw media_locale['FAVICON'] %}">
+    <noscript>
+    <meta HTTP-EQUIV="REFRESH" content="0; url=nojs.html">
+    </noscript>
+    <meta charset="utf-8">
+    <title>{% raw media_locale['PROJECT_TITLE'] %}</title>
+    <script>
+      //google analytics code
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-<script type="text/javascript" src="/static/js/qiime.js"></script>
-<script src="/static/vendor/js/jquery-1.11.1.min.js"></script>
-<script src="/static/vendor/js/jquery-ui-1.10.1.custom.min.js"></script>
-<script type="text/javascript" src="/static/vendor/js/jquery.metadata.js"></script>
-<script type="text/javascript" src="/static/vendor/js/jquery.validate.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
+      ga('create', 'UA-55353353-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <link rel="stylesheet" type="text/css" href="/static/css/americangut.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/menu.css">
+    <link rel="stylesheet" type="text/css" href="/static/vendor/css/ui-lightness/jquery-ui-1.10.1.custom.min.css">
+    <link rel="icon" type="image/ico" href="{% raw media_locale['FAVICON'] %}">
 
-    $("ul.subnav").parent().append("<span></span>"); //Only shows drop down trigger when js is enabled - Adds empty span tag after ul.subnav
+    <script type="text/javascript" src="/static/js/qiime.js"></script>
+    <script src="/static/vendor/js/jquery-1.11.1.min.js"></script>
+    <script src="/static/vendor/js/jquery-ui-1.10.1.custom.min.js"></script>
+    <script type="text/javascript" src="/static/vendor/js/jquery.metadata.js"></script>
+    <script type="text/javascript" src="/static/vendor/js/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
 
-    $("ul.topnav li span").click(function() { //When trigger is clicked...
+        $("ul.subnav").parent().append("<span></span>"); //Only shows drop down trigger when js is enabled - Adds empty span tag after ul.subnav
 
-        //Following events are applied to the subnav itself (moving subnav up and down)
-        $(this).parent().find("ul.subnav").slideDown('fast').show(); //Drop down the subnav on click
+        $("ul.topnav li span").click(function() { //When trigger is clicked...
 
-        $(this).parent().hover(function() {
-        }, function(){
-            $(this).parent().find("ul.subnav").slideUp('slow'); //When the mouse hovers out of the subnav, move it back up
+            //Following events are applied to the subnav itself (moving subnav up and down)
+            $(this).parent().find("ul.subnav").slideDown('fast').show(); //Drop down the subnav on click
+
+            $(this).parent().hover(function() {
+            }, function(){
+                $(this).parent().find("ul.subnav").slideUp('slow'); //When the mouse hovers out of the subnav, move it back up
+            });
+
+            //Following events are applied to the trigger (Hover events for the trigger)
+            }).hover(function() {
+                $(this).addClass("subhover"); //On hover over, add class "subhover"
+            }, function(){  //On Hover Out
+                $(this).removeClass("subhover"); //On hover out, remove class "subhover"
         });
 
-        //Following events are applied to the trigger (Hover events for the trigger)
-        }).hover(function() {
-            $(this).addClass("subhover"); //On hover over, add class "subhover"
-        }, function(){  //On Hover Out
-            $(this).removeClass("subhover"); //On hover out, remove class "subhover"
     });
 
-});
-
-function toggleSection(section_name)
-{
-    div = document.getElementById(section_name);
-    header_name = section_name + '_header';
-    if (div.style.display == 'none')
+    function toggleSection(section_name)
     {
-        $('#' + section_name).fadeIn('fast')
-        header_content = $('#' + header_name)[0].innerHTML
-        $('#' + header_name)[0].innerHTML = header_content.replace('+', '-');
-        window.scrollBy(0, 200);
+        div = document.getElementById(section_name);
+        header_name = section_name + '_header';
+        if (div.style.display == 'none')
+        {
+            $('#' + section_name).fadeIn('fast')
+            header_content = $('#' + header_name)[0].innerHTML
+            $('#' + header_name)[0].innerHTML = header_content.replace('+', '-');
+            window.scrollBy(0, 200);
+        }
+        else
+        {
+            $('#' + section_name).fadeOut('fast')
+            header_content = $('#' + header_name)[0].innerHTML
+            $('#' + header_name)[0].innerHTML = header_content.replace('-', '+');
+        }
     }
-    else
-    {
-        $('#' + section_name).fadeOut('fast')
-        header_content = $('#' + header_name)[0].innerHTML
-        $('#' + header_name)[0].innerHTML = header_content.replace('-', '+');
-    }
-}
-</script>
-{% block head %}
-{% end %}
+    </script>
+    {% block head %}
+    {% end %}
 </head>
     <body>
     {% block map %}
