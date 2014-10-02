@@ -120,47 +120,6 @@ CREATE TABLE public.controlled_vocabs (
 	CONSTRAINT controlled_vocabs_pkey PRIMARY KEY ( controlled_vocab_id )
  );
 
-CREATE TABLE public.human_survey_question ( 
-	human_survey_question_id bigserial  NOT NULL,
-	american             varchar  ,
-	british              varchar  ,
-	CONSTRAINT pk_human_survey_question PRIMARY KEY ( human_survey_question_id )
- );
-
-COMMENT ON TABLE public.human_survey_question IS 'Stores the human survey questions';
-
-COMMENT ON COLUMN public.human_survey_question.human_survey_question_id IS 'The unique question ID';
-
-COMMENT ON COLUMN public.human_survey_question.american IS 'The american english version of the question';
-
-COMMENT ON COLUMN public.human_survey_question.british IS 'The british english version of the question';
-
-CREATE TABLE public.human_survey_question_group ( 
-	group_order          integer  NOT NULL,
-	american_name        varchar  ,
-	british_name         varchar  ,
-	CONSTRAINT pk_human_survey_question_group PRIMARY KEY ( group_order )
- );
-
-COMMENT ON COLUMN public.human_survey_question_group.group_order IS 'The order that this group will be displayed in';
-
-COMMENT ON COLUMN public.human_survey_question_group.american_name IS 'The american english version of the question group`s name';
-
-CREATE TABLE public.human_survey_response ( 
-	american             varchar  NOT NULL,
-	british              varchar  ,
-	CONSTRAINT pk_human_survey_response PRIMARY KEY ( american )
- );
-
-COMMENT ON TABLE public.human_survey_response IS 'Stores every possible predictable response on the human survey';
-
-CREATE TABLE public.human_survey_response_types ( 
-	human_survey_response_type varchar  NOT NULL,
-	CONSTRAINT pk_human_survey_response_types PRIMARY KEY ( human_survey_response_type )
- );
-
-COMMENT ON TABLE public.human_survey_response_types IS 'Stores every possible type of response.  The response type will be processed in python to determine how the question is represented in the interface.';
-
 CREATE TABLE public.plate ( 
 	plate_id             bigint  NOT NULL,
 	plate                varchar(50)  ,
@@ -192,6 +151,55 @@ CREATE TABLE public.project_barcode (
 	CONSTRAINT fk_pb_to_barcode FOREIGN KEY ( barcode ) REFERENCES public.barcode( barcode )    ,
 	CONSTRAINT fk_pb_to_project FOREIGN KEY ( project_id ) REFERENCES public.project( project_id )    
  );
+
+CREATE TABLE public.survey_question ( 
+	survey_question_id   bigserial  NOT NULL,
+	american             varchar  ,
+	british              varchar  ,
+	CONSTRAINT pk_human_survey_question PRIMARY KEY ( survey_question_id )
+ );
+
+COMMENT ON TABLE public.survey_question IS 'Stores the human survey questions';
+
+COMMENT ON COLUMN public.survey_question.survey_question_id IS 'The unique question ID';
+
+COMMENT ON COLUMN public.survey_question.american IS 'The american english version of the question';
+
+COMMENT ON COLUMN public.survey_question.british IS 'The british english version of the question';
+
+CREATE TABLE public.survey_question_group ( 
+	survey_type          varchar  NOT NULL,
+	group_order          integer  NOT NULL,
+	american_name        varchar  ,
+	british_name         varchar  ,
+	CONSTRAINT idx_human_survey_question_group UNIQUE ( american_name ) ,
+	CONSTRAINT idx_human_survey_question_group_0 UNIQUE ( british_name ) ,
+	CONSTRAINT pk_human_survey_question_group PRIMARY KEY ( group_order, survey_type )
+ );
+
+CREATE INDEX idx_human_survey_question_group_1 ON public.survey_question_group ( survey_type );
+
+COMMENT ON COLUMN public.survey_question_group.survey_type IS 'human, animal, etc';
+
+COMMENT ON COLUMN public.survey_question_group.group_order IS 'The order that this group will be displayed in';
+
+COMMENT ON COLUMN public.survey_question_group.american_name IS 'The american english version of the question group`s name';
+
+CREATE TABLE public.survey_response ( 
+	american             varchar  NOT NULL,
+	british              varchar  ,
+	CONSTRAINT pk_human_survey_response PRIMARY KEY ( american ),
+	CONSTRAINT idx_human_survey_response UNIQUE ( british ) 
+ );
+
+COMMENT ON TABLE public.survey_response IS 'Stores every possible predictable response on the human survey';
+
+CREATE TABLE public.survey_response_types ( 
+	survey_response_type varchar  NOT NULL,
+	CONSTRAINT pk_human_survey_response_types PRIMARY KEY ( survey_response_type )
+ );
+
+COMMENT ON TABLE public.survey_response_types IS 'Stores every possible type of response.  The response type will be processed in python to determine how the question is represented in the interface.';
 
 CREATE TABLE public.zipcodes ( 
 	zipcode              varchar(5)  NOT NULL,
@@ -406,63 +414,67 @@ CREATE TABLE public.controlled_vocab_values (
 	CONSTRAINT fk_cont_vcb_values_cont_vcbs FOREIGN KEY ( controlled_vocab_id ) REFERENCES public.controlled_vocabs( controlled_vocab_id )    
  );
 
-CREATE TABLE public.human_survey_group_question ( 
-	human_survey_group   integer  NOT NULL,
-	human_survey_question_id bigint  NOT NULL,
-	CONSTRAINT pk_human_survey_group_question PRIMARY KEY ( human_survey_group, human_survey_question_id ),
-	CONSTRAINT fk_human_survey_group_question FOREIGN KEY ( human_survey_group ) REFERENCES public.human_survey_question_group( group_order )    ,
-	CONSTRAINT fk_human_survey_group_question_0 FOREIGN KEY ( human_survey_question_id ) REFERENCES public.human_survey_question( human_survey_question_id )    
+CREATE TABLE public.survey_group_question ( 
+	survey_group         integer  NOT NULL,
+	survey_question_id   bigint  NOT NULL,
+	CONSTRAINT pk_human_survey_group_question PRIMARY KEY ( survey_group, survey_question_id ),
+	CONSTRAINT fk_human_survey_group_question FOREIGN KEY ( survey_group ) REFERENCES public.survey_question_group( group_order )    ,
+	CONSTRAINT fk_human_survey_group_question_0 FOREIGN KEY ( survey_question_id ) REFERENCES public.survey_question( survey_question_id )    
  );
 
-CREATE INDEX idx_human_survey_group_question ON public.human_survey_group_question ( human_survey_group );
+CREATE INDEX idx_human_survey_group_question ON public.survey_group_question ( survey_group );
 
-CREATE INDEX idx_human_survey_group_question_0 ON public.human_survey_group_question ( human_survey_question_id );
+CREATE INDEX idx_human_survey_group_question_0 ON public.survey_group_question ( survey_question_id );
 
-CREATE TABLE public.human_survey_question_response ( 
-	human_survey_question_id bigint  NOT NULL,
+CREATE TABLE public.survey_question_response ( 
+	survey_question_id   bigint  NOT NULL,
 	response             varchar  NOT NULL,
-	CONSTRAINT pk_question_response PRIMARY KEY ( human_survey_question_id, response ),
+	display_index        serial  ,
+	CONSTRAINT pk_question_response PRIMARY KEY ( survey_question_id, response ),
 	CONSTRAINT idx_question_response UNIQUE ( response ) ,
-	CONSTRAINT idx_question_response_0 UNIQUE ( human_survey_question_id ) ,
-	CONSTRAINT fk_question_response FOREIGN KEY ( response ) REFERENCES public.human_survey_response( american )    ,
-	CONSTRAINT fk_question_response_0 FOREIGN KEY ( human_survey_question_id ) REFERENCES public.human_survey_question( human_survey_question_id )    
+	CONSTRAINT idx_question_response_0 UNIQUE ( survey_question_id ) ,
+	CONSTRAINT idx_human_survey_question_response UNIQUE ( display_index ) ,
+	CONSTRAINT fk_question_response FOREIGN KEY ( response ) REFERENCES public.survey_response( american )    ,
+	CONSTRAINT fk_question_response_0 FOREIGN KEY ( survey_question_id ) REFERENCES public.survey_question( survey_question_id )    
  );
 
-COMMENT ON TABLE public.human_survey_question_response IS 'Maps questions to responses';
+COMMENT ON TABLE public.survey_question_response IS 'Maps questions to responses';
 
-CREATE TABLE public.human_survey_question_response_type ( 
-	human_survey_question_id bigint  ,
-	human_survey_response_type varchar  NOT NULL,
-	CONSTRAINT fk_human_survey_response_type FOREIGN KEY ( human_survey_question_id ) REFERENCES public.human_survey_question( human_survey_question_id )    ,
-	CONSTRAINT fk_human_survey_question_response_type FOREIGN KEY ( human_survey_response_type ) REFERENCES public.human_survey_response_types( human_survey_response_type )    
+COMMENT ON COLUMN public.survey_question_response.display_index IS 'The display order of this response';
+
+CREATE TABLE public.survey_question_response_type ( 
+	survey_question_id   bigint  ,
+	survey_response_type varchar  NOT NULL,
+	CONSTRAINT fk_human_survey_response_type FOREIGN KEY ( survey_question_id ) REFERENCES public.survey_question( survey_question_id )    ,
+	CONSTRAINT fk_human_survey_question_response_type FOREIGN KEY ( survey_response_type ) REFERENCES public.survey_response_types( survey_response_type )    
  );
 
-CREATE INDEX idx_human_survey_response_type ON public.human_survey_question_response_type ( human_survey_question_id );
+CREATE INDEX idx_human_survey_response_type ON public.survey_question_response_type ( survey_question_id );
 
-CREATE INDEX idx_human_survey_question_response_type ON public.human_survey_question_response_type ( human_survey_response_type );
+CREATE INDEX idx_human_survey_question_response_type ON public.survey_question_response_type ( survey_response_type );
 
-COMMENT ON TABLE public.human_survey_question_response_type IS 'Stores the type of response for each question';
+COMMENT ON TABLE public.survey_question_response_type IS 'Stores the type of response for each question';
 
-CREATE TABLE public.human_survey_question_triggered_by ( 
-	human_survey_question_id bigint  ,
+CREATE TABLE public.survey_question_triggered_by ( 
+	survey_question_id   bigint  ,
 	trigger_question     bigint  ,
 	trigger_response     varchar  ,
-	CONSTRAINT fk_human_survey_question_triggered_by FOREIGN KEY ( human_survey_question_id ) REFERENCES public.human_survey_question( human_survey_question_id )    ,
-	CONSTRAINT fk_human_survey_question_triggered_by_0 FOREIGN KEY ( trigger_question ) REFERENCES public.human_survey_question_response( human_survey_question_id )    ,
-	CONSTRAINT fk_human_survey_question_triggered_by_1 FOREIGN KEY ( trigger_response ) REFERENCES public.human_survey_question_response( response )    
+	CONSTRAINT fk_human_survey_question_triggered_by FOREIGN KEY ( survey_question_id ) REFERENCES public.survey_question( survey_question_id )    ,
+	CONSTRAINT fk_human_survey_question_triggered_by_0 FOREIGN KEY ( trigger_question ) REFERENCES public.survey_question_response( survey_question_id )    ,
+	CONSTRAINT fk_human_survey_question_triggered_by_1 FOREIGN KEY ( trigger_response ) REFERENCES public.survey_question_response( response )    
  );
 
-CREATE INDEX idx_human_survey_question_triggered_by ON public.human_survey_question_triggered_by ( human_survey_question_id );
+CREATE INDEX idx_human_survey_question_triggered_by ON public.survey_question_triggered_by ( survey_question_id );
 
-CREATE INDEX idx_human_survey_question_triggered_by_0 ON public.human_survey_question_triggered_by ( trigger_question );
+CREATE INDEX idx_human_survey_question_triggered_by_0 ON public.survey_question_triggered_by ( trigger_question );
 
-CREATE INDEX idx_human_survey_question_triggered_by_1 ON public.human_survey_question_triggered_by ( trigger_response );
+CREATE INDEX idx_human_survey_question_triggered_by_1 ON public.survey_question_triggered_by ( trigger_response );
 
-COMMENT ON TABLE public.human_survey_question_triggered_by IS 'Which responses to the question trigger the appearance of this question';
+COMMENT ON TABLE public.survey_question_triggered_by IS 'Which responses to the question trigger the appearance of this question';
 
-COMMENT ON COLUMN public.human_survey_question_triggered_by.human_survey_question_id IS 'The ID of the question that is triggered';
+COMMENT ON COLUMN public.survey_question_triggered_by.survey_question_id IS 'The ID of the question that is triggered';
 
-COMMENT ON COLUMN public.human_survey_question_triggered_by.trigger_question IS 'The question that might trigger the appearance of this question';
+COMMENT ON COLUMN public.survey_question_triggered_by.trigger_question IS 'The question that might trigger the appearance of this question';
 
-COMMENT ON COLUMN public.human_survey_question_triggered_by.trigger_response IS 'The response to the trigger_question that will cause the appearance of this question';
+COMMENT ON COLUMN public.survey_question_triggered_by.trigger_response IS 'The response to the trigger_question that will cause the appearance of this question';
 

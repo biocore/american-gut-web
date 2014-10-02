@@ -20949,136 +20949,6 @@ AS $function$xpath_exists$function$
 				<column name="controlled_vocab_id" />
 			</index>
 		</table>
-		<table name="human_survey_group_question" >
-			<column name="human_survey_group" type="integer" jt="4" mandatory="y" />
-			<column name="human_survey_question_id" type="bigint" jt="-5" mandatory="y" />
-			<index name="pk_human_survey_group_question" unique="PRIMARY_KEY" >
-				<column name="human_survey_group" />
-				<column name="human_survey_question_id" />
-			</index>
-			<index name="idx_human_survey_group_question" unique="NORMAL" >
-				<column name="human_survey_group" />
-			</index>
-			<index name="idx_human_survey_group_question_0" unique="NORMAL" >
-				<column name="human_survey_question_id" />
-			</index>
-			<fk name="fk_human_survey_group_question" to_schema="public" to_table="human_survey_question_group" >
-				<fk_column name="human_survey_group" pk="group_order" />
-			</fk>
-			<fk name="fk_human_survey_group_question_0" to_schema="public" to_table="human_survey_question" >
-				<fk_column name="human_survey_question_id" pk="human_survey_question_id" />
-			</fk>
-		</table>
-		<table name="human_survey_question" >
-			<comment>Stores the human survey questions</comment>
-			<column name="human_survey_question_id" type="bigserial" jt="-5" mandatory="y" >
-				<comment><![CDATA[The unique question ID]]></comment>
-			</column>
-			<column name="american" type="varchar" jt="12" >
-				<comment><![CDATA[The american english version of the question]]></comment>
-			</column>
-			<column name="british" type="varchar" jt="12" >
-				<comment><![CDATA[The british english version of the question]]></comment>
-			</column>
-			<index name="pk_human_survey_question" unique="PRIMARY_KEY" >
-				<column name="human_survey_question_id" />
-			</index>
-		</table>
-		<table name="human_survey_question_group" >
-			<column name="group_order" type="integer" jt="4" mandatory="y" >
-				<comment><![CDATA[The order that this group will be displayed in]]></comment>
-			</column>
-			<column name="american_name" type="varchar" jt="12" >
-				<comment><![CDATA[The american english version of the question group's name]]></comment>
-			</column>
-			<column name="british_name" type="varchar" jt="12" />
-			<index name="pk_human_survey_question_group" unique="PRIMARY_KEY" >
-				<column name="group_order" />
-			</index>
-		</table>
-		<table name="human_survey_question_response" >
-			<comment>Maps questions to responses</comment>
-			<column name="human_survey_question_id" type="bigint" jt="-5" mandatory="y" />
-			<column name="response" type="varchar" jt="12" mandatory="y" />
-			<index name="pk_question_response" unique="PRIMARY_KEY" >
-				<column name="human_survey_question_id" />
-				<column name="response" />
-			</index>
-			<index name="idx_question_response" unique="UNIQUE" >
-				<column name="response" />
-			</index>
-			<index name="idx_question_response_0" unique="UNIQUE" >
-				<column name="human_survey_question_id" />
-			</index>
-			<fk name="fk_question_response" to_schema="public" to_table="human_survey_response" >
-				<fk_column name="response" pk="american" />
-			</fk>
-			<fk name="fk_question_response_0" to_schema="public" to_table="human_survey_question" >
-				<fk_column name="human_survey_question_id" pk="human_survey_question_id" />
-			</fk>
-		</table>
-		<table name="human_survey_question_response_type" >
-			<comment>Stores the type of response for each question</comment>
-			<column name="human_survey_question_id" type="bigint" jt="-5" />
-			<column name="human_survey_response_type" type="varchar" jt="12" mandatory="y" />
-			<index name="idx_human_survey_response_type" unique="NORMAL" >
-				<column name="human_survey_question_id" />
-			</index>
-			<index name="idx_human_survey_question_response_type" unique="NORMAL" >
-				<column name="human_survey_response_type" />
-			</index>
-			<fk name="fk_human_survey_response_type" to_schema="public" to_table="human_survey_question" >
-				<fk_column name="human_survey_question_id" pk="human_survey_question_id" />
-			</fk>
-			<fk name="fk_human_survey_question_response_type" to_schema="public" to_table="human_survey_response_types" >
-				<fk_column name="human_survey_response_type" pk="human_survey_response_type" />
-			</fk>
-		</table>
-		<table name="human_survey_question_triggered_by" >
-			<comment>Which responses to the question trigger the appearance of this question</comment>
-			<column name="human_survey_question_id" type="bigint" jt="-5" >
-				<comment><![CDATA[The ID of the question that is triggered]]></comment>
-			</column>
-			<column name="trigger_question" type="bigint" jt="-5" >
-				<comment><![CDATA[The question that might trigger the appearance of this question]]></comment>
-			</column>
-			<column name="trigger_response" type="varchar" jt="12" >
-				<comment><![CDATA[The response to the trigger_question that will cause the appearance of this question]]></comment>
-			</column>
-			<index name="idx_human_survey_question_triggered_by" unique="NORMAL" >
-				<column name="human_survey_question_id" />
-			</index>
-			<index name="idx_human_survey_question_triggered_by_0" unique="NORMAL" >
-				<column name="trigger_question" />
-			</index>
-			<index name="idx_human_survey_question_triggered_by_1" unique="NORMAL" >
-				<column name="trigger_response" />
-			</index>
-			<fk name="fk_human_survey_question_triggered_by" to_schema="public" to_table="human_survey_question" >
-				<fk_column name="human_survey_question_id" pk="human_survey_question_id" />
-			</fk>
-			<fk name="fk_human_survey_question_triggered_by_0" to_schema="public" to_table="human_survey_question_response" >
-				<fk_column name="trigger_question" pk="human_survey_question_id" />
-			</fk>
-			<fk name="fk_human_survey_question_triggered_by_1" to_schema="public" to_table="human_survey_question_response" >
-				<fk_column name="trigger_response" pk="response" />
-			</fk>
-		</table>
-		<table name="human_survey_response" >
-			<comment>Stores every possible predictable response on the human survey</comment>
-			<column name="american" type="varchar" jt="12" mandatory="y" />
-			<column name="british" type="varchar" jt="12" />
-			<index name="pk_human_survey_response" unique="PRIMARY_KEY" >
-				<column name="american" />
-			</index>
-		</table>
-		<table name="human_survey_response_types" >
-			<comment>Stores every possible type of response.  The response type will be processed in python to determine how the question is represented in the interface.</comment>
-			<column name="human_survey_response_type" type="varchar" jt="12" mandatory="y" />
-			<index name="pk_human_survey_response_types" unique="PRIMARY_KEY" >
-				<column name="human_survey_response_type" />
-			</index>
-		</table>
 		<table name="plate" >
 			<column name="plate_id" type="bigint" length="19" jt="-5" mandatory="y" />
 			<column name="plate" type="varchar" length="50" jt="12" />
@@ -21124,6 +20994,158 @@ AS $function$xpath_exists$function$
 				<fk_column name="project_id" pk="project_id" />
 			</fk>
 		</table>
+		<table name="survey_group_question" >
+			<column name="survey_group" type="integer" jt="4" mandatory="y" />
+			<column name="survey_question_id" type="bigint" jt="-5" mandatory="y" />
+			<index name="pk_human_survey_group_question" unique="PRIMARY_KEY" >
+				<column name="survey_group" />
+				<column name="survey_question_id" />
+			</index>
+			<index name="idx_human_survey_group_question" unique="NORMAL" >
+				<column name="survey_group" />
+			</index>
+			<index name="idx_human_survey_group_question_0" unique="NORMAL" >
+				<column name="survey_question_id" />
+			</index>
+			<fk name="fk_human_survey_group_question" to_schema="public" to_table="survey_question_group" >
+				<fk_column name="survey_group" pk="group_order" />
+			</fk>
+			<fk name="fk_human_survey_group_question_0" to_schema="public" to_table="survey_question" >
+				<fk_column name="survey_question_id" pk="survey_question_id" />
+			</fk>
+		</table>
+		<table name="survey_question" >
+			<comment>Stores the human survey questions</comment>
+			<column name="survey_question_id" type="bigserial" jt="-5" mandatory="y" >
+				<comment><![CDATA[The unique question ID]]></comment>
+			</column>
+			<column name="american" type="varchar" jt="12" >
+				<comment><![CDATA[The american english version of the question]]></comment>
+			</column>
+			<column name="british" type="varchar" jt="12" >
+				<comment><![CDATA[The british english version of the question]]></comment>
+			</column>
+			<index name="pk_human_survey_question" unique="PRIMARY_KEY" >
+				<column name="survey_question_id" />
+			</index>
+		</table>
+		<table name="survey_question_group" >
+			<column name="survey_type" type="varchar" jt="12" mandatory="y" >
+				<comment><![CDATA[human, animal, etc]]></comment>
+			</column>
+			<column name="group_order" type="integer" jt="4" mandatory="y" >
+				<comment><![CDATA[The order that this group will be displayed in]]></comment>
+			</column>
+			<column name="american_name" type="varchar" jt="12" >
+				<comment><![CDATA[The american english version of the question group's name]]></comment>
+			</column>
+			<column name="british_name" type="varchar" jt="12" />
+			<index name="idx_human_survey_question_group" unique="UNIQUE" >
+				<column name="american_name" />
+			</index>
+			<index name="idx_human_survey_question_group_0" unique="UNIQUE" >
+				<column name="british_name" />
+			</index>
+			<index name="idx_human_survey_question_group_1" unique="NORMAL" >
+				<column name="survey_type" />
+			</index>
+			<index name="pk_human_survey_question_group" unique="PRIMARY_KEY" >
+				<column name="group_order" />
+				<column name="survey_type" />
+			</index>
+		</table>
+		<table name="survey_question_response" >
+			<comment>Maps questions to responses</comment>
+			<column name="survey_question_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="response" type="varchar" jt="12" mandatory="y" />
+			<column name="display_index" type="serial" jt="4" >
+				<comment><![CDATA[The display order of this response]]></comment>
+			</column>
+			<index name="pk_question_response" unique="PRIMARY_KEY" >
+				<column name="survey_question_id" />
+				<column name="response" />
+			</index>
+			<index name="idx_question_response" unique="UNIQUE" >
+				<column name="response" />
+			</index>
+			<index name="idx_question_response_0" unique="UNIQUE" >
+				<column name="survey_question_id" />
+			</index>
+			<index name="idx_human_survey_question_response" unique="UNIQUE" >
+				<column name="display_index" />
+			</index>
+			<fk name="fk_question_response" to_schema="public" to_table="survey_response" >
+				<fk_column name="response" pk="american" />
+			</fk>
+			<fk name="fk_question_response_0" to_schema="public" to_table="survey_question" >
+				<fk_column name="survey_question_id" pk="survey_question_id" />
+			</fk>
+		</table>
+		<table name="survey_question_response_type" >
+			<comment>Stores the type of response for each question</comment>
+			<column name="survey_question_id" type="bigint" jt="-5" />
+			<column name="survey_response_type" type="varchar" jt="12" mandatory="y" />
+			<index name="idx_human_survey_response_type" unique="NORMAL" >
+				<column name="survey_question_id" />
+			</index>
+			<index name="idx_human_survey_question_response_type" unique="NORMAL" >
+				<column name="survey_response_type" />
+			</index>
+			<fk name="fk_human_survey_response_type" to_schema="public" to_table="survey_question" >
+				<fk_column name="survey_question_id" pk="survey_question_id" />
+			</fk>
+			<fk name="fk_human_survey_question_response_type" to_schema="public" to_table="survey_response_types" >
+				<fk_column name="survey_response_type" pk="survey_response_type" />
+			</fk>
+		</table>
+		<table name="survey_question_triggered_by" >
+			<comment>Which responses to the question trigger the appearance of this question</comment>
+			<column name="survey_question_id" type="bigint" jt="-5" >
+				<comment><![CDATA[The ID of the question that is triggered]]></comment>
+			</column>
+			<column name="trigger_question" type="bigint" jt="-5" >
+				<comment><![CDATA[The question that might trigger the appearance of this question]]></comment>
+			</column>
+			<column name="trigger_response" type="varchar" jt="12" >
+				<comment><![CDATA[The response to the trigger_question that will cause the appearance of this question]]></comment>
+			</column>
+			<index name="idx_human_survey_question_triggered_by" unique="NORMAL" >
+				<column name="survey_question_id" />
+			</index>
+			<index name="idx_human_survey_question_triggered_by_0" unique="NORMAL" >
+				<column name="trigger_question" />
+			</index>
+			<index name="idx_human_survey_question_triggered_by_1" unique="NORMAL" >
+				<column name="trigger_response" />
+			</index>
+			<fk name="fk_human_survey_question_triggered_by" to_schema="public" to_table="survey_question" >
+				<fk_column name="survey_question_id" pk="survey_question_id" />
+			</fk>
+			<fk name="fk_human_survey_question_triggered_by_0" to_schema="public" to_table="survey_question_response" >
+				<fk_column name="trigger_question" pk="survey_question_id" />
+			</fk>
+			<fk name="fk_human_survey_question_triggered_by_1" to_schema="public" to_table="survey_question_response" >
+				<fk_column name="trigger_response" pk="response" />
+			</fk>
+		</table>
+		<table name="survey_response" >
+			<comment>Stores every possible predictable response on the human survey</comment>
+			<column name="american" type="varchar" jt="12" mandatory="y" />
+			<column name="british" type="varchar" jt="12" />
+			<index name="pk_human_survey_response" unique="PRIMARY_KEY" >
+				<column name="american" />
+			</index>
+			<index name="idx_human_survey_response" unique="UNIQUE" >
+				<column name="british" />
+			</index>
+		</table>
+		<table name="survey_response_types" >
+			<comment>Stores every possible type of response.  The response type will be processed in python to determine how the question is represented in the interface.</comment>
+			<column name="survey_response_type" type="varchar" jt="12" mandatory="y" />
+			<index name="pk_human_survey_response_types" unique="PRIMARY_KEY" >
+				<column name="survey_response_type" />
+			</index>
+		</table>
 		<table name="zipcodes" >
 			<column name="zipcode" type="varchar" length="5" jt="12" mandatory="y" />
 			<column name="state" type="varchar" length="2" jt="12" mandatory="y" />
@@ -21166,14 +21188,14 @@ AS $function$xpath_exists$function$
 		<entity schema="public" name="plate_barcode" color="c6d9f7" x="1365" y="510" />
 		<entity schema="public" name="project_barcode" color="c6d9f7" x="1365" y="390" />
 		<entity schema="public" name="project" color="c6d9f7" x="1560" y="390" />
-		<entity schema="public" name="human_survey_question_group" color="a8c4ef" x="210" y="1590" />
-		<entity schema="public" name="human_survey_group_question" color="ffcccc" x="465" y="1590" />
-		<entity schema="public" name="human_survey_question" color="a8c4ef" x="465" y="1770" />
-		<entity schema="public" name="human_survey_question_response" color="ffcccc" x="720" y="1755" />
-		<entity schema="public" name="human_survey_question_triggered_by" color="a8c4ef" x="690" y="1650" />
-		<entity schema="public" name="human_survey_response" color="a8c4ef" x="720" y="1860" />
-		<entity schema="public" name="human_survey_question_response_type" color="ffcccc" x="720" y="1950" />
-		<entity schema="public" name="human_survey_response_types" color="ffffff" x="1020" y="1965" />
+		<entity schema="public" name="survey_question" color="a8c4ef" x="450" y="1755" />
+		<entity schema="public" name="survey_question_triggered_by" color="a8c4ef" x="675" y="1650" />
+		<entity schema="public" name="survey_question_response" color="ffcccc" x="720" y="1755" />
+		<entity schema="public" name="survey_response" color="a8c4ef" x="720" y="1860" />
+		<entity schema="public" name="survey_question_response_type" color="ffcccc" x="720" y="1950" />
+		<entity schema="public" name="survey_response_types" color="ffffff" x="1020" y="1965" />
+		<entity schema="public" name="survey_group_question" color="ffcccc" x="330" y="1590" />
+		<entity schema="public" name="survey_question_group" color="a8c4ef" x="75" y="1590" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by : 
    american_gut_consent</comment>
@@ -21210,14 +21232,14 @@ AS $function$xpath_exists$function$
 			<entity schema="public" name="barcode" />
 		</group>
 		<group name="human_survey_questions" color="c4e0f9" >
-			<entity schema="public" name="human_survey_question_response_type" />
-			<entity schema="public" name="human_survey_response" />
-			<entity schema="public" name="human_survey_response_types" />
-			<entity schema="public" name="human_survey_group_question" />
-			<entity schema="public" name="human_survey_question" />
-			<entity schema="public" name="human_survey_question_triggered_by" />
-			<entity schema="public" name="human_survey_question_group" />
-			<entity schema="public" name="human_survey_question_response" />
+			<entity schema="public" name="survey_question_response_type" />
+			<entity schema="public" name="survey_response" />
+			<entity schema="public" name="survey_response_types" />
+			<entity schema="public" name="survey_group_question" />
+			<entity schema="public" name="survey_question" />
+			<entity schema="public" name="survey_question_triggered_by" />
+			<entity schema="public" name="survey_question_group" />
+			<entity schema="public" name="survey_question_response" />
 		</group>
 	</layout>
 </project>
