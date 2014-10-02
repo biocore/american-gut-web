@@ -152,6 +152,19 @@ CREATE TABLE ag.project_barcode (
 	CONSTRAINT fk_pb_to_project FOREIGN KEY ( project_id ) REFERENCES ag.project( project_id )    
  );
 
+CREATE TABLE ag.survey_group ( 
+	group_order          integer  NOT NULL,
+	american_name        varchar  ,
+	british_name         varchar  ,
+	CONSTRAINT idx_human_survey_question_group UNIQUE ( american_name ) ,
+	CONSTRAINT idx_human_survey_question_group_0 UNIQUE ( british_name ) ,
+	CONSTRAINT pk_human_survey_question_group PRIMARY KEY ( group_order )
+ );
+
+COMMENT ON COLUMN ag.survey_group.group_order IS 'The order that this group will be displayed in';
+
+COMMENT ON COLUMN ag.survey_group.american_name IS 'The american english version of the question group`s name';
+
 CREATE TABLE ag.survey_question ( 
 	survey_question_id   bigserial  NOT NULL,
 	american             varchar  ,
@@ -166,24 +179,6 @@ COMMENT ON COLUMN ag.survey_question.survey_question_id IS 'The unique question 
 COMMENT ON COLUMN ag.survey_question.american IS 'The american english version of the question';
 
 COMMENT ON COLUMN ag.survey_question.british IS 'The british english version of the question';
-
-CREATE TABLE ag.survey_question_group ( 
-	survey_type          varchar  NOT NULL,
-	group_order          integer  NOT NULL,
-	american_name        varchar  ,
-	british_name         varchar  ,
-	CONSTRAINT idx_human_survey_question_group UNIQUE ( american_name ) ,
-	CONSTRAINT idx_human_survey_question_group_0 UNIQUE ( british_name ) ,
-	CONSTRAINT pk_human_survey_question_group PRIMARY KEY ( group_order, survey_type )
- );
-
-CREATE INDEX idx_human_survey_question_group_1 ON ag.survey_question_group ( survey_type );
-
-COMMENT ON COLUMN ag.survey_question_group.survey_type IS 'human, animal, etc';
-
-COMMENT ON COLUMN ag.survey_question_group.group_order IS 'The order that this group will be displayed in';
-
-COMMENT ON COLUMN ag.survey_question_group.american_name IS 'The american english version of the question group`s name';
 
 CREATE TABLE ag.survey_response ( 
 	american             varchar  NOT NULL,
@@ -200,6 +195,15 @@ CREATE TABLE ag.survey_response_types (
  );
 
 COMMENT ON TABLE ag.survey_response_types IS 'Stores every possible type of response.  The response type will be processed in python to determine how the question is represented in the interface.';
+
+CREATE TABLE ag.surveys ( 
+	survey_id            integer  NOT NULL,
+	survey_group         integer  NOT NULL,
+	CONSTRAINT idx_surveys_0 PRIMARY KEY ( survey_id, survey_group ),
+	CONSTRAINT fk_surveys FOREIGN KEY ( survey_group ) REFERENCES ag.survey_group( group_order )    
+ );
+
+CREATE INDEX idx_surveys ON ag.surveys ( survey_group );
 
 CREATE TABLE ag.zipcodes ( 
 	zipcode              varchar(5)  NOT NULL,
@@ -414,17 +418,17 @@ CREATE TABLE ag.controlled_vocab_values (
 	CONSTRAINT fk_cont_vcb_values_cont_vcbs FOREIGN KEY ( controlled_vocab_id ) REFERENCES ag.controlled_vocabs( controlled_vocab_id )    
  );
 
-CREATE TABLE ag.survey_group_question ( 
+CREATE TABLE ag.group_questions ( 
 	survey_group         integer  NOT NULL,
 	survey_question_id   bigint  NOT NULL,
 	CONSTRAINT pk_human_survey_group_question PRIMARY KEY ( survey_group, survey_question_id ),
-	CONSTRAINT fk_human_survey_group_question FOREIGN KEY ( survey_group ) REFERENCES ag.survey_question_group( group_order )    ,
+	CONSTRAINT fk_human_survey_group_question FOREIGN KEY ( survey_group ) REFERENCES ag.survey_group( group_order )    ,
 	CONSTRAINT fk_human_survey_group_question_0 FOREIGN KEY ( survey_question_id ) REFERENCES ag.survey_question( survey_question_id )    
  );
 
-CREATE INDEX idx_human_survey_group_question ON ag.survey_group_question ( survey_group );
+CREATE INDEX idx_human_survey_group_question ON ag.group_questions ( survey_group );
 
-CREATE INDEX idx_human_survey_group_question_0 ON ag.survey_group_question ( survey_question_id );
+CREATE INDEX idx_human_survey_group_question_0 ON ag.group_questions ( survey_question_id );
 
 CREATE TABLE ag.survey_question_response ( 
 	survey_question_id   bigint  NOT NULL,

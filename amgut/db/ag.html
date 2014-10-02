@@ -202,9 +202,9 @@
 <text x='700' y='25'>controlled_vocab_values</text>
 <rect style='fill:url(#groupUnderTitleLine); stroke-width:2;' x='700' y='28' width='595' height='2' />
 
-<!-- ============= Group 'human_survey_questions' ============= -->
+<!-- ============= Group 'survey_questions' ============= -->
 <rect class='grp' style='fill:#c4e0f9;' x='59' y='1555' width='1127' height='485' />
-<text x='70' y='1570'>human_survey_questions</text>
+<text x='70' y='1570'>survey_questions</text>
 <rect style='fill:url(#groupUnderTitleLine); stroke-width:2;' x='70' y='1573' width='1105' height='2' />
 
 <path transform='translate(7,0)' marker-start='url(#foot)'     d='M 855 945 L 862,945 Q 870,945 870,937 L 870,855' >
@@ -307,17 +307,22 @@
 	survey_question_response_type references survey_response_types ( survey_response_type )</title>
 </path>
 <text x='922' y='1990' transform='rotate(0 922,1990)' title='Foreign Key fk_human_survey_question_response_type
-	survey_question_response_type references survey_response_types ( survey_response_type )' style='fill:#a1a0a0;'>survey_response_type</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 315 1620 L 247,1620 Q 240,1620 240,1627 L 240,1627 Q 240,1635 232,1635 L 225,1635' >
+	survey_question_response_type references survey_response_types ( survey_response_type )' style='fill:#a1a0a0;'>survey_response_type</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 315 1620 L 195,1620' >
 	<title>Foreign Key fk_human_survey_group_question
-	survey_group_question references survey_question_group ( survey_group -> group_order )</title>
+	group_questions references survey_group ( survey_group -> group_order )</title>
 </path>
 <text x='242' y='1615' transform='rotate(0 242,1615)' title='Foreign Key fk_human_survey_group_question
-	survey_group_question references survey_question_group ( survey_group -> group_order )' style='fill:#a1a0a0;'>survey_group</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 480 1635 L 592,1635 Q 600,1635 600,1642 L 600,1777 Q 600,1785 592,1785 L 585,1785' >
+	group_questions references survey_group ( survey_group -> group_order )' style='fill:#a1a0a0;'>survey_group</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 465 1635 L 592,1635 Q 600,1635 600,1642 L 600,1777 Q 600,1785 592,1785 L 585,1785' >
 	<title>Foreign Key fk_human_survey_group_question_0
-	survey_group_question references survey_question ( survey_question_id )</title>
+	group_questions references survey_question ( survey_question_id )</title>
 </path>
-<text x='487' y='1630' transform='rotate(0 487,1630)' title='Foreign Key fk_human_survey_group_question_0
-	survey_group_question references survey_question ( survey_question_id )' style='fill:#a1a0a0;'>survey_question_id</text><!-- ============= Table 'ag_handout_kits' ============= -->
+<text x='472' y='1630' transform='rotate(0 472,1630)' title='Foreign Key fk_human_survey_group_question_0
+	group_questions references survey_question ( survey_question_id )' style='fill:#a1a0a0;'>survey_question_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 180 1800 L 202,1800 Q 210,1800 210,1792 L 210,1627 Q 210,1620 202,1620 L 195,1620' >
+	<title>Foreign Key fk_surveys
+	surveys references survey_group ( survey_group -> group_order )</title>
+</path>
+<text x='187' y='1795' transform='rotate(0 187,1795)' title='Foreign Key fk_surveys
+	surveys references survey_group ( survey_group -> group_order )' style='fill:#a1a0a0;'>survey_group</text><!-- ============= Table 'ag_handout_kits' ============= -->
 <rect class='table' x='210' y='503' width='150' height='150' rx='7' ry='7' />
 <path d='M 210.50 529.50 L 210.50 510.50 Q 210.50 503.50 217.50 503.50 L 352.50 503.50 Q 359.50 503.50 359.50 510.50 L 359.50 529.50 L210.50 529.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
 <a xlink:href='#ag_handout_kits'><text x='240' y='517' class='tableTitle'>ag_handout_kits</text><title>Table ag.ag_handout_kits</title></a>
@@ -744,7 +749,7 @@ Stores the human survey questions</title></a>
   <use id='nn' x='452' y='1782' xlink:href='#nn'/><a xlink:href='#survey_question_id'><use id='pk' x='452' y='1781' xlink:href='#pk'/><title>Primary Key  ( survey_question_id ) </title></a>
 <a xlink:href='#survey_question_id'><text x='468' y='1792'>survey_question_id</text><title>survey_question_id bigserial not null
 The unique question ID</title></a>
-<a xlink:href='#survey_question_id'><use id='ref' x='573' y='1781' xlink:href='#ref'/><title>Referred by survey_group_question ( survey_question_id ) 
+<a xlink:href='#survey_question_id'><use id='ref' x='573' y='1781' xlink:href='#ref'/><title>Referred by group_questions ( survey_question_id ) 
 Referred by survey_question_response ( survey_question_id ) 
 Referred by survey_question_response_type ( survey_question_id ) 
 Referred by survey_question_triggered_by ( survey_question_id ) </title></a>
@@ -820,33 +825,42 @@ Stores every possible type of response&#046;  The response type will be processe
 <a xlink:href='#survey_response_type'><text x='1038' y='2002'>survey_response_type</text><title>survey_response_type varchar not null</title></a>
 <a xlink:href='#survey_response_type'><use id='ref' x='1158' y='1991' xlink:href='#ref'/><title>Referred by survey_question_response_type ( survey_response_type ) </title></a>
 
-<!-- ============= Table 'survey_group_question' ============= -->
-<rect class='table' x='330' y='1583' width='150' height='75' rx='7' ry='7' />
-<path d='M 330.50 1609.50 L 330.50 1590.50 Q 330.50 1583.50 337.50 1583.50 L 472.50 1583.50 Q 479.50 1583.50 479.50 1590.50 L 479.50 1609.50 L330.50 1609.50 ' style='fill:url(#tableHeaderGradient5); stroke:none;' />
-<a xlink:href='#survey_group_question'><text x='341' y='1597' class='tableTitle'>survey_group_question</text><title>Table ag.survey_group_question</title></a>
+<!-- ============= Table 'survey_group' ============= -->
+<rect class='table' x='75' y='1583' width='120' height='90' rx='7' ry='7' />
+<path d='M 75.50 1609.50 L 75.50 1590.50 Q 75.50 1583.50 82.50 1583.50 L 187.50 1583.50 Q 194.50 1583.50 194.50 1590.50 L 194.50 1609.50 L75.50 1609.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
+<a xlink:href='#survey_group'><text x='97' y='1597' class='tableTitle'>survey_group</text><title>Table ag.survey_group</title></a>
+  <use id='nn' x='77' y='1617' xlink:href='#nn'/><a xlink:href='#group_order'><use id='pk' x='77' y='1616' xlink:href='#pk'/><title>Primary Key  ( group_order ) </title></a>
+<a xlink:href='#group_order'><text x='93' y='1627'>group_order</text><title>group_order integer not null
+The order that this group will be displayed in</title></a>
+<a xlink:href='#group_order'><use id='ref' x='183' y='1616' xlink:href='#ref'/><title>Referred by group_questions ( survey_group -> group_order ) 
+Referred by surveys ( survey_group -> group_order ) 
+Referred by surveys ( survey_group -> group_order ) </title></a>
+  <a xlink:href='#american_name'><use id='unq' x='77' y='1631' xlink:href='#unq'/><title>Unique Index  ( american_name ) </title></a>
+<a xlink:href='#american_name'><text x='93' y='1642'>american_name</text><title>american_name varchar
+The american english version of the question group&#039;s name</title></a>
+  <a xlink:href='#british_name'><use id='unq' x='77' y='1646' xlink:href='#unq'/><title>Unique Index  ( british_name ) </title></a>
+<a xlink:href='#british_name'><text x='93' y='1657'>british_name</text><title>british_name varchar</title></a>
+
+<!-- ============= Table 'group_questions' ============= -->
+<rect class='table' x='330' y='1583' width='135' height='75' rx='7' ry='7' />
+<path d='M 330.50 1609.50 L 330.50 1590.50 Q 330.50 1583.50 337.50 1583.50 L 457.50 1583.50 Q 464.50 1583.50 464.50 1590.50 L 464.50 1609.50 L330.50 1609.50 ' style='fill:url(#tableHeaderGradient5); stroke:none;' />
+<a xlink:href='#group_questions'><text x='351' y='1597' class='tableTitle'>group_questions</text><title>Table ag.group_questions</title></a>
   <use id='nn' x='332' y='1617' xlink:href='#nn'/><a xlink:href='#survey_group'><use id='pk' x='332' y='1616' xlink:href='#pk'/><title>Primary Key  ( survey_group, survey_question_id ) Index  ( survey_group ) </title></a>
 <a xlink:href='#survey_group'><text x='348' y='1627'>survey_group</text><title>survey_group integer not null</title></a>
-<a xlink:href='#survey_group'><use id='fk' x='468' y='1616' xlink:href='#fk'/><title>References survey_question_group ( survey_group -> group_order ) </title></a>
+<a xlink:href='#survey_group'><use id='fk' x='453' y='1616' xlink:href='#fk'/><title>References survey_group ( survey_group -> group_order ) </title></a>
   <use id='nn' x='332' y='1632' xlink:href='#nn'/><a xlink:href='#survey_question_id'><use id='pk' x='332' y='1631' xlink:href='#pk'/><title>Primary Key  ( survey_group, survey_question_id ) Index  ( survey_question_id ) </title></a>
 <a xlink:href='#survey_question_id'><text x='348' y='1642'>survey_question_id</text><title>survey_question_id bigint not null</title></a>
-<a xlink:href='#survey_question_id'><use id='fk' x='468' y='1631' xlink:href='#fk'/><title>References survey_question ( survey_question_id ) </title></a>
+<a xlink:href='#survey_question_id'><use id='fk' x='453' y='1631' xlink:href='#fk'/><title>References survey_question ( survey_question_id ) </title></a>
 
-<!-- ============= Table 'survey_question_group' ============= -->
-<rect class='table' x='75' y='1583' width='150' height='105' rx='7' ry='7' />
-<path d='M 75.50 1609.50 L 75.50 1590.50 Q 75.50 1583.50 82.50 1583.50 L 217.50 1583.50 Q 224.50 1583.50 224.50 1590.50 L 224.50 1609.50 L75.50 1609.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
-<a xlink:href='#survey_question_group'><text x='86' y='1597' class='tableTitle'>survey_question_group</text><title>Table ag.survey_question_group</title></a>
-  <use id='nn' x='77' y='1617' xlink:href='#nn'/><a xlink:href='#survey_type'><use id='pk' x='77' y='1616' xlink:href='#pk'/><title>Index  ( survey_type ) Primary Key  ( group_order, survey_type ) </title></a>
-<a xlink:href='#survey_type'><text x='93' y='1627'>survey_type</text><title>survey_type varchar not null
-human&#044; animal&#044; etc</title></a>
-  <use id='nn' x='77' y='1632' xlink:href='#nn'/><a xlink:href='#group_order'><use id='pk' x='77' y='1631' xlink:href='#pk'/><title>Primary Key  ( group_order, survey_type ) </title></a>
-<a xlink:href='#group_order'><text x='93' y='1642'>group_order</text><title>group_order integer not null
-The order that this group will be displayed in</title></a>
-<a xlink:href='#group_order'><use id='ref' x='213' y='1631' xlink:href='#ref'/><title>Referred by survey_group_question ( survey_group -> group_order ) </title></a>
-  <a xlink:href='#american_name'><use id='unq' x='77' y='1646' xlink:href='#unq'/><title>Unique Index  ( american_name ) </title></a>
-<a xlink:href='#american_name'><text x='93' y='1657'>american_name</text><title>american_name varchar
-The american english version of the question group&#039;s name</title></a>
-  <a xlink:href='#british_name'><use id='unq' x='77' y='1661' xlink:href='#unq'/><title>Unique Index  ( british_name ) </title></a>
-<a xlink:href='#british_name'><text x='93' y='1672'>british_name</text><title>british_name varchar</title></a>
+<!-- ============= Table 'surveys' ============= -->
+<rect class='table' x='75' y='1748' width='105' height='75' rx='7' ry='7' />
+<path d='M 75.50 1774.50 L 75.50 1755.50 Q 75.50 1748.50 82.50 1748.50 L 172.50 1748.50 Q 179.50 1748.50 179.50 1755.50 L 179.50 1774.50 L75.50 1774.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
+<a xlink:href='#surveys'><text x='106' y='1762' class='tableTitle'>surveys</text><title>Table ag.surveys</title></a>
+  <use id='nn' x='77' y='1782' xlink:href='#nn'/><a xlink:href='#survey_id'><use id='pk' x='77' y='1781' xlink:href='#pk'/><title>Primary Key  ( survey_id, survey_group ) </title></a>
+<a xlink:href='#survey_id'><text x='93' y='1792'>survey_id</text><title>survey_id integer not null</title></a>
+  <use id='nn' x='77' y='1797' xlink:href='#nn'/><a xlink:href='#survey_group'><use id='pk' x='77' y='1796' xlink:href='#pk'/><title>Index  ( survey_group ) Primary Key  ( survey_id, survey_group ) </title></a>
+<a xlink:href='#survey_group'><text x='93' y='1807'>survey_group</text><title>survey_group integer not null</title></a>
+<a xlink:href='#survey_group'><use id='fk' x='168' y='1796' xlink:href='#fk'/><title>References survey_group ( survey_group -> group_order ) </title></a>
 
 </g></svg>
 
@@ -2728,7 +2742,44 @@ The american english version of the question group&#039;s name</title></a>
 <br/><br/>
 <table id='dbs' >
 <thead>
-<tr><th colspan='3'><a name='survey_group_question'>survey_group_question</a></th></tr>
+<tr><th colspan='3'><a name='survey_group'>survey_group</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='group_order'>group&#095;order</a></td>
+		<td width='40%'> integer  NOT NULL  </td>
+		<td width='99%'> The order that this group will be displayed in </td>
+	</tr>
+	<tr>
+		<td><a name='american_name'>american&#095;name</a></td>
+		<td width='40%'> varchar   </td>
+		<td width='99%'> The american english version of the question group&#039;s name </td>
+	</tr>
+	<tr>
+		<td><a name='british_name'>british&#095;name</a></td>
+		<td width='40%'> varchar   </td>
+		<td width='99%'>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
+	<tr>		<td>idx&#095;human&#095;survey&#095;question&#095;group unique</td>
+		<td> ON american&#095;name</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;human&#095;survey&#095;question&#095;group&#095;0 unique</td>
+		<td> ON british&#095;name</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>pk&#095;human&#095;survey&#095;question&#095;group primary key</td>
+		<td> ON group&#095;order</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table id='dbs' >
+<thead>
+<tr><th colspan='3'><a name='group_questions'>group_questions</a></th></tr>
 </thead>
 <tbody>
 	<tr>
@@ -2757,7 +2808,7 @@ The american english version of the question group&#039;s name</title></a>
 <tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
 	<tr>
 		<td>fk_human_survey_group_question</td>
-		<td > ( survey&#095;group ) ref <a href='#survey&#095;question&#095;group'>survey&#095;question&#095;group</a> (group&#095;order) </td>
+		<td > ( survey&#095;group ) ref <a href='#survey&#095;group'>survey&#095;group</a> (group&#095;order) </td>
 		<td>  </td>
 	</tr>
 	<tr>
@@ -2771,44 +2822,32 @@ The american english version of the question group&#039;s name</title></a>
 <br/><br/>
 <table id='dbs' >
 <thead>
-<tr><th colspan='3'><a name='survey_question_group'>survey_question_group</a></th></tr>
+<tr><th colspan='3'><a name='surveys'>surveys</a></th></tr>
 </thead>
 <tbody>
 	<tr>
-		<td><a name='survey_type'>survey&#095;type</a></td>
-		<td width='40%'> varchar  NOT NULL  </td>
-		<td width='99%'> human&#044; animal&#044; etc </td>
-	</tr>
-	<tr>
-		<td><a name='group_order'>group&#095;order</a></td>
+		<td><a name='survey_id'>survey&#095;id</a></td>
 		<td width='40%'> integer  NOT NULL  </td>
-		<td width='99%'> The order that this group will be displayed in </td>
+		<td width='99%'>  </td>
 	</tr>
 	<tr>
-		<td><a name='american_name'>american&#095;name</a></td>
-		<td width='40%'> varchar   </td>
-		<td width='99%'> The american english version of the question group&#039;s name </td>
-	</tr>
-	<tr>
-		<td><a name='british_name'>british&#095;name</a></td>
-		<td width='40%'> varchar   </td>
+		<td><a name='survey_group'>survey&#095;group</a></td>
+		<td width='40%'> integer  NOT NULL  </td>
 		<td width='99%'>  </td>
 	</tr>
 <tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
-	<tr>		<td>idx&#095;human&#095;survey&#095;question&#095;group unique</td>
-		<td> ON american&#095;name</td>
+	<tr>		<td>idx&#095;surveys </td>
+		<td> ON survey&#095;group</td>
 		<td>  </td>
 	</tr>
-	<tr>		<td>idx&#095;human&#095;survey&#095;question&#095;group&#095;0 unique</td>
-		<td> ON british&#095;name</td>
+	<tr>		<td>idx&#095;surveys&#095;0 primary key</td>
+		<td> ON survey&#095;id&#044; survey&#095;group</td>
 		<td>  </td>
 	</tr>
-	<tr>		<td>idx&#095;human&#095;survey&#095;question&#095;group&#095;1 </td>
-		<td> ON survey&#095;type</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>pk&#095;human&#095;survey&#095;question&#095;group primary key</td>
-		<td> ON group&#095;order&#044; survey&#095;type</td>
+<tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
+	<tr>
+		<td>fk_surveys</td>
+		<td > ( survey&#095;group ) ref <a href='#survey&#095;group'>survey&#095;group</a> (group&#095;order) </td>
 		<td>  </td>
 	</tr>
 </tbody>
