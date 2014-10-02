@@ -17,13 +17,13 @@
       ga('create', '{{media_locale["ANALYTICS_ID"]}}', 'auto');
       ga('send', 'pageview');
     </script>
-    <script src="/static/vendor/js/jquery-1.11.1.min.js"></script>
-    <script src="/static/vendor/js/jquery-ui-1.10.1.custom.min.js"></script>
-    <script src="/static/vendor/js/jquery.ui.timepicker.js"></script>
-    <script src="/static/js/american_gut.js"></script>
-    <link rel="stylesheet" type="text/css" href="/static/css/americangut.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/menu.css">
-    <link rel="stylesheet" type="text/css" href="/static/vendor/css/ui-lightness/jquery-ui-1.10.1.custom.min.css">
+    <script src="{% raw media_locale['SITEBASE'] %}/static/vendor/js/jquery-1.11.1.min.js"></script>
+    <script src="{% raw media_locale['SITEBASE'] %}/static/vendor/js/jquery-ui-1.10.1.custom.min.js"></script>
+    <script src="{% raw media_locale['SITEBASE'] %}/static/vendor/js/jquery.ui.timepicker.js"></script>
+    <script src="{% raw media_locale['SITEBASE'] %}/static/js/american_gut.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% raw media_locale['SITEBASE'] %}/static/css/americangut.css">
+    <link rel="stylesheet" type="text/css" href="{% raw media_locale['SITEBASE'] %}/static/css/menu.css">
+    <link rel="stylesheet" type="text/css" href="{% raw media_locale['SITEBASE'] %}/static/vendor/css/ui-lightness/jquery-ui-1.10.1.custom.min.css">
     <link rel="icon" type="image/ico" href="{% raw media_locale['FAVICON'] %}">
 {%block head%}
 {%end%}
@@ -43,9 +43,9 @@
                         <ul>
                             <li><a href="/faq/#faq0" target="_blank"><span>{% raw media_locale['NAV_MICROBIOME_101'] %}</span></a></li>
                             <li><a href="/faq/" target="_blank"><span>{% raw media_locale['NAV_FAQ'] %}</span></a></li>
-                            <li><a href="/static/img/FAQ_Human_Microbiome.pdf" target="_blank"><span>{% raw media_locale['NAV_MICROBIOME_FAQ'] %}</span></a></li>
+                            <li><a href="{% raw media_locale['SITEBASE'] %}/static/img/FAQ_Human_Microbiome.pdf" target="_blank"><span>{% raw media_locale['NAV_MICROBIOME_FAQ'] %}</span></a></li>
                             <li><a href="/authed/addendum/" target="_blank"><span>{% raw media_locale['NAV_ADDENDUM'] %}</span></a></li>
-                            <li class="last"><a href="/static/img/mod1_main.pdf" target="_blank"><span>{% raw media_locale['NAV_PRELIM_RESULTS'] %}</span></a></li>
+                            <li class="last"><a href="{% raw media_locale['SITEBASE'] %}/static/img/mod1_main.pdf" target="_blank"><span>{% raw media_locale['NAV_PRELIM_RESULTS'] %}</span></a></li>
                         </ul>
                     </li>
                     <li><a href="/authed/change_password/"><span>{% raw media_locale['NAV_CHANGE_PASSWORD'] %}</span></a></li>
