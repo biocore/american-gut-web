@@ -6,6 +6,7 @@ from tornado.websocket import WebSocketHandler
 
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.util import AG_DATA_ACCESS
+from amgut import text_locale
 
 
 class AnimalSurveyHandler(BaseHandler):
@@ -17,6 +18,7 @@ class AnimalSurveyHandler(BaseHandler):
     @authenticated
     def post(self):
         skid = self.current_user
+        tl = text_locale['handlers']
         participant_name = self.get_argument('animal_name')
 
         # Add values to tables
@@ -77,13 +79,15 @@ class AnimalSurveyHandler(BaseHandler):
             AG_DATA_ACCESS.insertAGMultiple(ag_login_id, participant_name,
                                             field, value)
 
-        message = urlencode([('errmsg', "Successfully added %s!" % participant_name)])
+        message = urlencode([('errmsg', tl['SUCCESSFULLY_ADDED'] %
+                              participant_name)])
         self.redirect('/authed/portal/?%s' % message)
 
 
 class CheckParticipantName(WebSocketHandler, BaseHandler):
     @authenticated
     def on_message(self, msg):
+        tl = text_locale['handlers']
         skid = self.current_user
         participant_name = msg
 
@@ -93,8 +97,7 @@ class CheckParticipantName(WebSocketHandler, BaseHandler):
 
         if participant_name in (human_participants + animal_participants):
             # if the participant already exists in the system, fail nicely
-            output_message = ('Participant %s already exists, please choose a '
-                              'different name!' % participant_name)
+            output_message = (tl['PARTICIPANT_EXISTS'] % participant_name)
         else:
             # otherwise, success!
             output_message = 'success'

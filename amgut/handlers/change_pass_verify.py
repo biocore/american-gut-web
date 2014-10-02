@@ -3,6 +3,7 @@ from urllib import unquote
 from amgut.lib.mail import send_email
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.util import AG_DATA_ACCESS
+from amgut import text_locale
 
 
 class ChangePassVerifyHandler(BaseHandler):
@@ -45,12 +46,10 @@ class ChangePassVerifyHandler(BaseHandler):
                              supplied_kit_id):
         AG_DATA_ACCESS.ag_update_kit_password(supplied_kit_id, new_password)
         latlongs = AG_DATA_ACCESS.getMapMarkers()
-        MESSAGE = ('This is a courtesy email to confirm that you have '
-                   'changed your password for your kit with ID %s. '
-                   'If you did not request this change, please email us '
-                   'immediately at info@americangut.org.' % supplied_kit_id)
+        tl = text_locale['handlers']
+        MESSAGE = tl['CHANGE_PASS_BODY'] % supplied_kit_id
         try:
-            send_email(MESSAGE, 'American Gut Password Reset', email)
+            send_email(MESSAGE, tl['CHANGE_PASS_SUBJECT'], email)
             self.render('change_pass_verify.html', email='', kitid='',
                         passocde='', new_password='',
                         confirm_password='', result=4, message='',

@@ -5,6 +5,7 @@ from random import choice
 from amgut.lib.mail import send_email
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.util import AG_DATA_ACCESS
+from amgut import text_locale
 
 
 class ForgotPasswordHandler(BaseHandler):
@@ -24,24 +25,19 @@ class ForgotPasswordHandler(BaseHandler):
     def create_passcode_and_send_email(self, email, kit_id):
         kitids = AG_DATA_ACCESS.getAGKitIDsByEmail(email)
         latlongs = AG_DATA_ACCESS.getMapMarkers()
+        tl = text_locale['handlers']
         #if the kit id matches the email generate and send an email
         if kit_id in kitids:
             alphabet = letters + digits
             new_act_code = ''.join([choice(alphabet) for i in range(20)])
             # add new pass to the database
             AG_DATA_ACCESS.ag_set_pass_change_code(email, kit_id, new_act_code)
-            MESSAGE = ('The password on American Gut Kit ID %s  has been reset'
-                       ' please click the link below within two hours\n'
-                       'http://microbio.me/americangut/change_pass_verify/?'
-                       'email=%s;kitid=%s;'
-                       'passcode=%s' % (kit_id,
-                                        quote(email),
-                                        kit_id,
-                                        quote(new_act_code)))
+            MESSAGE = (tl['RESET_PASS_BODY'] % (kit_id, quote(email), kit_id,
+                                                quote(new_act_code)))
 
             #send the user an email and tell them to change their password
             try:
-                    send_email(MESSAGE, 'American Gut Password Reset', email)
+                    send_email(MESSAGE, tl['CHANGE_PASS_SUBJECT'], email)
                     self.render('forgot_password.html', email='', kitid='',
                                 result=1, message='',
                                 latlongs_db=latlongs, loginerror='')
