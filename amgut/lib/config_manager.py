@@ -9,6 +9,7 @@
 from os.path import join, dirname, abspath, exists, isfile
 from os import environ
 from functools import partial
+import warnings
 
 from future import standard_library
 with standard_library.hooks():
@@ -23,6 +24,12 @@ class MissingConfigSection(ConfigParser_Error):
                                                    (section,))
         self.section = section
         self.args = (section,)
+
+
+def _warn_on_extra(extra, set_type):
+    extra = ', '.join(extra)
+    if extra:
+        warnings.warn("Extra %s found: %r" % (set_type, extra))
 
 
 class ConfigurationManager(object):
@@ -90,6 +97,8 @@ class ConfigurationManager(object):
         missing = _expected_sections - set(config.sections())
         if missing:
             raise MissingConfigSection(', '.join(missing))
+        extra = set(config.sections()) - _expected_sections
+        _warn_on_extra(extra, 'sections')
 
         self._get_main(config)
         self._get_postgres(config)
@@ -98,6 +107,11 @@ class ConfigurationManager(object):
 
     def _get_main(self, config):
         """Get the configuration of the main section"""
+        expected_options = {'name', 'shorthand', 'test_environment',
+                            'base_data_dir', 'locale'}
+        _warn_on_extra(set(config.options('main')) - expected_options,
+                       'main section option(s)')
+
         get = partial(config.get, 'main')
         getboolean = partial(config.getboolean, 'main')
 
@@ -112,6 +126,10 @@ class ConfigurationManager(object):
 
     def _get_postgres(self, config):
         """Get the configuration of the postgres section"""
+        expected_options = {'user', 'password', 'database', 'host', 'port'}
+        _warn_on_extra(set(config.options('postgres')) - expected_options,
+                       'postgres section option(s)')
+
         get = partial(config.get, 'postgres')
         getint = partial(config.getint, 'postgres')
 
@@ -129,6 +147,10 @@ class ConfigurationManager(object):
 
     def _get_test(self, config):
         """Get the configuration of the test section"""
+        expected_options = {'goodpassword', 'badpassword'}
+        _warn_on_extra(set(config.options('test')) - expected_options,
+                       'test section option(s)')
+
         get = partial(config.get, 'test')
 
         self.goodpassword = get('GOODPASSWORD')
@@ -136,6 +158,10 @@ class ConfigurationManager(object):
 
     def _get_redis(self, config):
         """Get the configuration of the redis section"""
+        expected_options = {'host', 'port', 'db_id'}
+        _warn_on_extra(set(config.options('redis')) - expected_options,
+                       'redis section option(s)')
+
         get = partial(config.get, 'redis')
         getint = partial(config.getint, 'redis')
 
