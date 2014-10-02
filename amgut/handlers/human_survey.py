@@ -8,6 +8,7 @@ from uuid import uuid4
 
 from amgut.util import AG_DATA_ACCESS
 from amgut.handlers.base_handlers import BaseHandler
+from amgut.lib.util import store_survey
 from amgut.lib.human_survey_supp import (
     responses_map, key_map, question_group, group_order, question_type,
     supplemental_map)
@@ -33,7 +34,8 @@ def make_human_survey_class(group):
 
         if question_type[question_id] == 'SINGLE':
             attrs[question_id] = SelectField(
-                question_id, choices=list(enumerate(responses)))
+                question_id, choices=list(enumerate(responses)),
+                coerce=lambda x:x)
 
         elif question_type[question_id] == 'MULTIPLE':
             attrs[question_id] = SelectMultipleField(
@@ -46,12 +48,11 @@ def make_human_survey_class(group):
 
 
 def make_supplemental_forms():
-    forms = {}
+    attrs = {}
     for key in tl:
         if key.startswith('SUPPLEMENTAL'):
-            attrs = {key: TextAreaField(key)}
-            forms[key] = type('SupplementalForm', (Form,), attrs)
-    return forms
+            attrs[key] = TextAreaField(key)
+    return type('SupplementalForm', (Form,), attrs)
 
 
 surveys = [make_human_survey_class(group) for group in group_order]
@@ -78,8 +79,13 @@ class HumanSurveyHandler(BaseHandler):
 
         if page_number >= 0:
             form_data = surveys[page_number]()
+            supp = supplementals()
+
             form_data.process(data=self.request.arguments)
-            r_server.hset(human_survey_id, page_number, dumps(form_data.data))
+            supp.process(data=self.request.arguments)
+
+            data = {'questions': form_data.data, 'supplemental': supp.data}
+            r_server.hset(human_survey_id, page_number, dumps(data))
 
         # if this is not the last page, render the next page
         if next_page_number < len(surveys):
@@ -88,16 +94,19 @@ class HumanSurveyHandler(BaseHandler):
             # TODO: populate the next form page from database values, if they
             # exist
             the_form = surveys[next_page_number]()
+            supp = supplementals()
+
             title = tl[group_order[next_page_number]+'_TITLE']
 
-            supplemental_instances = {k: s() for k, s in supplementals.items()}
             self.render('human_survey.html', the_form=the_form,
                         skid=self.current_user, TITLE=title,
                         supplemental_map=supplemental_map,
-                        supplementals=supplemental_instances,
+                        supplementals=supp,
                         page_number=next_page_number,
                         progress=int(100.0*(page_number+2)/len(group_order)))
         else:
             # TODO: insert into database
             self.clear_cookie('human_survey_id')
+            store_survey(human_survey_id)
+
             # TODO: redirect to portal or something
