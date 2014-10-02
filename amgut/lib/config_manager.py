@@ -6,7 +6,8 @@
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
 
-from os.path import join, dirname, abspath, exists
+from os.path import join, dirname, abspath, exists, isfile
+from os import environ
 from functools import partial
 
 from future import standard_library
@@ -49,10 +50,25 @@ class ConfigurationManager(object):
         The port that redis is running on
     redis_db_id : int
         The ID of the redis database
+
+    Raises
+    ------
+    IOError
+        If the AG_CONFIG environment variable is set, but does not point to an
+        existing file
+
+    Notes
+    -----
+    - The environment variable AG_CONFIG is checked for a path to the config
+      file. If the environment variable is not set, the default config file is
+      used.
     """
     def __init__(self):
-        conf_fp = join(dirname(abspath(__file__)),
-                       '../ag_config.txt')
+        conf_fp = environ.get('AG_CONFIG') or join(dirname(abspath(__file__)),
+                                                   '../ag_config.txt')
+
+        if not isfile(conf_fp):
+            raise IOError("The configuration file %s is not an existing file")
 
         # Parse the configuration file
         config = ConfigParser()
