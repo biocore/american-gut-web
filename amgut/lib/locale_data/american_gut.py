@@ -636,6 +636,116 @@ _DIAGNOSIS_CHOICE = (_NO_RESPONSE_CHOICE,
                      'Diagnosed by an alternative medicine practitioner',
                      'Self-diagnosed')
 
+_ANIMAL_SURVEY = {
+    'GENERAL_TITLE': 'General',
+    'GENERAL_QUESTION_1': 'Animal type?',
+    'GENERAL_QUESTION_1_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Dog',
+                                   'Cat',
+                                   'Small mammal',
+                                   'Large mammal',
+                                   'Fish',
+                                   'Bird',
+                                   'Reptile',
+                                   'Amphibian',
+                                   'Other'),
+
+    'GENERAL_QUESTION_2': 'Origin?',
+    'GENERAL_QUESTION_2_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Breeder',
+                                   'Shelter',
+                                   'Home',
+                                   'Wild'),
+
+    'GENERAL_QUESTION_3': 'Age?',
+    'GENERAL_QUESTION_3_CHOICES': None,
+
+    'GENERAL_QUESTION_4': 'Gender?',
+    'GENERAL_QUESTION_4_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Male',
+                                   'Female',
+                                   'Unknown'),
+
+    'GENERAL_QUESTION_5': 'Setting?',
+    'GENERAL_QUESTION_5_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Urban',
+                                   'Suburban',
+                                   'Rural'),
+
+    'GENERAL_QUESTION_6': 'Weight category?',
+    'GENERAL_QUESTION_6_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Underweight',
+                                   'Skinny',
+                                   'Normal',
+                                   'Chubby',
+                                   'Overweight'),
+
+    'GENERAL_QUESTION_7': 'Diet classification?',
+    'GENERAL_QUESTION_7_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Carnivore',
+                                   'Omnivore',
+                                   'Herbivore'),
+
+    'GENERAL_QUESTION_8': 'Food source?',
+    'GENERAL_QUESTION_8_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Pet store food',
+                                   'Human food',
+                                   'Wild food'),
+
+    'GENERAL_QUESTION_9': 'Food type?',
+    'GENERAL_QUESTION_9_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'dry',
+                                   'wet',
+                                   'both'),
+
+    'GENERAL_QUESTION_10': 'Food special attributes?',
+    'GENERAL_QUESTION_10_CHOICES': (_NO_RESPONSE_CHOICE,
+                                    'Organic',
+                                    'Grain free'),
+
+    'GENERAL_QUESTION_11': 'Social?',
+    'GENERAL_QUESTION_11_CHOICES': (_NO_RESPONSE_CHOICE,
+                                    'Lives alone with humans',
+                                    'Lives alone no/limited humans (shelter)',
+                                    'Lives with other animals and humans',
+                                    'Lives with other animals/limited humans'),
+
+    'GENERAL_QUESTION_12': 'Any pets the current animal lives with?',
+    'GENERAL_QUESTION_12_CHOICES': None,
+
+    'GENERAL_QUESTION_13': 'Add the age of any human that the current animal lives with',
+    'GENERAL_QUESTION_13_CHOICES': None,
+
+    'GENERAL_QUESTION_14': 'Add the gender of any human that the current animal lives with',
+    'GENERAL_QUESTION_14_CHOICES': (_NO_RESPONSE_CHOICE,
+                                    'Male',
+                                    'Female',
+                                    'Other'),
+
+    'GENERAL_QUESTION_15': 'Hours spent outside?',
+    'GENERAL_QUESTION_15_CHOICES': (_NO_RESPONSE_CHOICE,
+                                    'None',
+                                    'Less than 2',
+                                    '2-4',
+                                    '4-8',
+                                    '8+'),
+
+    'GENERAL_QUESTION_16': 'Toilet water access?',
+    'GENERAL_QUESTION_16_CHOICES': (_NO_RESPONSE_CHOICE,
+                                    'Regular',
+                                    'Sometimes',
+                                    'Never'),
+
+    'GENERAL_QUESTION_17': 'Coprophage?',
+    'GENERAL_QUESTION_17_CHOICES': (_NO_RESPONSE_CHOICE,
+                                    'High',
+                                    'Moderate',
+                                    'Low',
+                                    'Never'),
+
+    'SUPPLEMENTAL_COMMENTS': 'Please write anything else about this animal that you think might affect its microorganisms.'
+}
+
 # sourced from 12-0582_-_american_gut_questionnaire_amended_09012014__irb_appd_09.19.14
 _HUMAN_SURVEY = {
     # Personal information
@@ -1107,5 +1217,6 @@ text_locale = {
     'register_user.html': _REGISTER_USER,
     'chage_pass_verify.html': _CHANGE_PASS_VERIFY,
     'survey_main.html': _SURVEY_MAIN,
+    'animal_survey.html': _ANIMAL_SURVEY,
     'handlers': _HANDLERS
 }
