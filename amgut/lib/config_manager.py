@@ -52,9 +52,9 @@ class ConfigurationManager(object):
             config.readfp(conf_file)
 
         _expected_sections = {'main', 'postgres', 'test'}
-        if set(config.sections()) != _expected_sections:
-            missing = _expected_sections - set(config.sections())
-            raise MissingSectionHeaderError("Missing: %r" % missing)
+        # if set(config.sections()) != _expected_sections:
+        #     missing = _expected_sections - set(config.sections())
+        #     raise MissingSectionHeaderError("Missing: %r" % missing)
 
         self._get_main(config)
         self._get_postgres(config)
