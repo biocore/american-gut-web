@@ -551,7 +551,7 @@ _PORTAL = {
     'VERIFY_BARCODES_POPUP': 'The barcode you need to verify is located on the outside of your sample tube.',
     'SAMPLE_SOURCE_HEADER_1': 'Sample Source',
     'SAMPLE_SOURCE_TEXT_1': 'There are three different sample sources that you can choose from for the %(project)s. The sources are human, animal and environmental. The buttons below will allow you to add a new sample source.',
-    'SAMPLE_SOURCE_TEXT_2': 'If you add a <strong>human</strong> source, you will need to have a completed 7 day food diary for that human. If you add a <strong>human</strong> or <strong>animal</strong> source, you will be asked to complete a survey',
+    'SAMPLE_SOURCE_TEXT_2': 'If you add a <strong>human</strong> or <strong>animal</strong> source, you will be asked to complete a survey',
     'SAMPLE_SOURCE_TYPE_HUMAN': 'Human',
     'SAMPLE_SOURCE_TYPE_ANIMAL': 'Animal',
     'SAMPLE_SOURCE_TYPE_ENVIRONMENTAL': 'Environmental',
@@ -559,8 +559,7 @@ _PORTAL = {
     'SURVEY_TEXT_1': 'If you are taking a human or animal sample, we ask that you complete a survey.',
     'SURVEY_TEXT_2': 'The survey will take <strong>30-45 minutes</strong> for a human subject, or <strong>10 minutes</strong> for an animal subject. You <strong>cannot</strong> save in the middle of the survey, so please set aside enough time to complete the entire survey.',
     'SURVEY_TEXT_3': 'If you are taking a human sample, the survey includes demographic, lifestyle, medical and diet questions. All survey questions are optional.',
-    'SURVEY_TEXT_4': 'The 7 day food diary is used when answering the human survey, so please be sure to have that ready <strong>before</strong> starting the survey. We strongly recommend using <a href="http://caloriecount.about.com/">CalorieCount</a> to record dietary intake, though you are free to use whatever method you find most convenient. A screenshot of the dietary questions is shown below, <strong>please make sure to use a tool that will allow you to accurately answer these questions</strong>.',
-    'SURVEY_TEXT_5': 'Additionally, <a href="http://titojankowski.com">Tito Jankowski</a> has compiled a <a href="http://titojankowski.com/american-gut-how-to/">comprehensive guide</a> on how to do this if you are a <a href="http://www.myfitnesspal.com">MyFitnessPal</a> user.',
+    'SURVEY_TEXT_4': 'The diet questions do not require a food diary, but please be prepared to answer questions about your eating habits. A screenshot of the dietary questions is shown below.',
     'SAMPLE_STEPS_HEADER_1': 'Before Taking Your Samples',
     'SAMPLE_STEPS_TEXT_1': 'These are the steps involved in taking a sample:',
     'SAMPLE_STEPS_TEXT_2': '<li>Make sure you have <a href="#" onclick="selectTab(\'source\')">added your sample source and complete the required survey(s)</a></li><li>Remove the sample swabs from the sample tube</li><li>Collect your sample following the guidelines below</li><li>Place sample swabs into the sample tube</li>',
@@ -636,9 +635,128 @@ _DIAGNOSIS_CHOICE = (_NO_RESPONSE_CHOICE,
                      'Diagnosed by an alternative medicine practitioner',
                      'Self-diagnosed')
 
+_ANIMAL_SURVEY = {
+    'GENERAL_TITLE': 'General',
+    'GENERAL_QUESTION_1': 'Animal type?',
+    'GENERAL_QUESTION_1_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Dog',
+                                   'Cat',
+                                   'Small mammal',
+                                   'Large mammal',
+                                   'Fish',
+                                   'Bird',
+                                   'Reptile',
+                                   'Amphibian',
+                                   'Other'),
+
+    'GENERAL_QUESTION_2': 'Origin?',
+    'GENERAL_QUESTION_2_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Breeder',
+                                   'Shelter',
+                                   'Home',
+                                   'Wild'),
+
+    'GENERAL_QUESTION_3': 'Age?',
+    'GENERAL_QUESTION_3_CHOICES': None,
+
+    'GENERAL_QUESTION_4': 'Gender?',
+    'GENERAL_QUESTION_4_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Male',
+                                   'Female',
+                                   'Unknown'),
+
+    'GENERAL_QUESTION_5': 'Setting?',
+    'GENERAL_QUESTION_5_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Urban',
+                                   'Suburban',
+                                   'Rural'),
+
+    'GENERAL_QUESTION_6': 'Weight category?',
+    'GENERAL_QUESTION_6_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Underweight',
+                                   'Skinny',
+                                   'Normal',
+                                   'Chubby',
+                                   'Overweight'),
+
+    'GENERAL_QUESTION_7': 'Diet classification?',
+    'GENERAL_QUESTION_7_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Carnivore',
+                                   'Omnivore',
+                                   'Herbivore'),
+
+    'GENERAL_QUESTION_8': 'Food source?',
+    'GENERAL_QUESTION_8_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Pet store food',
+                                   'Human food',
+                                   'Wild food'),
+
+    'GENERAL_QUESTION_9': 'Food type?',
+    'GENERAL_QUESTION_9_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'dry',
+                                   'wet',
+                                   'both'),
+
+    'GENERAL_QUESTION_10': 'Food special attributes?',
+    'GENERAL_QUESTION_10_CHOICES': (_NO_RESPONSE_CHOICE,
+                                    'Organic',
+                                    'Grain free'),
+
+    'GENERAL_QUESTION_11': 'Social?',
+    'GENERAL_QUESTION_11_CHOICES': (_NO_RESPONSE_CHOICE,
+                                    'Lives alone with humans',
+                                    'Lives alone no/limited humans (shelter)',
+                                    'Lives with other animals and humans',
+                                    'Lives with other animals/limited humans'),
+
+    'GENERAL_QUESTION_12': 'Any pets the current animal lives with?',
+    'GENERAL_QUESTION_12_CHOICES': None,
+
+    'GENERAL_QUESTION_13': 'Add the age of any human that the current animal lives with',
+    'GENERAL_QUESTION_13_CHOICES': None,
+
+    'GENERAL_QUESTION_14': 'Add the gender of any human that the current animal lives with',
+    'GENERAL_QUESTION_14_CHOICES': (_NO_RESPONSE_CHOICE,
+                                    'Male',
+                                    'Female',
+                                    'Other'),
+
+    'GENERAL_QUESTION_15': 'Hours spent outside?',
+    'GENERAL_QUESTION_15_CHOICES': (_NO_RESPONSE_CHOICE,
+                                    'None',
+                                    'Less than 2',
+                                    '2-4',
+                                    '4-8',
+                                    '8+'),
+
+    'GENERAL_QUESTION_16': 'Toilet water access?',
+    'GENERAL_QUESTION_16_CHOICES': (_NO_RESPONSE_CHOICE,
+                                    'Regular',
+                                    'Sometimes',
+                                    'Never'),
+
+    'GENERAL_QUESTION_17': 'Coprophage?',
+    'GENERAL_QUESTION_17_CHOICES': (_NO_RESPONSE_CHOICE,
+                                    'High',
+                                    'Moderate',
+                                    'Low',
+                                    'Never'),
+
+    'SUPPLEMENTAL_COMMENTS': 'Please write anything else about this animal that you think might affect its microorganisms.'
+}
+
+_HUMAN_SURVEY_COMPLETED = {
+    'COMPLETED_HEADER': 'Congratulations!',
+    'COMPLETED_TEXT': 'You are now an enrolled participant in the %(PROJECT_TITLE)s!' % media_locale,
+    'AVAILABLE_SURVEYS': 'Below are a few additional surveys that you may be interested in completing. There is no requirement to take these surveys, and your decision does not affect your involvement in the project in anyway.',
+    'SURVEY_ASD': '<a href="http://www.anl.gov/contributors/jack-gilbert">Dr. Jack Gilbert</a> is exploring the relationship between gut dysbiosis and Autism Spectrum Disorders, and in conjunction with the American Gut Project, we started an ASD-Cohort study. This additional survey contains questions specific to that cohort, but it is open to any participant to take if they so choose. Please click <a href="%s">here</a> to take the ASD-Cohort survey.',
+    'SURVEY_VIOSCREEN': 'The American Gut Project and its sister projects are very interested in diet. If you\'d like to provide additional detail about your diet, please click <a href="%s">here</a> to take a detailed diet survey (known as an Food Frequency Questionnaire). This is a validated FFQ, and is the one used by the Mayo Clinic.'
+}
+
 # sourced from 12-0582_-_american_gut_questionnaire_amended_09012014__irb_appd_09.19.14
 _HUMAN_SURVEY = {
     # Personal information
+    'PERSONAL_PROMPT_TITLE': 'Personal information',
     'PERSONAL_PROMPT_NAME': 'Name:',
     'PERSONAL_PROMPT_GENDER': 'Gender:',
     'PERSONAL_PROMPT_HEIGHT': 'Height',
@@ -1077,10 +1195,11 @@ _HUMAN_SURVEY = {
 
 _SURVEY_MAIN = {
     'TITLE': 'Survey',
-    'ONCE_YOU_START': 'Once you start this survey, you must complete it. Your answers will <strong>not</strong> be saved unless you complete the entire survey. It is <strong>very important</strong> to start your food diary before you start the survey. There are a number of FREE online dietary tools out there - we recommend <a href="http://www.fitday.com/" target="_blank" class="help">FitDay</a> and <a href="http://caloriecount.about.com/" class="help">Calorie Count</a>. Note we will be asking questions about your carb, protein, fat, alcohol, and fiber intake, (as a percentage of your total intake) as well as some info on types of food. So, use a tool that allows you to enter as much detail as possible.',
-    'TIME_COMMITMENT': 'We anticipate that participant time commitment for completing the questionnaire online will take no more than <strong>45 minutes</strong>; and completing the food diary should take no more than 10 minutes/day.',
-    'TYPES_OF_QUESTIONS': 'You will be asked questions about your general personal information (name, age, sex, height, weight, ethnicity, place of birth, and current ZIP code). We will ask if you recently moved and where you moved from. We will ask questions about general diet information (including whether you follow a special diet, if you have food allergies, whether you have cultural or religious food restrictions). Other questions address whether you have pets and the type of contact you have with these pets and your relationship to other people in this study.  There is a section on health information including a history of allergies/asthma, if you suffer from migraines and if you have a history of irritable bowel disease.',
-    'YOU_MAY_DECLINE': 'You may decline to answer any question by not selecting an answer.'
+    'ONCE_YOU_START': 'Once you start this survey, you must complete it. Your answers will <strong>not</strong> be saved unless you complete the entire survey.',
+    'TIME_COMMITMENT': 'We anticipate that participant time commitment for completing the questionnaire online will take no more than <strong>45 minutes</strong>.',
+    'TYPES_OF_QUESTIONS': 'You will be asked questions about your general personal information (name, age, sex, height, weight, ethnicity, place of birth, and current ZIP or equivalent code). We will ask if you recently moved and where you moved from. We will ask questions about general diet information (including whether you follow a special diet, if you have food allergies, whether you have cultural or religious food restrictions). Other questions address whether you have pets and the type of contact you have with these pets and your relationship to other people in this study.  There is a section on health information including a history of allergies/asthma, if you suffer from migraines and if you have a history of irritable bowel disease.',
+    'YOU_MAY_DECLINE': 'You may decline to answer any question by not selecting an answer.',
+    'OTHER_SURVEYS': 'Following the questionnaire, you will be presented with a few other focused surveys. As with everything, those surveys are optional but your responses could help improve our understanding of the microbiome.'
 }
 
 # Actual text locale
@@ -1104,8 +1223,10 @@ text_locale = {
     'taxa_summary.html': _TAXA_SUMMARY,
     'map.html': _MAP,
     'human_survey.html': _HUMAN_SURVEY,
+    'human_survey_completed.html': _HUMAN_SURVEY_COMPLETED,
     'register_user.html': _REGISTER_USER,
     'chage_pass_verify.html': _CHANGE_PASS_VERIFY,
     'survey_main.html': _SURVEY_MAIN,
+    'animal_survey.html': _ANIMAL_SURVEY,
     'handlers': _HANDLERS
 }

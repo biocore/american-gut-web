@@ -202,12 +202,12 @@
 <text x='700' y='25'>controlled_vocab_values</text>
 <rect style='fill:url(#groupUnderTitleLine); stroke-width:2;' x='700' y='28' width='595' height='2' />
 
-<!-- ============= Group 'human_survey_questions' ============= -->
+<!-- ============= Group 'survey_questions' ============= -->
 <rect class='grp' style='fill:#c4e0f9;' x='59' y='1555' width='1127' height='485' />
-<text x='70' y='1570'>human_survey_questions</text>
+<text x='70' y='1570'>survey_questions</text>
 <rect style='fill:url(#groupUnderTitleLine); stroke-width:2;' x='70' y='1573' width='1105' height='2' />
 
-<path transform='translate(7,0)' marker-start='url(#foot)'     d='M 855 945 L 862,945 Q 870,945 870,937 L 870,667 Q 870,660 862,660 L 855,660' >
+<path transform='translate(7,0)' marker-start='url(#foot)'     d='M 855 945 L 862,945 Q 870,945 870,937 L 870,855' >
 	<title>Foreign Key fk_sur_an_to_ag_login
 	ag_survey_answer references ag_login ( ag_login_id )</title>
 </path>
@@ -217,12 +217,12 @@
 	controlled_vocab_values references controlled_vocabs ( controlled_vocab_id )</title>
 </path>
 <text x='793' y='310' transform='rotate(0 793,310)' title='Foreign Key fk_cont_vcb_values_cont_vcbs
-	controlled_vocab_values references controlled_vocabs ( controlled_vocab_id )' style='fill:#a1a0a0;'>controlled_vocab_id</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 1275 570 L 1282,570 Q 1290,570 1290,562 L 1290,487 Q 1290,480 1282,480 L 892,480 Q 885,480 885,487 L 885,532 Q 885,540 877,540 L 870,540' >
+	controlled_vocab_values references controlled_vocabs ( controlled_vocab_id )' style='fill:#a1a0a0;'>controlled_vocab_id</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 1095 570 L 1087,570 Q 1080,570 1080,577 L 1080,690' >
 	<title>Foreign Key fk_ag_participant_exceptions
 	ag_participant_exceptions references ag_login ( ag_login_id )</title>
 </path>
-<text x='1282' y='565' transform='rotate(0 1282,565)' title='Foreign Key fk_ag_participant_exceptions
-	ag_participant_exceptions references ag_login ( ag_login_id )' style='fill:#a1a0a0;'>ag_login_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1350 675 L 1297,675 Q 1290,675 1290,667 L 1290,555' >
+<text x='1035' y='565' transform='rotate(0 1035,565)' title='Foreign Key fk_ag_participant_exceptions
+	ag_participant_exceptions references ag_login ( ag_login_id )' style='fill:#a1a0a0;'>ag_login_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1350 675 L 1087,675 Q 1080,675 1080,682 L 1080,862 Q 1080,870 1072,870 L 877,870 Q 870,870 870,862 L 870,667 Q 870,660 862,660 L 855,660' >
 	<title>Foreign Key fk_ag_hum_surv_to_ag_login
 	ag_human_survey references ag_login ( ag_login_id )</title>
 </path>
@@ -237,22 +237,22 @@
 	ag_survey_multiples references ag_login ( ag_login_id )</title>
 </path>
 <text x='855' y='1000' transform='rotate(0 855,1000)' title='Foreign Key fk_ag_mul_to_ag_login
-	ag_survey_multiples references ag_login ( ag_login_id )' style='fill:#a1a0a0;'>ag_login_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1305 960 L 1312,960 Q 1320,960 1320,952 L 1320,682 Q 1320,675 1312,675 L 1305,675' >
+	ag_survey_multiples references ag_login ( ag_login_id )' style='fill:#a1a0a0;'>ag_login_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1125 960 L 1087,960 Q 1080,960 1080,952 L 1080,877 Q 1080,870 1072,870 L 1065,870' >
 	<title>Foreign Key fk_ag_kit_to_login_id
 	ag_kit references ag_login ( ag_login_id )</title>
 </path>
-<text x='1312' y='955' transform='rotate(0 1312,955)' title='Foreign Key fk_ag_kit_to_login_id
+<text x='1065' y='955' transform='rotate(0 1065,955)' title='Foreign Key fk_ag_kit_to_login_id
 	ag_kit references ag_login ( ag_login_id )' style='fill:#a1a0a0;'>ag_login_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'  style='stroke-dasharray:4,2;'  d='M 945 1155 L 1102,1155 Q 1110,1155 1110,1147 L 1110,952 Q 1110,945 1117,945 L 1125,945' >
 	<title>Foreign Key fk_ag_kit_barcodes
 	ag_kit_barcodes references ag_kit ( ag_kit_id )</title>
 </path>
 <text x='952' y='1150' transform='rotate(0 952,1150)' title='Foreign Key fk_ag_kit_barcodes
-	ag_kit_barcodes references ag_kit ( ag_kit_id )' style='fill:#a1a0a0;'>ag_kit_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 945 1170 L 1072,1170 Q 1080,1170 1080,1162 L 1080,82 Q 1080,75 1087,75 L 1110,75' >
+	ag_kit_barcodes references ag_kit ( ag_kit_id )' style='fill:#a1a0a0;'>ag_kit_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 945 1170 L 1312,1170 Q 1320,1170 1320,1162 L 1320,82 Q 1320,75 1312,75 L 1290,75' >
 	<title>Foreign Key fk_ag_kit_barcodes_0
 	ag_kit_barcodes references barcode ( barcode )</title>
 </path>
 <text x='952' y='1165' transform='rotate(0 952,1165)' title='Foreign Key fk_ag_kit_barcodes_0
-	ag_kit_barcodes references barcode ( barcode )' style='fill:#a1a0a0;'>barcode</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 1350 555 L 1312,555 Q 1305,555 1305,547 L 1305,82 Q 1305,75 1297,75 L 1290,75' >
+	ag_kit_barcodes references barcode ( barcode )' style='fill:#a1a0a0;'>barcode</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1350 555 L 1327,555 Q 1320,555 1320,547 L 1320,540' >
 	<title>Foreign Key fk_plate_barcode
 	plate_barcode references barcode ( barcode )</title>
 </path>
@@ -262,7 +262,7 @@
 	plate_barcode references plate ( plate_id )</title>
 </path>
 <text x='1462' y='535' transform='rotate(0 1462,535)' title='Foreign Key fk_plate_barcode_0
-	plate_barcode references plate ( plate_id )' style='fill:#a1a0a0;'>plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1350 435 L 1312,435 Q 1305,435 1305,427 L 1305,420' >
+	plate_barcode references plate ( plate_id )' style='fill:#a1a0a0;'>plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1350 435 L 1327,435 Q 1320,435 1320,427 L 1320,420' >
 	<title>Foreign Key fk_pb_to_barcode
 	project_barcode references barcode ( barcode )</title>
 </path>
@@ -307,20 +307,25 @@
 	survey_question_response_type references survey_response_types ( survey_response_type )</title>
 </path>
 <text x='922' y='1990' transform='rotate(0 922,1990)' title='Foreign Key fk_human_survey_question_response_type
-	survey_question_response_type references survey_response_types ( survey_response_type )' style='fill:#a1a0a0;'>survey_response_type</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 315 1620 L 247,1620 Q 240,1620 240,1627 L 240,1627 Q 240,1635 232,1635 L 225,1635' >
+	survey_question_response_type references survey_response_types ( survey_response_type )' style='fill:#a1a0a0;'>survey_response_type</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 315 1620 L 195,1620' >
 	<title>Foreign Key fk_human_survey_group_question
-	survey_group_question references survey_question_group ( survey_group -> group_order )</title>
+	group_questions references survey_group ( survey_group -> group_order )</title>
 </path>
 <text x='242' y='1615' transform='rotate(0 242,1615)' title='Foreign Key fk_human_survey_group_question
-	survey_group_question references survey_question_group ( survey_group -> group_order )' style='fill:#a1a0a0;'>survey_group</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 480 1635 L 592,1635 Q 600,1635 600,1642 L 600,1777 Q 600,1785 592,1785 L 585,1785' >
+	group_questions references survey_group ( survey_group -> group_order )' style='fill:#a1a0a0;'>survey_group</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 465 1635 L 592,1635 Q 600,1635 600,1642 L 600,1777 Q 600,1785 592,1785 L 585,1785' >
 	<title>Foreign Key fk_human_survey_group_question_0
-	survey_group_question references survey_question ( survey_question_id )</title>
+	group_questions references survey_question ( survey_question_id )</title>
 </path>
-<text x='487' y='1630' transform='rotate(0 487,1630)' title='Foreign Key fk_human_survey_group_question_0
-	survey_group_question references survey_question ( survey_question_id )' style='fill:#a1a0a0;'>survey_question_id</text><!-- ============= Table 'ag_handout_kits' ============= -->
+<text x='472' y='1630' transform='rotate(0 472,1630)' title='Foreign Key fk_human_survey_group_question_0
+	group_questions references survey_question ( survey_question_id )' style='fill:#a1a0a0;'>survey_question_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 180 1800 L 202,1800 Q 210,1800 210,1792 L 210,1627 Q 210,1620 202,1620 L 195,1620' >
+	<title>Foreign Key fk_surveys
+	surveys references survey_group ( survey_group -> group_order )</title>
+</path>
+<text x='187' y='1795' transform='rotate(0 187,1795)' title='Foreign Key fk_surveys
+	surveys references survey_group ( survey_group -> group_order )' style='fill:#a1a0a0;'>survey_group</text><!-- ============= Table 'ag_handout_kits' ============= -->
 <rect class='table' x='210' y='503' width='150' height='150' rx='7' ry='7' />
 <path d='M 210.50 529.50 L 210.50 510.50 Q 210.50 503.50 217.50 503.50 L 352.50 503.50 Q 359.50 503.50 359.50 510.50 L 359.50 529.50 L210.50 529.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
-<a xlink:href='#ag_handout_kits'><text x='240' y='517' class='tableTitle'>ag_handout_kits</text><title>Table public.ag_handout_kits</title></a>
+<a xlink:href='#ag_handout_kits'><text x='240' y='517' class='tableTitle'>ag_handout_kits</text><title>Table ag.ag_handout_kits</title></a>
   <a xlink:href='#kit_id'><text x='228' y='547'>kit_id</text><title>kit_id varchar&#040;9&#041;</title></a>
   <a xlink:href='#password'><text x='228' y='562'>password</text><title>password varchar&#040;11&#041;</title></a>
   <a xlink:href='#barcode'><text x='228' y='577'>barcode</text><title>barcode varchar&#040;9&#041;</title></a>
@@ -332,7 +337,7 @@
 <!-- ============= Table 'ag_import_stats_tmp' ============= -->
 <rect class='table' x='450' y='713' width='165' height='225' rx='7' ry='7' />
 <path d='M 450.50 739.50 L 450.50 720.50 Q 450.50 713.50 457.50 713.50 L 607.50 713.50 Q 614.50 713.50 614.50 720.50 L 614.50 739.50 L450.50 739.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
-<a xlink:href='#ag_import_stats_tmp'><text x='475' y='727' class='tableTitle'>ag_import_stats_tmp</text><title>Table public.ag_import_stats_tmp</title></a>
+<a xlink:href='#ag_import_stats_tmp'><text x='475' y='727' class='tableTitle'>ag_import_stats_tmp</text><title>Table ag.ag_import_stats_tmp</title></a>
   <a xlink:href='#tmp_login_count'><text x='468' y='757'>tmp_login_count</text><title>tmp_login_count bigint</title></a>
   <a xlink:href='#tmp_kit_count'><text x='468' y='772'>tmp_kit_count</text><title>tmp_kit_count bigint</title></a>
   <a xlink:href='#tmp_barcode_count'><text x='468' y='787'>tmp_barcode_count</text><title>tmp_barcode_count bigint</title></a>
@@ -349,17 +354,15 @@
 <!-- ============= Table 'ag_login' ============= -->
 <rect class='table' x='735' y='623' width='120' height='225' rx='7' ry='7' />
 <path d='M 735.50 649.50 L 735.50 630.50 Q 735.50 623.50 742.50 623.50 L 847.50 623.50 Q 854.50 623.50 854.50 630.50 L 854.50 649.50 L735.50 649.50 ' style='fill:url(#tableHeaderGradient1); stroke:none;' />
-<a xlink:href='#ag_login'><text x='772' y='637' class='tableTitle'>ag_login</text><title>Table public.ag_login</title></a>
+<a xlink:href='#ag_login'><text x='772' y='637' class='tableTitle'>ag_login</text><title>Table ag.ag_login</title></a>
   <use id='nn' x='737' y='657' xlink:href='#nn'/><a xlink:href='#ag_login_id'><use id='pk' x='737' y='656' xlink:href='#pk'/><title>Primary Key  ( ag_login_id ) </title></a>
 <a xlink:href='#ag_login_id'><text x='753' y='667'>ag_login_id</text><title>ag_login_id uuid not null default uuid&#095;generate&#095;v4&#040;&#041;</title></a>
 <a xlink:href='#ag_login_id'><use id='ref' x='843' y='656' xlink:href='#ref'/><title>Referred by ag_animal_survey ( ag_login_id ) 
 Referred by ag_human_survey ( ag_login_id ) 
 Referred by ag_kit ( ag_login_id ) 
+Referred by ag_participant_exceptions ( ag_login_id ) 
 Referred by ag_survey_answer ( ag_login_id ) 
-Referred by ag_survey_multiples ( ag_login_id ) 
-Referred by ag_participant_exceptions ( ag_login_id ) 
-Referred by ag_participant_exceptions ( ag_login_id ) 
-Referred by ag_survey_multiples_backup ( ag_login_id ) </title></a>
+Referred by ag_survey_multiples ( ag_login_id ) </title></a>
   <a xlink:href='#email'><text x='753' y='682'>email</text><title>email varchar&#040;100&#041;</title></a>
   <a xlink:href='#name'><text x='753' y='697'>name</text><title>name varchar&#040;200&#041;</title></a>
   <a xlink:href='#address'><text x='753' y='712'>address</text><title>address varchar&#040;500&#041;</title></a>
@@ -375,7 +378,7 @@ Referred by ag_survey_multiples_backup ( ag_login_id ) </title></a>
 <!-- ============= Table 'ag_map_markers' ============= -->
 <rect class='table' x='45' y='533' width='105' height='120' rx='7' ry='7' />
 <path d='M 45.50 559.50 L 45.50 540.50 Q 45.50 533.50 52.50 533.50 L 142.50 533.50 Q 149.50 533.50 149.50 540.50 L 149.50 559.50 L45.50 559.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
-<a xlink:href='#ag_map_markers'><text x='51' y='547' class='tableTitle'>ag_map_markers</text><title>Table public.ag_map_markers</title></a>
+<a xlink:href='#ag_map_markers'><text x='51' y='547' class='tableTitle'>ag_map_markers</text><title>Table ag.ag_map_markers</title></a>
   <a xlink:href='#zipcode'><text x='63' y='577'>zipcode</text><title>zipcode varchar&#040;20&#041;</title></a>
   <a xlink:href='#latitude'><text x='63' y='592'>latitude</text><title>latitude float8</title></a>
   <a xlink:href='#longitude'><text x='63' y='607'>longitude</text><title>longitude float8</title></a>
@@ -385,7 +388,7 @@ Referred by ag_survey_multiples_backup ( ag_login_id ) </title></a>
 <!-- ============= Table 'ag_survey_answer' ============= -->
 <rect class='table' x='705' y='908' width='150' height='120' rx='7' ry='7' />
 <path d='M 705.50 934.50 L 705.50 915.50 Q 705.50 908.50 712.50 908.50 L 847.50 908.50 Q 854.50 908.50 854.50 915.50 L 854.50 934.50 L705.50 934.50 ' style='fill:url(#tableHeaderGradient1); stroke:none;' />
-<a xlink:href='#ag_survey_answer'><text x='730' y='922' class='tableTitle'>ag_survey_answer</text><title>Table public.ag_survey_answer</title></a>
+<a xlink:href='#ag_survey_answer'><text x='730' y='922' class='tableTitle'>ag_survey_answer</text><title>Table ag.ag_survey_answer</title></a>
   <use id='nn' x='707' y='942' xlink:href='#nn'/><a xlink:href='#ag_login_id'><use id='pk' x='707' y='941' xlink:href='#pk'/><title>Primary Key  ( ag_login_id, participant_name, question ) </title></a>
 <a xlink:href='#ag_login_id'><text x='723' y='952'>ag_login_id</text><title>ag_login_id uuid not null</title></a>
 <a xlink:href='#ag_login_id'><use id='fk' x='843' y='941' xlink:href='#fk'/><title>References ag_login ( ag_login_id ) </title></a>
@@ -399,13 +402,13 @@ Referred by ag_survey_multiples_backup ( ag_login_id ) </title></a>
 <!-- ============= Table 'barcode_exceptions' ============= -->
 <rect class='table' x='915' y='143' width='120' height='60' rx='7' ry='7' />
 <path d='M 915.50 169.50 L 915.50 150.50 Q 915.50 143.50 922.50 143.50 L 1027.50 143.50 Q 1034.50 143.50 1034.50 150.50 L 1034.50 169.50 L915.50 169.50 ' style='fill:url(#tableHeaderGradient2); stroke:none;' />
-<a xlink:href='#barcode_exceptions'><text x='920' y='157' class='tableTitle'>barcode_exceptions</text><title>Table public.barcode_exceptions</title></a>
+<a xlink:href='#barcode_exceptions'><text x='920' y='157' class='tableTitle'>barcode_exceptions</text><title>Table ag.barcode_exceptions</title></a>
   <a xlink:href='#barcode'><text x='933' y='187'>barcode</text><title>barcode varchar&#040;100&#041;</title></a>
 
 <!-- ============= Table 'controlled_vocab_values' ============= -->
 <rect class='table' x='915' y='263' width='150' height='120' rx='7' ry='7' />
 <path d='M 915.50 289.50 L 915.50 270.50 Q 915.50 263.50 922.50 263.50 L 1057.50 263.50 Q 1064.50 263.50 1064.50 270.50 L 1064.50 289.50 L915.50 289.50 ' style='fill:url(#tableHeaderGradient2); stroke:none;' />
-<a xlink:href='#controlled_vocab_values'><text x='923' y='277' class='tableTitle'>controlled_vocab_values</text><title>Table public.controlled_vocab_values</title></a>
+<a xlink:href='#controlled_vocab_values'><text x='923' y='277' class='tableTitle'>controlled_vocab_values</text><title>Table ag.controlled_vocab_values</title></a>
   <use id='nn' x='917' y='297' xlink:href='#nn'/><a xlink:href='#vocab_value_id'><use id='pk' x='917' y='296' xlink:href='#pk'/><title>Primary Key  ( vocab_value_id ) </title></a>
 <a xlink:href='#vocab_value_id'><text x='933' y='307'>vocab_value_id</text><title>vocab_value_id bigint not null</title></a>
   <use id='nn' x='917' y='312' xlink:href='#nn'/><a xlink:href='#controlled_vocab_id'><text x='933' y='322'>controlled_vocab_id</text><title>controlled_vocab_id bigint not null</title></a>
@@ -417,7 +420,7 @@ Referred by ag_survey_multiples_backup ( ag_login_id ) </title></a>
 <!-- ============= Table 'controlled_vocabs' ============= -->
 <rect class='table' x='705' y='263' width='150' height='75' rx='7' ry='7' />
 <path d='M 705.50 289.50 L 705.50 270.50 Q 705.50 263.50 712.50 263.50 L 847.50 263.50 Q 854.50 263.50 854.50 270.50 L 854.50 289.50 L705.50 289.50 ' style='fill:url(#tableHeaderGradient2); stroke:none;' />
-<a xlink:href='#controlled_vocabs'><text x='730' y='277' class='tableTitle'>controlled_vocabs</text><title>Table public.controlled_vocabs</title></a>
+<a xlink:href='#controlled_vocabs'><text x='730' y='277' class='tableTitle'>controlled_vocabs</text><title>Table ag.controlled_vocabs</title></a>
   <use id='nn' x='707' y='297' xlink:href='#nn'/><a xlink:href='#controlled_vocab_id'><use id='pk' x='707' y='296' xlink:href='#pk'/><title>Primary Key  ( controlled_vocab_id ) </title></a>
 <a xlink:href='#controlled_vocab_id'><text x='723' y='307'>controlled_vocab_id</text><title>controlled_vocab_id bigint not null</title></a>
 <a xlink:href='#controlled_vocab_id'><use id='ref' x='843' y='296' xlink:href='#ref'/><title>Referred by controlled_vocab_values ( controlled_vocab_id ) </title></a>
@@ -426,7 +429,7 @@ Referred by ag_survey_multiples_backup ( ag_login_id ) </title></a>
 <!-- ============= Table 'zipcodes' ============= -->
 <rect class='table' x='1125' y='263' width='105' height='135' rx='7' ry='7' />
 <path d='M 1125.50 289.50 L 1125.50 270.50 Q 1125.50 263.50 1132.50 263.50 L 1222.50 263.50 Q 1229.50 263.50 1229.50 270.50 L 1229.50 289.50 L1125.50 289.50 ' style='fill:url(#tableHeaderGradient2); stroke:none;' />
-<a xlink:href='#zipcodes'><text x='1153' y='277' class='tableTitle'>zipcodes</text><title>Table public.zipcodes</title></a>
+<a xlink:href='#zipcodes'><text x='1153' y='277' class='tableTitle'>zipcodes</text><title>Table ag.zipcodes</title></a>
   <use id='nn' x='1127' y='297' xlink:href='#nn'/><a xlink:href='#zipcode'><use id='pk' x='1127' y='296' xlink:href='#pk'/><title>Primary Key  ( zipcode ) </title></a>
 <a xlink:href='#zipcode'><text x='1143' y='307'>zipcode</text><title>zipcode varchar&#040;5&#041; not null</title></a>
   <use id='nn' x='1127' y='312' xlink:href='#nn'/><a xlink:href='#state'><text x='1143' y='322'>state</text><title>state varchar&#040;2&#041; not null</title></a>
@@ -440,7 +443,7 @@ Referred by ag_survey_multiples_backup ( ag_login_id ) </title></a>
 <!-- ============= Table 'ag_participant_exceptions' ============= -->
 <rect class='table' x='1110' y='533' width='165' height='75' rx='7' ry='7' />
 <path d='M 1110.50 559.50 L 1110.50 540.50 Q 1110.50 533.50 1117.50 533.50 L 1267.50 533.50 Q 1274.50 533.50 1274.50 540.50 L 1274.50 559.50 L1110.50 559.50 ' style='fill:url(#tableHeaderGradient1); stroke:none;' />
-<a xlink:href='#ag_participant_exceptions'><text x='1121' y='547' class='tableTitle'>ag_participant_exceptions</text><title>Table public.ag_participant_exceptions</title></a>
+<a xlink:href='#ag_participant_exceptions'><text x='1121' y='547' class='tableTitle'>ag_participant_exceptions</text><title>Table ag.ag_participant_exceptions</title></a>
   <a xlink:href='#ag_login_id'><use id='idx' x='1112' y='566' xlink:href='#idx'/><title>Index  ( ag_login_id ) </title></a>
 <a xlink:href='#ag_login_id'><text x='1128' y='577'>ag_login_id</text><title>ag_login_id uuid</title></a>
 <a xlink:href='#ag_login_id'><use id='fk' x='1263' y='566' xlink:href='#fk'/><title>References ag_login ( ag_login_id ) </title></a>
@@ -449,7 +452,7 @@ Referred by ag_survey_multiples_backup ( ag_login_id ) </title></a>
 <!-- ============= Table 'american_gut_consent' ============= -->
 <rect class='table' x='1560' y='638' width='135' height='165' rx='7' ry='7' />
 <path d='M 1560.50 664.50 L 1560.50 645.50 Q 1560.50 638.50 1567.50 638.50 L 1687.50 638.50 Q 1694.50 638.50 1694.50 645.50 L 1694.50 664.50 L1560.50 664.50 ' style='fill:url(#tableHeaderGradient3); stroke:none;' />
-<a xlink:href='#american_gut_consent'><text x='1566' y='652' class='tableTitle'>american_gut_consent</text><title>Table public.american_gut_consent</title></a>
+<a xlink:href='#american_gut_consent'><text x='1566' y='652' class='tableTitle'>american_gut_consent</text><title>Table ag.american_gut_consent</title></a>
   <a xlink:href='#participant_name'><text x='1578' y='682'>participant_name</text><title>participant_name varchar&#040;200&#041;</title></a>
   <a xlink:href='#contact_code'><text x='1578' y='697'>contact_code</text><title>contact_code varchar&#040;200&#041;</title></a>
   <a xlink:href='#is_7_to_13'><text x='1578' y='712'>is_7_to_13</text><title>is_7_to_13 varchar&#040;10&#041;</title></a>
@@ -462,7 +465,7 @@ Referred by ag_survey_multiples_backup ( ag_login_id ) </title></a>
 <!-- ============= Table 'ag_survey_multiples_backup' ============= -->
 <rect class='table' x='210' y='713' width='180' height='105' rx='7' ry='7' />
 <path d='M 210.50 739.50 L 210.50 720.50 Q 210.50 713.50 217.50 713.50 L 382.50 713.50 Q 389.50 713.50 389.50 720.50 L 389.50 739.50 L210.50 739.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
-<a xlink:href='#ag_survey_multiples_backup'><text x='222' y='727' class='tableTitle'>ag_survey_multiples_backup</text><title>Table public.ag_survey_multiples_backup</title></a>
+<a xlink:href='#ag_survey_multiples_backup'><text x='222' y='727' class='tableTitle'>ag_survey_multiples_backup</text><title>Table ag.ag_survey_multiples_backup</title></a>
   <use id='nn' x='212' y='747' xlink:href='#nn'/><a xlink:href='#ag_login_id'><use id='idx' x='212' y='746' xlink:href='#idx'/><title>Index  ( ag_login_id ) </title></a>
 <a xlink:href='#ag_login_id'><text x='228' y='757'>ag_login_id</text><title>ag_login_id uuid not null</title></a>
   <a xlink:href='#participant_name'><use id='idx' x='212' y='761' xlink:href='#idx'/><title>Index  ( participant_name ) </title></a>
@@ -473,7 +476,7 @@ Referred by ag_survey_multiples_backup ( ag_login_id ) </title></a>
 <!-- ============= Table 'ag_human_survey' ============= -->
 <rect class='table' x='1365' y='638' width='180' height='1710' rx='7' ry='7' />
 <path d='M 1365.50 664.50 L 1365.50 645.50 Q 1365.50 638.50 1372.50 638.50 L 1537.50 638.50 Q 1544.50 638.50 1544.50 645.50 L 1544.50 664.50 L1365.50 664.50 ' style='fill:url(#tableHeaderGradient3); stroke:none;' />
-<a xlink:href='#ag_human_survey'><text x='1406' y='652' class='tableTitle'>ag_human_survey</text><title>Table public.ag_human_survey</title></a>
+<a xlink:href='#ag_human_survey'><text x='1406' y='652' class='tableTitle'>ag_human_survey</text><title>Table ag.ag_human_survey</title></a>
   <use id='nn' x='1367' y='672' xlink:href='#nn'/><a xlink:href='#ag_login_id'><use id='pk' x='1367' y='671' xlink:href='#pk'/><title>Primary Key  ( ag_login_id, participant_name ) </title></a>
 <a xlink:href='#ag_login_id'><text x='1383' y='682'>ag_login_id</text><title>ag_login_id uuid not null</title></a>
 <a xlink:href='#ag_login_id'><use id='fk' x='1533' y='671' xlink:href='#fk'/><title>References ag_login ( ag_login_id ) </title></a>
@@ -592,7 +595,7 @@ Referred by ag_survey_multiples_backup ( ag_login_id ) </title></a>
 <!-- ============= Table 'ag_animal_survey' ============= -->
 <rect class='table' x='915' y='503' width='150' height='345' rx='7' ry='7' />
 <path d='M 915.50 529.50 L 915.50 510.50 Q 915.50 503.50 922.50 503.50 L 1057.50 503.50 Q 1064.50 503.50 1064.50 510.50 L 1064.50 529.50 L915.50 529.50 ' style='fill:url(#tableHeaderGradient1); stroke:none;' />
-<a xlink:href='#ag_animal_survey'><text x='942' y='517' class='tableTitle'>ag_animal_survey</text><title>Table public.ag_animal_survey</title></a>
+<a xlink:href='#ag_animal_survey'><text x='942' y='517' class='tableTitle'>ag_animal_survey</text><title>Table ag.ag_animal_survey</title></a>
   <use id='nn' x='917' y='537' xlink:href='#nn'/><a xlink:href='#ag_login_id'><use id='pk' x='917' y='536' xlink:href='#pk'/><title>Primary Key  ( ag_login_id, participant_name ) </title></a>
 <a xlink:href='#ag_login_id'><text x='933' y='547'>ag_login_id</text><title>ag_login_id uuid not null</title></a>
 <a xlink:href='#ag_login_id'><use id='fk' x='1053' y='536' xlink:href='#fk'/><title>References ag_login ( ag_login_id ) </title></a>
@@ -620,7 +623,7 @@ Referred by ag_survey_multiples_backup ( ag_login_id ) </title></a>
 <!-- ============= Table 'ag_survey_multiples' ============= -->
 <rect class='table' x='930' y='968' width='135' height='105' rx='7' ry='7' />
 <path d='M 930.50 994.50 L 930.50 975.50 Q 930.50 968.50 937.50 968.50 L 1057.50 968.50 Q 1064.50 968.50 1064.50 975.50 L 1064.50 994.50 L930.50 994.50 ' style='fill:url(#tableHeaderGradient1); stroke:none;' />
-<a xlink:href='#ag_survey_multiples'><text x='942' y='982' class='tableTitle'>ag_survey_multiples</text><title>Table public.ag_survey_multiples</title></a>
+<a xlink:href='#ag_survey_multiples'><text x='942' y='982' class='tableTitle'>ag_survey_multiples</text><title>Table ag.ag_survey_multiples</title></a>
   <use id='nn' x='932' y='1002' xlink:href='#nn'/><a xlink:href='#ag_login_id'><use id='pk' x='932' y='1001' xlink:href='#pk'/><title>Primary Key  ( ag_login_id, participant_name, item_name ) </title></a>
 <a xlink:href='#ag_login_id'><text x='948' y='1012'>ag_login_id</text><title>ag_login_id uuid not null</title></a>
 <a xlink:href='#ag_login_id'><use id='fk' x='1053' y='1001' xlink:href='#fk'/><title>References ag_login ( ag_login_id ) </title></a>
@@ -633,11 +636,10 @@ Referred by ag_survey_multiples_backup ( ag_login_id ) </title></a>
 <!-- ============= Table 'ag_kit' ============= -->
 <rect class='table' x='1140' y='908' width='165' height='210' rx='7' ry='7' />
 <path d='M 1140.50 934.50 L 1140.50 915.50 Q 1140.50 908.50 1147.50 908.50 L 1297.50 908.50 Q 1304.50 908.50 1304.50 915.50 L 1304.50 934.50 L1140.50 934.50 ' style='fill:url(#tableHeaderGradient1); stroke:none;' />
-<a xlink:href='#ag_kit'><text x='1206' y='922' class='tableTitle'>ag_kit</text><title>Table public.ag_kit</title></a>
+<a xlink:href='#ag_kit'><text x='1206' y='922' class='tableTitle'>ag_kit</text><title>Table ag.ag_kit</title></a>
   <use id='nn' x='1142' y='942' xlink:href='#nn'/><a xlink:href='#ag_kit_id'><use id='pk' x='1142' y='941' xlink:href='#pk'/><title>Primary Key  ( ag_kit_id ) </title></a>
 <a xlink:href='#ag_kit_id'><text x='1158' y='952'>ag_kit_id</text><title>ag_kit_id uuid not null default uuid&#095;generate&#095;v4&#040;&#041;</title></a>
-<a xlink:href='#ag_kit_id'><use id='ref' x='1293' y='941' xlink:href='#ref'/><title>Referred by ag_kit_barcodes ( ag_kit_id ) 
-Referred by ag_kit_barcodes ( ag_kit_id ) </title></a>
+<a xlink:href='#ag_kit_id'><use id='ref' x='1293' y='941' xlink:href='#ref'/><title>Referred by ag_kit_barcodes ( ag_kit_id ) </title></a>
   <use id='nn' x='1142' y='957' xlink:href='#nn'/><a xlink:href='#ag_login_id'><use id='idx' x='1142' y='956' xlink:href='#idx'/><title>Index  ( ag_login_id ) </title></a>
 <a xlink:href='#ag_login_id'><text x='1158' y='967'>ag_login_id</text><title>ag_login_id uuid not null</title></a>
 <a xlink:href='#ag_login_id'><use id='fk' x='1293' y='956' xlink:href='#fk'/><title>References ag_login ( ag_login_id ) </title></a>
@@ -655,7 +657,7 @@ Referred by ag_kit_barcodes ( ag_kit_id ) </title></a>
 <!-- ============= Table 'ag_kit_barcodes' ============= -->
 <rect class='table' x='765' y='1103' width='180' height='330' rx='7' ry='7' />
 <path d='M 765.50 1129.50 L 765.50 1110.50 Q 765.50 1103.50 772.50 1103.50 L 937.50 1103.50 Q 944.50 1103.50 944.50 1110.50 L 944.50 1129.50 L765.50 1129.50 ' style='fill:url(#tableHeaderGradient1); stroke:none;' />
-<a xlink:href='#ag_kit_barcodes'><text x='811' y='1117' class='tableTitle'>ag_kit_barcodes</text><title>Table public.ag_kit_barcodes</title></a>
+<a xlink:href='#ag_kit_barcodes'><text x='811' y='1117' class='tableTitle'>ag_kit_barcodes</text><title>Table ag.ag_kit_barcodes</title></a>
   <use id='nn' x='767' y='1137' xlink:href='#nn'/><a xlink:href='#ag_kit_barcode_id'><use id='pk' x='767' y='1136' xlink:href='#pk'/><title>Primary Key  ( ag_kit_barcode_id ) </title></a>
 <a xlink:href='#ag_kit_barcode_id'><text x='783' y='1147'>ag_kit_barcode_id</text><title>ag_kit_barcode_id uuid not null default uuid&#095;generate&#095;v4&#040;&#041;</title></a>
   <a xlink:href='#ag_kit_id'><use id='idx' x='767' y='1151' xlink:href='#idx'/><title>Index  ( ag_kit_id ) </title></a>
@@ -684,14 +686,12 @@ Referred by ag_kit_barcodes ( ag_kit_id ) </title></a>
 <!-- ============= Table 'barcode' ============= -->
 <rect class='table' x='1125' y='38' width='165' height='165' rx='7' ry='7' />
 <path d='M 1125.50 64.50 L 1125.50 45.50 Q 1125.50 38.50 1132.50 38.50 L 1282.50 38.50 Q 1289.50 38.50 1289.50 45.50 L 1289.50 64.50 L1125.50 64.50 ' style='fill:url(#tableHeaderGradient2); stroke:none;' />
-<a xlink:href='#barcode'><text x='1185' y='52' class='tableTitle'>barcode</text><title>Table public.barcode</title></a>
+<a xlink:href='#barcode'><text x='1185' y='52' class='tableTitle'>barcode</text><title>Table ag.barcode</title></a>
   <use id='nn' x='1127' y='72' xlink:href='#nn'/><a xlink:href='#barcode'><use id='pk' x='1127' y='71' xlink:href='#pk'/><title>Primary Key  ( barcode ) </title></a>
 <a xlink:href='#barcode'><text x='1143' y='82'>barcode</text><title>barcode varchar not null</title></a>
-<a xlink:href='#barcode'><use id='ref' x='1278' y='71' xlink:href='#ref'/><title>Referred by project_barcode ( barcode ) 
-Referred by ag_kit_barcodes ( barcode ) 
-Referred by ag_kit_barcodes ( barcode ) 
+<a xlink:href='#barcode'><use id='ref' x='1278' y='71' xlink:href='#ref'/><title>Referred by ag_kit_barcodes ( barcode ) 
 Referred by plate_barcode ( barcode ) 
-Referred by plate_barcode ( barcode ) </title></a>
+Referred by project_barcode ( barcode ) </title></a>
   <a xlink:href='#create_date_time'><text x='1143' y='97'>create_date_time</text><title>create_date_time timestamp default &#040;&#039;now&#039;&#058;&#058;text&#041;&#058;&#058;timestamp without time zone</title></a>
   <a xlink:href='#status'><text x='1143' y='112'>status</text><title>status varchar&#040;100&#041;</title></a>
   <a xlink:href='#scan_date'><text x='1143' y='127'>scan_date</text><title>scan_date varchar&#040;20&#041;</title></a>
@@ -703,18 +703,17 @@ Referred by plate_barcode ( barcode ) </title></a>
 <!-- ============= Table 'plate' ============= -->
 <rect class='table' x='1560' y='503' width='120' height='90' rx='7' ry='7' />
 <path d='M 1560.50 529.50 L 1560.50 510.50 Q 1560.50 503.50 1567.50 503.50 L 1672.50 503.50 Q 1679.50 503.50 1679.50 510.50 L 1679.50 529.50 L1560.50 529.50 ' style='fill:url(#tableHeaderGradient3); stroke:none;' />
-<a xlink:href='#plate'><text x='1607' y='517' class='tableTitle'>plate</text><title>Table public.plate</title></a>
+<a xlink:href='#plate'><text x='1607' y='517' class='tableTitle'>plate</text><title>Table ag.plate</title></a>
   <use id='nn' x='1562' y='537' xlink:href='#nn'/><a xlink:href='#plate_id'><use id='pk' x='1562' y='536' xlink:href='#pk'/><title>Primary Key  ( plate_id ) </title></a>
 <a xlink:href='#plate_id'><text x='1578' y='547'>plate_id</text><title>plate_id bigint not null</title></a>
-<a xlink:href='#plate_id'><use id='ref' x='1668' y='536' xlink:href='#ref'/><title>Referred by plate_barcode ( plate_id ) 
-Referred by plate_barcode ( plate_id ) </title></a>
+<a xlink:href='#plate_id'><use id='ref' x='1668' y='536' xlink:href='#ref'/><title>Referred by plate_barcode ( plate_id ) </title></a>
   <a xlink:href='#plate'><text x='1578' y='562'>plate</text><title>plate varchar&#040;50&#041;</title></a>
   <a xlink:href='#sequence_date'><text x='1578' y='577'>sequence_date</text><title>sequence_date varchar&#040;20&#041;</title></a>
 
 <!-- ============= Table 'plate_barcode' ============= -->
 <rect class='table' x='1365' y='503' width='90' height='75' rx='7' ry='7' />
 <path d='M 1365.50 529.50 L 1365.50 510.50 Q 1365.50 503.50 1372.50 503.50 L 1447.50 503.50 Q 1454.50 503.50 1454.50 510.50 L 1454.50 529.50 L1365.50 529.50 ' style='fill:url(#tableHeaderGradient3); stroke:none;' />
-<a xlink:href='#plate_barcode'><text x='1372' y='517' class='tableTitle'>plate_barcode</text><title>Table public.plate_barcode</title></a>
+<a xlink:href='#plate_barcode'><text x='1372' y='517' class='tableTitle'>plate_barcode</text><title>Table ag.plate_barcode</title></a>
   <use id='nn' x='1367' y='537' xlink:href='#nn'/><a xlink:href='#plate_id'><use id='idx' x='1367' y='536' xlink:href='#idx'/><title>Index  ( plate_id ) </title></a>
 <a xlink:href='#plate_id'><text x='1383' y='547'>plate_id</text><title>plate_id bigint not null</title></a>
 <a xlink:href='#plate_id'><use id='fk' x='1443' y='536' xlink:href='#fk'/><title>References plate ( plate_id ) </title></a>
@@ -725,7 +724,7 @@ Referred by plate_barcode ( plate_id ) </title></a>
 <!-- ============= Table 'project_barcode' ============= -->
 <rect class='table' x='1365' y='383' width='105' height='75' rx='7' ry='7' />
 <path d='M 1365.50 409.50 L 1365.50 390.50 Q 1365.50 383.50 1372.50 383.50 L 1462.50 383.50 Q 1469.50 383.50 1469.50 390.50 L 1469.50 409.50 L1365.50 409.50 ' style='fill:url(#tableHeaderGradient3); stroke:none;' />
-<a xlink:href='#project_barcode'><text x='1373' y='397' class='tableTitle'>project_barcode</text><title>Table public.project_barcode</title></a>
+<a xlink:href='#project_barcode'><text x='1373' y='397' class='tableTitle'>project_barcode</text><title>Table ag.project_barcode</title></a>
   <use id='nn' x='1367' y='417' xlink:href='#nn'/><a xlink:href='#project_id'><use id='pk' x='1367' y='416' xlink:href='#pk'/><title>Primary Key  ( project_id, barcode ) </title></a>
 <a xlink:href='#project_id'><text x='1383' y='427'>project_id</text><title>project_id bigint not null</title></a>
 <a xlink:href='#project_id'><use id='fk' x='1458' y='416' xlink:href='#fk'/><title>References project ( project_id ) </title></a>
@@ -736,7 +735,7 @@ Referred by plate_barcode ( plate_id ) </title></a>
 <!-- ============= Table 'project' ============= -->
 <rect class='table' x='1560' y='383' width='90' height='75' rx='7' ry='7' />
 <path d='M 1560.50 409.50 L 1560.50 390.50 Q 1560.50 383.50 1567.50 383.50 L 1642.50 383.50 Q 1649.50 383.50 1649.50 390.50 L 1649.50 409.50 L1560.50 409.50 ' style='fill:url(#tableHeaderGradient3); stroke:none;' />
-<a xlink:href='#project'><text x='1586' y='397' class='tableTitle'>project</text><title>Table public.project</title></a>
+<a xlink:href='#project'><text x='1586' y='397' class='tableTitle'>project</text><title>Table ag.project</title></a>
   <use id='nn' x='1562' y='417' xlink:href='#nn'/><a xlink:href='#project_id'><use id='pk' x='1562' y='416' xlink:href='#pk'/><title>Primary Key  ( project_id ) </title></a>
 <a xlink:href='#project_id'><text x='1578' y='427'>project_id</text><title>project_id bigint not null</title></a>
 <a xlink:href='#project_id'><use id='ref' x='1638' y='416' xlink:href='#ref'/><title>Referred by project_barcode ( project_id ) </title></a>
@@ -745,18 +744,14 @@ Referred by plate_barcode ( plate_id ) </title></a>
 <!-- ============= Table 'survey_question' ============= -->
 <rect class='table' x='450' y='1748' width='135' height='90' rx='7' ry='7' />
 <path d='M 450.50 1774.50 L 450.50 1755.50 Q 450.50 1748.50 457.50 1748.50 L 577.50 1748.50 Q 584.50 1748.50 584.50 1755.50 L 584.50 1774.50 L450.50 1774.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
-<a xlink:href='#survey_question'><text x='473' y='1762' class='tableTitle'>survey_question</text><title>Table public.survey_question
+<a xlink:href='#survey_question'><text x='473' y='1762' class='tableTitle'>survey_question</text><title>Table ag.survey_question
 Stores the human survey questions</title></a>
   <use id='nn' x='452' y='1782' xlink:href='#nn'/><a xlink:href='#survey_question_id'><use id='pk' x='452' y='1781' xlink:href='#pk'/><title>Primary Key  ( survey_question_id ) </title></a>
 <a xlink:href='#survey_question_id'><text x='468' y='1792'>survey_question_id</text><title>survey_question_id bigserial not null
 The unique question ID</title></a>
-<a xlink:href='#survey_question_id'><use id='ref' x='573' y='1781' xlink:href='#ref'/><title>Referred by survey_question_response ( survey_question_id ) 
+<a xlink:href='#survey_question_id'><use id='ref' x='573' y='1781' xlink:href='#ref'/><title>Referred by group_questions ( survey_question_id ) 
 Referred by survey_question_response ( survey_question_id ) 
-Referred by survey_group_question ( survey_question_id ) 
-Referred by survey_group_question ( survey_question_id ) 
 Referred by survey_question_response_type ( survey_question_id ) 
-Referred by survey_question_response_type ( survey_question_id ) 
-Referred by survey_question_triggered_by ( survey_question_id ) 
 Referred by survey_question_triggered_by ( survey_question_id ) </title></a>
   <a xlink:href='#american'><text x='468' y='1807'>american</text><title>american varchar
 The american english version of the question</title></a>
@@ -766,7 +761,7 @@ The british english version of the question</title></a>
 <!-- ============= Table 'survey_question_triggered_by' ============= -->
 <rect class='table' x='675' y='1643' width='180' height='90' rx='7' ry='7' />
 <path d='M 675.50 1669.50 L 675.50 1650.50 Q 675.50 1643.50 682.50 1643.50 L 847.50 1643.50 Q 854.50 1643.50 854.50 1650.50 L 854.50 1669.50 L675.50 1669.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
-<a xlink:href='#survey_question_triggered_by'><text x='683' y='1657' class='tableTitle'>survey_question_triggered_by</text><title>Table public.survey_question_triggered_by
+<a xlink:href='#survey_question_triggered_by'><text x='683' y='1657' class='tableTitle'>survey_question_triggered_by</text><title>Table ag.survey_question_triggered_by
 Which responses to the question trigger the appearance of this question</title></a>
   <a xlink:href='#survey_question_id'><use id='idx' x='677' y='1676' xlink:href='#idx'/><title>Index  ( survey_question_id ) </title></a>
 <a xlink:href='#survey_question_id'><text x='693' y='1687'>survey_question_id</text><title>survey_question_id bigint
@@ -784,17 +779,15 @@ The response to the trigger&#095;question that will cause the appearance of this
 <!-- ============= Table 'survey_question_response' ============= -->
 <rect class='table' x='720' y='1748' width='165' height='90' rx='7' ry='7' />
 <path d='M 720.50 1774.50 L 720.50 1755.50 Q 720.50 1748.50 727.50 1748.50 L 877.50 1748.50 Q 884.50 1748.50 884.50 1755.50 L 884.50 1774.50 L720.50 1774.50 ' style='fill:url(#tableHeaderGradient5); stroke:none;' />
-<a xlink:href='#survey_question_response'><text x='730' y='1762' class='tableTitle'>survey_question_response</text><title>Table public.survey_question_response
+<a xlink:href='#survey_question_response'><text x='730' y='1762' class='tableTitle'>survey_question_response</text><title>Table ag.survey_question_response
 Maps questions to responses</title></a>
   <use id='nn' x='722' y='1782' xlink:href='#nn'/><a xlink:href='#survey_question_id'><use id='pk' x='722' y='1781' xlink:href='#pk'/><title>Primary Key  ( survey_question_id, response ) Unique Index  ( survey_question_id ) </title></a>
 <a xlink:href='#survey_question_id'><text x='738' y='1792'>survey_question_id</text><title>survey_question_id bigint not null</title></a>
 <a xlink:href='#survey_question_id'><use id='fk' x='873' y='1781' xlink:href='#fk'/><title>References survey_question ( survey_question_id ) 
-Referred by survey_question_triggered_by ( trigger_question -> survey_question_id ) 
 Referred by survey_question_triggered_by ( trigger_question -> survey_question_id ) </title></a>
   <use id='nn' x='722' y='1797' xlink:href='#nn'/><a xlink:href='#response'><use id='pk' x='722' y='1796' xlink:href='#pk'/><title>Primary Key  ( survey_question_id, response ) Unique Index  ( response ) </title></a>
 <a xlink:href='#response'><text x='738' y='1807'>response</text><title>response varchar not null</title></a>
 <a xlink:href='#response'><use id='fk' x='873' y='1796' xlink:href='#fk'/><title>References survey_response ( response -> american ) 
-Referred by survey_question_triggered_by ( trigger_response -> response ) 
 Referred by survey_question_triggered_by ( trigger_response -> response ) </title></a>
   <a xlink:href='#display_index'><use id='unq' x='722' y='1811' xlink:href='#unq'/><title>Unique Index  ( display_index ) </title></a>
 <a xlink:href='#display_index'><text x='738' y='1822'>display_index</text><title>display_index serial
@@ -803,19 +796,18 @@ The display order of this response</title></a>
 <!-- ============= Table 'survey_response' ============= -->
 <rect class='table' x='720' y='1853' width='105' height='75' rx='7' ry='7' />
 <path d='M 720.50 1879.50 L 720.50 1860.50 Q 720.50 1853.50 727.50 1853.50 L 817.50 1853.50 Q 824.50 1853.50 824.50 1860.50 L 824.50 1879.50 L720.50 1879.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
-<a xlink:href='#survey_response'><text x='726' y='1867' class='tableTitle'>survey_response</text><title>Table public.survey_response
+<a xlink:href='#survey_response'><text x='726' y='1867' class='tableTitle'>survey_response</text><title>Table ag.survey_response
 Stores every possible predictable response on the human survey</title></a>
   <use id='nn' x='722' y='1887' xlink:href='#nn'/><a xlink:href='#american'><use id='pk' x='722' y='1886' xlink:href='#pk'/><title>Primary Key  ( american ) </title></a>
 <a xlink:href='#american'><text x='738' y='1897'>american</text><title>american varchar not null</title></a>
-<a xlink:href='#american'><use id='ref' x='813' y='1886' xlink:href='#ref'/><title>Referred by survey_question_response ( response -> american ) 
-Referred by survey_question_response ( response -> american ) </title></a>
+<a xlink:href='#american'><use id='ref' x='813' y='1886' xlink:href='#ref'/><title>Referred by survey_question_response ( response -> american ) </title></a>
   <a xlink:href='#british'><use id='unq' x='722' y='1901' xlink:href='#unq'/><title>Unique Index  ( british ) </title></a>
 <a xlink:href='#british'><text x='738' y='1912'>british</text><title>british varchar</title></a>
 
 <!-- ============= Table 'survey_question_response_type' ============= -->
 <rect class='table' x='720' y='1943' width='195' height='75' rx='7' ry='7' />
 <path d='M 720.50 1969.50 L 720.50 1950.50 Q 720.50 1943.50 727.50 1943.50 L 907.50 1943.50 Q 914.50 1943.50 914.50 1950.50 L 914.50 1969.50 L720.50 1969.50 ' style='fill:url(#tableHeaderGradient5); stroke:none;' />
-<a xlink:href='#survey_question_response_type'><text x='730' y='1957' class='tableTitle'>survey_question_response_type</text><title>Table public.survey_question_response_type
+<a xlink:href='#survey_question_response_type'><text x='730' y='1957' class='tableTitle'>survey_question_response_type</text><title>Table ag.survey_question_response_type
 Stores the type of response for each question</title></a>
   <a xlink:href='#survey_question_id'><use id='idx' x='722' y='1976' xlink:href='#idx'/><title>Index  ( survey_question_id ) </title></a>
 <a xlink:href='#survey_question_id'><text x='738' y='1987'>survey_question_id</text><title>survey_question_id bigint</title></a>
@@ -827,41 +819,48 @@ Stores the type of response for each question</title></a>
 <!-- ============= Table 'survey_response_types' ============= -->
 <rect class='table' x='1020' y='1958' width='150' height='60' rx='7' ry='7' />
 <path d='M 1020.50 1984.50 L 1020.50 1965.50 Q 1020.50 1958.50 1027.50 1958.50 L 1162.50 1958.50 Q 1169.50 1958.50 1169.50 1965.50 L 1169.50 1984.50 L1020.50 1984.50 ' style='fill:url(#tableHeaderGradient6); stroke:none;' />
-<a xlink:href='#survey_response_types'><text x='1031' y='1972' class='tableTitle'>survey_response_types</text><title>Table public.survey_response_types
+<a xlink:href='#survey_response_types'><text x='1031' y='1972' class='tableTitle'>survey_response_types</text><title>Table ag.survey_response_types
 Stores every possible type of response&#046;  The response type will be processed in python to determine how the question is represented in the interface&#046;</title></a>
   <use id='nn' x='1022' y='1992' xlink:href='#nn'/><a xlink:href='#survey_response_type'><use id='pk' x='1022' y='1991' xlink:href='#pk'/><title>Primary Key  ( survey_response_type ) </title></a>
 <a xlink:href='#survey_response_type'><text x='1038' y='2002'>survey_response_type</text><title>survey_response_type varchar not null</title></a>
-<a xlink:href='#survey_response_type'><use id='ref' x='1158' y='1991' xlink:href='#ref'/><title>Referred by survey_question_response_type ( survey_response_type ) 
-Referred by survey_question_response_type ( survey_response_type ) </title></a>
+<a xlink:href='#survey_response_type'><use id='ref' x='1158' y='1991' xlink:href='#ref'/><title>Referred by survey_question_response_type ( survey_response_type ) </title></a>
 
-<!-- ============= Table 'survey_group_question' ============= -->
-<rect class='table' x='330' y='1583' width='150' height='75' rx='7' ry='7' />
-<path d='M 330.50 1609.50 L 330.50 1590.50 Q 330.50 1583.50 337.50 1583.50 L 472.50 1583.50 Q 479.50 1583.50 479.50 1590.50 L 479.50 1609.50 L330.50 1609.50 ' style='fill:url(#tableHeaderGradient5); stroke:none;' />
-<a xlink:href='#survey_group_question'><text x='341' y='1597' class='tableTitle'>survey_group_question</text><title>Table public.survey_group_question</title></a>
+<!-- ============= Table 'survey_group' ============= -->
+<rect class='table' x='75' y='1583' width='120' height='90' rx='7' ry='7' />
+<path d='M 75.50 1609.50 L 75.50 1590.50 Q 75.50 1583.50 82.50 1583.50 L 187.50 1583.50 Q 194.50 1583.50 194.50 1590.50 L 194.50 1609.50 L75.50 1609.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
+<a xlink:href='#survey_group'><text x='97' y='1597' class='tableTitle'>survey_group</text><title>Table ag.survey_group</title></a>
+  <use id='nn' x='77' y='1617' xlink:href='#nn'/><a xlink:href='#group_order'><use id='pk' x='77' y='1616' xlink:href='#pk'/><title>Primary Key  ( group_order ) </title></a>
+<a xlink:href='#group_order'><text x='93' y='1627'>group_order</text><title>group_order integer not null
+The order that this group will be displayed in</title></a>
+<a xlink:href='#group_order'><use id='ref' x='183' y='1616' xlink:href='#ref'/><title>Referred by group_questions ( survey_group -> group_order ) 
+Referred by surveys ( survey_group -> group_order ) 
+Referred by surveys ( survey_group -> group_order ) </title></a>
+  <a xlink:href='#american_name'><use id='unq' x='77' y='1631' xlink:href='#unq'/><title>Unique Index  ( american_name ) </title></a>
+<a xlink:href='#american_name'><text x='93' y='1642'>american_name</text><title>american_name varchar
+The american english version of the question group&#039;s name</title></a>
+  <a xlink:href='#british_name'><use id='unq' x='77' y='1646' xlink:href='#unq'/><title>Unique Index  ( british_name ) </title></a>
+<a xlink:href='#british_name'><text x='93' y='1657'>british_name</text><title>british_name varchar</title></a>
+
+<!-- ============= Table 'group_questions' ============= -->
+<rect class='table' x='330' y='1583' width='135' height='75' rx='7' ry='7' />
+<path d='M 330.50 1609.50 L 330.50 1590.50 Q 330.50 1583.50 337.50 1583.50 L 457.50 1583.50 Q 464.50 1583.50 464.50 1590.50 L 464.50 1609.50 L330.50 1609.50 ' style='fill:url(#tableHeaderGradient5); stroke:none;' />
+<a xlink:href='#group_questions'><text x='351' y='1597' class='tableTitle'>group_questions</text><title>Table ag.group_questions</title></a>
   <use id='nn' x='332' y='1617' xlink:href='#nn'/><a xlink:href='#survey_group'><use id='pk' x='332' y='1616' xlink:href='#pk'/><title>Primary Key  ( survey_group, survey_question_id ) Index  ( survey_group ) </title></a>
 <a xlink:href='#survey_group'><text x='348' y='1627'>survey_group</text><title>survey_group integer not null</title></a>
-<a xlink:href='#survey_group'><use id='fk' x='468' y='1616' xlink:href='#fk'/><title>References survey_question_group ( survey_group -> group_order ) </title></a>
+<a xlink:href='#survey_group'><use id='fk' x='453' y='1616' xlink:href='#fk'/><title>References survey_group ( survey_group -> group_order ) </title></a>
   <use id='nn' x='332' y='1632' xlink:href='#nn'/><a xlink:href='#survey_question_id'><use id='pk' x='332' y='1631' xlink:href='#pk'/><title>Primary Key  ( survey_group, survey_question_id ) Index  ( survey_question_id ) </title></a>
 <a xlink:href='#survey_question_id'><text x='348' y='1642'>survey_question_id</text><title>survey_question_id bigint not null</title></a>
-<a xlink:href='#survey_question_id'><use id='fk' x='468' y='1631' xlink:href='#fk'/><title>References survey_question ( survey_question_id ) </title></a>
+<a xlink:href='#survey_question_id'><use id='fk' x='453' y='1631' xlink:href='#fk'/><title>References survey_question ( survey_question_id ) </title></a>
 
-<!-- ============= Table 'survey_question_group' ============= -->
-<rect class='table' x='75' y='1583' width='150' height='105' rx='7' ry='7' />
-<path d='M 75.50 1609.50 L 75.50 1590.50 Q 75.50 1583.50 82.50 1583.50 L 217.50 1583.50 Q 224.50 1583.50 224.50 1590.50 L 224.50 1609.50 L75.50 1609.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
-<a xlink:href='#survey_question_group'><text x='86' y='1597' class='tableTitle'>survey_question_group</text><title>Table public.survey_question_group</title></a>
-  <use id='nn' x='77' y='1617' xlink:href='#nn'/><a xlink:href='#survey_type'><use id='pk' x='77' y='1616' xlink:href='#pk'/><title>Index  ( survey_type ) Primary Key  ( group_order, survey_type ) </title></a>
-<a xlink:href='#survey_type'><text x='93' y='1627'>survey_type</text><title>survey_type varchar not null
-human&#044; animal&#044; etc</title></a>
-  <use id='nn' x='77' y='1632' xlink:href='#nn'/><a xlink:href='#group_order'><use id='pk' x='77' y='1631' xlink:href='#pk'/><title>Primary Key  ( group_order, survey_type ) </title></a>
-<a xlink:href='#group_order'><text x='93' y='1642'>group_order</text><title>group_order integer not null
-The order that this group will be displayed in</title></a>
-<a xlink:href='#group_order'><use id='ref' x='213' y='1631' xlink:href='#ref'/><title>Referred by survey_group_question ( survey_group -> group_order ) 
-Referred by survey_group_question ( survey_group -> group_order ) </title></a>
-  <a xlink:href='#american_name'><use id='unq' x='77' y='1646' xlink:href='#unq'/><title>Unique Index  ( american_name ) </title></a>
-<a xlink:href='#american_name'><text x='93' y='1657'>american_name</text><title>american_name varchar
-The american english version of the question group&#039;s name</title></a>
-  <a xlink:href='#british_name'><use id='unq' x='77' y='1661' xlink:href='#unq'/><title>Unique Index  ( british_name ) </title></a>
-<a xlink:href='#british_name'><text x='93' y='1672'>british_name</text><title>british_name varchar</title></a>
+<!-- ============= Table 'surveys' ============= -->
+<rect class='table' x='75' y='1748' width='105' height='75' rx='7' ry='7' />
+<path d='M 75.50 1774.50 L 75.50 1755.50 Q 75.50 1748.50 82.50 1748.50 L 172.50 1748.50 Q 179.50 1748.50 179.50 1755.50 L 179.50 1774.50 L75.50 1774.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
+<a xlink:href='#surveys'><text x='106' y='1762' class='tableTitle'>surveys</text><title>Table ag.surveys</title></a>
+  <use id='nn' x='77' y='1782' xlink:href='#nn'/><a xlink:href='#survey_id'><use id='pk' x='77' y='1781' xlink:href='#pk'/><title>Primary Key  ( survey_id, survey_group ) </title></a>
+<a xlink:href='#survey_id'><text x='93' y='1792'>survey_id</text><title>survey_id integer not null</title></a>
+  <use id='nn' x='77' y='1797' xlink:href='#nn'/><a xlink:href='#survey_group'><use id='pk' x='77' y='1796' xlink:href='#pk'/><title>Index  ( survey_group ) Primary Key  ( survey_id, survey_group ) </title></a>
+<a xlink:href='#survey_group'><text x='93' y='1807'>survey_group</text><title>survey_group integer not null</title></a>
+<a xlink:href='#survey_group'><use id='fk' x='168' y='1796' xlink:href='#fk'/><title>References survey_group ( survey_group -> group_order ) </title></a>
 
 </g></svg>
 
@@ -2743,7 +2742,44 @@ The american english version of the question group&#039;s name</title></a>
 <br/><br/>
 <table id='dbs' >
 <thead>
-<tr><th colspan='3'><a name='survey_group_question'>survey_group_question</a></th></tr>
+<tr><th colspan='3'><a name='survey_group'>survey_group</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='group_order'>group&#095;order</a></td>
+		<td width='40%'> integer  NOT NULL  </td>
+		<td width='99%'> The order that this group will be displayed in </td>
+	</tr>
+	<tr>
+		<td><a name='american_name'>american&#095;name</a></td>
+		<td width='40%'> varchar   </td>
+		<td width='99%'> The american english version of the question group&#039;s name </td>
+	</tr>
+	<tr>
+		<td><a name='british_name'>british&#095;name</a></td>
+		<td width='40%'> varchar   </td>
+		<td width='99%'>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
+	<tr>		<td>idx&#095;human&#095;survey&#095;question&#095;group unique</td>
+		<td> ON american&#095;name</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;human&#095;survey&#095;question&#095;group&#095;0 unique</td>
+		<td> ON british&#095;name</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>pk&#095;human&#095;survey&#095;question&#095;group primary key</td>
+		<td> ON group&#095;order</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table id='dbs' >
+<thead>
+<tr><th colspan='3'><a name='group_questions'>group_questions</a></th></tr>
 </thead>
 <tbody>
 	<tr>
@@ -2772,7 +2808,7 @@ The american english version of the question group&#039;s name</title></a>
 <tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
 	<tr>
 		<td>fk_human_survey_group_question</td>
-		<td > ( survey&#095;group ) ref <a href='#survey&#095;question&#095;group'>survey&#095;question&#095;group</a> (group&#095;order) </td>
+		<td > ( survey&#095;group ) ref <a href='#survey&#095;group'>survey&#095;group</a> (group&#095;order) </td>
 		<td>  </td>
 	</tr>
 	<tr>
@@ -2786,44 +2822,32 @@ The american english version of the question group&#039;s name</title></a>
 <br/><br/>
 <table id='dbs' >
 <thead>
-<tr><th colspan='3'><a name='survey_question_group'>survey_question_group</a></th></tr>
+<tr><th colspan='3'><a name='surveys'>surveys</a></th></tr>
 </thead>
 <tbody>
 	<tr>
-		<td><a name='survey_type'>survey&#095;type</a></td>
-		<td width='40%'> varchar  NOT NULL  </td>
-		<td width='99%'> human&#044; animal&#044; etc </td>
-	</tr>
-	<tr>
-		<td><a name='group_order'>group&#095;order</a></td>
+		<td><a name='survey_id'>survey&#095;id</a></td>
 		<td width='40%'> integer  NOT NULL  </td>
-		<td width='99%'> The order that this group will be displayed in </td>
+		<td width='99%'>  </td>
 	</tr>
 	<tr>
-		<td><a name='american_name'>american&#095;name</a></td>
-		<td width='40%'> varchar   </td>
-		<td width='99%'> The american english version of the question group&#039;s name </td>
-	</tr>
-	<tr>
-		<td><a name='british_name'>british&#095;name</a></td>
-		<td width='40%'> varchar   </td>
+		<td><a name='survey_group'>survey&#095;group</a></td>
+		<td width='40%'> integer  NOT NULL  </td>
 		<td width='99%'>  </td>
 	</tr>
 <tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
-	<tr>		<td>idx&#095;human&#095;survey&#095;question&#095;group unique</td>
-		<td> ON american&#095;name</td>
+	<tr>		<td>idx&#095;surveys </td>
+		<td> ON survey&#095;group</td>
 		<td>  </td>
 	</tr>
-	<tr>		<td>idx&#095;human&#095;survey&#095;question&#095;group&#095;0 unique</td>
-		<td> ON british&#095;name</td>
+	<tr>		<td>idx&#095;surveys&#095;0 primary key</td>
+		<td> ON survey&#095;id&#044; survey&#095;group</td>
 		<td>  </td>
 	</tr>
-	<tr>		<td>idx&#095;human&#095;survey&#095;question&#095;group&#095;1 </td>
-		<td> ON survey&#095;type</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>pk&#095;human&#095;survey&#095;question&#095;group primary key</td>
-		<td> ON group&#095;order&#044; survey&#095;type</td>
+<tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
+	<tr>
+		<td>fk_surveys</td>
+		<td > ( survey&#095;group ) ref <a href='#survey&#095;group'>survey&#095;group</a> (group&#095;order) </td>
 		<td>  </td>
 	</tr>
 </tbody>

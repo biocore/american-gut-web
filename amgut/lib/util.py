@@ -12,10 +12,9 @@ from functools import partial
 from future.utils import viewitems
 from psycopg2 import connect
 
-from amgut import r_server
+from amgut import r_server, media_locale, text_locale
 from amgut.lib.human_survey_supp import question_type, supplemental_map
 from amgut.lib.config_manager import AMGUT_CONFIG
-
 
 get_db_file = partial(join, join(dirname(dirname(abspath(__file__))), 'db'))
 LAYOUT_FP = get_db_file('ag.sql')
@@ -88,6 +87,7 @@ def ag_test_checker():
         return DecoratedClass
     return class_modifier
 
+
 def store_survey(human_survey_id):
     """Store the survey"""
     class response_director(object):
@@ -134,3 +134,23 @@ def store_survey(human_survey_id):
             to_store[quest] = resps
 
     # TODO: serialize and dump into the database
+
+
+def survey_vioscreen(survey_id):
+    """Return a formatted text block and URL for the external survey"""
+    tl = text_locale['human_survey_completed.html']
+    url = media_locale['SURVEY_VIOSCREEN_URL'] % {'survey_id': survey_id}
+    embedded_text = tl['SURVEY_VIOSCREEN']
+    return embedded_text % url
+
+
+def survey_asd(survey_id):
+    """Return a formatted text block and URL for the external survey"""
+    tl = text_locale['human_survey_completed.html']
+    url = media_locale['SURVEY_ASD_URL'] % {'survey_id': survey_id}
+    embedded_text = tl['SURVEY_ASD']
+    return embedded_text % url
+
+
+# external_surveys = (survey_vioscreen, survey_asd)
+external_surveys = (survey_asd, )
