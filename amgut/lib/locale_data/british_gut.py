@@ -276,7 +276,7 @@ _FAQ = {
     'WHEN_RESULTS_NON_FECAL': "I sent in a non-faecal sample and have not received any results, when should I expect results?",
     'WHEN_RESULTS_NON_FECAL_ANS': "The vast majority of the samples we've received are fecal, which was why we prioritized those samples. Much of the analysis and results infrastructure we've put in place is applicable to other sample types, but we do still need to assess what specific representations of the data make the most sense to return to participants. We apologize for the delay. Our tentative goal for skin and oral samples is January 1st, 2014, and environmental samples sometime during the first quarter of 2014.",
     'WHERE_SEND_SAMPLE': "Where do I send my sample?",
-    'WHERE_SEND_SAMPLE_ANS': '<p>This is the shipping address:</p>%(shipping)s' 
+    'WHERE_SEND_SAMPLE_ANS': '<p>This is the shipping address:</p>%(shipping)s'
                              '<p>If you are shipping internationally, please see the <a href="/international_shipping/">international shipping instructions</a>.' % {'project_name': AMGUT_CONFIG.project_name, 'shipping': media_locale['SHIPPING_ADDRESS']},
     'WHO_MICHAEL_POLLAN': "Who is Michael Pollan?",
     'WHO_MICHAEL_POLLAN_ANS': 'Michael Pollan is a New York Times Best Seller for his books on diet and nutrition. Further information about Michael can be found <a href="http://michaelpollan.com/">here</a>.',
@@ -601,7 +601,14 @@ _CHANGE_PASS_VERIFY = {
     'NO_VALID_CODE': 'Your password change code is not valid. If you wish to change your password please <a href="/forgot_password/">start over</a>',
 }
 
-_SURVEY_MAIN = {}
+_SURVEY_MAIN = {
+    'TITLE': 'Survey',
+    'ONCE_YOU_START': 'Once you start this survey, you must complete it. Your answers will <strong>not</strong> be saved unless you complete the entire survey.',
+    'TIME_COMMITMENT': 'We anticipate that participant time commitment for completing the questionnaire online will take no more than <strong>45 minutes</strong>.',
+    'TYPES_OF_QUESTIONS': 'You will be asked questions about your general personal information (name, age, sex, height, weight, ethnicity, place of birth, and current ZIP or equivalent code). We will ask if you recently moved and where you moved from. We will ask questions about general diet information (including whether you follow a special diet, if you have food allergies, whether you have cultural or religious food restrictions). Other questions address whether you have pets and the type of contact you have with these pets and your relationship to other people in this study. There is a section on health information including a history of allergies/asthma, if you suffer from migraines and if you have a history of irritable bowel disease.',
+    'YOU_MAY_DECLINE': 'You may decline to answer any question by not selecting an answer.',
+    'OTHER_SURVEYS': 'Following the questionnaire, you will be presented with a few other focused surveys. Those surveys are optional but your responses could help improve our understanding of the microbiome.'
+}
 
 # Actual text locale
 text_locale = {
