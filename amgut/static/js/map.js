@@ -82,8 +82,8 @@ function renderLocalizedMap(position)
 
 function renderMap()
 {
-    p = new google.maps.LatLng(39.83, -99.89);
-    zoom_level = 4;
+    p = new google.maps.LatLng(LAT, LONG);
+    zoom_level = ZOOM;
     drawMap(zoom_level, p);
 }
 

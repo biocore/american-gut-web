@@ -1,9 +1,12 @@
-{% from amgut import text_locale %}
+{% from amgut import text_locale, media_locale %}
 {% set tl = text_locale['map.html'] %}
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <script type="text/javascript" src="/static/js/map.js"></script>
 <script type="text/javascript">
     var latlongs_db = {% raw latlongs_db %};
+    var LAT = {{media_locale['LATITUDE']}}
+    var LONG = {{media_locale['LONGITUDE']}}
+    var ZOOM = {{media_locale['ZOOM']}}
 </script>
 
 <div style="width:100%; height:100%; background-color:#000;">

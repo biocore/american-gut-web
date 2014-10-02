@@ -7,6 +7,8 @@
 # -----------------------------------------------------------------------------
 
 from os.path import join, dirname, abspath, exists
+from functools import partial
+
 from future import standard_library
 with standard_library.hooks():
     from configparser import (ConfigParser, NoOptionError,
@@ -19,7 +21,7 @@ class ConfigurationManager(object):
     Parameters
     ----------
     conf_fp: str, optional
-        Filepath to the configuration file. Default: config_test.txt
+        Filepath to the configuration file. Default: ag_config.txt
 
     Attributes
     ----------
@@ -41,6 +43,12 @@ class ConfigurationManager(object):
         The correct password for the test account
     badpassword : str
         The password used for testing on the test account
+    redis_host : str
+        The host on which redis is running
+    redis_port : int
+        The port that redis is running on
+    redis_db_id : int
+        The ID of the redis database
     """
     def __init__(self):
         conf_fp = join(dirname(abspath(__file__)),
@@ -51,44 +59,62 @@ class ConfigurationManager(object):
         with open(conf_fp, 'U') as conf_file:
             config.readfp(conf_file)
 
-        _expected_sections = {'main', 'postgres', 'test'}
-        # if set(config.sections()) != _expected_sections:
-        #     missing = _expected_sections - set(config.sections())
-        #     raise MissingSectionHeaderError("Missing: %r" % missing)
+        _expected_sections = {'main', 'postgres', 'test', 'redis'}
+        if set(config.sections()) != _expected_sections:
+            missing = _expected_sections - set(config.sections())
+            raise MissingSectionHeaderError("Missing: %r" % missing)
 
         self._get_main(config)
         self._get_postgres(config)
         self._get_test(config)
+        self._get_redis(config)
 
     def _get_main(self, config):
         """Get the configuration of the main section"""
-        self.project_name = config.get('main', 'NAME')
-        self.project_shorthand = config.get('main', 'SHORTHAND')
-        self.test_environment = config.getboolean('main', 'TEST_ENVIRONMENT')
-        self.base_data_dir = config.get('main', 'BASE_DATA_DIR')
-        self.locale = config.get('main', 'LOCALE')
+        get = partial(config.get, 'main')
+        getboolean = partial(config.getboolean, 'main')
+
+        self.project_name = get('NAME')
+        self.project_shorthand = get('SHORTHAND')
+        self.test_environment = getboolean('TEST_ENVIRONMENT')
+        self.base_data_dir = get('BASE_DATA_DIR')
+        self.locale = get('LOCALE')
 
         if not exists(self.base_data_dir):
             raise IOError("Directory %s does not exist!" % self.base_data_dir)
 
     def _get_postgres(self, config):
         """Get the configuration of the postgres section"""
-        self.user = config.get('postgres', 'USER')
+        get = partial(config.get, 'postgres')
+        getint = partial(config.getint, 'postgres')
+
+        self.user = get('USER')
         try:
-            self.password = config.get('postgres', 'PASSWORD')
+            self.password = get('PASSWORD')
         except NoOptionError as e:
             if self.test_environment:
                 self.password = None
             else:
                 raise e
-        self.database = config.get('postgres', 'DATABASE')
-        self.host = config.get('postgres', 'HOST')
-        self.port = config.getint('postgres', 'PORT')
+        self.database = get('DATABASE')
+        self.host = get('HOST')
+        self.port = getint('PORT')
 
     def _get_test(self, config):
         """Get the configuration of the test section"""
-        self.goodpassword = config.get('test', 'GOODPASSWORD')
-        self.badpassword = config.get('test', 'BADPASSWORD')
+        get = partial(config.get, 'test')
+
+        self.goodpassword = get('GOODPASSWORD')
+        self.badpassword = get('BADPASSWORD')
+
+    def _get_redis(self, config):
+        """Get the configuration of the redis section"""
+        get = partial(config.get, 'redis')
+        getint = partial(config.getint, 'redis')
+
+        self.redis_host = get('HOST')
+        self.redis_port = getint('PORT')
+        self.redis_db_id = getint('DB_ID')
 
 
 AMGUT_CONFIG = ConfigurationManager()

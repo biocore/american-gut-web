@@ -14,6 +14,9 @@ from amgut.lib.config_manager import AMGUT_CONFIG
 HELP_EMAIL = "info@americangut.org"
 media_locale = {
     'LOGO': '/static/img/ag_logo.jpg',
+    'LATITUDE': 39.83,
+    'LONGITUDE': -99.89,
+    'ZOOM': 4,
     'STEPS_VIDEO': "http://player.vimeo.com/video/63542787",
     'ADD_PARTICIPANT': 'http://player.vimeo.com/video/63931218',
     'ADD_PARTICIPANT_IMG_1': "/static/img/add_participant.png",
@@ -124,9 +127,9 @@ _FAQ = {
     'BETTER_OR_WORSE_ANS': 'Right now, you can\'t. We\'re still trying to understand what constitutes a normal or average gut microbiome, and we have a lot to learn about the functions of many of the microbes that inhabit the gut. Therefore, it\'s tough to know what combinations of microbes are best for nutrition and health. That\'s one reason collecting data from so many people is important - hopefully we can start to learn more about this.',
     'LOOK_BELOW': "If you're still experiencing issues, look for your problem in the FAQ below",
     'PASSWORD_SAME_VERIFICATION_ANS': 'No. Your <strong>password</strong> is printed on the sheet that you received with your kit in the mail. That sheet looks like this:</p>'
-                                '<img src="%(FAQ_AMBIGUOUS_PASS)s"/><p>Your <strong>verification code</strong> is emailed to you. Look for the email: <br /><br /><strong>FROM:</strong>  %(project)s (%(help_email)s)<br /><strong>SUBJECT:</strong>  %(shorthand)s Kit ID & Verification Code' % {"shorthand": AMGUT_CONFIG.project_shorthand, "project": AMGUT_CONFIG.project_name, "FAQ_AMBIGUOUS_PASS": media_locale['FAQ_AMBIGUOUS_PASS'], 'help_email': media_locale['HELP_EMAIL']},
+                                      '<img src="%(FAQ_AMBIGUOUS_PASS)s"/><p>Your <strong>verification code</strong> is emailed to you. Look for the email: <br /><br /><strong>FROM:</strong>  %(project)s (%(help_email)s)<br /><strong>SUBJECT:</strong>  %(shorthand)s Kit ID & Verification Code' % {"shorthand": AMGUT_CONFIG.project_shorthand, "project": AMGUT_CONFIG.project_name, "FAQ_AMBIGUOUS_PASS": media_locale['FAQ_AMBIGUOUS_PASS'], 'help_email': media_locale['HELP_EMAIL']},
     'TAKES_SIX_MONTHS_ANS': 'Yes. It takes about 8 weeks for extractions, 8 weeks for the remainder of the processing, and 2 weeks to do the actual sequencing. This is before any analysis and if everything goes as planned, with no delays - equipment down, run failures, reagents or other consumables back ordered. Things do sometimes go wrong, so we say up to 6 months.',
-    'PARTICIPATE_WITH_DIAGNOSIS_ANS': 'Of course! The only exclusion criteria are: you must be more than 6 weeks old and cannot be a convicted felon. Please keep in mind that, for legal and ethical reasons, the %(project)s does not provide medically actionable results or advice.' % {"project": AMGUT_CONFIG.project_name},
+    'PARTICIPATE_WITH_DIAGNOSIS_ANS': 'Of course! The only exclusion criteria are: you must be more than 3 months old and cannot be in prison. Please keep in mind that, for legal and ethical reasons, the %(project)s does not provide medically actionable results or advice.' % {"project": AMGUT_CONFIG.project_name},
     'HOW_PROCESS_SAMPLES': 'How are the samples and data processed?',
     'WHO_MICHAEL_POLLAN_ANS': 'Michael Pollan is a New York Times Best Seller for his books on diet and nutrition. Further information about Michael can be found <a href="http://michaelpollan.com/">here</a>.',
     'WHO_MICHAEL_POLLAN': 'Who is Michael Pollan?',
@@ -220,7 +223,7 @@ _HELP_REQUEST = {
 
 _DB_ERROR = {
     'HEADER': 'Oops! There seems to be a database error.',
-    'MESSAGE': 'Please help us to debug by emailing us at <a href="mailto:%(help_email)s">%(help_email)s</a> and tell us exactly what happend before you got this error.' % {'help_email': media_locale['HELP_EMAIL']},
+    'MESSAGE': 'Please help us to debug by emailing us at <a href="mailto:%(help_email)s">%(help_email)s</a> and tell us exactly what happend before you got this error.' % {"help_email": media_locale["HELP_EMAIL"]},
     'SIGNOFF': 'Thanks, <br /> The American Gut Team'
 }
 
@@ -541,7 +544,7 @@ _PORTAL = {
     'VERIFICATION_TEXT_2': 'our <strong>Verification Code</strong> will be sent to you via email to the address that you entered when you made your donation; if you made an anonymous donation, please <a href="/authed/help_request/">contact us directly</a>.',
     'VERIFICATION_TEXT_3': 'If you cannot find your <strong>Verification Code</strong>, please make sure to check your spam folder. If you still cannot find the code, please <a href="/authed/help_request/">contact us</a>.',
     'VERIFICATION_HEADER_2': 'Verify your identity and kit barcode(s)',
-    'VERIFICATION_CODE_PROMPT': 'Please enter the verification code sent to your email address <a href="#" class="help" title="If you did not recieve a verification code in your email from American Gut, please check your spam folder. If you still can not find it, contact %(help_email)s">(?)</a>' % {'help_email': media_locale['HELP_EMAIL']},
+    'VERIFICATION_CODE_PROMPT': 'Please enter the verification code sent to your email address <a href="#" class="help" title="If you did not recieve a verification code in your email from American Gut, please check your spam folder. If you still can not find it, contact %(help_email)s">(?)</a>' % {"help_email": media_locale["HELP_EMAIL"]},
     'VERIFICATION_CODE_ERROR': 'The kit verification code you entered does not match our records. Please double-check the code you entered. If you continue to experience difficulties, please <a href=/authed/help_request/>contact us</a>.',
     'VERIFY_BARCODES': 'Please verify that the barcode(s) you received in the mail match the barcode(s) here',
     'VERIFY_BARCODES_POPUP': 'The barcode you need to verify is located on the outside of your sample tube.',
@@ -560,7 +563,7 @@ _PORTAL = {
     'SAMPLE_STEPS_HEADER_1': 'Before Taking Your Samples',
     'SAMPLE_STEPS_TEXT_1': 'These are the steps involved in taking a sample:',
     'SAMPLE_STEPS_TEXT_2': '<li>Make sure you have <a href="#" onclick="selectTab(\'source\')">added your sample source and complete the required survey(s)</a></li><li>Remove the sample swabs from the sample tube</li><li>Collect your sample following the guidelines below</li><li>Place sample swabs into the sample tube</li>',
-    'SAMPLE_STEPS_TEXT_3': 'These sample collection instructions are very important, please read through them <strong>before</strong> beginning to take your sample. Deviations will cause issues with sample processing, sequencing, and data analysis. We cannot guarantee that we will be able to process your sample if the instructions are not followed, and <strong>we cannot offer replacements if instructions were not followed</strong>. Please do not hesitate to ask us questions at <a href="/authed/help_request/">%(help_email)s</a>.' % {'help_email': media_locale['HELP_EMAIL']},
+    'SAMPLE_STEPS_TEXT_3': 'These sample collection instructions are very important, please read through them <strong>before</strong> beginning to take your sample. Deviations will cause issues with sample processing, sequencing, and data analysis. We cannot guarantee that we will be able to process your sample if the instructions are not followed, and <strong>we cannot offer replacements if instructions were not followed</strong>. Please do not hesitate to ask us questions at <a href="/authed/help_request/">%(help_email)s</a>.' % {"help_email": media_locale["HELP_EMAIL"]},
     'SAMPLE_STEPS_HEADER_2': 'Taking Your Samples',
     'SAMPLE_STEPS_TEXT_4': 'Once you have removed the sample tube, only handle the sample swab by the red cap.',
     'SAMPLE_STEPS_TEXT_5': 'For a <strong>fecal sample</strong>, rub both cotton tips on a fecal specimen (a used piece ofbathroom tissue). Collect a small amount of biomass. Maximum collection would be to saturate 1/2 a swab. <strong>More is not better!</strong> The ideal amount of biomass collected is shown below.',
@@ -626,6 +629,11 @@ _FREQUENCY_WEEK_CHOICES = (_NO_RESPONSE_CHOICE,
                            'Occasionally (1-2 times/week)',
                            'Regularly (3-5 times/week)',
                            'Daily')
+_DIAGNOSIS_CHOICE = (_NO_RESPONSE_CHOICE,
+                     'I do not have this condition',
+                     'Diagnosed by a medical professional (doctor, physician assistant)',
+                     'Diagnosed by an alternative medicine practitioner',
+                     'Self-diagnosed')
 
 # sourced from 12-0582_-_american_gut_questionnaire_amended_09012014__irb_appd_09.19.14
 _HUMAN_SURVEY = {
@@ -901,37 +909,68 @@ _HUMAN_SURVEY = {
                                    'A mixture of breast milk and formula',
                                    'Not sure'),
 
-    'HEALTH_QUESTION_51': 'Have you been diagnosed with any of the following conditions (check all that apply)?',
-    'HEALTH_QUESTION_51_CHOICES': (_NO_RESPONSE_CHOICE,
-                                   'I choose not to answer',
-                                   'I do not have any of the conditions listed below',
-                                   'ADD/ADHD',
-                                   'Alzheimer\'s Disease/Dementia',
-                                   'Asthma, Cystic Fibrosis or Lung Disease',
-                                   'Autism or Autism Spectrum Disorder',
-                                   'Autoimmune disease (i.e. Lupus, RA, MS, Hashimoto\'s thyroiditis), not including IBD (irritable bowel disease) or type I diabetes',
-                                   'Candida or fungal overgrowth in the gut',
-                                   'Clostridium difficile (C. diff) infection',
-                                   'Coronary artery Disease, heart disease, heart attack, stroke',
-                                   'Depression, bipolar disorder or schizophrenia',
-                                   'Diabetes',
-                                   'Epilepsy or seizure disorder',
-                                   'Irritable Bowel Syndrome (IBS)',
-                                   'Inflammatory Bowel Disease (IBD)',
-                                   'Migraines',
-                                   'Kidney Disease',
-                                   'Liver Disease',
-                                   'Phenylketonuria',
-                                   'Small Intestinal Bacterial Overgrowth (SIBO)',
-                                   'Skin Condition',
-                                   'Thyroid Disease',
-                                   'Other'),
+    'HEALTH_QUESTION_51.03': 'Have you ever been diagnosed with ADD/ADHD?',
+    'HEALTH_QUESTION_51.03_CHOICES': _DIAGNOSIS_CHOICE,
 
-    'HEALTH_QUESTION_52': 'For the conditions you checked in question 51, was the condition',
-    'HEALTH_QUESTION_52_CHOICES': (_NO_RESPONSE_CHOICE,
-                                   'Diagnosed by a medical professional (doctor, physician assistant)',
-                                   'Diagnosed by an alternative medicine practitioner',
-                                   'Self-diagnosed'),
+    'HEALTH_QUESTION_51.04': 'Have you ever been diagnosed with Alzheimer\'s Disease/Dementia?',
+    'HEALTH_QUESTION_51.04_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.05': 'Have you ever been diagnosed with Asthma, Cystic Fibrosis or Lung Disease?',
+    'HEALTH_QUESTION_51.05_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.06': 'Have you ever been diagnosed with Autism or Autism Spectrum Disorder?',
+    'HEALTH_QUESTION_51.06_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.07': 'Have you ever been diagnosed with Autoimmune disease (i.e. Lupus, RA, MS, Hashimoto\'s thyroiditis), not including IBD (irritable bowel disease) or type I diabetes?',
+    'HEALTH_QUESTION_51.07_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.08': 'Have you ever been diagnosed with Candida or fungal overgrowth in the gut?',
+    'HEALTH_QUESTION_51.08_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.09': 'Have you ever been diagnosed with Clostridium difficile (C. diff) infection?',
+    'HEALTH_QUESTION_51.09_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.10': 'Have you ever been diagnosed with coronary artery disease, heart disease, heart attack, stroke?',
+    'HEALTH_QUESTION_51.10_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.11': 'Have you ever been diagnosed with depression, bipolar disorder or schizophrenia?',
+    'HEALTH_QUESTION_51.11_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.12': 'Have you ever been diagnosed with diabetes?',
+    'HEALTH_QUESTION_51.12_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.13': 'Have you ever been diagnosed with epilepsy or seizure disorder?',
+    'HEALTH_QUESTION_51.13_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.14': 'Have you ever been diagnosed with irritable bowel syndrome (IBS)?',
+    'HEALTH_QUESTION_51.14_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.15': 'Have you ever been diagnosed with inflammatory bowel disease (IBD)?',
+    'HEALTH_QUESTION_51.15_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.16': 'Have you ever been diagnosed with migraines?',
+    'HEALTH_QUESTION_51.16_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.17': 'Have you ever been diagnosed with kidney disease?',
+    'HEALTH_QUESTION_51.17_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.18': 'Have you ever been diagnosed with liver disease?',
+    'HEALTH_QUESTION_51.18_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.19': 'Have you ever been diagnosed with phenylketonuria?',
+    'HEALTH_QUESTION_51.19_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.20': 'Have you ever been diagnosed with small intestinal bacterial overgrowth (SIBO)?',
+    'HEALTH_QUESTION_51.20_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.21': 'Have you ever been diagnosed with skin Condition?',
+    'HEALTH_QUESTION_51.21_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.22': 'Have you ever been diagnosed with thyroid Disease?',
+    'HEALTH_QUESTION_51.22_CHOICES': _DIAGNOSIS_CHOICE,
+
+    'HEALTH_QUESTION_51.23': 'Have you ever been diagnosed with any other relevant condition?',
+    'HEALTH_QUESTION_51.23_CHOICES': _DIAGNOSIS_CHOICE,
 
     'HEALTH_QUESTION_53': 'Are you willing to be contacted to answer additional questions about the conditions listed above?',
     'HEALTH_QUESTION_53_CHOICES': _YES_NO_CHOICES,
