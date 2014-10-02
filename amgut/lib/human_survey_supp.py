@@ -19,12 +19,14 @@ question_group = defaultdict(list)
 group_order = ['GENERAL_DIET', 'GENERAL', 'LIFESTYLE_HYGIENE', 'HEALTH',
                'DETAILED_DIET']
 
-question_idx = re.compile('([0-9]+)')
+question_idx = re.compile('([0-9.]+)')
 for text_key, values in viewitems(text_locale['human_survey.html']):
-    if text_key.startswith('SUPPLEMENT') or text_key.startswith('PERSONAL'):
+    if (text_key.startswith('SUPPLEMENT')
+            or text_key.startswith('PERSONAL')
+            or text_key.endswith('TITLE')):
         continue
 
-    idx = int(question_idx.search(text_key).group(1))
+    idx = float(question_idx.search(text_key).group(1))
     if text_key.endswith('CHOICES'):
         responses_map[idx] = values
     else:
@@ -59,8 +61,8 @@ supplemental_map = {
         ((1,), 'SUPPLEMENTAL_PREGNANCY'),  # triggered on Yes
     'HEALTH_QUESTION_48':
         ((1,), 'SUPPLEMENTAL_MEDICATION'),  # triggered on Yes
-    'HEALTH_QUESTION_51':
-        ((23,), 'SUPPLEMENTAL_OTHER_CONDITIONS'),  # triggered on Other
+    'HEALTH_QUESTION_51.23':
+        ((2, 3, 4,), 'SUPPLEMENTAL_OTHER_CONDITIONS'),  # triggered on Other
     }
 
 # associates the question with its type, where SINGLE is a question with only
@@ -118,8 +120,27 @@ question_type = {
     'HEALTH_QUESTION_48': 'SINGLE',
     'HEALTH_QUESTION_49': 'SINGLE',
     'HEALTH_QUESTION_50': 'SINGLE',
-    'HEALTH_QUESTION_51': 'MULTIPLE',
-    'HEALTH_QUESTION_52': 'SINGLE',
+    'HEALTH_QUESTION_51.03': 'SINGLE',
+    'HEALTH_QUESTION_51.04': 'SINGLE',
+    'HEALTH_QUESTION_51.05': 'SINGLE',
+    'HEALTH_QUESTION_51.06': 'SINGLE',
+    'HEALTH_QUESTION_51.07': 'SINGLE',
+    'HEALTH_QUESTION_51.08': 'SINGLE',
+    'HEALTH_QUESTION_51.09': 'SINGLE',
+    'HEALTH_QUESTION_51.10': 'SINGLE',
+    'HEALTH_QUESTION_51.11': 'SINGLE',
+    'HEALTH_QUESTION_51.12': 'SINGLE',
+    'HEALTH_QUESTION_51.13': 'SINGLE',
+    'HEALTH_QUESTION_51.14': 'SINGLE',
+    'HEALTH_QUESTION_51.15': 'SINGLE',
+    'HEALTH_QUESTION_51.16': 'SINGLE',
+    'HEALTH_QUESTION_51.17': 'SINGLE',
+    'HEALTH_QUESTION_51.18': 'SINGLE',
+    'HEALTH_QUESTION_51.19': 'SINGLE',
+    'HEALTH_QUESTION_51.20': 'SINGLE',
+    'HEALTH_QUESTION_51.21': 'SINGLE',
+    'HEALTH_QUESTION_51.22': 'SINGLE',
+    'HEALTH_QUESTION_51.23': 'SINGLE',
     'HEALTH_QUESTION_53': 'SINGLE',
     'HEALTH_QUESTION_54': 'SINGLE',
     'HEALTH_QUESTION_55': 'MULTIPLE',

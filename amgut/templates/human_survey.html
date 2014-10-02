@@ -1,0 +1,66 @@
+{% extends sitebase.html %}
+{% block head %}
+<script>
+function toggle_div(div_id, form_item_id, indices) {
+    var selected_index = $("#"+form_item_id).prop("selectedIndex");
+
+    if (indices.indexOf(selected_index) > -1) {
+        $("#"+div_id).slideDown(500);
+    }
+    else {
+        $("#"+div_id).slideUp(500);
+    };
+};
+
+$(document).ready(function() {
+    $("div[id^=supp_]").hide();
+
+    $( "#progressbar" ).progressbar({
+      value: {{ progress }}
+    });
+});
+</script>
+{% end %}
+{% block content %}
+{% from amgut import text_locale %}
+{% set tl = text_locale['human_survey.html'] %}
+
+{# Note that TITLE is linked to a locale, but is set from the human_survey
+handler #}
+<h1>{{ TITLE }}</h1>
+
+<table>
+    <form action='/authed/human_survey/' id="human_survey" method="POST">
+    <input type="hidden" name="page_number" value="{{page_number}}">
+    {% for form_item in the_form %}
+        {% set kwargs = {} %}
+        {% if form_item.id in supplemental_map %}
+            {% set supp_div_id = "supp_" + form_item.id + "_div" %}
+            {% set kwargs["onchange"] = "toggle_div('" + supp_div_id + "', '" + form_item.id + "', " + repr(list(supplemental_map[form_item.id][0])) + ");" %}
+        {% end %}
+        <tr align="left">
+            <td width="40%">{% raw tl[form_item.id] %}</td>
+            <td>{% raw form_item(**kwargs) %}</td>
+        </tr>
+        {% if form_item.id in supplemental_map %}
+        <tr>
+            <td colspan="2">
+                <div id="{{ supp_div_id }}">
+                    {# TODO: Add the actual divs here #}
+                    AWW YEAH
+                </div>
+            </td>
+        </tr>
+        {% end %}
+    {% end %}
+    <tr>
+        <td><input type="submit"></td>
+    </tr>
+    </form>
+</table>
+<br />
+<div id="progressbar"></div>
+<br />
+<br />
+
+{% end %}
