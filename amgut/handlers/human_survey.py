@@ -116,4 +116,4 @@ class HumanSurveyHandler(BaseHandler):
             # only get the cookie if you complete the survey
             self.clear_cookie('human_survey_id')
             self.set_secure_cookie('completed_survey_id', human_survey_id)
-            self.redirect(module_locale['SITEBASE'] + '/authed/human_survey_completed/')
+            self.redirect(media_locale['SITEBASE'] + '/authed/human_survey_completed/')

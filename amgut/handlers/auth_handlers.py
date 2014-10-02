@@ -43,7 +43,7 @@ class AuthRegisterHandoutHandler(BaseHandler):
             kitinfo['swabs_per_kit'], kitinfo['verification_code'],
             printresults)
         if success == -1:
-            self.redirect(module_locale['SITEBASE'] + '/db_error/?err=regkit')
+            self.redirect(media_locale['SITEBASE'] + '/db_error/?err=regkit')
             return
 
         # Add the barcodes
@@ -54,7 +54,7 @@ class AuthRegisterHandoutHandler(BaseHandler):
             barcode = row[0]
             success = AG_DATA_ACCESS.addAGBarcode(ag_kit_id, barcode)
             if success == -1:
-                self.redirect(module_locale['SITEBASE'] + '/db_error/?err=regbarcode')
+                self.redirect(media_locale['SITEBASE'] + '/db_error/?err=regbarcode')
                 return
 
         # Email the verification code
@@ -75,7 +75,7 @@ class AuthRegisterHandoutHandler(BaseHandler):
 
             self.render('help_request.html', skid=skid, result=result)
 
-        self.redirect(module_locale['SITEBASE'] + '/authed/portal/')
+        self.redirect(media_locale['SITEBASE'] + '/authed/portal/')
 
 
 class AuthLoginHandler(BaseHandler):
@@ -88,14 +88,14 @@ class AuthLoginHandler(BaseHandler):
         if login:
             # everything good so log in
             self.set_current_user(skid)
-            self.redirect(module_locale['SITEBASE'] + "/authed/portal/")
+            self.redirect(media_locale['SITEBASE'] + "/authed/portal/")
             return
         else:
             is_handout = AG_DATA_ACCESS.handoutCheck(skid, password)
             if is_handout == 'y':
                 # login user but have them register themselves
                 self.set_current_user(skid)
-                self.redirect(module_locale['SITEBASE'] + '/auth/register/')
+                self.redirect(media_locale['SITEBASE'] + '/auth/register/')
                 return
             else:
                 msg = tl['INVALID_KITID']
@@ -115,4 +115,4 @@ class AuthLogoutHandler(BaseHandler):
     """Logout handler, no page necessary"""
     def get(self):
         self.clear_cookie("skid")
-        self.redirect(module_locale['SITEBASE'] + "/")
+        self.redirect(media_locale['SITEBASE'] + "/")

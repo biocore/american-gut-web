@@ -64,6 +64,6 @@ class SampleOverviewHandler(BaseHandler):
         if bc_to_remove:
             ag_login_id = AG_DATA_ACCESS.get_user_for_kit(self.current_user)
             AG_DATA_ACCESS.deleteSample(bc_to_remove, ag_login_id)
-            self.redirect(module_locale['SITEBASE'] + "/authed/portal/")
+            self.redirect(media_locale['SITEBASE'] + "/authed/portal/")
 
         self._sample_overview_renderer()

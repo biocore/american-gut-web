@@ -81,7 +81,7 @@ class AnimalSurveyHandler(BaseHandler):
 
         message = urlencode([('errmsg', tl['SUCCESSFULLY_ADDED'] %
                               participant_name)])
-        self.redirect(module_locale['SITEBASE'] + '/authed/portal/?%s' % message)
+        self.redirect(media_locale['SITEBASE'] + '/authed/portal/?%s' % message)
 
 
 class CheckParticipantName(WebSocketHandler, BaseHandler):

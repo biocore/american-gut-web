@@ -12,7 +12,7 @@ class HumanSurveyCompletedHandler(BaseHandler):
 
         if human_survey_id is None:
             self.clear_cookie('completed_survey_id')
-            self.redirect(module_locale['SITEBASE'] + '/authed/portal/')
+            self.redirect(media_locale['SITEBASE'] + '/authed/portal/')
 
         else:
             surveys = [f(human_survey_id) for f in external_surveys]
@@ -23,4 +23,4 @@ class HumanSurveyCompletedHandler(BaseHandler):
     @authenticated
     def post(self):
         self.clear_cookie('completed_survey_id')
-        self.redirect(module_locale['SITEBASE'] + '/authed/portal/')
+        self.redirect(media_locale['SITEBASE'] + '/authed/portal/')

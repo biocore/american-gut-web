@@ -33,7 +33,7 @@ class AddSample(BaseHandler):
                                             sample_time, participant_name,
                                             notes)
 
-        self.redirect(module_locale['SITEBASE'] + '/authed/portal/')
+        self.redirect(media_locale['SITEBASE'] + '/authed/portal/')
 
     @authenticated
     def get(self):
