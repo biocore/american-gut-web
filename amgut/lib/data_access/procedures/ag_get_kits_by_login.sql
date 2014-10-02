@@ -1,7 +1,5 @@
 SET client_encoding TO 'UTF8';
 
-\set ON_ERROR_STOP ON
-
 
 CREATE OR REPLACE FUNCTION ag_get_kits_by_login (
     user_data_ refcursor

@@ -18,8 +18,10 @@ import psycopg2.extras
 
 from amgut.lib.data_access.ag_data_access import AGDataAccess
 from amgut.lib.config_manager import AMGUT_CONFIG
+from amgut.lib.util import ag_test_checker
 
 
+@ag_test_checker()
 class TestAGDataAccess(TestCase):
     def setUp(self):
         self.con = psycopg2.connect(user=AMGUT_CONFIG.user,
