@@ -766,6 +766,8 @@ _HUMAN_SURVEY = {
     'PERSONAL_PROMPT_BIRTHDATE': 'Birth date:',
     'PERSONAL_PROMPT_WEIGHT': 'Weight:',
     'PERSONAL_PROMPT_ZIP': 'Current ZIP code:',
+    'PERSONAL_PROMPT_WEIGHT_UNITS': 'Weight units:',
+    'PERSONAL_PROMPT_HEIGHT_UNITS': 'Height units:',
 
     # General diet information
     'GENERAL_DIET_TITLE': 'General Diet Information',

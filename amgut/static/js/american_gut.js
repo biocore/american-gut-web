@@ -726,46 +726,33 @@ function validateSurvey3() {
 }
 
 function validateSurvey1() {
-    for(var i = 0; i < document.survey_1.length; i++) 
+    survey_form = document.getElementById('human_survey');
+    for(var i = 0; i < survey_form.length; i++) 
     {
-        document.survey_1[i].className = document.survey_1[i].className.replace(/(?:^|\s)highlight(?!\S)/ , '');
+        survey_form[i].className = survey_form[i].className.replace(/(?:^|\s)highlight(?!\S)/ , '');
     }
 	
     var valid = true;
  	
-	if(!isValidDate(document.survey_1.birth_date.value) && document.survey_1.birth_date.value != "")
+	if(!isValidDate(survey_form.PERSONAL_PROMPT_BIRTHDATE.value) && survey_form.PERSONAL_PROMPT_BIRTHDATE.value != "")
 	{
-		document.survey_1.birth_date.className += " highlight"
+		survey_form.PERSONAL_PROMPT_BIRTHDATE.className += " highlight";
+		valid = false;
+	}
+
+ 	if(survey_form.PERSONAL_PROMPT_HEIGHT.value.replace(/[0-9]/g,"").length > 0)
+	{
+		survey_form.PERSONAL_PROMPT_HEIGHT.className += " highlight";
+		valid = false;
+	}
+
+ 	if(survey_form.PERSONAL_PROMPT_WEIGHT.value.replace(/[0-9]/g,"").length > 0)
+	{
+		survey_form.PERSONAL_PROMPT_WEIGHT.className += " highlight";
 		valid = false;
 	}
 	
-	if(document.survey_1.height_in.value.replace(/[0-9]/g,"").length > 0)
-	{
-		document.survey_1.height_in.className += " highlight"
-		valid = false;
-	}
-	
- 	if(document.survey_1.height_cm.value.replace(/[0-9]/g,"").length > 0)
-	{
-		document.survey_1.height_cm.className += " highlight"
-		valid = false;
-	}
-	
- 	if(document.survey_1.weight_lbs.value.replace(/[0-9]/g,"").length > 0)
-	{
-		document.survey_1.weight_lbs.className += " highlight"
-		valid = false;
-	}
-	
- 	if(document.survey_1.weight_kg.value.replace(/[0-9]/g,"").length > 0)
-	{
-		document.survey_1.weight_kg.className += " highlight"
-		valid = false;
-	}
-	
-	if(valid)
-		$('#survey_1').submit();
- 
+	return valid;
 }
 
 function validateParticipantName(participant_name, valid) {
