@@ -318,6 +318,116 @@ _PARTICIPANT_OVERVIEW = {
     'SAMPLES_ASSIGNED': "Samples assigned        ",
 }
 
+_ANIMAL_SURVEY = {
+    'GENERAL_TITLE': 'General',
+    'GENERAL_QUESTION_1': 'Animal type?',
+    'GENERAL_QUESTION_1_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Dog',
+                                   'Cat',
+                                   'Small mammal',
+                                   'Large mammal',
+                                   'Fish',
+                                   'Bird',
+                                   'Reptile',
+                                   'Amphibian',
+                                   'Other'),
+
+    'GENERAL_QUESTION_2': 'Origin?',
+    'GENERAL_QUESTION_2_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Breeder',
+                                   'Shelter',
+                                   'Home',
+                                   'Wild'),
+
+    'GENERAL_QUESTION_3': 'Age?',
+    'GENERAL_QUESTION_3_CHOICES': None,
+
+    'GENERAL_QUESTION_4': 'Gender?',
+    'GENERAL_QUESTION_4_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Male',
+                                   'Female',
+                                   'Unknown'),
+
+    'GENERAL_QUESTION_5': 'Setting?',
+    'GENERAL_QUESTION_5_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Urban',
+                                   'Suburban',
+                                   'Rural'),
+
+    'GENERAL_QUESTION_6': 'Weight category?',
+    'GENERAL_QUESTION_6_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Underweight',
+                                   'Skinny',
+                                   'Normal',
+                                   'Chubby',
+                                   'Overweight'),
+
+    'GENERAL_QUESTION_7': 'Diet classification?',
+    'GENERAL_QUESTION_7_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Carnivore',
+                                   'Omnivore',
+                                   'Herbivore'),
+
+    'GENERAL_QUESTION_8': 'Food source?',
+    'GENERAL_QUESTION_8_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'Pet store food',
+                                   'Human food',
+                                   'Wild food'),
+
+    'GENERAL_QUESTION_9': 'Food type?',
+    'GENERAL_QUESTION_9_CHOICES': (_NO_RESPONSE_CHOICE,
+                                   'dry',
+                                   'wet',
+                                   'both'),
+
+    'GENERAL_QUESTION_10': 'Food special attributes?',
+    'GENERAL_QUESTION_10_CHOICES': (_NO_RESPONSE_CHOICE,
+                                    'Organic',
+                                    'Grain free'),
+
+    'GENERAL_QUESTION_11': 'Social?',
+    'GENERAL_QUESTION_11_CHOICES': (_NO_RESPONSE_CHOICE,
+                                    'Lives alone with humans',
+                                    'Lives alone no/limited humans (shelter)',
+                                    'Lives with other animals and humans',
+                                    'Lives with other animals/limited humans'),
+
+    'GENERAL_QUESTION_12': 'Any pets the current animal lives with?',
+    'GENERAL_QUESTION_12_CHOICES': None,
+
+    'GENERAL_QUESTION_13': 'Add the age of any human that the current animal lives with',
+    'GENERAL_QUESTION_13_CHOICES': None,
+
+    'GENERAL_QUESTION_14': 'Add the gender of any human that the current animal lives with',
+    'GENERAL_QUESTION_14_CHOICES': (_NO_RESPONSE_CHOICE,
+                                    'Male',
+                                    'Female',
+                                    'Other'),
+
+    'GENERAL_QUESTION_15': 'Hours spent outside?',
+    'GENERAL_QUESTION_15_CHOICES': (_NO_RESPONSE_CHOICE,
+                                    'None',
+                                    'Less than 2',
+                                    '2-4',
+                                    '4-8',
+                                    '8+'),
+
+    'GENERAL_QUESTION_16': 'Toilet water access?',
+    'GENERAL_QUESTION_16_CHOICES': (_NO_RESPONSE_CHOICE,
+                                    'Regular',
+                                    'Sometimes',
+                                    'Never'),
+
+    'GENERAL_QUESTION_17': 'Coprophage?',
+    'GENERAL_QUESTION_17_CHOICES': (_NO_RESPONSE_CHOICE,
+                                    'High',
+                                    'Moderate',
+                                    'Low',
+                                    'Never'),
+
+    'SUPPLEMENTAL_COMMENTS': 'Please write anything else about this animal that you think might affect its microorganisms.'
+}
+
 _ADD_SAMPLE_OVERIVIEW = {
     'ENVIRONMENTAL': 'Environmental',
     'ADD_SAMPLE_3': 'on the main page when you log in.',
@@ -609,6 +719,14 @@ _SURVEY_MAIN = {
     'OTHER_SURVEYS': 'Following the questionnaire, you will be presented with a few other focused surveys. Those surveys are optional but your responses could help improve our understanding of the microbiome.'
 }
 
+_HUMAN_SURVEY_COMPLETED = {
+    'COMPLETED_HEADER': 'Congratulations!',
+    'COMPLETED_TEXT': 'You are now an enrolled participant in the %(PROJECT_TITLE)s!' % media_locale,
+    'AVAILABLE_SURVEYS': 'Below are a few additional surveys that you may be interested in completing. There is no requirement to take these surveys, and your decision does not affect your involvement in the project in anyway.',
+    'SURVEY_ASD': '<a href="http://www.anl.gov/contributors/jack-gilbert">Dr. Jack Gilbert</a> is exploring the relationship between gut dysbiosis and Autism Spectrum Disorders, and in conjunction with the American Gut Project, we started an ASD-Cohort study. This additional survey contains questions specific to that cohort, but it is open to any participant to take if they so choose. Please click <a href="%s">here</a> to take the ASD-Cohort survey.',
+    'SURVEY_VIOSCREEN': 'The American Gut Project and its sister projects are very interested in diet. If you\'d like to provide additional detail about your diet, please click <a href="%s">here</a> to take a detailed diet survey (known as an Food Frequency Questionnaire). This is a validated FFQ, and is the one used by the Mayo Clinic.'
+}
+
 # Actual text locale
 text_locale = {
     '404.html': _404,
@@ -632,5 +750,6 @@ text_locale = {
     'register_user.html': _REGISTER_USER,
     'chage_pass_verify.html': _CHANGE_PASS_VERIFY,
     'survey_main.html': _SURVEY_MAIN,
+    'animal_survey.html': _ANIMAL_SURVEY,
     'handlers': _HANDLERS
 }

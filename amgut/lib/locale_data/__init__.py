@@ -10,4 +10,7 @@ from __future__ import division
 # -----------------------------------------------------------------------------
 
 
-media_locale = {}
+media_locale = {
+    'SURVEY_VIOSCREEN_URL': 'https://demo.vioscreen.com/%(survey_id)s',  # THIS IS CURRENTLY MOCKED OUT
+    'SURVEY_ASD_URL': 'https://docs.google.com/forms/d/1ZlaQzENj7NA7TcdfFhXfW0jshrToTywAarV0fjTZQxc/viewform?entry.1089722816=%(survey_id)ss&entry.1116725993&entry.1983725631&entry.2036966278&entry.1785627282&entry.1461731626&entry.1203990558&entry.843049551&entry.476318397&entry.383297943&entry.228366248&entry.1651855735&entry.1234457826&entry.1079752165'
+}
