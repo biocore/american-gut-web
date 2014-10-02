@@ -18,7 +18,7 @@
 {% if participant_type == 'human' %}
             <tr>
                 <td>{% raw tl['COMPLETED_CONSENT'] %}</td>
-                <td><img src="/static/img/icon-green-checkmark.png"/></td>
+                <td><img src="{% raw media_locale['SITEBASE'] %}/static/img/icon-green-checkmark.png"/></td>
             </tr>
 {% end %}
             <tr>
@@ -27,7 +27,7 @@
                     (<a href="#" onclick="editHumanSurvey();">edit</a>)
 {% end %}
                 </td>
-                <td><img src="/static/img/icon-green-checkmark.png"/></td>
+                <td><img src="{% raw media_locale['SITEBASE'] %}/static/img/icon-green-checkmark.png"/></td>
             </tr>
             <tr>
                 <td>{% raw tl['SAMPLES_ASSIGNED'] %}</td>
@@ -36,8 +36,8 @@
 
 {% for sample in samples %}
                         <li>
-                            <form action="/atuhed/sample_overview/?barcode={{sample['barcode']}}" method="post" id="view_sample_{{sample['barcode']}}">
-                                <img class="icon" src="/static/img/sample_icon.png"/>
+                            <form action="{% raw media_locale['SITEBASE'] %}/atuhed/sample_overview/?barcode={{sample['barcode']}}" method="post" id="view_sample_{{sample['barcode']}}">
+                                <img class="icon" src="{% raw media_locale['SITEBASE'] %}/static/img/sample_icon.png"/>
                                 <input type="button" onclick="document.forms['view_sample_{{sample['barcode']}}'].submit(); return false;" value="{{sample['barcode']}}"/>
                             </form>
                         </li>
@@ -47,7 +47,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <form action="/participants/{{participant_name}}" method="post" id="remove_participant_{{participant_name}}">
+                    <form action="{% raw media_locale['SITEBASE'] %}/participants/{{participant_name}}" method="post" id="remove_participant_{{participant_name}}">
                         <input type="hidden" name="remove" value="{{participant_name}}">
                         <input type="submit" value="Remove {{participant_name}}"/>
                     </form>

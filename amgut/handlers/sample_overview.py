@@ -5,6 +5,7 @@ from tornado.web import authenticated
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.util import AG_DATA_ACCESS
 from amgut.handlers.base_handlers import BaseHandler
+from amgut import media_locale
 
 
 def _format_data_path(dir, barcode, ext):
@@ -63,6 +64,6 @@ class SampleOverviewHandler(BaseHandler):
         if bc_to_remove:
             ag_login_id = AG_DATA_ACCESS.get_user_for_kit(self.current_user)
             AG_DATA_ACCESS.deleteSample(bc_to_remove, ag_login_id)
-            self.redirect("/authed/portal/")
+            self.redirect(media_locale['SITEBASE'] + "/authed/portal/")
 
         self._sample_overview_renderer()
