@@ -421,6 +421,7 @@ CREATE TABLE ag.controlled_vocab_values (
 CREATE TABLE ag.group_questions ( 
 	survey_group         integer  NOT NULL,
 	survey_question_id   bigint  NOT NULL,
+	display_index        integer  NOT NULL,
 	CONSTRAINT pk_human_survey_group_question PRIMARY KEY ( survey_group, survey_question_id ),
 	CONSTRAINT fk_human_survey_group_question FOREIGN KEY ( survey_group ) REFERENCES ag.survey_group( group_order )    ,
 	CONSTRAINT fk_human_survey_group_question_0 FOREIGN KEY ( survey_question_id ) REFERENCES ag.survey_question( survey_question_id )    
@@ -463,9 +464,8 @@ CREATE TABLE ag.survey_question_triggered_by (
 	survey_question_id   bigint  ,
 	trigger_question     bigint  ,
 	trigger_response     varchar  ,
-	CONSTRAINT fk_human_survey_question_triggered_by FOREIGN KEY ( survey_question_id ) REFERENCES ag.survey_question( survey_question_id )    ,
-	CONSTRAINT fk_human_survey_question_triggered_by_0 FOREIGN KEY ( trigger_question ) REFERENCES ag.survey_question_response( survey_question_id )    ,
-	CONSTRAINT fk_human_survey_question_triggered_by_1 FOREIGN KEY ( trigger_response ) REFERENCES ag.survey_question_response( response )    
+	CONSTRAINT fk_survey_question_triggered_by FOREIGN KEY ( survey_question_id ) REFERENCES ag.survey_question( survey_question_id )    ,
+	CONSTRAINT fk_survey_question_triggered_by0 FOREIGN KEY ( trigger_question, trigger_response ) REFERENCES ag.survey_question_response( survey_question_id, response )    
  );
 
 CREATE INDEX idx_human_survey_question_triggered_by ON ag.survey_question_triggered_by ( survey_question_id );
@@ -473,6 +473,8 @@ CREATE INDEX idx_human_survey_question_triggered_by ON ag.survey_question_trigge
 CREATE INDEX idx_human_survey_question_triggered_by_0 ON ag.survey_question_triggered_by ( trigger_question );
 
 CREATE INDEX idx_human_survey_question_triggered_by_1 ON ag.survey_question_triggered_by ( trigger_response );
+
+CREATE INDEX idx_survey_question_triggered_by ON ag.survey_question_triggered_by ( trigger_question, trigger_response );
 
 COMMENT ON TABLE ag.survey_question_triggered_by IS 'Which responses to the question trigger the appearance of this question';
 
