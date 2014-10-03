@@ -1,16 +1,16 @@
+from __future__ import division
+
+# -----------------------------------------------------------------------------
+# Copyright (c) 2014--, The American Gut Development Team.
+#
+# Distributed under the terms of the BSD 3-clause License.
+#
+# The full license is in the file LICENSE, distributed with this software.
+# -----------------------------------------------------------------------------
 
 """
 Centralized database access for the American Gut web portal
 """
-
-__author__ = "Doug Wendel"
-__copyright__ = "Copyright 2009-2010, Qiime Web Analysis"
-__credits__ = ["Doug Wendel", "Emily TerAvest"]
-__license__ = "GPL"
-__version__ = "1.0.0.dev"
-__maintainer__ = ["Doug Wendel"]
-__email__ = "wendel@colorado.edu"
-__status__ = "Production"
 
 import urllib
 import httplib
