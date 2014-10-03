@@ -92,7 +92,7 @@ class ConfigurationManager(object):
         with open(conf_fp, 'U') as conf_file:
             config.readfp(conf_file)
 
-        _expected_sections = {'main', 'postgres', 'test', 'redis'}
+        _expected_sections = {'main', 'postgres', 'test', 'redis', 'email'}
 
         missing = _expected_sections - set(config.sections())
         if missing:
@@ -104,6 +104,7 @@ class ConfigurationManager(object):
         self._get_postgres(config)
         self._get_test(config)
         self._get_redis(config)
+        self._get_email(config)
 
     def _get_main(self, config):
         """Get the configuration of the main section"""
@@ -168,6 +169,17 @@ class ConfigurationManager(object):
         self.redis_host = get('HOST')
         self.redis_port = getint('PORT')
         self.redis_db_id = getint('DB_ID')
+
+    def _get_email(self, config):
+        get = partial(config.get, 'email')
+        getint = partial(config.getint, 'email')
+        getbool = partial(config.getboolean, 'email')
+
+        self.smtp_host = get('HOST')
+        self.smtp_ssl = getbool('SSL')
+        self.smtp_port = getint('PORT')
+        self.smtp_user = get('USERNAME')
+        self.smtp_password = get('PASSWORD')
 
 
 AMGUT_CONFIG = ConfigurationManager()

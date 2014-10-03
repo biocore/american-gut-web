@@ -41,6 +41,23 @@ PORT = 6379
 # The ID of the redis database
 DB_ID = 0
 
+# ----------------------------- Email settings -----------------------------
+[email]
+# SMTP Host
+HOST = localhost
+
+#SMTP port to connect
+PORT = 25
+
+# SSL connection required
+SSL = False
+
+# Username to connect to server
+USERNAME = 
+
+# Password for username
+PASSWORD =
+
 # ----------------------------- Test settings ---------------------------------
 [test]
 #data for tests 
