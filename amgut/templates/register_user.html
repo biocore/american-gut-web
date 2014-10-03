@@ -3,7 +3,7 @@
 {% from amgut import text_locale %}
 {% set tl = text_locale['register_user.html'] %}
 
-<script src="/static/vendor/js/jquery.validate.min.js"></script>
+<script src="{% raw media_locale['SITEBASE'] %}/static/vendor/js/jquery.validate.min.js"></script>
 <script type="text/javascript">
 $.validator.setDefaults({
     submitHandler: function() {
@@ -64,7 +64,7 @@ $(document).ready(function() {
 {% from amgut import text_locale %}
 {% set tl = text_locale['register_user.html'] %}
 <div class="registerwrapper" style="position:absolute; top:16px; left:285px; padding:15px;">
-    <form name="newParticipant" id="newParticipant" method="post" action="/auth/register/">
+    <form name="newParticipant" id="newParticipant" method="post" action="{% raw media_locale['SITEBASE'] %}/auth/register/">
         <input type="hidden" name="kit_id" id="kit_id" value="{{skid}}">
         <h3>New User Registration</h3>
         <table>

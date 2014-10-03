@@ -17,6 +17,7 @@ import click
 
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.lib.util import LAYOUT_FP, INITIALIZE_FP, POPULATE_FP
+from amgut.lib.data_access.sql_connection import SQLConnectionHandler
 
 
 def _check_db_exists(db, cursor):
@@ -60,36 +61,32 @@ def create_test_db():
     conn.close()
 
     # Connect to the postgres server, but this time to the just created db
-    conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
-                   host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
-                   database=AMGUT_CONFIG.database)
-    cur = conn.cursor()
+    conn = SQLConnectionHandler()
+    print("Creating schema")
+    conn.execute('CREATE SCHEMA ag')
 
     print("Inserting procedures")
     procedures_dirpath = join(dirname(dirname(abspath(__file__))), "lib",
                               "data_access", "procedures")
     for procedure_f in listdir(procedures_dirpath):
         with open(join(procedures_dirpath, procedure_f)) as f:
-            cur.execute(f.read())
+            conn.execute(f.read())
 
     print("Building SQL layout")
     with open(LAYOUT_FP) as f:
-        cur.execute(f.read())
+        # We have to skip the "create schema" line here
+        conn.execute('\n'.join(f.readlines()[1:]))
 
     # The following lines are commented out because the initialize.sql and
     # populate_test.sql files are empty, so psycopg2 fails. Once this files
     # have data, those lines should be executed
     print("Initializing the test database")
     # with open(INITIALIZE_FP) as f:
-    #     cur.execute(f.read)
+    #     conn.execute(f.read)
 
     print("Initializing the test database")
     # with open(POPULATE_FP) as f:
-    #     cur.execute(f.read)
-
-    conn.commit()
-    cur.close()
-    conn.close()
+    #     conn.execute(f.read)
 
     print("Test environment successfully created")
 

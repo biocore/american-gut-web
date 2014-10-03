@@ -43,7 +43,7 @@ function validateKitRequest() {
  {% if message %}
  <h2 style="color:red;">{% raw tl['UNKNOWN_EMAIL'] %}</h2>
  {% end %}
-<form id="get_kit" name="get_kit" method="post" action="/retrieve_kitid/">
+<form id="get_kit" name="get_kit" method="post" action="{% raw media_locale['SITEBASE'] %}/retrieve_kitid/">
     <table>
         <tr><td><h2>{% raw tl['ENTER_EMAIL'] %}</h2></td></tr>
         <tr><td>{% raw tl['EMAIL_PROMPT'] %}</td><td><input type="text" id="email" name="email" /></td></tr>

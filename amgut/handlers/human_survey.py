@@ -13,7 +13,7 @@ from amgut.handlers.base_handlers import BaseHandler
 from amgut.lib.human_survey_supp import (
     responses_map, key_map, question_group, group_order, question_type,
     supplemental_map)
-from amgut import r_server, text_locale
+from amgut import r_server, text_locale, media_locale
 
 
 tl = text_locale['human_survey.html']
@@ -123,5 +123,4 @@ class HumanSurveyHandler(BaseHandler):
             # only get the cookie if you complete the survey
             self.clear_cookie('human_survey_id')
             self.set_secure_cookie('completed_survey_id', human_survey_id)
-            self.redirect('/authed/human_survey_completed/')
-
+            self.redirect(media_locale['SITEBASE'] + '/authed/human_survey_completed/')
