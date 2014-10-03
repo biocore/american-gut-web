@@ -21,7 +21,6 @@ tl = text_locale['human_survey.html']
 
 
 class PersonalPrompts(Form):
-    PERSONAL_PROMPT_NAME = TextField()
     PERSONAL_PROMPT_GENDER = RadioField(choices=[(0, 'Female'),
                                                  (1, 'Male'),
                                                  (2, 'Other')])
