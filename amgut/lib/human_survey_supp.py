@@ -63,6 +63,8 @@ supplemental_map = {
         ((1,), 'SUPPLEMENTAL_MEDICATION'),  # triggered on Yes
     'HEALTH_QUESTION_51.23':
         ((2, 3, 4,), 'SUPPLEMENTAL_OTHER_CONDITIONS'),  # triggered on Other
+    'DETAILED_DIET_QUESTION_77':
+        ((1, 2, 3, 4, 5, 6), 'SUPPLEMENTAL_OPEN_COMMENT')  # Triggered on any
     }
 
 # associates the question with its type, where SINGLE is a question with only
