@@ -111,7 +111,6 @@ _FAQ = {
     'LOG_IN_WHAT_NOW_ANS_3': 'You can log a sample by clicking the "Log Sample" link in the menu. If you do not see the "Log Sample" link, then all of your barcodes have been assigned.',
     'PARTICIPATE_WITH_DIAGNOSIS': 'Can I participate in the project if I am diagnosed with ...?',
     'LOG_IN_WHAT_NOW_ANS_5': 'When adding a sample, please be sure to select the barcodes that matches the barcode on the sampling tube of the sample that you are logging',
-    'CONVERT_GRAMS_CALORIES': 'How do I convert grams of macronutrients into percentage of calories?',
     'TAKES_SIX_MONTHS': 'Does it really take up to 6 months to get my results?',
     'HOW_CHANGE_GUT': 'How can I change my gut microbiome?',
     'BETTER_OR_WORSE': 'How can I tell if my gut microbiome is better or worse than other people in my category?',
@@ -153,7 +152,6 @@ _FAQ = {
     'COMBINE_RESULTS_ANS': "We're still evaluating how best to present the data for samples that represent a family. We are mailing individual results now and will provide updated results through the web site later.",
     'PASSWORD_SAME_VERIFICATION': 'Is my password the same as my verification code?',
     'FECAL_NO_RESULTS': 'I sent in a fecal sample but did not get any results, what happened to them?',
-    'CONVERT_GRAMS_CALORIES_ANS': 'Once you determine how many grams of protein, carbohydrates and lipids you have consumed each day, multiply the grams of protein and the grams of carbohydrates by 4 each (since there are 4 calories in every gram of protein and carbohydrate) and multiply the grams of lipids by 9 (since there are 9 calories in every gram of lipids). Add all of these numbers together to determine the total number of calories you consumed. Divide protein calories by the total calories to determine the percentage of calories consumed as protein. Repeat for carbohydrates and lipids.',
     'DIFFERENT_WHATS_WRONG_WITH_ME': "I'm different than other people in my category. Does that mean something is wrong with me?",
     'WHY_TWO_SWABS_ANS_2': "<P>Each tube is used for <strong>one sample</strong>. The tube has two swabs in it because one is a backup in case the DNA does not amplify on the first swab.</p>"
                            "<p>Here's a video of Rob Knight talking about swab handling:</p>"
