@@ -847,7 +847,7 @@ _HUMAN_SURVEY = {
                                     'Within the past year',
                                     'I have lived in my current state of residence for more than a year.'),
 
-    'GENERAL_QUESTION_15': 'I have traveled outside of the United States in the past _________.',
+    'GENERAL_QUESTION_15': 'I have traveled outside of outside of my country of residence in the past _________.',
     'GENERAL_QUESTION_15_CHOICES': (_NO_RESPONSE_CHOICE,
                                     'Month',
                                     '3 months',
