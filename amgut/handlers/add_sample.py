@@ -3,6 +3,7 @@ from tornado.web import authenticated
 
 from amgut.util import AG_DATA_ACCESS
 from amgut.handlers.base_handlers import BaseHandler
+from amgut import media_locale
 
 
 class LogSample(Form):
@@ -32,7 +33,7 @@ class AddSample(BaseHandler):
                                             sample_time, participant_name,
                                             notes)
 
-        self.redirect('/authed/portal/')
+        self.redirect(media_locale['SITEBASE'] + '/authed/portal/')
 
     @authenticated
     def get(self):

@@ -3,6 +3,7 @@ from tornado.web import HTTPError
 
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.util import AG_DATA_ACCESS
+from amgut import media_locale
 
 
 class ParticipantOverviewHandler(BaseHandler):
@@ -23,7 +24,7 @@ class ParticipantOverviewHandler(BaseHandler):
             AG_DATA_ACCESS.deleteAGParticipant(
                 ag_login_id, participant_to_remove)
             # Redirect to portal
-            self.redirect("/authed/portal/")
+            self.redirect(media_locale['SITEBASE'] + "/authed/portal/")
 
         participant_type = self.get_argument('participant_type')
 

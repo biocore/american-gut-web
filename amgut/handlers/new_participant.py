@@ -49,12 +49,12 @@ class NewParticipantHandler(BaseHandler):
         # If the participant already exists, stop them outright
         if participant_name in participants:
             errmsg = tl['PARTICIPANT_EXISTS'] % participant_name
-            self.redirect("/authed/portal/?errmsg=%s" % errmsg)
+            self.redirect(media_locale['SITEBASE'] + "/authed/portal/?errmsg=%s" % errmsg)
 
         if is_juvenile == 'off' and is_exception:
             errmsg = ("We are expecting a survey from that juvenile user (%s)"
                       % participant_name)
-            self.redirect("/authed/portal/?errmsg=%s" % errmsg)
+            self.redirect(media_locale['SITEBASE'] + "/authed/portal/?errmsg=%s" % errmsg)
 
         if is_juvenile == 'on':
             # If they aren't already an exception, we need to verify them
@@ -79,6 +79,6 @@ class NewParticipantHandler(BaseHandler):
                 except:
                     alert_message = media_locale['EMAIL_ERROR']
 
-                self.redirect("/authed/portal/?errmsg=%s" % alert_message)
+                self.redirect(media_locale['SITEBASE'] + "/authed/portal/?errmsg=%s" % alert_message)
 
-        self.redirect("/authed/survey_main/")
+        self.redirect(media_locale['SITEBASE'] + "/authed/survey_main/")
