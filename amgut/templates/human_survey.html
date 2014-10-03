@@ -19,7 +19,7 @@ function validate_form() {
 
 $(document).ready(function() {
     $("div[id^=supp_]").hide();
-    $( "#PERSONAL_PROMPT_BIRTHDATE" ).datepicker();
+    $( "#PERSONAL_PROMPT_TODAYSDATE" ).datepicker();
     $( "#progressbar" ).progressbar({
       value: {{ progress }}
     });
@@ -31,9 +31,9 @@ table {
     border-collapse: collapse;
 }
 tr {
-    border: dashed;
+    border: dotted;
     border-width: 0px;
-    border-bottom-width: 1px;
+    border-bottom-width: 0px;
 }
 tr:first-child {
     border-top: none;
@@ -41,9 +41,12 @@ tr:first-child {
 tr:last-child {
     border-bottom: none;
 }
-td {
-    padding:5px;
+.tdmainform {
+    padding:20px;
     border-spacing: 5px 0;"
+}
+ul {
+    list-style-type: none;
 }
 </style>
 {% end %}
@@ -55,7 +58,7 @@ td {
 handler #}
 <h1>{{ TITLE }}</h1>
 <form action='{% raw media_locale["SITEBASE"] %}/authed/human_survey/' id="human_survey" method="POST" onsubmit="return validateSurvey{{page_number}}();">
-<table>
+<table id="mainsurveytable">
     <input type="hidden" name="page_number" value="{{page_number}}">
     {% for form_item in the_form %}
         {% set kwargs = {} %}
@@ -64,7 +67,7 @@ handler #}
             {% set kwargs["onchange"] = "toggle_div('" + supp_div_id + "', '" + form_item.id + "', " + repr(list(supplemental_map[form_item.id][0])) + ");" %}
         {% end %}
         <tr align="left">
-            <td width="50%">{% raw tl[form_item.id] %}</td>
+            <td width="50%" class="tdmainform">{% raw tl[form_item.id] %}</td>
             <td>{% raw form_item(**kwargs) %}</td>
         </tr>
         {% if form_item.id in supplemental_map %}

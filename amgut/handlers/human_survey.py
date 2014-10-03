@@ -7,6 +7,7 @@ from natsort import natsorted
 from json import loads, dumps
 import os
 import binascii
+from datetime import date
 
 from amgut.util import AG_DATA_ACCESS
 from amgut.handlers.base_handlers import BaseHandler
@@ -20,7 +21,6 @@ tl = text_locale['human_survey.html']
 
 
 class PersonalPrompts(Form):
-    PERSONAL_PROMPT_NAME = TextField()
     PERSONAL_PROMPT_GENDER = RadioField(choices=[(0, 'Female'),
                                                  (1, 'Male'),
                                                  (2, 'Other')])
@@ -30,7 +30,10 @@ class PersonalPrompts(Form):
                                                         ('cm', 'cm')])
     PERSONAL_PROMPT_COUNTRY_OF_BIRTH = TextField()
     PERSONAL_PROMPT_TODAYSDATE = DateField(format="%m/%d/%Y")
-    PERSONAL_PROMPT_BIRTHDATE = DateField(format="%m/%Y")
+    PERSONAL_PROMPT_BIRTHDATE_MONTH = SelectField(choices=[('', '')] + [
+        (x, x) for x in range(1, 13)])
+    PERSONAL_PROMPT_BIRTHDATE_YEAR = SelectField(choices=[('','')] + [
+        (x, x) for x in range(date.today().year, date.today().year - 150, -1)])
     PERSONAL_PROMPT_WEIGHT = IntegerField()
     PERSONAL_PROMPT_WEIGHT_UNITS = SelectField(choices=[('', ''),
                                                         ('lbs', 'lbs'),
