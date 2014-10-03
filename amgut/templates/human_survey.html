@@ -74,8 +74,9 @@ handler #}
         <tr>
             <td colspan="2">
                 <div id="{{ supp_div_id }}">
-                    {# TODO: Add the actual divs here #}
-                    AWW YEAH
+                    {% set supp_key = supplemental_map[form_item.id][-1] %}
+                    {% raw tl[supp_key] %}
+                    {% raw supplementals[supp_key]() %}
                 </div>
             </td>
         </tr>

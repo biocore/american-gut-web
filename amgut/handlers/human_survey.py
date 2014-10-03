@@ -1,6 +1,6 @@
 from wtforms import (Form, SelectField, SelectMultipleField, widgets,
-                     TextField, DateField, RadioField, SelectField,
-                     IntegerField)
+                     TextAreaField, TextField, DateField, RadioField,
+                     SelectField, IntegerField)
 from tornado.web import authenticated
 from future.utils import viewitems
 from natsort import natsorted
@@ -11,6 +11,7 @@ from datetime import date
 
 from amgut.util import AG_DATA_ACCESS
 from amgut.handlers.base_handlers import BaseHandler
+from amgut.lib.util import store_survey
 from amgut.lib.human_survey_supp import (
     responses_map, key_map, question_group, group_order, question_type,
     supplemental_map)
@@ -57,7 +58,8 @@ def make_human_survey_class(group):
 
         if question_type[question_id] == 'SINGLE':
             attrs[question_id] = SelectField(
-                question_id, choices=list(enumerate(responses)))
+                question_id, choices=list(enumerate(responses)),
+                coerce=lambda x:x)
 
         elif question_type[question_id] == 'MULTIPLE':
             attrs[question_id] = SelectMultipleField(
@@ -69,7 +71,16 @@ def make_human_survey_class(group):
     return type('HumanSurvey', (Form,), attrs)
 
 
+def make_supplemental_forms():
+    attrs = {}
+    for key in tl:
+        if key.startswith('SUPPLEMENTAL'):
+            attrs[key] = TextAreaField(key)
+    return type('SupplementalForm', (Form,), attrs)
+
+
 surveys = [make_human_survey_class(group) for group in group_order]
+supplementals = make_supplemental_forms()
 
 class HumanSurveyHandler(BaseHandler):
     @authenticated
@@ -92,8 +103,13 @@ class HumanSurveyHandler(BaseHandler):
 
         if page_number >= 0:
             form_data = surveys[page_number]()
+            supp = supplementals()
+
             form_data.process(data=self.request.arguments)
-            r_server.hset(human_survey_id, page_number, dumps(form_data.data))
+            supp.process(data=self.request.arguments)
+
+            data = {'questions': form_data.data, 'supplemental': supp.data}
+            r_server.hset(human_survey_id, page_number, dumps(data))
 
         progress = int(100.0*(page_number+2)/(len(group_order) + 1))
         if next_page_number == 0:
@@ -112,18 +128,21 @@ class HumanSurveyHandler(BaseHandler):
             # TODO: populate the next form page from database values, if they
             # exist
             the_form = surveys[next_page_number]()
+            supp = supplementals()
+
             title = tl[group_order[next_page_number]+'_TITLE']
+
             self.render('human_survey.html', the_form=the_form,
                         skid=self.current_user, TITLE=title,
                         supplemental_map=supplemental_map,
+                        supplementals=supp,
                         page_number=next_page_number,
                         progress=progress)
         else:
-            # TODO: insert into database
-            # TODO: store in the database a connection between human_survey_id and this specific participant
-            # TODO: redirect to portal or something
+            # TODO: store in the database a connection between human_survey_id and this specific participant. THIS IS NOT CURRENTLY STUBBED OUT IN STORE_SURVEY
 
             # only get the cookie if you complete the survey
             self.clear_cookie('human_survey_id')
             self.set_secure_cookie('completed_survey_id', human_survey_id)
+            store_survey(human_survey_id)
             self.redirect(media_locale['SITEBASE'] + '/authed/human_survey_completed/')
