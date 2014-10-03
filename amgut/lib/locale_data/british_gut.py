@@ -81,7 +81,7 @@ media_locale = {
     'SWAB_HANDLING': "http://player.vimeo.com/video/62393487",
     'EMAIL_ERROR': "There was a problem sending your email. Please contact us directly at <a href='mailto:%(help_email)s'>%(help_email)s</a>" % {'help_email': HELP_EMAIL},
     'EMAIL_SENT': 'Your message has been sent. We will reply shortly',
-    'SHIPPING_ADDRESS': 'British Gut<br/>Department of Twin Research, Kings College London,<br/>St Thomas’ Hospital Campus, 3rd Floor South Wing Block D<br/>Westminster Bridge Road, London SE1 7EH'
+    'SHIPPING_ADDRESS': 'British Gut<br/>Department of Twin Research<br>Kings College London<br/>St Thomas’ Hospital Campus<br>The Rayne Institute<br>Lambeth Wing, 4th Floor<br/>Westminster Bridge Road<br>London SE1 7EH'
 }
 
 _HANDLERS = {
@@ -257,7 +257,7 @@ _FAQ = {
     'ONLY_FECAL_RESULTS': "I sent more than one kind of sample, but I only received data for my faecal sample. What happened to my other samples?",
     'ONLY_FECAL_RESULTS_ANS': 'We have only sent out results for faecal samples and are in the process of evaluating how best to present the other sample types. Please see <a href="#faq12">the previous question </a>',
     'PARTICIPATE_WITH_DIAGNOSIS': "Can I participate in the project if I am diagnosed with ...?",
-    'PARTICIPATE_WITH_DIAGNOSIS_ANS': "Of course! The only exclusion criteria are: you must be more than 3 months old and cannot be in prison. Please keep in mind that, for legal and ethical reasons, the American Gut Project does not provide medically actionable results or advice.",
+    'PARTICIPATE_WITH_DIAGNOSIS_ANS': "Of course! The only exclusion criteria are: you must be more than 3 months old and cannot be in prison. Please keep in mind that, for legal and ethical reasons, the British Gut Project does not provide medically actionable results or advice.",
     'PASSWORD_DOESNT_WORK': "My password doesn't work!",
     'PASSWORD_DOESNT_WORK_ANS': '<p>The passwords have some ambiguous characters in them, so we have this guide to help you decipher which characters are in your password.</p><p class="ambig">abcdefghijklmnopqrstuvwxyz<br>ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>1234567890<br>1 = the number 1<br>l = the letter l as in Lima<br>0 = the number 0<br>O = the letter O as in Oscar<br>g = the letter g as in golf<br>q = the letter q as in quebec</p>',
     'PASSWORD_SAME_VERIFICATION': "Is my password the same as my verification code?",
@@ -269,9 +269,9 @@ _FAQ = {
     'RAW_DATA_ANS_2': 'Processed sequence data and open-access descriptions of the bioinformatic processing can be found at our <a href="https://github.com/qiime/American-Gut">Github repository</a>.</p>'
                       '<p>Sequencing of %(project_shorthand)s samples is an on-going project, as are the bioinformatic analyses. These resources will be updated as more information is added and as more open-access descriptions are finalized.' % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
     'STEPS_TO_FOLLOW': '<a href="%(steps_vid)s">%(project_shorthand)s - Steps to Follow When Your Kit Arrives</a> from <a href="http://vimeo.com/user16100300">shelley schlender</a> on <a href="http://vimeo.com">Vimeo</a>.' % {'project_shorthand': AMGUT_CONFIG.project_shorthand, 'steps_vid': media_locale['STEPS_VIDEO']},
-    'TAKES_SIX_MONTHS': "Does it really take up to 6 months to get my results?",
-    'TAKES_SIX_MONTHS_ANS': "Yes. It takes about 8 weeks for extractions, 8 weeks for the remainder of the processing, and 2 weeks to do the actual sequencing. This is before any analysis and if everything goes as planned, with no delays - equipment down, run failures, reagents or other consumables back ordered. Things do sometimes go wrong, so we say up to 6 months.",
-    'WATCH_VIDEOS': "Watch these helpful videos about what to do once you've received your kit!",
+    'TAKES_SIX_MONTHS': "Does it really take up to four months to get my results?",
+    'TAKES_SIX_MONTHS_ANS': "Yes. It takes about eight weeks for extractions, eight weeks for the remainder of the processing, and two weeks to do the actual sequencing. This is before any analysis and if everything goes as planned, with no delays - equipment down, run failures, reagents or other consumables back ordered. There are also added transit times for your sample to travel between the UK and the US. Things do sometimes go wrong, so we say up to four months, although we are working to improve these."
+    'WATCH_VIDEOS': "Watch these helpful videos created by our colleagues at the American Gut about what to do once you've received your kit!",
     'WHAT_FORMS': "What are the forms you talk about on the sampling instructions?",
     'WHAT_FORMS_ANS': 'The instruction on the sampling instructions that requires you to "place your forms and the sample tube in preaddressed envelope" is leftover from a previous version of the sampling instructions. There are no forms for you to include inside the envelope with your sample. If you are shipping internationally, please visit the <a href="%(sitebase)s/international_shipping/">International Shipping Instructions</a></p>' % {'sitebase': media_locale['SITEBASE']},
     'WHEN_RESULTS_NON_FECAL': "I sent in a non-faecal sample and have not received any results, when should I expect results?",
@@ -658,7 +658,7 @@ _PORTAL = {
     'MAIL_TAB': "Mail Samples <br>to Us",
     'RESULTS_HEADER_1': "Sequencing &amp; Results",
     'RESULTS_READY_HEADER_1': "Your results are ready!",
-    'RESULTS_READY_TEXT_1': "One or more of the samples you submitted have been sequenced, and the results are now available online! We will be mailing hardcopies of these results shortly. Currently, we have only processed fecal samples, but we will be processing samples from other body sites soon.",
+    'RESULTS_READY_TEXT_1': "One or more of the samples you submitted have been sequenced, and the results are now available online! Currently, we have only processed fecal samples, but we will be processing samples from other body sites soon.",
     'RESULTS_READY_TEXT_2': 'To access your available results, hover over "Human Samples" in the menu on the left, hover over your name, then click on your sample to view your results, or click one of the links below. The following barcodes are ready:',
     'RESULTS_READY_TEXT_3': "You will be able to view your results here on this website once they are available.",
     'RESULTS_TEXT_1': 'Once you have added a <a href="#" onclick="selectTab(\'source\')">sample source, completed the relevant survey</a> (if applicable), <a href="#" onclick="selectTab(\'sample\')">taken</a> and <a href="#" onclick="selectTab(\'log\')">logged your samples</a> and you have <a href="#" onclick="selectTab(\'mail\')">mailed the samples back to us</a>, we will then perform sequencing and analysis on your samples.',
