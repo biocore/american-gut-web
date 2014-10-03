@@ -35,8 +35,26 @@ def _check_db_exists(db, cursor):
     return (db,) in cursor.fetchall()
 
 
-@click.command()
-def create_test_db():
+@click.group()
+def cli():
+    pass
+
+
+@cli.group()
+def env():
+    pass
+
+
+@env.command()
+@click.argument('db', type=click.Choice(['test', 'production']))
+def make(db):
+    if db == 'test':
+        make_test_db()
+    if db == 'production':
+        make_production_db()
+
+
+def make_test_db():
     r"""Creates the american gut test database"""
     if not AMGUT_CONFIG.test_environment:
         raise ValueError("The configuration file in use is not set up for a "
@@ -66,8 +84,8 @@ def create_test_db():
     conn.execute('CREATE SCHEMA ag')
 
     print("Inserting procedures")
-    procedures_dirpath = join(dirname(dirname(abspath(__file__))), "lib",
-                              "data_access", "procedures")
+    procedures_dirpath = join(dirname(dirname(abspath(__file__))), "amgut",
+                              "lib", "data_access", "procedures")
     for procedure_f in listdir(procedures_dirpath):
         with open(join(procedures_dirpath, procedure_f)) as f:
             conn.execute(f.read())
@@ -81,14 +99,15 @@ def create_test_db():
     # populate_test.sql files are empty, so psycopg2 fails. Once this files
     # have data, those lines should be executed
     print("Initializing the test database")
-    # with open(INITIALIZE_FP) as f:
-    #     conn.execute(f.read)
+    with open(INITIALIZE_FP) as f:
+        conn.execute(f.read())
 
-    print("Initializing the test database")
+    print("Populating the test database")
     # with open(POPULATE_FP) as f:
-    #     conn.execute(f.read)
+    #     conn.execute(f.read())
 
     print("Test environment successfully created")
 
+
 if __name__ == '__main__':
-    create_test_db()
+    cli()
