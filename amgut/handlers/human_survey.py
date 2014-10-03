@@ -1,9 +1,6 @@
 from wtforms import (Form, SelectField, SelectMultipleField, widgets,
-<<<<<<< HEAD
-                     TextAreaField)
-=======
-                     TextField, DateField, RadioField)
->>>>>>> 2d59243751012bb583becf1e33ef002e73a24072
+                     TextAreaField, TextField, DateField, RadioField,
+                     SelectField, IntegerField)
 from tornado.web import authenticated
 from future.utils import viewitems
 from natsort import natsorted
@@ -17,7 +14,7 @@ from amgut.lib.util import store_survey
 from amgut.lib.human_survey_supp import (
     responses_map, key_map, question_group, group_order, question_type,
     supplemental_map)
-from amgut import r_server, text_locale
+from amgut import r_server, text_locale, media_locale
 
 
 tl = text_locale['human_survey.html']
@@ -28,11 +25,17 @@ class PersonalPrompts(Form):
     PERSONAL_PROMPT_GENDER = RadioField(choices=[(0, 'Female'),
                                                  (1, 'Male'),
                                                  (2, 'Other')])
-    PERSONAL_PROMPT_HEIGHT = TextField()
+    PERSONAL_PROMPT_HEIGHT = IntegerField()
+    PERSONAL_PROMPT_HEIGHT_UNITS = SelectField(choices=[('', ''),
+                                                        ('in', 'in'),
+                                                        ('cm', 'cm')])
     PERSONAL_PROMPT_COUNTRY_OF_BIRTH = TextField()
     PERSONAL_PROMPT_TODAYSDATE = DateField(format="%m/%d/%Y")
     PERSONAL_PROMPT_BIRTHDATE = DateField(format="%m/%Y")
-    PERSONAL_PROMPT_WEIGHT = TextField()
+    PERSONAL_PROMPT_WEIGHT = IntegerField()
+    PERSONAL_PROMPT_WEIGHT_UNITS = SelectField(choices=[('', ''),
+                                                        ('lbs', 'lbs'),
+                                                        ('kg', 'kg')])
     PERSONAL_PROMPT_ZIP = TextField()
 
 
@@ -139,5 +142,4 @@ class HumanSurveyHandler(BaseHandler):
             self.clear_cookie('human_survey_id')
             self.set_secure_cookie('completed_survey_id', human_survey_id)
             store_survey(human_survey_id)
-            self.redirect('/authed/human_survey_completed/')
-
+            self.redirect(media_locale['SITEBASE'] + '/authed/human_survey_completed/')

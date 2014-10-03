@@ -1,6 +1,7 @@
 from os.path import dirname, join
 from base64 import b64encode
 from uuid import uuid4
+from datetime import datetime
 
 from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
@@ -97,6 +98,9 @@ class QiimeWebApplication(Application):
 
 
 def main():
+    options.log_file_prefix = ("AMGUT_%d_%s.log" %
+                               (options.port, str(datetime.now())))
+    options.logging = 'warning'
     parse_command_line()
     http_server = HTTPServer(QiimeWebApplication())
     http_server.listen(options.port)

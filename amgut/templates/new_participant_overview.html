@@ -6,7 +6,7 @@
 <h2>{% raw tl['ADD_NEW'] %}</h2>
 <p class="note">{% raw tl['EXPLANATION'] %}</p>
 <p class="note">{% raw tl['ONCE_ADDED'] %}</p>
-<form action="/authed/new_participant/">
+<form action="{% raw media_locale['SITEBASE'] %}/authed/new_participant/">
     <input tabindex="1" type="submit" value="{% raw tl['CONTINUE'] %}" id="submit_form">
 </form>
 <br />
