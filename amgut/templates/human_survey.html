@@ -43,13 +43,13 @@ td {
 </style>
 {% end %}
 {% block content %}
-{% from amgut import text_locale %}
+{% from amgut import text_locale, media_locale %}
 {% set tl = text_locale['human_survey.html'] %}
 
 {# Note that TITLE is linked to a locale, but is set from the human_survey
 handler #}
 <h1>{{ TITLE }}</h1>
-<form action='/authed/human_survey/' id="human_survey" method="POST">
+<form action='{% raw media_locale["SITEBASE"] %}/authed/human_survey/' id="human_survey" method="POST">
 <table>
     <input type="hidden" name="page_number" value="{{page_number}}">
     {% for form_item in the_form %}
