@@ -485,7 +485,7 @@ _FORGOT_PASSWORD = {
 
 _ERROR = {
     'ERROR_OCCURED': "AN ERROR HAS OCCURED!",
-    'ERROR_CONTACT': 'Please copy the following into an email and send this information, along with the url you were trying to access, to <a href="mailto:%(help_email)s">%(help_email)s</a>' % {'help_email': media_locale['HELP_EMAIL']}
+    'ERROR_CONTACT': "The error has been logged and we will look into it. Please go back to the main page."
 }
 
 _RETREIVE_KITID = {
