@@ -26,7 +26,7 @@
 
 <h2>{% raw tl['NEW_SAMPLE_TITLE'] %} {{ participant_name }}</h2>
 
-<form id="add_sample" name="add_sample" method="post" action="/authed/add_sample_human/">
+<form id="add_sample" name="add_sample" method="post" action="{% raw media_locale['SITEBASE'] %}/authed/add_sample_human/">
     <input type="hidden" name="participant_name" value="{{ participant_name }}"/>
     <table width="100%">
         <tr>

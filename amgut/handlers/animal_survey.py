@@ -6,7 +6,7 @@ from tornado.websocket import WebSocketHandler
 
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.util import AG_DATA_ACCESS
-from amgut import text_locale
+from amgut import text_locale, media_locale
 
 
 class AnimalSurveyHandler(BaseHandler):
@@ -81,7 +81,7 @@ class AnimalSurveyHandler(BaseHandler):
 
         message = urlencode([('errmsg', tl['SUCCESSFULLY_ADDED'] %
                               participant_name)])
-        self.redirect('/authed/portal/?%s' % message)
+        self.redirect(media_locale['SITEBASE'] + '/authed/portal/?%s' % message)
 
 
 class CheckParticipantName(WebSocketHandler, BaseHandler):
