@@ -1,3 +1,5 @@
+import logging
+
 from tornado.web import RequestHandler
 
 from amgut.util import AG_DATA_ACCESS
@@ -17,6 +19,7 @@ class BaseHandler(RequestHandler):
     def write_error(self, status_code, **kwargs):
         '''Overrides the error page created by Tornado'''
         from traceback import format_exception
+        logging.exception(kwargs["exc_info"])
         if self.settings.get("debug") and "exc_info" in kwargs:
             exc_info = kwargs["exc_info"]
             trace_info = ''.join(["%s<br />" % line for line in
