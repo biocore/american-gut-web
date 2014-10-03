@@ -756,5 +756,6 @@ text_locale = {
     'chage_pass_verify.html': _CHANGE_PASS_VERIFY,
     'survey_main.html': _SURVEY_MAIN,
     'animal_survey.html': _ANIMAL_SURVEY,
+    'human_survey_completed.html': _HUMAN_SURVEY_COMPLETED,
     'handlers': _HANDLERS
 }
