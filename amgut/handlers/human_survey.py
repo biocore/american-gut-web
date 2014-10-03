@@ -25,13 +25,15 @@ class PersonalPrompts(Form):
                                                  (1, 'Male'),
                                                  (2, 'Other')])
     PERSONAL_PROMPT_HEIGHT = IntegerField()
-    PERSONAL_PROMPT_HEIGHT_UNITS = SelectField(choices=[('in', 'in'),
+    PERSONAL_PROMPT_HEIGHT_UNITS = SelectField(choices=[('', ''),
+                                                        ('in', 'in'),
                                                         ('cm', 'cm')])
     PERSONAL_PROMPT_COUNTRY_OF_BIRTH = TextField()
     PERSONAL_PROMPT_TODAYSDATE = DateField(format="%m/%d/%Y")
     PERSONAL_PROMPT_BIRTHDATE = DateField(format="%m/%Y")
     PERSONAL_PROMPT_WEIGHT = IntegerField()
-    PERSONAL_PROMPT_WEIGHT_UNITS = SelectField(choices=[('lbs', 'lbs'),
+    PERSONAL_PROMPT_WEIGHT_UNITS = SelectField(choices=[('', ''),
+                                                        ('lbs', 'lbs'),
                                                         ('kg', 'kg')])
     PERSONAL_PROMPT_ZIP = TextField()
 
