@@ -436,9 +436,7 @@ CREATE TABLE ag.survey_question_response (
 	response             varchar  NOT NULL,
 	display_index        serial  ,
 	CONSTRAINT pk_question_response PRIMARY KEY ( survey_question_id, response ),
-	CONSTRAINT idx_question_response UNIQUE ( response ) ,
-	CONSTRAINT idx_question_response_0 UNIQUE ( survey_question_id ) ,
-	CONSTRAINT idx_human_survey_question_response UNIQUE ( display_index ) ,
+	CONSTRAINT idx_survey_question_response UNIQUE ( survey_question_id, display_index ) ,
 	CONSTRAINT fk_question_response FOREIGN KEY ( response ) REFERENCES ag.survey_response( american )    ,
 	CONSTRAINT fk_question_response_0 FOREIGN KEY ( survey_question_id ) REFERENCES ag.survey_question( survey_question_id )    
  );
