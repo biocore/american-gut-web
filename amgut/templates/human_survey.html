@@ -25,6 +25,27 @@ $(document).ready(function() {
     });
 });
 </script>
+<style>
+table {
+    width=100%;
+    border-collapse: collapse;
+}
+tr {
+    border: dashed;
+    border-width: 0px;
+    border-bottom-width: 1px;
+}
+tr:first-child {
+    border-top: none;
+}
+tr:last-child {
+    border-bottom: none;
+}
+td {
+    padding:5px;
+    border-spacing: 5px 0;"
+}
+</style>
 {% end %}
 {% block content %}
 {% from amgut import text_locale, media_locale %}
@@ -33,9 +54,8 @@ $(document).ready(function() {
 {# Note that TITLE is linked to a locale, but is set from the human_survey
 handler #}
 <h1>{{ TITLE }}</h1>
-
+<form action='{% raw media_locale["SITEBASE"] %}/authed/human_survey/' id="human_survey" method="POST" onsubmit="return validateSurvey{{page_number}}();">
 <table>
-    <form action='{% raw media_locale["SITEBASE"] %}/authed/human_survey/' id="human_survey" method="POST" onsubmit="return validateSurvey{{page_number}}();">
     <input type="hidden" name="page_number" value="{{page_number}}">
     {% for form_item in the_form %}
         {% set kwargs = {} %}
@@ -44,7 +64,7 @@ handler #}
             {% set kwargs["onchange"] = "toggle_div('" + supp_div_id + "', '" + form_item.id + "', " + repr(list(supplemental_map[form_item.id][0])) + ");" %}
         {% end %}
         <tr align="left">
-            <td width="40%">{% raw tl[form_item.id] %}</td>
+            <td width="50%">{% raw tl[form_item.id] %}</td>
             <td>{% raw form_item(**kwargs) %}</td>
         </tr>
         {% if form_item.id in supplemental_map %}
@@ -59,10 +79,10 @@ handler #}
         {% end %}
     {% end %}
     <tr>
-        <td><input type="submit"></td>
+        <td colspan=2><input type="submit"></td>
     </tr>
-    </form>
 </table>
+</form>
 <br />
 <div id="progressbar"></div>
 <br />
