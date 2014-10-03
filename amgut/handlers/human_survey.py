@@ -1,5 +1,6 @@
 from wtforms import (Form, SelectField, SelectMultipleField, widgets,
-                     TextField, DateField, RadioField)
+                     TextField, DateField, RadioField, SelectField,
+                     IntegerField)
 from tornado.web import authenticated
 from future.utils import viewitems
 from natsort import natsorted
@@ -23,11 +24,17 @@ class PersonalPrompts(Form):
     PERSONAL_PROMPT_GENDER = RadioField(choices=[(0, 'Female'),
                                                  (1, 'Male'),
                                                  (2, 'Other')])
-    PERSONAL_PROMPT_HEIGHT = TextField()
+    PERSONAL_PROMPT_HEIGHT = IntegerField()
+    PERSONAL_PROMPT_HEIGHT_UNITS = SelectField(choices=[('', ''),
+                                                        ('in', 'in'),
+                                                        ('cm', 'cm')])
     PERSONAL_PROMPT_COUNTRY_OF_BIRTH = TextField()
     PERSONAL_PROMPT_TODAYSDATE = DateField(format="%m/%d/%Y")
     PERSONAL_PROMPT_BIRTHDATE = DateField(format="%m/%Y")
-    PERSONAL_PROMPT_WEIGHT = TextField()
+    PERSONAL_PROMPT_WEIGHT = IntegerField()
+    PERSONAL_PROMPT_WEIGHT_UNITS = SelectField(choices=[('', ''),
+                                                        ('lbs', 'lbs'),
+                                                        ('kg', 'kg')])
     PERSONAL_PROMPT_ZIP = TextField()
 
 

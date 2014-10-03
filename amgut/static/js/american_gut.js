@@ -1,9 +1,9 @@
 //functions for the portal toggle system
 function selectTab(id) {
-	document.querySelectorAll('.selected')[0].className = 'unselected';
-	document.querySelectorAll('.portal_selected')[0].className = 'portal_unselected';
-	document.getElementById(id+'_tab').className = 'selected';
-	document.getElementById(id+'_content').className = 'portal_selected';
+    document.querySelectorAll('.selected')[0].className = 'unselected';
+    document.querySelectorAll('.portal_selected')[0].className = 'portal_unselected';
+    document.getElementById(id+'_tab').className = 'selected';
+    document.getElementById(id+'_content').className = 'portal_selected';
 }
 
 var xmlhttp;
@@ -39,30 +39,30 @@ function GetXmlHttpObject()
 var old_field_number = 1
 
 function addThreeFields(field_name) {
-	var new_field_number = old_field_number+1
-	old_field_number = new_field_number
-	var newinput = '<input type="text" value="Type" name="'
-	newinput +=field_name
-	newinput +='_'
-	newinput +=new_field_number
-	newinput +='" id="'+field_name+'_'+new_field_number
-	newinput +='" class="smaller_text"/><select id="'
-	newinput += field_name
-	newinput +='_location_'
-	newinput +=new_field_number
-	newinput +='" name="'+field_name+'_location_'+new_field_number
-	newinput +='"><option>Housing...</option><option>Indoor</option><option>Outdoor</option><option>Confined</option></select><select id="'
-	newinput +=field_name
-	newinput +='_contact_'
-	newinput +=new_field_number
-	newinput +='" name="'+field_name+'_contact_'+new_field_number
-	newinput +='"><option>Contact...</option><option>None</option><option>Little</option><option>Moderate</option><option>Extensive</option></select><a class="remove_field" href="#" onclick="removeField(\''+field_name+'_'+new_field_number+'\')" title="Remove this field">x</a>'
-	
-	var newTextBoxDiv = $(document.createElement('div'))
-	     .attr("id", field_name+'_'+new_field_number);
-	newTextBoxDiv.after().html(newinput);
-	newTextBoxDiv.appendTo('#'+field_name);
-	setDefaultText()
+    var new_field_number = old_field_number+1
+    old_field_number = new_field_number
+    var newinput = '<input type="text" value="Type" name="'
+    newinput +=field_name
+    newinput +='_'
+    newinput +=new_field_number
+    newinput +='" id="'+field_name+'_'+new_field_number
+    newinput +='" class="smaller_text"/><select id="'
+    newinput += field_name
+    newinput +='_location_'
+    newinput +=new_field_number
+    newinput +='" name="'+field_name+'_location_'+new_field_number
+    newinput +='"><option>Housing...</option><option>Indoor</option><option>Outdoor</option><option>Confined</option></select><select id="'
+    newinput +=field_name
+    newinput +='_contact_'
+    newinput +=new_field_number
+    newinput +='" name="'+field_name+'_contact_'+new_field_number
+    newinput +='"><option>Contact...</option><option>None</option><option>Little</option><option>Moderate</option><option>Extensive</option></select><a class="remove_field" href="#" onclick="removeField(\''+field_name+'_'+new_field_number+'\')" title="Remove this field">x</a>'
+    
+    var newTextBoxDiv = $(document.createElement('div'))
+         .attr("id", field_name+'_'+new_field_number);
+    newTextBoxDiv.after().html(newinput);
+    newTextBoxDiv.appendTo('#'+field_name);
+    setDefaultText()
 
     var new_field_names = [];
     new_field_names.push(field_name + '_' + new_field_number);
@@ -73,14 +73,14 @@ function addThreeFields(field_name) {
 }
 
 function addTwoFields(field1_name,field2_name) {
-	var new_field_number = old_field_number+1
-	old_field_number = new_field_number
-	var newinput = '<input type="text" value="Name" name="'+field1_name+'_'+new_field_number+'" id="'+field1_name+'_'+new_field_number+'" class="small_text"/><input type="text" value="Relationship" name="'+field2_name+'_'+new_field_number+'" id="'+field2_name+'_'+new_field_number+'" class="small_text"/><a class="remove_field" href="#" onclick="removeField(\''+field1_name+'_'+new_field_number+'\')" title="Remove this field">x</a></input></div>'
-	var newTextBoxDiv = $(document.createElement('div'))
-	     .attr("id", field1_name+'_'+new_field_number);
-	newTextBoxDiv.after().html(newinput);
-	newTextBoxDiv.appendTo('#'+field1_name);
-	setDefaultText()
+    var new_field_number = old_field_number+1
+    old_field_number = new_field_number
+    var newinput = '<input type="text" value="Name" name="'+field1_name+'_'+new_field_number+'" id="'+field1_name+'_'+new_field_number+'" class="small_text"/><input type="text" value="Relationship" name="'+field2_name+'_'+new_field_number+'" id="'+field2_name+'_'+new_field_number+'" class="small_text"/><a class="remove_field" href="#" onclick="removeField(\''+field1_name+'_'+new_field_number+'\')" title="Remove this field">x</a></input></div>'
+    var newTextBoxDiv = $(document.createElement('div'))
+         .attr("id", field1_name+'_'+new_field_number);
+    newTextBoxDiv.after().html(newinput);
+    newTextBoxDiv.appendTo('#'+field1_name);
+    setDefaultText()
     
     var new_field_values = [];
     new_field_values.push(field1_name+'_'+new_field_number);
@@ -90,24 +90,24 @@ function addTwoFields(field1_name,field2_name) {
 }
 
 function addDestinationFields(div_name,field1_name,field2_name) {
-	var new_field_number = old_field_number+1
-	old_field_number = new_field_number
-	var newinput = '<select name="'+field1_name+'_'+new_field_number+'" id="'+field1_name+'_'+new_field_number+'">'
-	var num, name;
-	newinput += '<option value="">Select an option</option>'
-	for(var i =0; i < countries.length; i++) {
-		num = countries[i][0];
-		name = countries[i][1];
-		newinput+= '<option value="'+num+'">'+name+'</option>'
-	}
-	newinput+= '</select>'
-	newinput+= '<input type="text" value="Duration" name="'+field2_name+'_'+new_field_number+'" id="'+field2_name+'_'+new_field_number+'" class="smaller_text" onkeypress=\'validateNumber(event, false)\'/> days <a class="remove_field" href="#" onclick="removeField(\''+div_name+'_'+new_field_number+'\')" title="Remove this field">x</a></input></div>'
-	var newTextBoxDiv = $(document.createElement('div'))
-	     .attr("id", div_name+'_'+new_field_number);
-	newTextBoxDiv.after().html(newinput);
-	newTextBoxDiv.appendTo('#'+div_name);
-	// getCountries(field1_name+'_'+new_field_number)
-	setDefaultText()
+    var new_field_number = old_field_number+1
+    old_field_number = new_field_number
+    var newinput = '<select name="'+field1_name+'_'+new_field_number+'" id="'+field1_name+'_'+new_field_number+'">'
+    var num, name;
+    newinput += '<option value="">Select an option</option>'
+    for(var i =0; i < countries.length; i++) {
+        num = countries[i][0];
+        name = countries[i][1];
+        newinput+= '<option value="'+num+'">'+name+'</option>'
+    }
+    newinput+= '</select>'
+    newinput+= '<input type="text" value="Duration" name="'+field2_name+'_'+new_field_number+'" id="'+field2_name+'_'+new_field_number+'" class="smaller_text" onkeypress=\'validateNumber(event, false)\'/> days <a class="remove_field" href="#" onclick="removeField(\''+div_name+'_'+new_field_number+'\')" title="Remove this field">x</a></input></div>'
+    var newTextBoxDiv = $(document.createElement('div'))
+         .attr("id", div_name+'_'+new_field_number);
+    newTextBoxDiv.after().html(newinput);
+    newTextBoxDiv.appendTo('#'+div_name);
+    // getCountries(field1_name+'_'+new_field_number)
+    setDefaultText()
 
     var retvalues = [];
     retvalues.push(field1_name+'_'+new_field_number);
@@ -117,14 +117,14 @@ function addDestinationFields(div_name,field1_name,field2_name) {
 }
 
 function addField(field_name) {
-	var new_field_number = old_field_number+1
-	old_field_number = new_field_number
-	var newinput = '<div id="'+field_name+'_'+new_field_number+'"><input type="text" name="'+field_name+'_'+new_field_number+'" id="'+field_name+'_'+new_field_number+'"><a class="remove_field" href="#" onclick="removeField(\''+field_name+'_'+new_field_number+'\')" title="Remove this field">x</a></input></div>'
-	var newTextBoxDiv = $(document.createElement('div'))
-	     .attr("id", field_name+'_'+new_field_number);
-	newTextBoxDiv.after().html(newinput);
-	newTextBoxDiv.appendTo('#'+field_name);
-	setDefaultText()
+    var new_field_number = old_field_number+1
+    old_field_number = new_field_number
+    var newinput = '<div id="'+field_name+'_'+new_field_number+'"><input type="text" name="'+field_name+'_'+new_field_number+'" id="'+field_name+'_'+new_field_number+'"><a class="remove_field" href="#" onclick="removeField(\''+field_name+'_'+new_field_number+'\')" title="Remove this field">x</a></input></div>'
+    var newTextBoxDiv = $(document.createElement('div'))
+         .attr("id", field_name+'_'+new_field_number);
+    newTextBoxDiv.after().html(newinput);
+    newTextBoxDiv.appendTo('#'+field_name);
+    setDefaultText()
 
     return field_name + '_' + new_field_number;
 }
@@ -309,63 +309,63 @@ function setMultiplesDefaults_select(form_name, new_field_names, hits) {
 }
 
 function addHuman() {
-	field_name = "human"
-	var new_field_number = old_field_number+1
-	old_field_number = new_field_number
-	var newinput = '<div id="'+field_name+'_'+new_field_number+'"><input type="text" class="small_text" value="Age" name="'+field_name+'_'+new_field_number+'_age" id="'+field_name+'_'+new_field_number+'_age" onkeypress="validateNumber(event, false)"> years <br /><select name="'+field_name+'_'+new_field_number+'_sex" id="'+field_name+'_'+new_field_number+'_sex"><option value="">Select an option</option><option>Male</option><option>Female</option><option>Other</option></select><a class="remove_field" href="#" onclick="removeField(\''+field_name+'_'+new_field_number+'\')" title="Remove this pet">x</a></input></div>'
-	var newTextBoxDiv = $(document.createElement('div'))
-	     .attr("id", field_name+'_'+new_field_number);
-	newTextBoxDiv.after().html(newinput);
-	newTextBoxDiv.appendTo('#'+field_name);
-	setDefaultText()
+    field_name = "human"
+    var new_field_number = old_field_number+1
+    old_field_number = new_field_number
+    var newinput = '<div id="'+field_name+'_'+new_field_number+'"><input type="text" class="small_text" value="Age" name="'+field_name+'_'+new_field_number+'_age" id="'+field_name+'_'+new_field_number+'_age" onkeypress="validateNumber(event, false)"> years <br /><select name="'+field_name+'_'+new_field_number+'_sex" id="'+field_name+'_'+new_field_number+'_sex"><option value="">Select an option</option><option>Male</option><option>Female</option><option>Other</option></select><a class="remove_field" href="#" onclick="removeField(\''+field_name+'_'+new_field_number+'\')" title="Remove this pet">x</a></input></div>'
+    var newTextBoxDiv = $(document.createElement('div'))
+         .attr("id", field_name+'_'+new_field_number);
+    newTextBoxDiv.after().html(newinput);
+    newTextBoxDiv.appendTo('#'+field_name);
+    setDefaultText()
 }
 
 function addPet() {
-	field_name = "pet"
-	var new_field_number = old_field_number+1
-	old_field_number = new_field_number
-	var newinput = '<div id="'+field_name+'_'+new_field_number+'"><select name="'+field_name+'_'+new_field_number+'" id="'+field_name+'_'+new_field_number+'"><option value="">Select an option</option><option>Dog</option><option>Cat</option><option>Small mammal</option><option>Large mammal</option><option>Fish</option><option>Bird</option><option>Reptile</option><option>Amphibian</option><option>Other</option></select><a class="remove_field" href="#" onclick="removeField(\''+field_name+'_'+new_field_number+'\')" title="Remove this pet">x</a></input></div>'
-	var newTextBoxDiv = $(document.createElement('div'))
-	     .attr("id", field_name+'_'+new_field_number);
-	newTextBoxDiv.after().html(newinput);
-	newTextBoxDiv.appendTo('#'+field_name);
-	setDefaultText()
+    field_name = "pet"
+    var new_field_number = old_field_number+1
+    old_field_number = new_field_number
+    var newinput = '<div id="'+field_name+'_'+new_field_number+'"><select name="'+field_name+'_'+new_field_number+'" id="'+field_name+'_'+new_field_number+'"><option value="">Select an option</option><option>Dog</option><option>Cat</option><option>Small mammal</option><option>Large mammal</option><option>Fish</option><option>Bird</option><option>Reptile</option><option>Amphibian</option><option>Other</option></select><a class="remove_field" href="#" onclick="removeField(\''+field_name+'_'+new_field_number+'\')" title="Remove this pet">x</a></input></div>'
+    var newTextBoxDiv = $(document.createElement('div'))
+         .attr("id", field_name+'_'+new_field_number);
+    newTextBoxDiv.after().html(newinput);
+    newTextBoxDiv.appendTo('#'+field_name);
+    setDefaultText()
 }
 
 function removeField(item_id) {
-	var c = document.getElementById(item_id)
-	c.parentNode.removeChild(c);
+    var c = document.getElementById(item_id)
+    c.parentNode.removeChild(c);
 }
 
 function otherSelect(select_id,item_id,other_index) {
-	if (document.getElementById(select_id) === null){
-		return;
-	}
+    if (document.getElementById(select_id) === null){
+        return;
+    }
 
-	if(document.getElementById(select_id).selectedIndex == other_index)
-	{
-		setVisible(item_id)
-	}else{
-		setInvisible(item_id)
-	}
+    if(document.getElementById(select_id).selectedIndex == other_index)
+    {
+        setVisible(item_id)
+    }else{
+        setInvisible(item_id)
+    }
 }
 
 function anySelect(select_id,item_id,other_indices) {
-	if(other_indices.indexOf(document.getElementById(select_id).selectedIndex) > -1)
-	{
-		setInvisible(item_id)
-	}else{
-		setVisible(item_id)
-	}
+    if(other_indices.indexOf(document.getElementById(select_id).selectedIndex) > -1)
+    {
+        setInvisible(item_id)
+    }else{
+        setVisible(item_id)
+    }
 }
 
 function setVisible(item_id) {
-	document.getElementById(item_id).className = document.getElementById(item_id).className.replace
+    document.getElementById(item_id).className = document.getElementById(item_id).className.replace
       (/(?:^|\s)invisible(?!\S)/g , '');
 }
 
 function setInvisible(item_id) {
-	document.getElementById(item_id).className += " invisible"
+    document.getElementById(item_id).className += " invisible"
 }
 
 $(function()
@@ -375,89 +375,89 @@ $(function()
 
 
 function updateTotals() {
-	if(updateTotalIntake() && updateAnimalPlant())
-	{
-		document.getElementById('submit6').disabled = false
-		document.getElementById('dietaryIntakeTotal').className = "";
-		document.getElementById('plantAnimalTotal').className = "";
-	}
-	else
-		document.getElementById('submit6').disabled = true
+    if(updateTotalIntake() && updateAnimalPlant())
+    {
+        document.getElementById('submit6').disabled = false
+        document.getElementById('dietaryIntakeTotal').className = "";
+        document.getElementById('plantAnimalTotal').className = "";
+    }
+    else
+        document.getElementById('submit6').disabled = true
 }
 
 /*stuff for only dietary questions survey */
 function updateTotalIntake() {
-	var total = 0;
-	var prot = parseInt(document.getElementById('protein_per').value)
-	if(isNaN(prot))
-		document.getElementById('protein_per').value = 0
-	var fat = parseInt(document.getElementById('fat_per').value)
-	if(isNaN(fat))
-		document.getElementById('fat_per').value = 0
-	var carb = parseInt(document.getElementById('carbohydrate_per').value)
-	if(isNaN(carb))
-		document.getElementById('carbohydrate_per').value = 0
-	total = prot+fat+carb
-	if(isNaN(total))
-		return
-	if(total > 100)
-	{
-		document.getElementById('dietaryIntakeTotal').className += " highlight"
-		document.getElementById('dietaryIntakeTotal').innerHTML = total
-		return false;
-	}
-	else
-	{
-		document.getElementById('dietaryIntakeTotal').className = document.getElementById('dietaryIntakeTotal').className.replace(/(?:^|\s)highlight(?!\S)/ , '');
-		document.getElementById('dietaryIntakeTotal').innerHTML = total
-		return true;
-	}
-		
-	
-	// console.log(total)
+    var total = 0;
+    var prot = parseInt(document.getElementById('protein_per').value)
+    if(isNaN(prot))
+        document.getElementById('protein_per').value = 0
+    var fat = parseInt(document.getElementById('fat_per').value)
+    if(isNaN(fat))
+        document.getElementById('fat_per').value = 0
+    var carb = parseInt(document.getElementById('carbohydrate_per').value)
+    if(isNaN(carb))
+        document.getElementById('carbohydrate_per').value = 0
+    total = prot+fat+carb
+    if(isNaN(total))
+        return
+    if(total > 100)
+    {
+        document.getElementById('dietaryIntakeTotal').className += " highlight"
+        document.getElementById('dietaryIntakeTotal').innerHTML = total
+        return false;
+    }
+    else
+    {
+        document.getElementById('dietaryIntakeTotal').className = document.getElementById('dietaryIntakeTotal').className.replace(/(?:^|\s)highlight(?!\S)/ , '');
+        document.getElementById('dietaryIntakeTotal').innerHTML = total
+        return true;
+    }
+        
+    
+    // console.log(total)
 }
 
 function updateAnimalPlant() {
-	var total = 0;
-	var plant = parseInt(document.getElementById('plant_per').value)
-	if(isNaN(plant))
-		document.getElementById('plant_per').value = 0
-	var animal = parseInt(document.getElementById('animal_per').value)
-	if(isNaN(animal))
-		document.getElementById('animal_per').value = 0
-	total = plant+animal
-	if(isNaN(total))
-		return
-	if(total > 100)
-	{
-		document.getElementById('plantAnimalTotal').className += " highlight"
-		document.getElementById('plantAnimalTotal').innerHTML = total
-		return false;
-	}
-	else
-	{
-		document.getElementById('plantAnimalTotal').className = document.getElementById('plantAnimalTotal').className.replace(/(?:^|\s)highlight(?!\S)/ , '');
-		document.getElementById('plantAnimalTotal').innerHTML = total
-		return true;
-	}
-	
+    var total = 0;
+    var plant = parseInt(document.getElementById('plant_per').value)
+    if(isNaN(plant))
+        document.getElementById('plant_per').value = 0
+    var animal = parseInt(document.getElementById('animal_per').value)
+    if(isNaN(animal))
+        document.getElementById('animal_per').value = 0
+    total = plant+animal
+    if(isNaN(total))
+        return
+    if(total > 100)
+    {
+        document.getElementById('plantAnimalTotal').className += " highlight"
+        document.getElementById('plantAnimalTotal').innerHTML = total
+        return false;
+    }
+    else
+    {
+        document.getElementById('plantAnimalTotal').className = document.getElementById('plantAnimalTotal').className.replace(/(?:^|\s)highlight(?!\S)/ , '');
+        document.getElementById('plantAnimalTotal').innerHTML = total
+        return true;
+    }
+    
 }
 /* end stuff for dietary questions */
 
 /* number validation for percentage fields */
 function validatePercentage(item_id) {
-	if(isNaN(document.getElementById(item_id).value))
-		document.getElementById(item_id).value = 0
-	else if(document.getElementById(item_id).value < 0)
-		document.getElementById(item_id).value = 0
-	else if(document.getElementById(item_id).value > 100)
-		document.getElementById(item_id).value = 100
-	updateTotalIntake()
-	updateAnimalPlant()
+    if(isNaN(document.getElementById(item_id).value))
+        document.getElementById(item_id).value = 0
+    else if(document.getElementById(item_id).value < 0)
+        document.getElementById(item_id).value = 0
+    else if(document.getElementById(item_id).value > 100)
+        document.getElementById(item_id).value = 100
+    updateTotalIntake()
+    updateAnimalPlant()
 }
 
 function toggleConsent() {
-	var minor = !document.getElementById('is_juvenile').checked
+    var minor = !document.getElementById('is_juvenile').checked
     document.getElementById("parent_1_name").disabled = minor
     document.getElementById("parent_2_name").disabled = minor
     document.getElementById("deceased_parent").disabled = minor
@@ -472,7 +472,7 @@ function validateConsent()
     {
         document.consent_info[i].className = document.consent_info[i].className.replace(/(?:^|\s)highlight(?!\S)/ , '');
     }
-  	document.getElementById("consent").className = document.getElementById("consent").className.replace(/(?:^|\s)highlight(?!\S)/ , '');
+    document.getElementById("consent").className = document.getElementById("consent").className.replace(/(?:^|\s)highlight(?!\S)/ , '');
     var valid = true;
         
     if(!document.consent_info.consent.checked)
@@ -511,15 +511,15 @@ function validateConsent()
     }
         
     if(!valid) 
-	{
-	    //alert($('#consent_info').submit());
+    {
+        //alert($('#consent_info').submit());
         return;
-	}
+    }
     else 
-	{
+    {
         //alert($('#consent_info').submit());
         $('#consent_info').submit();
-	}
+    }
 }
 
 /*validation for add new sample*/
@@ -529,9 +529,9 @@ function verifyAddSample() {
         document.add_sample[i].className = document.add_sample[i].className.replace(/(?:^|\s)highlight(?!\S)/g , '');
     }
     document.getElementById("sample_site_div").className = document.getElementById("sample_site_div").className.replace(/(?:^|\s)highlight(?!\S)/g , '');
-	
+    
     var valid = true;
-	
+    
     if(document.add_sample.sample_date.value == "" || !isValidDate(document.add_sample.sample_date.value))
     {
         document.add_sample.sample_date.className += " highlight";
@@ -549,15 +549,15 @@ function verifyAddSample() {
     }
 
     if(!valid) 
-	{
-	    //alert($('#consent_info').submit());
+    {
+        //alert($('#consent_info').submit());
         return;
-	}
+    }
     else 
-	{
+    {
         //alert($('#consent_info').submit());
         $('#add_sample').submit();
-	}
+    }
 }
 
 /*validation for verification*/
@@ -565,37 +565,37 @@ function validateVerification() {
     for(var i = 0; i < document.verification_submit.length; i++) 
     {
         document.verification_submit[i].className = document.verification_submit[i].className.replace(/(?:^|\s)highlight(?!\S)/ , '');
-		
-		if(document.verification_submit[i].type == 'checkbox')
-		{
-			document.getElementById(document.verification_submit[i].id).className = document.verification_submit[i].className.replace(/(?:^|\s)highlight(?!\S)/ , '');
-		}
+        
+        if(document.verification_submit[i].type == 'checkbox')
+        {
+            document.getElementById(document.verification_submit[i].id).className = document.verification_submit[i].className.replace(/(?:^|\s)highlight(?!\S)/ , '');
+        }
     }
-	
+    
     var valid = true;
-	
+    
     if(document.verification_submit.user_verification_code.value == "")
     {
         document.verification_submit.user_verification_code.className += " highlight";
         valid = false;
     }
-	
-	for(var i = 0; i < document.verification_submit.length; i++)
-	{
-		if(document.verification_submit[i].type == 'checkbox' && !document.verification_submit[i].checked)
-		{
-			document.getElementById(document.verification_submit[i].id).className += " highlight";
-			valid = false;
-		}
-	}
+    
+    for(var i = 0; i < document.verification_submit.length; i++)
+    {
+        if(document.verification_submit[i].type == 'checkbox' && !document.verification_submit[i].checked)
+        {
+            document.getElementById(document.verification_submit[i].id).className += " highlight";
+            valid = false;
+        }
+    }
     if(!valid) 
-	{
+    {
         return;
-	}
+    }
     else 
-	{
+    {
         $('#verification_submit').submit();
-	}
+    }
 }
 
 /*field verification for help email send*/
@@ -604,41 +604,41 @@ function verifyHelpRequest() {
     {
         document.help_request[i].className = document.help_request[i].className.replace(/(?:^|\s)highlight(?!\S)/ , '');
     }
-	
+    
     var valid = true;
-	
-	if(document.help_request.first_name.value == "")
-	{
+    
+    if(document.help_request.first_name.value == "")
+    {
         document.help_request.first_name.className += " highlight";
         valid = false;
-	}
-	
-	if(document.help_request.last_name.value == "")
-	{
+    }
+    
+    if(document.help_request.last_name.value == "")
+    {
         document.help_request.last_name.className += " highlight";
         valid = false;
-	}
-	
-	if(document.help_request.email_address.value == "")
-	{
+    }
+    
+    if(document.help_request.email_address.value == "")
+    {
         document.help_request.email_address.className += " highlight";
         valid = false;
-	}
-	
-	if(document.help_request.message_body.value == "")
-	{
+    }
+    
+    if(document.help_request.message_body.value == "")
+    {
         document.help_request.message_body.className += " highlight";
         valid = false;
-	}
-	
+    }
+    
     if(!valid) 
-	{
+    {
         return;
-	}
+    }
     else 
-	{
+    {
         $('#help_request').submit();
-	}
+    }
 }
 
 function validatePasswordReset() {
@@ -646,35 +646,35 @@ function validatePasswordReset() {
     {
         document.change_password[i].className = document.change_password[i].className.replace(/(?:^|\s)highlight(?!\S)/ , '');
     }
-	
+    
     var valid = true;
-	
-	if(document.change_password.current_password.value == "")
-	{
+    
+    if(document.change_password.current_password.value == "")
+    {
         document.change_password.current_password.className += " highlight";
         valid = false;
-	}
-	
-	if(document.change_password.new_password.value == "")
-	{
+    }
+    
+    if(document.change_password.new_password.value == "")
+    {
         document.change_password.new_password.className += " highlight";
         valid = false;
-	}
-	
-	if(document.change_password.confirm_password.value == "")
-	{
+    }
+    
+    if(document.change_password.confirm_password.value == "")
+    {
         document.change_password.confirm_password.className += " highlight";
         valid = false;
-	}
-	
+    }
+    
     if(!valid) 
-	{
+    {
         return;
-	}
+    }
     else 
-	{
+    {
         $('#change_password').submit();
-	}
+    }
 }
 
 function validateUnknownPasswordReset() {
@@ -715,57 +715,56 @@ function validateUnknownPasswordReset() {
 /*clear empty boxes for survey3*/
 function validateSurvey3() {
     for(var i = 0; i < document.survey_3.length; i++) 
-    {	
-		if(document.survey_3[i].type == 'text')
-		{
-			if(document.survey_3[i].value == 'Duration'|| document.survey_3[i].value == 'Type' || document.survey_3[i].value == 'Name' || document.survey_3[i].value == 'Relationship')
-				document.survey_3[i].value = ''
-		}
+    {   
+        if(document.survey_3[i].type == 'text')
+        {
+            if(document.survey_3[i].value == 'Duration'|| document.survey_3[i].value == 'Type' || document.survey_3[i].value == 'Name' || document.survey_3[i].value == 'Relationship')
+                document.survey_3[i].value = ''
+        }
     }
     $('#survey_3').submit();
 }
 
-function validateSurvey1() {
-    for(var i = 0; i < document.survey_1.length; i++) 
+function validateSurvey0() {
+    survey_form = document.getElementById('human_survey');
+    for(var i = 0; i < survey_form.length; i++) 
     {
-        document.survey_1[i].className = document.survey_1[i].className.replace(/(?:^|\s)highlight(?!\S)/ , '');
+        survey_form[i].className = survey_form[i].className.replace(/(?:^|\s)highlight(?!\S)/ , '');
     }
-	
+    
     var valid = true;
- 	
-	if(!isValidDate(document.survey_1.birth_date.value) && document.survey_1.birth_date.value != "")
-	{
-		document.survey_1.birth_date.className += " highlight"
-		valid = false;
-	}
-	
-	if(document.survey_1.height_in.value.replace(/[0-9]/g,"").length > 0)
-	{
-		document.survey_1.height_in.className += " highlight"
-		valid = false;
-	}
-	
- 	if(document.survey_1.height_cm.value.replace(/[0-9]/g,"").length > 0)
-	{
-		document.survey_1.height_cm.className += " highlight"
-		valid = false;
-	}
-	
- 	if(document.survey_1.weight_lbs.value.replace(/[0-9]/g,"").length > 0)
-	{
-		document.survey_1.weight_lbs.className += " highlight"
-		valid = false;
-	}
-	
- 	if(document.survey_1.weight_kg.value.replace(/[0-9]/g,"").length > 0)
-	{
-		document.survey_1.weight_kg.className += " highlight"
-		valid = false;
-	}
-	
-	if(valid)
-		$('#survey_1').submit();
- 
+    
+    if(!isValidDate(survey_form.PERSONAL_PROMPT_BIRTHDATE.value) && survey_form.PERSONAL_PROMPT_BIRTHDATE.value != "")
+    {
+        survey_form.PERSONAL_PROMPT_BIRTHDATE.className += " highlight";
+        valid = false;
+    }
+
+    if(survey_form.PERSONAL_PROMPT_HEIGHT.value.length > 0) {
+        if(survey_form.PERSONAL_PROMPT_HEIGHT.value.replace(/[0-9]/g,"").length > 0)
+        {
+            survey_form.PERSONAL_PROMPT_HEIGHT.className += " highlight";
+            valid = false;
+        }
+        if(survey_form.PERSONAL_PROMPT_HEIGHT_UNITS.value == "") {
+            survey_form.PERSONAL_PROMPT_HEIGHT_UNITS.className += " highlight";
+            valid = false;   
+        }
+    }
+
+    if(survey_form.PERSONAL_PROMPT_WEIGHT.value.length > 0) {
+        if(survey_form.PERSONAL_PROMPT_WEIGHT.value.replace(/[0-9]/g,"").length > 0)
+        {
+            survey_form.PERSONAL_PROMPT_WEIGHT.className += " highlight";
+            valid = false;
+        }
+        if(survey_form.PERSONAL_PROMPT_WEIGHT_UNITS.value == "") {
+            survey_form.PERSONAL_PROMPT_WEIGHT_UNITS.className += " highlight";
+            valid = false;   
+        }
+    }
+    
+    return valid;
 }
 
 function validateParticipantName(participant_name, valid) {
@@ -796,28 +795,28 @@ function validateParticipantName(participant_name, valid) {
 }
 
 function validatePetSurvey() {
-	var valid = true;
+    var valid = true;
     for(var i = 0; i < document.pet_survey.length; i++) 
     {
-		if(document.pet_survey[i].type == 'text')
-		{
-			if(document.pet_survey[i].value == 'Age' || document.pet_survey[i].value == 'Name')
-				document.pet_survey[i].value = ''
-		}
+        if(document.pet_survey[i].type == 'text')
+        {
+            if(document.pet_survey[i].value == 'Age' || document.pet_survey[i].value == 'Name')
+                document.pet_survey[i].value = ''
+        }
         document.pet_survey[i].className = document.pet_survey[i].className.replace(/(?:^|\s)highlight(?!\S)/ , '');
     }
 
     if(document.pet_survey.animal_name.value == "")
-	{
-		document.pet_survey.animal_name.className += " highlight"
-		valid = false;
-	}
+    {
+        document.pet_survey.animal_name.className += " highlight"
+        valid = false;
+    }
 
-	if(valid) {
+    if(valid) {
         validateParticipantName(document.pet_survey.animal_name.value);
     }
-	else {
-		window.scrollTo(0, 0);
+    else {
+        window.scrollTo(0, 0);
     }
 
     document.pet_survey.petsubmit.disabled = false;
@@ -829,23 +828,23 @@ function verifyOptionalQuestions() {
     {
         document.optional_questions[i].className = document.optional_questions[i].className.replace(/(?:^|\s)highlight(?!\S)/ , '');
     }
-	
-	var valid = true;
-	
-	if(document.optional_questions.pregnant_due_date != null && !isValidDate(document.optional_questions.pregnant_due_date.value) && document.optional_questions.pregnant_due_date.value != "")
-	{
-		document.optional_questions.pregnant_due_date.className += " highlight"
-		valid = false;
-	}
+    
+    var valid = true;
+    
+    if(document.optional_questions.pregnant_due_date != null && !isValidDate(document.optional_questions.pregnant_due_date.value) && document.optional_questions.pregnant_due_date.value != "")
+    {
+        document.optional_questions.pregnant_due_date.className += " highlight"
+        valid = false;
+    }
 
-	if(document.optional_questions.diabetes_diagnose_date != null && !isValidDate(document.optional_questions.diabetes_diagnose_date.value) && document.optional_questions.diabetes_diagnose_date.value != "")
-	{
-		document.optional_questions.diabetes_diagnose_date.className += " highlight"
-		valid = false;
-	}
-	
-	if(valid)
-		$('#optional_questions').submit();
+    if(document.optional_questions.diabetes_diagnose_date != null && !isValidDate(document.optional_questions.diabetes_diagnose_date.value) && document.optional_questions.diabetes_diagnose_date.value != "")
+    {
+        document.optional_questions.diabetes_diagnose_date.className += " highlight"
+        valid = false;
+    }
+    
+    if(valid)
+        $('#optional_questions').submit();
 }
 
 /* from http://stackoverflow.com/questions/46155/validate-email-address-in-javascript */
@@ -930,57 +929,57 @@ function validateHhMm(inputField) {
     }
 
 function inToCm() {
-	var cur_cm = parseFloat(document.getElementById('height_cm').value)
-	var inches = parseFloat(document.getElementById('height_in').value)
-	var centimeters = inches * 2.54
-	
-	if(isNaN(cur_cm)) { /* update if there isn't a value */
-		if(!isNaN(inches))
-			document.getElementById('height_cm').value = centimeters.toFixed(0)
-	} else if(Math.abs(centimeters - cur_cm) > 1) { /* update if the value is reasonably changed */
-	    document.getElementById('height_cm').value = centimeters.toFixed(0)
-	} else {}
+    var cur_cm = parseFloat(document.getElementById('height_cm').value)
+    var inches = parseFloat(document.getElementById('height_in').value)
+    var centimeters = inches * 2.54
+    
+    if(isNaN(cur_cm)) { /* update if there isn't a value */
+        if(!isNaN(inches))
+            document.getElementById('height_cm').value = centimeters.toFixed(0)
+    } else if(Math.abs(centimeters - cur_cm) > 1) { /* update if the value is reasonably changed */
+        document.getElementById('height_cm').value = centimeters.toFixed(0)
+    } else {}
 }
 
 function cmToIn() {
-	var cur_in = parseFloat(document.getElementById('height_in').value)
-	var centimeters = parseFloat(document.getElementById('height_cm').value)
-	var inches = centimeters * 0.39
-	
-	if(isNaN(cur_in)) { /* update if there isn't a value */
-		if(!isNaN(centimeters))
-	    	document.getElementById('height_in').value = inches.toFixed(0)
-	} else if(Math.abs(inches - cur_in) > 2) { /* update if the value is reasonably changed */
-	    document.getElementById('height_in').value = inches.toFixed(0)
-	} else {}
+    var cur_in = parseFloat(document.getElementById('height_in').value)
+    var centimeters = parseFloat(document.getElementById('height_cm').value)
+    var inches = centimeters * 0.39
+    
+    if(isNaN(cur_in)) { /* update if there isn't a value */
+        if(!isNaN(centimeters))
+            document.getElementById('height_in').value = inches.toFixed(0)
+    } else if(Math.abs(inches - cur_in) > 2) { /* update if the value is reasonably changed */
+        document.getElementById('height_in').value = inches.toFixed(0)
+    } else {}
 }
 
 function lbsToKg() {
-	var cur_kg = parseFloat(document.getElementById('weight_kg').value)
-	var pounds = parseFloat(document.getElementById('weight_lbs').value)
-	var kg = pounds * 0.45
-	
-	if(isNaN(cur_kg)) { /* update if there isn't a value */
-		if(!isNaN(pounds))
-	    	document.getElementById('weight_kg').value = kg.toFixed(0)
-	} else if(Math.abs(kg - cur_kg) > 1) { /* update if the value is reasonably changed */
-	    document.getElementById('weight_kg').value = kg.toFixed(0)
-	} else {}
+    var cur_kg = parseFloat(document.getElementById('weight_kg').value)
+    var pounds = parseFloat(document.getElementById('weight_lbs').value)
+    var kg = pounds * 0.45
+    
+    if(isNaN(cur_kg)) { /* update if there isn't a value */
+        if(!isNaN(pounds))
+            document.getElementById('weight_kg').value = kg.toFixed(0)
+    } else if(Math.abs(kg - cur_kg) > 1) { /* update if the value is reasonably changed */
+        document.getElementById('weight_kg').value = kg.toFixed(0)
+    } else {}
 }
 
 function kgToLbs() {
-	var cur_lbs = parseFloat(document.getElementById('weight_lbs').value)
-	var kg = parseFloat(document.getElementById('weight_kg').value)
-	var pounds = kg * 2.20
-	
-	if(isNaN(cur_lbs)) { /* update if there isn't a value */
-		if(!isNaN(kg))
-	    	document.getElementById('weight_lbs').value = pounds.toFixed(0)
-	} else if(Math.abs(pounds - cur_lbs) > 3) { /* update if the value is reasonably changed */
-	    document.getElementById('weight_lbs').value = pounds.toFixed(0)
-	} else {}
+    var cur_lbs = parseFloat(document.getElementById('weight_lbs').value)
+    var kg = parseFloat(document.getElementById('weight_kg').value)
+    var pounds = kg * 2.20
+    
+    if(isNaN(cur_lbs)) { /* update if there isn't a value */
+        if(!isNaN(kg))
+            document.getElementById('weight_lbs').value = pounds.toFixed(0)
+    } else if(Math.abs(pounds - cur_lbs) > 3) { /* update if the value is reasonably changed */
+        document.getElementById('weight_lbs').value = pounds.toFixed(0)
+    } else {}
 }
 
 function reset(formID) {
-	document.getElementById(formID).reset();
+    document.getElementById(formID).reset();
 }
