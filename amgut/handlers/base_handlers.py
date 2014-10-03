@@ -1,6 +1,6 @@
 import logging
 
-from tornado.web import RequestHandler
+from tornado.web import RequestHandler, StaticFileHandler
 
 from amgut.util import AG_DATA_ACCESS
 from amgut import text_locale
@@ -49,3 +49,10 @@ class DBErrorHandler(BaseHandler):
             raise ValueError('DB Error not found: %s' % err)
         self.render("db_error.html", skid=self.current_user,
                     message=errors[err])
+
+class BaseStaticFileHandler(StaticFileHandler, BaseHandler):
+    def write_error(self, status_code, **kwargs):
+        if self.current_user:
+            self.render("404.html", skid=self.current_user)
+        else:
+            self.render("no_auth_404.html", loginerror="")
