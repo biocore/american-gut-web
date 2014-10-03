@@ -271,7 +271,7 @@ _FAQ = {
     'STEPS_TO_FOLLOW': '<a href="%(steps_vid)s">%(project_shorthand)s - Steps to Follow When Your Kit Arrives</a> from <a href="http://vimeo.com/user16100300">shelley schlender</a> on <a href="http://vimeo.com">Vimeo</a>.' % {'project_shorthand': AMGUT_CONFIG.project_shorthand, 'steps_vid': media_locale['STEPS_VIDEO']},
     'TAKES_SIX_MONTHS': "Does it really take up to four months to get my results?",
     'TAKES_SIX_MONTHS_ANS': "Yes. It takes about eight weeks for extractions, eight weeks for the remainder of the processing, and two weeks to do the actual sequencing. This is before any analysis and if everything goes as planned, with no delays - equipment down, run failures, reagents or other consumables back ordered. There are also added transit times for your sample to travel between the UK and the US. Things do sometimes go wrong, so we say up to four months, although we are working to improve these."
-    'WATCH_VIDEOS': "Watch these helpful videos about what to do once you've received your kit!",
+    'WATCH_VIDEOS': "Watch these helpful videos created by our colleagues at the American Gut about what to do once you've received your kit!",
     'WHAT_FORMS': "What are the forms you talk about on the sampling instructions?",
     'WHAT_FORMS_ANS': 'The instruction on the sampling instructions that requires you to "place your forms and the sample tube in preaddressed envelope" is leftover from a previous version of the sampling instructions. There are no forms for you to include inside the envelope with your sample. If you are shipping internationally, please visit the <a href="%(sitebase)s/international_shipping/">International Shipping Instructions</a></p>' % {'sitebase': media_locale['SITEBASE']},
     'WHEN_RESULTS_NON_FECAL': "I sent in a non-faecal sample and have not received any results, when should I expect results?",
@@ -658,7 +658,7 @@ _PORTAL = {
     'MAIL_TAB': "Mail Samples <br>to Us",
     'RESULTS_HEADER_1': "Sequencing &amp; Results",
     'RESULTS_READY_HEADER_1': "Your results are ready!",
-    'RESULTS_READY_TEXT_1': "One or more of the samples you submitted have been sequenced, and the results are now available online! We will be mailing hardcopies of these results shortly. Currently, we have only processed fecal samples, but we will be processing samples from other body sites soon.",
+    'RESULTS_READY_TEXT_1': "One or more of the samples you submitted have been sequenced, and the results are now available online! Currently, we have only processed fecal samples, but we will be processing samples from other body sites soon.",
     'RESULTS_READY_TEXT_2': 'To access your available results, hover over "Human Samples" in the menu on the left, hover over your name, then click on your sample to view your results, or click one of the links below. The following barcodes are ready:',
     'RESULTS_READY_TEXT_3': "You will be able to view your results here on this website once they are available.",
     'RESULTS_TEXT_1': 'Once you have added a <a href="#" onclick="selectTab(\'source\')">sample source, completed the relevant survey</a> (if applicable), <a href="#" onclick="selectTab(\'sample\')">taken</a> and <a href="#" onclick="selectTab(\'log\')">logged your samples</a> and you have <a href="#" onclick="selectTab(\'mail\')">mailed the samples back to us</a>, we will then perform sequencing and analysis on your samples.',
