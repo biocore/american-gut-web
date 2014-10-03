@@ -12,7 +12,6 @@ MESSAGE_TEMPLATE = """Contact: %s
         This participant is a child, the person filling out the survey for them
         needs to provide proof of consent. Email them for proof.
 
-        Juvenile age: %s
         Parent/Guardian 1: %s
         Parent/Guardian 2: %s
         Deceased: %s
@@ -59,7 +58,6 @@ class NewParticipantHandler(BaseHandler):
         if is_juvenile == 'on':
             # If they aren't already an exception, we need to verify them
             if not is_exception:
-                juvenile_age = self.get_argument("juvenile_age")
                 parent_1_name = self.get_argument("parent_1_name")
                 parent_2_name = self.get_argument("parent_2_name")
 
@@ -68,7 +66,7 @@ class NewParticipantHandler(BaseHandler):
                 subject = ("AGJUVENILE: %s (ag_login_id: %s) is a child"
                            % (participant_name, ag_login_id))
 
-                message = MESSAGE_TEMPLATE % (participant_name, juvenile_age,
+                message = MESSAGE_TEMPLATE % (participant_name,
                                               parent_1_name, parent_2_name,
                                               deceased_parent,
                                               self.current_user, kit_email)

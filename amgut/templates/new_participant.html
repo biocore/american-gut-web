@@ -127,9 +127,7 @@
                 <table>
                     <tr><td>{% raw tl['PARTICIPANT_NAME'] %}</td><td><input tabindex="2" type="text" name="participant_name" id="participant_name" onkeypress='validateText(event)'><div class="red right">*</div></td></tr>
                     <tr><td>{% raw tl['PARTICIPANT_EMAIL'] %}</td><td><input tabindex="3" type="text" name="participant_email" id="participant_email"  onkeypress='validateEmail(event)'><div class="red right">*</div></td></tr>
-                    <tr><td>{% raw tl['PARTICIPANT_AGE_CONFIRMATION'] %}</td><td><input type="checkbox" tabindex="4" name="is_juvenile" id="is_juvenile" class="is_juvenile" onclick="toggleConsent()"></td></tr>
-                    <tr><td></td><td><input type="radio" tabindex="5" name="juvenile_age" id="juvenile_age_less_than_7" value="under 7">&nbsp;&nbsp;{% raw tl['PARTICIPANT_IS_YOUNG'] %}</td></tr>
-                    <tr><td></td><td><input type="radio" tabindex="6" name="juvenile_age" id="juvenile_age_more_than_7" value="between 7 and 13">&nbsp;&nbsp;{% raw tl['PARTICIPANT_IS_YOUNG'] %}</td></tr>
+                    <tr><td>{% raw tl['PARTICIPANT_IS_YOUNG'] %}</td><td><input type="checkbox" tabindex="4" name="is_juvenile" id="is_juvenile" class="is_juvenile" onclick="toggleConsent()"></td></tr>
                     <tr><td>{% raw tl['PARTICIPANT_PARENT_1'] %}</td><td><input tabindex="7" type="text" name="parent_1_name" id="parent_1_name" onkeypress='validateText(event)'></td></tr>
                     <tr><td>{% raw tl['PARTICIPANT_PARENT_2'] %}</td><td><input tabindex="8" type="text" name="parent_2_name" id="parent_2_name" onkeypress='validateText(event)'></td></tr>
                     <tr><td>{% raw tl['PARTICIPANT_DECEASED_PARENTS'] %}</td><td><input  tabindex="9" type="checkbox" name="deceased_parent" id="deceased_parent" value="yes"></td></tr>

@@ -19,7 +19,7 @@ function validate_form() {
 
 $(document).ready(function() {
     $("div[id^=supp_]").hide();
-    $( "#PERSONAL_PROMPT_BIRTHDATE" ).datepicker();
+    $( "#PERSONAL_PROMPT_TODAYSDATE" ).datepicker();
     $( "#progressbar" ).progressbar({
       value: {{ progress }}
     });
@@ -44,6 +44,9 @@ tr:last-child {
 td {
     padding:5px;
     border-spacing: 5px 0;"
+}
+ul {
+    list-style-type: none;
 }
 </style>
 {% end %}
