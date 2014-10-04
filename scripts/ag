@@ -75,14 +75,15 @@ def make_test_db():
                          % AMGUT_CONFIG.database)
     # Create the database
     print("Creating database")
-    cur.execute('CREATE DATABASE %s' % AMGUT_CONFIG.database)
+    # cur.execute('CREATE DATABASE %s' % AMGUT_CONFIG.database)
+    cur.execute('CREATE DATABASE %s' % 'danielstestag')
     cur.close()
     conn.close()
 
     # Connect to the postgres server, but this time to the just created db
     conn = SQLConnectionHandler()
-    print("Creating schema")
-    conn.execute('CREATE SCHEMA ag')
+    #print("Creating schema")
+    #conn.execute('CREATE SCHEMA ag')
 
     print("Inserting procedures")
     procedures_dirpath = join(dirname(dirname(abspath(__file__))), "amgut",
@@ -135,30 +136,41 @@ def make_production_db():
     cur.close()
     conn.close()
 
-    # Connect to the postgres server, but this time to the just created db
-    conn = SQLConnectionHandler()
-    print("Creating schema")
-    conn.execute('CREATE SCHEMA ag')
+    # reconnect to the new database
+    conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
+                   host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
+                   database=AMGUT_CONFIG.database)
+    curr = conn.cursor()
+
+    # create the schema and set a search path
+    curr.execute('create schema ag')
+    curr.execute('set search_path to public, ag')
 
     print("Inserting procedures")
     procedures_dirpath = join(dirname(dirname(abspath(__file__))), "amgut",
                               "lib", "data_access", "procedures")
     for procedure_f in glob(join(procedures_dirpath, '*.sql')):
         with open(join(procedures_dirpath, procedure_f)) as f:
-            conn.execute(f.read())
+            curr.execute(f.read())
 
     print("Building SQL layout")
     with open(LAYOUT_FP) as f:
         # We have to skip the "create schema" line here
-        conn.execute('\n'.join(f.readlines()[1:]))
+        curr.execute('\n'.join(f.readlines()[1:]))
 
     with open(INITIALIZE_FP) as f:
-        conn.execute(f.read())
+        curr.execute(f.read())
 
     print('Granting privileges')
-    conn.execute('GRANT INSERT, UPDATE, DELETE, SELECT ON ALL TABLES IN SCHEMA'
-                 ' ag TO "ag-wwwuser";') # FIXME: THIS HAS TO BE CONFIGURABLE
-    conn.execute('GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA ag TO "ag-wwwuser";')
+
+    # create 
+    curr.execute('create user "ag_wwwuser"')
+    curr.execute('grant usage on schema public, ag to "ag_wwwuser"') 
+    curr.execute('grant connect on database %s to "ag_wwwuser"' % AMGUT_CONFIG.database) 
+    curr.execute('GRANT INSERT, UPDATE, DELETE, SELECT ON ALL TABLES IN SCHEMA'
+                 ' public, ag TO "ag_wwwuser";')
+    curr.execute('GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public, ag TO "ag_wwwuser";')
+    conn.commit()
     print('Privileges granted')
 
     print("Production environment successfully created")
