@@ -213,3 +213,7 @@ class Survey(object):
                                                 survey_question_id, response)
                             VALUES (%s, %s, %s)""",
                             without_fk_inserts)
+
+    #def get_survey(self, survey_id):
+    #    """Get a survey given a survey id"""
+    #    new_survey
