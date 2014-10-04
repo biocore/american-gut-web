@@ -23,6 +23,7 @@ r_server = Redis(host=AMGUT_CONFIG.redis_host,
 try:
     db_conn = SQLConnectionHandler()
 except:
+    # this SHOULD only trigger when the environment is being created...
     print "Can't get db_conn!"
     db_conn = None
 
