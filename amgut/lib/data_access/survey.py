@@ -9,6 +9,9 @@ from __future__ import division
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
 
+from wtforms import (SelectField, SelectMultipleField, widgets,
+                     TextAreaField)
+
 from amgut import AMGUT_CONFIG, db_conn
 
 
@@ -61,49 +64,93 @@ class Question(object):
                 self._survey_question_table),
                 [self.id])[0]
 
-        if current_response is None:
-            pass
-            # TODO: something
-
     @property
     def triggered_by(self):
-        # should return question_id: responses
+        """What other question-response combinations trigger this question
 
+        Returns
+        -------
+        dict
+            {other_question_id: [triggering responses to that question], ...}
+        """
         things = db_conn.execute_fetchone('''
             select exists(select * from survey_question_triggered_by
             where survey_question_id = %s)''', self.id)
 
-        raise NotImplementedError("We are about to do this (probably)...")
+        raise NotImplementedError("Coming soon")
+
+    @property
+    def interface_elements(self):
+        """Get WTForms interface elements for the question
+
+        Returns
+        -------
+        list
+            A list of the elements that represent the interface to the question
+        """
+        raise NotImplementedError("To be implemented by quesiton subtypes.")
 
 
 class QuestionSingle(Question):
+    """A question where there is one response
+    """
     def __init__(self, survey_question_id, current_response=None):
         super(QuestionSingle, self).__init__(survey_question_id,
                                              current_response)
-        # TODO: something
+
+    @property
+    def interface_elements(self):
+        """See superclass documentation
+        """
+        return [SelectField(
+            self.id, choices=list(enumerate(self.responses)),
+            coerce=lambda x: x)]
 
 
 class QuestionMultiple(Question):
+    """A question where there are multiple responses
+    """
     def __init__(self, survey_question_id, current_response=None):
         super(QuestionMultiple, self).__init__(survey_question_id,
                                                current_response)
-        # TODO: something
+    @property
+    def interface_elements(self):
+        """See superclass documentation
+        """
+        return [SelectMultipleField(
+            self.id, choices=list(enumerate(self.responses)),
+            widget=widgets.TableWidget(),
+            option_widget=widgets.CheckboxInput(),
+            coerce=lambda x: x)]
 
 
 class QuestionText(Question):
+    """A free-response question
+    """
     def __init__(self, survey_question_id, current_response=None):
         super(QuestionText, self).__init__(survey_question_id,
                                            current_response)
-        # TODO: something
+
+    @property
+    def interface_elements(self):
+        """See superclass documentation
+        """
+        return [TextAreaField(self.id)]
 
 
 class Group(object):
+    """Holds a logically connected group of questions
+
+    Parameters
+    ----------
+    ID : int
+        The ID in the database of the question group
+    """
     _group_table = 'survey_group'
     _group_questions_table = 'group_questions'
 
     def __init__(self, ID):
         self.id = ID
-        # TODO: probably this can be better
         qs = [Question(x[0]) for x in db_conn.execute_fetchall('''
             select gq.survey_question_id
             from {0} sg join {1} gq on sg.group_order = gq.survey_group
@@ -154,6 +201,13 @@ class Group(object):
 
 
 class Survey(object):
+    """Represents a whole survey
+
+    Parameters
+    ----------
+    ID : int
+        The ID of the survey in the database
+    """
     _surveys_table = 'surveys'
 
     def __init__(self, ID):

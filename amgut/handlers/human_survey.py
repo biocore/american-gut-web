@@ -2,9 +2,7 @@ import os
 import binascii
 from json import loads, dumps
 
-from wtforms import (Form, SelectField, SelectMultipleField, widgets,
-                     TextAreaField, TextField, DateField, RadioField,
-                     SelectField, IntegerField)
+from wtforms import Form
 from tornado.web import authenticated
 from future.utils import viewitems
 from natsort import natsorted
@@ -35,27 +33,14 @@ def make_human_survey_class(group):
     attrs = {}
     prompts = {}
     for question in group.questions:
-        responses = question.responses
-
         qid = '_'.join(group.american_name.split() + [str(question.id)])
 
-        if question.response_type == 'SINGLE':
-            field = SelectField(
-                qid, choices=list(enumerate(responses)),
-                coerce=lambda x:x)
-
-        elif question.response_type == 'MULTIPLE':
-            field = SelectMultipleField(
-                qid, choices=list(enumerate(responses)),
-                widget=widgets.TableWidget(),
-                option_widget=widgets.CheckboxInput(),
-                coerce=lambda x: x)
-
-        elif question.response_type == 'TEXT':
-            field = TextAreaField(qid)
-
         prompts[qid] = question.question
-        attrs[qid] = field
+
+        for i, element in enumerate(question.interface_elements):
+            element_id = '%s_%d' % (qid, i)
+            attrs[element_id] = question.iterface_elements
+
     attrs['prompts'] = prompts
     return type('HumanSurvey', (Form,), attrs)
 
