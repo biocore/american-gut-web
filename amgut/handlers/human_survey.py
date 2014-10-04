@@ -35,11 +35,11 @@ def make_human_survey_class(group):
     for question in group.questions:
         qid = '_'.join(group.american_name.split() + [str(question.id)])
 
-        prompts[qid] = question.question
 
         for i, element in enumerate(question.interface_elements):
             element_id = '%s_%d' % (qid, i)
             attrs[element_id] = element
+            prompts[element_id] = question.question
 
     attrs['prompts'] = prompts
     return type('HumanSurvey', (Form,), attrs)
@@ -100,8 +100,8 @@ class HumanSurveyHandler(BaseHandler):
 
             # only get the cookie if you complete the survey
             login_id = AG_DATA_ACCESS.get_user_for_kit(self.current_user)
-            print human_survey_id
-            print login_id
+            print human_survey_id, type(human_survey_id)
+            print login_id, type(login_id)
             self.clear_cookie('human_survey_id')
             self.set_secure_cookie('completed_survey_id', human_survey_id)
             store_survey(primary_human_survey, login_id, human_survey_id)

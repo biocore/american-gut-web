@@ -98,7 +98,7 @@ class PartitionResponse(object):
                       'TEXT': self.without_fk}
 
     def _get_survey_question_id(self, key):
-        return int(key.split('_')[-1])
+        return int(key.split('_')[-2])
 
     def __setitem__(self, key, value):
         qid = self._get_survey_question_id(key)

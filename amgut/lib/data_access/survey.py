@@ -255,7 +255,8 @@ class Survey(object):
             of the data to insert
         """
         with db_conn.get_postgres_cursor() as cur:
-            cur.execute("INSERT INTO ag_login_surveys (%s, %s)" %
+            cur.execute("""INSERT INTO ag_login_surveys
+                            (ag_login_id, survey_id) VALUES ('%s', '%s')""" %
                         (login_id, survey_id))
             cur.executemany("""
                 INSERT INTO survey_answers (survey_id, survey_question_id,
