@@ -5,14 +5,14 @@
 #
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
-from json import loads
+from json import loads, dumps
 from os.path import abspath, join, dirname
 from functools import partial
 
 from future.utils import viewitems
 from psycopg2 import connect
 
-from amgut import r_server, media_locale, text_locale
+from amgut import r_server, media_locale, text_locale, db_conn
 from amgut.lib.config_manager import AMGUT_CONFIG
 
 get_db_file = partial(join, join(dirname(dirname(abspath(__file__))), 'db'))
@@ -87,52 +87,79 @@ def ag_test_checker():
     return class_modifier
 
 
-def store_survey(human_survey_id):
-    """Store the survey"""
-    class response_director(object):
-        def __init__(self):
-            self._single = {}
-            self._multiple = {}
-            self._text = {}
+class PartitionResponse(object):
+    def __init__(self, question_types):
+        self.with_fk = {}
+        self.without_fk = {}
+        self._question_types = question_types
 
-            self._setters = {'SINGLE': self._single_store,
-                             'MULTIPLE': self._multiple_store,
-                             'TEXT': self._text_store}
+        self._dmap = {'SINGLE': self.with_fk,
+                      'MULTIPLE': self.with_fk,
+                      'TEXT': self.without_fk}
 
-        def __setitem__(self, key, value):
-            self._setters[question_type[key]](key, value)
+    def _get_survey_question_id(self, key):
+        return int(key.split('_')[-1])
 
-        def _single_store(self, key, value):
-            self._single[key] = value
+    def __setitem__(self, key, value):
+        qid = self._get_survey_question_id(key)
+        d = self._dmap[self._question_types[qid]]
+        self._store(d, qid, value)
 
-        def _multiple_store(self, key, value):
-            self._multiple[key] = value
+    def _store(self, d, qid, value):
+        d[qid] = value
 
-        def _text_store(self, key, value):
-            self._text[key] = value
 
-    data = r_server.hgetall(human_survey_id)
-    to_store = response_director()
+def store_survey(survey, login_id, survey_id):
+    """Store the survey
+
+    Parameters
+    ----------
+    survey : amgut.lib.data_access.survey.Survey
+        The corresponding survey
+    login_id : uuid
+        The corresponding login id
+    survey_id : str
+        The corresponding survey ID to retreive from redis
+
+    """
+    data = r_server.hgetall(survey_id)
+    to_store = PartitionResponse(survey.question_types)
 
     for page in data:
         page_data = loads(data[page])
         questions = page_data['questions']
-        supplemental = page_data['supplemental']
+        #supplemental = page_data['supplemental']
 
         for quest, resps in viewitems(questions):
-            resps = set([int(i) for i in resps])
+            if resps is None:
+                resps = {-1} # unspecified
+            else:
+                resps = set([int(i) for i in resps])
 
-            if quest in supplemental_map:
-                indices, supp_key = supplemental_map[quest]
-
-                if set(indices).intersection(resps):
-                    to_store[supp_key] = supplemental[supp_key]
-                else:
-                    to_store[supp_key] = None
+            #if quest in supplemental_map:
+            #    indices, supp_key = supplemental_map[quest]
+#
+ #               if set(indices).intersection(resps):
+  #                  to_store[supp_key] = supplemental[supp_key]
+   #             else:
+    #                to_store[supp_key] = None
 
             to_store[quest] = resps
 
-    # TODO: serialize and dump into the database
+
+    with_fk_inserts = []
+    for qid, indices in viewitems(to_store.with_fk):
+        question = survey.questions[qid]
+
+        for idx in indices:
+            resp = question.responses[idx] if idx != -1 else survey.unspecified
+            with_fk_inserts.append((survey_id, qid, resp))
+
+    without_fk_inserts = [(survey_id, qid, dumps(v))
+                          for qid, v in viewitems(to_store.without_fk)]
+
+    survey.store_survey(login_id, survey_id, with_fk_inserts,
+                        without_fk_inserts)
 
 
 def survey_vioscreen(survey_id):
