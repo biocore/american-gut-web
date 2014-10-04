@@ -72,7 +72,9 @@ class HumanSurveyHandler(BaseHandler):
             form_data = surveys[page_number]()
 
             form_data.process(data=self.request.arguments)
+            # TODO: collect supplemental responses
 
+            # TODO: store supplemental data in data
             data = {'questions': form_data.data}
 
             r_server.hset(human_survey_id, page_number, dumps(data))
@@ -97,8 +99,11 @@ class HumanSurveyHandler(BaseHandler):
             # TODO: store in the database a connection between human_survey_id and this specific participant. THIS IS NOT CURRENTLY STUBBED OUT IN STORE_SURVEY
 
             # only get the cookie if you complete the survey
+            login_id = AG_DATA_ACCESS.get_user_for_kit(self.current_user)
+            print human_survey_id
+            print login_id
             self.clear_cookie('human_survey_id')
             self.set_secure_cookie('completed_survey_id', human_survey_id)
-            store_survey(human_survey_id)
+            store_survey(primary_human_survey, login_id, human_survey_id)
             self.redirect(media_locale['SITEBASE'] +
                           '/authed/human_survey_completed/')
