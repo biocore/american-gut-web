@@ -511,7 +511,7 @@
 			<fk name="fk_survey_answers_other" to_schema="ag" to_table="ag_login_surveys" >
 				<fk_column name="survey_id" pk="survey_id" />
 			</fk>
-			<fk name="fk_survey_answers_other_0" to_schema="ag" to_table="survey_question_response" >
+			<fk name="fk_survey_answers_other_0" to_schema="ag" to_table="survey_question" >
 				<fk_column name="survey_question_id" pk="survey_question_id" />
 			</fk>
 		</table>
@@ -562,9 +562,6 @@
 			<index name="idx_survey_question_response" unique="UNIQUE" >
 				<column name="survey_question_id" />
 				<column name="display_index" />
-			</index>
-			<index name="pk_survey_question_response" unique="UNIQUE" >
-				<column name="survey_question_id" />
 			</index>
 			<fk name="fk_question_response" to_schema="ag" to_table="survey_response" >
 				<fk_column name="response" pk="american" />
@@ -21278,8 +21275,8 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="survey_group" color="a8c4ef" x="75" y="1590" />
 		<entity schema="ag" name="ag_human_survey" color="c6d9f7" x="1365" y="645" />
 		<entity schema="ag" name="ag_login_surveys" color="ffcccc" x="1125" y="1245" />
-		<entity schema="ag" name="survey_question_response" color="ffcccc" x="720" y="1755" />
 		<entity schema="ag" name="survey_answers" color="a8c4ef" x="1215" y="1365" />
+		<entity schema="ag" name="survey_question_response" color="ffcccc" x="720" y="1755" />
 		<entity schema="ag" name="survey_answers_other" color="a8c4ef" x="1035" y="1365" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by : 

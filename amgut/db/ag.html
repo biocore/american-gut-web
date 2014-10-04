@@ -312,17 +312,7 @@
 	ag_login_surveys references ag_login ( ag_login_id )</title>
 </path>
 <text x='1237' y='1270' transform='rotate(0 1237,1270)' title='Foreign Key fk_ag_login_surveys
-	ag_login_surveys references ag_login ( ag_login_id )' style='fill:#a1a0a0;'>ag_login_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 705 1800 L 697,1800 Q 690,1800 690,1807 L 690,1882 Q 690,1890 697,1890 L 705,1890' >
-	<title>Foreign Key fk_question_response
-	survey_question_response references survey_response ( response -> american )</title>
-</path>
-<text x='657' y='1795' transform='rotate(0 657,1795)' title='Foreign Key fk_question_response
-	survey_question_response references survey_response ( response -> american )' style='fill:#a1a0a0;'>response</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 705 1785 L 652,1785 Q 645,1785 645,1777 L 645,1687 Q 645,1680 637,1680 L 630,1680' >
-	<title>Foreign Key fk_question_response_0
-	survey_question_response references survey_question ( survey_question_id )</title>
-</path>
-<text x='602' y='1780' transform='rotate(0 602,1780)' title='Foreign Key fk_question_response_0
-	survey_question_response references survey_question ( survey_question_id )' style='fill:#a1a0a0;'>survey_question_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1200 1425 L 1192,1425 Q 1185,1425 1185,1432 L 1185,1702 Q 1185,1710 1177,1710 L 907,1710 Q 900,1710 900,1717 L 900,1725' >
+	ag_login_surveys references ag_login ( ag_login_id )' style='fill:#a1a0a0;'>ag_login_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1200 1425 L 1192,1425 Q 1185,1425 1185,1432 L 1185,1702 Q 1185,1710 1177,1710 L 907,1710 Q 900,1710 900,1717 L 900,1725' >
 	<title>Foreign Key fk_survey_answers
 	survey_answers references survey_question_response ( survey_question_id, response )</title>
 </path>
@@ -332,17 +322,27 @@
 	survey_answers references ag_login_surveys ( survey_id )</title>
 </path>
 <text x='1150' y='1390' transform='rotate(0 1150,1390)' title='Foreign Key fk_survey_answers_0
-	survey_answers references ag_login_surveys ( survey_id )' style='fill:#a1a0a0;'>survey_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 1020 1395 L 1012,1395 Q 1005,1395 1005,1387 L 1005,1297 Q 1005,1290 1012,1290 L 1110,1290' >
+	survey_answers references ag_login_surveys ( survey_id )' style='fill:#a1a0a0;'>survey_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 705 1800 L 697,1800 Q 690,1800 690,1807 L 690,1882 Q 690,1890 697,1890 L 705,1890' >
+	<title>Foreign Key fk_question_response
+	survey_question_response references survey_response ( response -> american )</title>
+</path>
+<text x='657' y='1795' transform='rotate(0 657,1795)' title='Foreign Key fk_question_response
+	survey_question_response references survey_response ( response -> american )' style='fill:#a1a0a0;'>response</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 705 1785 L 652,1785 Q 645,1785 645,1777 L 645,1687 Q 645,1680 637,1680 L 630,1680' >
+	<title>Foreign Key fk_question_response_0
+	survey_question_response references survey_question ( survey_question_id )</title>
+</path>
+<text x='602' y='1780' transform='rotate(0 602,1780)' title='Foreign Key fk_question_response_0
+	survey_question_response references survey_question ( survey_question_id )' style='fill:#a1a0a0;'>survey_question_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 1020 1395 L 1012,1395 Q 1005,1395 1005,1387 L 1005,1297 Q 1005,1290 1012,1290 L 1110,1290' >
 	<title>Foreign Key fk_survey_answers_other
 	survey_answers_other references ag_login_surveys ( survey_id )</title>
 </path>
 <text x='970' y='1390' transform='rotate(0 970,1390)' title='Foreign Key fk_survey_answers_other
-	survey_answers_other references ag_login_surveys ( survey_id )' style='fill:#a1a0a0;'>survey_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 1020 1410 L 967,1410 Q 960,1410 960,1417 L 960,1777 Q 960,1785 952,1785 L 885,1785' >
+	survey_answers_other references ag_login_surveys ( survey_id )' style='fill:#a1a0a0;'>survey_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1020 1410 L 967,1410 Q 960,1410 960,1417 L 960,1612 Q 960,1620 952,1620 L 607,1620 Q 600,1620 600,1627 L 600,1650' >
 	<title>Foreign Key fk_survey_answers_other_0
-	survey_answers_other references survey_question_response ( survey_question_id )</title>
+	survey_answers_other references survey_question ( survey_question_id )</title>
 </path>
 <text x='917' y='1405' transform='rotate(0 917,1405)' title='Foreign Key fk_survey_answers_other_0
-	survey_answers_other references survey_question_response ( survey_question_id )' style='fill:#a1a0a0;'>survey_question_id</text><!-- ============= Table 'ag_handout_kits' ============= -->
+	survey_answers_other references survey_question ( survey_question_id )' style='fill:#a1a0a0;'>survey_question_id</text><!-- ============= Table 'ag_handout_kits' ============= -->
 <rect class='table' x='210' y='503' width='150' height='150' rx='7' ry='7' />
 <path d='M 210.50 529.50 L 210.50 510.50 Q 210.50 503.50 217.50 503.50 L 352.50 503.50 Q 359.50 503.50 359.50 510.50 L 359.50 529.50 L210.50 529.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
 <a xlink:href='#ag_handout_kits'><text x='240' y='517' class='tableTitle'>ag_handout_kits</text><title>Table ag.ag_handout_kits</title></a>
@@ -653,7 +653,9 @@ The unique question ID</title></a>
 <a xlink:href='#survey_question_id'><use id='ref' x='573' y='1781' xlink:href='#ref'/><title>Referred by group_questions ( survey_question_id ) 
 Referred by survey_question_response ( survey_question_id ) 
 Referred by survey_question_response_type ( survey_question_id ) 
-Referred by survey_question_triggered_by ( survey_question_id ) </title></a>
+Referred by survey_question_triggered_by ( survey_question_id ) 
+Referred by survey_answers_other ( survey_question_id ) 
+Referred by survey_answers_other ( survey_question_id ) </title></a>
   <a xlink:href='#american'><text x='468' y='1807'>american</text><title>american varchar
 The american english version of the question</title></a>
   <a xlink:href='#british'><text x='468' y='1822'>british</text><title>british varchar
@@ -882,29 +884,6 @@ Referred by survey_answers ( survey_id )
 Referred by survey_answers_other ( survey_id ) 
 Referred by survey_answers_other ( survey_id ) </title></a>
 
-<!-- ============= Table 'survey_question_response' ============= -->
-<rect class='table' x='720' y='1748' width='165' height='90' rx='7' ry='7' />
-<path d='M 720.50 1774.50 L 720.50 1755.50 Q 720.50 1748.50 727.50 1748.50 L 877.50 1748.50 Q 884.50 1748.50 884.50 1755.50 L 884.50 1774.50 L720.50 1774.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
-<a xlink:href='#survey_question_response'><text x='730' y='1762' class='tableTitle'>survey_question_response</text><title>Table ag.survey_question_response
-Maps questions to responses</title></a>
-  <use id='nn' x='722' y='1782' xlink:href='#nn'/><a xlink:href='#survey_question_id'><use id='pk' x='722' y='1781' xlink:href='#pk'/><title>Primary Key  ( survey_question_id, response ) Unique Index  ( survey_question_id, display_index ) Unique Index  ( survey_question_id ) </title></a>
-<a xlink:href='#survey_question_id'><text x='738' y='1792'>survey_question_id</text><title>survey_question_id bigint not null</title></a>
-<a xlink:href='#survey_question_id'><use id='fk' x='873' y='1781' xlink:href='#fk'/><title>References survey_question ( survey_question_id ) 
-Referred by survey_question_triggered_by ( trigger_question -> survey_question_id, trigger_response -> response ) 
-Referred by survey_answers ( survey_question_id, response ) 
-Referred by survey_answers ( survey_question_id, response ) 
-Referred by survey_answers_other ( survey_question_id ) 
-Referred by survey_answers_other ( survey_question_id ) </title></a>
-  <use id='nn' x='722' y='1797' xlink:href='#nn'/><a xlink:href='#response'><use id='pk' x='722' y='1796' xlink:href='#pk'/><title>Primary Key  ( survey_question_id, response ) </title></a>
-<a xlink:href='#response'><text x='738' y='1807'>response</text><title>response varchar not null</title></a>
-<a xlink:href='#response'><use id='fk' x='873' y='1796' xlink:href='#fk'/><title>References survey_response ( response -> american ) 
-Referred by survey_question_triggered_by ( trigger_question -> survey_question_id, trigger_response -> response ) 
-Referred by survey_answers ( survey_question_id, response ) 
-Referred by survey_answers ( survey_question_id, response ) </title></a>
-  <a xlink:href='#display_index'><use id='unq' x='722' y='1811' xlink:href='#unq'/><title>Unique Index  ( survey_question_id, display_index ) </title></a>
-<a xlink:href='#display_index'><text x='738' y='1822'>display_index</text><title>display_index serial
-The display order of this response</title></a>
-
 <!-- ============= Table 'survey_answers' ============= -->
 <rect class='table' x='1215' y='1358' width='135' height='90' rx='7' ry='7' />
 <path d='M 1215.50 1384.50 L 1215.50 1365.50 Q 1215.50 1358.50 1222.50 1358.50 L 1342.50 1358.50 Q 1349.50 1358.50 1349.50 1365.50 L 1349.50 1384.50 L1215.50 1384.50 ' style='fill:url(#tableHeaderGradient5); stroke:none;' />
@@ -924,6 +903,28 @@ The question being answered</title></a>
 The answer the question being asked</title></a>
 <a xlink:href='#response'><use id='fk' x='1338' y='1421' xlink:href='#fk'/><title>References survey_question_response ( survey_question_id, response ) </title></a>
 
+<!-- ============= Table 'survey_question_response' ============= -->
+<rect class='table' x='720' y='1748' width='165' height='90' rx='7' ry='7' />
+<path d='M 720.50 1774.50 L 720.50 1755.50 Q 720.50 1748.50 727.50 1748.50 L 877.50 1748.50 Q 884.50 1748.50 884.50 1755.50 L 884.50 1774.50 L720.50 1774.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
+<a xlink:href='#survey_question_response'><text x='730' y='1762' class='tableTitle'>survey_question_response</text><title>Table ag.survey_question_response
+Maps questions to responses</title></a>
+  <use id='nn' x='722' y='1782' xlink:href='#nn'/><a xlink:href='#survey_question_id'><use id='pk' x='722' y='1781' xlink:href='#pk'/><title>Primary Key  ( survey_question_id, response ) Unique Index  ( survey_question_id, display_index ) </title></a>
+<a xlink:href='#survey_question_id'><text x='738' y='1792'>survey_question_id</text><title>survey_question_id bigint not null</title></a>
+<a xlink:href='#survey_question_id'><use id='fk' x='873' y='1781' xlink:href='#fk'/><title>References survey_question ( survey_question_id ) 
+Referred by survey_question_triggered_by ( trigger_question -> survey_question_id, trigger_response -> response ) 
+Referred by survey_answers ( survey_question_id, response ) 
+Referred by survey_answers ( survey_question_id, response ) 
+Referred by survey_answers_other ( survey_question_id ) </title></a>
+  <use id='nn' x='722' y='1797' xlink:href='#nn'/><a xlink:href='#response'><use id='pk' x='722' y='1796' xlink:href='#pk'/><title>Primary Key  ( survey_question_id, response ) </title></a>
+<a xlink:href='#response'><text x='738' y='1807'>response</text><title>response varchar not null</title></a>
+<a xlink:href='#response'><use id='fk' x='873' y='1796' xlink:href='#fk'/><title>References survey_response ( response -> american ) 
+Referred by survey_question_triggered_by ( trigger_question -> survey_question_id, trigger_response -> response ) 
+Referred by survey_answers ( survey_question_id, response ) 
+Referred by survey_answers ( survey_question_id, response ) </title></a>
+  <a xlink:href='#display_index'><use id='unq' x='722' y='1811' xlink:href='#unq'/><title>Unique Index  ( survey_question_id, display_index ) </title></a>
+<a xlink:href='#display_index'><text x='738' y='1822'>display_index</text><title>display_index serial
+The display order of this response</title></a>
+
 <!-- ============= Table 'survey_answers_other' ============= -->
 <rect class='table' x='1035' y='1358' width='135' height='90' rx='7' ry='7' />
 <path d='M 1035.50 1384.50 L 1035.50 1365.50 Q 1035.50 1358.50 1042.50 1358.50 L 1162.50 1358.50 Q 1169.50 1358.50 1169.50 1365.50 L 1169.50 1384.50 L1035.50 1384.50 ' style='fill:url(#tableHeaderGradient5); stroke:none;' />
@@ -934,7 +935,7 @@ Survey answers for which there are no corresponding foreign keys</title></a>
 <a xlink:href='#survey_id'><use id='fk' x='1158' y='1391' xlink:href='#fk'/><title>References ag_login_surveys ( survey_id ) </title></a>
   <use id='nn' x='1037' y='1407' xlink:href='#nn'/><a xlink:href='#survey_question_id'><use id='pk' x='1037' y='1406' xlink:href='#pk'/><title>Primary Key  ( survey_id, survey_question_id ) Index  ( survey_question_id ) </title></a>
 <a xlink:href='#survey_question_id'><text x='1053' y='1417'>survey_question_id</text><title>survey_question_id bigint not null</title></a>
-<a xlink:href='#survey_question_id'><use id='fk' x='1158' y='1406' xlink:href='#fk'/><title>References survey_question_response ( survey_question_id ) </title></a>
+<a xlink:href='#survey_question_id'><use id='fk' x='1158' y='1406' xlink:href='#fk'/><title>References survey_question ( survey_question_id ) </title></a>
   <use id='nn' x='1037' y='1422' xlink:href='#nn'/><a xlink:href='#response'><text x='1053' y='1432'>response</text><title>response varchar not null</title></a>
 
 </g></svg>
@@ -2924,55 +2925,6 @@ Survey answers for which there are no corresponding foreign keys</title></a>
 <br/><br/>
 <table id='dbs' >
 <thead>
-<tr><th colspan='3'><a name='survey_question_response'>survey_question_response</a></th></tr>
-<tr><td colspan='3'>Maps questions to responses </td></tr>
-</thead>
-<tbody>
-	<tr>
-		<td><a name='survey_question_id'>survey&#095;question&#095;id</a></td>
-		<td width='40%'> bigint  NOT NULL  </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='response'>response</a></td>
-		<td width='40%'> varchar  NOT NULL  </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='display_index'>display&#095;index</a></td>
-		<td width='40%'> serial   </td>
-		<td width='99%'> The display order of this response </td>
-	</tr>
-<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
-	<tr>		<td>pk&#095;question&#095;response primary key</td>
-		<td> ON survey&#095;question&#095;id&#044; response</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;survey&#095;question&#095;response unique</td>
-		<td> ON survey&#095;question&#095;id&#044; display&#095;index</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>pk&#095;survey&#095;question&#095;response unique</td>
-		<td> ON survey&#095;question&#095;id</td>
-		<td>  </td>
-	</tr>
-<tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
-	<tr>
-		<td>fk_question_response</td>
-		<td > ( response ) ref <a href='#survey&#095;response'>survey&#095;response</a> (american) </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>fk_question_response_0</td>
-		<td > ( survey&#095;question&#095;id ) ref <a href='#survey&#095;question'>survey&#095;question</a> (survey&#095;question&#095;id) </td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table id='dbs' >
-<thead>
 <tr><th colspan='3'><a name='survey_answers'>survey_answers</a></th></tr>
 <tr><td colspan='3'>Stores answers to questions of type SINGLE and MULTIPLE </td></tr>
 </thead>
@@ -3022,6 +2974,51 @@ Survey answers for which there are no corresponding foreign keys</title></a>
 <br/><br/>
 <table id='dbs' >
 <thead>
+<tr><th colspan='3'><a name='survey_question_response'>survey_question_response</a></th></tr>
+<tr><td colspan='3'>Maps questions to responses </td></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='survey_question_id'>survey&#095;question&#095;id</a></td>
+		<td width='40%'> bigint  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='response'>response</a></td>
+		<td width='40%'> varchar  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='display_index'>display&#095;index</a></td>
+		<td width='40%'> serial   </td>
+		<td width='99%'> The display order of this response </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
+	<tr>		<td>pk&#095;question&#095;response primary key</td>
+		<td> ON survey&#095;question&#095;id&#044; response</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;survey&#095;question&#095;response unique</td>
+		<td> ON survey&#095;question&#095;id&#044; display&#095;index</td>
+		<td>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
+	<tr>
+		<td>fk_question_response</td>
+		<td > ( response ) ref <a href='#survey&#095;response'>survey&#095;response</a> (american) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>fk_question_response_0</td>
+		<td > ( survey&#095;question&#095;id ) ref <a href='#survey&#095;question'>survey&#095;question</a> (survey&#095;question&#095;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table id='dbs' >
+<thead>
 <tr><th colspan='3'><a name='survey_answers_other'>survey_answers_other</a></th></tr>
 <tr><td colspan='3'>Survey answers for which there are no corresponding foreign keys </td></tr>
 </thead>
@@ -3062,7 +3059,7 @@ Survey answers for which there are no corresponding foreign keys</title></a>
 	</tr>
 	<tr>
 		<td>fk_survey_answers_other_0</td>
-		<td > ( survey&#095;question&#095;id ) ref <a href='#survey&#095;question&#095;response'>survey&#095;question&#095;response</a> (survey&#095;question&#095;id) </td>
+		<td > ( survey&#095;question&#095;id ) ref <a href='#survey&#095;question'>survey&#095;question</a> (survey&#095;question&#095;id) </td>
 		<td>  </td>
 	</tr>
 </tbody>

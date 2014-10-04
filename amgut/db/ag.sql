@@ -442,13 +442,27 @@ CREATE INDEX idx_human_survey_group_question ON ag.group_questions ( survey_grou
 
 CREATE INDEX idx_human_survey_group_question_0 ON ag.group_questions ( survey_question_id );
 
+CREATE TABLE ag.survey_answers_other ( 
+	survey_id            varchar  NOT NULL,
+	survey_question_id   bigint  NOT NULL,
+	response             varchar  NOT NULL,
+	CONSTRAINT pk_survey_answers_other PRIMARY KEY ( survey_id, survey_question_id ),
+	CONSTRAINT fk_survey_answers_other FOREIGN KEY ( survey_id ) REFERENCES ag.ag_login_surveys( survey_id )    ,
+	CONSTRAINT fk_survey_answers_other_0 FOREIGN KEY ( survey_question_id ) REFERENCES ag.survey_question( survey_question_id )    
+ );
+
+CREATE INDEX idx_survey_answers_other ON ag.survey_answers_other ( survey_id );
+
+CREATE INDEX idx_survey_answers_other_0 ON ag.survey_answers_other ( survey_question_id );
+
+COMMENT ON TABLE ag.survey_answers_other IS 'Survey answers for which there are no corresponding foreign keys';
+
 CREATE TABLE ag.survey_question_response ( 
 	survey_question_id   bigint  NOT NULL,
 	response             varchar  NOT NULL,
 	display_index        serial  ,
 	CONSTRAINT pk_question_response PRIMARY KEY ( survey_question_id, response ),
 	CONSTRAINT idx_survey_question_response UNIQUE ( survey_question_id, display_index ) ,
-	CONSTRAINT pk_survey_question_response UNIQUE ( survey_question_id ) ,
 	CONSTRAINT fk_question_response FOREIGN KEY ( response ) REFERENCES ag.survey_response( american )    ,
 	CONSTRAINT fk_question_response_0 FOREIGN KEY ( survey_question_id ) REFERENCES ag.survey_question( survey_question_id )    
  );
@@ -514,19 +528,4 @@ COMMENT ON COLUMN ag.survey_answers.survey_id IS 'The unique identifier for the 
 COMMENT ON COLUMN ag.survey_answers.survey_question_id IS 'The question being answered';
 
 COMMENT ON COLUMN ag.survey_answers.response IS 'The answer the question being asked';
-
-CREATE TABLE ag.survey_answers_other ( 
-	survey_id            varchar  NOT NULL,
-	survey_question_id   bigint  NOT NULL,
-	response             varchar  NOT NULL,
-	CONSTRAINT pk_survey_answers_other PRIMARY KEY ( survey_id, survey_question_id ),
-	CONSTRAINT fk_survey_answers_other FOREIGN KEY ( survey_id ) REFERENCES ag.ag_login_surveys( survey_id )    ,
-	CONSTRAINT fk_survey_answers_other_0 FOREIGN KEY ( survey_question_id ) REFERENCES ag.survey_question_response( survey_question_id )    
- );
-
-CREATE INDEX idx_survey_answers_other ON ag.survey_answers_other ( survey_id );
-
-CREATE INDEX idx_survey_answers_other_0 ON ag.survey_answers_other ( survey_question_id );
-
-COMMENT ON TABLE ag.survey_answers_other IS 'Survey answers for which there are no corresponding foreign keys';
 

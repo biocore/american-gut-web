@@ -172,11 +172,8 @@ def _make_settings_table():
     args = [str(setting[1]) for setting in settings]
 
     with conn.get_postgres_cursor() as cur:
-        print cur.mogrify(sql, args)
         cur.execute("create table settings ({})".format(', '.join(columns)))
         cur.execute(sql, args)
-
-    conn._connection.commit()
 
 
 def _populate_test_db():
