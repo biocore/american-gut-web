@@ -88,7 +88,7 @@ class HumanSurveyHandler(BaseHandler):
 
             r_server.hset(human_survey_id, page_number, dumps(data))
 
-        progress = int(100.0*(page_number+2)/(len(group_order) + 1))
+        progress = int(100.0*(page_number+2)/(len(primary_human_survey.groups) + 1))
 
         # if this is not the last page, render the next page
         if next_page_number < len(surveys):
@@ -97,7 +97,7 @@ class HumanSurveyHandler(BaseHandler):
             the_form = surveys[next_page_number]()
             supp = {}
 
-            title = tl[group_order[next_page_number]+'_TITLE']
+            title = 'NO_TITLE'
 
             self.render('human_survey.html', the_form=the_form,
                         skid=self.current_user, TITLE=title,

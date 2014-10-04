@@ -53,6 +53,14 @@ class Question(object):
                 self._response_type_table),
             [self.id])[0]
 
+        # TODO: columns should reflect LOCALE
+        self.question = db_conn.execute_fetchone('''
+            select american
+            from {0}
+            where survey_question_id = %s'''.format(
+                self._survey_question_table),
+                [self.id])
+
         if current_response is None:
             pass
             # TODO: something

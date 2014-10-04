@@ -67,17 +67,17 @@ handler #}
             {# set kwargs["onchange"] = "toggle_div('" + supp_div_id + "', '" + form_item.id + "', " + repr(list(supplemental_map[form_item.id][0])) + ");" #}
         {# end #}
         <tr align="left">
-            <td width="50%" class="tdmainform">{% raw tl[form_item.id] %}</td>
+            <td width="50%" class="tdmainform">{% raw form_item.id %}</td>
             <td>{% raw form_item(**kwargs) %}</td>
         </tr>
         {# if form_item.id in supplemental_map #}
         <tr>
             <td colspan="2">
-                <div id="{{ supp_div_id }}">
+                {# < div id="{{ supp_div_id }}"> #}
                     {# set supp_key = supplemental_map[form_item.id][-1] #}
                     {# raw tl[supp_key] #}
                     {# raw supplementals[supp_key]() #}
-                </div>
+                {# </div> #}
             </td>
         </tr>
         {# end #}
