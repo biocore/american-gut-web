@@ -235,16 +235,14 @@ class Survey(object):
                 _LOCALE_COLUMN,
                 self._survey_answer_table))[0]
 
-    def store_survey(self, login_id, survey_id, with_fk_inserts,
+    def store_survey(self, consent_details, with_fk_inserts,
                      without_fk_inserts):
         """Store a survey
 
         Parameters
         ----------
-        login_id : uuid
-            The corresponding login id
-        survey_id : str
-            The corresponding survey id
+        consent_details : dict
+            Participant consent details
         with_fk_inserts : list
             [(str, int, str)] where str is the survey_id, int is a
             survey_question.survey_question_id and str is a
@@ -255,9 +253,16 @@ class Survey(object):
             of the data to insert
         """
         with db_conn.get_postgres_cursor() as cur:
-            cur.execute("""INSERT INTO ag_login_surveys
-                            (ag_login_id, survey_id) VALUES ('%s', '%s')""" %
-                        (login_id, survey_id))
+            cur.execute("""
+                INSERT INTO ag_login_surveys
+                    (ag_login_id, survey_id, participant_name)
+                VALUES (%s, %s %s)""", consent_details['login_id'],
+                                       consent_details['survey_id'],
+                                       consent_details['participant_name'])
+            cur.execute("""
+                INSERT INTO ag_consent
+                    (""")
+
             cur.executemany("""
                 INSERT INTO survey_answers (survey_id, survey_question_id,
                                             response)
