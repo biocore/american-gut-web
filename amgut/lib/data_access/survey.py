@@ -53,13 +53,13 @@ class Question(object):
                 self._response_type_table),
             [self.id])[0]
 
-        # TODO: columns should reflect LOCALE
         self.question = db_conn.execute_fetchone('''
-            select american
-            from {0}
+            select {0}
+            from {1}
             where survey_question_id = %s'''.format(
+                _LOCALE_COLUMN,
                 self._survey_question_table),
-                [self.id])
+                [self.id])[0]
 
         if current_response is None:
             pass
@@ -135,8 +135,8 @@ class Group(object):
     def name(self):
         """Gets the locale-specific name of the group
         """
-        return self.conn.fetchone('''
-            select {0}
+        return db_conn.execute_fetchone('''
+            select {0}_name
             from {1} where group_order = %s'''.format(
                 _LOCALE_COLUMN,
                 self._group_table),
