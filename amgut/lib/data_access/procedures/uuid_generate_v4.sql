@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION public.uuid_generate_v4()
+CREATE OR REPLACE FUNCTION uuid_generate_v4()
  RETURNS uuid
  LANGUAGE c
  STRICT
