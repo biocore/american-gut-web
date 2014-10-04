@@ -10,8 +10,9 @@
 
 from os import listdir
 from os.path import abspath, join, dirname
+from glob import glob
 
-from psycopg2 import connect
+from psycopg2 import connect, OperationalError
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 import click
 
@@ -74,14 +75,15 @@ def make_test_db():
                          % AMGUT_CONFIG.database)
     # Create the database
     print("Creating database")
-    cur.execute('CREATE DATABASE %s' % AMGUT_CONFIG.database)
+    # cur.execute('CREATE DATABASE %s' % AMGUT_CONFIG.database)
+    cur.execute('CREATE DATABASE %s' % 'danielstestag')
     cur.close()
     conn.close()
 
     # Connect to the postgres server, but this time to the just created db
     conn = SQLConnectionHandler()
-    print("Creating schema")
-    conn.execute('CREATE SCHEMA ag')
+    #print("Creating schema")
+    #conn.execute('CREATE SCHEMA ag')
 
     print("Inserting procedures")
     procedures_dirpath = join(dirname(dirname(abspath(__file__))), "amgut",
@@ -107,6 +109,71 @@ def make_test_db():
     #     conn.execute(f.read())
 
     print("Test environment successfully created")
+
+def make_production_db():
+    r"""Creates the american gut production database"""
+
+    # Connect to the postgres server
+    try:
+        conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
+                       host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port)
+    except OperationalError as e:
+        raise OperationalError("Cannot connect to the server, error is %s" %
+                               str(e))
+
+    # Set the isolation level to AUTOCOMMIT so we can execute a create database
+    # sql query
+    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+    # Get the cursor
+    cur = conn.cursor()
+    # Check that the database does not already exists
+    if _check_db_exists(AMGUT_CONFIG.database, cur):
+        raise ValueError("Database '%s' already present on the system"
+                         % AMGUT_CONFIG.database)
+    # Create the database
+    print("Creating database")
+    cur.execute('CREATE DATABASE %s' % AMGUT_CONFIG.database)
+    cur.close()
+    conn.close()
+
+    # reconnect to the new database
+    conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
+                   host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
+                   database=AMGUT_CONFIG.database)
+    curr = conn.cursor()
+
+    # create the schema and set a search path
+    curr.execute('create schema ag')
+    curr.execute('set search_path to public, ag')
+
+    print("Inserting procedures")
+    procedures_dirpath = join(dirname(dirname(abspath(__file__))), "amgut",
+                              "lib", "data_access", "procedures")
+    for procedure_f in glob(join(procedures_dirpath, '*.sql')):
+        with open(join(procedures_dirpath, procedure_f)) as f:
+            curr.execute(f.read())
+
+    print("Building SQL layout")
+    with open(LAYOUT_FP) as f:
+        # We have to skip the "create schema" line here
+        curr.execute('\n'.join(f.readlines()[1:]))
+
+    with open(INITIALIZE_FP) as f:
+        curr.execute(f.read())
+
+    print('Granting privileges')
+
+    # create 
+    curr.execute('create user "ag_wwwuser"')
+    curr.execute('grant usage on schema public, ag to "ag_wwwuser"') 
+    curr.execute('grant connect on database %s to "ag_wwwuser"' % AMGUT_CONFIG.database) 
+    curr.execute('GRANT INSERT, UPDATE, DELETE, SELECT ON ALL TABLES IN SCHEMA'
+                 ' public, ag TO "ag_wwwuser";')
+    curr.execute('GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public, ag TO "ag_wwwuser";')
+    conn.commit()
+    print('Privileges granted')
+
+    print("Production environment successfully created")
 
 
 if __name__ == '__main__':
