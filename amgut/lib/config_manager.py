@@ -108,6 +108,18 @@ class ConfigurationManager(object):
         self._get_test(config)
         self._get_redis(config)
 
+    def get_settings(self):
+        """Returns settings that should be stored in postgres settings table
+
+        Returns
+        -------
+        list of tuple
+            Tuples are (parameter, argument)
+        """
+        return [('test_environment', self.test_environment),
+                ('base_data_dir', self.base_data_dir),
+                ('locale', self.locale)]
+
     def _get_main(self, config):
         """Get the configuration of the main section"""
         expected_options = {'name', 'shorthand', 'test_environment',
