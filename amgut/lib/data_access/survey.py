@@ -155,6 +155,7 @@ class Group(object):
 
 class Survey(object):
     _surveys_table = 'surveys'
+    _survey_answer_table = 'survey_response'
 
     def __init__(self, ID):
         self.id = ID
@@ -165,3 +166,50 @@ class Survey(object):
             order by survey_group'''.format(
                 self._surveys_table),
             [self.id])]
+
+        self.questions = {}
+        self.question_types = {}
+        for group in self.groups:
+            for question in group.questions:
+                self.question_types[question.id] = question.response_type
+                self.questions[question.id] = question
+
+        self.unspecified = db_conn.execute_fetchone("""
+            select {0}
+            from {1}
+            where american='Unspecified'""".format(
+                _LOCALE_COLUMN,
+                self._survey_answer_table))[0]
+
+    def store_survey(self, login_id, survey_id, with_fk_inserts,
+                     without_fk_inserts):
+        """Store a survey
+
+        Parameters
+        ----------
+        login_id : uuid
+            The corresponding login id
+        survey_id : str
+            The corresponding survey id
+        with_fk_inserts : list
+            [(str, int, str)] where str is the survey_id, int is a
+            survey_question.survey_question_id and str is a
+            survey_response.american
+        without_fk_inserts : list
+            [(str, int, str)] where str is the survey_id, int is a
+            survey_question.survey_question_id and str is a json representation
+            of the data to insert
+        """
+        with db_conn.get_postgres_cursor() as cur:
+            cur.execute("INSERT INTO ag_login_surveys (%s, %s)" %
+                        (login_id, survey_id))
+            cur.executemany("""
+                INSERT INTO survey_answers (survey_id, survey_question_id,
+                                            response)
+                VALUES (%s, %s, %s)""",
+                            with_fk_inserts)
+            cur.executemany("""
+                            INSERT INTO survey_answers_other (survey_id,
+                                                survey_question_id, response)
+                            VALUES (%s, %s, %s)""",
+                            without_fk_inserts)
