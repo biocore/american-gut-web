@@ -41,6 +41,16 @@ CREATE TABLE ag.ag_login (
 	CONSTRAINT ag_login_pkey PRIMARY KEY ( ag_login_id )
  );
 
+CREATE TABLE ag.ag_login_surveys ( 
+	ag_login_id          uuid  NOT NULL,
+	survey_id            varchar  NOT NULL,
+	CONSTRAINT idx_ag_login_surveys PRIMARY KEY ( ag_login_id, survey_id ),
+	CONSTRAINT idx_ag_login_surveys_1 UNIQUE ( survey_id ) ,
+	CONSTRAINT fk_ag_login_surveys FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id )    
+ );
+
+CREATE INDEX idx_ag_login_surveys_0 ON ag.ag_login_surveys ( ag_login_id );
+
 CREATE TABLE ag.ag_map_markers ( 
 	zipcode              varchar(20)  ,
 	latitude             float8  ,
@@ -438,6 +448,7 @@ CREATE TABLE ag.survey_question_response (
 	display_index        serial  ,
 	CONSTRAINT pk_question_response PRIMARY KEY ( survey_question_id, response ),
 	CONSTRAINT idx_survey_question_response UNIQUE ( survey_question_id, display_index ) ,
+	CONSTRAINT pk_survey_question_response UNIQUE ( survey_question_id ) ,
 	CONSTRAINT fk_question_response FOREIGN KEY ( response ) REFERENCES ag.survey_response( american )    ,
 	CONSTRAINT fk_question_response_0 FOREIGN KEY ( survey_question_id ) REFERENCES ag.survey_question( survey_question_id )    
  );
@@ -488,11 +499,13 @@ CREATE TABLE ag.survey_answers (
 	survey_question_id   bigint  NOT NULL,
 	response             varchar  NOT NULL,
 	CONSTRAINT pk_survey_answers PRIMARY KEY ( survey_id, survey_question_id, response ),
-	CONSTRAINT pk_survey_answers_0 UNIQUE ( survey_id ) ,
-	CONSTRAINT fk_survey_answers FOREIGN KEY ( survey_question_id, response ) REFERENCES ag.survey_question_response( survey_question_id, response )    
+	CONSTRAINT fk_survey_answers FOREIGN KEY ( survey_question_id, response ) REFERENCES ag.survey_question_response( survey_question_id, response )    ,
+	CONSTRAINT fk_survey_answers_0 FOREIGN KEY ( survey_id ) REFERENCES ag.ag_login_surveys( survey_id )    
  );
 
 CREATE INDEX idx_survey_answers ON ag.survey_answers ( survey_question_id, response );
+
+CREATE INDEX idx_survey_answers_0 ON ag.survey_answers ( survey_id );
 
 COMMENT ON TABLE ag.survey_answers IS 'Stores answers to questions of type SINGLE and MULTIPLE';
 
@@ -502,15 +515,18 @@ COMMENT ON COLUMN ag.survey_answers.survey_question_id IS 'The question being an
 
 COMMENT ON COLUMN ag.survey_answers.response IS 'The answer the question being asked';
 
-CREATE TABLE ag.ag_login_surveys ( 
-	ag_login_id          uuid  NOT NULL,
+CREATE TABLE ag.survey_answers_other ( 
 	survey_id            varchar  NOT NULL,
-	CONSTRAINT idx_ag_login_surveys PRIMARY KEY ( ag_login_id, survey_id ),
-	CONSTRAINT fk_ag_login_surveys_0 FOREIGN KEY ( survey_id ) REFERENCES ag.survey_answers( survey_id )    ,
-	CONSTRAINT fk_ag_login_surveys FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id )    
+	survey_question_id   bigint  NOT NULL,
+	response             varchar  NOT NULL,
+	CONSTRAINT pk_survey_answers_other PRIMARY KEY ( survey_id, survey_question_id ),
+	CONSTRAINT fk_survey_answers_other FOREIGN KEY ( survey_id ) REFERENCES ag.ag_login_surveys( survey_id )    ,
+	CONSTRAINT fk_survey_answers_other_0 FOREIGN KEY ( survey_question_id ) REFERENCES ag.survey_question_response( survey_question_id )    
  );
 
-CREATE INDEX idx_ag_login_surveys_0 ON ag.ag_login_surveys ( ag_login_id );
+CREATE INDEX idx_survey_answers_other ON ag.survey_answers_other ( survey_id );
 
-CREATE INDEX idx_ag_login_surveys_1 ON ag.ag_login_surveys ( survey_id );
+CREATE INDEX idx_survey_answers_other_0 ON ag.survey_answers_other ( survey_question_id );
+
+COMMENT ON TABLE ag.survey_answers_other IS 'Survey answers for which there are no corresponding foreign keys';
 
