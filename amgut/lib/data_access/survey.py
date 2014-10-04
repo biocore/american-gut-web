@@ -136,7 +136,7 @@ class Group(object):
         """Gets the locale-specific name of the group
         """
         return db_conn.execute_fetchone('''
-            select {0}_name
+            select {0}
             from {1} where group_order = %s'''.format(
                 _LOCALE_COLUMN,
                 self._group_table),
@@ -147,7 +147,7 @@ class Group(object):
         """Gets the locale-specific name of the group
         """
         return db_conn.execute_fetchone('''
-            select american_name
+            select american
             from {0} where group_order = %s'''.format(
                 self._group_table),
             [self.id])[0]
