@@ -39,7 +39,7 @@ def make_human_survey_class(group):
 
         for i, element in enumerate(question.interface_elements):
             element_id = '%s_%d' % (qid, i)
-            attrs[element_id] = question.iterface_elements
+            attrs[element_id] = element
 
     attrs['prompts'] = prompts
     return type('HumanSurvey', (Form,), attrs)
