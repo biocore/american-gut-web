@@ -13,7 +13,6 @@ from future.utils import viewitems
 from psycopg2 import connect
 
 from amgut import r_server, media_locale, text_locale
-from amgut.lib.human_survey_supp import question_type, supplemental_map
 from amgut.lib.config_manager import AMGUT_CONFIG
 
 get_db_file = partial(join, join(dirname(dirname(abspath(__file__))), 'db'))
