@@ -1,9 +1,13 @@
+import binascii
+import os
+from json import dumps
+
 from tornado.web import authenticated
 
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.util import AG_DATA_ACCESS
 from amgut.lib.mail import send_email
-from amgut import media_locale, text_locale
+from amgut import media_locale, text_locale, r_server
 
 
 MESSAGE_TEMPLATE = """Contact: %s
@@ -79,4 +83,15 @@ class NewParticipantHandler(BaseHandler):
 
                 self.redirect(media_locale['SITEBASE'] + "/authed/portal/?errmsg=%s" % alert_message)
 
+        human_survey_id = binascii.hexlify(os.urandom(8))
+        consent_details = {'participant_name': participant_name,
+                           'parent_1_name': parent_1_name,
+                           'parent_2_name': parent_2_name,
+                           'is_juvenile': is_juvenile,
+                           'deceased_parent': deceased_parent,
+                           'login_id': ag_login_id,
+                           'survey_id': human_survey_id}
+
+        r_server.hset(human_survey_id, 'consent', dumps(consent_details))
+        self.set_secure_cookie('human_survey_id', human_survey_id)
         self.redirect(media_locale['SITEBASE'] + "/authed/survey_main/")
