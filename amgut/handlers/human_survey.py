@@ -38,19 +38,19 @@ def make_human_survey_class(group):
 
         qid = '_'.join(group.american_name.split() + [str(question.id)])
 
-        if question.question_type == 'SINGLE':
+        if question.response_type == 'SINGLE':
             attrs[qid] = SelectField(
                 qid, choices=list(enumerate(responses)),
                 coerce=lambda x:x)
 
-        elif question.question_type == 'MULTIPLE':
+        elif question.response_type == 'MULTIPLE':
             attrs[qid] = SelectMultipleField(
                 qid, choices=list(enumerate(responses)),
                 widget=widgets.TableWidget(),
                 option_widget=widgets.CheckboxInput(),
                 coerce=lambda x: x)
 
-        elif question.question_type == 'TEXT':
+        elif question.response_type == 'TEXT':
             attrs[qid] = TextAreaField(qid)
 
     return type('HumanSurvey', (Form,), attrs)

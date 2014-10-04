@@ -52,7 +52,7 @@ class Question(object):
             where survey_question_id = %s'''.format(
                 self._response_type_table),
             [self.id])[0]
-        
+
         if current_response is None:
             pass
             # TODO: something
@@ -64,7 +64,7 @@ class Question(object):
         things = db_conn.execute_fetchone('''
             select exists(select * from survey_question_triggered_by
             where survey_question_id = %s)''', self.id)
-        
+
         raise NotImplementedError("We are about to do this (probably)...")
 
 
@@ -127,24 +127,24 @@ class Group(object):
     def name(self):
         """Gets the locale-specific name of the group
         """
-        return sef.conn.fetchone('''
+        return self.conn.fetchone('''
             select {0}
             from {1} where group_order = %s'''.format(
                 _LOCALE_COLUMN,
                 self._group_table),
-            [self.id])
+            [self.id])[0]
 
     @property
     def american_name(self):
         """Gets the locale-specific name of the group
         """
         return db_conn.execute_fetchone('''
-            select american
+            select american_name
             from {0} where group_order = %s'''.format(
                 self._group_table),
-            [self.id])
+            [self.id])[0]
 
-            
+
 class Survey(object):
     _surveys_table = 'surveys'
 
