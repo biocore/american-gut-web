@@ -33,26 +33,30 @@ def make_human_survey_class(group):
     of checkboxes for questions that can have multiple responses
     """
     attrs = {}
+    prompts = {}
     for question in group.questions:
         responses = question.responses
 
         qid = '_'.join(group.american_name.split() + [str(question.id)])
 
         if question.response_type == 'SINGLE':
-            attrs[qid] = SelectField(
+            field = SelectField(
                 qid, choices=list(enumerate(responses)),
                 coerce=lambda x:x)
 
         elif question.response_type == 'MULTIPLE':
-            attrs[qid] = SelectMultipleField(
+            field = SelectMultipleField(
                 qid, choices=list(enumerate(responses)),
                 widget=widgets.TableWidget(),
                 option_widget=widgets.CheckboxInput(),
                 coerce=lambda x: x)
 
         elif question.response_type == 'TEXT':
-            attrs[qid] = TextAreaField(qid)
+            field = TextAreaField(qid)
 
+        prompts[qid] = question.question
+        attrs[qid] = field
+    attrs['prompts'] = prompts
     return type('HumanSurvey', (Form,), attrs)
 
 
@@ -95,9 +99,9 @@ class HumanSurveyHandler(BaseHandler):
             # TODO: populate the next form page from database values, if they
             # exist
             the_form = surveys[next_page_number]()
-            supp = {}
+            title = primary_human_survey.groups[next_page_number].name
 
-            title = 'NO_TITLE'
+            supp = {}
 
             self.render('human_survey.html', the_form=the_form,
                         skid=self.current_user, TITLE=title,
