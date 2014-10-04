@@ -80,6 +80,8 @@ class AGDataAccess(object):
                 port=AMGUT_CONFIG.port)
         else:
             self.connection = con
+        cur = self.connection.cursor()
+        cur.execute('set search_path to public, ag')
 
         self._sql = SQLConnectionHandler(con)
 
