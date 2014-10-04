@@ -1,11 +1,11 @@
 ----------------------------------------------------------
 -- survey_group
 ----------------------------------------------------------
-INSERT INTO survey_group (group_order, american_name, british_name) VALUES (0, 'General Diet Information', 'General Diet Information');
-INSERT INTO survey_group (group_order, american_name, british_name) VALUES (1, 'General Information', 'General Information');
-INSERT INTO survey_group (group_order, american_name, british_name) VALUES (2, 'General Lifestyle and Hygiene Information', 'General Lifestyle and Hygiene Information');
-INSERT INTO survey_group (group_order, american_name, british_name) VALUES (3, 'General Health Information', 'General Health Information');
-INSERT INTO survey_group (group_order, american_name, british_name) VALUES (4, 'Detailed Dietary information', 'Detailed Dietary information');
+INSERT INTO survey_group (group_order, american, british) VALUES (0, 'General Diet Information', 'General Diet Information');
+INSERT INTO survey_group (group_order, american, british) VALUES (1, 'General Information', 'General Information');
+INSERT INTO survey_group (group_order, american, british) VALUES (2, 'General Lifestyle and Hygiene Information', 'General Lifestyle and Hygiene Information');
+INSERT INTO survey_group (group_order, american, british) VALUES (3, 'General Health Information', 'General Health Information');
+INSERT INTO survey_group (group_order, american, british) VALUES (4, 'Detailed Dietary information', 'Detailed Dietary information');
 
 ----------------------------------------------------------
 -- surveys
