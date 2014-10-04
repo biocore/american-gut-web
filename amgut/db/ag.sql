@@ -154,16 +154,16 @@ CREATE TABLE ag.project_barcode (
 
 CREATE TABLE ag.survey_group ( 
 	group_order          integer  NOT NULL,
-	american_name        varchar  ,
-	british_name         varchar  ,
-	CONSTRAINT idx_human_survey_question_group UNIQUE ( american_name ) ,
-	CONSTRAINT idx_human_survey_question_group_0 UNIQUE ( british_name ) ,
+	american             varchar  ,
+	british              varchar  ,
+	CONSTRAINT idx_human_survey_question_group UNIQUE ( american ) ,
+	CONSTRAINT idx_human_survey_question_group_0 UNIQUE ( british ) ,
 	CONSTRAINT pk_human_survey_question_group PRIMARY KEY ( group_order )
  );
 
 COMMENT ON COLUMN ag.survey_group.group_order IS 'The order that this group will be displayed in';
 
-COMMENT ON COLUMN ag.survey_group.american_name IS 'The american english version of the question group`s name';
+COMMENT ON COLUMN ag.survey_group.american IS 'The american english version of the question group`s name';
 
 CREATE TABLE ag.survey_question ( 
 	survey_question_id   bigserial  NOT NULL,
@@ -358,6 +358,7 @@ CREATE TABLE ag.ag_human_survey (
 	participant_name_u   varchar(400)  ,
 	CONSTRAINT ag_human_survey_pkey PRIMARY KEY ( ag_login_id, participant_name ),
 	CONSTRAINT pk_ag_human_survey UNIQUE ( participant_name ) ,
+	CONSTRAINT pk_ag_human_survey_0 UNIQUE ( ag_login_id ) ,
 	CONSTRAINT fk_ag_hum_surv_to_ag_login FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id )    
  );
 
@@ -481,4 +482,35 @@ COMMENT ON COLUMN ag.survey_question_triggered_by.survey_question_id IS 'The ID 
 COMMENT ON COLUMN ag.survey_question_triggered_by.trigger_question IS 'The question that might trigger the appearance of this question';
 
 COMMENT ON COLUMN ag.survey_question_triggered_by.trigger_response IS 'The response to the trigger_question that will cause the appearance of this question';
+
+CREATE TABLE ag.survey_answers ( 
+	survey_id            varchar  NOT NULL,
+	survey_question_id   bigint  NOT NULL,
+	response             varchar  NOT NULL,
+	CONSTRAINT pk_survey_answers PRIMARY KEY ( survey_id, survey_question_id, response ),
+	CONSTRAINT pk_survey_answers_0 UNIQUE ( survey_id ) ,
+	CONSTRAINT fk_survey_answers FOREIGN KEY ( survey_question_id, response ) REFERENCES ag.survey_question_response( survey_question_id, response )    
+ );
+
+CREATE INDEX idx_survey_answers ON ag.survey_answers ( survey_question_id, response );
+
+COMMENT ON TABLE ag.survey_answers IS 'Stores answers to questions of type SINGLE and MULTIPLE';
+
+COMMENT ON COLUMN ag.survey_answers.survey_id IS 'The unique identifier for the survey';
+
+COMMENT ON COLUMN ag.survey_answers.survey_question_id IS 'The question being answered';
+
+COMMENT ON COLUMN ag.survey_answers.response IS 'The answer the question being asked';
+
+CREATE TABLE ag.ag_login_surveys ( 
+	ag_login_id          uuid  NOT NULL,
+	survey_id            varchar  NOT NULL,
+	CONSTRAINT idx_ag_login_surveys PRIMARY KEY ( ag_login_id, survey_id ),
+	CONSTRAINT fk_ag_login_surveys_0 FOREIGN KEY ( survey_id ) REFERENCES ag.survey_answers( survey_id )    ,
+	CONSTRAINT fk_ag_login_surveys FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id )    
+ );
+
+CREATE INDEX idx_ag_login_surveys_0 ON ag.ag_login_surveys ( ag_login_id );
+
+CREATE INDEX idx_ag_login_surveys_1 ON ag.ag_login_surveys ( survey_id );
 
