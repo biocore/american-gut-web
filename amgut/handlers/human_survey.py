@@ -1,42 +1,22 @@
+import os
+import binascii
+from json import loads, dumps
+
 from wtforms import (Form, SelectField, SelectMultipleField, widgets,
                      TextAreaField, TextField, DateField, RadioField,
                      SelectField, IntegerField)
 from tornado.web import authenticated
 from future.utils import viewitems
 from natsort import natsorted
-from json import loads, dumps
-import os
-import binascii
 
 from amgut.util import AG_DATA_ACCESS
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.lib.util import store_survey
-from amgut.lib.human_survey_supp import (
-    responses_map, key_map, question_group, group_order, question_type,
-    supplemental_map)
+from amgut.lib.survey_supp import primary_human_survey
 from amgut import r_server, text_locale, media_locale
 
 
 tl = text_locale['human_survey.html']
-
-
-class PersonalPrompts(Form):
-    PERSONAL_PROMPT_NAME = TextField()
-    PERSONAL_PROMPT_GENDER = RadioField(choices=[(0, 'Female'),
-                                                 (1, 'Male'),
-                                                 (2, 'Other')])
-    PERSONAL_PROMPT_HEIGHT = IntegerField()
-    PERSONAL_PROMPT_HEIGHT_UNITS = SelectField(choices=[('', ''),
-                                                        ('in', 'in'),
-                                                        ('cm', 'cm')])
-    PERSONAL_PROMPT_COUNTRY_OF_BIRTH = TextField()
-    PERSONAL_PROMPT_TODAYSDATE = DateField(format="%m/%d/%Y")
-    PERSONAL_PROMPT_BIRTHDATE = DateField(format="%m/%Y")
-    PERSONAL_PROMPT_WEIGHT = IntegerField()
-    PERSONAL_PROMPT_WEIGHT_UNITS = SelectField(choices=[('', ''),
-                                                        ('lbs', 'lbs'),
-                                                        ('kg', 'kg')])
-    PERSONAL_PROMPT_ZIP = TextField()
 
 
 def make_human_survey_class(group):
@@ -49,35 +29,32 @@ def make_human_survey_class(group):
     of checkboxes for questions that can have multiple responses
     """
     attrs = {}
-    for idx in sorted(question_group[group]):
-        question_id = key_map[idx]
-        responses = responses_map[idx]
+    for question in group.questions:
+        responses = question.responses
 
-        if question_type[question_id] == 'SINGLE':
-            attrs[question_id] = SelectField(
-                question_id, choices=list(enumerate(responses)),
+        qid = '_'.join(group.american_name.split() + [str(question.id)])
+
+        if question.question_type == 'SINGLE':
+            attrs[qid] = SelectField(
+                qid, choices=list(enumerate(responses)),
                 coerce=lambda x:x)
 
-        elif question_type[question_id] == 'MULTIPLE':
-            attrs[question_id] = SelectMultipleField(
-                question_id, choices=list(enumerate(responses)),
+        elif question.question_type == 'MULTIPLE':
+            attrs[qid] = SelectMultipleField(
+                qid, choices=list(enumerate(responses)),
                 widget=widgets.TableWidget(),
                 option_widget=widgets.CheckboxInput(),
                 coerce=lambda x: x)
 
+        elif question.question_type == 'TEXT':
+            attrs[qid] = TextAreaField(qid)
+
     return type('HumanSurvey', (Form,), attrs)
 
 
-def make_supplemental_forms():
-    attrs = {}
-    for key in tl:
-        if key.startswith('SUPPLEMENTAL'):
-            attrs[key] = TextAreaField(key)
-    return type('SupplementalForm', (Form,), attrs)
+surveys = [make_human_survey_class(group)
+           for group in primary_human_survey.groups]
 
-
-surveys = [make_human_survey_class(group) for group in group_order]
-supplementals = make_supplemental_forms()
 
 class HumanSurveyHandler(BaseHandler):
     @authenticated
@@ -100,38 +77,26 @@ class HumanSurveyHandler(BaseHandler):
 
         if page_number >= 0:
             form_data = surveys[page_number]()
-            supp = supplementals()
 
             form_data.process(data=self.request.arguments)
-            supp.process(data=self.request.arguments)
 
-            data = {'questions': form_data.data, 'supplemental': supp.data}
+            data = {'questions': form_data.data}
+
             r_server.hset(human_survey_id, page_number, dumps(data))
 
         progress = int(100.0*(page_number+2)/(len(group_order) + 1))
-        if next_page_number == 0:
-            self.set_secure_cookie('human_survey_page_number',
-                                   str(next_page_number))
-            the_form = PersonalPrompts()
-            title = tl['PERSONAL_PROMPT_TITLE']
-            self.render('human_survey.html', the_form=the_form,
-                        skid=self.current_user, TITLE=title,
-                        supplemental_map=supplemental_map,
-                        page_number=next_page_number,
-                        progress=progress)
 
         # if this is not the last page, render the next page
-        elif next_page_number < len(surveys):
+        if next_page_number < len(surveys):
             # TODO: populate the next form page from database values, if they
             # exist
             the_form = surveys[next_page_number]()
-            supp = supplementals()
+            supp = {}
 
             title = tl[group_order[next_page_number]+'_TITLE']
 
             self.render('human_survey.html', the_form=the_form,
                         skid=self.current_user, TITLE=title,
-                        supplemental_map=supplemental_map,
                         supplementals=supp,
                         page_number=next_page_number,
                         progress=progress)
@@ -142,4 +107,5 @@ class HumanSurveyHandler(BaseHandler):
             self.clear_cookie('human_survey_id')
             self.set_secure_cookie('completed_survey_id', human_survey_id)
             store_survey(human_survey_id)
-            self.redirect(media_locale['SITEBASE'] + '/authed/human_survey_completed/')
+            self.redirect(media_locale['SITEBASE'] +
+                          '/authed/human_survey_completed/')
