@@ -451,6 +451,19 @@ CREATE INDEX idx_human_survey_group_question ON ag.group_questions ( survey_grou
 
 CREATE INDEX idx_human_survey_group_question_0 ON ag.group_questions ( survey_question_id );
 
+CREATE TABLE ag.iso_country_lookup ( 
+	iso_code             varchar  NOT NULL,
+	country              varchar  NOT NULL,
+	CONSTRAINT pk_iso_country_lookup PRIMARY KEY ( iso_code ),
+	CONSTRAINT fk_iso_country_lookup FOREIGN KEY ( country ) REFERENCES ag.survey_response( american )    
+ );
+
+CREATE INDEX idx_iso_country_lookup ON ag.iso_country_lookup ( country );
+
+COMMENT ON TABLE ag.iso_country_lookup IS 'ISO standard codes for countries';
+
+COMMENT ON COLUMN ag.iso_country_lookup.iso_code IS 'The ISO code for the country';
+
 CREATE TABLE ag.survey_answers_other ( 
 	survey_id            varchar  NOT NULL,
 	survey_question_id   bigint  NOT NULL,
