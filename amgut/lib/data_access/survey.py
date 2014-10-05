@@ -10,7 +10,7 @@ from __future__ import division
 # -----------------------------------------------------------------------------
 
 from wtforms import (SelectField, SelectMultipleField, widgets,
-                     TextAreaField)
+                     TextAreaField, TextField)
 
 from amgut import AMGUT_CONFIG, db_conn
 
@@ -138,6 +138,19 @@ class QuestionText(Question):
         return [TextAreaField(self.id)]
 
 
+class QuestionString(Question):
+    """A single text field question"""
+    def __init__(self, survey_question_id, current_response=None):
+        super(QuestionString, self).__init__(survey_question_id,
+                                             current_response)
+
+    @property
+    def interface_elements(self):
+        """See superclass documentation
+        """
+        return [TextField(self.id)]
+
+
 class Group(object):
     """Holds a logically connected group of questions
 
@@ -172,6 +185,8 @@ class Group(object):
                 question_class = QuestionMultiple
             elif response_type == 'TEXT':
                 question_class = QuestionText
+            elif response_type == 'STRING':
+                question_class = QuestionString
             else:
                 raise ValueError("Unrecognized response type: %s" %
                                  response_type)
