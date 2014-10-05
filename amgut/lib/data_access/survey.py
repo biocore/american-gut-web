@@ -254,14 +254,26 @@ class Survey(object):
         """
         with db_conn.get_postgres_cursor() as cur:
             cur.execute("""
+                INSERT INTO ag_consent
+                    (ag_login_id, participant_name, is_juvenile,
+                     parent_1_name, parent_2_name, deceased_parent,
+                     participant_email)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)""",
+                        (consent_details['login_id'],
+                         consent_details['participant_name'],
+                         consent_details['is_juvenile'],
+                         consent_details['parent_1_name'],
+                         consent_details['parent_2_name'],
+                         consent_details['deceased_parent'],
+                         consent_details['participant_email']))
+
+            cur.execute("""
                 INSERT INTO ag_login_surveys
                     (ag_login_id, survey_id, participant_name)
-                VALUES (%s, %s %s)""", consent_details['login_id'],
-                                       consent_details['survey_id'],
-                                       consent_details['participant_name'])
-            cur.execute("""
-                INSERT INTO ag_consent
-                    (""")
+                VALUES (%s, %s, %s)""",
+                        (consent_details['login_id'],
+                         consent_details['survey_id'],
+                         consent_details['participant_name']))
 
             cur.executemany("""
                 INSERT INTO survey_answers (survey_id, survey_question_id,

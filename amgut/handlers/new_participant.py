@@ -36,7 +36,10 @@ class NewParticipantHandler(BaseHandler):
         tl = text_locale['handlers']
         deceased_parent = self.get_argument("deceased_parent", None)
         participant_name = self.get_argument("participant_name")
+        participant_email = self.get_argument("participant_email")
         is_juvenile = self.get_argument("is_juvenile", 'off')
+        parent_1_name = self.get_argument("parent_1_name", None)
+        parent_2_name = self.get_argument("parent_2_name", None)
 
         ag_login_id = AG_DATA_ACCESS.get_user_for_kit(self.current_user)
         kit_email = AG_DATA_ACCESS.get_user_info(self.current_user)['email']
@@ -62,9 +65,6 @@ class NewParticipantHandler(BaseHandler):
         if is_juvenile == 'on':
             # If they aren't already an exception, we need to verify them
             if not is_exception:
-                parent_1_name = self.get_argument("parent_1_name")
-                parent_2_name = self.get_argument("parent_2_name")
-
                 alert_message = tl['MINOR_PARENTAL_BODY']
 
                 subject = ("AGJUVENILE: %s (ag_login_id: %s) is a child"
@@ -84,14 +84,17 @@ class NewParticipantHandler(BaseHandler):
                 self.redirect(media_locale['SITEBASE'] + "/authed/portal/?errmsg=%s" % alert_message)
 
         human_survey_id = binascii.hexlify(os.urandom(8))
-        consent_details = {'participant_name': participant_name,
-                           'parent_1_name': parent_1_name,
-                           'parent_2_name': parent_2_name,
-                           'is_juvenile': is_juvenile,
-                           'deceased_parent': deceased_parent,
-                           'login_id': ag_login_id,
-                           'survey_id': human_survey_id}
+        consent= {'participant_name': participant_name,
+                  'participant_email': participant_email,
+                  'parent_1_name': parent_1_name,
+                  'parent_2_name': parent_2_name,
+                  'is_juvenile': True if is_juvenile == 'on' else False,
+                  'deceased_parent': deceased_parent,
+                  'login_id': ag_login_id,
+                  'survey_id': human_survey_id}
 
-        r_server.hset(human_survey_id, 'consent', dumps(consent_details))
+        r_server.hset(human_survey_id, 'consent', dumps(consent))
+        r_server.expire(human_survey_id, 86400)
+
         self.set_secure_cookie('human_survey_id', human_survey_id)
         self.redirect(media_locale['SITEBASE'] + "/authed/survey_main/")
