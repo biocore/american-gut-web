@@ -109,21 +109,19 @@ class PartitionResponse(object):
         d[qid] = value
 
 
-def store_survey(survey, login_id, survey_id):
+def store_survey(survey, survey_id):
     """Store the survey
 
     Parameters
     ----------
     survey : amgut.lib.data_access.survey.Survey
         The corresponding survey
-    login_id : uuid
-        The corresponding login id
     survey_id : str
         The corresponding survey ID to retreive from redis
-
     """
     data = r_server.hgetall(survey_id)
     to_store = PartitionResponse(survey.question_types)
+    consent_details = loads(data.pop('consent'))
 
     for page in data:
         page_data = loads(data[page])
@@ -158,8 +156,7 @@ def store_survey(survey, login_id, survey_id):
     without_fk_inserts = [(survey_id, qid, dumps(v))
                           for qid, v in viewitems(to_store.without_fk)]
 
-    survey.store_survey(login_id, survey_id, with_fk_inserts,
-                        without_fk_inserts)
+    survey.store_survey(consent_details, with_fk_inserts, without_fk_inserts)
 
 
 def survey_vioscreen(survey_id):

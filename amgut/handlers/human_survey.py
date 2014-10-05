@@ -1,5 +1,4 @@
 import os
-import binascii
 from json import loads, dumps
 
 from wtforms import Form
@@ -8,7 +7,6 @@ from future.utils import viewitems
 from natsort import natsorted
 from json import loads, dumps
 import os
-import binascii
 from datetime import date
 
 from amgut.util import AG_DATA_ACCESS
@@ -54,18 +52,6 @@ class HumanSurveyHandler(BaseHandler):
     def post(self):
         human_survey_id = self.get_secure_cookie('human_survey_id')
         page_number = int(self.get_argument('page_number'))
-
-        if human_survey_id is None:
-            if page_number == -1:
-                # http://wyattbaldwin.com/2014/01/09/generating-random-tokens-in-python/
-                human_survey_id = binascii.hexlify(os.urandom(8))
-                self.set_secure_cookie('human_survey_id', human_survey_id)
-            else:
-                # it should not be possible to get here, unless someone is
-                # posting data to the page using a different interface
-                self.clear_cookie('human_survey_id')
-                return
-
         next_page_number = page_number + 1
 
         if page_number >= 0:
@@ -99,11 +85,8 @@ class HumanSurveyHandler(BaseHandler):
             # TODO: store in the database a connection between human_survey_id and this specific participant. THIS IS NOT CURRENTLY STUBBED OUT IN STORE_SURVEY
 
             # only get the cookie if you complete the survey
-            login_id = AG_DATA_ACCESS.get_user_for_kit(self.current_user)
-            print human_survey_id, type(human_survey_id)
-            print login_id, type(login_id)
             self.clear_cookie('human_survey_id')
             self.set_secure_cookie('completed_survey_id', human_survey_id)
-            store_survey(primary_human_survey, login_id, human_survey_id)
+            store_survey(primary_human_survey, human_survey_id)
             self.redirect(media_locale['SITEBASE'] +
                           '/authed/human_survey_completed/')
