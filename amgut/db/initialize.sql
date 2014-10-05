@@ -522,7 +522,6 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (8, 'I was diagnosed with gluten allergy (anti-gluten IgG), but not celiac disease', 2);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (8, 'I do not eat gluten because it makes me feel bad', 3);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (8, 'No', 4);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (9, 'Unspecified', 0);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (9, 'Peanuts', 1);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (9, 'Tree nuts', 2);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (9, 'Shellfish', 3);
@@ -629,7 +628,6 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (29, 'Occasionally (1-2 times/week)', 3);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (29, 'Regularly (3-5 times/week)', 4);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (29, 'Daily', 5);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (30, 'Unspecified', 0);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (30, 'Beer/Cider', 1);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (30, 'Sour beers', 2);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (30, 'White wine', 3);
@@ -742,7 +740,6 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (53, 'Unspecified', 0);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (53, 'Yes', 1);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (53, 'No', 2);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (54, 'Unspecified', 0);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (54, 'Drug (e.g. Penicillin)', 1);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (54, 'Pet dander', 2);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (54, 'Beestings', 3);
