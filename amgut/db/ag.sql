@@ -51,7 +51,8 @@ CREATE TABLE ag.ag_map_markers (
 
 CREATE TABLE ag.ag_participant_exceptions ( 
 	ag_login_id          uuid  ,
-	participant_name     varchar(200)  
+	participant_name     varchar(200)  ,
+	CONSTRAINT fk_ag_participant_exceptions FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id )    
  );
 
 CREATE INDEX idx_ag_participant_exceptions ON ag.ag_participant_exceptions ( ag_login_id );
@@ -62,7 +63,8 @@ CREATE TABLE ag.ag_survey_answer (
 	question             varchar(100)  NOT NULL,
 	ag_survery_answer_id uuid DEFAULT uuid_generate_v4() ,
 	answer               varchar(4000)  ,
-	CONSTRAINT ag_survey_answer_pkey PRIMARY KEY ( ag_login_id, participant_name, question )
+	CONSTRAINT ag_survey_answer_pkey PRIMARY KEY ( ag_login_id, participant_name, question ),
+	CONSTRAINT fk_sur_an_to_ag_login FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id )    
  );
 
 CREATE TABLE ag.ag_survey_multiples ( 
@@ -70,7 +72,8 @@ CREATE TABLE ag.ag_survey_multiples (
 	participant_name     varchar(200)  NOT NULL,
 	item_name            varchar(50)  NOT NULL,
 	item_value           varchar(1000)  ,
-	CONSTRAINT ag_survey_multiples_pkey PRIMARY KEY ( ag_login_id, participant_name, item_name )
+	CONSTRAINT ag_survey_multiples_pkey PRIMARY KEY ( ag_login_id, participant_name, item_name ),
+	CONSTRAINT fk_ag_mul_to_ag_login FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id )    
  );
 
 CREATE TABLE ag.ag_survey_multiples_backup ( 
@@ -115,7 +118,9 @@ CREATE TABLE ag.plate (
 
 CREATE TABLE ag.plate_barcode ( 
 	plate_id             bigint  NOT NULL,
-	barcode              varchar  NOT NULL
+	barcode              varchar  NOT NULL,
+	CONSTRAINT fk_plate_barcode FOREIGN KEY ( barcode ) REFERENCES ag.barcode( barcode )    ,
+	CONSTRAINT fk_plate_barcode_0 FOREIGN KEY ( plate_id ) REFERENCES ag.plate( plate_id )    
  );
 
 CREATE INDEX idx_plate_barcode ON ag.plate_barcode ( barcode );
@@ -131,7 +136,9 @@ CREATE TABLE ag.project (
 CREATE TABLE ag.project_barcode ( 
 	project_id           bigint  NOT NULL,
 	barcode              char(9)  NOT NULL,
-	CONSTRAINT project_barcode_pkey PRIMARY KEY ( project_id, barcode )
+	CONSTRAINT project_barcode_pkey PRIMARY KEY ( project_id, barcode ),
+	CONSTRAINT fk_pb_to_barcode FOREIGN KEY ( barcode ) REFERENCES ag.barcode( barcode )    ,
+	CONSTRAINT fk_pb_to_project FOREIGN KEY ( project_id ) REFERENCES ag.project( project_id )    
  );
 
 CREATE TABLE ag.survey_group ( 
@@ -181,7 +188,8 @@ COMMENT ON TABLE ag.survey_response_types IS 'Stores every possible type of resp
 CREATE TABLE ag.surveys ( 
 	survey_id            integer  NOT NULL,
 	survey_group         integer  NOT NULL,
-	CONSTRAINT idx_surveys_0 PRIMARY KEY ( survey_id, survey_group )
+	CONSTRAINT idx_surveys_0 PRIMARY KEY ( survey_id, survey_group ),
+	CONSTRAINT fk_surveys FOREIGN KEY ( survey_group ) REFERENCES ag.survey_group( group_order )    
  );
 
 CREATE INDEX idx_surveys ON ag.surveys ( survey_group );
@@ -221,12 +229,14 @@ CREATE TABLE ag.ag_animal_survey (
 	toilet               varchar(100)  ,
 	coprophage           varchar(100)  ,
 	comments             varchar(2000)  ,
-	CONSTRAINT ag_animal_survey_pkey PRIMARY KEY ( ag_login_id, participant_name )
+	CONSTRAINT ag_animal_survey_pkey PRIMARY KEY ( ag_login_id, participant_name ),
+	CONSTRAINT fk_ag_animal_surv_to_ag_login FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id )    
  );
 
 CREATE TABLE ag.ag_consent ( 
 	ag_login_id          uuid  NOT NULL,
 	participant_name     varchar(200)  NOT NULL,
+	participant_email    varchar  NOT NULL,
 	is_juvenile          bool  ,
 	parent_1_name        varchar(200)  ,
 	parent_2_name        varchar(200)  ,
@@ -234,7 +244,8 @@ CREATE TABLE ag.ag_consent (
 	parent_2_code        varchar(200)  ,
 	deceased_parent      varchar(10)  ,
 	CONSTRAINT pk_american_gut_consent PRIMARY KEY ( ag_login_id, participant_name ),
-	CONSTRAINT pk_american_gut_consent_0 UNIQUE ( participant_name ) 
+	CONSTRAINT pk_american_gut_consent_0 UNIQUE ( participant_name ) ,
+	CONSTRAINT fk_american_gut_consent FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id )    
  );
 
 CREATE INDEX idx_american_gut_consent ON ag.ag_consent ( ag_login_id );
@@ -353,7 +364,8 @@ CREATE TABLE ag.ag_human_survey (
 	participant_name_u   varchar(400)  ,
 	CONSTRAINT ag_human_survey_pkey PRIMARY KEY ( ag_login_id, participant_name ),
 	CONSTRAINT pk_ag_human_survey UNIQUE ( participant_name ) ,
-	CONSTRAINT pk_ag_human_survey_0 UNIQUE ( ag_login_id ) 
+	CONSTRAINT pk_ag_human_survey_0 UNIQUE ( ag_login_id ) ,
+	CONSTRAINT fk_ag_hum_surv_to_ag_login FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id )    
  );
 
 CREATE TABLE ag.ag_kit ( 
@@ -369,7 +381,8 @@ CREATE TABLE ag.ag_kit (
 	pass_reset_time      timestamp  ,
 	print_results        varchar(1) DEFAULT 'n'::character varying ,
 	CONSTRAINT ag_kit_pkey PRIMARY KEY ( ag_kit_id ),
-	CONSTRAINT ag_kit_supplied_kit_id_key UNIQUE ( supplied_kit_id ) 
+	CONSTRAINT ag_kit_supplied_kit_id_key UNIQUE ( supplied_kit_id ) ,
+	CONSTRAINT fk_ag_kit_to_login_id FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id )    
  );
 
 CREATE INDEX ix_ag_kit_login ON ag.ag_kit ( ag_login_id );
@@ -395,7 +408,9 @@ CREATE TABLE ag.ag_kit_barcodes (
 	withdrawn            varchar(1)  ,
 	refunded             varchar(1)  ,
 	CONSTRAINT ag_kit_barcodes_pkey PRIMARY KEY ( ag_kit_barcode_id ),
-	CONSTRAINT ag_kit_barcodes_barcode_key UNIQUE ( barcode ) 
+	CONSTRAINT ag_kit_barcodes_barcode_key UNIQUE ( barcode ) ,
+	CONSTRAINT fk_ag_kit_barcodes FOREIGN KEY ( ag_kit_id ) REFERENCES ag.ag_kit( ag_kit_id )    ,
+	CONSTRAINT fk_ag_kit_barcodes_0 FOREIGN KEY ( barcode ) REFERENCES ag.barcode( barcode )    
  );
 
 CREATE INDEX ix_ag_kit_bc_kit ON ag.ag_kit_barcodes ( ag_kit_id );
@@ -404,7 +419,9 @@ CREATE TABLE ag.ag_login_surveys (
 	ag_login_id          uuid  NOT NULL,
 	survey_id            varchar  NOT NULL,
 	participant_name     varchar  ,
-	CONSTRAINT pk_ag_login_surveys PRIMARY KEY ( survey_id )
+	CONSTRAINT pk_ag_login_surveys PRIMARY KEY ( survey_id ),
+	CONSTRAINT fk_ag_login_surveys FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id )    ,
+	CONSTRAINT fk_ag_login_surveys0 FOREIGN KEY ( ag_login_id, participant_name ) REFERENCES ag.ag_consent( ag_login_id, participant_name )    
  );
 
 CREATE INDEX idx_ag_login_surveys ON ag.ag_login_surveys ( participant_name );
@@ -417,14 +434,17 @@ CREATE TABLE ag.controlled_vocab_values (
 	term                 varchar(500)  NOT NULL,
 	order_by             bigint  ,
 	default_item         char(1)  ,
-	CONSTRAINT controlled_vocab_values_pkey PRIMARY KEY ( vocab_value_id )
+	CONSTRAINT controlled_vocab_values_pkey PRIMARY KEY ( vocab_value_id ),
+	CONSTRAINT fk_cont_vcb_values_cont_vcbs FOREIGN KEY ( controlled_vocab_id ) REFERENCES ag.controlled_vocabs( controlled_vocab_id )    
  );
 
 CREATE TABLE ag.group_questions ( 
 	survey_group         integer  NOT NULL,
 	survey_question_id   bigint  NOT NULL,
 	display_index        integer  NOT NULL,
-	CONSTRAINT pk_human_survey_group_question PRIMARY KEY ( survey_group, survey_question_id )
+	CONSTRAINT pk_human_survey_group_question PRIMARY KEY ( survey_group, survey_question_id ),
+	CONSTRAINT fk_human_survey_group_question FOREIGN KEY ( survey_group ) REFERENCES ag.survey_group( group_order )    ,
+	CONSTRAINT fk_human_survey_group_question_0 FOREIGN KEY ( survey_question_id ) REFERENCES ag.survey_question( survey_question_id )    
  );
 
 CREATE INDEX idx_human_survey_group_question ON ag.group_questions ( survey_group );
@@ -435,7 +455,9 @@ CREATE TABLE ag.survey_answers_other (
 	survey_id            varchar  NOT NULL,
 	survey_question_id   bigint  NOT NULL,
 	response             varchar  NOT NULL,
-	CONSTRAINT pk_survey_answers_other PRIMARY KEY ( survey_id, survey_question_id )
+	CONSTRAINT pk_survey_answers_other PRIMARY KEY ( survey_id, survey_question_id ),
+	CONSTRAINT fk_survey_answers_other FOREIGN KEY ( survey_id ) REFERENCES ag.ag_login_surveys( survey_id )    ,
+	CONSTRAINT fk_survey_answers_other_0 FOREIGN KEY ( survey_question_id ) REFERENCES ag.survey_question( survey_question_id )    
  );
 
 CREATE INDEX idx_survey_answers_other ON ag.survey_answers_other ( survey_id );
@@ -449,7 +471,9 @@ CREATE TABLE ag.survey_question_response (
 	response             varchar  NOT NULL,
 	display_index        serial  ,
 	CONSTRAINT pk_question_response PRIMARY KEY ( survey_question_id, response ),
-	CONSTRAINT idx_survey_question_response UNIQUE ( survey_question_id, display_index ) 
+	CONSTRAINT idx_survey_question_response UNIQUE ( survey_question_id, display_index ) ,
+	CONSTRAINT fk_question_response FOREIGN KEY ( response ) REFERENCES ag.survey_response( american )    ,
+	CONSTRAINT fk_question_response_0 FOREIGN KEY ( survey_question_id ) REFERENCES ag.survey_question( survey_question_id )    
  );
 
 COMMENT ON TABLE ag.survey_question_response IS 'Maps questions to responses';
@@ -458,7 +482,9 @@ COMMENT ON COLUMN ag.survey_question_response.display_index IS 'The display orde
 
 CREATE TABLE ag.survey_question_response_type ( 
 	survey_question_id   bigint  ,
-	survey_response_type varchar  NOT NULL
+	survey_response_type varchar  NOT NULL,
+	CONSTRAINT fk_human_survey_response_type FOREIGN KEY ( survey_question_id ) REFERENCES ag.survey_question( survey_question_id )    ,
+	CONSTRAINT fk_human_survey_question_response_type FOREIGN KEY ( survey_response_type ) REFERENCES ag.survey_response_types( survey_response_type )    
  );
 
 CREATE INDEX idx_human_survey_response_type ON ag.survey_question_response_type ( survey_question_id );
@@ -470,7 +496,9 @@ COMMENT ON TABLE ag.survey_question_response_type IS 'Stores the type of respons
 CREATE TABLE ag.survey_question_triggered_by ( 
 	survey_question_id   bigint  ,
 	trigger_question     bigint  ,
-	trigger_response     varchar  
+	trigger_response     varchar  ,
+	CONSTRAINT fk_survey_question_triggered_by FOREIGN KEY ( survey_question_id ) REFERENCES ag.survey_question( survey_question_id )    ,
+	CONSTRAINT fk_survey_question_triggered_by0 FOREIGN KEY ( trigger_question, trigger_response ) REFERENCES ag.survey_question_response( survey_question_id, response )    
  );
 
 CREATE INDEX idx_human_survey_question_triggered_by ON ag.survey_question_triggered_by ( survey_question_id );
@@ -493,7 +521,9 @@ CREATE TABLE ag.survey_answers (
 	survey_id            varchar  NOT NULL,
 	survey_question_id   bigint  NOT NULL,
 	response             varchar  NOT NULL,
-	CONSTRAINT pk_survey_answers PRIMARY KEY ( survey_id, survey_question_id, response )
+	CONSTRAINT pk_survey_answers PRIMARY KEY ( survey_id, survey_question_id, response ),
+	CONSTRAINT fk_survey_answers FOREIGN KEY ( survey_question_id, response ) REFERENCES ag.survey_question_response( survey_question_id, response )    ,
+	CONSTRAINT fk_survey_answers_0 FOREIGN KEY ( survey_id ) REFERENCES ag.ag_login_surveys( survey_id )    
  );
 
 CREATE INDEX idx_survey_answers ON ag.survey_answers ( survey_question_id, response );
@@ -507,62 +537,4 @@ COMMENT ON COLUMN ag.survey_answers.survey_id IS 'The unique identifier for the 
 COMMENT ON COLUMN ag.survey_answers.survey_question_id IS 'The question being answered';
 
 COMMENT ON COLUMN ag.survey_answers.response IS 'The answer the question being asked';
-
-ALTER TABLE ag.ag_animal_survey ADD CONSTRAINT fk_ag_animal_surv_to_ag_login FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id );
-
-ALTER TABLE ag.ag_consent ADD CONSTRAINT fk_american_gut_consent FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id );
-
-ALTER TABLE ag.ag_human_survey ADD CONSTRAINT fk_ag_hum_surv_to_ag_login FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id );
-
-ALTER TABLE ag.ag_kit ADD CONSTRAINT fk_ag_kit_to_login_id FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id );
-
-ALTER TABLE ag.ag_kit_barcodes ADD CONSTRAINT fk_ag_kit_barcodes FOREIGN KEY ( ag_kit_id ) REFERENCES ag.ag_kit( ag_kit_id );
-
-ALTER TABLE ag.ag_kit_barcodes ADD CONSTRAINT fk_ag_kit_barcodes_0 FOREIGN KEY ( barcode ) REFERENCES ag.barcode( barcode );
-
-ALTER TABLE ag.ag_login_surveys ADD CONSTRAINT fk_ag_login_surveys FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id );
-
-ALTER TABLE ag.ag_login_surveys ADD CONSTRAINT fk_ag_login_surveys0 FOREIGN KEY ( ag_login_id, participant_name ) REFERENCES ag.ag_consent( ag_login_id, participant_name );
-
-ALTER TABLE ag.ag_participant_exceptions ADD CONSTRAINT fk_ag_participant_exceptions FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id );
-
-ALTER TABLE ag.ag_survey_answer ADD CONSTRAINT fk_sur_an_to_ag_login FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id );
-
-ALTER TABLE ag.ag_survey_multiples ADD CONSTRAINT fk_ag_mul_to_ag_login FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id );
-
-ALTER TABLE ag.controlled_vocab_values ADD CONSTRAINT fk_cont_vcb_values_cont_vcbs FOREIGN KEY ( controlled_vocab_id ) REFERENCES ag.controlled_vocabs( controlled_vocab_id );
-
-ALTER TABLE ag.group_questions ADD CONSTRAINT fk_human_survey_group_question FOREIGN KEY ( survey_group ) REFERENCES ag.survey_group( group_order );
-
-ALTER TABLE ag.group_questions ADD CONSTRAINT fk_human_survey_group_question_0 FOREIGN KEY ( survey_question_id ) REFERENCES ag.survey_question( survey_question_id );
-
-ALTER TABLE ag.plate_barcode ADD CONSTRAINT fk_plate_barcode FOREIGN KEY ( barcode ) REFERENCES ag.barcode( barcode );
-
-ALTER TABLE ag.plate_barcode ADD CONSTRAINT fk_plate_barcode_0 FOREIGN KEY ( plate_id ) REFERENCES ag.plate( plate_id );
-
-ALTER TABLE ag.project_barcode ADD CONSTRAINT fk_pb_to_barcode FOREIGN KEY ( barcode ) REFERENCES ag.barcode( barcode );
-
-ALTER TABLE ag.project_barcode ADD CONSTRAINT fk_pb_to_project FOREIGN KEY ( project_id ) REFERENCES ag.project( project_id );
-
-ALTER TABLE ag.survey_answers ADD CONSTRAINT fk_survey_answers FOREIGN KEY ( survey_question_id, response ) REFERENCES ag.survey_question_response( survey_question_id, response );
-
-ALTER TABLE ag.survey_answers ADD CONSTRAINT fk_survey_answers_0 FOREIGN KEY ( survey_id ) REFERENCES ag.ag_login_surveys( survey_id );
-
-ALTER TABLE ag.survey_answers_other ADD CONSTRAINT fk_survey_answers_other FOREIGN KEY ( survey_id ) REFERENCES ag.ag_login_surveys( survey_id );
-
-ALTER TABLE ag.survey_answers_other ADD CONSTRAINT fk_survey_answers_other_0 FOREIGN KEY ( survey_question_id ) REFERENCES ag.survey_question( survey_question_id );
-
-ALTER TABLE ag.survey_question_response ADD CONSTRAINT fk_question_response FOREIGN KEY ( response ) REFERENCES ag.survey_response( american );
-
-ALTER TABLE ag.survey_question_response ADD CONSTRAINT fk_question_response_0 FOREIGN KEY ( survey_question_id ) REFERENCES ag.survey_question( survey_question_id );
-
-ALTER TABLE ag.survey_question_response_type ADD CONSTRAINT fk_human_survey_response_type FOREIGN KEY ( survey_question_id ) REFERENCES ag.survey_question( survey_question_id );
-
-ALTER TABLE ag.survey_question_response_type ADD CONSTRAINT fk_human_survey_question_response_type FOREIGN KEY ( survey_response_type ) REFERENCES ag.survey_response_types( survey_response_type );
-
-ALTER TABLE ag.survey_question_triggered_by ADD CONSTRAINT fk_survey_question_triggered_by FOREIGN KEY ( survey_question_id ) REFERENCES ag.survey_question( survey_question_id );
-
-ALTER TABLE ag.survey_question_triggered_by ADD CONSTRAINT fk_survey_question_triggered_by0 FOREIGN KEY ( trigger_question, trigger_response ) REFERENCES ag.survey_question_response( survey_question_id, response );
-
-ALTER TABLE ag.surveys ADD CONSTRAINT fk_surveys FOREIGN KEY ( survey_group ) REFERENCES ag.survey_group( group_order );
 
