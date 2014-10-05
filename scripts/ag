@@ -89,7 +89,7 @@ def clean_test():
         cur.execute('drop database {}'.format(AMGUT_CONFIG.database))
         print("Database %s dropped" % AMGUT_CONFIG.database)
         cur.execute('drop role ag_wwwuser')
-        print("role %s dropped" % AMGUT_CONFIG.user)
+        print("role ag_wwwuser dropped")
         cur.close()
         conn.close()
 
