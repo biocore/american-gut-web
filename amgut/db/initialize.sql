@@ -7,6 +7,7 @@ INSERT INTO survey_group (group_order, american, british) VALUES (1, 'General In
 INSERT INTO survey_group (group_order, american, british) VALUES (2, 'General Lifestyle and Hygiene Information', 'General Lifestyle and Hygiene Information');
 INSERT INTO survey_group (group_order, american, british) VALUES (3, 'General Health Information', 'General Health Information');
 INSERT INTO survey_group (group_order, american, british) VALUES (4, 'Detailed Dietary information', 'Detailed Dietary information');
+INSERT INTO survey_group (group_order, american, british) VALUES (5, 'Anything else?', 'Anything else?');
 
 ----------------------------------------------------------
 -- surveys
@@ -17,6 +18,7 @@ INSERT INTO surveys (survey_id, survey_group) VALUES (1, 1);
 INSERT INTO surveys (survey_id, survey_group) VALUES (1, 2);
 INSERT INTO surveys (survey_id, survey_group) VALUES (1, 3);
 INSERT INTO surveys (survey_id, survey_group) VALUES (1, 4);
+INSERT INTO surveys (survey_id, survey_group) VALUES (1, 5);
 
 ----------------------------------------------------------
 -- survey_question
@@ -150,6 +152,8 @@ INSERT INTO survey_question (american, british) VALUES ('Birth year:', 'Birth ye
 INSERT INTO survey_question (american, british) VALUES ('Weight:', 'Weight:');
 INSERT INTO survey_question (american, british) VALUES ('Weight units:', 'Weight units:');
 INSERT INTO survey_question (american, british) VALUES ('Current ZIP code:', 'Current ZIP code:');
+-- about yourself
+INSERT INTO survey_question (american, british) VALUES ('Please write anything else about yourself that you think could affect your personal microorganisms.', 'Please write anything else about yourself that you think could affect your personal microorganisms.');
 
 ----------------------------------------------------------
 -- group_questions
@@ -261,6 +265,8 @@ INSERT INTO group_questions (survey_group, survey_question_id, display_index) VA
 INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 126, 6);
 INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 127, 7);
 INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 128, 8);
+-- about yourself
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (5, 129, 0);
 
 ----------------------------------------------------------
 -- survey_response_types
@@ -402,6 +408,8 @@ INSERT INTO survey_question_response_type (survey_question_id, survey_response_t
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (126, 'STRING');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (127, 'STRING');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (128, 'STRING');
+-- about yourself
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (129, 'TEXT');
 
 ----------------------------------------------------------
 -- survey_response
