@@ -24,7 +24,6 @@
                     <li><h4>{% raw tl['TEXT_BACKGROUND_TITLE'] %}</h4>
                         <p>{% raw tl['TEXT_BACKGROUND_DESCRIPTION_1'] %}</p>
                         <p>{% raw tl['TEXT_BACKGROUND_DESCRIPTION_2'] %}</p>
-                        <p>{% raw tl['TEXT_BACKGROUND_DESCRIPTION_3'] %}</p>
                     </li>
 
                     <li><h4>{% raw tl['TEXT_STUDY_TASK_TITLE'] %}</h4>
@@ -43,11 +42,13 @@
                         </p>
                         <p>{% raw tl['TEXT_STUDY_TASK_DESCRIPTION_ADDITIONAL_2'] %}</p>
                         <h5>{% raw tl['TEXT_INTERNATIONAL_PARTICIPANT_TITLE'] %}</h5>
-                        <p>{% raw tl['TEXT_INTERNATIONAL_PARTICIPANT_DESCRIPTION'] %}</p>
+                        <p>{% raw tl['TEXT_INTERNATIONAL_PARTICIPANT_DESCRIPTION_1'] %}</p>
+                        <p>{% raw tl['TEXT_INTERNATIONAL_PARTICIPANT_DESCRIPTION_2'] %}</p>
 
                         <h5>{% raw tl['TEXT_SURVEY_DESCRIPTION_TITLE'] %}</h5>
                         <p>{% raw tl['TEXT_SURVEY_DESCRIPTION_DESCRIPTION_1'] %}</p>
                         <p>{% raw tl['TEXT_SURVEY_DESCRIPTION_DESCRIPTION_2'] %}</p>
+                        <p>{% raw tl['TEXT_SURVEY_DESCRIPTION_DESCRIPTION_3'] %}</p>
                     </li>
 
                     <li><h4>{% raw tl['TEXT_DURATION_TITLE'] %}</h4>
@@ -120,7 +121,7 @@
             <div class="lefta">
                 <div class="" id="consent">
                     <form method="post" id="consent_info" name="consent_info" action="{% raw media_locale['SITEBASE'] %}/authed/new_participant/">
-                        <input tabindex="1" value="Yes" type="checkbox" name="consent" id="consent"> {% raw tl['TEXT_I_HAVE_READ'] %}
+                        <input tabindex="1" value="Yes" type="checkbox" name="consent" id="consent"> <p>{% raw tl['TEXT_I_HAVE_READ_1'] %}</p><p>{% raw tl['TEXT_I_HAVE_READ_2'] %}</p>
                 </div>
                 <br>
                 <br>
