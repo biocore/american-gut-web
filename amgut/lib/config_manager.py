@@ -69,6 +69,16 @@ class ConfigurationManager(object):
         The port that redis is running on
     redis_db_id : int
         The ID of the redis database
+    smtp_host
+        The host where the SMTP server lives
+    smtp_ssl
+        Whether or not SSL connection is required by SMTP host
+    smtp_port
+        The port the SMTP serveris running on
+    smtp_user
+        The username for connecting to the SMTP server
+    smtp_password
+        The password for connecting to the SMTP server
 
     Raises
     ------
@@ -95,7 +105,7 @@ class ConfigurationManager(object):
         with open(conf_fp, 'U') as conf_file:
             config.readfp(conf_file)
 
-        _expected_sections = {'main', 'postgres', 'test', 'redis'}
+        _expected_sections = {'main', 'postgres', 'test', 'redis', 'email'}
 
         missing = _expected_sections - set(config.sections())
         if missing:
@@ -107,6 +117,7 @@ class ConfigurationManager(object):
         self._get_postgres(config)
         self._get_test(config)
         self._get_redis(config)
+        self._get_email(config)
 
     def get_settings(self):
         """Returns settings that should be stored in postgres settings table
@@ -187,6 +198,17 @@ class ConfigurationManager(object):
         self.redis_host = get('HOST')
         self.redis_port = getint('PORT')
         self.redis_db_id = getint('DB_ID')
+
+    def _get_email(self, config):
+        get = partial(config.get, 'email')
+        getint = partial(config.getint, 'email')
+        getbool = partial(config.getboolean, 'email')
+
+        self.smtp_host = get('HOST')
+        self.smtp_ssl = getbool('SSL')
+        self.smtp_port = getint('PORT')
+        self.smtp_user = get('USERNAME')
+        self.smtp_password = get('PASSWORD')
 
 
 AMGUT_CONFIG = ConfigurationManager()

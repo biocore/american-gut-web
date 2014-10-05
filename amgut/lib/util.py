@@ -92,16 +92,12 @@ class PartitionResponse(object):
         self.with_fk = {}
         self.without_fk = {}
         self._question_types = question_types
-
         self._dmap = {'SINGLE': self.with_fk,
                       'MULTIPLE': self.with_fk,
-                      'TEXT': self.without_fk}
+                      'TEXT': self.without_fk,
+                      'STRING': self.without_fk}
 
-    def _get_survey_question_id(self, key):
-        return int(key.split('_')[-2])
-
-    def __setitem__(self, key, value):
-        qid = self._get_survey_question_id(key)
+    def __setitem__(self, qid, value):
         d = self._dmap[self._question_types[qid]]
         self._store(d, qid, value)
 
@@ -119,6 +115,9 @@ def store_survey(survey, survey_id):
     survey_id : str
         The corresponding survey ID to retreive from redis
     """
+    def get_survey_question_id(key):
+        return int(key.split('_')[-2])
+
     data = r_server.hgetall(survey_id)
     to_store = PartitionResponse(survey.question_types)
     consent_details = loads(data.pop('consent'))
@@ -129,20 +128,25 @@ def store_survey(survey, survey_id):
         #supplemental = page_data['supplemental']
 
         for quest, resps in viewitems(questions):
-            if resps is None:
-                resps = {-1} # unspecified
-            else:
-                resps = set([int(i) for i in resps])
+            qid = get_survey_question_id(quest)
+            qtype = survey.question_types[qid]
 
-            #if quest in supplemental_map:
+            if resps is None:
+                resps = {-1} # unspecified multiple choice
+            elif qtype in ['SINGLE', 'MULTIPLE']:
+                resps = set([int(i) for i in resps])
+            else:
+                pass
+
+            #if qtype in ['SINGLE', 'MULTIPLE'] and quest in supplemental_map:
             #    indices, supp_key = supplemental_map[quest]
 #
  #               if set(indices).intersection(resps):
-  #                  to_store[supp_key] = supplemental[supp_key]
+  #                  to_store[supp_qid] = supplemental[supp_qid]
    #             else:
-    #                to_store[supp_key] = None
+    #                to_store[supp_qid] = None
 
-            to_store[quest] = resps
+            to_store[qid] = resps
 
 
     with_fk_inserts = []

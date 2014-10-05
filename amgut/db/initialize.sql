@@ -103,7 +103,7 @@ INSERT INTO survey_question (american, british) VALUES ('Have you ever been diag
 INSERT INTO survey_question (american, british) VALUES ('Have you ever been diagnosed with small intestinal bacterial overgrowth (SIBO)?', 'Have you ever been diagnosed with small intestinal bacterial overgrowth (SIBO)?');
 INSERT INTO survey_question (american, british) VALUES ('Have you ever been diagnosed with irritable bowel syndrome (IBS)?', 'Have you ever been diagnosed with irritable bowel syndrome (IBS)?');
 INSERT INTO survey_question (american, british) VALUES ('Have you ever been diagnosed with Clostridium difficile (C. diff) infection?', 'Have you ever been diagnosed with Clostridium difficile (C. diff) infection?');
-INSERT INTO survey_question (american, british) VALUES ('Have you ever been diagnosed with any other relevant condition?', 'Have you ever been diagnosed with any other relevant condition?');
+INSERT INTO survey_question (american, british) VALUES ('Have you ever been diagnosed with any other relevant clinical condition?', 'Have you ever been diagnosed with any other relevant clinical condition?');
 INSERT INTO survey_question (american, british) VALUES ('Have you ever been diagnosed with diabetes?', 'Have you ever been diagnosed with diabetes?');
 INSERT INTO survey_question (american, british) VALUES ('Have you ever been diagnosed with inflammatory bowel disease (IBD)?', 'Have you ever been diagnosed with inflammatory bowel disease (IBD)?');
 INSERT INTO survey_question (american, british) VALUES ('Have you ever been diagnosed with Alzheimer''s Disease/Dementia?', 'Have you ever been diagnosed with Alzheimer''s Disease/Dementia?');
@@ -563,6 +563,7 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (8, 'I was diagnosed with gluten allergy (anti-gluten IgG), but not celiac disease', 2);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (8, 'I do not eat gluten because it makes me feel bad', 3);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (8, 'No', 4);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (9, 'Unspecified', 1000);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (9, 'Peanuts', 1);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (9, 'Tree nuts', 2);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (9, 'Shellfish', 3);
@@ -669,6 +670,7 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (29, 'Occasionally (1-2 times/week)', 3);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (29, 'Regularly (3-5 times/week)', 4);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (29, 'Daily', 5);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (30, 'Unspecified', 1000);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (30, 'Beer/Cider', 1);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (30, 'Sour beers', 2);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (30, 'White wine', 3);
@@ -781,6 +783,7 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (53, 'Unspecified', 0);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (53, 'Yes', 1);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (53, 'No', 2);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (54, 'Unspecified', 1000);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (54, 'Drug (e.g. Penicillin)', 1);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (54, 'Pet dander', 2);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (54, 'Beestings', 3);
@@ -1021,22 +1024,59 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (97, 'Self-diagnosed', 4);
 
 ----------------------------------------------------------
--- survey_question_triggered_by
+-- survey_question_triggers
 ----------------------------------------------------------
-INSERT INTO survey_question_triggered_by (survey_question_id, trigger_question, trigger_response) VALUES (101, 21, 'Yes');
-INSERT INTO survey_question_triggered_by (survey_question_id, trigger_question, trigger_response) VALUES (106, 81, 'Diagnosed by a medical professional (doctor, physician assistant)');
-INSERT INTO survey_question_triggered_by (survey_question_id, trigger_question, trigger_response) VALUES (106, 81, 'Diagnosed by an alternative medicine practitioner');
-INSERT INTO survey_question_triggered_by (survey_question_id, trigger_question, trigger_response) VALUES (106, 81, 'Self-diagnosed');
-INSERT INTO survey_question_triggered_by (survey_question_id, trigger_question, trigger_response) VALUES (104, 12, 'Yes');
-INSERT INTO survey_question_triggered_by (survey_question_id, trigger_question, trigger_response) VALUES (101, 20, 'Yes');
-INSERT INTO survey_question_triggered_by (survey_question_id, trigger_question, trigger_response) VALUES (109, 18, 'Yes');
-INSERT INTO survey_question_triggered_by (survey_question_id, trigger_question, trigger_response) VALUES (108, 16, 'Month');
-INSERT INTO survey_question_triggered_by (survey_question_id, trigger_question, trigger_response) VALUES (108, 16, '3 months');
-INSERT INTO survey_question_triggered_by (survey_question_id, trigger_question, trigger_response) VALUES (108, 16, '6 months');
-INSERT INTO survey_question_triggered_by (survey_question_id, trigger_question, trigger_response) VALUES (102, 14, 'Other');
-INSERT INTO survey_question_triggered_by (survey_question_id, trigger_question, trigger_response) VALUES (110, 39, 'Week');
-INSERT INTO survey_question_triggered_by (survey_question_id, trigger_question, trigger_response) VALUES (110, 39, 'Month');
-INSERT INTO survey_question_triggered_by (survey_question_id, trigger_question, trigger_response) VALUES (98, 49, 'Yes');
-INSERT INTO survey_question_triggered_by (survey_question_id, trigger_question, trigger_response) VALUES (97, 42, 'Yes');
-INSERT INTO survey_question_triggered_by (survey_question_id, trigger_question, trigger_response) VALUES (98, 6, 'Yes');
+-- Herbal supplements
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (6, 105, 'Yes');
+
+-- Other clinical condition
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (81, 107, 'Diagnosed by a medical professional (doctor, physician assistant)');
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (81, 107, 'Diagnosed by an alternative medicine practitioner');
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (81, 107, 'Self-diagnosed');
+
+-- Special diet restrictions
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (12, 105, 'Yes');
+
+-- Race/ethnicity
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (14, 103, 'Other');
+
+-- Traveled outside of the United States
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (16, 109, 'Month');
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (16, 109, '3 months');
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (16, 109, '6 months');
+
+-- Roommates or family members in study 
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (18, 110, 'Yes');
+
+-- Dog or cat
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (20, 102, 'Yes');
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (21, 102, 'Yes');
+
+-- Antibiotics
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (39, 111, 'Week');
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (39, 111, 'Month');
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (39, 111, '6 months');
+
+-- Pregnant
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (42, 98, 'Yes');
+
+-- OTC or prescription meds
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (49, 99, 'Yes');
+
+-- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (101, 21, 'Yes');
+-- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (106, 81, 'Diagnosed by a medical professional (doctor, physician assistant)');
+-- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (106, 81, 'Diagnosed by an alternative medicine practitioner');
+-- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (106, 81, 'Self-diagnosed');
+-- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (104, 12, 'Yes');
+-- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (101, 20, 'Yes');
+-- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (109, 18, 'Yes');
+-- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (108, 16, 'Month');
+-- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (108, 16, '3 months');
+-- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (108, 16, '6 months');
+-- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (102, 14, 'Other');
+-- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (110, 39, 'Week');
+-- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (110, 39, 'Month');
+-- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (98, 49, 'Yes');
+-- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (97, 42, 'Yes');
+-- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (98, 6, 'Yes');
 

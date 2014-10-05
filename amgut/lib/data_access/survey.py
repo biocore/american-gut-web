@@ -13,7 +13,7 @@ from itertools import groupby
 from operator import itemgetter
 
 from wtforms import (SelectField, SelectMultipleField, widgets,
-                     TextAreaField)
+                     TextAreaField, TextField)
 
 from amgut import AMGUT_CONFIG, db_conn
 
@@ -30,7 +30,7 @@ class Question(object):
     _question_response_table = 'survey_question_response'
     _response_table = 'survey_response'
     _response_type_table = 'survey_question_response_type'
-    _supplemental_survey_table = 'survey_question_triggered_by'
+    _supplemental_survey_table = 'survey_question_triggers'
 
     def __init__(self, ID, current_response=None):
         self.id = ID
@@ -67,21 +67,25 @@ class Question(object):
                 self._survey_question_table),
                 [self.id])[0]
 
-    @property
-    def triggered_by(self):
-        """What other question-response combinations trigger this question
+        self.triggers = self._triggers()
+
+    def _triggers(self):
+        """What other question-response combinations this question can trigger
 
         Returns
         -------
         dict
-            {other_question_id: [triggering responses to that question], ...}
+            {other_question_id: [triggering indices to that question], ...}
         """
         trigger_list = db_conn.execute_fetchall('''
-            select select trigger_question, trigger_response
-            from survey_question_triggered_by
-            where survey_question_id = %s
-            order by trigger_question'''.format(
-                self._supplemental_survey_table),
+            select triggered_question, sqr.display_index
+            from {0} sst
+            join {1} sqr
+                on sst.survey_question_id=sqr.survey_question_id
+            where sst.survey_question_id = %s
+            order by triggered_question'''.format(
+                self._supplemental_survey_table,
+                self._question_response_table),
             [self.id])
 
         return {key: list(group)
@@ -97,6 +101,28 @@ class Question(object):
             A list of the elements that represent the interface to the question
         """
         raise NotImplementedError("To be implemented by quesiton subtypes.")
+
+    @classmethod
+    def factory(cls, ID):
+        """Return the correct class type based on response type"""
+        question = Question(ID)
+
+        response_type = question.response_type
+        question_class = None
+
+        if response_type == 'SINGLE':
+            question_class = QuestionSingle
+        elif response_type == 'MULTIPLE':
+            question_class = QuestionMultiple
+        elif response_type == 'TEXT':
+            question_class = QuestionText
+        elif response_type == 'STRING':
+            question_class = QuestionString
+        else:
+            raise ValueError("Unrecognized response type: %s" %
+                             response_type)
+
+        return question_class(question.id)
 
 
 class QuestionSingle(Question):
@@ -125,8 +151,10 @@ class QuestionMultiple(Question):
     def interface_elements(self):
         """See superclass documentation
         """
+        choices = [(i,v) for i, v in enumerate(self.responses)
+                   if v != 'Unspecified']
         return [SelectMultipleField(
-            self.id, choices=list(enumerate(self.responses)),
+            self.id, choices=choices,
             widget=widgets.TableWidget(),
             option_widget=widgets.CheckboxInput(),
             coerce=lambda x: x)]
@@ -146,6 +174,19 @@ class QuestionText(Question):
         return [TextAreaField(self.id)]
 
 
+class QuestionString(Question):
+    """A single text field question"""
+    def __init__(self, survey_question_id, current_response=None):
+        super(QuestionString, self).__init__(survey_question_id,
+                                             current_response)
+
+    @property
+    def interface_elements(self):
+        """See superclass documentation
+        """
+        return [TextField(self.id)]
+
+
 class Group(object):
     """Holds a logically connected group of questions
 
@@ -159,7 +200,7 @@ class Group(object):
 
     def __init__(self, ID):
         self.id = ID
-        qs = [Question(x[0]) for x in db_conn.execute_fetchall('''
+        qs = [Question.factory(x[0]) for x in db_conn.execute_fetchall('''
             select gq.survey_question_id
             from {0} sg join {1} gq on sg.group_order = gq.survey_group
             where sg.group_order = %s
@@ -168,23 +209,7 @@ class Group(object):
                 self._group_table,
                 self._group_questions_table),
             [self.id])]
-
-        self.questions = []
-        for question in qs:
-            response_type = question.response_type
-            question_class = None
-
-            if response_type == 'SINGLE':
-                question_class = QuestionSingle
-            elif response_type == 'MULTIPLE':
-                question_class = QuestionMultiple
-            elif response_type == 'TEXT':
-                question_class = QuestionText
-            else:
-                raise ValueError("Unrecognized response type: %s" %
-                                 response_type)
-
-            self.questions.append(question_class(question.id))
+        self.questions = qs
 
     @property
     def name(self):
