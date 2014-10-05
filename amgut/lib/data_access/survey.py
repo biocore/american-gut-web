@@ -67,22 +67,25 @@ class Question(object):
                 self._survey_question_table),
                 [self.id])[0]
 
-        self.triggered_by = self._triggered_by()
+        self.triggers = self._triggers()
 
-    def _triggered_by(self):
-        """What other question-response combinations trigger this question
+    def _triggers(self):
+        """What other question-response combinations this question can trigger
 
         Returns
         -------
         dict
-            {other_question_id: [triggering responses to that question], ...}
+            {other_question_id: [triggering indices to that question], ...}
         """
         trigger_list = db_conn.execute_fetchall('''
-            select triggered_question, triggering_response
-            from {0}
-            where survey_question_id = %s
+            select triggered_question, sqr.display_index
+            from {0} sst
+            join {1} sqr
+                on sst.survey_question_id=sqr.survey_question_id
+            where sst.survey_question_id = %s
             order by triggered_question'''.format(
-                self._supplemental_survey_table),
+                self._supplemental_survey_table,
+                self._question_response_table),
             [self.id])
 
         return {key: list(group)
