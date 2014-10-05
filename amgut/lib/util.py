@@ -88,6 +88,11 @@ def ag_test_checker():
 
 
 class PartitionResponse(object):
+    """Partition responses based on the response type
+
+    Splits up the responses based on whether the response can or cannot be
+    associated with a foreign key in the database.
+    """
     def __init__(self, question_types):
         self.with_fk = {}
         self.without_fk = {}
