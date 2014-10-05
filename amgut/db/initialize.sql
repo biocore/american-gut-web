@@ -133,7 +133,7 @@ INSERT INTO survey_question (american, british) VALUES ('Other conditions you su
 INSERT INTO survey_question (american, british) VALUES ('Please write anything else about yourself that you think could affect your personal microorganisms.', 'Please write anything else about yourself that you think could affect your personal microorganisms.');
 INSERT INTO survey_question (american, british) VALUES ('Travel:', 'Travel:');
 INSERT INTO survey_question (american, british) VALUES ('What is your relationship to other people in this study who have voluntarily told you of their participation (e.g. partner, children, roommates)?  For children, please specify whether or not you are genetically related.  Note that we will only use information that both parties provide.', 'What is your relationship to other people in this study who have voluntarily told you of their participation (e.g. partner, children, roommates)?  For children, please specify whether or not you are genetically related.  Note that we will only use information that both parties provide.');
-INSERT INTO survey_question (american, british) VALUES ('Antibiotic/s:', 'Antibiotic/s:');
+INSERT INTO survey_question (american, british) VALUES ('Antibiotics:', 'Antibiotics:');
 INSERT INTO survey_question (american, british) VALUES ('Country of birth:', 'Country of birth:');
 INSERT INTO survey_question (american, british) VALUES ('Current ZIP code:', 'Current ZIP code:');
 INSERT INTO survey_question (american, british) VALUES ('Name:', 'Name:');
