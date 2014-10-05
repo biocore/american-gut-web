@@ -30,7 +30,8 @@ def make_human_survey_class(group):
     prompts = {}
     for question in group.questions:
         qid = '_'.join(group.american_name.split() + [str(question.id)])
-
+        if question.triggers:
+            pass
 
         for i, element in enumerate(question.interface_elements):
             element_id = '%s_%d' % (qid, i)
