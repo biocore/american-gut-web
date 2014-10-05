@@ -67,8 +67,9 @@ class Question(object):
                 self._survey_question_table),
                 [self.id])[0]
 
-    @property
-    def triggered_by(self):
+        self.triggered_by = self._triggered_by()
+
+    def _triggered_by(self):
         """What other question-response combinations trigger this question
 
         Returns
