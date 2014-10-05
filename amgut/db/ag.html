@@ -352,7 +352,12 @@
 	survey_question_triggers references survey_question_response ( survey_question_id, triggering_response -> response )</title>
 </path>
 <text x='832' y='1690' transform='rotate(0 832,1690)' title='Foreign Key fk_survey_question_triggers0
-	survey_question_triggers references survey_question_response ( survey_question_id, triggering_response -> response )' style='fill:#a1a0a0;'>survey_question_id,triggering_response</text><!-- ============= Table 'ag_handout_kits' ============= -->
+	survey_question_triggers references survey_question_response ( survey_question_id, triggering_response -> response )' style='fill:#a1a0a0;'>survey_question_id,triggering_response</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 915 1890 L 825,1890' >
+	<title>Foreign Key fk_iso_country_lookup
+	iso_country_lookup references survey_response ( country -> american )</title>
+</path>
+<text x='875' y='1885' transform='rotate(0 875,1885)' title='Foreign Key fk_iso_country_lookup
+	iso_country_lookup references survey_response ( country -> american )' style='fill:#a1a0a0;'>country</text><!-- ============= Table 'ag_handout_kits' ============= -->
 <rect class='table' x='210' y='503' width='150' height='150' rx='7' ry='7' />
 <path d='M 210.50 529.50 L 210.50 510.50 Q 210.50 503.50 217.50 503.50 L 352.50 503.50 Q 359.50 503.50 359.50 510.50 L 359.50 529.50 L210.50 529.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
 <a xlink:href='#ag_handout_kits'><text x='240' y='517' class='tableTitle'>ag_handout_kits</text><title>Table ag.ag_handout_kits</title></a>
@@ -654,7 +659,9 @@ Stores every possible type of response&#046;  The response type will be processe
 Stores every possible predictable response on the human survey</title></a>
   <use id='nn' x='722' y='1887' xlink:href='#nn'/><a xlink:href='#american'><use id='pk' x='722' y='1886' xlink:href='#pk'/><title>Primary Key  ( american ) </title></a>
 <a xlink:href='#american'><text x='738' y='1897'>american</text><title>american varchar not null</title></a>
-<a xlink:href='#american'><use id='ref' x='813' y='1886' xlink:href='#ref'/><title>Referred by survey_question_response ( response -> american ) </title></a>
+<a xlink:href='#american'><use id='ref' x='813' y='1886' xlink:href='#ref'/><title>Referred by survey_question_response ( response -> american ) 
+Referred by iso_country_lookup ( country -> american ) 
+Referred by iso_country_lookup ( country -> american ) </title></a>
   <a xlink:href='#british'><use id='unq' x='722' y='1901' xlink:href='#unq'/><title>Unique Index  ( british ) </title></a>
 <a xlink:href='#british'><text x='738' y='1912'>british</text><title>british varchar</title></a>
 
@@ -967,6 +974,18 @@ The response to the question that will cause the appearance of the triggered&#09
 <a xlink:href='#triggered_question'><text x='693' y='1717'>triggered_question</text><title>triggered_question bigint
 The question that is triggered</title></a>
 <a xlink:href='#triggered_question'><use id='fk' x='813' y='1706' xlink:href='#fk'/><title>References survey_question ( triggered_question -> survey_question_id ) </title></a>
+
+<!-- ============= Table 'iso_country_lookup' ============= -->
+<rect class='table' x='930' y='1838' width='120' height='75' rx='7' ry='7' />
+<path d='M 930.50 1864.50 L 930.50 1845.50 Q 930.50 1838.50 937.50 1838.50 L 1042.50 1838.50 Q 1049.50 1838.50 1049.50 1845.50 L 1049.50 1864.50 L930.50 1864.50 ' style='fill:url(#tableHeaderGradient5); stroke:none;' />
+<a xlink:href='#iso_country_lookup'><text x='936' y='1852' class='tableTitle'>iso_country_lookup</text><title>Table ag.iso_country_lookup
+ISO standard codes for countries</title></a>
+  <use id='nn' x='932' y='1872' xlink:href='#nn'/><a xlink:href='#iso_code'><use id='pk' x='932' y='1871' xlink:href='#pk'/><title>Primary Key  ( iso_code ) </title></a>
+<a xlink:href='#iso_code'><text x='948' y='1882'>iso_code</text><title>iso_code varchar not null
+The ISO code for the country</title></a>
+  <use id='nn' x='932' y='1887' xlink:href='#nn'/><a xlink:href='#country'><use id='idx' x='932' y='1886' xlink:href='#idx'/><title>Index  ( country ) </title></a>
+<a xlink:href='#country'><text x='948' y='1897'>country</text><title>country varchar not null</title></a>
+<a xlink:href='#country'><use id='fk' x='1038' y='1886' xlink:href='#fk'/><title>References survey_response ( country -> american ) </title></a>
 
 </g></svg>
 
@@ -3128,6 +3147,41 @@ The question that is triggered</title></a>
 	<tr>
 		<td>fk_survey_question_triggers0</td>
 		<td > ( survey&#095;question&#095;id&#044; triggering&#095;response ) ref <a href='#survey&#095;question&#095;response'>survey&#095;question&#095;response</a> (survey&#095;question&#095;id&#044; response) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table id='dbs' >
+<thead>
+<tr><th colspan='3'><a name='iso_country_lookup'>iso_country_lookup</a></th></tr>
+<tr><td colspan='3'>ISO standard codes for countries </td></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='iso_code'>iso&#095;code</a></td>
+		<td width='40%'> varchar  NOT NULL  </td>
+		<td width='99%'> The ISO code for the country </td>
+	</tr>
+	<tr>
+		<td><a name='country'>country</a></td>
+		<td width='40%'> varchar  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
+	<tr>		<td>pk&#095;iso&#095;country&#095;lookup primary key</td>
+		<td> ON iso&#095;code</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;iso&#095;country&#095;lookup </td>
+		<td> ON country</td>
+		<td>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
+	<tr>
+		<td>fk_iso_country_lookup</td>
+		<td > ( country ) ref <a href='#survey&#095;response'>survey&#095;response</a> (american) </td>
 		<td>  </td>
 	</tr>
 </tbody>

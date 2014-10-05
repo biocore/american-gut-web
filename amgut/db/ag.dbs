@@ -436,6 +436,22 @@
 				<fk_column name="survey_question_id" pk="survey_question_id" />
 			</fk>
 		</table>
+		<table name="iso_country_lookup" >
+			<comment>ISO standard codes for countries</comment>
+			<column name="iso_code" type="varchar" jt="12" mandatory="y" >
+				<comment><![CDATA[The ISO code for the country]]></comment>
+			</column>
+			<column name="country" type="varchar" jt="12" mandatory="y" />
+			<index name="pk_iso_country_lookup" unique="PRIMARY_KEY" >
+				<column name="iso_code" />
+			</index>
+			<index name="idx_iso_country_lookup" unique="NORMAL" >
+				<column name="country" />
+			</index>
+			<fk name="fk_iso_country_lookup" to_schema="ag" to_table="survey_response" >
+				<fk_column name="country" pk="american" />
+			</fk>
+		</table>
 		<table name="plate" >
 			<column name="plate_id" type="bigint" length="19" jt="-5" mandatory="y" />
 			<column name="plate" type="varchar" length="50" jt="12" />
@@ -21301,6 +21317,7 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="survey_answers" color="a8c4ef" x="1560" y="1425" />
 		<entity schema="ag" name="ag_consent" color="c6d9f7" x="1470" y="945" />
 		<entity schema="ag" name="survey_question_triggers" color="a8c4ef" x="675" y="1650" />
+		<entity schema="ag" name="iso_country_lookup" color="a8c4ef" x="930" y="1845" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by : 
    american_gut_consent</comment>
@@ -21348,6 +21365,7 @@ AS $function$xpath_exists$function$
 			<entity schema="ag" name="survey_question_triggers" />
 			<entity schema="ag" name="survey_group" />
 			<entity schema="ag" name="survey_question_response" />
+			<entity schema="ag" name="iso_country_lookup" />
 		</group>
 	</layout>
 </project>
