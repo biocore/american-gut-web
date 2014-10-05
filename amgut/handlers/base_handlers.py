@@ -25,7 +25,7 @@ class BaseHandler(RequestHandler):
         trace_info = ''.join(format_exception(*exc_info))
         request_info = ''.join(["%s:   %s\n" %
                                (k, self.request.__dict__[k]) for k in
-                                self.request.__dict__.keys()])
+                                self.request.__dict__])
         error = exc_info[1]
         formatted_email = (">SKID\n%s\n\n>Error\n%s\n\n>Traceback\n%s\n\n"
                            ">Request Info\n%s\n\n" %

@@ -66,6 +66,16 @@ class ConfigurationManager(object):
         The port that redis is running on
     redis_db_id : int
         The ID of the redis database
+    smtp_host
+        The host where the SMTP server lives
+    smtp_ssl
+        Whether or not SSL connection is required by SMTP host
+    smtp_port
+        The port the SMTP serveris running on
+    smtp_user
+        The username for connecting to the SMTP server
+    smtp_password
+        The password for connecting to the SMTP server
 
     Raises
     ------
