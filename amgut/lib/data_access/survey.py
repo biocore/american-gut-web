@@ -125,8 +125,10 @@ class QuestionMultiple(Question):
     def interface_elements(self):
         """See superclass documentation
         """
+        choices = [(i,v) for i, v in enumerate(self.responses)
+                   if v != 'Unspecified']
         return [SelectMultipleField(
-            self.id, choices=list(enumerate(self.responses)),
+            self.id, choices=choices,
             widget=widgets.TableWidget(),
             option_widget=widgets.CheckboxInput(),
             coerce=lambda x: x)]
