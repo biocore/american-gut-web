@@ -3,6 +3,7 @@ import os
 from json import dumps
 
 from tornado.web import authenticated
+from tornado.escape import url_escape
 
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.util import AG_DATA_ACCESS
@@ -51,7 +52,7 @@ class NewParticipantHandler(BaseHandler):
 
         # If the participant already exists, stop them outright
         if AG_DATA_ACCESS.check_if_consent_exists(ag_login_id, participant_name):
-            errmsg = tl['PARTICIPANT_EXISTS'] % participant_name
+            errmsg = url_escape(tl['PARTICIPANT_EXISTS'] % participant_name)
             self.redirect(media_locale['SITEBASE'] + "/authed/portal/?errmsg=%s" % errmsg)
 
         if is_juvenile == 'off' and is_exception:
