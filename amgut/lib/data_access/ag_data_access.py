@@ -914,6 +914,17 @@ class AGDataAccess(object):
         return (human_samples, animal_samples, environmental_samples,
                 kit_verified)
 
+    def check_if_consent_exists(self, ag_login_id, participant_name):
+        """Return True if a consent already exists"""
+        sql = """select exists(
+                    select 1
+                    from ag_consent
+                    where ag_login_id=%s and
+                        participant_name=%s)"""
+        cursor = self.connection.cursor()
+        cursor.execute(sql, (ag_login_id, participant_name))
+        return cursor.fetchone()[0]
+
     def get_verification_code(self, supplied_kit_id):
         """returns the verification code for the kit"""
         sql = ("select kit_verification_code from ag_kit where "
