@@ -493,29 +493,31 @@ CREATE INDEX idx_human_survey_question_response_type ON ag.survey_question_respo
 
 COMMENT ON TABLE ag.survey_question_response_type IS 'Stores the type of response for each question';
 
-CREATE TABLE ag.survey_question_triggered_by ( 
+CREATE TABLE ag.survey_question_triggers ( 
 	survey_question_id   bigint  ,
-	trigger_question     bigint  ,
-	trigger_response     varchar  ,
-	CONSTRAINT fk_survey_question_triggered_by FOREIGN KEY ( survey_question_id ) REFERENCES ag.survey_question( survey_question_id )    ,
-	CONSTRAINT fk_survey_question_triggered_by0 FOREIGN KEY ( trigger_question, trigger_response ) REFERENCES ag.survey_question_response( survey_question_id, response )    
+	triggering_response  varchar  ,
+	triggered_question   bigint  ,
+	CONSTRAINT fk_survey_question_triggers FOREIGN KEY ( triggered_question ) REFERENCES ag.survey_question( survey_question_id )    ,
+	CONSTRAINT fk_survey_question_triggers0 FOREIGN KEY ( survey_question_id, triggering_response ) REFERENCES ag.survey_question_response( survey_question_id, response )    
  );
 
-CREATE INDEX idx_human_survey_question_triggered_by ON ag.survey_question_triggered_by ( survey_question_id );
+CREATE INDEX idx_human_survey_question_triggered_by ON ag.survey_question_triggers ( survey_question_id );
 
-CREATE INDEX idx_human_survey_question_triggered_by_0 ON ag.survey_question_triggered_by ( trigger_question );
+CREATE INDEX idx_human_survey_question_triggered_by_0 ON ag.survey_question_triggers ( triggered_question );
 
-CREATE INDEX idx_human_survey_question_triggered_by_1 ON ag.survey_question_triggered_by ( trigger_response );
+CREATE INDEX idx_human_survey_question_triggered_by_1 ON ag.survey_question_triggers ( triggering_response );
 
-CREATE INDEX idx_survey_question_triggered_by ON ag.survey_question_triggered_by ( trigger_question, trigger_response );
+CREATE INDEX idx_survey_question_triggered_by ON ag.survey_question_triggers ( triggered_question, triggering_response );
 
-COMMENT ON TABLE ag.survey_question_triggered_by IS 'Which responses to the question trigger the appearance of this question';
+CREATE INDEX idx_survey_question_triggers ON ag.survey_question_triggers ( survey_question_id, triggering_response );
 
-COMMENT ON COLUMN ag.survey_question_triggered_by.survey_question_id IS 'The ID of the question that is triggered';
+COMMENT ON TABLE ag.survey_question_triggers IS 'Which question/answer combos trigger other questions';
 
-COMMENT ON COLUMN ag.survey_question_triggered_by.trigger_question IS 'The question that might trigger the appearance of this question';
+COMMENT ON COLUMN ag.survey_question_triggers.survey_question_id IS 'The ID of the question that is triggered';
 
-COMMENT ON COLUMN ag.survey_question_triggered_by.trigger_response IS 'The response to the trigger_question that will cause the appearance of this question';
+COMMENT ON COLUMN ag.survey_question_triggers.triggering_response IS 'The response to the question that will cause the appearance of the triggered_question';
+
+COMMENT ON COLUMN ag.survey_question_triggers.triggered_question IS 'The question that is triggered';
 
 CREATE TABLE ag.survey_answers ( 
 	survey_id            varchar  NOT NULL,
