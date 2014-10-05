@@ -77,7 +77,7 @@ class Question(object):
             {other_question_id: [triggering responses to that question], ...}
         """
         trigger_list = db_conn.execute_fetchall('''
-            select select trigger_question, trigger_response
+            select trigger_question, trigger_response
             from survey_question_triggered_by
             where survey_question_id = %s
             order by trigger_question'''.format(
