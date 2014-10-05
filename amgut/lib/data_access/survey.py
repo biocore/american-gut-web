@@ -9,6 +9,9 @@ from __future__ import division
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
 
+from itertools import groupby
+from operator import itemgetter
+
 from wtforms import (SelectField, SelectMultipleField, widgets,
                      TextAreaField)
 
@@ -73,11 +76,16 @@ class Question(object):
         dict
             {other_question_id: [triggering responses to that question], ...}
         """
-        things = db_conn.execute_fetchone('''
-            select exists(select * from survey_question_triggered_by
-            where survey_question_id = %s)''', self.id)
+        trigger_list = db_conn.execute_fetchall('''
+            select select trigger_question, trigger_response
+            from survey_question_triggered_by
+            where survey_question_id = %s
+            order by trigger_question'''.format(
+                self._supplemental_survey_table),
+            [self.id])
 
-        raise NotImplementedError("Coming soon")
+        return {key: list(group)
+                for key, group in groupby(trigger_list, key=itemgetter(0))}
 
     @property
     def interface_elements(self):
