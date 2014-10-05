@@ -84,6 +84,7 @@ media_locale = {
 }
 
 _HANDLERS = {
+    'JUVENILE_CONSENT_EXPECTED': "We are expecting a manual consent form for the juvenile user (%s)",
     'PARTICIPANT_EXISTS': 'Participant %s already exists!',
     'SUCCESSFULLY_ADDED': "Successfully added %s!",
     'AUTH_REGISTER_SUBJECT': "%(project_shorthand)s Verification Code" % {'project_shorthand': AMGUT_CONFIG.project_shorthand},

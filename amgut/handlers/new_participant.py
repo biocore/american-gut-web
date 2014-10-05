@@ -56,8 +56,8 @@ class NewParticipantHandler(BaseHandler):
             self.redirect(media_locale['SITEBASE'] + "/authed/portal/?errmsg=%s" % errmsg)
 
         if is_juvenile == 'off' and is_exception:
-            errmsg = ("We are expecting a survey from that juvenile user (%s)"
-                      % participant_name)
+            errmsg = url_escape(tl["JUVENILE_CONSENT_EXPECTED"] %
+                                participant_name)
             self.redirect(media_locale['SITEBASE'] + "/authed/portal/?errmsg=%s" % errmsg)
 
         if is_juvenile == 'on':
