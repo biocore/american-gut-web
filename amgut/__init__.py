@@ -14,10 +14,18 @@ import importlib
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.lib.locale_data import media_locale
 from redis import Redis
+from amgut.lib.data_access.sql_connection import SQLConnectionHandler
 
 r_server = Redis(host=AMGUT_CONFIG.redis_host,
                  port=AMGUT_CONFIG.redis_port,
                  db=AMGUT_CONFIG.redis_db_id)
+
+try:
+    db_conn = SQLConnectionHandler()
+except:
+    # this SHOULD only trigger when the environment is being created...
+    print "Can't get db_conn!"
+    db_conn = None
 
 current_locale_module = '.'.join(['amgut.lib.locale_data',
                                   AMGUT_CONFIG.locale])
@@ -30,4 +38,5 @@ except ImportError:
 text_locale = current_locale.text_locale
 media_locale.update(current_locale.media_locale)
 
-__all__ = ['r_server', 'text_locale', 'media_locale', 'AMGUT_CONFIG']
+__all__ = ['r_server', 'text_locale', 'media_locale', 'AMGUT_CONFIG',
+           'db_conn']

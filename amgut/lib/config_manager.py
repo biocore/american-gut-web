@@ -16,6 +16,7 @@ with standard_library.hooks():
     from configparser import (ConfigParser, NoOptionError,
                               Error as ConfigParser_Error)
 
+from amgut.lib.locale_data import available_locales
 
 class MissingConfigSection(ConfigParser_Error):
     """Exception when the config file is missing a required section"""
@@ -46,6 +47,8 @@ class ConfigurationManager(object):
         Whether we are in a test environment or not
     base_data_dir : str
         Path to the base directorys where all data file are stored
+    locale : str
+        The locale
     user : str
         The postgres user
     password : str
@@ -116,6 +119,18 @@ class ConfigurationManager(object):
         self._get_redis(config)
         self._get_email(config)
 
+    def get_settings(self):
+        """Returns settings that should be stored in postgres settings table
+
+        Returns
+        -------
+        list of tuple
+            Tuples are (parameter, argument)
+        """
+        return [('test_environment', self.test_environment),
+                ('base_data_dir', self.base_data_dir),
+                ('locale', self.locale)]
+
     def _get_main(self, config):
         """Get the configuration of the main section"""
         expected_options = {'name', 'shorthand', 'test_environment',
@@ -134,6 +149,10 @@ class ConfigurationManager(object):
 
         if not exists(self.base_data_dir):
             raise IOError("Directory %s does not exist!" % self.base_data_dir)
+
+        if self.locale not in available_locales:
+            raise ValueError("%s is not a recognized locale. Please select "
+                             "from %r" % (self.locale, available_locales))
 
     def _get_postgres(self, config):
         """Get the configuration of the postgres section"""

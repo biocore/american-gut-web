@@ -105,6 +105,7 @@ _HANDLERS = {
 }
 
 _NEW_PARTICIPANT = {
+    'JUVENILE_CONSENT_EXPECTED': "We are expecting a manual consent form for the juvenile user (%s)",
     'ADD_HUMAN_TITLE': 'Add a New Human Source',
     'ADD_HUMAN_HELP_SUGGESTION': 'If you need help with the website, please use the contact mechanism in the menu to the left. Please do not email the people listed in this form for help, unless it has to do with an injury. ',
     'CONSENT_TITLE': 'CONSENT TO PARTICIPATE IN A RESEARCH STUDY',
