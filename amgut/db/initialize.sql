@@ -1,6 +1,7 @@
 ----------------------------------------------------------
 -- survey_group
 ----------------------------------------------------------
+INSERT INTO survey_group (group_order, american, british) VALUES (-1, 'Personal Information', 'Personal Information');
 INSERT INTO survey_group (group_order, american, british) VALUES (0, 'General Diet Information', 'General Diet Information');
 INSERT INTO survey_group (group_order, american, british) VALUES (1, 'General Information', 'General Information');
 INSERT INTO survey_group (group_order, american, british) VALUES (2, 'General Lifestyle and Hygiene Information', 'General Lifestyle and Hygiene Information');
@@ -10,6 +11,7 @@ INSERT INTO survey_group (group_order, american, british) VALUES (4, 'Detailed D
 ----------------------------------------------------------
 -- surveys
 ----------------------------------------------------------
+INSERT INTO surveys (survey_id, survey_group) VALUES (1, -1);
 INSERT INTO surveys (survey_id, survey_group) VALUES (1, 0);
 INSERT INTO surveys (survey_id, survey_group) VALUES (1, 1);
 INSERT INTO surveys (survey_id, survey_group) VALUES (1, 2);
@@ -138,6 +140,16 @@ INSERT INTO survey_question (american, british) VALUES ('Gender:', 'Gender:');
 INSERT INTO survey_question (american, british) VALUES ('Today''s date:', 'Today''s date:');
 INSERT INTO survey_question (american, british) VALUES ('Weight:', 'Weight:');
 INSERT INTO survey_question (american, british) VALUES ('Height', 'Height');
+-- personal prompt questions
+INSERT INTO survey_question (american, british) VALUES ('Gender:', 'Gender:');
+INSERT INTO survey_question (american, british) VALUES ('Height:', 'Height:');
+INSERT INTO survey_question (american, british) VALUES ('Height units:', 'Height units:');
+INSERT INTO survey_question (american, british) VALUES ('Country of birth:', 'Country of birth:');
+INSERT INTO survey_question (american, british) VALUES ('Birth month:', 'Birth month:');
+INSERT INTO survey_question (american, british) VALUES ('Birth year:', 'Birth year:');
+INSERT INTO survey_question (american, british) VALUES ('Weight:', 'Weight:');
+INSERT INTO survey_question (american, british) VALUES ('Weight units:', 'Weight units:');
+INSERT INTO survey_question (american, british) VALUES ('Current ZIP code:', 'Current ZIP code:');
 
 ----------------------------------------------------------
 -- group_questions
@@ -239,6 +251,16 @@ INSERT INTO group_questions (survey_group, survey_question_id, display_index) VA
 INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (1, 15, 7);
 INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (1, 16, 8);
 INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (1, 14, 9);
+-- personal prompt
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 120, 0);
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 121, 1);
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 122, 2);
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 123, 3);
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 124, 4);
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 125, 5);
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 126, 6);
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 127, 7);
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 128, 8);
 
 ----------------------------------------------------------
 -- survey_response_types
@@ -246,6 +268,7 @@ INSERT INTO group_questions (survey_group, survey_question_id, display_index) VA
 INSERT INTO survey_response_types (survey_response_type) VALUES ('TEXT');
 INSERT INTO survey_response_types (survey_response_type) VALUES ('SINGLE');
 INSERT INTO survey_response_types (survey_response_type) VALUES ('MULTIPLE');
+INSERT INTO survey_response_types (survey_response_type) VALUES ('STRING');
 
 ----------------------------------------------------------
 -- survey_question_response_type
@@ -369,6 +392,16 @@ INSERT INTO survey_question_response_type (survey_question_id, survey_response_t
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (107, 'TEXT');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (109, 'TEXT');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (110, 'TEXT');
+-- personal prompt
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (120, 'STRING');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (121, 'STRING');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (122, 'STRING');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (123, 'STRING');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (124, 'STRING');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (125, 'STRING');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (126, 'STRING');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (127, 'STRING');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (128, 'STRING');
 
 ----------------------------------------------------------
 -- survey_response
