@@ -1,13 +1,11 @@
 import os
 from json import loads, dumps
+from datetime import date
 
 from wtforms import Form
 from tornado.web import authenticated
 from future.utils import viewitems
 from natsort import natsorted
-from json import loads, dumps
-import os
-from datetime import date
 
 from amgut.util import AG_DATA_ACCESS
 from amgut.handlers.base_handlers import BaseHandler
