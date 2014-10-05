@@ -30,7 +30,7 @@ class Question(object):
     _question_response_table = 'survey_question_response'
     _response_table = 'survey_response'
     _response_type_table = 'survey_question_response_type'
-    _supplemental_survey_table = 'survey_question_triggered_by'
+    _supplemental_survey_table = 'survey_question_triggers'
 
     def __init__(self, ID, current_response=None):
         self.id = ID
@@ -78,10 +78,10 @@ class Question(object):
             {other_question_id: [triggering responses to that question], ...}
         """
         trigger_list = db_conn.execute_fetchall('''
-            select trigger_question, trigger_response
-            from survey_question_triggered_by
+            select triggered_question, triggering_response
+            from {0}
             where survey_question_id = %s
-            order by trigger_question'''.format(
+            order by triggered_question'''.format(
                 self._supplemental_survey_table),
             [self.id])
 
@@ -98,6 +98,28 @@ class Question(object):
             A list of the elements that represent the interface to the question
         """
         raise NotImplementedError("To be implemented by quesiton subtypes.")
+
+    @classmethod
+    def factory(cls, ID):
+        """Return the correct class type based on response type"""
+        question = Question(ID)
+
+        response_type = question.response_type
+        question_class = None
+
+        if response_type == 'SINGLE':
+            question_class = QuestionSingle
+        elif response_type == 'MULTIPLE':
+            question_class = QuestionMultiple
+        elif response_type == 'TEXT':
+            question_class = QuestionText
+        elif response_type == 'STRING':
+            question_class = QuestionString
+        else:
+            raise ValueError("Unrecognized response type: %s" %
+                             response_type)
+
+        return question_class(question.id)
 
 
 class QuestionSingle(Question):
@@ -175,7 +197,7 @@ class Group(object):
 
     def __init__(self, ID):
         self.id = ID
-        qs = [Question(x[0]) for x in db_conn.execute_fetchall('''
+        qs = [Question.factory(x[0]) for x in db_conn.execute_fetchall('''
             select gq.survey_question_id
             from {0} sg join {1} gq on sg.group_order = gq.survey_group
             where sg.group_order = %s
@@ -184,25 +206,7 @@ class Group(object):
                 self._group_table,
                 self._group_questions_table),
             [self.id])]
-
-        self.questions = []
-        for question in qs:
-            response_type = question.response_type
-            question_class = None
-
-            if response_type == 'SINGLE':
-                question_class = QuestionSingle
-            elif response_type == 'MULTIPLE':
-                question_class = QuestionMultiple
-            elif response_type == 'TEXT':
-                question_class = QuestionText
-            elif response_type == 'STRING':
-                question_class = QuestionString
-            else:
-                raise ValueError("Unrecognized response type: %s" %
-                                 response_type)
-
-            self.questions.append(question_class(question.id))
+        self.questions = qs
 
     @property
     def name(self):
