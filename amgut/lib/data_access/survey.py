@@ -82,6 +82,7 @@ class Question(object):
             from {0} sst
             join {1} sqr
                 on sst.survey_question_id=sqr.survey_question_id
+                and sqr.response=sst.triggering_response
             where sst.survey_question_id = %s
             order by triggered_question'''.format(
                 self._supplemental_survey_table,
