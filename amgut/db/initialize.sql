@@ -126,22 +126,9 @@ INSERT INTO survey_question (american, british) VALUES ('Treatment for:', 'Treat
 INSERT INTO survey_question (american, british) VALUES ('Indoor/outdoor or confined (cage/tank):', 'Indoor/outdoor or confined (cage/tank):');
 INSERT INTO survey_question (american, british) VALUES ('Pets', 'Pets');
 INSERT INTO survey_question (american, british) VALUES ('Race/ethnicity:', 'Race/ethnicity:');
-INSERT INTO survey_question (american, british) VALUES ('Name:', 'Name:');
 INSERT INTO survey_question (american, british) VALUES ('Dietary Supplements/Dietary Restrictions:', 'Dietary Supplements/Dietary Restrictions:');
 INSERT INTO survey_question (american, british) VALUES ('Contact extent:', 'Contact extent:');
 INSERT INTO survey_question (american, british) VALUES ('Other conditions you suffer from that were not listed in the diagnosed conditions question', 'Other conditions you suffer from that were not listed in the diagnosed conditions question');
-INSERT INTO survey_question (american, british) VALUES ('Please write anything else about yourself that you think could affect your personal microorganisms.', 'Please write anything else about yourself that you think could affect your personal microorganisms.');
-INSERT INTO survey_question (american, british) VALUES ('Travel:', 'Travel:');
-INSERT INTO survey_question (american, british) VALUES ('What is your relationship to other people in this study who have voluntarily told you of their participation (e.g. partner, children, roommates)?  For children, please specify whether or not you are genetically related.  Note that we will only use information that both parties provide.', 'What is your relationship to other people in this study who have voluntarily told you of their participation (e.g. partner, children, roommates)?  For children, please specify whether or not you are genetically related.  Note that we will only use information that both parties provide.');
-INSERT INTO survey_question (american, british) VALUES ('Antibiotics:', 'Antibiotics:');
-INSERT INTO survey_question (american, british) VALUES ('Country of birth:', 'Country of birth:');
-INSERT INTO survey_question (american, british) VALUES ('Current ZIP code:', 'Current ZIP code:');
-INSERT INTO survey_question (american, british) VALUES ('Name:', 'Name:');
-INSERT INTO survey_question (american, british) VALUES ('Birth date:', 'Birth date:');
-INSERT INTO survey_question (american, british) VALUES ('Gender:', 'Gender:');
-INSERT INTO survey_question (american, british) VALUES ('Today''s date:', 'Today''s date:');
-INSERT INTO survey_question (american, british) VALUES ('Weight:', 'Weight:');
-INSERT INTO survey_question (american, british) VALUES ('Height', 'Height');
 -- personal prompt questions
 INSERT INTO survey_question (american, british) VALUES ('Gender:', 'Gender:');
 INSERT INTO survey_question (american, british) VALUES ('Height:', 'Height:');
@@ -256,17 +243,17 @@ INSERT INTO group_questions (survey_group, survey_question_id, display_index) VA
 INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (1, 16, 8);
 INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (1, 14, 9);
 -- personal prompt
-INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 120, 0);
-INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 121, 1);
-INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 122, 2);
-INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 123, 3);
-INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 124, 4);
-INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 125, 5);
-INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 126, 6);
-INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 127, 7);
-INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 128, 8);
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 107, 0);
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 108, 1);
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 109, 2);
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 110, 3);
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 111, 4);
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 112, 5);
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 113, 6);
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 114, 7);
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 115, 8);
 -- about yourself
-INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (5, 129, 0);
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (5, 116, 0);
 
 ----------------------------------------------------------
 -- survey_response_types
@@ -376,40 +363,18 @@ INSERT INTO survey_question_response_type (survey_question_id, survey_response_t
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (95, 'SINGLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (56, 'SINGLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (55, 'SINGLE');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (110, 'TEXT');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (111, 'TEXT');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (112, 'TEXT');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (113, 'TEXT');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (114, 'TEXT');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (115, 'TEXT');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (116, 'TEXT');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (117, 'TEXT');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (97, 'TEXT');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (98, 'TEXT');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (108, 'TEXT');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (99, 'TEXT');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (100, 'TEXT');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (101, 'TEXT');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (102, 'TEXT');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (103, 'TEXT');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (104, 'TEXT');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (105, 'TEXT');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (106, 'TEXT');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (107, 'TEXT');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (109, 'TEXT');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (110, 'TEXT');
 -- personal prompt
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (120, 'STRING');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (121, 'STRING');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (122, 'STRING');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (123, 'STRING');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (124, 'STRING');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (125, 'STRING');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (126, 'STRING');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (127, 'STRING');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (128, 'STRING');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (107, 'STRING');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (108, 'STRING');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (109, 'STRING');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (110, 'STRING');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (111, 'STRING');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (112, 'STRING');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (113, 'STRING');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (114, 'STRING');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (115, 'STRING');
 -- about yourself
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (129, 'TEXT');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (116, 'TEXT');
 
 ----------------------------------------------------------
 -- survey_response
@@ -1062,21 +1027,3 @@ INSERT INTO survey_question_triggers (survey_question_id, triggered_question, tr
 
 -- OTC or prescription meds
 INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (49, 99, 'Yes');
-
--- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (101, 21, 'Yes');
--- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (106, 81, 'Diagnosed by a medical professional (doctor, physician assistant)');
--- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (106, 81, 'Diagnosed by an alternative medicine practitioner');
--- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (106, 81, 'Self-diagnosed');
--- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (104, 12, 'Yes');
--- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (101, 20, 'Yes');
--- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (109, 18, 'Yes');
--- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (108, 16, 'Month');
--- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (108, 16, '3 months');
--- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (108, 16, '6 months');
--- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (102, 14, 'Other');
--- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (110, 39, 'Week');
--- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (110, 39, 'Month');
--- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (98, 49, 'Yes');
--- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (97, 42, 'Yes');
--- INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (98, 6, 'Yes');
-
