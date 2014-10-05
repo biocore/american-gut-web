@@ -38,7 +38,7 @@ INSERT INTO survey_question (american, british) VALUES ('Do you follow any other
 INSERT INTO survey_question (american, british) VALUES ('What is your drinking water source at home?', 'What is your drinking water source at home?');
 INSERT INTO survey_question (american, british) VALUES ('What is your race/ethnicity?', 'What is your race/ethnicity?');
 INSERT INTO survey_question (american, british) VALUES ('When did you move to current state of residence?', 'When did you move to current state of residence?');
-INSERT INTO survey_question (american, british) VALUES ('I have traveled outside of the United States in the past _________.', 'I have traveled outside of the United States in the past _________.');
+INSERT INTO survey_question (american, british) VALUES ('I have traveled outside of my country of residence in the past _________.', 'I have traveled outside of my country of residence in the past _________.');
 INSERT INTO survey_question (american, british) VALUES ('How many non-family roommates do you have?', 'How many non-family roommates do you have?');
 INSERT INTO survey_question (american, british) VALUES ('Are any of your roommates participating in this study?', 'Are any of your roommates participating in this study?');
 INSERT INTO survey_question (american, british) VALUES ('Are you related to or live with any of the other participants in this study?', 'Are you related to or live with any of the other participants in this study?');
@@ -464,7 +464,7 @@ INSERT INTO survey_response (american, british) VALUES ('Less than 5 hours', 'Le
 INSERT INTO survey_response (american, british) VALUES ('Occasionally (1-2 times/week)', 'Occasionally (1-2 times/week)');
 INSERT INTO survey_response (american, british) VALUES ('Asian or Pacific Islander', 'Asian or Pacific Islander');
 INSERT INTO survey_response (american, british) VALUES ('Yes', 'Yes');
-INSERT INTO survey_response (american, british) VALUES ('I have not been outside of the United States in the past year.', 'I have not been outside of the United States in the past year.');
+INSERT INTO survey_response (american, british) VALUES ('I have not been outside of my country of residence in the past year.', 'I have not been outside of my country of residence in the past year.');
 INSERT INTO survey_response (american, british) VALUES ('8 or more hours', '8 or more hours');
 INSERT INTO survey_response (american, british) VALUES ('I use an antiperspirant', 'I use an antiperspirant');
 INSERT INTO survey_response (american, british) VALUES ('Shellfish', 'Shellfish');
@@ -601,7 +601,7 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (16, '3 months', 2);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (16, '6 months', 3);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (16, '1 year', 4);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (16, 'I have not been outside of the United States in the past year.', 5);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (16, 'I have not been outside of my country of residence in the past year.', 5);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (17, 'Unspecified', 0);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (17, 'None', 1);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (17, 'One', 2);
