@@ -188,4 +188,5 @@ def survey_asd(survey_id):
     return embedded_text % url
 
 
-external_surveys = (survey_vioscreen, survey_asd)
+# external_surveys = (survey_vioscreen, survey_asd)
+external_surveys = (survey_asd)
