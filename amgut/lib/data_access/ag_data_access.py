@@ -441,7 +441,7 @@ class AGDataAccess(object):
             "SELECT exists(SELECT * FROM survey_answers_other WHERE "
             "survey_id = %s)", [survey_id])[0]
 
-        return all(survey_answers is False, survey_answers_other is False)
+        return all((survey_answers is False, survey_answers_other is False))
 
     def AGGetBarcodeMetadata(self, barcode):
         results = self._sql.execute_proc_return_cursor(
