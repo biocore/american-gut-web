@@ -954,6 +954,35 @@ class AGDataAccess(object):
 
         return user_data
 
+    def get_person_info(self, survey_id):
+        # get question responses
+        info = {}
+        sql = ("SELECT q.american, sa.response FROM ag.survey_answers_other "
+               " sa JOIN ag.ag_login_surveys ls ON sa.survey_id = ls.survey_id "
+               "JOIN ag.survey_question q ON q.survey_question_id = sa.survey_question_id "
+               "WHERE sa.survey_id = %s AND q.american IN ('Birth month:','Birth year:','Gender:')")
+        cursor = self.connection.cursor()
+        cursor.execute(sql, [survey_id])
+        rows = cursor.fetchall()
+
+        for res in rows:
+            value = json.loads(res[1])[0]
+            if res[0] == 'Birth month:':
+                info['birth_month'] = value
+            elif res[0] == 'Birth year:':
+                info['birth_year'] = value
+            elif res[0] == 'Gender:':
+                info['gender'] = value
+
+        # get name from consent form
+        sql = ("SELECT c.participant_name FROM ag.ag_consent c JOIN "
+               "ag.ag_login_surveys ls ON c.ag_login_id = ls.ag_login_id WHERE "
+               "ls.survey_id = %s")
+        cursor.execute(sql, [survey_id])
+        info["name"] = cursor.fetchone()[0]
+
+        return info
+
     def get_barcode_results(self, supplied_kit_id):
         sql = """select akb.barcode, akb.participant_name
                  from ag_kit_barcodes akb
