@@ -875,7 +875,6 @@ INSERT INTO survey_response (american, british) VALUES ('2014', '2014');
 --gender
 INSERT INTO survey_response (american, british) VALUES ('Male', 'Male');
 INSERT INTO survey_response (american, british) VALUES ('Female', 'Female');
-INSERT INTO survey_response (american, british) VALUES ('Other', 'Other');
 
 ----------------------------------------------------------
 -- survey_question_response
