@@ -424,10 +424,19 @@ class AGDataAccess(object):
         self.connection.commit()
 
     def getHumanParticipants(self, ag_login_id):
-        results = self._sql.execute_proc_return_cursor(
-            'ag_get_human_participants', [ag_login_id])
-        return_res = [row[0] for row in results]
-        results.close()
+        conn_handler = SQLConnectionHandler()
+        # get people from new survey setup
+        return_res = []
+        new_survey_sql = ("SELECT participant_name FROM ag_login_surveys "
+                          "WHERE ag_login_id = %s")
+        results = conn_handler.execute_fetchall(new_survey_sql, [ag_login_id])
+        return_res.extend([row[0] for row in results])
+
+        # get people from old surveys
+        old_survey_sql = ("SELECT participant_name FROM ag_human_survey where "
+                          "ag_login_id = %s")
+        results = conn_handler.execute_fetchall(new_survey_sql, [ag_login_id])
+        return_res.extend([row[0] for row in results])
         return return_res
 
     def AGGetBarcodeMetadata(self, barcode):
