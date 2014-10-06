@@ -442,10 +442,10 @@ class AGDataAccess(object):
         # check survey exists
         survey_answers = conn_handler.execute_fetchone(
             "SELECT exists(SELECT * FROM survey_answers WHERE survey_id = %s)",
-            [survey_id])
+            [survey_id])[0]
         survey_answers_other = conn_handler.execute_fetchone(
             "SELECT exists(SELECT * FROM survey_answers_other WHERE "
-            "survey_id = %s)", [survey_id])
+            "survey_id = %s)", [survey_id])[0]
 
         return all(survey_answers is False, survey_answers_other is False)
 
