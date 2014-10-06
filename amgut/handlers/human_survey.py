@@ -1,13 +1,9 @@
-import os
-from json import loads, dumps
-from datetime import date
+from json import dumps
+from collections import defaultdict
 
 from wtforms import Form
 from tornado.web import authenticated
-from future.utils import viewitems
-from natsort import natsorted
 
-from amgut.util import AG_DATA_ACCESS
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.lib.util import store_survey
 from amgut.lib.survey_supp import primary_human_survey
@@ -25,18 +21,24 @@ def make_human_survey_class(group):
     """
     attrs = {}
     prompts = {}
-    for question in group.questions:
-        qid = '_'.join(group.american_name.split() + [str(question.id)])
+    triggers = defaultdict(list)
+    triggered = defaultdict(list)
 
-        if question.triggers:
-            pass
+    for q in group.questions:
+        for eid, element in zip(q.interface_element_ids, q.interface_elements):
+            attrs[eid] = element
+            prompts[eid] = q.question
 
-        for i, element in enumerate(question.interface_elements):
-            element_id = '%s_%d' % (qid, i)
-            attrs[element_id] = element
-            prompts[element_id] = question.question
+            if q.triggers:
+                for triggered_id, triggering_responses in q.triggers.items():
+                    triggers[eid].extend(triggering_responses)
+                    triggered[eid].extend(group.id_to_eid[triggered_id])
 
     attrs['prompts'] = prompts
+    attrs['triggers'] = triggers
+    attrs['triggered'] = triggered
+    attrs['supplemental_eids'] = group.supplemental_eids
+
     return type('HumanSurvey', (Form,), attrs)
 
 
@@ -66,7 +68,6 @@ class HumanSurveyHandler(BaseHandler):
 
         # if this is not the last page, render the next page
         if next_page_number < len(surveys):
-            # TODO: populate the next form page from database values, if they
             # exist
             the_form = surveys[next_page_number]()
             title = primary_human_survey.groups[next_page_number].name
@@ -79,8 +80,6 @@ class HumanSurveyHandler(BaseHandler):
                         page_number=next_page_number,
                         progress=progress)
         else:
-            # TODO: store in the database a connection between human_survey_id and this specific participant. THIS IS NOT CURRENTLY STUBBED OUT IN STORE_SURVEY
-
             # only get the cookie if you complete the survey
             self.clear_cookie('human_survey_id')
             self.set_secure_cookie('completed_survey_id', human_survey_id)
