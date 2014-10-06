@@ -424,6 +424,10 @@
 			<index name="idx_human_survey_group_question_0" unique="NORMAL" >
 				<column name="survey_question_id" />
 			</index>
+			<index name="idx_group_questions" unique="UNIQUE" >
+				<column name="survey_group" />
+				<column name="display_index" />
+			</index>
 			<fk name="fk_human_survey_group_question" to_schema="ag" to_table="survey_group" >
 				<fk_column name="survey_group" pk="group_order" />
 			</fk>
@@ -579,6 +583,9 @@
 			</index>
 			<index name="idx_survey_question" unique="UNIQUE" >
 				<column name="american" />
+			</index>
+			<index name="idx_survey_question_0" unique="UNIQUE" >
+				<column name="british" />
 			</index>
 		</table>
 		<table name="survey_question_response" >
@@ -21299,7 +21306,6 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="plate_barcode" color="c6d9f7" x="1695" y="510" />
 		<entity schema="ag" name="project_barcode" color="c6d9f7" x="1695" y="390" />
 		<entity schema="ag" name="project" color="c6d9f7" x="1890" y="390" />
-		<entity schema="ag" name="survey_question_response_type" color="ffcccc" x="720" y="1950" />
 		<entity schema="ag" name="group_questions" color="ffcccc" x="330" y="1590" />
 		<entity schema="ag" name="survey_response_types" color="ffffff" x="1020" y="1965" />
 		<entity schema="ag" name="ag_login" color="f7e2c6" x="735" y="630" />
@@ -21310,12 +21316,13 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="survey_answers" color="a8c4ef" x="1560" y="1425" />
 		<entity schema="ag" name="ag_consent" color="c6d9f7" x="1470" y="945" />
 		<entity schema="ag" name="survey_question_triggers" color="a8c4ef" x="675" y="1650" />
-		<entity schema="ag" name="iso_country_lookup" color="a8c4ef" x="930" y="1845" />
 		<entity schema="ag" name="survey_response" color="a8c4ef" x="720" y="1860" />
 		<entity schema="ag" name="survey_question_response" color="ffcccc" x="720" y="1755" />
 		<entity schema="ag" name="ag_login_surveys" color="ffcccc" x="1455" y="1245" />
 		<entity schema="ag" name="survey_question" color="a8c4ef" x="450" y="1755" />
 		<entity schema="ag" name="ag_human_survey" color="c6d9f7" x="1695" y="645" />
+		<entity schema="ag" name="iso_country_lookup" color="ffffff" x="930" y="1845" />
+		<entity schema="ag" name="survey_question_response_type" color="ffcccc" x="720" y="1950" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by : 
    american_gut_consent</comment>

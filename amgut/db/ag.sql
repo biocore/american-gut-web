@@ -159,7 +159,8 @@ CREATE TABLE ag.survey_question (
 	american             varchar  ,
 	british              varchar  ,
 	CONSTRAINT pk_human_survey_question PRIMARY KEY ( survey_question_id ),
-	CONSTRAINT idx_survey_question UNIQUE ( american ) 
+	CONSTRAINT idx_survey_question UNIQUE ( american ) ,
+	CONSTRAINT idx_survey_question_0 UNIQUE ( british ) 
  );
 
 COMMENT ON TABLE ag.survey_question IS 'Stores the human survey questions';
@@ -443,6 +444,7 @@ CREATE TABLE ag.group_questions (
 	survey_question_id   bigint  NOT NULL,
 	display_index        integer  NOT NULL,
 	CONSTRAINT pk_human_survey_group_question PRIMARY KEY ( survey_group, survey_question_id ),
+	CONSTRAINT idx_group_questions UNIQUE ( survey_group, display_index ) ,
 	CONSTRAINT fk_human_survey_group_question FOREIGN KEY ( survey_group ) REFERENCES ag.survey_group( group_order )    ,
 	CONSTRAINT fk_human_survey_group_question_0 FOREIGN KEY ( survey_question_id ) REFERENCES ag.survey_question( survey_question_id )    
  );
