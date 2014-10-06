@@ -9,8 +9,7 @@ from __future__ import division
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
 
-from itertools import groupby
-from operator import itemgetter
+from collections import defaultdict
 
 from wtforms import (SelectField, SelectMultipleField, widgets,
                      TextAreaField, TextField)
@@ -32,8 +31,9 @@ class Question(object):
     _response_type_table = 'survey_question_response_type'
     _supplemental_survey_table = 'survey_question_triggers'
 
-    def __init__(self, ID, current_response=None):
+    def __init__(self, ID, group_name):
         self.id = ID
+        self.group_name = group_name
 
         responses = db_conn.execute_fetchall('''
             select sr.{0}
@@ -68,14 +68,20 @@ class Question(object):
                 [self.id])[0]
 
         self.triggers = self._triggers()
+        self.qid = '_'.join(self.group_name.split() + [str(self.id)])
+
+        element_ids, elements = self._interface_elements()
+        self.interface_elements = elements
+        self.interface_element_ids = ['%s_%d' % (self.qid, i)
+                                      for i in element_ids]
 
     def _triggers(self):
         """What other question-response combinations this question can trigger
 
         Returns
         -------
-        dict
-            {other_question_id: [triggering indices to that question], ...}
+        tuple
+            (other_question_id, [triggering indices to that question])
         """
         trigger_list = db_conn.execute_fetchall('''
             select triggered_question, sqr.display_index
@@ -89,24 +95,23 @@ class Question(object):
                 self._question_response_table),
             [self.id])
 
-        return {key: list(group)
-                for key, group in groupby(trigger_list, key=itemgetter(0))}
+        results = defaultdict(list)
+        for question, index in trigger_list:
+            results[question].append(index)
 
-    @property
-    def interface_elements(self):
-        """Get WTForms interface elements for the question
+        if results:
+            return results.items()[0]
+        else:
+            return ()
 
-        Returns
-        -------
-        list
-            A list of the elements that represent the interface to the question
-        """
-        raise NotImplementedError("To be implemented by quesiton subtypes.")
+    def _interface_elements(self):
+        """Can be overridden by subclasses"""
+        return ([], [])
 
     @classmethod
-    def factory(cls, ID):
+    def factory(cls, ID, name):
         """Return the correct class type based on response type"""
-        question = Question(ID)
+        question = Question(ID, name)
 
         response_type = question.response_type
         question_class = None
@@ -123,69 +128,50 @@ class Question(object):
             raise ValueError("Unrecognized response type: %s" %
                              response_type)
 
-        return question_class(question.id)
+        return question_class(question.id, name)
 
 
 class QuestionSingle(Question):
     """A question where there is one response
     """
-    def __init__(self, survey_question_id, current_response=None):
-        super(QuestionSingle, self).__init__(survey_question_id,
-                                             current_response)
-
-    @property
-    def interface_elements(self):
+    def _interface_elements(self):
         """See superclass documentation
         """
-        return [SelectField(
+        return ([0], [SelectField(
             self.id, choices=list(enumerate(self.responses)),
-            coerce=lambda x: x)]
+            coerce=lambda x: x)])
 
 
 class QuestionMultiple(Question):
     """A question where there are multiple responses
     """
-    def __init__(self, survey_question_id, current_response=None):
-        super(QuestionMultiple, self).__init__(survey_question_id,
-                                               current_response)
-    @property
-    def interface_elements(self):
+    def _interface_elements(self):
         """See superclass documentation
         """
-        choices = [(i,v) for i, v in enumerate(self.responses)
+        choices = [(i, v) for i, v in enumerate(self.responses)
                    if v != 'Unspecified']
-        return [SelectMultipleField(
+        return ([0], [SelectMultipleField(
             self.id, choices=choices,
             widget=widgets.TableWidget(),
             option_widget=widgets.CheckboxInput(),
-            coerce=lambda x: x)]
+            coerce=lambda x: x)])
 
 
 class QuestionText(Question):
     """A free-response question
     """
-    def __init__(self, survey_question_id, current_response=None):
-        super(QuestionText, self).__init__(survey_question_id,
-                                           current_response)
-
-    @property
-    def interface_elements(self):
+    def _interface_elements(self):
         """See superclass documentation
         """
-        return [TextAreaField(self.id)]
+        return ([0], [TextAreaField(self.id)])
 
 
 class QuestionString(Question):
     """A single text field question"""
-    def __init__(self, survey_question_id, current_response=None):
-        super(QuestionString, self).__init__(survey_question_id,
-                                             current_response)
-
-    @property
-    def interface_elements(self):
+    def _interface_elements(self):
         """See superclass documentation
         """
-        return [TextField(self.id)]
+        return ([0], [TextField(self.id)])
 
 
 class Group(object):
@@ -201,7 +187,8 @@ class Group(object):
 
     def __init__(self, ID):
         self.id = ID
-        qs = [Question.factory(x[0]) for x in db_conn.execute_fetchall('''
+        n = self.american_name
+        qs = [Question.factory(x[0], n) for x in db_conn.execute_fetchall('''
             select gq.survey_question_id
             from {0} sg join {1} gq on sg.group_order = gq.survey_group
             where sg.group_order = %s
@@ -210,7 +197,18 @@ class Group(object):
                 self._group_table,
                 self._group_questions_table),
             [self.id])]
+
+        self.qid_to_eid = {q.qid: q.interface_element_ids for q in qs}
+
+        self.question_lookup = {q.id: q for q in qs}
         self.questions = qs
+
+        self.supplemental_eids = set()
+        for q in qs:
+            if q.triggers:
+                triggered = self.question_lookup[q.triggers[0]]
+                triggered_eids = triggered.interface_element_ids
+                self.supplemental_eids.update(set(triggered_eids))
 
     @property
     def name(self):
