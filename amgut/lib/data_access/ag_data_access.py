@@ -431,14 +431,8 @@ class AGDataAccess(object):
         results = conn_handler.execute_fetchall(new_survey_sql, [ag_login_id])
         return [row[0] for row in results]
 
-    def is_old_participant(ag_login_id, participant_name):
+    def is_old_survey(survey_id):
         conn_handler = SQLConnectionHandler()
-        # get survey_id
-        sql = ("SELECT survey_id FROM ag_login_surveys WHERE ag_login_id = "
-               "%s AND participant_name = %s")
-        survey_id = conn_handler.execute_fetchone(
-            sql, (ag_login_id, participant_name))[0]
-
         # check survey exists
         survey_answers = conn_handler.execute_fetchone(
             "SELECT exists(SELECT * FROM survey_answers WHERE survey_id = %s)",
