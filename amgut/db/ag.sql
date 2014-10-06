@@ -155,10 +155,11 @@ COMMENT ON COLUMN ag.survey_group.group_order IS 'The order that this group will
 COMMENT ON COLUMN ag.survey_group.american IS 'The american english version of the question group`s name';
 
 CREATE TABLE ag.survey_question ( 
-	survey_question_id   bigserial  NOT NULL,
+	survey_question_id   bigint  NOT NULL,
 	american             varchar  ,
 	british              varchar  ,
-	CONSTRAINT pk_human_survey_question PRIMARY KEY ( survey_question_id )
+	CONSTRAINT pk_human_survey_question PRIMARY KEY ( survey_question_id ),
+	CONSTRAINT idx_survey_question UNIQUE ( american ) 
  );
 
 COMMENT ON TABLE ag.survey_question IS 'Stores the human survey questions';
@@ -363,8 +364,6 @@ CREATE TABLE ag.ag_human_survey (
 	participant_email    varchar(300)  ,
 	participant_name_u   varchar(400)  ,
 	CONSTRAINT ag_human_survey_pkey PRIMARY KEY ( ag_login_id, participant_name ),
-	CONSTRAINT pk_ag_human_survey UNIQUE ( participant_name ) ,
-	CONSTRAINT pk_ag_human_survey_0 UNIQUE ( ag_login_id ) ,
 	CONSTRAINT fk_ag_hum_surv_to_ag_login FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id )    
  );
 
@@ -419,6 +418,7 @@ CREATE TABLE ag.ag_login_surveys (
 	ag_login_id          uuid  NOT NULL,
 	survey_id            varchar  NOT NULL,
 	participant_name     varchar  ,
+	vioscreen_status     integer  ,
 	CONSTRAINT pk_ag_login_surveys PRIMARY KEY ( survey_id ),
 	CONSTRAINT fk_ag_login_surveys FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id )    ,
 	CONSTRAINT fk_ag_login_surveys0 FOREIGN KEY ( ag_login_id, participant_name ) REFERENCES ag.ag_consent( ag_login_id, participant_name )    
