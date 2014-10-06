@@ -956,7 +956,7 @@ class AGDataAccess(object):
 
     def get_person_info(self, survey_id):
         # get question responses
-        info = {}
+        info = {'birth_month': 'Unspecified', 'birth_year': 'Unspecified', 'gender': 'Unspecified'}
         sql = ("SELECT q.american, sa.response FROM ag.survey_answers_other "
                " sa JOIN ag.ag_login_surveys ls ON sa.survey_id = ls.survey_id "
                "JOIN ag.survey_question q ON q.survey_question_id = sa.survey_question_id "

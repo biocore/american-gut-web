@@ -4,7 +4,7 @@ from base64 import b64decode, b64encode
 
 from amgut import AMGUT_CONFIG
 from amgut import media_locale
-from amgut.util import AG_DATA_ACCESS
+from amgut import AG_DATA_ACCESS
 
 
 def pkcs7_pad_message(in_message):
@@ -30,9 +30,9 @@ def encrypt_key(survey_id):
         gender_id = 2
 
     # clean up birthdate
-    if userinfo['birth_month'] == "":
+    if userinfo['birth_month'] == "Unspecified":
         userinfo['birth_month'] = '01'
-    if userinfo['birth_year'] == "":
+    if userinfo['birth_year'] == "Unspecified":
         userinfo['birth_year'] = '1800'
     if len(userinfo['birth_month']) == 1:
         userinfo['birth_month'] = '0' + userinfo['birth_month']
