@@ -11,10 +11,7 @@ from amgut.util import AG_DATA_ACCESS
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.lib.util import store_survey
 from amgut.lib.survey_supp import primary_human_survey
-from amgut import r_server, text_locale, media_locale
-
-
-tl = text_locale['human_survey.html']
+from amgut import r_server, media_locale
 
 
 def make_human_survey_class(group):
@@ -30,6 +27,7 @@ def make_human_survey_class(group):
     prompts = {}
     for question in group.questions:
         qid = '_'.join(group.american_name.split() + [str(question.id)])
+
         if question.triggers:
             pass
 
