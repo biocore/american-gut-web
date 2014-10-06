@@ -148,6 +148,11 @@ INSERT INTO survey_question (survey_question_id, american, british) VALUES (121,
 ----------------------------------------------------------
 -- group_questions
 ----------------------------------------------------------
+
+-- daniels test
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (1, 105, 1000);
+
+
 INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (4, 72, 0);
 INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (4, 71, 1);
 INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (4, 69, 2);
@@ -1825,6 +1830,7 @@ INSERT INTO survey_question_triggers (survey_question_id, triggered_question, tr
 INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (18, 120, 'Yes');
 -- Dog or cat
 INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (20, 101, 'Yes');
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (20, 105, 'Yes');
 INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (21, 117, 'Yes');
 -- Antibiotics
 INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (39, 121, 'Week');
