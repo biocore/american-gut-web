@@ -1643,6 +1643,7 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (111, 'November', 11);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (111, 'December', 12);
 --birth year
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (112, 'Unspecified', 0);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (112, '2014', 1);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (112, '2013', 2);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (112, '2012', 3);
