@@ -11,9 +11,12 @@ from functools import partial
 
 from future.utils import viewitems
 from psycopg2 import connect
+from tornado.escape import url_escape
 
 from amgut import r_server, media_locale, text_locale, db_conn
 from amgut.lib.config_manager import AMGUT_CONFIG
+from amgut.lib.vioscreen import encrypt_key
+
 
 get_db_file = partial(join, join(dirname(dirname(abspath(__file__))), 'db'))
 LAYOUT_FP = get_db_file('ag.sql')
@@ -171,8 +174,9 @@ def store_survey(survey, survey_id):
 def survey_vioscreen(survey_id):
     """Return a formatted text block and URL for the external survey"""
     tl = text_locale['human_survey_completed.html']
-    url = media_locale['SURVEY_VIOSCREEN_URL'] % {'survey_id': survey_id}
     embedded_text = tl['SURVEY_VIOSCREEN']
+    url = ("http://demo.vioscreen.com/remotelogin.aspx?Key=%s&RegCode=KLUCB" %
+           url_escape(encrypt_key(survey_id)))
     return embedded_text % url
 
 
@@ -184,5 +188,4 @@ def survey_asd(survey_id):
     return embedded_text % url
 
 
-# external_surveys = (survey_vioscreen, survey_asd)
-external_surveys = (survey_asd, )
+external_surveys = (survey_vioscreen, survey_asd)
