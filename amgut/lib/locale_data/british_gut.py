@@ -47,7 +47,7 @@ media_locale = {
     'ADD_SAMPLE_OVERVIEW': _SITEBASE + "/static/img/add_sample_overview.png",
     'FAQ_AMBIGUOUS_PASS': _SITEBASE + "/static/img/creds_example.png",
     'FAVICON': _SITEBASE + "/static/img/favicon.ico",
-    'FUNDRAZR_URL': "https://fundrazr.com/campaigns/4Tqx5",
+    'FUNDRAZR_URL': "https://fundrazr.com/campaigns/4sSf3",
     'HELP_EMAIL': HELP_EMAIL,
     'LOGO': _SITEBASE + '/static/img/british_gut_logo.jpg',
     'LOG_SAMPLE_OPTS': _SITEBASE + "/static/img/log_sample_options.png",
