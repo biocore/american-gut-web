@@ -403,6 +403,10 @@ class AGDataAccess(object):
                "survey_id = %s")
         conn_handler.execute(sql, [survey_id])
 
+        sql = ("DELETE FROM ag_consent WHERE ag_login_id = "
+               "%s AND participant_name = %s")
+        conn_handler.execute(sql, [ag_login_id, participant_name])
+
     def insertAGMultiple(self, ag_login_id, participant_name, field_name,
                          field_value):
         sql = ("insert into ag_survey_multiples (ag_login_id, "
