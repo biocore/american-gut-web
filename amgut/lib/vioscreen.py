@@ -30,9 +30,9 @@ def encrypt_key(survey_id):
         gender_id = 2
 
     # clean up birthdate
-    if userinfo['birth_month'] == "":
+    if userinfo['birth_month'] == "Unspecified":
         userinfo['birth_month'] = '01'
-    if userinfo['birth_year'] == "":
+    if userinfo['birth_year'] == "Unspecified":
         userinfo['birth_year'] = '1800'
     if len(userinfo['birth_month']) == 1:
         userinfo['birth_month'] = '0' + userinfo['birth_month']
