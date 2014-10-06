@@ -49,13 +49,13 @@ def encrypt_key(survey_id):
 
     regcode = AMGUT_CONFIG.vioscreen_regcode
     returnurl = "http://microbio.me%s%s" % (media_locale["SITEBASE"],
-                                            "/authed/portal/")
+                                            "/authed/vspassthrough/")
     assess_query = ("FirstName=%s&LastName=%s"
                     "&RegCode=%s"
                     "&Username=%s"
                     "&DOB=%s"
                     "&Gender=%d"
-                    "&AppId=1&Visit=1&ReturnUrl={%s}" %
+                    "&AppId=1&Visit=1&EncryptQuery=True&ReturnUrl={%s}" %
                     (firstname, lastname, regcode, survey_id, dob, gender_id,
                      returnurl))
 
