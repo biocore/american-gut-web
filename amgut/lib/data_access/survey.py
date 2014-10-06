@@ -203,7 +203,7 @@ class Group(object):
         self.question_lookup = {q.id: q for q in qs}
         self.questions = qs
 
-        self.supplemental_eids = {}
+        self.supplemental_eids = set()
         for q in qs:
             if q.triggers:
                 triggered = self.question_lookup[q.triggers[0]]
