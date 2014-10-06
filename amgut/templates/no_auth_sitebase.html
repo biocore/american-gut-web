@@ -72,6 +72,10 @@
     </script>
     {% block head %}
     {% end %}
+
+    {% if current_user %}
+        <meta http-equiv="refresh" content="0; url={% raw media_locale['SITEBASE'] %}/authed/portal/" />
+    {% end %}
 </head>
     <body>
     {% block map %}
@@ -85,6 +89,9 @@
         <div class="left menuwrapper">
             <div id="cssmenu">
                 <ul>
+                {% if current_user %}
+                    <li class="active"><a href="{% raw media_locale['SITEBASE'] %}/authed/portal/"><span>{% raw media_locale['NAV_HOME'] %}</span></a></li>
+                {% end %}
                     <li><a href="{% raw media_locale['SITEBASE'] %}/faq/#faq0">{% raw media_locale['NAV_MICROBIOME_101'] %}</a></li>
                     <li><a href="{% raw media_locale['FUNDRAZR_URL'] %}" target="_blank">{% raw media_locale['NAV_JOIN_PROJECT'] %}</a></li>
                     <li><a href="{% raw media_locale['SITEBASE'] %}/static/img/mod1_main.pdf" target="_blank">{% raw media_locale['NAV_PRELIM_RESULTS'] %}</a></li>
@@ -93,15 +100,19 @@
                         <ul>
                             <li><a href="{% raw media_locale['SITEBASE'] %}/faq/">{% raw media_locale['NAV_FAQ'] %}</a></li>
                             <li><a href="{% raw media_locale['SITEBASE'] %}/static/img/full_instructions.pdf" target="_blank">{% raw media_locale['NAV_KIT_INSTRUCTIONS'] %}</a></li>
-                            {% if 'NAV_INTERNATIONAL' in media_locale %}
-                                <li class="last"><a href="{% raw media_locale['SITEBASE'] %}/international_shipping/">{% raw media_locale['NAV_INTERNATIONAL'] %}</a></li>
-                            {% end %}
+                        {% if 'NAV_INTERNATIONAL' in media_locale %}
+                            <li class="last"><a href="{% raw media_locale['SITEBASE'] %}/international_shipping/">{% raw media_locale['NAV_INTERNATIONAL'] %}</a></li>
+                        {% end %}
                         </ul>
                     </li>
+                    {% if current_user %}
+                        <li class="last"><a href="{% raw media_locale['SITEBASE'] %}/auth/logout/"><span>{% raw media_locale['NAV_LOGOUT'] %}</span></a></li>
+                    {% end %}
                 </ul>
             </div>
             <div id="cssmenu">
             <!-- Login form div -->
+            {% if not current_user %}
                 <h3 style="margin-left:5px;">{% raw media_locale['NAV_PARTICIPANT_LOGIN'] %}</h3>
                 <table width="100%">
                     <tr width="100%">
@@ -121,6 +132,7 @@
                         <td width="30%"></td>
                     </tr>
                 </table>
+            {% end %}
             <!-- End login form div -->
             </div>
         </div>
