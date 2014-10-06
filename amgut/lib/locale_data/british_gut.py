@@ -286,7 +286,7 @@ _FAQ = {
     'WHO_MICHAEL_POLLAN_ANS': 'Michael Pollan is a New York Times Best Seller for his books on diet and nutrition. Further information about Michael can be found <a href="http://michaelpollan.com/">here</a>.',
     'WHY_TWO_SWABS': "Why are there 2 swabs inside the tube?",
     'WHY_TWO_SWABS_ANS_1': "Each sampling tube contains two swabs and looks like this:",
-    'WHY_TWO_SWABS_ANS_2': "Each tube is used for <strong>one sample</strong>. The tube has two swabs in it because one is a backup in case the DNA does not amplify on the first swab."
+    'WHY_TWO_SWABS_ANS_2': "<p>Each tube is used for <strong>one sample</strong>. The tube has two swabs in it because one is a backup in case the DNA does not amplify on the first swab.</p>"
                            "<p>Here's a video of Rob Knight talking about swab handling:</p><iframe src='%(swab_handle_vid)s' width=''500'' height=''281'' frameborder=''0'' webkitallowfullscreen='' mozallowfullscreen='' allowfullscreen=''></iframe>" % {'swab_handle_vid': media_locale['SWAB_HANDLING']}
 }
 
@@ -466,7 +466,6 @@ _NEW_PARTICIPANT_OVERVIEW = {
     'ONCE_ADDED': "Once you have added a human source, you will then see the name of that source in the left menu, and you will also have an option for adding a sample to that source. When you click that, you will be able to select the appropriate barcode and add sample metadata."
 }
 
-_INTERNATIONAL = {}
 _MAP = {
     'MAP_TITLE': "Map Key",
     'MAP_KIT': "Kit Verified",
@@ -551,10 +550,10 @@ _ADDENDUM = {
     'CONTRIB': "Contributors",
     'DIFFERENT_AGES_POPS': "Different Ages and Populations",
     'DIFFERENT_AGES_POPS_ALT': "PCoA of international populations colored by age",
-    'DIFFERENT_AGES_POPS_TEXT': "This plot lets you compare your sample to other fecal microbiome samples according to age and place of origin. The colour of each point indicates the age of the person the sample was collected from, with red being the youngest and purple being the oldest. Also, on this plot, the ovals show where in the world each sample came from. The red oval shows you the area where an average sample from a Western country should fall. The yellow oval shows you where an average sample from an Amerindian population in Venezuela should fall. The blue oval shows you where an average sample from Malawi should fall. These data are from <a href = 'http://www.nature.com/nature/journal/v486/n7402/abs/nature11053.html'>Yatsunenko et al. 2012</a>. We used these populations as a comparison to your sample since a large number of people with diverse ages were sampled in these populations. We have fewer data from other populations in other parts of the world.",
+    'DIFFERENT_AGES_POPS_TEXT': "This plot lets you compare your sample to other faecal microbiome samples according to age and place of origin. The colour of each point indicates the age of the person the sample was collected from, with red being the youngest and purple being the oldest. Also, on this plot, the ovals show where in the world each sample came from. The red oval shows you the area where an average sample from a Western country should fall. The yellow oval shows you where an average sample from an Amerindian population in Venezuela should fall. The blue oval shows you where an average sample from Malawi should fall. These data are from <a href = 'http://www.nature.com/nature/journal/v486/n7402/abs/nature11053.html'>Yatsunenko et al. 2012</a>. We used these populations as a comparison to your sample since a large number of people with diverse ages were sampled in these populations. We have fewer data from other populations in other parts of the world.",
     'DIFFERENT_BODY_SITES': "Different Body Sites",
     'DIFFERENT_BODY_SITES_ALT': "PCoA by body site for AGP and HMP",
-    'DIFFERENT_BODY_SITES_TEXT': "This plot lets you compare your sample to samples collected in other microbiome projects from several body sites. The colour of each point tells you which project and body site the sample came from. HMP refers to the <a href = 'http://www.hmpdacc.org'>Human Microbiome Project</a>, funded by the National Institutes of Health. You can see how your sample compared to fecal, oral, and skin samples from the Human Microbiome Project, as well as to fecal, oral, and skin samples from the American Gut Project, the Global Gut Project, and the Personal Genome Project. These samples have been combined in any category not labeled \"HMP\". The oval around each group of points shows you where an average sample from each project and body site should fall on the plot. These sometimes make it easier to see the patterns all the clusters of points make.",
+    'DIFFERENT_BODY_SITES_TEXT': "This plot lets you compare your sample to samples collected in other microbiome projects from several body sites. The colour of each point tells you which project and body site the sample came from. HMP refers to the <a href = 'http://www.hmpdacc.org'>Human Microbiome Project</a>, funded by the National Institutes of Health. You can see how your sample compared to faecal, oral, and skin samples from the Human Microbiome Project, as well as to faecal, oral, and skin samples from the American Gut Project, the Global Gut Project, and the Personal Genome Project. These samples have been combined in any category not labeled \"HMP\". The oval around each group of points shows you where an average sample from each project and body site should fall on the plot. These sometimes make it easier to see the patterns all the clusters of points make.",
     'ENRICHED': "Enriched Microbes",
     'ENRICHED_EXP_1': "The second table shows four microbes that you had more of compared to other people. It is likely that other participants also have these microbes in their sample, but we found substantially higher abundances of them in your sample relative to others. The percentages on the right tell you how many of your total bacteria (under \"Sample\") or of the total bacteria in an average person\'s sample (under \"Population\") belong to these taxa. Since you have more of these bacteria than most other people, the percentage under \"Sample\" should be higher than the percentage under \"Population\".",
     'ENRICHED_EXP_2': "The fold change tells you how many more of these bacteria you have than the average participant. For example, if you have 20% Bacteria A and the average person in the population has 10% Bacteria A, you have twice as many Bacteria A. This would be a twofold (2x) difference. Please note that because the percentages we report on this sheet are rounded (e.g., 0.05% rounded to 0.1%), and your fold differences are calculated from values that are not rounded, the fold differences you see may be slightly distinct than what you would calculate based on the numbers you see.",
@@ -635,6 +634,18 @@ _ADDENDUM = {
     'YOUR_ENRICHED_TABLE_HEADER': "<th>Taxonomy</th><th>Sample</th><th>Population</th><th>Fold</th>"
 }
 
+_INTERNATIONAL = {
+    'PAGE_TITLE': '%(shorthand)s International Shipping Instructions' % {'shorthand': AMGUT_CONFIG.project_shorthand},
+    'INTERNATIONAL_HEADER_1': "International Shipping",
+    'INTERNATIONAL_TEXT_1': 'At the moment, we are unable to accept non-British samples at the British Gut. Please send any non-UK international samples to:',
+    'INTERNATIONAL_TEXT_2': 'In order to comply with amended federal and IATA regulations, we are requesting that international participants return their sample tubes through FedEx International and that international participants follow the additional safely requirements for shipping human swab samples to the United States. Your airway bill must clearly identify the package as containing "human exempt specimens". The samples will additionally need to be packaged within a secondary containment to ensure that they can safely enter the United States.',
+    'INTERNATIONAL_TEXT_3': "For shipment, you will need to use clear tape to secure the sample swabs to the sample tube, then place the sample tube in the provided buff mailing envelope. Then place the buff envelope inside a Tyvek/plastic mailer, <strong>which can be acquired free of charge from FedEx</strong>, when shipping the sample, prior to FedEx shipment.",
+    'INTERNATIONAL_TEXT_4': "If you do not follow these directions the sample will be destroyed by United States Customs at the port of entry into the United States.",
+    'YOUR_SAMPLES': 'Your samples',
+    'YOUR_SAMPLES_LIST': '<li>Are considered dried specimens</li><li>Must be shipped via FedEx</li><li>Must have tape to sealing the plastic tube that contains the swab</li><li>Must be placed in a buff mailing envelope with the buff envelope placed inside a Tyvek/plastic mailer prior to FedEx shipment</li><li>Must be shipped with an airway bill and must be labeled with the complete address of the sender and complete address of recipient, and with the words "Human exempt sample(s)"</li>',
+    'AMERICAN_GUT_ADDRESS': "American Gut Project<br>Knight Lab, JSCBB<br>596 UCB<br>Boulder, CO 80309"
+}
+
 _PORTAL = {
     'ADD_SOURCE_TAB': "Add Source <br>Survey",
     'DOMESTIC_HEADER_1': "Domestic Shipping",
@@ -678,7 +689,7 @@ _PORTAL = {
     'SAMPLE_STEPS_TEXT_2': '<li>Make sure you have <a href="#" onclick="selectTab(\'source\')">added your sample source and complete the required survey(s)</a></li><li>Remove the sample swabs from the sample tube</li><li>Collect your sample following the guidelines below</li><li>Place sample swabs into the sample tube</li>',
     'SAMPLE_STEPS_TEXT_3': 'These sample collection instructions are very important, please read through them <strong>before</strong> beginning to take your sample. Deviations will cause issues with sample processing, sequencing, and data analysis. We cannot guarantee that we will be able to process your sample if the instructions are not followed, and <strong>we cannot offer replacements if instructions were not followed</strong>. Please do not hesitate to ask us questions at <a href="%(sitebase)s/authed/help_request/">%(help_email)s</a>.' % {'help_email': media_locale['HELP_EMAIL'], 'sitebase': media_locale['SITEBASE']},
     'SAMPLE_STEPS_TEXT_4': "Once you have removed the sample tube, only handle the sample swab by the red cap.",
-    'SAMPLE_STEPS_TEXT_5': "For a <strong>faecal sample</strong>, rub both cotton tips on a fecal specimen (a used piece of bathroom tissue). Collect a small amount of biomass. Maximum collection would be to saturate 1/2 a swab. <strong>More is not better!</strong> The ideal amount of biomass collected is shown below.",
+    'SAMPLE_STEPS_TEXT_5': "For a <strong>faecal sample</strong>, rub both cotton tips on a faecal specimen (a used piece of bathroom tissue). Collect a small amount of biomass. Maximum collection would be to saturate 1/2 a swab. <strong>More is not better!</strong> The ideal amount of biomass collected is shown below.",
     'SAMPLE_STEPS_TEXT_6': "For an <strong>oral sample</strong>, firmly rub both sides of both cotton tips on the surface of the tongue for 20 seconds. Take great caution not to touch the cheeks, teeth, or lips.",
     'SAMPLE_STEPS_TEXT_7': "For a <strong>skin sample</strong>, firmly rub both sides of both cotton tips over the skin surface being sampled for 20 seconds.",
     'SAMPLE_STEPS_TEXT_8': "For an <strong>other/environmental sample</strong>, firmly rub both sides of both cotton tips over the surface being sampled for 20 seconds.",
