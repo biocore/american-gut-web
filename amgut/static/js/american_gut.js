@@ -547,6 +547,10 @@ function verifyAddSample() {
         document.getElementById("sample_site_div").className += " highlight";
         valid = false;
     }
+    if(document.add_sample.barcode.value == "") {
+        document.getElementById("barcode").className += " highlight";
+        valid = false;
+    }
 
     if(!valid) 
     {
