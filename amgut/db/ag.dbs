@@ -181,12 +181,6 @@
 				<column name="ag_login_id" />
 				<column name="participant_name" />
 			</index>
-			<index name="pk_ag_human_survey" unique="UNIQUE" >
-				<column name="participant_name" />
-			</index>
-			<index name="pk_ag_human_survey_0" unique="UNIQUE" >
-				<column name="ag_login_id" />
-			</index>
 			<fk name="fk_ag_hum_surv_to_ag_login" to_schema="ag" to_table="ag_login" >
 				<fk_column name="ag_login_id" pk="ag_login_id" />
 			</fk>
@@ -299,6 +293,7 @@
 			<column name="ag_login_id" type="uuid" jt="1111" mandatory="y" />
 			<column name="survey_id" type="varchar" jt="12" mandatory="y" />
 			<column name="participant_name" type="varchar" jt="12" />
+			<column name="vioscreen_status" type="integer" jt="4" />
 			<index name="pk_ag_login_surveys" unique="PRIMARY_KEY" >
 				<column name="survey_id" />
 			</index>
@@ -570,7 +565,7 @@
 		</table>
 		<table name="survey_question" >
 			<comment>Stores the human survey questions</comment>
-			<column name="survey_question_id" type="bigserial" jt="-5" mandatory="y" >
+			<column name="survey_question_id" type="bigint" jt="-5" mandatory="y" >
 				<comment><![CDATA[The unique question ID]]></comment>
 			</column>
 			<column name="american" type="varchar" jt="12" >
@@ -581,6 +576,9 @@
 			</column>
 			<index name="pk_human_survey_question" unique="PRIMARY_KEY" >
 				<column name="survey_question_id" />
+			</index>
+			<index name="idx_survey_question" unique="UNIQUE" >
+				<column name="american" />
 			</index>
 		</table>
 		<table name="survey_question_response" >
@@ -21303,21 +21301,21 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="project" color="c6d9f7" x="1890" y="390" />
 		<entity schema="ag" name="survey_question_response_type" color="ffcccc" x="720" y="1950" />
 		<entity schema="ag" name="group_questions" color="ffcccc" x="330" y="1590" />
-		<entity schema="ag" name="survey_question" color="a8c4ef" x="450" y="1755" />
 		<entity schema="ag" name="survey_response_types" color="ffffff" x="1020" y="1965" />
-		<entity schema="ag" name="survey_response" color="a8c4ef" x="720" y="1860" />
 		<entity schema="ag" name="ag_login" color="f7e2c6" x="735" y="630" />
 		<entity schema="ag" name="surveys" color="a8c4ef" x="75" y="1755" />
 		<entity schema="ag" name="survey_group" color="a8c4ef" x="75" y="1590" />
-		<entity schema="ag" name="ag_human_survey" color="c6d9f7" x="1695" y="645" />
-		<entity schema="ag" name="survey_question_response" color="ffcccc" x="720" y="1755" />
 		<entity schema="ag" name="ag_kit" color="f7e2c6" x="1140" y="915" />
 		<entity schema="ag" name="survey_answers_other" color="a8c4ef" x="1335" y="1365" />
-		<entity schema="ag" name="ag_login_surveys" color="ffcccc" x="1455" y="1245" />
 		<entity schema="ag" name="survey_answers" color="a8c4ef" x="1560" y="1425" />
 		<entity schema="ag" name="ag_consent" color="c6d9f7" x="1470" y="945" />
 		<entity schema="ag" name="survey_question_triggers" color="a8c4ef" x="675" y="1650" />
 		<entity schema="ag" name="iso_country_lookup" color="a8c4ef" x="930" y="1845" />
+		<entity schema="ag" name="survey_response" color="a8c4ef" x="720" y="1860" />
+		<entity schema="ag" name="survey_question_response" color="ffcccc" x="720" y="1755" />
+		<entity schema="ag" name="ag_login_surveys" color="ffcccc" x="1455" y="1245" />
+		<entity schema="ag" name="survey_question" color="a8c4ef" x="450" y="1755" />
+		<entity schema="ag" name="ag_human_survey" color="c6d9f7" x="1695" y="645" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by : 
    american_gut_consent</comment>
