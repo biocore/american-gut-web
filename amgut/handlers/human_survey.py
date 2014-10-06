@@ -1,41 +1,13 @@
-from wtforms import (Form, SelectField, SelectMultipleField, widgets,
-                     TextField, DateField, RadioField, SelectField,
-                     IntegerField)
+from json import dumps
+from collections import defaultdict
+
+from wtforms import Form
 from tornado.web import authenticated
-from future.utils import viewitems
-from natsort import natsorted
-from json import loads, dumps
-import os
-import binascii
 
-from amgut.util import AG_DATA_ACCESS
 from amgut.handlers.base_handlers import BaseHandler
-from amgut.lib.human_survey_supp import (
-    responses_map, key_map, question_group, group_order, question_type,
-    supplemental_map)
-from amgut import r_server, text_locale, media_locale
-
-
-tl = text_locale['human_survey.html']
-
-
-class PersonalPrompts(Form):
-    PERSONAL_PROMPT_NAME = TextField()
-    PERSONAL_PROMPT_GENDER = RadioField(choices=[(0, 'Female'),
-                                                 (1, 'Male'),
-                                                 (2, 'Other')])
-    PERSONAL_PROMPT_HEIGHT = IntegerField()
-    PERSONAL_PROMPT_HEIGHT_UNITS = SelectField(choices=[('', ''),
-                                                        ('in', 'in'),
-                                                        ('cm', 'cm')])
-    PERSONAL_PROMPT_COUNTRY_OF_BIRTH = TextField()
-    PERSONAL_PROMPT_TODAYSDATE = DateField(format="%m/%d/%Y")
-    PERSONAL_PROMPT_BIRTHDATE = DateField(format="%m/%Y")
-    PERSONAL_PROMPT_WEIGHT = IntegerField()
-    PERSONAL_PROMPT_WEIGHT_UNITS = SelectField(choices=[('', ''),
-                                                        ('lbs', 'lbs'),
-                                                        ('kg', 'kg')])
-    PERSONAL_PROMPT_ZIP = TextField()
+from amgut.lib.util import store_survey
+from amgut.lib.survey_supp import primary_human_survey
+from amgut import r_server, media_locale
 
 
 def make_human_survey_class(group):
@@ -48,79 +20,69 @@ def make_human_survey_class(group):
     of checkboxes for questions that can have multiple responses
     """
     attrs = {}
-    for idx in sorted(question_group[group]):
-        question_id = key_map[idx]
-        responses = responses_map[idx]
+    prompts = {}
+    triggers = defaultdict(list)
+    triggered = defaultdict(list)
 
-        if question_type[question_id] == 'SINGLE':
-            attrs[question_id] = SelectField(
-                question_id, choices=list(enumerate(responses)))
+    for q in group.questions:
+        for eid, element in zip(q.interface_element_ids, q.interface_elements):
+            attrs[eid] = element
+            prompts[eid] = q.question
 
-        elif question_type[question_id] == 'MULTIPLE':
-            attrs[question_id] = SelectMultipleField(
-                question_id, choices=list(enumerate(responses)),
-                widget=widgets.TableWidget(),
-                option_widget=widgets.CheckboxInput(),
-                coerce=lambda x: x)
+            if q.triggers:
+                for triggered_id, triggering_responses in q.triggers.items():
+                    triggers[eid].extend(triggering_responses)
+                    triggered[eid].extend(group.id_to_eid[triggered_id])
+
+    attrs['prompts'] = prompts
+    attrs['triggers'] = triggers
+    attrs['triggered'] = triggered
+    attrs['supplemental_eids'] = group.supplemental_eids
 
     return type('HumanSurvey', (Form,), attrs)
 
 
-surveys = [make_human_survey_class(group) for group in group_order]
+surveys = [make_human_survey_class(group)
+           for group in primary_human_survey.groups]
+
 
 class HumanSurveyHandler(BaseHandler):
     @authenticated
     def post(self):
         human_survey_id = self.get_secure_cookie('human_survey_id')
         page_number = int(self.get_argument('page_number'))
-
-        if human_survey_id is None:
-            if page_number == -1:
-                # http://wyattbaldwin.com/2014/01/09/generating-random-tokens-in-python/
-                human_survey_id = binascii.hexlify(os.urandom(8))
-                self.set_secure_cookie('human_survey_id', human_survey_id)
-            else:
-                # it should not be possible to get here, unless someone is
-                # posting data to the page using a different interface
-                self.clear_cookie('human_survey_id')
-                return
-
         next_page_number = page_number + 1
 
         if page_number >= 0:
             form_data = surveys[page_number]()
-            form_data.process(data=self.request.arguments)
-            r_server.hset(human_survey_id, page_number, dumps(form_data.data))
 
-        progress = int(100.0*(page_number+2)/(len(group_order) + 1))
-        if next_page_number == 0:
-            self.set_secure_cookie('human_survey_page_number',
-                                   str(next_page_number))
-            the_form = PersonalPrompts()
-            title = tl['PERSONAL_PROMPT_TITLE']
-            self.render('human_survey.html', the_form=the_form,
-                        skid=self.current_user, TITLE=title,
-                        supplemental_map=supplemental_map,
-                        page_number=next_page_number,
-                        progress=progress)
+            form_data.process(data=self.request.arguments)
+            # TODO: collect supplemental responses
+
+            # TODO: store supplemental data in data
+            data = {'questions': form_data.data}
+
+            r_server.hset(human_survey_id, page_number, dumps(data))
+
+        progress = int(100.0*(page_number+2)/(len(primary_human_survey.groups) + 1))
 
         # if this is not the last page, render the next page
-        elif next_page_number < len(surveys):
-            # TODO: populate the next form page from database values, if they
+        if next_page_number < len(surveys):
             # exist
             the_form = surveys[next_page_number]()
-            title = tl[group_order[next_page_number]+'_TITLE']
+            title = primary_human_survey.groups[next_page_number].name
+
+            supp = {}
+
             self.render('human_survey.html', the_form=the_form,
                         skid=self.current_user, TITLE=title,
-                        supplemental_map=supplemental_map,
+                        supplementals=supp,
                         page_number=next_page_number,
                         progress=progress)
         else:
-            # TODO: insert into database
-            # TODO: store in the database a connection between human_survey_id and this specific participant
-            # TODO: redirect to portal or something
-
             # only get the cookie if you complete the survey
             self.clear_cookie('human_survey_id')
             self.set_secure_cookie('completed_survey_id', human_survey_id)
-            self.redirect(media_locale['SITEBASE'] + '/authed/human_survey_completed/')
+            store_survey(primary_human_survey, human_survey_id)
+            self.redirect(media_locale['SITEBASE'] +
+                          '/authed/human_survey_completed/')

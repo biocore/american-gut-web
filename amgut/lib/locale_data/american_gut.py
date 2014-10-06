@@ -84,6 +84,7 @@ media_locale = {
 }
 
 _HANDLERS = {
+    'JUVENILE_CONSENT_EXPECTED': "We are expecting a manual consent form for the juvenile user (%s)",
     'PARTICIPANT_EXISTS': 'Participant %s already exists!',
     'SUCCESSFULLY_ADDED': "Successfully added %s!",
     'AUTH_REGISTER_SUBJECT': "%(project_shorthand)s Verification Code" % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
@@ -111,7 +112,7 @@ _FAQ = {
     'LOG_IN_WHAT_NOW_ANS_3': 'You can log a sample by clicking the "Log Sample" link in the menu. If you do not see the "Log Sample" link, then all of your barcodes have been assigned.',
     'PARTICIPATE_WITH_DIAGNOSIS': 'Can I participate in the project if I am diagnosed with ...?',
     'LOG_IN_WHAT_NOW_ANS_5': 'When adding a sample, please be sure to select the barcodes that matches the barcode on the sampling tube of the sample that you are logging',
-    'TAKES_SIX_MONTHS': 'Does it really take up to 6 months to get my results?',
+    'TAKES_SIX_MONTHS': 'Does it really take up to three months to get my results?',
     'HOW_CHANGE_GUT': 'How can I change my gut microbiome?',
     'BETTER_OR_WORSE': 'How can I tell if my gut microbiome is better or worse than other people in my category?',
     'ONLY_FECAL_RESULTS_ANS': 'We have only sent out results for fecal samples and are in the process of evaluating how best to present the other sample types. Please see <a href="#faq12">the previous question </a>',
@@ -132,7 +133,7 @@ _FAQ = {
     'LOOK_BELOW': "If you're still experiencing issues, look for your problem in the FAQ below",
     'PASSWORD_SAME_VERIFICATION_ANS': 'No. Your <strong>password</strong> is printed on the sheet that you received with your kit in the mail. That sheet looks like this:</p>'
                                       '<img src="%(FAQ_AMBIGUOUS_PASS)s"/><p>Your <strong>verification code</strong> is emailed to you. Look for the email: <br /><br /><strong>FROM:</strong>  %(project)s (%(help_email)s)<br /><strong>SUBJECT:</strong>  %(shorthand)s Kit ID & Verification Code' % {"shorthand": AMGUT_CONFIG.project_shorthand, "project": AMGUT_CONFIG.project_name, "FAQ_AMBIGUOUS_PASS": media_locale['FAQ_AMBIGUOUS_PASS'], 'help_email': media_locale['HELP_EMAIL']},
-    'TAKES_SIX_MONTHS_ANS': 'Yes. It takes about 8 weeks for extractions, 8 weeks for the remainder of the processing, and 2 weeks to do the actual sequencing. This is before any analysis and if everything goes as planned, with no delays - equipment down, run failures, reagents or other consumables back ordered. Things do sometimes go wrong, so we say up to 6 months.',
+    'TAKES_SIX_MONTHS_ANS': 'Yes. It takes about eight weeks for extractions, eight weeks for the remainder of the processing, and two weeks to do the actual sequencing. This is before any analysis and if everything goes as planned, with no delays - equipment down, run failures, reagents or other consumables back ordered. Things do sometimes go wrong, so we say up to three months.',
     'PARTICIPATE_WITH_DIAGNOSIS_ANS': 'Of course! The only exclusion criteria are: you must be more than 3 months old and cannot be in prison. Please keep in mind that, for legal and ethical reasons, the %(project)s does not provide medically actionable results or advice.' % {"project": AMGUT_CONFIG.project_name},
     'HOW_PROCESS_SAMPLES': 'How are the samples and data processed?',
     'WHO_MICHAEL_POLLAN_ANS': 'Michael Pollan is a New York Times Best Seller for his books on diet and nutrition. Further information about Michael can be found <a href="http://michaelpollan.com/">here</a>.',
@@ -312,8 +313,7 @@ _NEW_PARTICIPANT = {
     'TEXT_PARTICIPATION_DESCRIPTION': ' Please think about the information below carefully. Feel free to ask questions before making your decision whether or not to participate. If you decide to participate, you will be asked to sign this form electronically and will receive a copy of the form by email at the address you supplied when you signed up for the study.',
     'TEXT_BACKGROUND_TITLE': 'Purpose and Background',
     'TEXT_BACKGROUND_DESCRIPTION_1': 'Trillions of microorganisms live on and within the human body, which is colonized at birth and continuously inhabited throughout a person\'s lifetime. Our resident microbes occupy many body habitats, including the skin and mucosal surfaces, and the gastrointestinal tract. Our microbial symbionts are largely harmless or beneficial; for example, we rely on our gut microbiota to aid in nutrition, resist pathogens, and educate our immune system.  We would like to survey a large number of volunteers from the US and other countries including all body types, all dietary preferences and both healthy and unhealthy people to more clearly define the range of these microbial communities.  We are interested in learning whether people with similar age, diet, environment, family, pets, body weight, or other features, also have similar microorganisms.',
-    'TEXT_BACKGROUND_DESCRIPTION_2': 'To accomplish this we will ask you to sample up to 7 sites on your body (skin anywhere on the body, saliva, stool, nostril mucus, vaginal mucus, ear wax or tears) using polyester tipped swabs that will be sent to you at the address you provide with instructions on how to obtain the samples, instructions for safely returning the samples to us and a pre-addressed envelope for returning the samples to us through FedEx or the mail service. You will also be asked to complete the questionnaire online that includes questions about age, diet, environment, family, pets, body weight and current health status.  You will be asked to use a website to determine your average intake of fat, protein, carbohydrates, vegetables and grains for 7 days prior to sampling.  The samples will have a code label attached to them so that we can identify who sent them to us but no personally identifying information. Some people may be asked to keep a food diary detailing everything they eat and drink every day for up to 6 months.  We may also request additional samples from certain participants that are of particular interest because of their health status and/or dietary preferences (a maximum of 7 times).  We anticipate that the entire study will be completed in 5 years. When the results are available for your samples we will provide you with an easy to understand summary of the microbial communities of your body and a summary of the combined results of other participants for comparison.  We anticipate that the results for your samples will be available within 3-6 months of receipt in the laboratory. These results will be sent to you by email. ',
-    'TEXT_BACKGROUND_DESCRIPTION_3': 'We are requesting that you contribute funding to the project at a level that is commensurate with the number of swabs and the kinds of tests you are requesting.  The basic package covers a single fecal swab.',
+    'TEXT_BACKGROUND_DESCRIPTION_2': 'We anticipate that the entire study will be completed in 5 years. When the results are available for your samples we will provide you with an easy to understand summary of the microbial communities of your body and a summary of the combined results of other participants for comparison.  We anticipate that the results for your samples will be available within 3-6 months of receipt in the laboratory. These results will be sent to you by email. ',
     'TEXT_STUDY_TASK_TITLE': 'Study Tasks and Procedures',
     'TEXT_STUDY_TASK_DESCRIPTION': 'If you agree to participate in this study you will be asked for your name ,  and to donate samples, to complete a questionnaire and to provide updated personal information. We will send you a sample kit that includes the swabs (which are individually wrapped in plastic and include a plastic sleeve for returning the sample to us), coded labels for the sample tubes, and a pre-addressed envelope with instructions on how to safely  return the samples to us for analysis.  ',
     'TEXT_STUDY_TASK_DESCRIPTION_LIST_TITLE': 'Samples may include',
@@ -324,18 +324,20 @@ _NEW_PARTICIPANT = {
     'TEXT_STUDY_TASK_DESCRIPTION_LIST_5': 'Vaginal mucus by inserting a sterile polyester-tip swab into the introitus of the vagina',
     'TEXT_STUDY_TASK_DESCRIPTION_LIST_6': 'Ear wax by inserting a sterile polyester-tip swab gently into the ear',
     'TEXT_STUDY_TASK_DESCRIPTION_LIST_7': 'Tears by inserting a sterile polyester-tip swab gently along the inner corner of the eyelid (avoiding contact with the eye).',
-    'TEXT_STUDY_TASK_DESCRIPTION_ADDITIONAL_1': 'Examples of areas of skin that may be swabbed include the forehead, and left and right palms.',
+    'TEXT_STUDY_TASK_DESCRIPTION_ADDITIONAL_1': 'We are requesting that you contribute funding to the project at a level that is commensurate with the number of swabs and the kinds of tests you are requesting.  The basic package covers a single fecal swab.',
     'TEXT_STUDY_TASK_DESCRIPTION_ADDITIONAL_2': 'After you submit your first set of samples, we may ask you to donate additional samples (up to 7 times) if you belong to a group that has specific diet, disease or age considerations.  You will be contacted by email if we would like to repeat the sampling. Some participants will be asked to provide a detailed food diary that includes a list of everything you eat and drink every day for up to 6 months. If this is required we will contact you by email to confirm that you are willing to contribute this information.',
     'TEXT_INTERNATIONAL_PARTICIPANT_TITLE': 'International Participants',
-    'TEXT_INTERNATIONAL_PARTICIPANT_DESCRIPTION': 'In order to comply with amended federal regulations and IATA regulations we are requesting that international participants return their sample tubes through FedEx international and follow additional requirements for safely shipping human swab samples.  You will need to use the airway bill we send to you  for shipment that clearly identifies the samples as "human exempt specimens".  The samples will be packaged with secondary containment to ensure that they can be safely returned.  For this you will use tape to seal the plastic tube that contains the swab, place the swab in a buff mailing envelope and place the buff envelope inside the Tyvek/plastic mailer prior to FedEx shipment.  If you do not follow these directions the sample will be intercepted at the port of entry into the USA and destroyed.',
+    'TEXT_INTERNATIONAL_PARTICIPANT_DESCRIPTION_1': 'If you are an international participant from the United Kingdom or Australia, sample aggregation sites have been established at King\'s College, London, UK and the University of Queensland, Brisbane, Australia.  Instructions for making use of these sites are available on the web site (http://www.americangut.org)',
+    'TEXT_INTERNATIONAL_PARTICIPANT_DESCRIPTION_2': 'For other international participants to comply with amended federal regulations and IATA regulations we are requesting that you return your sample tubes through FedEx international and follow additional requirements for safely shipping human swab samples.  You will need label the airbill clearly for shipment identifying the samples as "human exempt specimens".  The samples should be packaged with secondary containment to ensure that they can be safely returned.  For this you will use tape to seal the plastic tube that contains the swab, wrap the sample tube in absorbent tissue then place the swab in a mailing envelope inside the Tyvek/plastic mailer prior to FedEx shipment.  If you do not follow these directions the sample may be intercepted at the port of entry into the USA and destroyed.',
     'TEXT_SURVEY_DESCRIPTION_TITLE': 'Description of Surveys/Questionnaires/Interview Questions',
     'TEXT_SURVEY_DESCRIPTION_DESCRIPTION_1': 'You will be asked questions about your general personal information (age, sex, height, weight, ethnicity, place of birth, current ZIP code. We will ask if you recently moved and where you moved from., We will ask questions about general diet information (including whether you follow a special diet, if you have food allergies, whether you have cultural or religious food restrictions). Other questions address whether you have pets and the type of contact you have with these pets and your relationship to other people in this study.  There is a section on health information including a history of allergies/asthma, if you suffer from migraines and if you have a history of irritable bowel disease.  The questionnaire also asks you to complete a food log to assess the amount of protein, fat, carbohydrate, grains and vegetables in your diet. For this we suggest that you contact a free website that will allow you to estimate these amounts.',
-    'TEXT_SURVEY_DESCRIPTION_DESCRIPTION_2': 'Some participants may be asked to keep a detailed food diary for up to 6 months listing all the foods they eat and drink in a day.',
+    'TEXT_SURVEY_DESCRIPTION_DESCRIPTION_2': 'Participants will be presented with the option of completing a Frequent Foods Questionnaire at a third party site (www.vioscreen.com).',
+    'TEXT_SURVEY_DESCRIPTION_DESCRIPTION_3': 'Some participants may be asked to keep a detailed food diary for up to 6 months listing all the foods they eat and drink in a day.',
     'TEXT_DURATION_TITLE': 'Duration',
-    'TEXT_DURATION_DESCRIPTION': 'We anticipate that participant time commitment for sampling will be less than 15 minutes; to complete the questionnaire online will take no more than 45 minutes; and completing the food diary should take no more than10 minutes/day.  The study will be conducted over a maximum period of 5 years to include all the people we are requesting permission to sample.  We anticipate that results will be available within 3-6 months of sample receipt.',
+    'TEXT_DURATION_DESCRIPTION': 'We anticipate that participant time commitment for sampling will be less than 15 minutes; to complete the questionnaire online will take no more than 45 minutes; and completing the food diary should take no more than10 minutes/day.  If you choose to complete the FFQ at VioScreen, this will take an additional 40 minutes. The study will be conducted over a maximum period of 5 years to include all the people we are requesting permission to sample.  We anticipate that results will be available within 3-6 months of sample receipt.',
     'TEXT_WITHDRAWAL_TITLE': 'Study Withdrawal',
-    'TEXT_WITHDRAWAL_DESCRIPTION_1': 'Taking part in this study is completely voluntary.  You do not have to participate if you do not want to.  You may also leave the study at any time.  If you leave the study before it is finished, there will be no penalty to you, and you will not lose any benefits to which you are otherwise entitled.',
-    'TEXT_WITHDRAWAL_DESCRIPTION_2': 'To withdraw from the study send email to the American Gut Project (www.humanfoodproject.com/american-gut/) using the email address you used to contact us about the study and include your access code so that we can delete your records.',
+    'TEXT_WITHDRAWAL_DESCRIPTION_1': 'Taking part in this study is completely <strong>voluntary</strong>.  You do not have to participate if you don\'t want to.  You may also leave the study at any time.  If you leave the study before it is finished, there will be no penalty to you, and you will not lose any benefits to which you are otherwise entitled.',
+    'TEXT_WITHDRAWAL_DESCRIPTION_2': 'To withdraw from the study send email to the American Gut Project (info@americangut.org) using the email address you used to contact us about the study and include your access code so that we can delete your records.',
     'TEXT_RISKS_TITLE': 'Risks and Discomforts',
     'TEXT_RISKS_DESCRIPTION_1': 'There are no foreseeable risks for participating in this study.  You should be aware that the samples you submit are not anonymous but we will make every effort to ensure that they remain confidential.  The only staff associated with the study that will have access to confidential information (your name and address) will be those responsible for shipping the sample kit and questionnaire to you.  When the samples are returned they will have an associated code but no personally identifiable information.',
     'TEXT_BENEFITS_TITLE': 'Benefits',
@@ -359,12 +361,11 @@ _NEW_PARTICIPANT = {
     'TEXT_QUESTIONS_DESCRIPTION_1': 'For questions, concerns, or complaints about this study, call please call Rob Knight at 303-492-1984 or email <a href="mailto:Rob.Knight@colorado.edu">Rob Knight</a>.',
     'TEXT_QUESTIONS_DESCRIPTION_2': 'If you are injured as a result of participating in this study or for questions about a study-related injury, call Please call Rob Knight at 303-492-1984 or email <a href="mailto:Rob.Knight@colorado.edu">Rob Knight</a>.',
     'TEXT_QUESTIONS_DESCRIPTION_3': 'If you have questions about your rights as a research study participant, you can call the Institutional Review Board (IRB). The IRB is independent from the research team. You can contact the IRB if you have concerns or complaints that you do not want to talk to the study team about. The IRB phone number is (303) 735-3702.',
-    'TEXT_I_HAVE_READ': ' I have read (or someone has read to me) this form. I am aware that I am being asked to provide personally identifying information so that I can be considered for inclusion into the study. I voluntarily agree to provide this information. I am not giving up any legal rights by signing this form. I will be sent a copy of this form by e-mail.',
+    'TEXT_I_HAVE_READ_1': 'I have read (or someone has read to me) this form. I am aware that I am being asked to be in a research study. I have had a chance to ask all the questions I have at this time. I have had my questions answered in a way that is clear. I voluntarily agree to be in this study.',
+    'TEXT_I_HAVE_READ_2': 'I am not giving up any legal rights by signing this form. I will be sent a copy of this form to the email address I used to sign up for the study.',
     'PARTICIPANT_NAME': 'Name of participant',
     'PARTICIPANT_EMAIL': 'Email of participant',
-    'PARTICIPANT_AGE_CONFIRMATION': 'Participant is 13 years of age or younger',
-    'PARTICIPANT_IS_YOUNG': 'Participant is older than 3 months and younger than 7 years of age',
-    'PARTICIPANT_IS_YOUNG_2': 'Participant is between 7 and 13 years of age',
+    'PARTICIPANT_IS_YOUNG': 'Participant is older than 3 months and younger than 18 years of age',
     'PARTICIPANT_PARENT_1': 'Name of parent/guardian 1',
     'PARTICIPANT_PARENT_2': 'Name of parent/guardian 2',
     'PARTICIPANT_DECEASED_PARENTS': 'One or both parents are deceased or unable to consent.'
@@ -598,7 +599,7 @@ _PORTAL = {
     'RESULTS_TEXT_1': 'Once you have added a <a href="#" onclick="selectTab(\'source\')">sample source, completed the relevant survey</a> (if applicable), <a href="#" onclick="selectTab(\'sample\')">taken</a> and <a href="#" onclick="selectTab(\'log\')">logged your samples</a> and you have <a href="#" onclick="selectTab(\'mail\')">mailed the samples back to us</a>, we will then perform sequencing and analysis on your samples.',
     'RESULTS_TEXT_2': 'Sequencing and data analysis can take up to 6 months, please be patient! We will let you know as soon as your samples have been sequenced and analyzed.',
     'RESULTS_READY_HEADER_1': 'Your results are ready!',
-    'RESULTS_READY_TEXT_1': 'One or more of the samples you submitted have been sequenced, and the results are now available online! We will be mailing hardcopies of these results shortly. Currently, we have only processed fecal samples, but we will be processing samples from other body sites soon.',
+    'RESULTS_READY_TEXT_1': 'One or more of the samples you submitted have been sequenced, and the results are now available online! Currently, we have only processed fecal samples, but we will be processing samples from other body sites soon.',
     'RESULTS_READY_TEXT_2': 'To access your available results, hover over "Human Samples" in the menu on the left, hover over your name, then click on your sample to view your results, or click one of the links below. The following barcodes are ready:',
     'RESULTS_READY_TEXT_3': 'You will be able to view your results here on this website once they are available.'
 }
@@ -752,451 +753,9 @@ _ANIMAL_SURVEY = {
 _HUMAN_SURVEY_COMPLETED = {
     'COMPLETED_HEADER': 'Congratulations!',
     'COMPLETED_TEXT': 'You are now an enrolled participant in the %(PROJECT_TITLE)s!' % media_locale,
-    'AVAILABLE_SURVEYS': 'Below are a few additional surveys that you may be interested in completing. There is no requirement to take these surveys, and your decision does not affect your involvement in the project in anyway.',
+    'AVAILABLE_SURVEYS': 'Below are a few additional surveys that you may be interested in completing. There is no requirement to take these surveys, and your decision does not affect your involvement in the project in any way.',
     'SURVEY_ASD': '<a href="http://www.anl.gov/contributors/jack-gilbert">Dr. Jack Gilbert</a> is exploring the relationship between gut dysbiosis and Autism Spectrum Disorders, and in conjunction with the American Gut Project, we started an ASD-Cohort study. This additional survey contains questions specific to that cohort, but it is open to any participant to take if they so choose. Please click <a href="%s">here</a> to take the ASD-Cohort survey.',
     'SURVEY_VIOSCREEN': 'The American Gut Project and its sister projects are very interested in diet. If you\'d like to provide additional detail about your diet, please click <a href="%s">here</a> to take a detailed diet survey (known as an Food Frequency Questionnaire). This is a validated FFQ, and is the one used by the Mayo Clinic.'
-}
-
-# sourced from 12-0582_-_american_gut_questionnaire_amended_09012014__irb_appd_09.19.14
-_HUMAN_SURVEY = {
-    # Personal information
-    'PERSONAL_PROMPT_TITLE': 'Personal information',
-    'PERSONAL_PROMPT_NAME': 'Name:',
-    'PERSONAL_PROMPT_GENDER': 'Gender:',
-    'PERSONAL_PROMPT_HEIGHT': 'Height',
-    'PERSONAL_PROMPT_COUNTRY_OF_BIRTH': 'Country of birth:',
-    'PERSONAL_PROMPT_TODAYSDATE': 'Today\'s date:',
-    'PERSONAL_PROMPT_BIRTHDATE': 'Birth date:',
-    'PERSONAL_PROMPT_WEIGHT': 'Weight:',
-    'PERSONAL_PROMPT_ZIP': 'Current ZIP code:',
-    'PERSONAL_PROMPT_WEIGHT_UNITS': 'Weight units:',
-    'PERSONAL_PROMPT_HEIGHT_UNITS': 'Height units:',
-
-    # General diet information
-    'GENERAL_DIET_TITLE': 'General Diet Information',
-    'GENERAL_DIET_QUESTION_0': 'How would you classify your diet?',
-    'GENERAL_DIET_QUESTION_0_CHOICES': (_NO_RESPONSE_CHOICE,
-                                        'Omnivore',
-                                        'Omnivore but do not eat red meat',
-                                        'Vegetarian',
-                                        'Vegetarian but eat seafood',
-                                        'Vegan'),
-
-    'GENERAL_DIET_QUESTION_1': 'Are you taking a daily multivitamin?',
-    'GENERAL_DIET_QUESTION_1_CHOICES': _YES_NO_CHOICES,
-
-    'GENERAL_DIET_QUESTION_2': 'How frequently do you take a probiotic?',
-    'GENERAL_DIET_QUESTION_2_CHOICES': _FREQUENCY_MONTH_CHOICES,
-
-    'GENERAL_DIET_QUESTION_3': 'How frequently do you take Vitamin B complex, folate or folic acid?',
-    'GENERAL_DIET_QUESTION_3_CHOICES': _FREQUENCY_MONTH_CHOICES,
-
-    'GENERAL_DIET_QUESTION_4': 'How frequently do you take Vitamin D supplement?',
-    'GENERAL_DIET_QUESTION_4_CHOICES': _FREQUENCY_MONTH_CHOICES,
-
-    'GENERAL_DIET_QUESTION_5': 'Are you taking any other nutritional/herbal supplements?',
-    'GENERAL_DIET_QUESTION_5_CHOICES': _YES_NO_CHOICES,
-
-    'GENERAL_DIET_QUESTION_6': 'Are you lactose intolerant?',
-    'GENERAL_DIET_QUESTION_6_CHOICES': _YES_NO_CHOICES,
-
-    'GENERAL_DIET_QUESTION_7': 'Are you gluten intolerant?',
-    'GENERAL_DIET_QUESTION_7_CHOICES': (_NO_RESPONSE_CHOICE,
-                                        'I was diagnosed with celiac disease',
-                                        'I was diagnosed with gluten allergy (anti-gluten IgG), but not celiac disease',
-                                        'I do not eat gluten because it makes me feel bad',
-                                        'No'),
-
-    'GENERAL_DIET_QUESTION_8': 'I am allergic to __________ (mark all that apply)',
-    'GENERAL_DIET_QUESTION_8_CHOICES': (_NO_RESPONSE_CHOICE,
-                                        'Peanuts',
-                                        'Tree nuts',
-                                        'Shellfish',
-                                        'Other',
-                                        'I have no food allergies that I know of.'),
-
-    'GENERAL_DIET_QUESTION_9': 'Do you eat a paleo, modified paleo, primal, FODMAP, Westen-Price, or other low-grain, low processed food diet?',
-    'GENERAL_DIET_QUESTION_9_CHOICES': _YES_NO_CHOICES,
-
-    'GENERAL_DIET_QUESTION_10': 'Do you eat meat/dairy products from animals treated with antibiotics?',
-    'GENERAL_DIET_QUESTION_10_CHOICES': _YES_NO_NOTSURE_CHOICES,
-
-    'GENERAL_DIET_QUESTION_11': 'Do you follow any other special diet restrictions other than those indicated above?',
-    'GENERAL_DIET_QUESTION_11_CHOICES': _YES_NO_CHOICES,
-
-    'GENERAL_DIET_QUESTION_12': 'What is your drinking water source at home?',
-    'GENERAL_DIET_QUESTION_12_CHOICES': (_NO_RESPONSE_CHOICE,
-                                         'City',
-                                         'Well',
-                                         'Bottled',
-                                         'Filtered',
-                                         'Not sure'),
-
-    # General information
-    'GENERAL_TITLE': 'General Information',
-    'GENERAL_QUESTION_13': 'What is your race/ethnicity?',
-    'GENERAL_QUESTION_13_CHOICES': (_NO_RESPONSE_CHOICE,
-                                    'Caucasian',
-                                    'Asian or Pacific Islander',
-                                    'African American',
-                                    'Hispanic',
-                                    'Other'),
-
-    'GENERAL_QUESTION_14': 'When did you move to current state of residence?',
-    'GENERAL_QUESTION_14_CHOICES': (_NO_RESPONSE_CHOICE,
-                                    'Within the past month',
-                                    'Within the past 3 months',
-                                    'Within the past 6 months',
-                                    'Within the past year',
-                                    'I have lived in my current state of residence for more than a year.'),
-
-    'GENERAL_QUESTION_15': 'I have traveled outside of the United States in the past _________.',
-    'GENERAL_QUESTION_15_CHOICES': (_NO_RESPONSE_CHOICE,
-                                    'Month',
-                                    '3 months',
-                                    '6 months',
-                                    '1 year',
-                                    'I have not been outside of the United States in the past year.'),
-
-    'GENERAL_QUESTION_16': 'How many non-family roommates do you have?',
-    'GENERAL_QUESTION_16_CHOICES': (_NO_RESPONSE_CHOICE,
-                                    'None',
-                                    'One',
-                                    'Two',
-                                    'Three',
-                                    'More than three'),
-
-    'GENERAL_QUESTION_17': 'Are any of your roommates participating in this study?',
-    'GENERAL_QUESTION_17_CHOICES': _YES_NO_NOTSURE_CHOICES,
-
-    'GENERAL_QUESTION_18': 'Are you related to or live with any of the other participants in this study?',
-    'GENERAL_QUESTION_18_CHOICES': _YES_NO_NOTSURE_CHOICES,
-
-    'GENERAL_QUESTION_19': 'Do you have a dog(s)?',
-    'GENERAL_QUESTION_19_CHOICES': _YES_NO_CHOICES,
-
-    'GENERAL_QUESTION_20': 'Do you have a cat(s)?',
-    'GENERAL_QUESTION_20_CHOICES': _YES_NO_CHOICES,
-
-    'GENERAL_QUESTION_21': 'Which is your dominant hand?',
-    'GENERAL_QUESTION_21_CHOICES': (_NO_RESPONSE_CHOICE,
-                                    'I am right handed',
-                                    'I am left handed',
-                                    'I am ambidextrous'),
-
-    'GENERAL_QUESTION_22': 'What is your highest level of education?',
-    'GENERAL_QUESTION_22_CHOICES': (_NO_RESPONSE_CHOICE,
-                                    'Did not complete high school',
-                                    'High School or GED equilivant',
-                                    'Some college or technical school',
-                                    'Associate\'s degree',
-                                    'Bachelor\'s degree',
-                                    'Some graduate school or professional',
-                                    'Graduate or Professional degree'),
-
-    # General lifestyle and hygiene information
-    'LIFESTYLE_HYGIENE_TITLE': 'General Lifestyle and Hygiene Information',
-    'LIFESTYLE_HYGIENE_QUESTION_23': 'How often do you exercise?',
-    'LIFESTYLE_HYGIENE_QUESTION_23_CHOICES': _FREQUENCY_MONTH_CHOICES,
-
-    'LIFESTYLE_HYGIENE_QUESTION_24': 'Do you generally exercise indoors or outdoors?',
-    'LIFESTYLE_HYGIENE_QUESTION_24_CHOICES': (_NO_RESPONSE_CHOICE,
-                                              'Indoors',
-                                              'Outdoors',
-                                              'Both',
-                                              'Depends on the season',
-                                              'None of the above'),
-
-    'LIFESTYLE_HYGIENE_QUESTION_25': 'Do you bite your fingernails?',
-    'LIFESTYLE_HYGIENE_QUESTION_25_CHOICES': _YES_NO_CHOICES,
-
-    'LIFESTYLE_HYGIENE_QUESTION_26': 'How often do you use a swimming pool/hot tub?',
-    'LIFESTYLE_HYGIENE_QUESTION_26_CHOICES': _FREQUENCY_MONTH_CHOICES,
-
-    'LIFESTYLE_HYGIENE_QUESTION_27': 'How often do you smoke cigarettes?',
-    'LIFESTYLE_HYGIENE_QUESTION_27_CHOICES': _FREQUENCY_MONTH_CHOICES,
-
-    'LIFESTYLE_HYGIENE_QUESTION_28': 'How often do you drink alcohol?',
-    'LIFESTYLE_HYGIENE_QUESTION_28_CHOICES': _FREQUENCY_MONTH_CHOICES,
-
-    'LIFESTYLE_HYGIENE_QUESTION_29': 'What type(s) of alcohol do you typically consume (select all that apply)?',
-    'LIFESTYLE_HYGIENE_QUESTION_29_CHOICES': (_NO_RESPONSE_CHOICE,
-                                              'Beer/Cider',
-                                              'Sour beers',
-                                              'White wine',
-                                              'Red wine',
-                                              'Spirits/hard alcohol'),
-
-    'LIFESTYLE_HYGIENE_QUESTION_30': 'How often do you brush your teeth?',
-    'LIFESTYLE_HYGIENE_QUESTION_30_CHOICES': _FREQUENCY_MONTH_CHOICES,
-
-    'LIFESTYLE_HYGIENE_QUESTION_31': 'How often do you floss your teeth?',
-    'LIFESTYLE_HYGIENE_QUESTION_31_CHOICES': _FREQUENCY_MONTH_CHOICES,
-
-    'LIFESTYLE_HYGIENE_QUESTION_32': 'How often do you wear facial cosmetics?',
-    'LIFESTYLE_HYGIENE_QUESTION_32_CHOICES': _FREQUENCY_MONTH_CHOICES,
-
-    'LIFESTYLE_HYGIENE_QUESTION_33': 'Do you use deodorant or antiperspirant (antiperspirants generally contain aluminum)?',
-    'LIFESTYLE_HYGIENE_QUESTION_33_CHOICES': (_NO_RESPONSE_CHOICE,
-                                              'I use deodorant',
-                                              'I use an antiperspirant',
-                                              'Not sure, but I use some form of deodorant/antiperspirant',
-                                              'I do not use deodorant or an antiperspirant'),
-
-    'LIFESTYLE_HYGIENE_QUESTION_34': 'Approximately how many hours of sleep to you get in an average night?',
-    'LIFESTYLE_HYGIENE_QUESTION_34_CHOICES': (_NO_RESPONSE_CHOICE,
-                                              'Less than 5 hours',
-                                              '5-6 hours',
-                                              '6-7 hours',
-                                              '7-8 hours',
-                                              '8 or more hours'),
-
-    'LIFESTYLE_HYGIENE_QUESTION_35': 'Do you use fabric softener when drying your clothes?',
-    'LIFESTYLE_HYGIENE_QUESTION_35_CHOICES': _YES_NO_CHOICES,
-
-    # General health information
-    'HEALTH_TITLE': 'General Health Information',
-    'HEALTH_QUESTION_36': 'How many times do you have a bowel movement in an average day?',
-    'HEALTH_QUESTION_36_CHOICES': (_NO_RESPONSE_CHOICE,
-                                   'Less than one',
-                                   'One',
-                                   'Two',
-                                   'Three',
-                                   'Four',
-                                   'Five or more'),
-
-    'HEALTH_QUESTION_37': 'Describe the quality of your bowel movements:',
-    'HEALTH_QUESTION_37_CHOICES': (_NO_RESPONSE_CHOICE,
-                                   'I tend to be constipated (have difficulty passing stool)',
-                                   'I tend to have diarrhea (watery stool)',
-                                   'I tend to have normal formed stool',
-                                   'I don\'t know, I do not have a point of reference'),
-
-    'HEALTH_QUESTION_38': 'I have taken antibiotics in the last ____________.',
-    'HEALTH_QUESTION_38_CHOICES': (_NO_RESPONSE_CHOICE,
-                                   'Week',
-                                   'Month',
-                                   '6 months',
-                                   'Year',
-                                   'I have not taken antibiotics in the past year.'),
-
-    'HEALTH_QUESTION_39': 'I have received a flu vaccine in the last ____________.',
-    'HEALTH_QUESTION_39_CHOICES': (_NO_RESPONSE_CHOICE,
-                                   'Week',
-                                   'Month',
-                                   '6 months',
-                                   'Year',
-                                   'I have not gotten the flu vaccine in the past year.'),
-
-    'HEALTH_QUESTION_40': 'Are you currently using some form of hormonal birth control?',
-    'HEALTH_QUESTION_40_CHOICES': (_NO_RESPONSE_CHOICE,
-                                   'Yes, I am taking the "pill"',
-                                   'Yes, I use an injected contraceptive (DMPA)',
-                                   'Yes, I use a contraceptive patch (Ortho-Evra)',
-                                   'Yes, I use the NuvaRing',
-                                   'Yes, I use a hormonal IUD (Mirena)',
-                                   'No'),
-
-    'HEALTH_QUESTION_41': 'Are you currently pregnant?',
-    'HEALTH_QUESTION_41_CHOICES': _YES_NO_NOTSURE_CHOICES,
-
-    'HEALTH_QUESTION_42': 'My weight has _________ within the last 6 months.',
-    'HEALTH_QUESTION_42_CHOICES': (_NO_RESPONSE_CHOICE,
-                                   'Increased more than 10 pounds',
-                                   'Decreased more than 10 pounds',
-                                   'Remained stable'),
-
-    'HEALTH_QUESTION_43': 'Have you had your tonsils removed?',
-    'HEALTH_QUESTION_43_CHOICES': _YES_NO_NOTSURE_CHOICES,
-
-    'HEALTH_QUESTION_44': 'Have you had you appendix removed?',
-    'HEALTH_QUESTION_44_CHOICES': _YES_NO_NOTSURE_CHOICES,
-
-    'HEALTH_QUESTION_45': 'Have you had chickenpox?',
-    'HEALTH_QUESTION_45_CHOICES': _YES_NO_NOTSURE_CHOICES,
-
-    'HEALTH_QUESTION_46': 'Do you currently take prescription medication for facial acne?',
-    'HEALTH_QUESTION_46_CHOICES': _YES_NO_CHOICES,
-
-    'HEALTH_QUESTION_47': 'Do you use over the counter products to control facial acne?',
-    'HEALTH_QUESTION_47_CHOICES': _YES_NO_CHOICES,
-
-    'HEALTH_QUESTION_48': 'Do you currently take over the counter or prescription medication for other conditions?',
-    'HEALTH_QUESTION_48_CHOICES': _YES_NO_CHOICES,
-
-    'HEALTH_QUESTION_49': 'Were you born via Caesarean section (C-section)?',
-    'HEALTH_QUESTION_49_CHOICES': _YES_NO_NOTSURE_CHOICES,
-
-    'HEALTH_QUESTION_50': 'How were you fed as an infant?',
-    'HEALTH_QUESTION_50_CHOICES': (_NO_RESPONSE_CHOICE,
-                                   'Primarily breast milk',
-                                   'Primarily infant formula',
-                                   'A mixture of breast milk and formula',
-                                   'Not sure'),
-
-    'HEALTH_QUESTION_51.03': 'Have you ever been diagnosed with ADD/ADHD?',
-    'HEALTH_QUESTION_51.03_CHOICES': _DIAGNOSIS_CHOICE,
-
-    'HEALTH_QUESTION_51.04': 'Have you ever been diagnosed with Alzheimer\'s Disease/Dementia?',
-    'HEALTH_QUESTION_51.04_CHOICES': _DIAGNOSIS_CHOICE,
-
-    'HEALTH_QUESTION_51.05': 'Have you ever been diagnosed with Asthma, Cystic Fibrosis or Lung Disease?',
-    'HEALTH_QUESTION_51.05_CHOICES': _DIAGNOSIS_CHOICE,
-
-    'HEALTH_QUESTION_51.06': 'Have you ever been diagnosed with Autism or Autism Spectrum Disorder?',
-    'HEALTH_QUESTION_51.06_CHOICES': _DIAGNOSIS_CHOICE,
-
-    'HEALTH_QUESTION_51.07': 'Have you ever been diagnosed with Autoimmune disease (i.e. Lupus, RA, MS, Hashimoto\'s thyroiditis), not including IBD (irritable bowel disease) or type I diabetes?',
-    'HEALTH_QUESTION_51.07_CHOICES': _DIAGNOSIS_CHOICE,
-
-    'HEALTH_QUESTION_51.08': 'Have you ever been diagnosed with Candida or fungal overgrowth in the gut?',
-    'HEALTH_QUESTION_51.08_CHOICES': _DIAGNOSIS_CHOICE,
-
-    'HEALTH_QUESTION_51.09': 'Have you ever been diagnosed with Clostridium difficile (C. diff) infection?',
-    'HEALTH_QUESTION_51.09_CHOICES': _DIAGNOSIS_CHOICE,
-
-    'HEALTH_QUESTION_51.10': 'Have you ever been diagnosed with coronary artery disease, heart disease, heart attack, stroke?',
-    'HEALTH_QUESTION_51.10_CHOICES': _DIAGNOSIS_CHOICE,
-
-    'HEALTH_QUESTION_51.11': 'Have you ever been diagnosed with depression, bipolar disorder or schizophrenia?',
-    'HEALTH_QUESTION_51.11_CHOICES': _DIAGNOSIS_CHOICE,
-
-    'HEALTH_QUESTION_51.12': 'Have you ever been diagnosed with diabetes?',
-    'HEALTH_QUESTION_51.12_CHOICES': _DIAGNOSIS_CHOICE,
-
-    'HEALTH_QUESTION_51.13': 'Have you ever been diagnosed with epilepsy or seizure disorder?',
-    'HEALTH_QUESTION_51.13_CHOICES': _DIAGNOSIS_CHOICE,
-
-    'HEALTH_QUESTION_51.14': 'Have you ever been diagnosed with irritable bowel syndrome (IBS)?',
-    'HEALTH_QUESTION_51.14_CHOICES': _DIAGNOSIS_CHOICE,
-
-    'HEALTH_QUESTION_51.15': 'Have you ever been diagnosed with inflammatory bowel disease (IBD)?',
-    'HEALTH_QUESTION_51.15_CHOICES': _DIAGNOSIS_CHOICE,
-
-    'HEALTH_QUESTION_51.16': 'Have you ever been diagnosed with migraines?',
-    'HEALTH_QUESTION_51.16_CHOICES': _DIAGNOSIS_CHOICE,
-
-    'HEALTH_QUESTION_51.17': 'Have you ever been diagnosed with kidney disease?',
-    'HEALTH_QUESTION_51.17_CHOICES': _DIAGNOSIS_CHOICE,
-
-    'HEALTH_QUESTION_51.18': 'Have you ever been diagnosed with liver disease?',
-    'HEALTH_QUESTION_51.18_CHOICES': _DIAGNOSIS_CHOICE,
-
-    'HEALTH_QUESTION_51.19': 'Have you ever been diagnosed with phenylketonuria?',
-    'HEALTH_QUESTION_51.19_CHOICES': _DIAGNOSIS_CHOICE,
-
-    'HEALTH_QUESTION_51.20': 'Have you ever been diagnosed with small intestinal bacterial overgrowth (SIBO)?',
-    'HEALTH_QUESTION_51.20_CHOICES': _DIAGNOSIS_CHOICE,
-
-    'HEALTH_QUESTION_51.21': 'Have you ever been diagnosed with skin Condition?',
-    'HEALTH_QUESTION_51.21_CHOICES': _DIAGNOSIS_CHOICE,
-
-    'HEALTH_QUESTION_51.22': 'Have you ever been diagnosed with thyroid Disease?',
-    'HEALTH_QUESTION_51.22_CHOICES': _DIAGNOSIS_CHOICE,
-
-    'HEALTH_QUESTION_51.23': 'Have you ever been diagnosed with any other relevant condition?',
-    'HEALTH_QUESTION_51.23_CHOICES': _DIAGNOSIS_CHOICE,
-
-    'HEALTH_QUESTION_53': 'Are you willing to be contacted to answer additional questions about the conditions listed above?',
-    'HEALTH_QUESTION_53_CHOICES': _YES_NO_CHOICES,
-
-    'HEALTH_QUESTION_54': 'Do you have seasonal allergies?',
-    'HEALTH_QUESTION_54_CHOICES': _YES_NO_CHOICES,
-
-    'HEALTH_QUESTION_55': 'Do you have any of the following non-food allergies? (mark all that apply)',
-    'HEALTH_QUESTION_55_CHOICES': (_NO_RESPONSE_CHOICE,
-                                   'Drug (e.g. Penicillin)',
-                                   'Pet dander',
-                                   'Beestings',
-                                   'Poison ivy/oak',
-                                   'Sun'),
-
-    # Detailed Dietary information
-    'DETAILED_DIET_TITLE': 'Detailed Dietary information',
-    'DETAILED_DIET_QUESTION_56': 'Are you an infant who receives most of their nutrition from breast milk or formula, or an adult who receives most (more than 75% of daily calories) of their nutrition from adult nutritional shakes (i.e. Ensure)?',
-    'DETAILED_DIET_QUESTION_56_CHOICES': (_NO_RESPONSE_CHOICE,
-                                          'Yes',
-                                          'No',
-                                          'I eat both solid food and formula/breast milk'),
-
-    'DETAILED_DIET_QUESTION_57': 'In an average week, how often do you consume meat/eggs?',
-    'DETAILED_DIET_QUESTION_57_CHOICES': _FREQUENCY_WEEK_CHOICES,
-
-    'DETAILED_DIET_QUESTION_58': 'In an average week, how often do you cook and consume home cooked meals? (Exclude ready-to-eat meals like boxed macaroni and cheese, ramen noodles, lean cuisine)',
-    'DETAILED_DIET_QUESTION_58_CHOICES': _FREQUENCY_WEEK_CHOICES,
-
-    'DETAILED_DIET_QUESTION_59': 'In an average week, how often do you consume ready-to-eat meals (i.e macaroni and cheese, ramen noodles, lean cuisine)?',
-    'DETAILED_DIET_QUESTION_59_CHOICES': _FREQUENCY_WEEK_CHOICES,
-
-    'DETAILED_DIET_QUESTION_60': 'In an average week, how often do you eat food prepared at a restaurant, including carry-out/take-out?',
-    'DETAILED_DIET_QUESTION_60_CHOICES': _FREQUENCY_WEEK_CHOICES,
-
-    'DETAILED_DIET_QUESTION_61': 'In an average week, how often do you eat at least 2 servings of whole grains in a day?',
-    'DETAILED_DIET_QUESTION_61_CHOICES': _FREQUENCY_WEEK_CHOICES,
-
-    'DETAILED_DIET_QUESTION_62': 'In an average week, how often to you consume at least 2-3 servings of fruit in a day?',
-    'DETAILED_DIET_QUESTION_62_CHOICES': _FREQUENCY_WEEK_CHOICES,
-
-    'DETAILED_DIET_QUESTION_63': 'In an average week, how often do you consume at least 2-3 servings of vegetables, including potatoes in a day?',
-    'DETAILED_DIET_QUESTION_63_CHOICES': _FREQUENCY_WEEK_CHOICES,
-
-    'DETAILED_DIET_QUESTION_64': 'How often do you consume one or more servings of fermented vegetables in or plant products a day in an average week?',
-    'DETAILED_DIET_QUESTION_64_CHOICES': _FREQUENCY_WEEK_CHOICES,
-
-    'DETAILED_DIET_QUESTION_65': 'In an average week, how often do you consume at least 2 servings of milk or cheese a day?',
-    'DETAILED_DIET_QUESTION_65_CHOICES': _FREQUENCY_WEEK_CHOICES,
-
-    'DETAILED_DIET_QUESTION_66': 'In an average week, how often do you consume milk substitutes (soy milk, lactose free milk, almond milk, etc.)?',
-    'DETAILED_DIET_QUESTION_66_CHOICES': _FREQUENCY_WEEK_CHOICES,
-
-    'DETAILED_DIET_QUESTION_67': 'How often do you eat frozen desserts (ice cream/gelato/milkshakes, sherbet/sorbet, frozen yogurt, etc.)?',
-    'DETAILED_DIET_QUESTION_67_CHOICES': _FREQUENCY_WEEK_CHOICES,
-
-    'DETAILED_DIET_QUESTION_68': 'In an average week, how often do you eat red meat?',
-    'DETAILED_DIET_QUESTION_68_CHOICES': _FREQUENCY_WEEK_CHOICES,
-
-    'DETAILED_DIET_QUESTION_69': 'In an average week, how often do you consume higher fat red meats like prime rib, T-bone steak, hamburger, ribs, bacon, etc.?',
-    'DETAILED_DIET_QUESTION_69_CHOICES': _FREQUENCY_WEEK_CHOICES,
-
-    'DETAILED_DIET_QUESTION_70': 'How many days in an average week do you consume chicken or turkey at least once a day?',
-    'DETAILED_DIET_QUESTION_70_CHOICES': _FREQUENCY_WEEK_CHOICES,
-
-    'DETAILED_DIET_QUESTION_71': 'How many days in an average week do you consume seafood (fish, shrimp, lobster, crab, etc.)?',
-    'DETAILED_DIET_QUESTION_71_CHOICES': _FREQUENCY_WEEK_CHOICES,
-
-    'DETAILED_DIET_QUESTION_72': 'How many days in an average week do you consume salted snacks (potato chips, nacho chips, corn chips, popcorn with butter, French fries etc.)?',
-    'DETAILED_DIET_QUESTION_72_CHOICES': _FREQUENCY_WEEK_CHOICES,
-
-    'DETAILED_DIET_QUESTION_73': 'How many days in an average week do you consume sugary sweets (cake, cookies, pastries, donuts, muffins, chocolate etc.) at least once a day',
-    'DETAILED_DIET_QUESTION_73_CHOICES': _FREQUENCY_WEEK_CHOICES,
-
-    'DETAILED_DIET_QUESTION_74': 'Cook with olive oil?',
-    'DETAILED_DIET_QUESTION_74_CHOICES': _FREQUENCY_WEEK_CHOICES,
-
-    'DETAILED_DIET_QUESTION_75': 'Consume whole eggs (does not include egg beaters or just egg whites).',
-    'DETAILED_DIET_QUESTION_75_CHOICES': _FREQUENCY_WEEK_CHOICES,
-
-    'DETAILED_DIET_QUESTION_76': 'Drink 16 ounces or more of sugar sweetened beverages such as non-diet soda or fruit drink/punch (however, not including 100 % fruit juice) in a day?',
-    'DETAILED_DIET_QUESTION_76_CHOICES': _FREQUENCY_WEEK_CHOICES,
-
-    'DETAILED_DIET_QUESTION_77': 'Consume at least 1L (~32 ounces) of water in a day?',
-    'DETAILED_DIET_QUESTION_77_CHOICES': _FREQUENCY_WEEK_CHOICES,
-
-    # Supplemental questions
-    'SUPPLEMENTAL_DIET': 'Dietary Supplements/Dietary Restrictions:',
-    'SUPPLEMENTAL_RICE': 'Race/ethnicity:',
-    'SUPPLEMENTAL_MEDICATION': 'Over the counter and prescription medication:',
-    'SUPPLEMENTAL_TRAVEL': 'Travel:',
-    'SUPPLEMENTAL_RELATIONSHIP': 'What is your relationship to other people in this study who have voluntarily told you of their participation (e.g. partner, children, roommates)?  For children, please specify whether or not you are genetically related.  Note that we will only use information that both parties provide.',
-    'SUPPLEMENTAL_PETS': 'Pets',
-    'SUPPLEMENTAL_PETS_INOUTDOOR': 'Indoor/outdoor or confined (cage/tank):',
-    'SUPPLEMENTAL_PETS_CONTACT': 'Contact extent:',
-    'SUPPLEMENTAL_ANTIBIOTICS': 'Antibiotic/s:',
-    'SUPPLEMENTAL_ANTIBIOTICS_NAME': 'Name:',
-    'SUPPLEMENTAL_ANTIBIOTICS_TREATMENT': 'Treatment for:',
-    'SUPPLEMENTAL_PREGNANCY': 'Pregnancy due date:',
-    'SUPPLEMENTAL_OTHER_CONDITIONS': 'Other conditions you suffer from that were not listed in the diagnosed conditions question',
-    'SUPPLEMENTAL_OPEN_COMMENT': 'Please write anything else about yourself that you think could affect your personal microorganisms.'
 }
 
 _SURVEY_MAIN = {
@@ -1228,7 +787,6 @@ text_locale = {
     'sample_overview.html': _SAMPLE_OVERVIEW,
     'taxa_summary.html': _TAXA_SUMMARY,
     'map.html': _MAP,
-    'human_survey.html': _HUMAN_SURVEY,
     'human_survey_completed.html': _HUMAN_SURVEY_COMPLETED,
     'register_user.html': _REGISTER_USER,
     'chage_pass_verify.html': _CHANGE_PASS_VERIFY,

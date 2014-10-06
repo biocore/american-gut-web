@@ -69,7 +69,7 @@
                 <td colspan="2">
                     <form action="{% raw media_locale['SITEBASE'] %}/authed/sample_overview/" method="post" id="remove_sample_{{ barcode }}">
                         <input type="hidden" name="remove" value="{{ barcode }}">
-                        <input type="submit" value="{% raw tl['REMOVE_BARCODE'] %}"/>
+                        <input type="submit" value="{% raw tl['REMOVE_BARCODE'] % {'barcode': barcode} %}"/>
                     </form>
                 </td>
             </tr>

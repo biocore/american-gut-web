@@ -5,11 +5,11 @@ from datetime import datetime
 
 from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
-from tornado.web import Application, StaticFileHandler
+from tornado.web import Application
 from tornado.options import define, options, parse_command_line
 
 from amgut.handlers.base_handlers import (
-    MainHandler, NoPageHandler, DBErrorHandler)
+    MainHandler, NoPageHandler, DBErrorHandler, BaseStaticFileHandler)
 from amgut import AMGUT_CONFIG
 
 from amgut.handlers.auth_handlers import (
@@ -53,9 +53,9 @@ DEBUG = True
 class QiimeWebApplication(Application):
     def __init__(self):
         handlers = [
-            (r"/results/(.*)", StaticFileHandler,
+            (r"/results/(.*)", BaseStaticFileHandler,
              {"path": AMGUT_CONFIG.base_data_dir}),
-            (r"/static/(.*)", StaticFileHandler, {"path": STATIC_PATH}),
+            (r"/static/(.*)", BaseStaticFileHandler, {"path": STATIC_PATH}),
             (r"/", MainHandler),
             (r"/db_error/", DBErrorHandler),
             (r"/auth/login/", AuthLoginHandler),
@@ -76,10 +76,10 @@ class QiimeWebApplication(Application):
             (r"/authed/add_sample_animal/", AddAnimalSampleHandler),
             (r"/authed/add_sample_general/", AddGeneralSampleHandler),
             (r"/authed/change_password/", ChangePasswordHandler),
+            (r"/authed/add_animal/", AnimalSurveyHandler),
             (r"/faq/", FAQHandler),
             (r"/participants/(.*)", ParticipantOverviewHandler),
             (r"/international_shipping/", InternationalHandler),
-            (r"/add_animal/", AnimalSurveyHandler),
             (r"/check_participant_name/", CheckParticipantName),
             (r"/taxa_summaries/(.*)", TaxaSummaryHandler),
             (r"/retrieve_kitid/", KitIDHandler),

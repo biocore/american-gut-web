@@ -10,11 +10,13 @@
 
 from os import listdir
 from os.path import abspath, join, dirname
+from glob import glob
 
-from psycopg2 import connect
+from psycopg2 import connect, OperationalError
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 import click
 
+from amgut import db_conn
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.lib.util import LAYOUT_FP, INITIALIZE_FP, POPULATE_FP
 from amgut.lib.data_access.sql_connection import SQLConnectionHandler
@@ -49,20 +51,58 @@ def env():
 @click.argument('db', type=click.Choice(['test', 'production']))
 def make(db):
     if db == 'test':
-        make_test_db()
+        _create_database()
+        _make_settings_table()
+        _build_and_initialize()
+        _populate_test_db()
+        print("Test environment successfully created")
+
     if db == 'production':
-        make_production_db()
+        _create_database()
+        _make_settings_table()
+        _build_and_initialize()
+        print("Production environment successfully created")
 
 
-def make_test_db():
-    r"""Creates the american gut test database"""
-    if not AMGUT_CONFIG.test_environment:
-        raise ValueError("The configuration file in use is not set up for a "
-                         "test environment")
+@env.command()
+def clean_test():
+    db_conn._connection.close()
+    conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
+                   host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
+                   database=AMGUT_CONFIG.database)
+    cur = conn.cursor()
 
-    # Connect to the postgres server
+    cur.execute('select test_environment from settings')
+    is_test_db = cur.fetchone()[0].lower()
+    cur.close()
+    conn.close()
+
     conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
                    host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port)
+    cur = conn.cursor()
+
+    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+    if is_test_db == 'false':
+        raise OperationalError("The settings table indicates this is not "
+                               "a test database; aborting.")
+    else:
+        cur.execute('drop database {}'.format(AMGUT_CONFIG.database))
+        print("Database %s dropped" % AMGUT_CONFIG.database)
+        cur.execute('drop role ag_wwwuser')
+        print("role ag_wwwuser dropped")
+        cur.close()
+        conn.close()
+
+
+def _create_database():
+    # Connect to the postgres server
+    try:
+        conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
+                       host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port)
+    except OperationalError as e:
+        raise OperationalError("Cannot connect to the server, error is %s" %
+                               str(e))
+
     # Set the isolation level to AUTOCOMMIT so we can execute a create database
     # sql query
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
@@ -78,35 +118,69 @@ def make_test_db():
     cur.close()
     conn.close()
 
-    # Connect to the postgres server, but this time to the just created db
-    conn = SQLConnectionHandler()
-    print("Creating schema")
-    conn.execute('CREATE SCHEMA ag')
+
+def _build_and_initialize():
+    conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
+                   host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
+                   database=AMGUT_CONFIG.database)
+    curr = conn.cursor()
+
+    # create the schema and set a search path
+    curr.execute('create schema ag')
+    curr.execute('set search_path to ag, public')
 
     print("Inserting procedures")
     procedures_dirpath = join(dirname(dirname(abspath(__file__))), "amgut",
                               "lib", "data_access", "procedures")
-    for procedure_f in listdir(procedures_dirpath):
+    for procedure_f in glob(join(procedures_dirpath, '*.sql')):
         with open(join(procedures_dirpath, procedure_f)) as f:
-            conn.execute(f.read())
+            curr.execute(f.read())
 
     print("Building SQL layout")
     with open(LAYOUT_FP) as f:
         # We have to skip the "create schema" line here
-        conn.execute('\n'.join(f.readlines()[1:]))
+        curr.execute('\n'.join(f.readlines()[1:]))
 
-    # The following lines are commented out because the initialize.sql and
-    # populate_test.sql files are empty, so psycopg2 fails. Once this files
-    # have data, those lines should be executed
-    print("Initializing the test database")
     with open(INITIALIZE_FP) as f:
-        conn.execute(f.read())
+        curr.execute(f.read())
 
+    print('Granting privileges')
+
+    # create 
+    curr.execute('create user "ag_wwwuser"')
+    curr.execute('grant usage on schema public, ag to "ag_wwwuser"') 
+    curr.execute('grant connect on database %s to "ag_wwwuser"' %
+                 AMGUT_CONFIG.database) 
+    curr.execute('GRANT INSERT, UPDATE, DELETE, SELECT ON ALL TABLES IN SCHEMA'
+                 ' public, ag TO "ag_wwwuser";')
+    curr.execute('GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public, ag TO '
+                 '"ag_wwwuser";')
+    conn.commit()
+
+
+def _make_settings_table():
+    conn = SQLConnectionHandler()
+    settings = AMGUT_CONFIG.get_settings()
+
+    columns = [' '.join([setting[0], 'varchar']) for setting in settings]
+    column_names = [setting[0] for setting in settings]
+
+
+    num_values = len(settings)
+    sql = "insert into settings ({}) values ({})".format(
+          ', '.join(column_names), ', '.join(['%s']*num_values))
+    args = [str(setting[1]) for setting in settings]
+
+    with conn.get_postgres_cursor() as cur:
+        cur.execute("create table settings ({})".format(', '.join(columns)))
+        cur.execute(sql, args)
+
+
+def _populate_test_db():
     print("Populating the test database")
-    # with open(POPULATE_FP) as f:
-    #     conn.execute(f.read())
-
-    print("Test environment successfully created")
+    conn = SQLConnectionHandler()
+    with open(POPULATE_FP) as f:
+        conn.execute(f.read())
 
 
 if __name__ == '__main__':

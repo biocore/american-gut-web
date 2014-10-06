@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 from __future__ import division
 
 # -----------------------------------------------------------------------------
@@ -35,14 +34,20 @@ class SQLConnectionHandler(object):
 
     @contextmanager
     def get_postgres_cursor(self):
-        """ Returns a Postgres cursor
+        """ Returns a Postgres cursor, commits on close
 
         Returns
         -------
         pgcursor : psycopg2.cursor
         """
-        with self._connection.cursor(cursor_factory=DictCursor) as cur:
-            yield cur
+        try:
+            with self._connection.cursor(cursor_factory=DictCursor) as cur:
+                yield cur
+        except:
+            self._connection.rollback()
+            raise
+        else:
+            self._connection.commit()
 
     def _check_sql_args(self, sql_args):
         """ Checks that sql_args have the correct type

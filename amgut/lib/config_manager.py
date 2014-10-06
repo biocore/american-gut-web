@@ -16,6 +16,7 @@ with standard_library.hooks():
     from configparser import (ConfigParser, NoOptionError,
                               Error as ConfigParser_Error)
 
+from amgut.lib.locale_data import available_locales
 
 class MissingConfigSection(ConfigParser_Error):
     """Exception when the config file is missing a required section"""
@@ -46,6 +47,8 @@ class ConfigurationManager(object):
         Whether we are in a test environment or not
     base_data_dir : str
         Path to the base directorys where all data file are stored
+    locale : str
+        The locale
     user : str
         The postgres user
     password : str
@@ -66,6 +69,16 @@ class ConfigurationManager(object):
         The port that redis is running on
     redis_db_id : int
         The ID of the redis database
+    smtp_host
+        The host where the SMTP server lives
+    smtp_ssl
+        Whether or not SSL connection is required by SMTP host
+    smtp_port
+        The port the SMTP serveris running on
+    smtp_user
+        The username for connecting to the SMTP server
+    smtp_password
+        The password for connecting to the SMTP server
 
     Raises
     ------
@@ -92,7 +105,8 @@ class ConfigurationManager(object):
         with open(conf_fp, 'U') as conf_file:
             config.readfp(conf_file)
 
-        _expected_sections = {'main', 'postgres', 'test', 'redis'}
+        _expected_sections = {'main', 'postgres', 'test', 'redis', 'email',
+                              'thirdparty'}
 
         missing = _expected_sections - set(config.sections())
         if missing:
@@ -104,6 +118,20 @@ class ConfigurationManager(object):
         self._get_postgres(config)
         self._get_test(config)
         self._get_redis(config)
+        self._get_email(config)
+        self._get_third_party(config)
+
+    def get_settings(self):
+        """Returns settings that should be stored in postgres settings table
+
+        Returns
+        -------
+        list of tuple
+            Tuples are (parameter, argument)
+        """
+        return [('test_environment', self.test_environment),
+                ('base_data_dir', self.base_data_dir),
+                ('locale', self.locale)]
 
     def _get_main(self, config):
         """Get the configuration of the main section"""
@@ -123,6 +151,10 @@ class ConfigurationManager(object):
 
         if not exists(self.base_data_dir):
             raise IOError("Directory %s does not exist!" % self.base_data_dir)
+
+        if self.locale not in available_locales:
+            raise ValueError("%s is not a recognized locale. Please select "
+                             "from %r" % (self.locale, available_locales))
 
     def _get_postgres(self, config):
         """Get the configuration of the postgres section"""
@@ -169,5 +201,21 @@ class ConfigurationManager(object):
         self.redis_port = getint('PORT')
         self.redis_db_id = getint('DB_ID')
 
+    def _get_email(self, config):
+        get = partial(config.get, 'email')
+        getint = partial(config.getint, 'email')
+        getbool = partial(config.getboolean, 'email')
+
+        self.smtp_host = get('HOST')
+        self.smtp_ssl = getbool('SSL')
+        self.smtp_port = getint('PORT')
+        self.smtp_user = get('USERNAME')
+        self.smtp_password = get('PASSWORD')
+
+    def _get_third_party(self, config):
+        get = partial(config.get, 'thirdparty')
+
+        self.vioscreen_regcode = get('VIOSCREEN_REGCODE')
+        self.vioscreen_cryptokey = get('VIOSCREEN_CRYPTOKEY')
 
 AMGUT_CONFIG = ConfigurationManager()

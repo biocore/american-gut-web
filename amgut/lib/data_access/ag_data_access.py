@@ -1,16 +1,16 @@
+from __future__ import division
+
+# -----------------------------------------------------------------------------
+# Copyright (c) 2014--, The American Gut Development Team.
+#
+# Distributed under the terms of the BSD 3-clause License.
+#
+# The full license is in the file LICENSE, distributed with this software.
+# -----------------------------------------------------------------------------
 
 """
 Centralized database access for the American Gut web portal
 """
-
-__author__ = "Doug Wendel"
-__copyright__ = "Copyright 2009-2010, Qiime Web Analysis"
-__credits__ = ["Doug Wendel", "Emily TerAvest"]
-__license__ = "GPL"
-__version__ = "1.0.0.dev"
-__maintainer__ = ["Doug Wendel"]
-__email__ = "wendel@colorado.edu"
-__status__ = "Production"
 
 import urllib
 import httplib
@@ -80,6 +80,8 @@ class AGDataAccess(object):
                 port=AMGUT_CONFIG.port)
         else:
             self.connection = con
+        cur = self.connection.cursor()
+        cur.execute('set search_path to public, ag')
 
         self._sql = SQLConnectionHandler(con)
 
@@ -422,10 +424,19 @@ class AGDataAccess(object):
         self.connection.commit()
 
     def getHumanParticipants(self, ag_login_id):
-        results = self._sql.execute_proc_return_cursor(
-            'ag_get_human_participants', [ag_login_id])
-        return_res = [row[0] for row in results]
-        results.close()
+        conn_handler = SQLConnectionHandler()
+        # get people from new survey setup
+        return_res = []
+        new_survey_sql = ("SELECT participant_name FROM ag_login_surveys "
+                          "WHERE ag_login_id = %s")
+        results = conn_handler.execute_fetchall(new_survey_sql, [ag_login_id])
+        return_res.extend(row[0] for row in results)
+
+        # get people from old surveys
+        old_survey_sql = ("SELECT participant_name FROM ag_human_survey where "
+                          "ag_login_id = %s")
+        results = conn_handler.execute_fetchall(new_survey_sql, [ag_login_id])
+        return_res.extend(row[0] for row in results)
         return return_res
 
     def AGGetBarcodeMetadata(self, barcode):
@@ -912,6 +923,17 @@ class AGDataAccess(object):
         return (human_samples, animal_samples, environmental_samples,
                 kit_verified)
 
+    def check_if_consent_exists(self, ag_login_id, participant_name):
+        """Return True if a consent already exists"""
+        sql = """select exists(
+                    select 1
+                    from ag_consent
+                    where ag_login_id=%s and
+                        participant_name=%s)"""
+        cursor = self.connection.cursor()
+        cursor.execute(sql, (ag_login_id, participant_name))
+        return cursor.fetchone()[0]
+
     def get_verification_code(self, supplied_kit_id):
         """returns the verification code for the kit"""
         sql = ("select kit_verification_code from ag_kit where "
@@ -940,6 +962,35 @@ class AGDataAccess(object):
             user_data['ag_login_id'] = str(user_data['ag_login_id'])
 
         return user_data
+
+    def get_person_info(self, survey_id):
+        # get question responses
+        info = {'birth_month': 'Unspecified', 'birth_year': 'Unspecified', 'gender': 'Unspecified'}
+        sql = ("SELECT q.american, sa.response FROM ag.survey_answers_other "
+               " sa JOIN ag.ag_login_surveys ls ON sa.survey_id = ls.survey_id "
+               "JOIN ag.survey_question q ON q.survey_question_id = sa.survey_question_id "
+               "WHERE sa.survey_id = %s AND q.american IN ('Birth month:','Birth year:','Gender:')")
+        cursor = self.connection.cursor()
+        cursor.execute(sql, [survey_id])
+        rows = cursor.fetchall()
+
+        for res in rows:
+            value = json.loads(res[1])[0]
+            if res[0] == 'Birth month:':
+                info['birth_month'] = value
+            elif res[0] == 'Birth year:':
+                info['birth_year'] = value
+            elif res[0] == 'Gender:':
+                info['gender'] = value
+
+        # get name from consent form
+        sql = ("SELECT c.participant_name FROM ag.ag_consent c JOIN "
+               "ag.ag_login_surveys ls ON c.ag_login_id = ls.ag_login_id WHERE "
+               "ls.survey_id = %s")
+        cursor.execute(sql, [survey_id])
+        info["name"] = cursor.fetchone()[0]
+
+        return info
 
     def get_barcode_results(self, supplied_kit_id):
         sql = """select akb.barcode, akb.participant_name
@@ -985,6 +1036,16 @@ class AGDataAccess(object):
         results = cursor.fetchall()
         cursor.close()
         return [x[0] for x in results]
+
+    def search_participants(self, term):
+        sql = """ select  cast(ag_login_id as varchar(100)) as ag_login_id
+                 from    ag_consent
+                 where   lower(participant_name) like %s or
+                 lower(participant_email) like %s"""
+        conn_handler = SQLConnectionHandler()
+        liketerm = '%%' + term + '%%'
+        return [x[0] for x in conn_handler.execute_fetchall(
+            sql, [liketerm, liketerm])]
 
     def search_barcodes(self, term):
         sql = """select  cast(ak.ag_login_id as varchar(100)) as ag_login_id

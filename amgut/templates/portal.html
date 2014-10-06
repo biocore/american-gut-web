@@ -8,7 +8,7 @@
 <h2>{% raw tl['GREETING'] % fmt %}</h2>
 
 {% if errmsg %}
-    <h2 class="msg">{{errmsg}}</h2>
+    <h2 class="msg">{% raw errmsg %}</h2>
 {% end %}
 
 
@@ -74,8 +74,8 @@
             <p class="portal_blurb">{% raw tl['SAMPLE_SOURCE_TEXT_1'] % fmt %}</p>
             <p class="portal_blurb">{% raw tl['SAMPLE_SOURCE_TEXT_2']%}</p>
             <div id="source_icons">
-                <a href="{% raw media_locale['SITEBASE'] %}/authed/new_participant_overview.html"><div class="source_icon"><img src="{% raw media_locale['SITEBASE'] %}/static/img/human.png"><div>{% raw tl['SAMPLE_SOURCE_TYPE_HUMAN'] %}</div></div></a>
-                <a href="{% raw media_locale['SITEBASE'] %}/authed/animal_survey.html"><div class="source_icon"><img src="{% raw media_locale['SITEBASE'] %}/static/img/animal.png"><div>{% raw tl['SAMPLE_SOURCE_TYPE_ANIMAL'] %}</div></div></a>
+                <a href="{% raw media_locale['SITEBASE'] %}/authed/new_participant_overview/"><div class="source_icon"><img src="{% raw media_locale['SITEBASE'] %}/static/img/human.png"><div>{% raw tl['SAMPLE_SOURCE_TYPE_HUMAN'] %}</div></div></a>
+                <a href="{% raw media_locale['SITEBASE'] %}/authed/add_animal/"><div class="source_icon"><img src="{% raw media_locale['SITEBASE'] %}/static/img/animal.png"><div>{% raw tl['SAMPLE_SOURCE_TYPE_ANIMAL'] %}</div></div></a>
                 <a href="" onclick="document.forms['add_sample_general'].submit(); return false;"><div class="source_icon"><img src="{% raw media_locale['SITEBASE'] %}/static/img/environmental.png"><div>{% raw tl['SAMPLE_SOURCE_TYPE_ENVIRONMENTAL'] %}</div></div></a>
             </div>
             <br />
@@ -86,7 +86,8 @@
             <p class="portal_blurb">{% raw tl['SURVEY_TEXT_3'] %}</p>
             <p class="portal_blurb">{% raw tl['SURVEY_TEXT_4'] %}</p>
             <div class="centered">
-                <img src="{% raw media_locale['PORTAL_DIET_QUESTIONS'] %}">
+                <img src="{% raw media_locale['PORTAL_DIET_QUESTIONS'] %}"
+                 width=818>
             </div>
         </div>
         <div id="sample_content" class="portal_unselected">

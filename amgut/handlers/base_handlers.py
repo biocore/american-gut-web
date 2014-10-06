@@ -1,8 +1,9 @@
 import logging
 
-from tornado.web import RequestHandler
+from tornado.web import RequestHandler, StaticFileHandler
 
 from amgut.util import AG_DATA_ACCESS
+from amgut.lib.mail import send_email
 from amgut import text_locale
 
 
@@ -18,7 +19,18 @@ class BaseHandler(RequestHandler):
 
     def write_error(self, status_code, **kwargs):
         '''Overrides the error page created by Tornado'''
+        from traceback import format_exception
         logging.exception(kwargs["exc_info"])
+        exc_info = kwargs["exc_info"]
+        trace_info = ''.join(format_exception(*exc_info))
+        request_info = ''.join(["%s:   %s\n" %
+                               (k, self.request.__dict__[k]) for k in
+                                self.request.__dict__])
+        error = exc_info[1]
+        formatted_email = (">SKID\n%s\n\n>Error\n%s\n\n>Traceback\n%s\n\n"
+                           ">Request Info\n%s\n\n" %
+                           (self.current_user, error, trace_info, request_info))
+        send_email(formatted_email, "SERVER ERROR!")
         self.render('error.html', skid=self.current_user)
 
 
@@ -49,3 +61,10 @@ class DBErrorHandler(BaseHandler):
             raise ValueError('DB Error not found: %s' % err)
         self.render("db_error.html", skid=self.current_user,
                     message=errors[err])
+
+class BaseStaticFileHandler(StaticFileHandler, BaseHandler):
+    def write_error(self, status_code, **kwargs):
+        if self.current_user:
+            self.render("404.html", skid=self.current_user)
+        else:
+            self.render("no_auth_404.html", loginerror="")
