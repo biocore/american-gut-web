@@ -875,6 +875,7 @@ INSERT INTO survey_response (american, british) VALUES ('2014', '2014');
 --gender
 INSERT INTO survey_response (american, british) VALUES ('Male', 'Male');
 INSERT INTO survey_response (american, british) VALUES ('Female', 'Female');
+INSERT INTO survey_response (american, british) VALUES ('Other', 'Other');
 
 ----------------------------------------------------------
 -- survey_question_response
@@ -1773,6 +1774,7 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (107, 'Unspecified', 0);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (107, 'Male', 1);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (107, 'Female', 2);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (107, 'Other', 3);
 
 ----------------------------------------------------------
 -- survey_question_triggers
