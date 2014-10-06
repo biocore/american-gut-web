@@ -733,33 +733,32 @@ function validateSurvey0() {
     }
     
     var valid = true;
-    
-    if(!isValidDate(survey_form.PERSONAL_PROMPT_BIRTHDATE.value) && survey_form.PERSONAL_PROMPT_BIRTHDATE.value != "")
-    {
-        survey_form.PERSONAL_PROMPT_BIRTHDATE.className += " highlight";
-        valid = false;
-    }
 
-    if(survey_form.PERSONAL_PROMPT_HEIGHT.value.length > 0) {
-        if(survey_form.PERSONAL_PROMPT_HEIGHT.value.replace(/[0-9]/g,"").length > 0)
+    //Verify Height
+    //Height = Personal_Information_108_0
+    //Height units = Personal_Information_109_0
+    if(survey_form.Personal_Information_108_0.value.length > 0) {
+        if(survey_form.Personal_Information_108_0.value.replace(/[0-9]/g,"").length > 0)
         {
-            survey_form.PERSONAL_PROMPT_HEIGHT.className += " highlight";
+            survey_form.Personal_Information_108_0.className += " highlight";
             valid = false;
         }
-        if(survey_form.PERSONAL_PROMPT_HEIGHT_UNITS.value == "") {
-            survey_form.PERSONAL_PROMPT_HEIGHT_UNITS.className += " highlight";
-            valid = false;   
-        }
-    }
-
-    if(survey_form.PERSONAL_PROMPT_WEIGHT.value.length > 0) {
-        if(survey_form.PERSONAL_PROMPT_WEIGHT.value.replace(/[0-9]/g,"").length > 0)
-        {
-            survey_form.PERSONAL_PROMPT_WEIGHT.className += " highlight";
+        if(survey_form.Personal_Information_109_0.value == "0") {
+            survey_form.Personal_Information_109_0.className += " highlight";
             valid = false;
         }
-        if(survey_form.PERSONAL_PROMPT_WEIGHT_UNITS.value == "") {
-            survey_form.PERSONAL_PROMPT_WEIGHT_UNITS.className += " highlight";
+    }
+    //Verify Weight
+    if(survey_form.Personal_Information_113_0.value.length > 0) {
+        //Weight = Personal_Information_113_0
+        //Weight units = Personal_Information_114_0
+        if(survey_form.Personal_Information_113_0.value.replace(/[0-9]/g,"").length > 0)
+        {
+            survey_form.Personal_Information_113_0.className += " highlight";
+            valid = false;
+        }
+        if(survey_form.Personal_Information_114_0.value == "0") {
+            survey_form.Personal_Information_114_0.className += " highlight";
             valid = false;   
         }
     }
