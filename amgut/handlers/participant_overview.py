@@ -25,6 +25,7 @@ class ParticipantOverviewHandler(BaseHandler):
                 ag_login_id, participant_to_remove)
             # Redirect to portal
             self.redirect(media_locale['SITEBASE'] + "/authed/portal/")
+            return
 
         participant_type = self.get_argument('participant_type')
 
