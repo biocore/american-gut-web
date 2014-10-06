@@ -105,7 +105,8 @@ class ConfigurationManager(object):
         with open(conf_fp, 'U') as conf_file:
             config.readfp(conf_file)
 
-        _expected_sections = {'main', 'postgres', 'test', 'redis', 'email'}
+        _expected_sections = {'main', 'postgres', 'test', 'redis', 'email',
+                              'thirdparty'}
 
         missing = _expected_sections - set(config.sections())
         if missing:
@@ -118,6 +119,7 @@ class ConfigurationManager(object):
         self._get_test(config)
         self._get_redis(config)
         self._get_email(config)
+        self._get_third_party(config)
 
     def get_settings(self):
         """Returns settings that should be stored in postgres settings table
@@ -210,5 +212,10 @@ class ConfigurationManager(object):
         self.smtp_user = get('USERNAME')
         self.smtp_password = get('PASSWORD')
 
+    def _get_third_party(self, config):
+        get = partial(config.get, 'thirdparty')
+
+        self.vioscreen_regcode = get('VIOSCREEN_REGCODE')
+        self.vioscreen_cryptokey = get('VIOSCREEN_CRYPTOKEY')
 
 AMGUT_CONFIG = ConfigurationManager()

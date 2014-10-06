@@ -65,3 +65,9 @@ GOODPASSWORD =
 
 BADPASSWORD = oldpass
 
+# ----------------------------- Third-Party settings ------------------------
+[thirdparty]
+
+VIOSCREEN_REGCODE =
+
+VIOSCREEN_CRYPTOKEY =
