@@ -378,9 +378,35 @@ class AGDataAccess(object):
         self.connection.commit()
 
     def deleteAGParticipant(self, ag_login_id, participant_name):
+        # Remove user using old stype DB Schema
         self.connection.cursor().callproc('ag_delete_participant',
                                           [ag_login_id, participant_name])
         self.connection.commit()
+
+        # Remove user from new schema
+        conn_handler = SQLConnectionHandler()
+        sql = ("SELECT survey_id FROM ag_login_surveys WHERE ag_login_id = "
+                   "%s AND participant_name = %s")
+        survey_id = conn_handler.execute_fetchone(
+            sql, (ag_login_id, participant_name))[0]
+
+        with conn_handler.get_postgres_cursor() as curr:
+            sql = ("DELETE FROM survey_answers WHERE "
+                   "survey_id = %s")
+            curr.execute(sql, [survey_id])
+
+            sql = ("DELETE FROM survey_answers_other WHERE "
+                   "survey_id = %s")
+            curr.execute(sql, [survey_id])
+
+            # Delete last due to foreign keys
+            sql = ("DELETE FROM ag_login_surveys WHERE "
+                   "survey_id = %s")
+            curr.execute(sql, [survey_id])
+
+            sql = ("DELETE FROM ag_consent WHERE ag_login_id = "
+                   "%s AND participant_name = %s")
+            curr.execute(sql, [ag_login_id, participant_name])
 
     def insertAGMultiple(self, ag_login_id, participant_name, field_name,
                          field_value):
