@@ -9,8 +9,7 @@ from __future__ import division
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
 
-from itertools import groupby
-from operator import itemgetter
+from collections import defaultdict
 
 from wtforms import (SelectField, SelectMultipleField, widgets,
                      TextAreaField, TextField)
@@ -89,8 +88,10 @@ class Question(object):
                 self._question_response_table),
             [self.id])
 
-        return {key: list(group)
-                for key, group in groupby(trigger_list, key=itemgetter(0))}
+        results = defaultdict(list)
+        for question, index in trigger_list:
+            results[question].append(index)
+        return results
 
     @property
     def interface_elements(self):
