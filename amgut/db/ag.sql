@@ -387,34 +387,6 @@ CREATE TABLE ag.ag_kit (
 
 CREATE INDEX ix_ag_kit_login ON ag.ag_kit ( ag_login_id );
 
-CREATE TABLE ag.ag_kit_barcodes ( 
-	ag_kit_barcode_id    uuid DEFAULT uuid_generate_v4() NOT NULL,
-	ag_kit_id            uuid  ,
-	barcode              varchar  NOT NULL,
-	sample_barcode_file  varchar(500)  ,
-	sample_barcode_file_md5 varchar(50)  ,
-	site_sampled         varchar(200)  ,
-	sample_date          varchar(20)  ,
-	participant_name     varchar(200)  ,
-	sample_time          varchar(100)  ,
-	notes                varchar(2000)  ,
-	environment_sampled  varchar(100)  ,
-	moldy                char(1)  ,
-	overloaded           char(1)  ,
-	other                char(1)  ,
-	other_text           varchar(2000)  ,
-	date_of_last_email   varchar(20)  ,
-	results_ready        varchar(1)  ,
-	withdrawn            varchar(1)  ,
-	refunded             varchar(1)  ,
-	CONSTRAINT ag_kit_barcodes_pkey PRIMARY KEY ( ag_kit_barcode_id ),
-	CONSTRAINT ag_kit_barcodes_barcode_key UNIQUE ( barcode ) ,
-	CONSTRAINT fk_ag_kit_barcodes FOREIGN KEY ( ag_kit_id ) REFERENCES ag.ag_kit( ag_kit_id )    ,
-	CONSTRAINT fk_ag_kit_barcodes_0 FOREIGN KEY ( barcode ) REFERENCES ag.barcode( barcode )    
- );
-
-CREATE INDEX ix_ag_kit_bc_kit ON ag.ag_kit_barcodes ( ag_kit_id );
-
 CREATE TABLE ag.ag_login_surveys ( 
 	ag_login_id          uuid  NOT NULL,
 	survey_id            varchar  NOT NULL,
@@ -533,6 +505,38 @@ COMMENT ON COLUMN ag.survey_question_triggers.survey_question_id IS 'The ID of t
 COMMENT ON COLUMN ag.survey_question_triggers.triggering_response IS 'The response to the question that will cause the appearance of the triggered_question';
 
 COMMENT ON COLUMN ag.survey_question_triggers.triggered_question IS 'The question that is triggered';
+
+CREATE TABLE ag.ag_kit_barcodes ( 
+	ag_kit_barcode_id    uuid DEFAULT uuid_generate_v4() NOT NULL,
+	ag_kit_id            uuid  ,
+	barcode              varchar  NOT NULL,
+	survey_id            varchar  ,
+	sample_barcode_file  varchar(500)  ,
+	sample_barcode_file_md5 varchar(50)  ,
+	site_sampled         varchar(200)  ,
+	sample_date          varchar(20)  ,
+	participant_name     varchar(200)  ,
+	sample_time          varchar(100)  ,
+	notes                varchar(2000)  ,
+	environment_sampled  varchar(100)  ,
+	moldy                char(1)  ,
+	overloaded           char(1)  ,
+	other                char(1)  ,
+	other_text           varchar(2000)  ,
+	date_of_last_email   varchar(20)  ,
+	results_ready        varchar(1)  ,
+	withdrawn            varchar(1)  ,
+	refunded             varchar(1)  ,
+	CONSTRAINT ag_kit_barcodes_pkey PRIMARY KEY ( ag_kit_barcode_id ),
+	CONSTRAINT ag_kit_barcodes_barcode_key UNIQUE ( barcode ) ,
+	CONSTRAINT fk_ag_kit_barcodes FOREIGN KEY ( ag_kit_id ) REFERENCES ag.ag_kit( ag_kit_id )    ,
+	CONSTRAINT fk_ag_kit_barcodes_0 FOREIGN KEY ( barcode ) REFERENCES ag.barcode( barcode )    ,
+	CONSTRAINT fk_ag_kit_barcodes_1 FOREIGN KEY ( survey_id ) REFERENCES ag.ag_login_surveys( survey_id )    
+ );
+
+CREATE INDEX ix_ag_kit_bc_kit ON ag.ag_kit_barcodes ( ag_kit_id );
+
+CREATE INDEX idx_ag_kit_barcodes ON ag.ag_kit_barcodes ( survey_id );
 
 CREATE TABLE ag.survey_answers ( 
 	survey_id            varchar  NOT NULL,
