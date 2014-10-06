@@ -4,7 +4,7 @@ from base64 import b64decode, b64encode
 
 from amgut import AMGUT_CONFIG
 from amgut import media_locale
-from amgut.util import AG_DATA_ACCESS
+from amgut import AG_DATA_ACCESS
 
 
 def pkcs7_pad_message(in_message):
