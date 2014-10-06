@@ -6,7 +6,7 @@ from amgut.handlers.base_handlers import BaseHandler
 from amgut import media_locale
 
 
-class ViscreenPassthroughHandler(BaseHandler):
+class VioscreenPassthroughHandler(BaseHandler):
     @authenticated
     def get(self):
         # get information out of  encrypted vioscreen url
