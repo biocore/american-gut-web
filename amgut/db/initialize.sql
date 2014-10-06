@@ -364,7 +364,7 @@ INSERT INTO survey_question_response_type (survey_question_id, survey_response_t
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (56, 'SINGLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (55, 'SINGLE');
 -- personal prompt
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (107, 'STRING');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (107, 'SINGLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (108, 'STRING');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (109, 'SINGLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (110, 'SINGLE');
@@ -874,6 +874,9 @@ INSERT INTO survey_response (american, british) VALUES ('2011', '2011');
 INSERT INTO survey_response (american, british) VALUES ('2012', '2012');
 INSERT INTO survey_response (american, british) VALUES ('2013', '2013');
 INSERT INTO survey_response (american, british) VALUES ('2014', '2014');
+--gender
+INSERT INTO survey_response (american, british) VALUES ('Male', 'Male');
+INSERT INTO survey_response (american, british) VALUES ('Female', 'Female');
 
 ----------------------------------------------------------
 -- survey_question_response
@@ -1768,7 +1771,10 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (112, '2012', 123);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (112, '2013', 124);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (112, '2014', 125);
-
+--gender
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (107, 'Unspecified', 0);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (107, 'Male', 1);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (107, 'Female', 2);
 
 ----------------------------------------------------------
 -- survey_question_triggers
