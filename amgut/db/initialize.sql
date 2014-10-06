@@ -389,6 +389,14 @@ INSERT INTO survey_question_response_type (survey_question_id, survey_response_t
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (115, 'STRING');
 -- about yourself
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (116, 'TEXT');
+-- supplements
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (101, 'TEXT');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (104, 'TEXT');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (117, 'TEXT');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (118, 'TEXT');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (119, 'TEXT');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (120, 'TEXT');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (121, 'TEXT');
 
 ----------------------------------------------------------
 -- survey_response
