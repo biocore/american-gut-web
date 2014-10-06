@@ -75,12 +75,12 @@ handler #}
         {% if form_item.id in the_form.triggers %}
         <tr>
             <td colspan="2">
-                {% < div id="{{ supp_div_id }}"> %}
+                <div id="{{ supp_div_id }}"> 
                     {% for eid in the_form.triggered[form_item.id] %}
                         {% raw the_form.prompts[eid] %}
                         {% raw the_form[eid]() %}
                     {% end %}
-                {% </div> %}
+                </div>
             </td>
         </tr>
         {% end %}

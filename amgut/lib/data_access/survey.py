@@ -9,6 +9,7 @@ from __future__ import division
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
 
+from json import loads
 from collections import defaultdict
 
 from wtforms import (SelectField, SelectMultipleField, widgets,
@@ -67,6 +68,13 @@ class Question(object):
                 self._survey_question_table),
                 [self.id])[0]
 
+        self.american_question = db_conn.execute_fetchone('''
+            select american
+            from {0}
+            where survey_question_id = %s'''.format(
+                self._survey_question_table),
+                [self.id])[0]
+
         self.triggers = self._triggers()
         self.qid = '_'.join(self.group_name.split() + [str(self.id)])
 
@@ -100,7 +108,7 @@ class Question(object):
             results[question].append(index)
 
         if results:
-            return results.items()[0]
+            return results
         else:
             return ()
 
@@ -198,15 +206,15 @@ class Group(object):
                 self._group_questions_table),
             [self.id])]
 
-        self.qid_to_eid = {q.qid: q.interface_element_ids for q in qs}
+        self.id_to_eid = {q.id: q.interface_element_ids for q in qs}
 
         self.question_lookup = {q.id: q for q in qs}
         self.questions = qs
 
         self.supplemental_eids = set()
         for q in qs:
-            if q.triggers:
-                triggered = self.question_lookup[q.triggers[0]]
+            for id_ in q.triggers:
+                triggered = self.question_lookup[id_]
                 triggered_eids = triggered.interface_element_ids
                 self.supplemental_eids.update(set(triggered_eids))
 

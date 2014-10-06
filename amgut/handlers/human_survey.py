@@ -1,4 +1,5 @@
 from json import dumps
+from collections import defaultdict
 
 from wtforms import Form
 from tornado.web import authenticated
@@ -20,8 +21,8 @@ def make_human_survey_class(group):
     """
     attrs = {}
     prompts = {}
-    triggers = {}
-    triggered = {}
+    triggers = defaultdict(list)
+    triggered = defaultdict(list)
 
     for q in group.questions:
         for eid, element in zip(q.interface_element_ids, q.interface_elements):
@@ -29,9 +30,9 @@ def make_human_survey_class(group):
             prompts[eid] = q.question
 
             if q.triggers:
-                triggered_id, triggering_responses = q.triggers
-                triggers[eid] = triggering_responses
-                triggered[eid] = group.qid_to_eid[triggered_id]
+                for triggered_id, triggering_responses in q.triggers.items():
+                    triggers[eid].extend(triggering_responses)
+                    triggered[eid].extend(group.id_to_eid[triggered_id])
 
     attrs['prompts'] = prompts
     attrs['triggers'] = triggers
