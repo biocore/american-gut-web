@@ -98,8 +98,10 @@ class QiimeWebApplication(Application):
 
 
 def main():
-    options.log_file_prefix = ("AMGUT_%d_%s.log" %
-                               (options.port, str(datetime.now())))
+    # replace spaces for underscores to autocomplete easily in a shell
+    prefix = ("AMGUT_%d_%s.log" % (options.port,
+                                   str(datetime.now()))).replace(' ', '_')
+    options.log_file_prefix = prefix
     options.logging = 'warning'
     parse_command_line()
     http_server = HTTPServer(QiimeWebApplication())
