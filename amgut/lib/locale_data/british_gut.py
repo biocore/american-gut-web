@@ -632,6 +632,19 @@ _ADDENDUM = {
     'YOUR_ENRICHED_TABLE_HEADER': "<th>Taxonomy</th><th>Sample</th><th>Population</th><th>Fold</th>"
 }
 
+_INTERNATIONAL = {
+    'PAGE_TITLE': '%(shorthand)s International Shipping Instructions' % {'shorthand': AMGUT_CONFIG.project_shorthand},
+    'INTERNATIONAL_HEADER_1': "International Shipping",
+    'INTERNATIONAL_HEADER_2': "Your samples",
+    'INTERNATIONAL_TEXT_1': 'At the moment, we are unable to accept non-British samples at the British Gut. Please send any non-UK international samples to:',
+    'INTERNATIONAL_TEXT_2': 'In order to comply with amended federal and IATA regulations, we are requesting that international participants return their sample tubes through FedEx International and that international participants follow the additional safely requirements for shipping human swab samples to the United States. Your airway bill must clearly identify the package as containing "human exempt specimens". The samples will additionally need to be packaged within a secondary containment to ensure that they can safely enter the United States.',
+    'INTERNATIONAL_TEXT_3': "For shipment, you will need to use clear tape to secure the sample swabs to the sample tube, then place the sample tube in the provided buff mailing envelope. Then place the buff envelope inside a Tyvek/plastic mailer, <strong>which can be acquired free of charge from FedEx</strong>, when shipping the sample, prior to FedEx shipment.",
+    'INTERNATIONAL_TEXT_4': "If you do not follow these directions the sample will be destroyed by United States Customs at the port of entry into the United States.",
+    'YOUR_SAMPLES': 'Your samples',
+    'YOUR_SAMPLES_LIST': '<li>Are considered dried specimens</li><li>Must be shipped via FedEx</li><li>Must have tape to sealing the plastic tube that contains the swab</li><li>Must be placed in a buff mailing envelope with the buff envelope placed inside a Tyvek/plastic mailer prior to FedEx shipment</li><li>Must be shipped with an airway bill and must be labeled with the complete address of the sender and complete address of recipient, and with the words "Human exempt sample(s)"</li>',
+    'AMERICAN_GUT_ADDRESS': "American Gut Project<br>Knight Lab, JSCBB<br>596 UCB<br>Boulder, CO 80309"
+}
+
 _PORTAL = {
     'ADD_SOURCE_TAB': "Add Source <br>Survey",
     'DOMESTIC_HEADER_1': "Domestic Shipping",
