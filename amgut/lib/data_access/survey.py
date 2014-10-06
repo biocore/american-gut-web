@@ -73,8 +73,8 @@ class Question(object):
 
         Returns
         -------
-        dict
-            {other_question_id: [triggering indices to that question], ...}
+        tuple
+            (other_question_id, [triggering indices to that question])
         """
         trigger_list = db_conn.execute_fetchall('''
             select triggered_question, sqr.display_index
@@ -91,7 +91,11 @@ class Question(object):
         results = defaultdict(list)
         for question, index in trigger_list:
             results[question].append(index)
-        return results
+
+        if results:
+            return results.items()[0]
+        else:
+            return ()
 
     @property
     def interface_elements(self):
