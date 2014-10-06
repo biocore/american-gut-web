@@ -283,7 +283,7 @@ _FAQ = {
     'WHO_MICHAEL_POLLAN_ANS': 'Michael Pollan is a New York Times Best Seller for his books on diet and nutrition. Further information about Michael can be found <a href="http://michaelpollan.com/">here</a>.',
     'WHY_TWO_SWABS': "Why are there 2 swabs inside the tube?",
     'WHY_TWO_SWABS_ANS_1': "Each sampling tube contains two swabs and looks like this:",
-    'WHY_TWO_SWABS_ANS_2': "Each tube is used for <strong>one sample</strong>. The tube has two swabs in it because one is a backup in case the DNA does not amplify on the first swab."
+    'WHY_TWO_SWABS_ANS_2': "<p>Each tube is used for <strong>one sample</strong>. The tube has two swabs in it because one is a backup in case the DNA does not amplify on the first swab.</p>"
                            "<p>Here's a video of Rob Knight talking about swab handling:</p><iframe src='%(swab_handle_vid)s' width=''500'' height=''281'' frameborder=''0'' webkitallowfullscreen='' mozallowfullscreen='' allowfullscreen=''></iframe>" % {'swab_handle_vid': media_locale['SWAB_HANDLING']}
 }
 
