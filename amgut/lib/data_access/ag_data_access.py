@@ -427,17 +427,10 @@ class AGDataAccess(object):
         conn_handler = SQLConnectionHandler()
         # get people from new survey setup
         return_res = []
-        new_survey_sql = ("SELECT participant_name FROM ag_login_surveys "
+        new_survey_sql = ("SELECT participant_name FROM ag_consent "
                           "WHERE ag_login_id = %s")
         results = conn_handler.execute_fetchall(new_survey_sql, [ag_login_id])
-        return_res.extend(row[0] for row in results)
-
-        # get people from old surveys
-        old_survey_sql = ("SELECT participant_name FROM ag_human_survey where "
-                          "ag_login_id = %s")
-        results = conn_handler.execute_fetchall(new_survey_sql, [ag_login_id])
-        return_res.extend(row[0] for row in results)
-        return return_res
+        return [row[0] for row in results]
 
     def AGGetBarcodeMetadata(self, barcode):
         results = self._sql.execute_proc_return_cursor(
