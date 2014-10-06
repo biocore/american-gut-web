@@ -8,6 +8,8 @@ from tornado.ioloop import IOLoop
 from tornado.web import Application
 from tornado.options import define, options, parse_command_line
 
+from amgut import media_locale
+
 from amgut.handlers.base_handlers import (
     MainHandler, NoPageHandler, DBErrorHandler, BaseStaticFileHandler)
 from amgut import AMGUT_CONFIG
@@ -99,8 +101,9 @@ class QiimeWebApplication(Application):
 
 def main():
     # replace spaces for underscores to autocomplete easily in a shell
-    prefix = ("AMGUT_%d_%s.log" % (options.port,
-                                   str(datetime.now()))).replace(' ', '_')
+    # format looks like american_gut_8888_2014-10-06_15:30:20.256035.log
+    prefix = ("%s_%d_%s.log" % (media_locale['LOCALE'], options.port,
+                                str(datetime.now()))).replace(' ', '_')
     options.log_file_prefix = prefix
     options.logging = 'warning'
     parse_command_line()
