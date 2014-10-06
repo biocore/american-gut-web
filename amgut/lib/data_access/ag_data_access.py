@@ -1037,6 +1037,16 @@ class AGDataAccess(object):
         cursor.close()
         return [x[0] for x in results]
 
+    def search_participants(self, term):
+        sql = """ select  cast(ag_login_id as varchar(100)) as ag_login_id
+                 from    ag_consent
+                 where   lower(participant_name) like %s or
+                 lower(participant_email) like %s"""
+        conn_handler = SQLConnectionHandler()
+        liketerm = '%%' + term + '%%'
+        return [x[0] for x in conn_handler.execute_fetchall(
+            sql, [liketerm, liketerm])]
+
     def search_barcodes(self, term):
         sql = """select  cast(ak.ag_login_id as varchar(100)) as ag_login_id
                  from    ag_kit ak
