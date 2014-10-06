@@ -23,17 +23,24 @@ def make_human_survey_class(group):
     """
     attrs = {}
     prompts = {}
-    for question in group.questions:
-        qid = '_'.join(group.american_name.split() + [str(question.id)])
-        if question.triggers:
-            pass
+    triggers = {}
+    triggered = {}
 
-        for i, element in enumerate(question.interface_elements):
-            element_id = '%s_%d' % (qid, i)
-            attrs[element_id] = element
-            prompts[element_id] = question.question
+    for q in group.questions:
+        for eid, element in zip(q.interface_element_ids, q.interface_elements):
+            attrs[eid] = element
+            prompts[eid] = q.question
+
+            if q.triggers:
+                triggered_id, triggering_responses = q.triggers
+                triggers[eid] = triggering_responses
+                triggered[eid] = group.qid_to_eid[triggered_id]
 
     attrs['prompts'] = prompts
+    attrs['triggers'] = triggers
+    attrs['triggered'] = triggered
+    attrs['supplemental_eids'] = group.supplemental_eids
+
     return type('HumanSurvey', (Form,), attrs)
 
 

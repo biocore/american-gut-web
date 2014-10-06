@@ -61,26 +61,30 @@ handler #}
 <table id="mainsurveytable">
     <input type="hidden" name="page_number" value="{{page_number}}">
     {% for form_item in the_form %}
+        {% if form_item.id in the_form.supplemental_eids %}
+            {% continue %}
+        {% end %}
         {% set kwargs = {} %}
-        {# if form_item.id in supplemental_map #}
-            {# set supp_div_id = "supp_" + form_item.id + "_div" #}
-            {# set kwargs["onchange"] = "toggle_div('" + supp_div_id + "', '" + form_item.id + "', " + repr(list(supplemental_map[form_item.id][0])) + ");" #}
-        {# end #}
+        {% if form_item.id in the_form.triggers %}
+            {% set supp_div_id = "supp_" + form_item.id + "_div" %}
+            {% set kwargs["onchange"] = "toggle_div('" + supp_div_id + "', '" + form_item.id + "', " + repr(the_form.triggers[form_item.id]) + ");" %}
+        {% end %}
         <tr align="left">
             <td width="50%" class="tdmainform">{% raw the_form.prompts[form_item.id] %}</td>
             <td>{% raw form_item(**kwargs) %}</td>
         </tr>
-        {# if form_item.id in supplemental_map #}
+        {% if form_item.id in the_form.triggers %}
         <tr>
             <td colspan="2">
-                {# < div id="{{ supp_div_id }}"> #}
-                    {# set supp_key = supplemental_map[form_item.id][-1] #}
-                    {# raw tl[supp_key] #}
-                    {# raw supplementals[supp_key]() #}
-                {# </div> #}
+                {% < div id="{{ supp_div_id }}"> %}
+                    {% for eid in the_form.triggered[form_item.id] %}
+                        {% raw the_form.prompts[eid] %}
+                        {% raw the_form[eid]() %}
+                    {% end %}
+                {% </div> %}
             </td>
         </tr>
-        {# end #}
+        {% end %}
     {% end %}
     <tr>
         <td colspan=2><input type="submit"></td>
