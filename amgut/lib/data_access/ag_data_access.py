@@ -484,6 +484,12 @@ class AGDataAccess(object):
 
         return all((survey_answers is False, survey_answers_other is False))
 
+    def updateVioscreenStatus(self, survey_id, status):
+        conn_handler = SQLConnectionHandler()
+        sql = ("UPDATE ag_login_surveys SET vioscreen_status = %s WHERE "
+               "survey_id = %s")
+        conn_handler.execute(sql, (status, survey_id))
+
     def AGGetBarcodeMetadata(self, barcode):
         results = self._sql.execute_proc_return_cursor(
             'ag_get_barcode_metadata', [barcode])
