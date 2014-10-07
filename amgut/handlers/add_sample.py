@@ -24,11 +24,13 @@ class AddSample(BaseHandler):
         sample_date = self.get_argument('sample_date')
         sample_time = self.get_argument('sample_time')
         notes = self.get_argument('notes')
-        participant_name = self.get_argument('participant_name', '')
+        participant_name = self.get_argument('participant_name')
         sample_site = self.get_argument('sample_site', '')
         env_sampled = self.get_argument('environment_sampled', '')
 
-        AG_DATA_ACCESS.logParticipantSample(barcode, sample_site,
+        ag_login_id = AG_DATA_ACCESS.get_user_for_kit(self.current_user)
+
+        AG_DATA_ACCESS.logParticipantSample(ag_login_id, barcode, sample_site,
                                             env_sampled, sample_date,
                                             sample_time, participant_name,
                                             notes)

@@ -429,14 +429,29 @@ class AGDataAccess(object):
                                           [ag_login_id, participant_name])
         self.connection.commit()
 
-    def logParticipantSample(self, barcode, sample_site, environment_sampled,
-                             sample_date, sample_time, participant_name,
-                             notes):
-        self.connection.cursor().callproc('ag_log_participant_sample',
-                                          [barcode, sample_site,
-                                           environment_sampled, sample_date,
-                                           sample_time, participant_name,
-                                           notes])
+    def logParticipantSample(self, ag_login_id, barcode, sample_site,
+                             environment_sampled, sample_date, sample_time,
+                             participant_name, notes):
+        # Get survey id
+        sql = ("SELECT survey_id FROM ag_login_surveys WHERE ag_login_id = "
+               "%s AND participant_name = %s")
+        conn_handler = SQLConnectionHandler()
+        survey_id = conn_handler.execute_fetchone(
+            sql, (ag_login_id, participant_name))[0]
+
+        # Add barcode info
+        sql = """update  ag_kit_barcodes
+                 set     site_sampled = %s,
+                         environment_sampled = %s,
+                         sample_date = %s,
+                         sample_time = %s,
+                         participant_name = %s,
+                         notes = %s,
+                         survey_id = %s
+                 where   barcode = %s"""
+        conn_handler.execute(sql, [
+            sample_site, environment_sampled, sample_date, sample_time,
+            participant_name, notes, survey_id, barcode])
         self.connection.commit()
 
     def deleteSample(self, barcode, ag_login_id):
