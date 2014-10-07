@@ -16,6 +16,7 @@ HELP_EMAIL = "info@americangut.org"
 _SITEBASE = ''
 
 media_locale = {
+    'LOCALE': AMGUT_CONFIG.locale,
     'SITEBASE': _SITEBASE,
     'LOGO': _SITEBASE + '/static/img/ag_logo.jpg',
     'ANALYTICS_ID': 'UA-55353353-1',
