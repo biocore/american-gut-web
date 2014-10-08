@@ -20,7 +20,7 @@ class SampleOverviewHandler(BaseHandler):
         sample_data = AG_DATA_ACCESS.getAGBarcodeDetails(barcode)
 
         fs_base = AMGUT_CONFIG.base_data_dir
-        web_base = '/results'
+        web_base = "%s/results" % media_locale['SITEBASE']
 
         fs_barcode_pdf = _format_data_path(fs_base, 'pdfs', barcode, 'pdf')
         fs_barcode_txt = _format_data_path(fs_base, 'taxa-summaries', barcode,
