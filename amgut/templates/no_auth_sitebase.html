@@ -1,4 +1,6 @@
 {% from amgut import media_locale %}
+{% from amgut.handlers.FAQ import FAQHandler %}
+{% from amgut.handlers.addendum import AddendumHandler %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,7 +75,7 @@
     {% block head %}
     {% end %}
 
-    {% if current_user %}
+    {% if current_user and not isinstance(handler, (FAQHandler, AddendumHandler)) %}
         <meta http-equiv="refresh" content="0; url={% raw media_locale['SITEBASE'] %}/authed/portal/" />
     {% end %}
 </head>
