@@ -1298,3 +1298,14 @@ class AGDataAccess(object):
                              sequencing_status, obsolete, barcode])
         con.commit()
         cursor.close()
+
+    def get_survey_id(self, ag_login_id, participant_name):
+        """Return the survey ID associated with a participant or None"""
+        sql = """select survey_id
+                 from ag_login_surveys
+                 where ag_login_id=%s and participant_name=%s"""
+        cursor = self.connection.cursor()
+        cursor.execute(sql, [ag_login_id, participant_name])
+        id_ = cursor.fetchone()
+
+        return id_[0] if id_ else None

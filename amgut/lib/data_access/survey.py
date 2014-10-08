@@ -9,7 +9,7 @@ from __future__ import division
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
 
-from json import loads
+import ast
 from collections import defaultdict
 
 from wtforms import (SelectField, SelectMultipleField, widgets,
@@ -35,6 +35,7 @@ class Question(object):
     def __init__(self, ID, group_name):
         self.id = ID
         self.group_name = group_name
+        self.set_response = None
 
         responses = db_conn.execute_fetchall('''
             select sr.{0}
@@ -249,7 +250,11 @@ class Survey(object):
         The ID of the survey in the database
     """
     _surveys_table = 'surveys'
-    _survey_answer_table = 'survey_response'
+    _survey_response_table = 'survey_response'
+    _survey_question_response_table = 'survey_question_response'
+    _survey_question_response_type_table = 'survey_question_response_type'
+    _survey_answers_table = 'survey_answers'
+    _survey_answers_other_table = 'survey_answers_other'
 
     def __init__(self, ID):
         self.id = ID
@@ -273,7 +278,51 @@ class Survey(object):
             from {1}
             where american='Unspecified'""".format(
                 _LOCALE_COLUMN,
-                self._survey_answer_table))[0]
+                self._survey_response_table))[0]
+
+    def fetch_survey(self, survey_id):
+        """Return {element_id: answer}
+
+        The answer is in the form of ["display_index"] or ["text"] depending on
+        if the answer has a foreign key or not. These data are serialized for
+        input into a WTForm.
+        """
+        answers = db_conn.execute_fetchall("""
+            select sa.survey_question_id,
+                   sqr.display_index,
+                   sqrt.survey_response_type
+            from {0} sa
+                join {1} sqr
+                    on sa.response=sqr.response
+                    and sa.survey_question_id=sqr.survey_question_id
+                join {2} sqrt
+                    on sa.survey_question_id=sqrt.survey_question_id
+            where sa.survey_id=%s""".format(
+            self._survey_answers_table,
+            self._survey_question_response_table,
+            self._survey_question_response_type_table),
+            [survey_id])
+
+        answers_other = db_conn.execute_fetchall("""
+            select survey_question_id, response
+            from {0}
+            where survey_id=%s""".format(self._survey_answers_other_table),
+            [survey_id])
+
+        survey = defaultdict(list)
+        for qid, idx, qtype in answers:
+            eid = self.questions[qid].interface_element_ids[0]
+            if qtype == 'SINGLE':
+                survey[eid] = idx
+            else:
+                survey[eid].append(idx)
+
+        for qid, data in answers_other:
+            eid = self.questions[qid].interface_element_ids[0]
+            data = ast.literal_eval(data)[0]  # to parse "['asd']" into a list
+            survey[eid] = data
+
+        return survey
 
     def store_survey(self, consent_details, with_fk_inserts,
                      without_fk_inserts):
@@ -293,28 +342,48 @@ class Survey(object):
             of the data to insert
         """
         with db_conn.get_postgres_cursor() as cur:
-            cur.execute("""
-                INSERT INTO ag_consent
-                    (ag_login_id, participant_name, is_juvenile,
-                     parent_1_name, parent_2_name, deceased_parent,
-                     participant_email)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)""",
-                        (consent_details['login_id'],
-                         consent_details['participant_name'],
-                         consent_details['is_juvenile'],
-                         consent_details['parent_1_name'],
-                         consent_details['parent_2_name'],
-                         consent_details['deceased_parent'],
-                         consent_details['participant_email']))
+            cur.execute("""select exists(
+                               select 1
+                               from ag_login_surveys
+                               where survey_id=%s)""",
+                        [consent_details['survey_id']])
 
-            cur.execute("""
-                INSERT INTO ag_login_surveys
-                    (ag_login_id, survey_id, participant_name)
-                VALUES (%s, %s, %s)""",
-                        (consent_details['login_id'],
-                         consent_details['survey_id'],
-                         consent_details['participant_name']))
+            if cur.fetchone()[0]:
+                # if the survey exists, remove all its current answers
+                cur.execute("""
+                    DELETE FROM survey_answers
+                    WHERE survey_id=%s""",
+                    [consent_details['survey_id']])
+                cur.execute("""
+                    DELETE FROM survey_answers_other
+                    WHERE survey_id=%s""",
+                    [consent_details['survey_id']])
+            else:
+                # otherwise, we have a new survey so we need to attach this
+                # survey ID to the consent and the login surveys join table
+                cur.execute("""
+                    INSERT INTO ag_consent
+                        (ag_login_id, participant_name, is_juvenile,
+                         parent_1_name, parent_2_name, deceased_parent,
+                         participant_email)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s)""",
+                            (consent_details['login_id'],
+                             consent_details['participant_name'],
+                             consent_details['is_juvenile'],
+                             consent_details['parent_1_name'],
+                             consent_details['parent_2_name'],
+                             consent_details['deceased_parent'],
+                             consent_details['participant_email']))
 
+                cur.execute("""
+                    INSERT INTO ag_login_surveys
+                        (ag_login_id, survey_id, participant_name)
+                    VALUES (%s, %s, %s)""",
+                            (consent_details['login_id'],
+                             consent_details['survey_id'],
+                             consent_details['participant_name']))
+
+            # now we insert the answers
             cur.executemany("""
                 INSERT INTO survey_answers (survey_id, survey_question_id,
                                             response)
