@@ -252,6 +252,7 @@ class Survey(object):
     _surveys_table = 'surveys'
     _survey_response_table = 'survey_response'
     _survey_question_response_table = 'survey_question_response'
+    _survey_question_response_type_table = 'survey_question_response_type'
     _survey_answers_table = 'survey_answers'
     _survey_answers_other_table = 'survey_answers_other'
 
@@ -287,12 +288,19 @@ class Survey(object):
         input into a WTForm.
         """
         answers = db_conn.execute_fetchall("""
-            select sa.survey_question_id, sqr.display_index
-            from {0} sa join
-                 {1} sqr on sa.response=sqr.response and
-                            sa.survey_question_id=sqr.survey_question_id
-            where survey_id=%s""".format(self._survey_answers_table,
-                                         self._survey_question_response_table),
+            select sa.survey_question_id,
+                   sqr.display_index,
+                   sqrt.survey_response_type
+            from {0} sa
+                join {1} sqr
+                    on sa.response=sqr.response
+                    and sa.survey_question_id=sqr.survey_question_id
+                join {2} sqrt
+                    on sa.survey_question_id=sqrt.survey_question_id
+            where sa.survey_id=%s""".format(
+            self._survey_answers_table,
+            self._survey_question_response_table,
+            self._survey_question_response_type_table),
             [survey_id])
 
         answers_other = db_conn.execute_fetchall("""
@@ -302,9 +310,12 @@ class Survey(object):
             [survey_id])
 
         survey = defaultdict(list)
-        for qid, idx in answers:
+        for qid, idx, qtype in answers:
             eid = self.questions[qid].interface_element_ids[0]
-            survey[eid].append(int(idx))
+            if qtype == 'SINGLE':
+                survey[eid] = idx
+            else:
+                survey[eid].append(idx)
 
         for qid, data in answers_other:
             eid = self.questions[qid].interface_element_ids[0]
