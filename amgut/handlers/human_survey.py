@@ -69,7 +69,6 @@ class HumanSurveyHandler(BaseHandler):
 
         if page_number >= 0:
             form_data = surveys[page_number]()
-            print human_survey_id
             form_data.process(data=self.request.arguments)
             data = {'questions': form_data.data}
 
@@ -83,11 +82,10 @@ class HumanSurveyHandler(BaseHandler):
 
             existing_responses = r_server.hget(human_survey_id, 'existing')
             if existing_responses:
-                print "existing"
-                the_form = surveys[next_page_number](data=loads(existing_responses))
-                print the_form.data
-            title = primary_human_survey.groups[next_page_number].name
+                existing_responses = loads(existing_responses)
+                the_form = surveys[next_page_number](data=existing_responses)
 
+            title = primary_human_survey.groups[next_page_number].name
 
             self.render('human_survey.html', the_form=the_form,
                         skid=self.current_user, TITLE=title,
