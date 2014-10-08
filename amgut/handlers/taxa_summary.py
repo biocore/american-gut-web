@@ -12,6 +12,7 @@ class TaxaSummaryHandler(BaseHandler):
     @authenticated
     def get(self, barcode):
         # nothing else to do
+        barcode = barcode.strip('/')  # for nginx rewrites
         if barcode is None:
             tl = text_locale['handlers']
             self.render('taxa_summary.html', skid=self.current_user,
