@@ -342,28 +342,48 @@ class Survey(object):
             of the data to insert
         """
         with db_conn.get_postgres_cursor() as cur:
-            cur.execute("""
-                INSERT INTO ag_consent
-                    (ag_login_id, participant_name, is_juvenile,
-                     parent_1_name, parent_2_name, deceased_parent,
-                     participant_email)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)""",
-                        (consent_details['login_id'],
-                         consent_details['participant_name'],
-                         consent_details['is_juvenile'],
-                         consent_details['parent_1_name'],
-                         consent_details['parent_2_name'],
-                         consent_details['deceased_parent'],
-                         consent_details['participant_email']))
+            cur.execute("""select exists(
+                               select 1
+                               from ag_login_surveys
+                               where survey_id=%s)""",
+                        [consent_details['survey_id']])
 
-            cur.execute("""
-                INSERT INTO ag_login_surveys
-                    (ag_login_id, survey_id, participant_name)
-                VALUES (%s, %s, %s)""",
-                        (consent_details['login_id'],
-                         consent_details['survey_id'],
-                         consent_details['participant_name']))
+            if cur.fetchone()[0]:
+                # if the survey exists, remove all its current answers
+                cur.execute("""
+                    DELETE FROM survey_answers
+                    WHERE survey_id=%s""",
+                    [consent_details['survey_id']])
+                cur.execute("""
+                    DELETE FROM survey_answers_other
+                    WHERE survey_id=%s""",
+                    [consent_details['survey_id']])
+            else:
+                # otherwise, we have a new survey so we need to attach this
+                # survey ID to the consent and the login surveys join table
+                cur.execute("""
+                    INSERT INTO ag_consent
+                        (ag_login_id, participant_name, is_juvenile,
+                         parent_1_name, parent_2_name, deceased_parent,
+                         participant_email)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s)""",
+                            (consent_details['login_id'],
+                             consent_details['participant_name'],
+                             consent_details['is_juvenile'],
+                             consent_details['parent_1_name'],
+                             consent_details['parent_2_name'],
+                             consent_details['deceased_parent'],
+                             consent_details['participant_email']))
 
+                cur.execute("""
+                    INSERT INTO ag_login_surveys
+                        (ag_login_id, survey_id, participant_name)
+                    VALUES (%s, %s, %s)""",
+                            (consent_details['login_id'],
+                             consent_details['survey_id'],
+                             consent_details['participant_name']))
+
+            # now we insert the answers
             cur.executemany("""
                 INSERT INTO survey_answers (survey_id, survey_question_id,
                                             response)
