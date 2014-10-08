@@ -36,7 +36,7 @@
 
 {% for sample in samples %}
                         <li>
-                            <form action="{% raw media_locale['SITEBASE'] %}/atuhed/sample_overview/?barcode={{sample['barcode']}}" method="post" id="view_sample_{{sample['barcode']}}">
+                            <form action="{% raw media_locale['SITEBASE'] %}/authed/sample_overview/?barcode={{sample['barcode']}}" method="post" id="view_sample_{{sample['barcode']}}">
                                 <img class="icon" src="{% raw media_locale['SITEBASE'] %}/static/img/sample_icon.png"/>
                                 <input type="button" onclick="document.forms['view_sample_{{sample['barcode']}}'].submit(); return false;" value="{{sample['barcode']}}"/>
                             </form>
