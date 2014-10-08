@@ -436,8 +436,6 @@ class AGDataAccess(object):
         conn_handler = SQLConnectionHandler()
         if sample_site is not None:
             # Get survey id
-            print sample_site, type(sample_site)
-            print environment_sampled, type(environment_sampled)
             sql = ("SELECT survey_id FROM ag_login_surveys WHERE ag_login_id = "
                    "%s AND participant_name = %s")
             survey_id = conn_handler.execute_fetchone(
