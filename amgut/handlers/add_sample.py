@@ -27,7 +27,6 @@ class AddSample(BaseHandler):
         participant_name = self.get_argument('participant_name')
         sample_site = self.get_argument('sample_site', '')
 
-        # tears.
         if participant_name == 'environmental':
             # environmental sample
             env_sampled = sample_site
