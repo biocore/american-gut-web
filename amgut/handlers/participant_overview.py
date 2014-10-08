@@ -9,6 +9,7 @@ from amgut import media_locale
 class ParticipantOverviewHandler(BaseHandler):
     @authenticated
     def post(self, participant_name):
+        participant_name = participant_name.strip('/')  # for nginx
         skid = self.current_user
         ag_login_id = AG_DATA_ACCESS.get_user_for_kit(skid)
 
