@@ -9,9 +9,6 @@ from amgut.lib.util import store_survey
 from amgut.lib.survey_supp import primary_human_survey
 from amgut import r_server, media_locale
 
-def get_survey_responses(human_survey_id, next_page_number):
-    """Returns {element_id: [display_index]} """
-    pass
 
 def make_human_survey_class(group):
     """Creates a form class for a group of questions
