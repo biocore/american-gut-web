@@ -432,12 +432,17 @@ class AGDataAccess(object):
     def logParticipantSample(self, ag_login_id, barcode, sample_site,
                              environment_sampled, sample_date, sample_time,
                              participant_name, notes):
-        # Get survey id
-        sql = ("SELECT survey_id FROM ag_login_surveys WHERE ag_login_id = "
-               "%s AND participant_name = %s")
+
         conn_handler = SQLConnectionHandler()
-        survey_id = conn_handler.execute_fetchone(
-            sql, (ag_login_id, participant_name))[0]
+        if sample_site is not None:
+            # Get survey id
+            sql = ("SELECT survey_id FROM ag_login_surveys WHERE ag_login_id = "
+                   "%s AND participant_name = %s")
+            survey_id = conn_handler.execute_fetchone(
+                sql, (ag_login_id, participant_name))[0]
+        else:
+            # otherwise, it is an environmental sample
+            survey_id = None
 
         # Add barcode info
         sql = """update  ag_kit_barcodes
