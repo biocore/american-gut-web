@@ -47,6 +47,45 @@ def env():
     pass
 
 
+@cli.group()
+def mode():
+    pass
+
+
+@mode.command()
+@click.option('--set-maintenance', required=True, is_flag=True,
+              help='Disable site logins, and display a message')
+@click.option('--message', required=True, type=str)
+def maintenance(set_maintenance, message):
+    """Enable maintenance mode.
+
+    Active connections will remain active during maintenance mode, however
+    logins will be disabled. The 'message' will be displayed on the banner for
+    everyone who is logged in, and those going to the site to login. Ideally,
+    the message is phrased to indicate that "those logged in can continue until
+    ... time."
+    """
+    from amgut import r_server
+    if set_maintenance:
+        r_server.set('maintenance', message)
+    else:
+        click.echo("No change was made, --set-maintenance was not specified!")
+
+
+@mode.command()
+@click.option('--set-production', required=True, is_flag=True,
+              help='Enable site logins, remove maintenance message')
+def production(set_production):
+    """Enable production mode.
+
+    Logins are repermitted, and maintenance banner messages are removed
+    """
+    from amgut import r_server
+    if set_production:
+        r_server.delete('maintenance')
+    else:
+        click.echo("No change was made, --set-production was not specified!")
+
 @env.command()
 @click.argument('db', type=click.Choice(['test', 'production']))
 def make(db):
