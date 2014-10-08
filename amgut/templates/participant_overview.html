@@ -1,15 +1,14 @@
 {% extends sitebase.html %}
+
 {% block content %}
+<script>
+    function submitEdit() {
+        $('#edit_survey').submit();
+}
+</script>
+
 {% from amgut import text_locale %}
 {% set tl = text_locale['participant_overview.html'] %}
-
-<form action="survey1.html" method="post" id="edit_survey">
-
-{% for field_name, default_value in sorted(defaults.items()) %}
-    <input type="hidden" name="{{field_name}}" value="{{default_value}}" />
-{% end %}
-
-</form>
 
 <h2>{% raw tl['OVERVIEW_FOR_PARTICPANT'] %} {{participant_name}}</h2>
 <div class="overview_wrapper">
@@ -24,7 +23,11 @@
             <tr>
                 <td>{% raw tl['COMPLETED_SURVEY'] %}
 {% if participant_type == 'human' %}
-                    (edit currently disabled)
+                    <form id="edit_survey" name="edit_survey" method="post" action="{% raw media_locale['SITEBASE'] %}/authed/human_survey/">
+                        <input type="hidden" name="survey_id" value={{ survey_id}}>
+                        <input type="hidden" name="page_number" value=-1>
+                        <input type="button" name="submit_button" id="submit_button" value="edit" onclick="submitEdit()">
+                    </form>
 {% end %}
                 </td>
                 <td><img src="{% raw media_locale['SITEBASE'] %}/static/img/icon-green-checkmark.png"/></td>

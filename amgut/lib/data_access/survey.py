@@ -9,7 +9,7 @@ from __future__ import division
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
 
-from json import loads
+import ast
 from collections import defaultdict
 
 from wtforms import (SelectField, SelectMultipleField, widgets,
@@ -35,6 +35,7 @@ class Question(object):
     def __init__(self, ID, group_name):
         self.id = ID
         self.group_name = group_name
+        self.set_response = None
 
         responses = db_conn.execute_fetchall('''
             select sr.{0}
@@ -249,7 +250,10 @@ class Survey(object):
         The ID of the survey in the database
     """
     _surveys_table = 'surveys'
-    _survey_answer_table = 'survey_response'
+    _survey_response_table = 'survey_response'
+    _survey_question_response_table = 'survey_question_response'
+    _survey_answers_table = 'survey_answers'
+    _survey_answers_other_table = 'survey_answers_other'
 
     def __init__(self, ID):
         self.id = ID
@@ -273,7 +277,41 @@ class Survey(object):
             from {1}
             where american='Unspecified'""".format(
                 _LOCALE_COLUMN,
-                self._survey_answer_table))[0]
+                self._survey_response_table))[0]
+
+    def fetch_survey(self, survey_id):
+        """Return {element_id: answer}
+
+        The answer is in the form of ["display_index"] or ["text"] depending on
+        if the answer has a foreign key or not. These data are serialized for
+        input into a WTForm.
+        """
+        answers = db_conn.execute_fetchall("""
+            select sa.survey_question_id, sqr.display_index
+            from {0} sa join
+                 {1} sqr on sa.response=sqr.response and
+                            sa.survey_question_id=sqr.survey_question_id
+            where survey_id=%s""".format(self._survey_answers_table,
+                                         self._survey_question_response_table),
+            [survey_id])
+
+        answers_other = db_conn.execute_fetchall("""
+            select survey_question_id, response
+            from {0}
+            where survey_id=%s""".format(self._survey_answers_other_table),
+            [survey_id])
+
+        survey = defaultdict(list)
+        for qid, idx in answers:
+            eid = self.questions[qid].interface_element_ids[0]
+            survey[eid].append(int(idx))
+
+        for qid, data in answers_other:
+            eid = self.questions[qid].interface_element_ids[0]
+            data = ast.literal_eval(data)[0]  # to parse "['asd']" into a list
+            survey[eid] = data
+
+        return survey
 
     def store_survey(self, consent_details, with_fk_inserts,
                      without_fk_inserts):

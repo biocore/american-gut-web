@@ -130,10 +130,12 @@ def store_survey(survey, survey_id):
     to_store = PartitionResponse(survey.question_types)
     consent_details = loads(data.pop('consent'))
 
+    if 'existing' in data:
+        data.pop('existing')
+
     for page in data:
         page_data = loads(data[page])
         questions = page_data['questions']
-        #supplemental = page_data['supplemental']
 
         for quest, resps in viewitems(questions):
             qid = get_survey_question_id(quest)
@@ -146,16 +148,7 @@ def store_survey(survey, survey_id):
             else:
                 pass
 
-            #if qtype in ['SINGLE', 'MULTIPLE'] and quest in supplemental_map:
-            #    indices, supp_key = supplemental_map[quest]
-#
- #               if set(indices).intersection(resps):
-  #                  to_store[supp_qid] = supplemental[supp_qid]
-   #             else:
-    #                to_store[supp_qid] = None
-
             to_store[qid] = resps
-
 
     with_fk_inserts = []
     for qid, indices in viewitems(to_store.with_fk):
