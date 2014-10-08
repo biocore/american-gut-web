@@ -61,6 +61,7 @@ class HumanSurveyHandler(BaseHandler):
             self.set_secure_cookie('human_survey_id', human_survey_id)
             data = primary_human_survey.fetch_survey(human_survey_id)
             r_server.hset(human_survey_id, 'existing', dumps(data))
+            r_server.expire(human_survey_id, 86400)
 
         next_page_number = page_number + 1
 
