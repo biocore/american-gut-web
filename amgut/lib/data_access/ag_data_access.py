@@ -378,9 +378,35 @@ class AGDataAccess(object):
         self.connection.commit()
 
     def deleteAGParticipant(self, ag_login_id, participant_name):
+        # Remove user using old stype DB Schema
         self.connection.cursor().callproc('ag_delete_participant',
                                           [ag_login_id, participant_name])
         self.connection.commit()
+
+        # Remove user from new schema
+        conn_handler = SQLConnectionHandler()
+        sql = ("SELECT survey_id FROM ag_login_surveys WHERE ag_login_id = "
+                   "%s AND participant_name = %s")
+        survey_id = conn_handler.execute_fetchone(
+            sql, (ag_login_id, participant_name))[0]
+
+        with conn_handler.get_postgres_cursor() as curr:
+            sql = ("DELETE FROM survey_answers WHERE "
+                   "survey_id = %s")
+            curr.execute(sql, [survey_id])
+
+            sql = ("DELETE FROM survey_answers_other WHERE "
+                   "survey_id = %s")
+            curr.execute(sql, [survey_id])
+
+            # Delete last due to foreign keys
+            sql = ("DELETE FROM ag_login_surveys WHERE "
+                   "survey_id = %s")
+            curr.execute(sql, [survey_id])
+
+            sql = ("DELETE FROM ag_consent WHERE ag_login_id = "
+                   "%s AND participant_name = %s")
+            curr.execute(sql, [ag_login_id, participant_name])
 
     def insertAGMultiple(self, ag_login_id, participant_name, field_name,
                          field_value):
@@ -403,14 +429,29 @@ class AGDataAccess(object):
                                           [ag_login_id, participant_name])
         self.connection.commit()
 
-    def logParticipantSample(self, barcode, sample_site, environment_sampled,
-                             sample_date, sample_time, participant_name,
-                             notes):
-        self.connection.cursor().callproc('ag_log_participant_sample',
-                                          [barcode, sample_site,
-                                           environment_sampled, sample_date,
-                                           sample_time, participant_name,
-                                           notes])
+    def logParticipantSample(self, ag_login_id, barcode, sample_site,
+                             environment_sampled, sample_date, sample_time,
+                             participant_name, notes):
+        # Get survey id
+        sql = ("SELECT survey_id FROM ag_login_surveys WHERE ag_login_id = "
+               "%s AND participant_name = %s")
+        conn_handler = SQLConnectionHandler()
+        survey_id = conn_handler.execute_fetchone(
+            sql, (ag_login_id, participant_name))[0]
+
+        # Add barcode info
+        sql = """update  ag_kit_barcodes
+                 set     site_sampled = %s,
+                         environment_sampled = %s,
+                         sample_date = %s,
+                         sample_time = %s,
+                         participant_name = %s,
+                         notes = %s,
+                         survey_id = %s
+                 where   barcode = %s"""
+        conn_handler.execute(sql, [
+            sample_site, environment_sampled, sample_date, sample_time,
+            participant_name, notes, survey_id, barcode])
         self.connection.commit()
 
     def deleteSample(self, barcode, ag_login_id):
@@ -426,18 +467,28 @@ class AGDataAccess(object):
     def getHumanParticipants(self, ag_login_id):
         conn_handler = SQLConnectionHandler()
         # get people from new survey setup
-        return_res = []
-        new_survey_sql = ("SELECT participant_name FROM ag_login_surveys "
+        new_survey_sql = ("SELECT participant_name FROM ag_consent "
                           "WHERE ag_login_id = %s")
         results = conn_handler.execute_fetchall(new_survey_sql, [ag_login_id])
-        return_res.extend(row[0] for row in results)
+        return [row[0] for row in results]
 
-        # get people from old surveys
-        old_survey_sql = ("SELECT participant_name FROM ag_human_survey where "
-                          "ag_login_id = %s")
-        results = conn_handler.execute_fetchall(new_survey_sql, [ag_login_id])
-        return_res.extend(row[0] for row in results)
-        return return_res
+    def is_old_survey(survey_id):
+        conn_handler = SQLConnectionHandler()
+        # check survey exists
+        survey_answers = conn_handler.execute_fetchone(
+            "SELECT exists(SELECT * FROM survey_answers WHERE survey_id = %s)",
+            [survey_id])[0]
+        survey_answers_other = conn_handler.execute_fetchone(
+            "SELECT exists(SELECT * FROM survey_answers_other WHERE "
+            "survey_id = %s)", [survey_id])[0]
+
+        return all((survey_answers is False, survey_answers_other is False))
+
+    def updateVioscreenStatus(self, survey_id, status):
+        conn_handler = SQLConnectionHandler()
+        sql = ("UPDATE ag_login_surveys SET vioscreen_status = %s WHERE "
+               "survey_id = %s")
+        conn_handler.execute(sql, (status, survey_id))
 
     def AGGetBarcodeMetadata(self, barcode):
         results = self._sql.execute_proc_return_cursor(
