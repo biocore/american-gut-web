@@ -18,6 +18,7 @@ HELP_EMAIL = "info@britishgut.org"
 _SITEBASE = ''
 
 media_locale = {
+    'LOCALE': AMGUT_CONFIG.locale,
     'SITEBASE': _SITEBASE,
     'ANALYTICS_ID': 'UA-55355651-1',
     'LATITUDE': 54.5,
