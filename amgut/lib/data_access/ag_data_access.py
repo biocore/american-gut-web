@@ -477,7 +477,7 @@ class AGDataAccess(object):
         results = conn_handler.execute_fetchall(new_survey_sql, [ag_login_id])
         return [row[0] for row in results]
 
-    def is_old_survey(survey_id):
+    def is_old_survey(self, survey_id):
         conn_handler = SQLConnectionHandler()
         # check survey exists
         survey_answers = conn_handler.execute_fetchone(
