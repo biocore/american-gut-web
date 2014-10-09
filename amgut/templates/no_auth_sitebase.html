@@ -1,6 +1,7 @@
 {% from amgut import media_locale %}
 {% from amgut.handlers.FAQ import FAQHandler %}
 {% from amgut.handlers.addendum import AddendumHandler %}
+{% from amgut.handlers.auth_handlers import AuthRegisterHandoutHandler %}
 {% from amgut import r_server %}
 {% set maintenance = r_server.get('maintenance') %}
 <!DOCTYPE html>
@@ -77,7 +78,7 @@
     {% block head %}
     {% end %}
 
-    {% if current_user and not isinstance(handler, (FAQHandler, AddendumHandler)) %}
+    {% if current_user and not isinstance(handler, (FAQHandler, AddendumHandler, AuthRegisterHandoutHandler)) %}
         <meta http-equiv="refresh" content="0; url={% raw media_locale['SITEBASE'] %}/authed/portal/" />
     {% end %}
 </head>
