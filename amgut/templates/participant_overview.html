@@ -1,6 +1,7 @@
 {% extends sitebase.html %}
 
 {% block content %}
+{% from amgut import AG_DATA_ACCESS %}
 <script>
     function submitEdit() {
         $('#edit_survey').submit();
@@ -22,7 +23,7 @@
 {% end %}
             <tr>
                 <td>{% raw tl['COMPLETED_SURVEY'] %}
-{% if participant_type == 'human' %}
+{% if participant_type == 'human' and not AG_DATA_ACCESS.is_old_survey(survey_id) %}
                     <form id="edit_survey" name="edit_survey" method="post" action="{% raw media_locale['SITEBASE'] %}/authed/human_survey/">
                         <input type="hidden" name="survey_id" value={{ survey_id}}>
                         <input type="hidden" name="page_number" value=-1>
