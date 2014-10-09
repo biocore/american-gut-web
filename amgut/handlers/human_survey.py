@@ -3,6 +3,7 @@ from collections import defaultdict
 
 from wtforms import Form
 from tornado.web import authenticated
+from tornado.escape import url_escape
 
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.lib.util import store_survey
@@ -56,6 +57,10 @@ class HumanSurveyHandler(BaseHandler):
         if human_survey_id is None:
             # we came from consent
             human_survey_id = self.get_secure_cookie('human_survey_id')
+            if human_survey_id is None:
+                err_msg = url_escape("There was an unexpected error.")
+                self.redirect("/authed/portal/?errmsg=%s" % err_msg)
+                return
         else:
             # we came from participant_overview
             self.set_secure_cookie('human_survey_id', human_survey_id)

@@ -80,8 +80,10 @@ class NewParticipantHandler(BaseHandler):
                     alert_message = media_locale['EMAIL_ERROR']
 
                 self.redirect(media_locale['SITEBASE'] + "/authed/portal/?errmsg=%s" % alert_message)
+                return
 
         human_survey_id = binascii.hexlify(os.urandom(8))
+
         consent= {'participant_name': participant_name,
                   'participant_email': participant_email,
                   'parent_1_name': parent_1_name,
