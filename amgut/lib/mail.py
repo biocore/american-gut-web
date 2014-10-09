@@ -24,7 +24,7 @@ def send_email(message, subject, recipient='americangut@gmail.com',
     # Send the message via our own SMTP server, but don't include the
     # envelope header.
     if AMGUT_CONFIG.smtp_ssl:
-        smtplib.SMTP_SSL()
+        s = smtplib.SMTP_SSL()
     else:
         s = smtplib.SMTP()
     s.connect(AMGUT_CONFIG.smtp_host, AMGUT_CONFIG.smtp_port)
