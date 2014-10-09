@@ -59,7 +59,7 @@ class HumanSurveyHandler(BaseHandler):
             human_survey_id = self.get_secure_cookie('human_survey_id')
             if human_survey_id is None:
                 err_msg = url_escape("There was an unexpected error.")
-                self.redirect("/authed/portal/?errmsg=%s" % err_msg)
+                self.redirect(media_locale['SITEBASE'] + "/authed/portal/?errmsg=%s" % err_msg)
                 return
         else:
             # we came from participant_overview
