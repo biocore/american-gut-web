@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from os.path import dirname, join
 from base64 import b64encode
 from uuid import uuid4
