@@ -101,7 +101,13 @@ class ConfigurationManager(object):
                           "existing file" % conf_fp)
 
         # Parse the configuration file
-        config = ConfigParser()
+        config = ConfigParser(defaults={
+            'open_humans_key': '',
+            'open_humans_secret': ''
+        })
+
+        self.default_keys = set(config.defaults().keys())
+
         with open(conf_fp, 'U') as conf_file:
             config.readfp(conf_file)
 
@@ -137,8 +143,8 @@ class ConfigurationManager(object):
         """Get the configuration of the main section"""
         expected_options = {'name', 'shorthand', 'test_environment',
                             'base_data_dir', 'locale'}
-        _warn_on_extra(set(config.options('main')) - expected_options,
-                       'main section option(s)')
+        _warn_on_extra(set(config.options('main')) - expected_options -
+                       self.default_keys, 'main section option(s)')
 
         get = partial(config.get, 'main')
         getboolean = partial(config.getboolean, 'main')
@@ -159,8 +165,8 @@ class ConfigurationManager(object):
     def _get_postgres(self, config):
         """Get the configuration of the postgres section"""
         expected_options = {'user', 'password', 'database', 'host', 'port'}
-        _warn_on_extra(set(config.options('postgres')) - expected_options,
-                       'postgres section option(s)')
+        _warn_on_extra(set(config.options('postgres')) - expected_options -
+                       self.default_keys, 'postgres section option(s)')
 
         get = partial(config.get, 'postgres')
         getint = partial(config.getint, 'postgres')
@@ -180,8 +186,8 @@ class ConfigurationManager(object):
     def _get_test(self, config):
         """Get the configuration of the test section"""
         expected_options = {'goodpassword', 'badpassword'}
-        _warn_on_extra(set(config.options('test')) - expected_options,
-                       'test section option(s)')
+        _warn_on_extra(set(config.options('test')) - expected_options -
+                       self.default_keys, 'test section option(s)')
 
         get = partial(config.get, 'test')
 
@@ -191,8 +197,8 @@ class ConfigurationManager(object):
     def _get_redis(self, config):
         """Get the configuration of the redis section"""
         expected_options = {'host', 'port', 'db_id'}
-        _warn_on_extra(set(config.options('redis')) - expected_options,
-                       'redis section option(s)')
+        _warn_on_extra(set(config.options('redis')) - expected_options -
+                       self.default_keys, 'redis section option(s)')
 
         get = partial(config.get, 'redis')
         getint = partial(config.getint, 'redis')
@@ -217,5 +223,8 @@ class ConfigurationManager(object):
 
         self.vioscreen_regcode = get('VIOSCREEN_REGCODE')
         self.vioscreen_cryptokey = get('VIOSCREEN_CRYPTOKEY')
+
+        self.open_humans_key = get('OPEN_HUMANS_KEY')
+        self.open_humans_secret = get('OPEN_HUMANS_SECRET')
 
 AMGUT_CONFIG = ConfigurationManager()
