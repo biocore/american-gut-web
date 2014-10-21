@@ -20,6 +20,7 @@ class BaseHandler(RequestHandler):
     def write_error(self, status_code, **kwargs):
         '''Overrides the error page created by Tornado'''
         from traceback import format_exception
+        user = self.current_user
         logging.exception(kwargs["exc_info"])
         exc_info = kwargs["exc_info"]
         trace_info = ''.join(format_exception(*exc_info))
@@ -29,9 +30,13 @@ class BaseHandler(RequestHandler):
         error = exc_info[1]
         formatted_email = (">SKID\n%s\n\n>Error\n%s\n\n>Traceback\n%s\n\n"
                            ">Request Info\n%s\n\n" %
-                           (self.current_user, error, trace_info, request_info))
+                           (user, error, trace_info, request_info))
         send_email(formatted_email, "SERVER ERROR!")
         self.render('error.html', skid=self.current_user)
+
+    def head(self):
+        """ Satisfy servers that this url exists"""
+        self.finish()
 
 
 class MainHandler(BaseHandler):
@@ -41,7 +46,17 @@ class MainHandler(BaseHandler):
         self.render("index.html", latlongs_db=latlong_db, loginerror="")
 
 
-class NoPageHandler(BaseHandler):
+class NoPageHandler(RequestHandler):
+    # does not extend BaseHandler so 404 doesn't have HEAD request response
+    def get_current_user(self):
+        '''Overrides default method of returning user curently connected'''
+        skid = self.get_secure_cookie("skid")
+        if skid is None:
+            self.clear_cookie("skid")
+            return None
+        else:
+            return skid.strip('" ')
+
     def get(self):
         if self.current_user:
             self.render("404.html", skid=self.current_user)
