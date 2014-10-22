@@ -100,14 +100,15 @@ class ConfigurationManager(object):
             raise IOError("The configuration file '%s' is not an "
                           "existing file" % conf_fp)
 
-        # Parse the configuration file
         config = ConfigParser(defaults={
             'open_humans_key': '',
-            'open_humans_secret': ''
+            'open_humans_secret': '',
+            'open_humans_base_url': 'https://openhumans.org',
         })
 
         self.default_keys = set(config.defaults().keys())
 
+        # Parse the configuration file
         with open(conf_fp, 'U') as conf_file:
             config.readfp(conf_file)
 
@@ -223,6 +224,8 @@ class ConfigurationManager(object):
 
         self.vioscreen_regcode = get('VIOSCREEN_REGCODE')
         self.vioscreen_cryptokey = get('VIOSCREEN_CRYPTOKEY')
+
+        self.open_humans_base_url = get('OPEN_HUMANS_BASE_URL')
 
         self.open_humans_key = get('OPEN_HUMANS_KEY')
         self.open_humans_secret = get('OPEN_HUMANS_SECRET')

@@ -44,6 +44,8 @@ from amgut.handlers.add_sample_overview import AddSampleOverviewHandler
 from amgut.handlers.change_pass_verify import ChangePassVerifyHandler
 from amgut.handlers.change_password import ChangePasswordHandler
 
+from amgut.handlers.open_humans import OpenHumansLoginHandler
+
 define("port", default=8888, help="run on the given port", type=int)
 
 
@@ -83,6 +85,7 @@ class QiimeWebApplication(Application):
             (r"/authed/add_sample_general/", AddGeneralSampleHandler),
             (r"/authed/change_password/", ChangePasswordHandler),
             (r"/authed/add_animal/", AnimalSurveyHandler),
+            (r"/authed/connect/open-humans", OpenHumansLoginHandler),
             (r"/faq/", FAQHandler),
             (r"/participants/(.*)", ParticipantOverviewHandler),
             (r"/international_shipping/", InternationalHandler),
