@@ -35,7 +35,7 @@ class BaseHandler(RequestHandler):
         self.render('error.html', skid=self.current_user)
 
     def head(self):
-        """ Satisfy servers that this url exists"""
+        """Satisfy servers that this url exists"""
         self.finish()
 
 
@@ -46,17 +46,8 @@ class MainHandler(BaseHandler):
         self.render("index.html", latlongs_db=latlong_db, loginerror="")
 
 
-class NoPageHandler(RequestHandler):
-    # does not extend BaseHandler so 404 doesn't have HEAD request response
-    def get_current_user(self):
-        '''Overrides default method of returning user curently connected'''
-        skid = self.get_secure_cookie("skid")
-        if skid is None:
-            self.clear_cookie("skid")
-            return None
-        else:
-            return skid.strip('" ')
-
+class NoPageHandler(BaseHandler):
+    '''404 page'''
     def get(self):
         if self.current_user:
             self.render("404.html", skid=self.current_user)
@@ -76,6 +67,7 @@ class DBErrorHandler(BaseHandler):
             raise ValueError('DB Error not found: %s' % err)
         self.render("db_error.html", skid=self.current_user,
                     message=errors[err])
+
 
 class BaseStaticFileHandler(StaticFileHandler, BaseHandler):
     def write_error(self, status_code, **kwargs):
