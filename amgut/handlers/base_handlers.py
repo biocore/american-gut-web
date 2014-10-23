@@ -49,10 +49,16 @@ class MainHandler(BaseHandler):
 class NoPageHandler(BaseHandler):
     '''404 page'''
     def get(self):
+        self.set_status(404)
         if self.current_user:
             self.render("404.html", skid=self.current_user)
         else:
             self.render("no_auth_404.html", loginerror="")
+
+    def head(self):
+        """Satisfy servers that this url exists"""
+        self.set_status(404)
+        self.finish()
 
 
 class DBErrorHandler(BaseHandler):
