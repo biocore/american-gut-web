@@ -1186,6 +1186,21 @@ class AGDataAccess(object):
 
         return login
 
+    def ag_new_survey_exists(self, barcode):
+        """
+        Returns metadata for an american gut barcode in the new database
+        tables
+        """
+        sql = "select survey_id from ag_kit_barcodes where barcode = %s"
+        cursor = self.connection.cursor()
+        cursor.execute(sql, [barcode])
+        survey_id = cursor.fetchone()
+        print survey_id
+        if survey_id is not None:
+            return True
+        else:
+            return False
+
 #################################################
 ### GENERAL DATA ACCESS  #######################
 ################################################
