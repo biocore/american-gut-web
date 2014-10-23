@@ -142,7 +142,7 @@ class AGDataAccess(object):
         else:
             return False
 
-    def addAGLogin(self, email, name, address, city, state, zip, country):
+    def addAGLogin(self, email, name, address, city, state, zip_, country):
         clean_email = email.strip().lower()
         sql = "select ag_login_id from ag_login WHERE LOWER(email) = %s"
         cur = self.connection.cursor()
