@@ -1,7 +1,8 @@
 {% from future.utils import viewitems %}
-{% from amgut import media_locale %}
+{% from amgut import media_locale, r_server %}
 {% from amgut.util import AG_DATA_ACCESS %}
 {% set human_participants, animal_participants, environmental_samples, kit_verified = AG_DATA_ACCESS.get_menu_items(skid) %}
+{% set maintenance = r_server.get('maintenance') %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,6 +33,11 @@
     <div class="wrapper clearfix">
         <div class="header clearfix">
             <img id="logo" src="{% raw media_locale['LOGO'] %}">
+    {% if maintenance is not None %}
+            <big><font color="red">
+                {{ maintenance }}
+            </font></big>
+    {% end %}
         </div>
         <br />
 

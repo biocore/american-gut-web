@@ -8,9 +8,8 @@ from amgut.handlers.base_handlers import BaseHandler
 from amgut import media_locale
 
 
-def _format_data_path(dir, barcode, ext):
-    return os.path.join(AMGUT_CONFIG.base_data_dir, dir,
-                        '.'.join([barcode, ext]))
+def _format_data_path(base, dir, barcode, ext):
+    return os.path.join(base, dir, '.'.join([barcode, ext]))
 
 
 class SampleOverviewHandler(BaseHandler):
@@ -20,13 +19,20 @@ class SampleOverviewHandler(BaseHandler):
 
         sample_data = AG_DATA_ACCESS.getAGBarcodeDetails(barcode)
 
-        barcode_pdf = _format_data_path('pdfs', barcode, 'pdf')
-        barcode_txt = _format_data_path('taxa-summaries', barcode, 'txt')
+        fs_base = AMGUT_CONFIG.base_data_dir
+        web_base = "%s/results" % media_locale['SITEBASE']
 
-        if not os.path.exists(barcode_pdf):
-            barcode_pdf = None
-        if not os.path.exists(barcode_txt):
-            barcode_txt = None
+        fs_barcode_pdf = _format_data_path(fs_base, 'pdfs', barcode, 'pdf')
+        fs_barcode_txt = _format_data_path(fs_base, 'taxa-summaries', barcode,
+                                        'txt')
+        web_barcode_pdf = _format_data_path(web_base, 'pdfs', barcode, 'pdf')
+        web_barcode_txt = _format_data_path(web_base, 'taxa-summaries',
+                                            barcode, 'txt')
+
+        if not os.path.exists(fs_barcode_pdf):
+            web_barcode_pdf = None
+        if not os.path.exists(fs_barcode_txt):
+            web_barcode_txt = None
 
         sample_time = sample_data['sample_time']
         sample_date = sample_data['sample_date']
@@ -49,7 +55,7 @@ class SampleOverviewHandler(BaseHandler):
             notes = ''
 
         self.render('sample_overview.html', skid=self.current_user,
-                    barcode_pdf=barcode_pdf, barcode_txt=barcode_txt,
+                    barcode_pdf=web_barcode_pdf, barcode_txt=web_barcode_txt,
                     bgcolor=bgcolor, status=status, barcode=barcode,
                     sample_origin=sample_origin, sample_date=sample_date,
                     sample_time=sample_time, notes=notes)

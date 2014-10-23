@@ -20,6 +20,9 @@ def pkcs7_unpad_message(in_message, ):
 def encrypt_key(survey_id):
     """Encode minimal required vioscreen information to AES key"""
     userinfo = AG_DATA_ACCESS.get_person_info(survey_id)
+    firstname = "NOT"
+    lastname = "IDENTIFIED"
+
     # clean up gender
     if userinfo["gender"] == "Male":
         gender_id = 1
@@ -38,24 +41,15 @@ def encrypt_key(survey_id):
         userinfo['birth_month'] = '0' + userinfo['birth_month']
     dob = ''.join([userinfo['birth_month'], "01", userinfo['birth_year']])
 
-    # clean up name
-    splitname = userinfo['name'].split(' ', 1)
-    firstname = splitname[0]
-    if len(splitname) == 1:
-        # only first or last given, so default as first
-        lastname = ""
-    else:
-        lastname = splitname[1]
-
     regcode = AMGUT_CONFIG.vioscreen_regcode
     returnurl = "http://microbio.me%s%s" % (media_locale["SITEBASE"],
-                                            "/authed/portal/")
+                                            "/authed/vspassthrough/")
     assess_query = ("FirstName=%s&LastName=%s"
                     "&RegCode=%s"
                     "&Username=%s"
                     "&DOB=%s"
                     "&Gender=%d"
-                    "&AppId=1&Visit=1&ReturnUrl={%s}" %
+                    "&AppId=1&Visit=1&EncryptQuery=True&ReturnUrl={%s}" %
                     (firstname, lastname, regcode, survey_id, dob, gender_id,
                      returnurl))
 

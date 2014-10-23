@@ -47,6 +47,33 @@ def env():
     pass
 
 
+@cli.command()
+@click.argument('mode', required=True, 
+                type=click.Choice(['maintenance', 'production']))
+@click.option('--message', type=str, 
+              default='The site is down for maintenance')
+def mode(mode, message):
+    """Enable maintenance or production mode.
+
+    In maintenance mode, active connections will remain active during
+    maintenance mode, however logins will be disabled. The 'message' will be
+    displayed on the banner for everyone who is logged in, and those going to
+    the site to login. Ideally, the message is phrased to indicate that "those
+    logged in can continue until ... time."
+
+    In production mode, the banner message is not displayed and logins are
+    enabled.
+    """
+    from amgut import r_server
+
+    if mode == 'maintenance':
+        r_server.set('maintenance', message)
+        click.echo("Warning, going into maintenance mode. Logins disabled!")
+    elif mode == 'production':
+        r_server.delete('maintenance')
+        click.echo("Warning, going into production mode. Logins enabled!")
+
+
 @env.command()
 @click.argument('db', type=click.Choice(['test', 'production']))
 def make(db):

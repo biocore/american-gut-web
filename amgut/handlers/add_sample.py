@@ -24,11 +24,19 @@ class AddSample(BaseHandler):
         sample_date = self.get_argument('sample_date')
         sample_time = self.get_argument('sample_time')
         notes = self.get_argument('notes')
-        participant_name = self.get_argument('participant_name', '')
+        participant_name = self.get_argument('participant_name')
         sample_site = self.get_argument('sample_site', '')
-        env_sampled = self.get_argument('environment_sampled', '')
 
-        AG_DATA_ACCESS.logParticipantSample(barcode, sample_site,
+        if participant_name == 'environmental':
+            # environmental sample
+            env_sampled = sample_site
+            sample_site = None
+        else:
+            env_sampled = None
+
+        ag_login_id = AG_DATA_ACCESS.get_user_for_kit(self.current_user)
+
+        AG_DATA_ACCESS.logParticipantSample(ag_login_id, barcode, sample_site,
                                             env_sampled, sample_date,
                                             sample_time, participant_name,
                                             notes)
@@ -41,7 +49,7 @@ class AddSample(BaseHandler):
         ag_login_id = AG_DATA_ACCESS.get_user_for_kit(kit_id)
         kit_barcodes = AG_DATA_ACCESS.getAvailableBarcodes(ag_login_id)
         participant_name = self.get_argument('participant_name',
-                                             'environmetal')
+                                             'environmental')
 
         form = LogSample()
         form.barcode.choices = [(v, v) for v in kit_barcodes]

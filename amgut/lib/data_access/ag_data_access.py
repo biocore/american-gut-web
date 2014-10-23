@@ -429,14 +429,34 @@ class AGDataAccess(object):
                                           [ag_login_id, participant_name])
         self.connection.commit()
 
-    def logParticipantSample(self, barcode, sample_site, environment_sampled,
-                             sample_date, sample_time, participant_name,
-                             notes):
-        self.connection.cursor().callproc('ag_log_participant_sample',
-                                          [barcode, sample_site,
-                                           environment_sampled, sample_date,
-                                           sample_time, participant_name,
-                                           notes])
+    def logParticipantSample(self, ag_login_id, barcode, sample_site,
+                             environment_sampled, sample_date, sample_time,
+                             participant_name, notes):
+
+        conn_handler = SQLConnectionHandler()
+        if sample_site is not None:
+            # Get survey id
+            sql = ("SELECT survey_id FROM ag_login_surveys WHERE ag_login_id = "
+                   "%s AND participant_name = %s")
+            survey_id = conn_handler.execute_fetchone(
+                sql, (ag_login_id, participant_name))[0]
+        else:
+            # otherwise, it is an environmental sample
+            survey_id = None
+
+        # Add barcode info
+        sql = """update  ag_kit_barcodes
+                 set     site_sampled = %s,
+                         environment_sampled = %s,
+                         sample_date = %s,
+                         sample_time = %s,
+                         participant_name = %s,
+                         notes = %s,
+                         survey_id = %s
+                 where   barcode = %s"""
+        conn_handler.execute(sql, [
+            sample_site, environment_sampled, sample_date, sample_time,
+            participant_name, notes, survey_id, barcode])
         self.connection.commit()
 
     def deleteSample(self, barcode, ag_login_id):
@@ -457,7 +477,7 @@ class AGDataAccess(object):
         results = conn_handler.execute_fetchall(new_survey_sql, [ag_login_id])
         return [row[0] for row in results]
 
-    def is_old_survey(survey_id):
+    def is_old_survey(self, survey_id):
         conn_handler = SQLConnectionHandler()
         # check survey exists
         survey_answers = conn_handler.execute_fetchone(
@@ -468,6 +488,12 @@ class AGDataAccess(object):
             "survey_id = %s)", [survey_id])[0]
 
         return all((survey_answers is False, survey_answers_other is False))
+
+    def updateVioscreenStatus(self, survey_id, status):
+        conn_handler = SQLConnectionHandler()
+        sql = ("UPDATE ag_login_surveys SET vioscreen_status = %s WHERE "
+               "survey_id = %s")
+        conn_handler.execute(sql, (status, survey_id))
 
     def AGGetBarcodeMetadata(self, barcode):
         results = self._sql.execute_proc_return_cursor(
@@ -1277,3 +1303,14 @@ class AGDataAccess(object):
                              sequencing_status, obsolete, barcode])
         con.commit()
         cursor.close()
+
+    def get_survey_id(self, ag_login_id, participant_name):
+        """Return the survey ID associated with a participant or None"""
+        sql = """select survey_id
+                 from ag_login_surveys
+                 where ag_login_id=%s and participant_name=%s"""
+        cursor = self.connection.cursor()
+        cursor.execute(sql, [ag_login_id, participant_name])
+        id_ = cursor.fetchone()
+
+        return id_[0] if id_ else None

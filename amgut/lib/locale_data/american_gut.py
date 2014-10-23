@@ -16,6 +16,7 @@ HELP_EMAIL = "info@americangut.org"
 _SITEBASE = ''
 
 media_locale = {
+    'LOCALE': AMGUT_CONFIG.locale,
     'SITEBASE': _SITEBASE,
     'LOGO': _SITEBASE + '/static/img/ag_logo.jpg',
     'ANALYTICS_ID': 'UA-55353353-1',
@@ -89,7 +90,7 @@ _HANDLERS = {
     'SUCCESSFULLY_ADDED': "Successfully added %s!",
     'AUTH_REGISTER_SUBJECT': "%(project_shorthand)s Verification Code" % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
     'AUTH_REGISTER_PGP': "\n\nFor the PGP cohort, we are requesting that you collect one sample from each of the following sites:\n\nLeft hand\nRight hand\nForehead\nMouth\nFecal\n\nThis is important to ensure that we have the same types of samples for all PGP participants which, in turn, could be helpful in downstream analysis when looking for relationships between the microbiome and the human genome\n\n.",
-    'AUTH_REGISTER_BODY': "Thank you for registering with the %(project_name)s! Your verification code is:\n\n{0}\n\nYou will need this code to verifiy your kit on the %(project_shorthand)s webstite. To get started, please log into:\n\nhttp://microbio.me/BritishGut\n\nEnter the kit_id and password found inside your kit, verify the contents of your kit, and enter the verification code found in this email.{1}\n\nSincerely,\nThe %(project_shorthand)s Team" % {'project_shorthand': AMGUT_CONFIG.project_shorthand, 'project_name': AMGUT_CONFIG.project_name},
+    'AUTH_REGISTER_BODY': "Thank you for registering with the %(project_name)s! Your verification code is:\n\n{0}\n\nYou will need this code to verifiy your kit on the %(project_shorthand)s webstite. To get started, please log into:\n\nhttp://microbio.me/AmericanGut\n\nEnter the kit_id and password found inside your kit, verify the contents of your kit, and enter the verification code found in this email.{1}\n\nSincerely,\nThe %(project_shorthand)s Team" % {'project_shorthand': AMGUT_CONFIG.project_shorthand, 'project_name': AMGUT_CONFIG.project_name},
     'KIT_REG_SUCCESS': 'Kit registered successfully.',
     'INVALID_KITID': "Invalid Kit ID or Password",
     'ADD_KIT_ERROR': "Could not add kit to database.  Did you hit the back button while registering and press 'register user' again?",
@@ -101,7 +102,8 @@ _HANDLERS = {
     'MESSAGE_SENT': "Your message has been sent. We will reply shortly",
     'KIT_IDS_BODY': 'Your {1} Kit IDs are %s. You are receiving this email because you requested your Kit ID from the {1} web page If you did not request your Kit ID please email {0} Thank you,\n The {1} Team\n'.format(media_locale['HELP_EMAIL'], AMGUT_CONFIG.project_shorthand),
     'KIT_IDS_SUBJECT': '%(project_shorthand)s Kit ID' % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
-    'BARCODE_ERROR': "ERROR: No barcode was requested"
+    'BARCODE_ERROR': "ERROR: No barcode was requested",
+    'AUTH_SUBJECT': "You have registered your kit!  Your verification code is below."
 }
 
 # Template specific dicts
@@ -276,12 +278,14 @@ _NEW_PARTICIPANT_OVERVIEW = {
 
 _INTERNATIONAL = {
     'PAGE_TITLE': '%(shorthand)s International Shipping Instructions' % {'shorthand': AMGUT_CONFIG.project_shorthand},
-    'INT_PARTICIPANTS': 'International Participants:',
-    'INSTRUCTIONS_1': 'In order to comply with amended federal and IATA regulations, we are requesting that international participants return their sample tubes through FedEx International and that international participants follow the additional safely requirements for shipping human swab samples to the United States. Your airway bill must clearly identify the package as containing "human exempt specimens". The samples will additionally need to be packaged within a secondary containment to ensure that they can safely enter the United States.',
-    'INSTRUCTIONS_2': 'For shipment, you will need to use regular tape to seal the plastic tube that contains the swab, then place the swab in the provided brown mailing envelope and place the brown envelope inside a Tyvek/plastic mailer, <strong>which can be acquired free of charge from FedEx</strong>, when shipping the package, prior to FedEx shipment.',
-    'INSTRUCTIONS_3': 'If you do not follow these directions the sample will be destroyed by United States Customs at the port of entry into the United States.',
+    'INTERNATIONAL_HEADER_1': "International Shipping",
+    'INTERNATIONAL_TEXT_1': 'Please send any non-UK international samples to:',
+    'INTERNATIONAL_TEXT_2': 'In order to comply with amended federal and IATA regulations, we are requesting that international participants return their sample tubes through FedEx International and that international participants follow the additional safely requirements for shipping human swab samples to the United States. Your airway bill must clearly identify the package as containing "human exempt specimens". The samples will additionally need to be packaged within a secondary containment to ensure that they can safely enter the United States.',
+    'INTERNATIONAL_TEXT_3': "For shipment, you will need to use clear tape to secure the sample swabs to the sample tube, then place the sample tube in the provided buff mailing envelope. Then place the buff envelope inside a Tyvek/plastic mailer, <strong>which can be acquired free of charge from FedEx</strong>, when shipping the sample, prior to FedEx shipment.",
+    'INTERNATIONAL_TEXT_4': "If you do not follow these directions the sample will be destroyed by United States Customs at the port of entry into the United States.",
     'YOUR_SAMPLES': 'Your samples',
-    'YOUR_SAMPLES_LIST': '<li>Are considered dried specimens</li><li>Must be shipped via FedEx</li><li>Must have tape to sealing the plastic tube that contains the swab</li><li>Must be placed in a buff mailing envelope with the buff envelope placed inside a Tyvek/plastic mailer prior to FedEx shipment</li><li>Must be shipped with an airway bill and must be labeled with the complete address of the sender and complete address of recipient, and with the words "Human exempt sample(s)"</li>'
+    'YOUR_SAMPLES_LIST': '<li>Are considered dried specimens</li><li>Must be shipped via FedEx</li><li>Must have tape to sealing the plastic tube that contains the swab</li><li>Must be placed in a buff mailing envelope with the buff envelope placed inside a Tyvek/plastic mailer prior to FedEx shipment</li><li>Must be shipped with an airway bill and must be labeled with the complete address of the sender and complete address of recipient, and with the words "Human exempt sample(s)"</li>',
+    'AMERICAN_GUT_ADDRESS': media_locale["SHIPPING_ADDRESS"]
 }
 
 _NEW_PARTICIPANT = {

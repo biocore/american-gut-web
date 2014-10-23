@@ -1,8 +1,9 @@
-from json import dumps
+from json import dumps, loads
 from collections import defaultdict
 
 from wtforms import Form
 from tornado.web import authenticated
+from tornado.escape import url_escape
 
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.lib.util import store_survey
@@ -49,17 +50,29 @@ surveys = [make_human_survey_class(group)
 class HumanSurveyHandler(BaseHandler):
     @authenticated
     def post(self):
-        human_survey_id = self.get_secure_cookie('human_survey_id')
+        # see if we're coming from an edit
+        human_survey_id = self.get_argument('survey_id', None)
         page_number = int(self.get_argument('page_number'))
+
+        if human_survey_id is None:
+            # we came from consent
+            human_survey_id = self.get_secure_cookie('human_survey_id')
+            if human_survey_id is None:
+                err_msg = url_escape("There was an unexpected error.")
+                self.redirect(media_locale['SITEBASE'] + "/authed/portal/?errmsg=%s" % err_msg)
+                return
+        else:
+            # we came from participant_overview
+            self.set_secure_cookie('human_survey_id', human_survey_id)
+            data = primary_human_survey.fetch_survey(human_survey_id)
+            r_server.hset(human_survey_id, 'existing', dumps(data))
+            r_server.expire(human_survey_id, 86400)
+
         next_page_number = page_number + 1
 
         if page_number >= 0:
             form_data = surveys[page_number]()
-
             form_data.process(data=self.request.arguments)
-            # TODO: collect supplemental responses
-
-            # TODO: store supplemental data in data
             data = {'questions': form_data.data}
 
             r_server.hset(human_survey_id, page_number, dumps(data))
@@ -68,15 +81,17 @@ class HumanSurveyHandler(BaseHandler):
 
         # if this is not the last page, render the next page
         if next_page_number < len(surveys):
-            # exist
             the_form = surveys[next_page_number]()
-            title = primary_human_survey.groups[next_page_number].name
 
-            supp = {}
+            existing_responses = r_server.hget(human_survey_id, 'existing')
+            if existing_responses:
+                existing_responses = loads(existing_responses)
+                the_form = surveys[next_page_number](data=existing_responses)
+
+            title = primary_human_survey.groups[next_page_number].name
 
             self.render('human_survey.html', the_form=the_form,
                         skid=self.current_user, TITLE=title,
-                        supplementals=supp,
                         page_number=next_page_number,
                         progress=progress)
         else:

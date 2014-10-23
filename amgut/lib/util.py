@@ -130,10 +130,12 @@ def store_survey(survey, survey_id):
     to_store = PartitionResponse(survey.question_types)
     consent_details = loads(data.pop('consent'))
 
+    if 'existing' in data:
+        data.pop('existing')
+
     for page in data:
         page_data = loads(data[page])
         questions = page_data['questions']
-        #supplemental = page_data['supplemental']
 
         for quest, resps in viewitems(questions):
             qid = get_survey_question_id(quest)
@@ -146,16 +148,7 @@ def store_survey(survey, survey_id):
             else:
                 pass
 
-            #if qtype in ['SINGLE', 'MULTIPLE'] and quest in supplemental_map:
-            #    indices, supp_key = supplemental_map[quest]
-#
- #               if set(indices).intersection(resps):
-  #                  to_store[supp_qid] = supplemental[supp_qid]
-   #             else:
-    #                to_store[supp_qid] = None
-
             to_store[qid] = resps
-
 
     with_fk_inserts = []
     for qid, indices in viewitems(to_store.with_fk):
@@ -175,7 +168,7 @@ def survey_vioscreen(survey_id):
     """Return a formatted text block and URL for the external survey"""
     tl = text_locale['human_survey_completed.html']
     embedded_text = tl['SURVEY_VIOSCREEN']
-    url = ("http://demo.vioscreen.com/remotelogin.aspx?Key=%s&RegCode=KLUCB" %
+    url = ("https://vioscreen.com/remotelogin.aspx?Key=%s&RegCode=KLUCB" %
            url_escape(encrypt_key(survey_id)))
     return embedded_text % url
 

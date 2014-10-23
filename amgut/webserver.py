@@ -8,6 +8,8 @@ from tornado.ioloop import IOLoop
 from tornado.web import Application
 from tornado.options import define, options, parse_command_line
 
+from amgut import media_locale
+
 from amgut.handlers.base_handlers import (
     MainHandler, NoPageHandler, DBErrorHandler, BaseStaticFileHandler)
 from amgut import AMGUT_CONFIG
@@ -24,6 +26,7 @@ from amgut.handlers.animal_survey import (AnimalSurveyHandler,
                                           CheckParticipantName)
 from amgut.handlers.human_survey import HumanSurveyHandler
 from amgut.handlers.human_survey_completed import HumanSurveyCompletedHandler
+from amgut.handlers.vioscreen import VioscreenPassthroughHandler
 from amgut.handlers.add_sample import (AddHumanSampleHandler,
                                        AddGeneralSampleHandler,
                                        AddAnimalSampleHandler)
@@ -71,6 +74,7 @@ class QiimeWebApplication(Application):
             (r"/authed/survey_main/", SurveyMainHandler),
             (r"/authed/human_survey/", HumanSurveyHandler),
             (r"/authed/human_survey_completed/", HumanSurveyCompletedHandler),
+            (r"/authed/vspassthrough/", VioscreenPassthroughHandler),
             (r"/authed/portal/", PortalHandler),
             (r"/authed/add_sample_human/", AddHumanSampleHandler),
             (r"/authed/add_sample_animal/", AddAnimalSampleHandler),
@@ -98,8 +102,11 @@ class QiimeWebApplication(Application):
 
 
 def main():
-    options.log_file_prefix = ("AMGUT_%d_%s.log" %
-                               (options.port, str(datetime.now())))
+    # replace spaces for underscores to autocomplete easily in a shell
+    # format looks like american_gut_8888_2014-10-06_15:30:20.256035.log
+    prefix = ("%s_%d_%s.log" % (media_locale['LOCALE'], options.port,
+                                str(datetime.now()))).replace(' ', '_')
+    options.log_file_prefix = prefix
     options.logging = 'warning'
     parse_command_line()
     http_server = HTTPServer(QiimeWebApplication())

@@ -1,4 +1,9 @@
 {% from amgut import media_locale %}
+{% from amgut.handlers.FAQ import FAQHandler %}
+{% from amgut.handlers.addendum import AddendumHandler %}
+{% from amgut.handlers.auth_handlers import AuthRegisterHandoutHandler %}
+{% from amgut import r_server %}
+{% set maintenance = r_server.get('maintenance') %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,7 +78,7 @@
     {% block head %}
     {% end %}
 
-    {% if current_user %}
+    {% if current_user and not isinstance(handler, (FAQHandler, AddendumHandler, AuthRegisterHandoutHandler)) %}
         <meta http-equiv="refresh" content="0; url={% raw media_locale['SITEBASE'] %}/authed/portal/" />
     {% end %}
 </head>
@@ -84,6 +89,12 @@
     <div class="wrapper clearfix" style="position:absolute; top:10px; left:50px; right:50px; opacity:0.9;">
         <div class="header clearfix">
             <img id="logo" src="{% raw media_locale['LOGO'] %}">
+
+    {% if maintenance is not None %}
+            <big><font color="red">
+                {{ maintenance }}
+            </font></big>
+    {% end %}
         </div>
         <br>
         <div class="left menuwrapper">
@@ -118,6 +129,7 @@
                     <tr width="100%">
                         <td width="30%"></td>
                         <td width="30%">
+                        {% if maintenance is None %}
                             <div style="color:red">{{loginerror}}</div>
                             <form method="post" action="{% raw media_locale['SITEBASE'] %}/auth/login/">
                                 <table width="100%">
@@ -128,6 +140,7 @@
                                       <tr><td colspan="2"><a href="{% raw media_locale['SITEBASE'] %}/forgot_password/" class="small_link">{% raw media_locale['NAV_FORGOT_PASSWORD'] %}</a></td></tr>
                                 </table>
                             </form>
+                        {% end %}
                         </td>
                         <td width="30%"></td>
                     </tr>

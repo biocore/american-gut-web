@@ -18,6 +18,7 @@ HELP_EMAIL = "info@britishgut.org"
 _SITEBASE = ''
 
 media_locale = {
+    'LOCALE': AMGUT_CONFIG.locale,
     'SITEBASE': _SITEBASE,
     'ANALYTICS_ID': 'UA-55355651-1',
     'LATITUDE': 54.5,
@@ -96,12 +97,13 @@ _HANDLERS = {
     'ADD_BARCODE_ERROR': "Could not add barcode to database. Did you hit the back button while registering and press 'register user' again?",
     'CHANGE_PASS_BODY': 'This is a courtesy email to confirm that you have changed your password for your kit with ID %s. If you did not request this change, please email us immediately at {0}'.format(media_locale['HELP_EMAIL']),
     'CHANGE_PASS_SUBJECT': '%(project_shorthand)s Password Reset' % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
-    'RESET_PASS_BODY': 'The password on American Gut Kit ID %s  has been reset please click the link below within two hours\nhttp://microbio.me/americangut/change_pass_verify/?email=%s;kitid=%s;passcode=%s',
+    'RESET_PASS_BODY': 'The password on British Gut Kit ID %s  has been reset please click the link below within two hours\nhttp://microbio.me/britishgut/change_pass_verify/?email=%s;kitid=%s;passcode=%s',
     'MINOR_PARENTAL_BODY': "Thank you for your interest in this study. Because of your status as a minor, we will contact you within 24 hours to verify parent/guardian consent.",
     'MESSAGE_SENT': "Your message has been sent. We will reply shortly",
     'KIT_IDS_BODY': 'Your {1} Kit IDs are %s. You are receiving this email because you requested your Kit ID from the {1} web page If you did not request your Kit ID please email {0} Thank you,\n The {1} Team\n'.format(media_locale['HELP_EMAIL'], AMGUT_CONFIG.project_shorthand),
     'KIT_IDS_SUBJECT': '%(project_shorthand)s Kit ID' % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
-    'BARCODE_ERROR': "ERROR: No barcode was requested"
+    'BARCODE_ERROR': "ERROR: No barcode was requested",
+    'AUTH_SUBJECT': "You have registered your kit!  Your verification code is below."
 }
 
 _NEW_PARTICIPANT = {
@@ -145,7 +147,7 @@ _NEW_PARTICIPANT = {
     'TEXT_STUDY_TASK_DESCRIPTION_ADDITIONAL_1': 'We are requesting that you contribute funding to the project at a level that is commensurate with the number of swabs and the kinds of tests you are requesting.  The basic package covers a single fecal swab.',
     'TEXT_STUDY_TASK_DESCRIPTION_ADDITIONAL_2': 'After you submit your first set of samples, we may ask you to donate additional samples (up to 7 times) if you belong to a group that has specific diet, disease or age considerations.  You will be contacted by email if we would like to repeat the sampling. Some participants will be asked to provide a detailed food diary that includes a list of everything you eat and drink every day for up to 6 months. If this is required we will contact you by email to confirm that you are willing to contribute this information.',
     'TEXT_INTERNATIONAL_PARTICIPANT_TITLE': 'International Participants',
-    'TEXT_INTERNATIONAL_PARTICIPANT_DESCRIPTION_1': 'If you are an international participant from the United Kingdom or Australia, sample aggregation sites have been established at King\'s College, London, UK and the University of Queensland, Brisbane, Australia.  Instructions for making use of these sites are available on the web site (http://www.americangut.org)',
+    'TEXT_INTERNATIONAL_PARTICIPANT_DESCRIPTION_1': 'If you are an international participant from the United Kingdom or Australia, sample aggregation sites have been established at King\'s College, London, UK and the University of Queensland, Brisbane, Australia.  Instructions for making use of these sites are available on the web site (http://www.britishgut.org)',
     'TEXT_INTERNATIONAL_PARTICIPANT_DESCRIPTION_2': 'For other international participants to comply with amended federal regulations and IATA regulations we are requesting that you return your sample tubes through FedEx international and follow additional requirements for safely shipping human swab samples.  You will need label the airbill clearly for shipment identifying the samples as "human exempt specimens".  The samples should be packaged with secondary containment to ensure that they can be safely returned.  For this you will use tape to seal the plastic tube that contains the swab, wrap the sample tube in absorbent tissue then place the swab in a mailing envelope inside the Tyvek/plastic mailer prior to FedEx shipment.  If you do not follow these directions the sample may be intercepted at the port of entry into the USA and destroyed.',
     'TEXT_SURVEY_DESCRIPTION_TITLE': 'Description of Surveys/Questionnaires/Interview Questions',
     'TEXT_SURVEY_DESCRIPTION_DESCRIPTION_1': 'You will be asked questions about your general personal information (age, sex, height, weight, ethnicity, place of birth, current ZIP code. We will ask if you recently moved and where you moved from., We will ask questions about general diet information (including whether you follow a special diet, if you have food allergies, whether you have cultural or religious food restrictions). Other questions address whether you have pets and the type of contact you have with these pets and your relationship to other people in this study.  There is a section on health information including a history of allergies/asthma, if you suffer from migraines and if you have a history of irritable bowel disease.  The questionnaire also asks you to complete a food log to assess the amount of protein, fat, carbohydrate, grains and vegetables in your diet. For this we suggest that you contact a free website that will allow you to estimate these amounts.',
@@ -155,7 +157,7 @@ _NEW_PARTICIPANT = {
     'TEXT_DURATION_DESCRIPTION': 'We anticipate that participant time commitment for sampling will be less than 15 minutes; to complete the questionnaire online will take no more than 45 minutes; and completing the food diary should take no more than10 minutes/day.  If you choose to complete the FFQ at VioScreen, this will take an additional 40 minutes. The study will be conducted over a maximum period of 5 years to include all the people we are requesting permission to sample.  We anticipate that results will be available within 3-6 months of sample receipt.',
     'TEXT_WITHDRAWAL_TITLE': 'Study Withdrawal',
     'TEXT_WITHDRAWAL_DESCRIPTION_1': 'Taking part in this study is completely <strong>voluntary</strong>.  You do not have to participate if you don\'t want to.  You may also leave the study at any time.  If you leave the study before it is finished, there will be no penalty to you, and you will not lose any benefits to which you are otherwise entitled.',
-    'TEXT_WITHDRAWAL_DESCRIPTION_2': 'To withdraw from the study send email to the American Gut Project (info@americangut.org) using the email address you used to contact us about the study and include your access code so that we can delete your records.',
+    'TEXT_WITHDRAWAL_DESCRIPTION_2': 'To withdraw from the study send email to the American Gut Project (info@britishgut.org) using the email address you used to contact us about the study and include your access code so that we can delete your records.',
     'TEXT_RISKS_TITLE': 'Risks and Discomforts',
     'TEXT_RISKS_DESCRIPTION_1': 'There are no foreseeable risks for participating in this study.  You should be aware that the samples you submit are not anonymous but we will make every effort to ensure that they remain confidential.  The only staff associated with the study that will have access to confidential information (your name and address) will be those responsible for shipping the sample kit and questionnaire to you.  When the samples are returned they will have an associated code but no personally identifiable information.',
     'TEXT_BENEFITS_TITLE': 'Benefits',
@@ -286,7 +288,7 @@ _FAQ = {
     'WHO_MICHAEL_POLLAN_ANS': 'Michael Pollan is a New York Times Best Seller for his books on diet and nutrition. Further information about Michael can be found <a href="http://michaelpollan.com/">here</a>.',
     'WHY_TWO_SWABS': "Why are there 2 swabs inside the tube?",
     'WHY_TWO_SWABS_ANS_1': "Each sampling tube contains two swabs and looks like this:",
-    'WHY_TWO_SWABS_ANS_2': "Each tube is used for <strong>one sample</strong>. The tube has two swabs in it because one is a backup in case the DNA does not amplify on the first swab."
+    'WHY_TWO_SWABS_ANS_2': "<p>Each tube is used for <strong>one sample</strong>. The tube has two swabs in it because one is a backup in case the DNA does not amplify on the first swab.</p>"
                            "<p>Here's a video of Rob Knight talking about swab handling:</p><iframe src='%(swab_handle_vid)s' width=''500'' height=''281'' frameborder=''0'' webkitallowfullscreen='' mozallowfullscreen='' allowfullscreen=''></iframe>" % {'swab_handle_vid': media_locale['SWAB_HANDLING']}
 }
 
@@ -466,7 +468,6 @@ _NEW_PARTICIPANT_OVERVIEW = {
     'ONCE_ADDED': "Once you have added a human source, you will then see the name of that source in the left menu, and you will also have an option for adding a sample to that source. When you click that, you will be able to select the appropriate barcode and add sample metadata."
 }
 
-_INTERNATIONAL = {}
 _MAP = {
     'MAP_TITLE': "Map Key",
     'MAP_KIT': "Kit Verified",
@@ -551,10 +552,10 @@ _ADDENDUM = {
     'CONTRIB': "Contributors",
     'DIFFERENT_AGES_POPS': "Different Ages and Populations",
     'DIFFERENT_AGES_POPS_ALT': "PCoA of international populations colored by age",
-    'DIFFERENT_AGES_POPS_TEXT': "This plot lets you compare your sample to other fecal microbiome samples according to age and place of origin. The colour of each point indicates the age of the person the sample was collected from, with red being the youngest and purple being the oldest. Also, on this plot, the ovals show where in the world each sample came from. The red oval shows you the area where an average sample from a Western country should fall. The yellow oval shows you where an average sample from an Amerindian population in Venezuela should fall. The blue oval shows you where an average sample from Malawi should fall. These data are from <a href = 'http://www.nature.com/nature/journal/v486/n7402/abs/nature11053.html'>Yatsunenko et al. 2012</a>. We used these populations as a comparison to your sample since a large number of people with diverse ages were sampled in these populations. We have fewer data from other populations in other parts of the world.",
+    'DIFFERENT_AGES_POPS_TEXT': "This plot lets you compare your sample to other faecal microbiome samples according to age and place of origin. The colour of each point indicates the age of the person the sample was collected from, with red being the youngest and purple being the oldest. Also, on this plot, the ovals show where in the world each sample came from. The red oval shows you the area where an average sample from a Western country should fall. The yellow oval shows you where an average sample from an Amerindian population in Venezuela should fall. The blue oval shows you where an average sample from Malawi should fall. These data are from <a href = 'http://www.nature.com/nature/journal/v486/n7402/abs/nature11053.html'>Yatsunenko et al. 2012</a>. We used these populations as a comparison to your sample since a large number of people with diverse ages were sampled in these populations. We have fewer data from other populations in other parts of the world.",
     'DIFFERENT_BODY_SITES': "Different Body Sites",
     'DIFFERENT_BODY_SITES_ALT': "PCoA by body site for AGP and HMP",
-    'DIFFERENT_BODY_SITES_TEXT': "This plot lets you compare your sample to samples collected in other microbiome projects from several body sites. The colour of each point tells you which project and body site the sample came from. HMP refers to the <a href = 'http://www.hmpdacc.org'>Human Microbiome Project</a>, funded by the National Institutes of Health. You can see how your sample compared to fecal, oral, and skin samples from the Human Microbiome Project, as well as to fecal, oral, and skin samples from the American Gut Project, the Global Gut Project, and the Personal Genome Project. These samples have been combined in any category not labeled \"HMP\". The oval around each group of points shows you where an average sample from each project and body site should fall on the plot. These sometimes make it easier to see the patterns all the clusters of points make.",
+    'DIFFERENT_BODY_SITES_TEXT': "This plot lets you compare your sample to samples collected in other microbiome projects from several body sites. The colour of each point tells you which project and body site the sample came from. HMP refers to the <a href = 'http://www.hmpdacc.org'>Human Microbiome Project</a>, funded by the National Institutes of Health. You can see how your sample compared to faecal, oral, and skin samples from the Human Microbiome Project, as well as to faecal, oral, and skin samples from the American Gut Project, the Global Gut Project, and the Personal Genome Project. These samples have been combined in any category not labeled \"HMP\". The oval around each group of points shows you where an average sample from each project and body site should fall on the plot. These sometimes make it easier to see the patterns all the clusters of points make.",
     'ENRICHED': "Enriched Microbes",
     'ENRICHED_EXP_1': "The second table shows four microbes that you had more of compared to other people. It is likely that other participants also have these microbes in their sample, but we found substantially higher abundances of them in your sample relative to others. The percentages on the right tell you how many of your total bacteria (under \"Sample\") or of the total bacteria in an average person\'s sample (under \"Population\") belong to these taxa. Since you have more of these bacteria than most other people, the percentage under \"Sample\" should be higher than the percentage under \"Population\".",
     'ENRICHED_EXP_2': "The fold change tells you how many more of these bacteria you have than the average participant. For example, if you have 20% Bacteria A and the average person in the population has 10% Bacteria A, you have twice as many Bacteria A. This would be a twofold (2x) difference. Please note that because the percentages we report on this sheet are rounded (e.g., 0.05% rounded to 0.1%), and your fold differences are calculated from values that are not rounded, the fold differences you see may be slightly distinct than what you would calculate based on the numbers you see.",
@@ -635,6 +636,18 @@ _ADDENDUM = {
     'YOUR_ENRICHED_TABLE_HEADER': "<th>Taxonomy</th><th>Sample</th><th>Population</th><th>Fold</th>"
 }
 
+_INTERNATIONAL = {
+    'PAGE_TITLE': '%(shorthand)s International Shipping Instructions' % {'shorthand': AMGUT_CONFIG.project_shorthand},
+    'INTERNATIONAL_HEADER_1': "International Shipping",
+    'INTERNATIONAL_TEXT_1': 'At the moment, we are unable to accept non-British samples at the British Gut. Please send any non-UK international samples to:',
+    'INTERNATIONAL_TEXT_2': 'In order to comply with amended federal and IATA regulations, we are requesting that international participants return their sample tubes through FedEx International and that international participants follow the additional safely requirements for shipping human swab samples to the United States. Your airway bill must clearly identify the package as containing "human exempt specimens". The samples will additionally need to be packaged within a secondary containment to ensure that they can safely enter the United States.',
+    'INTERNATIONAL_TEXT_3': "For shipment, you will need to use clear tape to secure the sample swabs to the sample tube, then place the sample tube in the provided buff mailing envelope. Then place the buff envelope inside a Tyvek/plastic mailer, <strong>which can be acquired free of charge from FedEx</strong>, when shipping the sample, prior to FedEx shipment.",
+    'INTERNATIONAL_TEXT_4': "If you do not follow these directions the sample will be destroyed by United States Customs at the port of entry into the United States.",
+    'YOUR_SAMPLES': 'Your samples',
+    'YOUR_SAMPLES_LIST': '<li>Are considered dried specimens</li><li>Must be shipped via FedEx</li><li>Must have tape to sealing the plastic tube that contains the swab</li><li>Must be placed in a buff mailing envelope with the buff envelope placed inside a Tyvek/plastic mailer prior to FedEx shipment</li><li>Must be shipped with an airway bill and must be labeled with the complete address of the sender and complete address of recipient, and with the words "Human exempt sample(s)"</li>',
+    'AMERICAN_GUT_ADDRESS': "American Gut Project<br>Knight Lab, JSCBB<br>596 UCB<br>Boulder, CO 80309"
+}
+
 _PORTAL = {
     'ADD_SOURCE_TAB': "Add Source <br>Survey",
     'DOMESTIC_HEADER_1': "Domestic Shipping",
@@ -678,7 +691,7 @@ _PORTAL = {
     'SAMPLE_STEPS_TEXT_2': '<li>Make sure you have <a href="#" onclick="selectTab(\'source\')">added your sample source and complete the required survey(s)</a></li><li>Remove the sample swabs from the sample tube</li><li>Collect your sample following the guidelines below</li><li>Place sample swabs into the sample tube</li>',
     'SAMPLE_STEPS_TEXT_3': 'These sample collection instructions are very important, please read through them <strong>before</strong> beginning to take your sample. Deviations will cause issues with sample processing, sequencing, and data analysis. We cannot guarantee that we will be able to process your sample if the instructions are not followed, and <strong>we cannot offer replacements if instructions were not followed</strong>. Please do not hesitate to ask us questions at <a href="%(sitebase)s/authed/help_request/">%(help_email)s</a>.' % {'help_email': media_locale['HELP_EMAIL'], 'sitebase': media_locale['SITEBASE']},
     'SAMPLE_STEPS_TEXT_4': "Once you have removed the sample tube, only handle the sample swab by the red cap.",
-    'SAMPLE_STEPS_TEXT_5': "For a <strong>faecal sample</strong>, rub both cotton tips on a fecal specimen (a used piece of bathroom tissue). Collect a small amount of biomass. Maximum collection would be to saturate 1/2 a swab. <strong>More is not better!</strong> The ideal amount of biomass collected is shown below.",
+    'SAMPLE_STEPS_TEXT_5': "For a <strong>faecal sample</strong>, rub both cotton tips on a faecal specimen (a used piece of bathroom tissue). Collect a small amount of biomass. Maximum collection would be to saturate 1/2 a swab. <strong>More is not better!</strong> The ideal amount of biomass collected is shown below.",
     'SAMPLE_STEPS_TEXT_6': "For an <strong>oral sample</strong>, firmly rub both sides of both cotton tips on the surface of the tongue for 20 seconds. Take great caution not to touch the cheeks, teeth, or lips.",
     'SAMPLE_STEPS_TEXT_7': "For a <strong>skin sample</strong>, firmly rub both sides of both cotton tips over the skin surface being sampled for 20 seconds.",
     'SAMPLE_STEPS_TEXT_8': "For an <strong>other/environmental sample</strong>, firmly rub both sides of both cotton tips over the surface being sampled for 20 seconds.",
@@ -729,8 +742,8 @@ _HUMAN_SURVEY_COMPLETED = {
     'COMPLETED_HEADER': 'Congratulations!',
     'COMPLETED_TEXT': 'You are now an enrolled participant in the %(PROJECT_TITLE)s!' % media_locale,
     'AVAILABLE_SURVEYS': 'Below are a few additional surveys that you may be interested in completing. There is no requirement to take these surveys, and your decision does not affect your involvement in the project in any way.',
-    'SURVEY_ASD': '<a href="http://www.anl.gov/contributors/jack-gilbert">Dr. Jack Gilbert</a> is exploring the relationship between gut dysbiosis and Autism Spectrum Disorders, and in conjunction with the American Gut Project, we started an ASD-Cohort study. This additional survey contains questions specific to that cohort, but it is open to any participant to take if they so choose. Please click <a href="%s">here</a> to take the ASD-Cohort survey.',
-    'SURVEY_VIOSCREEN': 'The American Gut Project and its sister projects are very interested in diet. If you\'d like to provide additional detail about your diet, please click <a href="%s">here</a> to take a detailed diet survey (known as an Food Frequency Questionnaire). This is a validated FFQ, and is the one used by the Mayo Clinic.'
+    'SURVEY_ASD': '<a href="http://www.anl.gov/contributors/jack-gilbert">Dr. Jack Gilbert</a> is exploring the relationship between gut dysbiosis and Autism Spectrum Disorders, and in conjunction with the British Gut Project, we started an ASD-Cohort study. This additional survey contains questions specific to that cohort, but it is open to any participant to take if they so choose. Please click <a href="%s">here</a> to take the ASD-Cohort survey.',
+    'SURVEY_VIOSCREEN': 'The British Gut Project and its sister projects are very interested in diet. If you\'d like to provide additional detail about your diet, please click <a href="%s">here</a> to take a detailed diet survey (known as an Food Frequency Questionnaire). This is a validated FFQ, and is the one used by the Mayo Clinic.'
 }
 
 # Actual text locale

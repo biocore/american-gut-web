@@ -1,10 +1,10 @@
 {% from amgut import text_locale, media_locale %}
-{% set fmt = media_locale['help_email'] %}
+{% set fmt = media_locale['HELP_EMAIL'] %}
 <H2> {% raw text_locale['db_error.html']['HEADER'] %}Oops! There seems to be a database error. </H2>
 <br />
 {{message}}
 <br /><br />
-{% raw text_locale['db_error.html']['MESSAGE'] % fmt %}
+{% raw text_locale['db_error.html']['MESSAGE'] %}
 <br /><br />
 
 <br />{% raw text_locale['db_error.html']['SIGNOFF'] %}<br />
