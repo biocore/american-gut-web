@@ -142,19 +142,21 @@ class AGDataAccess(object):
         else:
             return False
 
-    def addAGLogin(self, email, name, address, city, state, zip, country):
-        sql = "select ag_login_id from ag_login WHERE email = %s"
+    def addAGLogin(self, email, name, address, city, state, zip_, country):
+        clean_email = email.strip().lower()
+        sql = "select ag_login_id from ag_login WHERE LOWER(email) = %s"
         cur = self.connection.cursor()
-        cur.execute(sql, [email])
+        cur.execute(sql, [clean_email])
         ag_login_id = cur.fetchone()
         if not ag_login_id:
             # create the login
-            cur.callproc('ag_insert_login', [email.strip().lower(), name,
-                                             address,
-                                             city, state, zip, country])
-            self.connection.commit()
-            cur.execute(sql, [email])
+            sql = ("INSERT INTO ag_login (email, name, address, city, state, "
+                   "zip, country) VALUES (%s, %s, %s, %s, %s, %s, %s) "
+                   "RETURNING ag_login_id")
+            cur.execute(sql, [clean_email, name, address, city,
+                              state, zip_, country])
             ag_login_id = cur.fetchone()
+            self.connection.commit()
         return ag_login_id[0]
 
     def updateAGLogin(self, ag_login_id, email, name, address, city, state,
