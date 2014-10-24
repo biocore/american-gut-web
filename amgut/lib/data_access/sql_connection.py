@@ -11,6 +11,7 @@ from __future__ import division
 from contextlib import contextmanager
 from psycopg2 import connect, Error as PostgresError
 from psycopg2.extras import DictCursor
+from psycopg2 import OperationalError
 
 from amgut.lib.config_manager import AMGUT_CONFIG
 
@@ -19,11 +20,7 @@ class SQLConnectionHandler(object):
     """Encapsulates the DB connection with the Postgres DB"""
     def __init__(self, con=None):
         if not con:
-            self._connection = connect(user=AMGUT_CONFIG.user,
-                                       password=AMGUT_CONFIG.password,
-                                       database=AMGUT_CONFIG.database,
-                                       host=AMGUT_CONFIG.host,
-                                       port=AMGUT_CONFIG.port)
+            self._open_connection()
         else:
             self._connection = con
 
@@ -31,6 +28,19 @@ class SQLConnectionHandler(object):
 
     def __del__(self):
         self._connection.close()
+        del self._connection
+
+    def _open_connection(self):
+        try:
+            self._connection = connect(user=AMGUT_CONFIG.user,
+                                       password=AMGUT_CONFIG.password,
+                                       database=AMGUT_CONFIG.database,
+                                       host=AMGUT_CONFIG.host,
+                                       port=AMGUT_CONFIG.port)
+            self.execute('set search_path to ag, public')
+        except Exception as e:
+            # catch any error from the database and raise for site to catch
+            raise RuntimeError("Cannot connect to database!\n%s" % str(e))
 
     @contextmanager
     def get_postgres_cursor(self):
@@ -40,6 +50,9 @@ class SQLConnectionHandler(object):
         -------
         pgcursor : psycopg2.cursor
         """
+        if self._connection.closed:
+            self._open_connection()
+
         try:
             with self._connection.cursor(cursor_factory=DictCursor) as cur:
                 yield cur
@@ -48,6 +61,10 @@ class SQLConnectionHandler(object):
             raise
         else:
             self._connection.commit()
+
+    def __del__(self):
+        self.con.close()
+        del self.con
 
     def _check_sql_args(self, sql_args):
         """ Checks that sql_args have the correct type
