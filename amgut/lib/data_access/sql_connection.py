@@ -28,7 +28,6 @@ class SQLConnectionHandler(object):
 
     def __del__(self):
         self._connection.close()
-        del self._connection
 
     def _open_connection(self):
         try:
@@ -63,8 +62,7 @@ class SQLConnectionHandler(object):
             self._connection.commit()
 
     def __del__(self):
-        self.con.close()
-        del self.con
+        self._connection.close()
 
     def _check_sql_args(self, sql_args):
         """ Checks that sql_args have the correct type
@@ -227,6 +225,8 @@ class SQLConnectionHandler(object):
             arguments sent to the stored procedure
         """
         proc_args.append('cur2')
+        if self._connection.closed:
+            self._open_connection()
         cur = self._connection.cursor()
         cur.callproc(procname, proc_args)
         cur.close()
