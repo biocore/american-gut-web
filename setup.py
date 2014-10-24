@@ -49,6 +49,7 @@ setup(name='American Gut participant UI',
       install_requires=[
           'click==3.3',
           'future==0.13.1',
+          'open-humans-tornado-oauth2==1.0.0',
           'psycopg2',
           'pycrypto==2.6.1',
           'redis'
