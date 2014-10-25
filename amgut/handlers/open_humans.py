@@ -17,6 +17,7 @@ class OpenHumansLoginHandler(web.RequestHandler, OpenHumansMixin):
     _OAUTH_ACCESS_TOKEN_URL = urljoin(AMGUT_CONFIG.open_humans_base_url,
                                       '/oauth2/access_token')
 
+    @web.authenticated
     @web.asynchronous
     def get(self):
         redirect_uri = self._OAUTH_REDIRECT_URL
@@ -62,6 +63,7 @@ class BaseOpenHumansHandler(web.RequestHandler):
         return escape.json_decode(user_json)
 
 
+# TODO: Connect this
 class OpenHumansConnectionHandler(BaseOpenHumansHandler, OpenHumansMixin):
     _API_URL = urljoin(AMGUT_CONFIG.open_humans_base_url, '/api')
 
@@ -75,7 +77,7 @@ class OpenHumansConnectionHandler(BaseOpenHumansHandler, OpenHumansMixin):
     def _on_user_data(self, user_data):
         if user_data is None:
             # Session may have expired
-            self.redirect('/authed/open-humans/connect')
+            self.redirect('/authed/connect/open-humans')
 
             return
 
