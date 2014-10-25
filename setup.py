@@ -45,7 +45,13 @@ setup(name='American Gut participant UI',
                     'amgut.lib': [],
                     'amgut.lib.data_access': [],
                     'amgut.handlers': []},
-      extras_require={'test': ["nose >= 0.10.1", "pep8"]},
+      extras_require={
+          'test': [
+              'mock==1.0.1',
+              'nose >= 0.10.1',
+              'pep8',
+          ]
+      },
       install_requires=[
           'click==3.3',
           'future==0.13.1',
