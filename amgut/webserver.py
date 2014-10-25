@@ -85,7 +85,7 @@ class QiimeWebApplication(Application):
             (r"/authed/add_sample_general/", AddGeneralSampleHandler),
             (r"/authed/change_password/", ChangePasswordHandler),
             (r"/authed/add_animal/", AnimalSurveyHandler),
-            (r"/authed/connect/open-humans", OpenHumansLoginHandler),
+            (r"/authed/connect/open-humans/", OpenHumansLoginHandler),
             (r"/faq/", FAQHandler),
             (r"/participants/(.*)", ParticipantOverviewHandler),
             (r"/international_shipping/", InternationalHandler),

@@ -10,7 +10,7 @@ from amgut.lib.config_manager import AMGUT_CONFIG
 
 class OpenHumansLoginHandler(web.RequestHandler, OpenHumansMixin):
     _OAUTH_REDIRECT_URL = urljoin(AMGUT_CONFIG.base_url,
-                                  '/authed/connect/open-humans')
+                                  '/authed/connect/open-humans/')
 
     _OAUTH_AUTHORIZE_URL = urljoin(AMGUT_CONFIG.open_humans_base_url,
                                    '/oauth2/authorize')
@@ -77,7 +77,7 @@ class OpenHumansConnectionHandler(BaseOpenHumansHandler, OpenHumansMixin):
     def _on_user_data(self, user_data):
         if user_data is None:
             # Session may have expired
-            self.redirect('/authed/connect/open-humans')
+            self.redirect('/authed/connect/open-humans/')
 
             return
 
