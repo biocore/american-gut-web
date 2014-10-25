@@ -101,7 +101,8 @@ class QiimeWebApplication(Application):
             "template_path": TEMPLATE_PATH,
             "debug": DEBUG,
             "cookie_secret": COOKIE_SECRET,
-            "login_url": "/auth/login/",
+            # Currently the only login form is on the homepage
+            "login_url": "/",
         }
         super(QiimeWebApplication, self).__init__(handlers, **settings)
 
