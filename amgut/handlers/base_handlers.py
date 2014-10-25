@@ -32,8 +32,10 @@ class BaseHandler(RequestHandler):
         formatted_email = (">SKID\n%s\n\n>Error\n%s\n\n>Traceback\n%s\n\n"
                            ">Request Info\n%s\n\n" %
                            (user, error, trace_info, request_info))
+
         send_email(formatted_email, "SERVER ERROR!",
                    recipient=AMGUT_CONFIG.error_email)
+
         self.render('error.html', skid=self.current_user)
 
     def head(self):
