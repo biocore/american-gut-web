@@ -106,7 +106,7 @@ class ConfigurationManager(object):
             'open_humans_base_url': 'https://openhumans.org',
         })
 
-        self.default_keys = set(config.defaults().keys())
+        self.defaults = set(config.defaults())
 
         # Parse the configuration file
         with open(conf_fp, 'U') as conf_file:
@@ -146,7 +146,7 @@ class ConfigurationManager(object):
                             'base_data_dir', 'locale', 'base_url',
                             'error_email'}
         _warn_on_extra(set(config.options('main')) - expected_options -
-                       self.default_keys, 'main section option(s)')
+                       self.defaults, 'main section option(s)')
 
         get = partial(config.get, 'main')
         getboolean = partial(config.getboolean, 'main')
@@ -170,7 +170,7 @@ class ConfigurationManager(object):
         """Get the configuration of the postgres section"""
         expected_options = {'user', 'password', 'database', 'host', 'port'}
         _warn_on_extra(set(config.options('postgres')) - expected_options -
-                       self.default_keys, 'postgres section option(s)')
+                       self.defaults, 'postgres section option(s)')
 
         get = partial(config.get, 'postgres')
         getint = partial(config.getint, 'postgres')
@@ -191,7 +191,7 @@ class ConfigurationManager(object):
         """Get the configuration of the test section"""
         expected_options = {'goodpassword', 'badpassword'}
         _warn_on_extra(set(config.options('test')) - expected_options -
-                       self.default_keys, 'test section option(s)')
+                       self.defaults, 'test section option(s)')
 
         get = partial(config.get, 'test')
 
@@ -202,7 +202,7 @@ class ConfigurationManager(object):
         """Get the configuration of the redis section"""
         expected_options = {'host', 'port', 'db_id'}
         _warn_on_extra(set(config.options('redis')) - expected_options -
-                       self.default_keys, 'redis section option(s)')
+                       self.defaults, 'redis section option(s)')
 
         get = partial(config.get, 'redis')
         getint = partial(config.getint, 'redis')
