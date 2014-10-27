@@ -1197,10 +1197,7 @@ class AGDataAccess(object):
         cursor = self.connection.cursor()
         cursor.execute(sql, [barcode])
         survey_id = cursor.fetchone()
-        if survey_id is not None:
-            return True
-        else:
-            return False
+        return survey_id is not None
 
 #################################################
 ### GENERAL DATA ACCESS  #######################
