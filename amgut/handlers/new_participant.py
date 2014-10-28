@@ -54,11 +54,13 @@ class NewParticipantHandler(BaseHandler):
         if AG_DATA_ACCESS.check_if_consent_exists(ag_login_id, participant_name):
             errmsg = url_escape(tl['PARTICIPANT_EXISTS'] % participant_name)
             self.redirect(media_locale['SITEBASE'] + "/authed/portal/?errmsg=%s" % errmsg)
+            return
 
         if is_juvenile == 'off' and is_exception:
             errmsg = url_escape(tl["JUVENILE_CONSENT_EXPECTED"] %
                                 participant_name)
             self.redirect(media_locale['SITEBASE'] + "/authed/portal/?errmsg=%s" % errmsg)
+            return
 
         if is_juvenile == 'on':
             # If they aren't already an exception, we need to verify them
