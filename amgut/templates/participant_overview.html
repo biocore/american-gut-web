@@ -52,7 +52,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <form action="{% raw media_locale['SITEBASE'] %}/participants/{% url_escape(participant_name) %}" method="post" id="remove_participant_{{participant_name}}">
+                    <form action="{% raw media_locale['SITEBASE'] %}/participants/{{ url_escape(participant_name) }}" method="post" id="remove_participant_{{participant_name}}">
                         <input type="hidden" name="remove" value="{{participant_name}}">
                         <input type="submit" value="Remove {{participant_name}}"/>
                     </form>
