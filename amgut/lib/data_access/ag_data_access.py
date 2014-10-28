@@ -102,17 +102,6 @@ class AGDataAccess(object):
         if self.connection:
             return True
 
-    def dynamicMetadataSelect(self, query_string):
-        # Make sure no tomfoolery is afoot
-        query_string_parts = set(query_string.lower().split())
-        verboten = set(['insert', 'update', 'delete'])
-        intersection = query_string_parts.intersection(verboten)
-        if len(intersection) > 0:
-            raise Exception('Only select statements are allowed. Your query:'
-                            ' %s' % query_string)
-
-        return self.connection.cursor().execute(query_string)
-
     def _get_col_names_from_cursor(self, cur):
         if cur.description:
             return [x[0] for x in cur.description]
@@ -343,6 +332,10 @@ class AGDataAccess(object):
         try:
             self.connection.cursor().callproc('ag_insert_barcode',
                                               [ag_kit_id, barcode])
+            self.connection.commit()
+            sql = ("insert into project_barcode (project_id, barcode) "
+                   "values (1, %s)")
+            self.connection.cursor().execute(sql, [barcode])
             self.connection.commit()
         except psycopg2.IntegrityError:
             self.connection.commit()
@@ -583,26 +576,29 @@ class AGDataAccess(object):
         # clear previous geocoding attempts if retry is True
         if retry:
             sql = (
-                "select cast(ag_login_id as varchar2(100)) from ag_login "
+                "select cast(ag_login_id as varchar(100))from ag_login "
                 "where cannot_geocode = 'y'"
             )
-
-            logins = self.dynamicMetadataSelect(sql)
+            cursor = self.connection.cursor()
+            cursor.execute(sql)
+            logins = cursor.fetchall()
 
             for row in logins:
                 ag_login_id = row[0]
-                self.updateGeoInfo(ag_login_id, '', '', '', '')
+                self.updateGeoInfo(ag_login_id, None, None, None, '')
 
         # get logins that have not been geocoded yet
         sql = (
             'select city, state, zip, country, '
-            'cast(ag_login_id as varchar2(100)) '
+            'cast(ag_login_id as varchar(100))'
             'from ag_login '
             'where elevation is null '
             'and cannot_geocode is null'
         )
 
-        logins = self.dynamicMetadataSelect(sql)
+        cursor = self.connection.cursor()
+        cursor.execute(sql)
+        logins = cursor.fetchall()
 
         row_counter = 0
         for row in logins:
@@ -621,7 +617,7 @@ class AGDataAccess(object):
 
             if r in ('unknown_error', 'not_OK', 'no_results'):
                 # Could not geocode, mark it so we don't try next time
-                self.updateGeoInfo(ag_login_id, '', '', '', 'y')
+                self.updateGeoInfo(ag_login_id, None, None, None, 'y')
                 continue
             elif r == 'over_limit':
                 # If the reason for failure is merely that we are over the
@@ -1191,6 +1187,17 @@ class AGDataAccess(object):
             login['email'] = email
 
         return login
+
+    def ag_new_survey_exists(self, barcode):
+        """
+        Returns metadata for an american gut barcode in the new database
+        tables
+        """
+        sql = "select survey_id from ag_kit_barcodes where barcode = %s"
+        cursor = self.connection.cursor()
+        cursor.execute(sql, [barcode])
+        survey_id = cursor.fetchone()
+        return survey_id is not None
 
 #################################################
 ### GENERAL DATA ACCESS  #######################
