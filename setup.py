@@ -11,7 +11,6 @@
 __version__ = "0.1.0-dev"
 
 from setuptools import setup
-from glob import glob
 
 
 classes = """
@@ -46,8 +45,21 @@ setup(name='American Gut participant UI',
                     'amgut.lib': [],
                     'amgut.lib.data_access': [],
                     'amgut.handlers': []},
-      extras_require={'test': ["nose >= 0.10.1", "pep8"]},
-      install_requires=['psycopg2', 'tornado==3.1.1', 'WTForms==2.0.1',
-                        'redis'],
-      classifiers=classifiers
-      )
+      extras_require={
+          'test': [
+              'mock==1.0.1',
+              'nose >= 0.10.1',
+              'pep8',
+          ]
+      },
+      install_requires=[
+          'click==3.3',
+          'future==0.13.1',
+          'open-humans-tornado-oauth2==1.0.0',
+          'psycopg2',
+          'pycrypto==2.6.1',
+          'redis',
+          'tornado==3.2.2',
+          'WTForms==2.0.1',
+      ],
+      classifiers=classifiers)
