@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from os.path import dirname, join
 from base64 import b64encode
 from uuid import uuid4
@@ -42,6 +44,8 @@ from amgut.handlers.add_sample_overview import AddSampleOverviewHandler
 from amgut.handlers.change_pass_verify import ChangePassVerifyHandler
 from amgut.handlers.change_password import ChangePasswordHandler
 
+from amgut.handlers.open_humans import OpenHumansLoginHandler
+
 define("port", default=8888, help="run on the given port", type=int)
 
 
@@ -81,6 +85,7 @@ class QiimeWebApplication(Application):
             (r"/authed/add_sample_general/", AddGeneralSampleHandler),
             (r"/authed/change_password/", ChangePasswordHandler),
             (r"/authed/add_animal/", AnimalSurveyHandler),
+            (r"/authed/connect/open-humans/", OpenHumansLoginHandler),
             (r"/faq/", FAQHandler),
             (r"/participants/(.*)", ParticipantOverviewHandler),
             (r"/international_shipping/", InternationalHandler),
@@ -96,7 +101,8 @@ class QiimeWebApplication(Application):
             "template_path": TEMPLATE_PATH,
             "debug": DEBUG,
             "cookie_secret": COOKIE_SECRET,
-            "login_url": "/auth/login/",
+            # Currently the only login form is on the homepage
+            "login_url": "/",
         }
         super(QiimeWebApplication, self).__init__(handlers, **settings)
 

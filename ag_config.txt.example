@@ -9,9 +9,15 @@ TEST_ENVIRONMENT = TRUE
 # Path to the base directory where the data files are going to be stored
 BASE_DATA_DIR =
 
+# The URL where the site is served from, e.g. http://americangut.org
+BASE_URL =
+
 LOCALE = american_gut
 name = American Gut Project
 shorthand = American Gut
+
+# The email address where error reports are sent to
+ERROR_EMAIL =
 
 # ----------------------------- Postgres settings -----------------------------
 [postgres]
@@ -71,3 +77,8 @@ BADPASSWORD = oldpass
 VIOSCREEN_REGCODE =
 
 VIOSCREEN_CRYPTOKEY =
+
+OPEN_HUMANS_BASE_URL = https://openhumans.org
+
+OPEN_HUMANS_KEY =
+OPEN_HUMANS_SECRET =

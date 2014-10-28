@@ -1,16 +1,16 @@
-from __future__ import division
-
+import errno
 import smtplib
+import socket
+
 from email.mime.text import MIMEText
+
 from amgut import media_locale
 from amgut.lib.config_manager import AMGUT_CONFIG
 
 
-
-
 def send_email(message, subject, recipient='americangut@gmail.com',
                sender=media_locale['HELP_EMAIL']):
-    """Send an email from your local host """
+    """Send an email from your local host"""
 
     # Create a text/plain message
     msg = MIMEText(message)
@@ -27,12 +27,23 @@ def send_email(message, subject, recipient='americangut@gmail.com',
         s = smtplib.SMTP_SSL()
     else:
         s = smtplib.SMTP()
-    s.connect(AMGUT_CONFIG.smtp_host, AMGUT_CONFIG.smtp_port)
+
+    try:
+        s.connect(AMGUT_CONFIG.smtp_host, AMGUT_CONFIG.smtp_port)
+    except socket.error as e:
+        # TODO: Inability to connect to the mail server shouldn't prevent pages
+        # from loading but it should be logged in some way
+        if e.errno == errno.ECONNREFUSED:
+            return
+        else:
+            raise
+
     # try tls, if not available on server just ignore error
     try:
         s.starttls()
     except smtplib.SMTPException:
         pass
+
     s.ehlo_or_helo_if_needed()
 
     if AMGUT_CONFIG.smtp_user:
