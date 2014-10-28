@@ -2,7 +2,11 @@ import logging
 
 from urlparse import urljoin
 
-from open_humans_tornado_oauth2 import OpenHumansMixin
+try:
+    from open_humans_tornado_oauth2 import OpenHumansMixin
+except ImportError:
+    OpenHumansMixin = object
+
 from tornado import escape, web
 
 from amgut.lib.config_manager import AMGUT_CONFIG
