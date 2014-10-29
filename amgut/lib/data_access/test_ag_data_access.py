@@ -83,13 +83,6 @@ class TestAGDataAccess(TestCase):
         rec = cur.fetchone()
         self.assertEqual(rec[1], 'test@microbio.me')
 
-    def test_getAGSurveyDetails(self):
-        ag_login_id = 'd8592c74-7da1-2135-e040-8a80115d6401'
-        participant_name = 'foo'
-        data = self.data_access.getAGSurveyDetails(ag_login_id,
-                                                   participant_name)
-        self.assertEqual(data['consent'], 'Yes')
-
     def test_getAGLogins(self):
         data = self.data_access.getAGLogins()
         self.assertTrue({'ag_login_id': 'd8592c74-7da1-2135-e040-8a80115d6401',
@@ -100,19 +93,18 @@ class TestAGDataAccess(TestCase):
         self.assertTrue({'email': 'test@microbio.me',
                          'supplied_kit_id': 'test',
                          'ag_kit_id': 'd8592c74-7da2-2135-e040-8a80115d6401'}
-                         in data)
+                        in data)
 
     def test_getAGBarcodes(self):
         data = self.data_access.getAGBarcodes()
         self.assertEqual(data[0], '000000001')
-        self.assertEqual(data[-1], '999999999')
+        self.assertEqual(data[-1], '000010860')
 
     def test_getAGBarcodesByLogin(self):
         data = self.data_access.getAGBarcodesByLogin(
             'd8592c74-7da1-2135-e040-8a80115d6401')
         expected = {
-            '000017221', '000017223', '000017222', '000017225', '000017224',
-            '000017227', '000017226', '000010860', '000010859', '000006616',
+            '000010860', '000006616',
             '000000001'}
         observed = {row['barcode'] for row in data}
         self.assertEqual(observed, expected)
@@ -206,107 +198,41 @@ class TestAGDataAccess(TestCase):
         cur.execute('select * from ag_kit_barcodes where barcode = %s',
                     ('000010860',))
         rec = cur.fetchone()
-        self.assertEqual(rec[5], 'Stool')
-        self.assertEqual(rec[6], '07/30/2014')
+        self.assertEqual(rec[6], 'Stool')
+        self.assertEqual(rec[7], '07/30/2014')
         self.data_access.updateAGBarcode(
             '000010860', 'd8592c74-7da2-2135-e040-8a80115d6401', '', '', '',
             '', '', '', '', '')
         cur.execute('select * from ag_kit_barcodes where barcode = %s',
                     ('000010860',))
         rec = cur.fetchone()
-        self.assertEqual(rec[5], '')
         self.assertEqual(rec[6], '')
-
-    def test_addAGHumanParticipant(self):
-        self.data_access.addAGHumanParticipant(
-            'd8592c747da12135e0408a80115d6401', 'sp_test')
-        data = self.data_access.getHumanParticipants(
-            'd8592c74-7da1-2135-e040-8a80115d6401')
-        self.assertTrue('sp_test' in data)
-        cur = self.con.cursor()
-        cur.execute('delete from ag_human_survey where ag_login_id =   %s and '
-                    'participant_name = %s',
-                    ('d8592c747da12135e0408a80115d6401', 'sp_test',))
-        self.con.commit()
-
-    def test_addAGAnimalParticipant(self):
-        self.data_access.addAGAnimalParticipant(
-            'd8592c747da12135e0408a80115d6401', 'fuzzy2')
-        data = self.data_access.getAnimalParticipants(
-            'd8592c747da12135e0408a80115d6401')
-        self.assertTrue('fuzzy2' in data)
-        cur = self.con.cursor()
-        cur.execute('delete from ag_animal_survey where ag_login_id = %s and '
-                    'participant_name = %s',
-                    ('d8592c747da12135e0408a80115d6401', 'fuzzy2',))
-        self.con.commit()
-
-    def test_addAGSingle(self):
-        self.data_access.addAGSingle('d8592c747da12135e0408a80115d6401',
-                                     'Emily', 'softener', 'haha',
-                                     'ag_human_survey')
-        cur = self.con.cursor()
-        cur.execute('select softener from ag_human_survey where ag_login_id = '
-                    '%s and participant_name = %s',
-                    ('d8592c747da12135e0408a80115d6401', 'Emily',))
-        rec = cur.fetchone()[0]
-        self.assertEqual(rec, 'haha')
-        self.data_access.addAGSingle('d8592c747da12135e0408a80115d6401',
-                                     'Emily', 'softener', 'no',
-                                     'ag_human_survey')
-        cur.execute('select softener from ag_human_survey where ag_login_id = '
-                    '%s and participant_name = %s',
-                    ('d8592c747da12135e0408a80115d6401', 'Emily',))
-        rec = cur.fetchone()[0]
-        self.assertEqual(rec, 'no')
+        self.assertEqual(rec[7], '')
 
     def test_deleteAGParticipant(self):
         cur = self.con.cursor()
-        cur.execute('insert into ag_human_survey (ag_login_id, '
-                    'participant_name) values (%s, %s)',
-                    ('d8592c747da12135e0408a80115d6401', 'sp_test',))
+        cur.execute('insert into ag_consent (ag_login_id, '
+                    'participant_name, participant_email) values (%s, %s, %s)',
+                    ('d8592c747da12135e0408a80115d6401', 'sp_test',
+                        'foo@bar.com'))
+        self.con.commit()
+        cur.execute('insert into ag_login_surveys (ag_login_id, survey_id,'
+                    ' participant_name) values (%s, %s, %s)',
+                    ('d8592c74-7da1-2135-e040-8a80115d6401', '1235',
+                        'sp_test'))
         self.con.commit()
         self.data_access.deleteAGParticipant(
             'd8592c747da12135e0408a80115d6401', 'sp_test')
         data = self.data_access.getHumanParticipants(
             'd8592c747da12135e0408a80115d6401')
-        self.assertEqual(len(data), 2)
-
-    def test_addAGGeneralValue(self):
-        self.data_access.addAGGeneralValue('d8592c747da12135e0408a80115d6401',
-                                           'test', 'badquest', 'badans')
-        cur = self.con.cursor()
-        cur.execute('select * from ag_survey_answer where question = %s',
-                    ('badquest',))
-        rec = cur.fetchall()
-        self.assertEqual(len(rec), 1)
-        cur.execute('delete from ag_survey_answer where ag_login_id = %s and '
-                    'participant_name = %s and question =  %s',
-                    ('d8592c747da12135e0408a80115d6401', 'test', 'badquest',))
-        self.con.commit()
-
-    def test_deleteAGGeneralValues(self):
-        cur = self.con.cursor()
-        cur.execute('insert into ag_survey_answer(ag_login_id, '
-                    'participant_name, question, answer) values (%s, %s, '
-                    '%s, %s), (%s,%s, %s, %s)',
-                    ('d8592c747da12135e0408a80115d6401', 'Emily2', 'race',
-                        'Caucasian', 'd8592c747da12135e0408a80115d6401',
-                        'Emily2', 'cat', 'yes',))
-        self.data_access.deleteAGGeneralValues(
-            'd8592c747da12135e0408a80115d6401', 'Emily2')
-        cur.execute('select * from ag_survey_answer where ag_login_id = %s and'
-                    ' participant_name = %s',
-                    ('d8592c747da12135e0408a80115d6401', 'Emily2',))
-        rec = cur.fetchall()
-        self.assertEqual(len(rec), 0)
+        self.assertEqual(len(data), 1)
 
     def test_logParticipantSample(self):
-        self.data_access.logParticipantSample('000010860', 'Stool', '',
-                                              '07/29/2014', '09:30 AM',
-                                              'Emily', 'no notes')
+        self.data_access.logParticipantSample(
+            'd8592c74-7da1-2135-e040-8a80115d6401', '000010860', 'Stool', '',
+            '07/29/2014', '09:30 AM', 'foo', 'no notes')
         data = self.data_access.getAGBarcodeDetails('000010860')
-        self.assertEqual(data['participant_name'], 'Emily')
+        self.assertEqual(data['participant_name'], 'foo')
         self.assertEqual(data['site_sampled'], 'Stool')
         self.assertEqual(data['sample_date'], '07/29/2014')
         self.data_access.deleteSample('000010860',
@@ -333,23 +259,13 @@ class TestAGDataAccess(TestCase):
     def test_getHumanParticipants(self):
         data = self.data_access.getHumanParticipants(
             'd8592c74-7da1-2135-e040-8a80115d6401')
-        self.assertEqual(set(data), {'Emily', 'foo'})
-
-    def test_AGGetBarcodeMetadata(self):
-        data = self.data_access.AGGetBarcodeMetadata('000000001')
-        self.assertEqual(data[0]['foodallergies_peanuts'], 'unknown')
-        self.assertEqual(data[0]['chickenpox'], 'unknown')
-
-    def test_AGGetBarcodeMetadataAnimal(self):
-        data = self.data_access.AGGetBarcodeMetadataAnimal('000010860')
-        # this test needs to be changed when the test database is updated
-        self.assertEqual(len(data), 0)
+        self.assertEqual(set(data), {'foo'})
 
     def test_getAnimalParticipants(self):
         data = self.data_access.getAnimalParticipants(
             'd8592c74-7da1-2135-e040-8a80115d6401')
         # this test needs updated when the test database is updated
-        self.assertEqual(len(data), 9)
+        self.assertEqual(len(data), 0)
 
     def test_getParticipantExceptions(self):
         data = self.data_access.getParticipantExceptions(
@@ -374,8 +290,7 @@ class TestAGDataAccess(TestCase):
     def test_getAvailableBarcodes(self):
         data = self.data_access.getAvailableBarcodes(
             'd8592c74-7da1-2135-e040-8a80115d6401')
-        # this test will change when test database is updated
-        self.assertEqual(len(data), 9)
+        self.assertEqual(len(data), 1)
 
     def test_verifyKit(self):
         cur = self.con.cursor()
@@ -413,23 +328,6 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(data['site_sampled'], 'Stool')
         self.assertEqual(data['name'], 'Test')
 
-    def test_updateAGSurvey(self):
-        self.data_access.updateAGSurvey('d8592c747da12135e0408a80115d6401',
-                                        'Emily', 'softener', 'haha')
-        cur = self.con.cursor()
-        cur.execute('select softener from ag_human_survey where ag_login_id = '
-                    '%s and participant_name = %s',
-                    ('d8592c747da12135e0408a80115d6401', 'Emily',))
-        rec = cur.fetchone()[0]
-        self.assertEqual(rec, 'haha')
-        self.data_access.updateAGSurvey('d8592c747da12135e0408a80115d6401',
-                                        'Emily', 'softener', 'no')
-        cur.execute('select softener from ag_human_survey where ag_login_id = '
-                    '%s and participant_name = %s',
-                    ('d8592c747da12135e0408a80115d6401', 'Emily',))
-        rec = cur.fetchone()[0]
-        self.assertEqual(rec, 'no')
-
     def test_getAGStats(self):
         data = self.data_access.getAGStats()
         self.assertEqual(len(data), 23)
@@ -441,12 +339,12 @@ class TestAGDataAccess(TestCase):
         cur.execute('select * from ag_kit_barcodes where barcode = %s',
                     ('000010860',))
         rec = cur.fetchone()
-        self.assertEqual([rec[11], rec[12], rec[13]], ['n', 'n', 'y'])
+        self.assertEqual([rec[12], rec[13], rec[14]], ['n', 'n', 'y'])
         self.data_access.updateAKB('000010860', None, None, None, None, None)
         cur.execute('select * from ag_kit_barcodes where barcode = %s',
                     ('000010860',))
         rec = cur.fetchone()
-        self.assertEqual([rec[11], rec[12], rec[13]], [None, None, None])
+        self.assertEqual([rec[12], rec[13], rec[14]], [None, None, None])
 
     def test_getAGKitIDsByEmail(self):
         data = self.data_access.getAGKitIDsByEmail('test@microbio.me')
@@ -487,9 +385,7 @@ class TestAGDataAccess(TestCase):
 
     def test_getBarcodesByKit(self):
         observed = self.data_access.getBarcodesByKit('test')
-        expected = {'000010860', '000010859', '000006616', '000000001',
-                    '000017221', '000017223', '000017222', '000017225',
-                    '000017224', '000017227', '000017226'}
+        expected = {'000010860', '000006616', '000000001'}
 
         self.assertEqual(set(observed), expected)
 
@@ -520,8 +416,8 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(len(data), 0)
 
     def test_get_barcodes_from_handout_kit(self):
-        data = self.data_access.get_barcodes_from_handout_kit('PGP_cRzJo')
-        self.assertEqual(len(data), 5)
+        data = self.data_access.get_barcodes_from_handout_kit('test_ha')
+        self.assertEqual(len(data), 3)
 
 
 if __name__ == "__main__":
