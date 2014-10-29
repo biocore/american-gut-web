@@ -124,7 +124,6 @@ INSERT INTO survey_question (survey_question_id, american, british) VALUES (97, 
 INSERT INTO survey_question (survey_question_id, american, british) VALUES (98, 'Pregnancy due date:', 'Pregnancy due date:');
 INSERT INTO survey_question (survey_question_id, american, british) VALUES (99, 'Over the counter and prescription medication:', 'Over the counter and prescription medication:');
 INSERT INTO survey_question (survey_question_id, american, british) VALUES (101, 'Is your dog indoor/outdoor or confined (cage/tank):', 'Is your dog indoor/outdoor or confined (cage/tank):');
-INSERT INTO survey_question (survey_question_id, american, british) VALUES (102, 'Pets:', 'Pets:');
 INSERT INTO survey_question (survey_question_id, american, british) VALUES (103, 'Race/ethnicity:', 'Race/ethnicity:');
 INSERT INTO survey_question (survey_question_id, american, british) VALUES (104, 'Dietary Supplements:', 'Dietary Supplements:');
 INSERT INTO survey_question (survey_question_id, american, british) VALUES (105, 'Contact extent with dog:', 'Contact extent with dog:');
@@ -400,7 +399,6 @@ INSERT INTO survey_question_response_type (survey_question_id, survey_response_t
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (98, 'TEXT');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (99, 'TEXT');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (101, 'TEXT');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (102, 'TEXT');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (103, 'TEXT');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (104, 'TEXT');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (105, 'TEXT');

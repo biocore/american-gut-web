@@ -437,14 +437,6 @@ COMMENT ON TABLE ag.iso_country_lookup IS 'ISO standard codes for countries';
 
 COMMENT ON COLUMN ag.iso_country_lookup.iso_code IS 'The ISO code for the country';
 
-CREATE TABLE ag.promoted_survey_ids ( 
-	survey_id            varchar  NOT NULL,
-	CONSTRAINT pk_promoted_survey_ids PRIMARY KEY ( survey_id ),
-	CONSTRAINT fk_promoted_survey_ids FOREIGN KEY ( survey_id ) REFERENCES ag.ag_login_surveys( survey_id )    
- );
-
-COMMENT ON TABLE ag.promoted_survey_ids IS 'Keeps track of the survey_ids that correspond to surveys that were ported from first questionnaire to the second';
-
 CREATE TABLE ag.survey_answers_other ( 
 	survey_id            varchar  NOT NULL,
 	survey_question_id   bigint  NOT NULL,
