@@ -67,7 +67,7 @@ if __name__ == '__main__':
                          is_juvenile, parent_1_name, parent_2_name,
                          deceased_parent)
                     VALUES
-                        (%s, %s, %s, %s, %s, %s, %s)"""
+                         (%s, %s, %s, %s, %s, %s, %s)"""
 
         consent_args = (ag_login_id, participant_name,
             row['participant_email'], row['is_juvenile'],
@@ -84,7 +84,16 @@ if __name__ == '__main__':
                             (%s, %s, %s)"""
 
         survey_args = (ag_login_id, new_survey_id, participant_name)
+
+        ##################################################################
+        # insert row into promoted_survey_ids
+        ##################################################################
+        promoted_survey_sql = """insert into promoted_survey_ids (survey_id)
+                                 values (%s)"""
+        promoted_survey_args = [new_survey_id]
         
         with db_conn.get_postgres_cursor() as cur:
             cur.execute(consent_sql, consent_args)
             cur.execute(survey_sql, survey_args)
+            cur.execute(promoted_survey_sql, promoted_survey_args)
+

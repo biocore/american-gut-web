@@ -2,12 +2,35 @@
 
 from datetime import datetime
 
+from data_access_connections import data_access_factory
+from enums import ServerConfig, DataAccessType
+
 from amgut import db_conn
-import binascii
+
+data_access = data_access_factory(ServerConfig.data_access_type,
+                                  'qiime')
 
 
 COUNTRIES_SQL = """select country from iso_country_lookup"""
 COUNTRIES = {x[0] for x in db_conn.execute_fetchall(COUNTRIES_SQL)}
+
+
+OLD_COUNTRIES = data_access.getControlledVocabValueList(28)
+for code, country in OLD_COUNTRIES.items():
+    if country == 'USA':
+        OLD_COUNTRIES[code] = 'United States'
+    elif country == "Cote d'Ivoire":
+        OLD_COUNTRIES[code] = "Cote D'ivoire"
+    elif country == 'Iran':
+        OLD_COUNTRIES[code] = 'Iran, Islamic Republic of'
+    elif country == 'Syria':
+        OLD_COUNTRIES[code] = 'Syrian Arab Republic'
+    elif country == 'Russia':
+        OLD_COUNTRIES[code] = 'Russian Federation'
+    elif country == 'Taiwan':
+        OLD_COUNTRIES[code] = 'Taiwan, Province of China'
+    elif country == 'South Korea':
+        OLD_COUNTRIES[code] = 'Korea, Republic of'
 
 
 def old_surveys():
@@ -46,7 +69,8 @@ def get_multiples(ag_login_id, pname, prefix):
              and ag_login_id = '{}'
              and participant_name = '{}'""".format(prefix, ag_login_id, pname)
 
-    return {iname: ival for iname, ival in db_conn.execute_fetchall(sql)}
+    return {iname: ival for iname, ival in db_conn.execute_fetchall(sql)
+            if ival is not None}
 
 
 def verify_old_participant(ag_login_id, pname):
@@ -65,8 +89,9 @@ def verify_old_participant(ag_login_id, pname):
 
     Returns
     -------
-    bool
-        True if the user is an old participant, False if not
+    bool or str
+        If the user is not an old participant, returns False; otherwise,
+        returns the one survey_id associated with the participant
     """
     survey_ids_sql = """select survey_id from ag_login_surveys
                         where ag_login_id = %s and participant_name = %s"""
@@ -103,7 +128,7 @@ def verify_old_participant(ag_login_id, pname):
                                                          ag_login_id, pname)
         return False
 
-    return True
+    return survey_id
 
 
 def _medical(old_response):
@@ -157,7 +182,8 @@ def height(old, new):
     if height_in is not None or height_cm is not None:
         # If we have a value for both units of measurement, go with the cm
         # response. If we have only inches, convert to cm
-        new[108] = height_cm or 2.54*height_in
+        new[108] = int(round(height_cm or 2.54*height_in))
+        new[109] = 'centimeters'
 
     return new
 
@@ -236,7 +262,7 @@ def softener(old, new):
     if old_val == 'yes':
         new[36] = 'Yes'
     if old_val == 'no':
-        new[36] == 'No'
+        new[36] = 'No'
 
     return new
 
@@ -293,7 +319,7 @@ def pregnant(old, new):
     if old_val == 'notsure':
         new[42] = 'Not sure'
 
-    return row
+    return new
 
 
 def gender(old, new):
@@ -351,7 +377,7 @@ def special_restrictions(old, new, ag_login_id, pname):
     return new
 
 def race_other(old, new):
-    new[103] = old['race_other']
+    new[103] = old['race_other'] or ''
     return new
 
 
@@ -381,7 +407,7 @@ def sleep_duration(old, new):
 
 
 def about_yourself_text(old, new):
-    new[116] = old['about_yourself_text']
+    new[116] = old['about_yourself_text'] or ''
     return new
 
 
@@ -395,7 +421,7 @@ def exercise_frequency(old, new):
 
 
 def zip_code(old, new):
-    new[115] = old['zip_code']
+    new[115] = old['zip_code'] or ''
     return new
 
 
@@ -419,7 +445,7 @@ def diabetes_medication(old, new, ag_login_id, pname):
         meds = [v for k, v in meds.items()]
         new[49] = 'Yes'
         new[99] = '; '.join(meds)
-    elif old_val == 'no'
+    elif old_val == 'no':
         new[49] = 'No'
 
     return new
@@ -433,10 +459,22 @@ def weight_change(old, new):
     return new
 
 
-def supplements(row):
-    # TODO: Not sure what to do here since we can map the supplements question
-    # but the triggering question has changed...
-    return row
+def supplements(old, new, ag_login_id, pname):
+    old_val = old['supplements'] 
+
+    if old_val is None:
+        return new
+
+    new_val = old_val.capitalize()
+    new[6] = new_val
+
+    if new_val == 'Yes':
+        # Fill in responses for 104
+        responses = get_multiples(ag_login_id, pname, 'supplements_fields')
+        responses = '; '.join([v for k, v in responses.items()])
+        new[104] = responses
+
+    return new
 
 
 def antibiotic_select(old, new, ag_login_id, pname):
@@ -462,7 +500,7 @@ def antibiotic_select(old, new, ag_login_id, pname):
     if trigger:
         meds = get_multiples(ag_login_id, pname, 'antibiotic_med')
         meds = [v for k, v in meds.items()]
-        new[126] = '; '.join(meds)
+        new[124] = '; '.join(meds)
 
     return new
 
@@ -501,10 +539,19 @@ def acne_medication_otc(old, new):
     return new
 
 
-def conditions_medication(old, new):
+def conditions_medication(old, new, ag_login_id, pname):
     old_val = old['conditions_medication']
-    if old_val is not None:
-        new[49] = old_val.capitalize()
+    if old_val is None:
+        return new
+
+    new_val = old_val.capitalize()
+    new[49] = new_val
+
+    if new_val == 'Yes':
+        responses = get_multiples(ag_login_id, pname, 'generalmeds')
+        # Safe to include new[99] here since this function is executed after
+        # the other that affects new[99]
+        responses = '; '.join([new[99]] + [v for k, v in responses.items()])
 
     return new
 
@@ -548,7 +595,7 @@ def contraceptive(old, new):
 
 
 def antibiotic_condition(old, new):
-    new[124] = old['antibiotic_condition']
+    new[126] = old['antibiotic_condition'] or ''
     return new
 
 
@@ -565,7 +612,7 @@ def diet_type(old, new):
 
     if old_val is not None:
         # Only one subtle wording change here
-        if old_val == 'Omnivore but no read meat':
+        if old_val == 'Omnivore but no red meat':
             new[1] = 'Omnivore but do not eat red meat'
         else:
             new[1] = old_val
@@ -574,7 +621,7 @@ def diet_type(old, new):
 
 
 def pool_frequency(old, new):
-    new_val = _frequency(old['pool_freqeuncy'])
+    new_val = _frequency(old['pool_frequency'])
 
     if new_val is not None:
         new[27] = new_val
@@ -601,7 +648,7 @@ def seasonal_allergies(old, new):
 
 
 def exercise_location(old, new):
-    old_val = old['seasonal_allergies']
+    old_val = old['exercise_location']
 
     if old_val is not None:
         new[25] = old_val
@@ -625,6 +672,8 @@ def deodorant_use(old, new):
     
     if 'deoderant' in old_val:
         old_val = old_val.replace('deoderant', 'deodorant')
+    if 'or antiperspirant' in old_val:
+        old_val = old_val.replace('or antiperspirant', 'or an antiperspirant')
 
     new[34] = old_val
 
@@ -632,8 +681,11 @@ def deodorant_use(old, new):
 
 
 def country_of_birth(old, new):
-    # TODO: convert the numerical values in the old table to the countries
-    # in the new database
+    old_val = old['country_of_birth']
+    if old_val is not None:
+        old_val = int(old_val)
+        new[110] = OLD_COUNTRIES[old_val]
+
     return new
 
 
@@ -662,7 +714,8 @@ def weight(old, new):
     if weight_lbs is not None or weight_kg is not None:
         # If we have a value for both units of measurement, go with the kg
         # response. If we have only lbs, convert to kg
-        new[113] = weight_kg or 2.20462*weight_lbs
+        new[113] = int(round(weight_kg or 2.20462*weight_lbs))
+        new[114] = 'kilograms'
 
     return new
 
@@ -701,7 +754,7 @@ def hand(old, new):
 
 
 def pregnant_due_date(old, new):
-    new[98] = old['pregnant_due_date']
+    new[98] = old['pregnant_due_date'] or ''
     return new
 
 
@@ -716,7 +769,7 @@ def diabetes(old, new):
     return new
 
 
-def last_travel(row):
+def last_travel(old, new):
     old_val = old['last_travel']
 
     if old_val is None:
@@ -779,13 +832,12 @@ def birth_date(old, new):
 
     try:
         d = datetime.strptime(old_val, '%m/%d/%Y')
+        # %B gets the locale's full name for the month
+        # %Y gets the 4-digit year
+        new[111] = d.strftime('%B')
+        new[112] = d.strftime('%Y')
     except ValueError:
         return new
-
-    # %B gets the locale's full name for the month
-    # %Y gets the 4-digit year
-    new[111] = d.strftime('%B')
-    new[112] = d.strftime('%Y')
 
     return new
 
@@ -798,7 +850,7 @@ if __name__ == '__main__':
     # Set up defaults for new questions
     # If it's a single or multiple, then default is "Unspecified"
     # If it's a string or text, then the default is ''
-    sql = """select survey_question_id, response_type
+    sql = """select survey_question_id, survey_response_type
              from survey_question_response_type"""
 
     # maps question IDs to response types
@@ -812,49 +864,114 @@ if __name__ == '__main__':
                       'STRING': '',
                       'TEXT': ''}
 
+    total_surveys = 0
+    transfers = 0
     for row in old_surveys():
+        total_surveys += 1
         ag_login_id = row.pop('ag_login_id')
         pname = row.pop('participant_name')
 
-        if not verify_old_participant(ag_login_id, pname):
+        survey_id = verify_old_participant(ag_login_id, pname)
+        if not survey_id:
             continue
-
-        # Generate a new survey ID for this participant
-        survey_id = binascii.hexlify(os.urandom(8))
+        transfers += 1
 
         # record the new responses, which begin as default values based on
         # response type
-        new_responses = {}
+        new_responses = {
             qid: default_values[response_type]
             for qid, response_type in qids_response_types.items()}
 
-        # TODO: execute all relevant functions above on the row, then insert
-        # into the appropriate tables (depending on response type)
+        new_responses = pku(row, new_responses)
+        new_responses = height(row, new_responses)
+        new_responses = drinking_water_source(row, new_responses)
+        new_responses = asthma(row, new_responses)
+        new_responses = current_residence_duration(row, new_responses)
+        new_responses = nonfoodallergies(row, new_responses)
+        new_responses = livingwith(row, new_responses)
+        new_responses = softener(row, new_responses)
+        new_responses = skin_condition(row, new_responses)
+        new_responses = migraine(row, new_responses)
+        new_responses = flu_vaccine_date(row, new_responses)
+        new_responses = pregnant(row, new_responses)
+        new_responses = gender(row, new_responses)
+        new_responses = csection(row, new_responses)
+        new_responses = race(row, new_responses)
+        new_responses = cosmetics_frequency(row, new_responses)
+        new_responses = special_restrictions(row, new_responses, ag_login_id, pname)
+        new_responses = race_other(row, new_responses)
+        new_responses = ibd(row, new_responses)
+        new_responses = foodallergies_other(row, new_responses)
+        new_responses = sleep_duration(row, new_responses)
+        new_responses = about_yourself_text(row, new_responses)
+        new_responses = exercise_frequency(row, new_responses)
+        new_responses = zip_code(row, new_responses)
+        new_responses = nails(row, new_responses)
+        new_responses = diabetes_medication(row, new_responses, ag_login_id, pname)
+        new_responses = weight_change(row, new_responses)
+        new_responses = supplements(row, new_responses, ag_login_id, pname)
+        new_responses = antibiotic_select(row, new_responses, ag_login_id, pname)
+        new_responses = foodallergies(row, new_responses)
+        new_responses = acne_medication(row, new_responses)
+        new_responses = acne_medication_otc(row, new_responses)
+        new_responses = conditions_medication(row, new_responses, ag_login_id, pname)
+        new_responses = gluten(row, new_responses)
+        new_responses = smoking_frequency(row, new_responses)
+        new_responses = contraceptive(row, new_responses)
+        new_responses = antibiotic_condition(row, new_responses)
+        new_responses = cat(row, new_responses)
+        new_responses = diet_type(row, new_responses)
+        new_responses = pool_frequency(row, new_responses)
+        new_responses = alcohol_frequency(row, new_responses)
+        new_responses = seasonal_allergies(row, new_responses)
+        new_responses = exercise_location(row, new_responses)
+        new_responses = tonsils_removed(row, new_responses)
+        new_responses = deodorant_use(row, new_responses)
+        new_responses = country_of_birth(row, new_responses)
+        new_responses = teethbrushing_frequency(row, new_responses)
+        new_responses = chickenpox(row, new_responses)
+        new_responses = weight(row, new_responses)
+        new_responses = appendix_removed(row, new_responses)
+        new_responses = flossing_frequency(row, new_responses)
+        new_responses = hand(row, new_responses)
+        new_responses = pregnant_due_date(row, new_responses)
+        new_responses = diabetes(row, new_responses)
+        new_responses = last_travel(row, new_responses)
+        new_responses = lactose(row, new_responses)
+        new_responses = dog(row, new_responses)
+        new_responses = roommates(row, new_responses)
+        new_responses = multivitamin(row, new_responses)
+        new_responses = birth_date(row, new_responses)
 
         sql = """insert into {}
                  (survey_id, survey_question_id, response)
                  VALUES 
                  (%s, %s, %s)"""
 
-        for qid, response_type in qids_response_types.items():
-            if response_type == 'SINGLE':
-                query = sql.format('survey_answers')
-                db_conn.execute(query, (survey_id, qid, new_responses[qid]))
-            elif response_type == 'MULTIPLE':
-                query = sql.format('survey_answers')
-                # If we have a response other than the default response, then
-                # pop the default value
-                if len(new_responses[qid]) > 1:
-                    new_responses[qid].pop(0)
+        with db_conn.get_postgres_cursor() as cur:
+            for qid, response_type in qids_response_types.items():
+                if response_type == 'SINGLE':
+                    query = sql.format('survey_answers')
+                    cur.execute(query, (survey_id, qid, new_responses[qid]))
+                elif response_type == 'MULTIPLE':
+                    query = sql.format('survey_answers')
+                    # If we have a response other than the default response, then
+                    # pop the default value
+                    if len(new_responses[qid]) > 1:
+                        assert(new_responses[qid][0] == 'Unspecified')
+                        new_responses[qid].pop(0)
 
-                # Record all remaining responses to the database
-                for resp in new_responses[qid]:
-                    db_conn.execute(query, (survey_id, qid, resp))
+                    # Record all remaining responses to the database
+                    for resp in new_responses[qid]:
+                        cur.execute(query, (survey_id, qid, resp))
 
-            elif response_type in ('STRING', 'TEXT'):
-                query = sql.format('survey_answers_other')
-                db_conn.execute(query, (survey_id, qid, new_responses[qid]))
-            else:
-                raise ValueError("Unrecognized response type: %s" %
-                                 response_type)
+                elif response_type in ('STRING', 'TEXT'):
+                    response = '["%s"]' % new_responses[qid]
+                    query = sql.format('survey_answers_other')
+                    cur.execute(query, (survey_id, qid, response))
+                else:
+                    raise ValueError("Unrecognized response type: %s" %
+                                     response_type)
+
+    print "transferred", transfers, "out of", total_surveys, "attempts"
 
