@@ -342,10 +342,6 @@ class AGDataAccess(object):
             self.get_cursor().callproc('ag_insert_barcode',
                                        [ag_kit_id, barcode])
             self.connection.commit()
-            sql = ("insert into project_barcode (project_id, barcode) "
-                   "values (1, %s)")
-            self.connection.cursor().execute(sql, [barcode])
-            self.connection.commit()
         except psycopg2.IntegrityError:
             self.connection.commit()
             return -1
