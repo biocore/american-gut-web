@@ -1271,7 +1271,7 @@ class AGDataAccess(object):
         result = self.get_cursor()
         cursor = self.get_cursor()
         cursor.execute(sql, [project, barcode])
-        con.commit()
+        self.connection.commit()
         cursor.close()
 
     def getProjectNames(self):
@@ -1299,7 +1299,7 @@ class AGDataAccess(object):
         cursor = self.get_cursor()
         cursor.execute(sql, [status, postmark, scan_date, biomass_remaining,
                              sequencing_status, obsolete, barcode])
-        con.commit()
+        self.connection.commit()
         cursor.close()
 
     def get_survey_id(self, ag_login_id, participant_name):
