@@ -22,6 +22,12 @@ class BaseHandler(RequestHandler):
         '''Overrides the error page created by Tornado'''
         from traceback import format_exception
         user = self.current_user
+        # render error page BEFORE handling the error
+        if user:
+            self.render('error.html', skid=user)
+        else:
+            self.render('no_auth_error.html', loginerror="")
+
         logging.exception(kwargs["exc_info"])
         exc_info = kwargs["exc_info"]
         trace_info = ''.join(format_exception(*exc_info))
@@ -35,8 +41,6 @@ class BaseHandler(RequestHandler):
 
         send_email(formatted_email, "SERVER ERROR!",
                    recipient=AMGUT_CONFIG.error_email)
-
-        self.render('error.html', skid=self.current_user)
 
     def head(self):
         """Satisfy servers that this url exists"""
