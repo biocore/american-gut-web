@@ -9,16 +9,17 @@
 # -----------------------------------------------------------------------------
 
 from os import listdir
-from os.path import abspath, join, dirname
+from os.path import abspath, join, dirname, split
 from glob import glob
 
 from psycopg2 import connect, OperationalError
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+from natsort import natsorted
 import click
 
-from amgut import db_conn
+from amgut import db_conn, AG_DATA_ACCESS
 from amgut.lib.config_manager import AMGUT_CONFIG
-from amgut.lib.util import LAYOUT_FP, INITIALIZE_FP, POPULATE_FP
+from amgut.lib.util import LAYOUT_FP, INITIALIZE_FP, POPULATE_FP, PATCHES_DIR
 from amgut.lib.data_access.sql_connection import SQLConnectionHandler
 
 
@@ -81,6 +82,7 @@ def make(db):
         _create_database()
         _make_settings_table()
         _build_and_initialize()
+        _patch()
         _populate_test_db()
         print("Test environment successfully created")
 
@@ -88,15 +90,19 @@ def make(db):
         _create_database()
         _make_settings_table()
         _build_and_initialize()
+        _patch()
         print("Production environment successfully created")
 
 
 @env.command()
 def clean_test():
     db_conn._connection.close()
+    AG_DATA_ACCESS.connection.close()
+
     conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
                    host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
                    database=AMGUT_CONFIG.database)
+
     cur = conn.cursor()
 
     cur.execute('select test_environment from settings')
@@ -109,6 +115,7 @@ def clean_test():
     cur = conn.cursor()
 
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+
     if is_test_db == 'false':
         raise OperationalError("The settings table indicates this is not "
                                "a test database; aborting.")
@@ -119,6 +126,16 @@ def clean_test():
         print("role ag_wwwuser dropped")
         cur.close()
         conn.close()
+
+
+@env.command()
+def patch():
+    """Patches the database schema based on the SETTINGS table
+
+    Pulls the current patch from the settings table and applies all subsequent
+    patches found in the patches directory.
+    """
+    _patch()
 
 
 def _create_database():
@@ -199,7 +216,10 @@ def _make_settings_table():
     args = [str(setting[1]) for setting in settings]
 
     with conn.get_postgres_cursor() as cur:
-        cur.execute("create table settings ({})".format(', '.join(columns)))
+        create_sql = "create table settings ({}, current_patch varchar not null default 'unpatched')"
+        create_sql = create_sql.format(', '.join(columns))
+
+        cur.execute(create_sql)
         cur.execute(sql, args)
 
 
@@ -208,6 +228,42 @@ def _populate_test_db():
     conn = SQLConnectionHandler()
     with open(POPULATE_FP) as f:
         conn.execute(f.read())
+
+
+def _patch(patches_dir=PATCHES_DIR):
+    """Patches the database schema based on the SETTINGS table
+
+    Pulls the current patch from the settings table and applies all subsequent
+    patches found in the patches directory.
+    """
+    print("Patching the database...")
+    conn = SQLConnectionHandler()
+
+    current_patch = conn.execute_fetchone(
+        "SELECT current_patch FROM settings")[0]
+    current_patch_fp = join(patches_dir, current_patch)
+
+    sql_glob = join(patches_dir, '*.sql')
+    patch_files = natsorted(glob(sql_glob))
+
+    if current_patch == 'unpatched':
+        next_patch_index = 0
+    elif current_patch_fp not in patch_files:
+        raise RuntimeError("Cannot find patch file %s" % current_patch)
+    else:
+        next_patch_index = patch_files.index(current_patch_fp) + 1
+
+    patch_update_sql = "UPDATE settings SET current_patch = %s"
+
+    for patch_fp in patch_files[next_patch_index:]:
+        patch_filename = split(patch_fp)[-1]
+        with conn.get_postgres_cursor() as cur:
+            with open(patch_fp, 'U') as patch_file:
+                print('\tApplying patch %s...' % patch_filename)
+                cur.execute(patch_file.read())
+                cur.execute(patch_update_sql, [patch_filename])
+
+        conn._connection.commit()
 
 
 if __name__ == '__main__':
