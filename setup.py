@@ -61,5 +61,6 @@ setup(name='American Gut participant UI',
           'redis',
           'tornado==3.2.2',
           'WTForms==2.0.1',
+          'natsort'
       ],
       classifiers=classifiers)
