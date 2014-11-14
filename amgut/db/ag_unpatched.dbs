@@ -500,16 +500,6 @@
 				<fk_column name="project_id" pk="project_id" />
 			</fk>
 		</table>
-		<table name="promoted_survey_ids" >
-			<comment>Keeps track of the survey_ids that correspond to surveys that were ported from first questionnaire to the second</comment>
-			<column name="survey_id" type="varchar" jt="12" mandatory="y" />
-			<index name="pk_promoted_survey_ids" unique="PRIMARY_KEY" >
-				<column name="survey_id" />
-			</index>
-			<fk name="fk_promoted_survey_ids" to_schema="ag" to_table="ag_login_surveys" >
-				<fk_column name="survey_id" pk="survey_id" />
-			</fk>
-		</table>
 		<table name="survey_answers" >
 			<comment>Stores answers to questions of type SINGLE and MULTIPLE</comment>
 			<column name="survey_id" type="varchar" jt="12" mandatory="y" >
@@ -21337,7 +21327,6 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="ag_consent" color="c6d9f7" x="1470" y="945" />
 		<entity schema="ag" name="ag_login_surveys" color="ffcccc" x="1455" y="1245" />
 		<entity schema="ag" name="survey_answers" color="a8c4ef" x="1560" y="1425" />
-		<entity schema="ag" name="promoted_survey_ids" color="a8c4ef" x="1455" y="1140" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by : 
    american_gut_consent</comment>
@@ -21387,17 +21376,5 @@ AS $function$xpath_exists$function$
 			<entity schema="ag" name="survey_question_response" />
 			<entity schema="ag" name="iso_country_lookup" />
 		</group>
-		<script name="patch" id="SQL6779489" >
-			<string><![CDATA[CREATE TABLE ag.promoted_survey_ids ( 
-	survey_id            varchar  NOT NULL,
-	CONSTRAINT pk_promoted_survey_ids PRIMARY KEY ( survey_id )
- ) ;
-
-COMMENT ON TABLE ag.promoted_survey_ids IS 'Keeps track of the survey_ids that correspond to surveys that were ported from first questionnaire to the second';
-
-ALTER TABLE ag.promoted_survey_ids ADD CONSTRAINT fk_promoted_survey_ids FOREIGN KEY ( survey_id ) REFERENCES ag.ag_login_surveys( survey_id )    ;
-
-]]></string>
-		</script>
 	</layout>
 </project>

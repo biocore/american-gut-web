@@ -246,7 +246,6 @@ CREATE TABLE ag.ag_consent (
 	parent_2_code        varchar(200)  ,
 	deceased_parent      varchar(10)  ,
 	CONSTRAINT pk_american_gut_consent PRIMARY KEY ( ag_login_id, participant_name ),
-	CONSTRAINT pk_american_gut_consent_0 UNIQUE ( participant_name ) ,
 	CONSTRAINT fk_american_gut_consent FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id )    
  );
 

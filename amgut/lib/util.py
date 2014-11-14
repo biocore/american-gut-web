@@ -19,9 +19,10 @@ from amgut.lib.vioscreen import encrypt_key
 
 
 get_db_file = partial(join, join(dirname(dirname(abspath(__file__))), 'db'))
-LAYOUT_FP = get_db_file('ag.sql')
+LAYOUT_FP = get_db_file('ag_unpatched.sql')
 INITIALIZE_FP = get_db_file('initialize.sql')
 POPULATE_FP = get_db_file('populate_test.sql')
+PATCHES_DIR = get_db_file('patches')
 
 
 def reset_test_database(wrapped_fn):
