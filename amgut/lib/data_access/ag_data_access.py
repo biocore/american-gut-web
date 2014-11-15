@@ -408,6 +408,26 @@ class AGDataAccess(object):
                    "%s AND participant_name = %s")
             curr.execute(sql, [ag_login_id, participant_name])
 
+    def getConsent(self, survey_id):
+        conn_handler = SQLConnectionHandler()
+        with conn_handler.get_postgres_cursor() as cur:
+            cur.execute("""SELECT agc.participant_name,
+                                  agc.participant_email,
+                                  agc.parent_1_name,
+                                  agc.parent_2_name,
+                                  agc.is_juvenile,
+                                  agc.deceased_parent,
+                                  agc.ag_login_id,
+                                  agl.survey_id
+                           FROM ag_consent agc JOIN
+                                ag_login_surveys agl ON agc.ag_login_id=agl.ag_login_id AND
+                                                        agc.participant_name=agl.participant_name
+                           WHERE agl.survey_id=%s""", [survey_id])
+            colnames = [x[0] for x in cur.description]
+            result = cur.fetchone()
+            if result:
+                return {k: v for k, v in zip(colnames, result)}
+
     def insertAGMultiple(self, ag_login_id, participant_name, field_name,
                          field_value):
         sql = ("insert into ag_survey_multiples (ag_login_id, "

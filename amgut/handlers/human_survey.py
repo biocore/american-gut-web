@@ -5,6 +5,7 @@ from wtforms import Form
 from tornado.web import authenticated
 from tornado.escape import url_escape
 
+from amgut import AG_DATA_ACCESS
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.lib.util import store_survey
 from amgut.lib.survey_supp import primary_human_survey
@@ -63,8 +64,10 @@ class HumanSurveyHandler(BaseHandler):
                 return
         else:
             # we came from participant_overview
+            consent = AG_DATA_ACCESS.getConsent(human_survey_id)
             self.set_secure_cookie('human_survey_id', human_survey_id)
             data = primary_human_survey.fetch_survey(human_survey_id)
+            r_server.hset(human_survey_id, 'consent', dumps(consent))
             r_server.hset(human_survey_id, 'existing', dumps(data))
             r_server.expire(human_survey_id, 86400)
 
