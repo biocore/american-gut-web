@@ -9,7 +9,6 @@ from __future__ import division
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
 
-import ast
 from collections import defaultdict
 
 from wtforms import (SelectField, SelectMultipleField, widgets,
@@ -319,7 +318,7 @@ class Survey(object):
 
         for qid, data in answers_other:
             eid = self.questions[qid].interface_element_ids[0]
-            data = ast.literal_eval(data)[0]  # to parse "['asd']" into a list
+            data = str(data[2:-2])  # drop [""]
             survey[eid] = data
 
         return survey
