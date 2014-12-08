@@ -22,7 +22,7 @@ class ParticipantOverviewHandler(BaseHandler):
             for bc in barcodes:
                 AG_DATA_ACCESS.deleteSample(bc['barcode'], ag_login_id)
             # Remove the participant
-            AG_DATA_ACCESS.deleteAGParticipant(
+            AG_DATA_ACCESS.deleteAGParticipantSurvey(
                 ag_login_id, participant_to_remove)
             # Redirect to portal
             self.redirect(media_locale['SITEBASE'] + "/authed/portal/")
