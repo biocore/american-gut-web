@@ -399,6 +399,11 @@ class AGDataAccess(object):
                    "survey_id = %s")
             curr.execute(sql, [survey_id])
 
+            # Reset survey attached to barcode(s)
+            sql = ("UPDATE ag_kit_barcodes SET survey_id = NULL WHERE "
+                   "survey_id = %s")
+            curr.execute(sql, [survey_id])
+
             # Delete last due to foreign keys
             sql = ("DELETE FROM ag_login_surveys WHERE "
                    "survey_id = %s")
