@@ -78,7 +78,7 @@ class AGDataAccess(object):
         else:
             self.connection = con
         cur = self.get_cursor()
-        cur.execute('set search_path to public, ag')
+        cur.execute('set search_path to ag, public')
 
         self._sql = SQLConnectionHandler(con)
 
