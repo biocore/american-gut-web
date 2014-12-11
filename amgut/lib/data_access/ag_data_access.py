@@ -209,7 +209,7 @@ class AGDataAccess(object):
     def getAGBarcodesByLogin(self, ag_login_id):
         # returned tuple consists of:
         # site_sampled, sample_date, sample_time, participant_name,
-        #environment_sampled, notes
+        # environment_sampled, notes
         results = self._sql.execute_proc_return_cursor(
             'ag_get_barcodes_by_login',
             [ag_login_id])
