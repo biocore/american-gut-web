@@ -428,14 +428,16 @@ class AGDataAccess(object):
             if result:
                 return {k: v for k, v in zip(colnames, result)}
 
-    def insertAGMultiple(self, ag_login_id, participant_name, field_name,
-                         field_value):
-        sql = ("insert into ag_survey_multiples (ag_login_id, "
-               "participant_name,item_name, item_value) values ('{0}','{1}',"
-               " '{2}', '{3}')").format(ag_login_id, participant_name,
-                                        field_name, field_value)
-        self.get_cursor().execute(sql)
-        self.connection.commit()
+    # NOTE: This method is vulnerable to SQL injection as-written but is not
+    # used anywhere at the moment
+    # def insertAGMultiple(self, ag_login_id, participant_name, field_name,
+    #                      field_value):
+    #     sql = ("insert into ag_survey_multiples (ag_login_id, "
+    #            "participant_name,item_name, item_value) values ('{0}','{1}',"
+    #            " '{2}', '{3}')").format(ag_login_id, participant_name,
+    #                                     field_name, field_value)
+    #     self.get_cursor().execute(sql)
+    #     self.connection.commit()
 
     def addAGGeneralValue(self, ag_login_id, participant_name, field_name,
                           field_value):
