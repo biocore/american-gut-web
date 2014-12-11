@@ -5,10 +5,10 @@ from json import dumps
 from tornado.web import authenticated
 from tornado.escape import url_escape
 
+from amgut import media_locale, text_locale
 from amgut.handlers.base_handlers import BaseHandler
-from amgut.util import AG_DATA_ACCESS
+from amgut.connections import ag_data, redis
 from amgut.lib.mail import send_email
-from amgut import media_locale, text_locale, r_server
 
 
 MESSAGE_TEMPLATE = """Contact: %s
@@ -42,16 +42,16 @@ class NewParticipantHandler(BaseHandler):
         parent_1_name = self.get_argument("parent_1_name", None)
         parent_2_name = self.get_argument("parent_2_name", None)
 
-        ag_login_id = AG_DATA_ACCESS.get_user_for_kit(self.current_user)
-        kit_email = AG_DATA_ACCESS.get_user_info(self.current_user)['email']
+        ag_login_id = ag_data.get_user_for_kit(self.current_user)
+        kit_email = ag_data.get_user_info(self.current_user)['email']
 
         # Check if the participant is on the exceptions list
         is_exception = (
             participant_name
-            in AG_DATA_ACCESS.getParticipantExceptions(ag_login_id))
+            in ag_data.getParticipantExceptions(ag_login_id))
 
         # If the participant already exists, stop them outright
-        if AG_DATA_ACCESS.check_if_consent_exists(ag_login_id, participant_name):
+        if ag_data.check_if_consent_exists(ag_login_id, participant_name):
             errmsg = url_escape(tl['PARTICIPANT_EXISTS'] % participant_name)
             self.redirect(media_locale['SITEBASE'] + "/authed/portal/?errmsg=%s" % errmsg)
             return
@@ -95,8 +95,8 @@ class NewParticipantHandler(BaseHandler):
                   'login_id': ag_login_id,
                   'survey_id': human_survey_id}
 
-        r_server.hset(human_survey_id, 'consent', dumps(consent))
-        r_server.expire(human_survey_id, 86400)
+        redis.hset(human_survey_id, 'consent', dumps(consent))
+        redis.expire(human_survey_id, 86400)
 
         self.set_secure_cookie('human_survey_id', human_survey_id)
         self.redirect(media_locale['SITEBASE'] + "/authed/survey_main/")

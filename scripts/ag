@@ -17,7 +17,6 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from natsort import natsorted
 import click
 
-from amgut import db_conn, AG_DATA_ACCESS
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.lib.util import LAYOUT_FP, INITIALIZE_FP, POPULATE_FP, PATCHES_DIR
 from amgut.lib.data_access.sql_connection import SQLConnectionHandler
@@ -65,13 +64,13 @@ def mode(mode, message):
     In production mode, the banner message is not displayed and logins are
     enabled.
     """
-    from amgut import r_server
+    from amgut.connections import redis
 
     if mode == 'maintenance':
-        r_server.set('maintenance', message)
+        redis.set('maintenance', message)
         click.echo("Warning, going into maintenance mode. Logins disabled!")
     elif mode == 'production':
-        r_server.delete('maintenance')
+        redis.delete('maintenance')
         click.echo("Warning, going into production mode. Logins enabled!")
 
 
@@ -96,8 +95,6 @@ def make(db):
 
 @env.command()
 def clean_test():
-    db_conn._connection.close()
-    AG_DATA_ACCESS.connection.close()
 
     conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
                    host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,

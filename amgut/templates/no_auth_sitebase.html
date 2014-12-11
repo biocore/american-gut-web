@@ -2,8 +2,8 @@
 {% from amgut.handlers.FAQ import FAQHandler %}
 {% from amgut.handlers.addendum import AddendumHandler %}
 {% from amgut.handlers.auth_handlers import AuthRegisterHandoutHandler %}
-{% from amgut import r_server %}
-{% set maintenance = r_server.get('maintenance') %}
+{% from amgut.connections import redis %}
+{% set maintenance = redis.get('maintenance') %}
 <!DOCTYPE html>
 <html lang="en">
 <head>

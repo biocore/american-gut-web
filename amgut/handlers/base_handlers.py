@@ -2,7 +2,7 @@ import logging
 
 from tornado.web import RequestHandler, StaticFileHandler
 
-from amgut.util import AG_DATA_ACCESS
+from amgut.connections import ag_data
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.lib.mail import send_email
 from amgut import text_locale
@@ -50,7 +50,7 @@ class BaseHandler(RequestHandler):
 class MainHandler(BaseHandler):
     '''Index page'''
     def get(self):
-        latlong_db = AG_DATA_ACCESS.getMapMarkers()
+        latlong_db = ag_data.getMapMarkers()
         self.render("index.html", latlongs_db=latlong_db, loginerror="")
 
 

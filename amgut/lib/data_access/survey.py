@@ -14,8 +14,10 @@ from collections import defaultdict
 from wtforms import (SelectField, SelectMultipleField, widgets,
                      TextAreaField, TextField)
 
-from amgut import AMGUT_CONFIG, db_conn
+from amgut import AMGUT_CONFIG
+from amgut.lib.data_access.sql_connection import SQLConnectionHandler
 
+db_conn = SQLConnectionHandler()
 
 _LOCALE_TO_COLUMN = {'american_gut': 'american',
                      'british_gut': 'british'}
