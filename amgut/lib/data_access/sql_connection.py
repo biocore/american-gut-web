@@ -61,9 +61,6 @@ class SQLConnectionHandler(object):
         else:
             self._connection.commit()
 
-    def __del__(self):
-        self._connection.close()
-
     def _check_sql_args(self, sql_args):
         """ Checks that sql_args have the correct type
 
