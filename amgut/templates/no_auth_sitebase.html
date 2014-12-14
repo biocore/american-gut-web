@@ -133,8 +133,8 @@
                             <div style="color:red">{{loginerror}}</div>
                             <form method="post" action="{% raw media_locale['SITEBASE'] %}/auth/login/">
                                 <table width="100%">
-                                  <tr><td>Kit ID</td><td><input type="text" id="skid" name="skid"></td></tr>
-                                  <tr><td>Password</td><td><input type="password" id="password" name="password"></td></tr>
+                                  <tr><td><label for="skid">Kit ID</label></td><td><input type="text" id="skid" name="skid"></td></tr>
+                                  <tr><td><label for="password">Password</label></td><td><input type="password" id="password" name="password"></td></tr>
                                   <tr><td colspan="2"><input type="submit" value="Log In"></tr> 
                                       <tr><td colspan="2"><a href="{% raw media_locale['SITEBASE'] %}/retrieve_kitid/" class="small_link">{% raw media_locale['NAV_FORGOT_KITID'] %}</a></td></tr>
                                       <tr><td colspan="2"><a href="{% raw media_locale['SITEBASE'] %}/forgot_password/" class="small_link">{% raw media_locale['NAV_FORGOT_PASSWORD'] %}</a></td></tr>
