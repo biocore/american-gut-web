@@ -9,9 +9,8 @@ The website for the American Gut Project participant portal
 - [OS X] `brew install redis`
 - `mkvirtualenv amgut`
 - `workon amgut`
-- `python setup.py develop` (this gets you the dependencies from `setup.py`)
-- `pip install -e .[test]` (this installs the test dependencies in
-  `extras_require`)
+- `pip install -e .[test]` (this installs the all dependencies, including those
+  in `extras_require`)
 - `cp ag_config.txt.example amgut/ag_config.txt`
 - set options in `amgut/ag_config.txt`
 - to enable uuid v4 function in postgres:
