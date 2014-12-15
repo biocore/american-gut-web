@@ -16,6 +16,8 @@ from unittest import TestCase, main
 import psycopg2
 import psycopg2.extras
 
+from passlib.hash import bcrypt
+
 from amgut.lib.data_access.ag_data_access import AGDataAccess
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.lib.util import ag_test_checker
@@ -369,7 +371,7 @@ class TestAGDataAccess(TestCase):
         cur.execute('select kit_password from ag_kit where supplied_kit_id = '
                     '%s', ('test',))
         rec = cur.fetchone()
-        self.assertEqual(rec[0], 'newpass')
+        self.assertTrue(bcrypt.verify('newpass', rec[0]))
 
     def test_ag_verify_kit_password_change_code(self):
         self.data_access.ag_set_pass_change_code('test@microbio.me', 'test',
