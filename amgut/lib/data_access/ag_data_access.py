@@ -197,6 +197,7 @@ class AGDataAccess(object):
 
         return return_res
 
+    # note: only used by the password migration
     def getAGKitsByLogin(self):
         results = self._sql.execute_proc_return_cursor('ag_get_kits_by_login',
                                                        [])

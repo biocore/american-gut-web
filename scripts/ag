@@ -19,6 +19,7 @@ from psycopg2 import connect, InternalError, OperationalError, ProgrammingError
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 from natsort import natsorted
+from passlib.hash import bcrypt
 
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.lib.util import LAYOUT_FP, INITIALIZE_FP, POPULATE_FP, PATCHES_DIR
@@ -91,6 +92,25 @@ def make(db, force):
 
 
 @cli.command()
+def migrate_passwords():
+    """Migrate passwords to bcrypt hashes."""
+
+    from amgut.connections import ag_data
+
+    kits_by_login = ag_data.getAGKitsByLogin()
+
+    for kit_id in [d['supplied_kit_id'] for d in kits_by_login]:
+        password = ag_data.getAGKitDetails(kit_id)['kit_password']
+
+        if not bcrypt.identify(password):
+            click.echo('migrating kit {} to a bcrypt hash'.format(kit_id))
+
+            ag_data.ag_update_kit_password(kit_id, bcrypt.encrypt(password))
+        else:
+            click.echo('kit {} is already a bcrypt hash'.format(kit_id))
+
+
+@cli.command()
 def drop_procedures():
     """Drops the stored procedures."""
     conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
@@ -99,31 +119,18 @@ def drop_procedures():
 
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 
-    for procedure in _procedures():
-        name = splitext(basename(procedure))[0]
-
-        sql = """SELECT format('%s(%s)',
-                               oid::regproc,
-                               pg_get_function_identity_arguments(oid))
-                 FROM   pg_proc
-                 WHERE  proname = '{}'
-                 AND    pg_function_is_visible(oid)""".format(name)
-
-        cur.execute(sql)
-
+    for name in _procedure_names():
         click.echo('Dropping function {}'.format(name))
 
-        for (full_name,) in cur.fetchall():
-            try:
-                cur.execute('DROP FUNCTION IF EXISTS {} CASCADE'
-                            .format(full_name))
-            except InternalError as e:
-                click.echo('Failed to drop {}:'.format(name))
+        try:
+            cur.execute('DROP FUNCTION IF EXISTS {} CASCADE'.format(name))
+        except InternalError as e:
+            click.echo('Failed to drop {}:'.format(name))
 
-                error = '\n'.join(['\t{}'.format(line)
-                                   for line in str(e).strip().split('\n')])
+            error = '\n'.join(['\t{}'.format(line)
+                               for line in str(e).strip().split('\n')])
 
-                click.echo(error)
+            click.echo(error)
 
     cur.close()
     conn.close()
@@ -142,7 +149,7 @@ def drop_test(force):
     cur = conn.cursor()
 
     try:
-        cur.execute('SELECT test_environment FROM ag.settings')
+        cur.execute('SELECT test_environment FROM settings')
         is_test_db = cur.fetchone()[0].lower()
     except ProgrammingError:
         if not force:
@@ -152,7 +159,7 @@ def drop_test(force):
     conn.close()
 
     if not force and is_test_db != 'true':
-        raise OperationalError("The ag.settings table indicates this is not "
+        raise OperationalError("The settings table indicates this is not "
                                "a test database; aborting.")
 
     conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
@@ -239,6 +246,7 @@ def drop_test(force):
 
     proc.communicate('{}\n'.format(AMGUT_CONFIG.password))
 
+
 @cli.command()
 def patch():
     """Applies any unapplied database patches.
@@ -289,42 +297,113 @@ def _procedures():
             for p in glob(join(procedure_path, '*.sql'))]
 
 
+def _migrate_procedures(from_schema='public', to_schema='ag'):
+    click.echo('Migrating procedures from {} to {}'.format(from_schema,
+                                                           to_schema))
+
+    conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
+                   host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
+                   database=AMGUT_CONFIG.database)
+    cur = conn.cursor()
+
+    cur.execute('SET SEARCH_PATH TO {}'.format(from_schema))
+
+    sql = """SELECT format('%I.%I(%s)',
+                           pg_namespace.nspname,
+                           pg_proc.proname,
+                           pg_get_function_identity_arguments(pg_proc.oid))
+             FROM pg_proc
+             INNER JOIN pg_namespace
+                ON (pg_proc.pronamespace = pg_namespace.oid)
+             WHERE pg_namespace.nspname = '{}';""".format(from_schema)
+
+    cur.execute(sql)
+
+    for (full_name,) in cur.fetchall():
+        click.echo('Migrating {} to {}'.format(full_name, to_schema))
+
+        cur.execute('ALTER FUNCTION {} SET SCHEMA {}'.format(full_name,
+                                                             to_schema))
+
+    conn.commit()
+
+    cur.close()
+    conn.close()
+
+
+def _procedure_names():
+    conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
+                   host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
+                   database=AMGUT_CONFIG.database)
+    cur = conn.cursor()
+
+    cur.execute('SET SEARCH_PATH TO ag, public')
+
+    procedures = []
+
+    for procedure in _procedures():
+        name = splitext(basename(procedure))[0]
+
+        sql = """SELECT format('%s(%s)',
+                               oid::regproc,
+                               pg_get_function_identity_arguments(oid))
+                 FROM   pg_proc
+                 WHERE  proname = '{}'
+                 AND    pg_function_is_visible(oid)""".format(name)
+
+        cur.execute(sql)
+
+        for (full_name,) in cur.fetchall():
+            procedures.append(full_name)
+
+    cur.close()
+    conn.close()
+
+    return procedures
+
+
+@cli.command()
+def procedure_names():
+    for name in _procedure_names():
+        click.echo(name)
+
+
 def _build_and_initialize():
     conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
                    host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
                    database=AMGUT_CONFIG.database)
-    curr = conn.cursor()
+    cur = conn.cursor()
 
     # create the schema and set a search path
-    curr.execute('create schema ag')
-    curr.execute('set search_path to ag, public')
+    cur.execute('CREATE SCHEMA AG')
+    cur.execute('SET SEARCH_PATH TO ag, public')
 
-    click.echo("Inserting procedures")
+    click.echo('Inserting procedures')
 
     for procedure in _procedures():
         with open(procedure) as f:
-            curr.execute(f.read())
+            cur.execute(f.read())
 
     click.echo("Building SQL layout")
 
     with open(LAYOUT_FP) as f:
         # We have to skip the "create schema" line here
-        curr.execute('\n'.join(f.readlines()[1:]))
+        cur.execute('\n'.join(f.readlines()[1:]))
 
     with open(INITIALIZE_FP) as f:
-        curr.execute(f.read())
+        cur.execute(f.read())
 
     click.echo('Granting privileges')
 
     # create
-    curr.execute('CREATE USER "ag_wwwuser"')
-    curr.execute('GRANT USAGE ON schema public, ag TO "ag_wwwuser"')
-    curr.execute('GRANT CONNECT ON DATABASE %s TO "ag_wwwuser"' %
-                 AMGUT_CONFIG.database)
-    curr.execute('GRANT INSERT, UPDATE, DELETE, SELECT ON ALL TABLES IN SCHEMA'
-                 ' public, ag TO "ag_wwwuser";')
-    curr.execute('GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public, ag TO '
-                 '"ag_wwwuser";')
+    cur.execute('CREATE USER "ag_wwwuser"')
+    cur.execute('GRANT USAGE ON schema public, ag TO "ag_wwwuser"')
+    cur.execute('GRANT CONNECT ON DATABASE %s TO "ag_wwwuser"' %
+                AMGUT_CONFIG.database)
+    cur.execute('GRANT INSERT, UPDATE, DELETE, SELECT ON ALL TABLES IN SCHEMA'
+                ' public, ag TO "ag_wwwuser";')
+    cur.execute('GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public, ag TO '
+                '"ag_wwwuser";')
     conn.commit()
 
 
@@ -370,7 +449,7 @@ def _patch(patches_dir=PATCHES_DIR):
     conn = SQLConnectionHandler()
 
     current_patch = conn.execute_fetchone(
-        "SELECT current_patch FROM ag.settings")[0]
+        "SELECT current_patch FROM settings")[0]
     current_patch_fp = join(patches_dir, current_patch)
 
     sql_glob = join(patches_dir, '*.sql')
@@ -383,7 +462,7 @@ def _patch(patches_dir=PATCHES_DIR):
     else:
         next_patch_index = patch_files.index(current_patch_fp) + 1
 
-    patch_update_sql = "UPDATE ag.settings SET current_patch = %s"
+    patch_update_sql = "UPDATE settings SET current_patch = %s"
 
     for patch_fp in patch_files[next_patch_index:]:
         patch_filename = split(patch_fp)[-1]
@@ -392,10 +471,14 @@ def _patch(patches_dir=PATCHES_DIR):
 
             with open(patch_fp, 'U') as patch_file:
                 click.echo('\tApplying patch %s...' % patch_filename)
+
                 cur.execute(patch_file.read())
                 cur.execute(patch_update_sql, [patch_filename])
 
         conn._connection.commit()
+
+    # Idempotent patches implemented in Python can be run here
+    _migrate_procedures('public', 'ag')
 
 
 if __name__ == '__main__':
