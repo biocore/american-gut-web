@@ -148,6 +148,8 @@ def drop_test(force):
 
     cur = conn.cursor()
 
+    cur.execute('SET SEARCH_PATH TO ag, public')
+
     try:
         cur.execute('SELECT test_environment FROM settings')
         is_test_db = cur.fetchone()[0].lower()
@@ -166,6 +168,8 @@ def drop_test(force):
                    host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
                    database=AMGUT_CONFIG.database)
     cur = conn.cursor()
+
+    cur.execute('SET SEARCH_PATH TO ag, public')
 
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 
@@ -218,9 +222,15 @@ def drop_test(force):
                    host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port)
     cur = conn.cursor()
 
+    cur.execute('SET SEARCH_PATH TO ag, public')
+
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 
+    click.echo('Dropping user ag_wwwuser...')
     cur.execute('DROP USER IF EXISTS ag_wwwuser')
+
+    click.echo('Dropping schema ag...')
+    cur.execute('DROP SCHEMA IF EXISTS ag CASCADE')
 
     cur.close()
     conn.close()
@@ -272,6 +282,8 @@ def _create_database(force=False):
 
     # Get the cursor
     cur = conn.cursor()
+
+    cur.execute('SET SEARCH_PATH TO ag, public')
 
     db_exists = _check_db_exists(AMGUT_CONFIG.database, cur)
 
