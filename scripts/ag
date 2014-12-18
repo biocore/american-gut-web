@@ -19,8 +19,11 @@ from psycopg2 import connect, InternalError, OperationalError, ProgrammingError
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 from natsort import natsorted
+# pylint: disable=no-name-in-module
 from passlib.hash import bcrypt
+# pylint: enable=no-name-in-module
 
+from amgut.connections import ag_data, redis
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.lib.util import LAYOUT_FP, INITIALIZE_FP, POPULATE_FP, PATCHES_DIR
 from amgut.lib.data_access.sql_connection import SQLConnectionHandler
@@ -63,8 +66,6 @@ def mode(mode_name, message):
     In production mode, the banner message is not displayed and logins are
     enabled.
     """
-    from amgut.connections import redis
-
     if mode_name == 'maintenance':
         redis.set('maintenance', message)
         click.echo("Warning, going into maintenance mode. Logins disabled!")
@@ -94,8 +95,6 @@ def make(db, force):
 @cli.command()
 def migrate_passwords():
     """Migrate passwords to bcrypt hashes."""
-
-    from amgut.connections import ag_data
 
     kits_by_login = ag_data.getAGKitsByLogin()
 
@@ -372,12 +371,6 @@ def _procedure_names():
     conn.close()
 
     return procedures
-
-
-@cli.command()
-def procedure_names():
-    for name in _procedure_names():
-        click.echo(name)
 
 
 def _build_and_initialize():

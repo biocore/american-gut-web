@@ -13,9 +13,8 @@ from future.utils import viewitems
 from psycopg2 import connect
 from tornado.escape import url_escape
 
-import amgut.connections
-
 from amgut import media_locale, text_locale
+from amgut.connections import ag_data, redis
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.lib.vioscreen import encrypt_key
 
@@ -129,7 +128,7 @@ def store_survey(survey, survey_id):
     def get_survey_question_id(key):
         return int(key.split('_')[-2])
 
-    data = amgut.connections.redis.hgetall(survey_id)
+    data = redis.hgetall(survey_id)
     to_store = PartitionResponse(survey.question_types)
     consent_details = loads(data.pop('consent'))
 
@@ -145,7 +144,7 @@ def store_survey(survey, survey_id):
             qtype = survey.question_types[qid]
 
             if resps is None:
-                resps = {-1} # unspecified multiple choice
+                resps = {-1}  # unspecified multiple choice
             elif qtype in ['SINGLE', 'MULTIPLE']:
                 resps = set([int(i) for i in resps])
             else:
@@ -171,7 +170,7 @@ def survey_vioscreen(survey_id):
     """Return a formatted text block and URL for the external survey"""
     tl = text_locale['human_survey_completed.html']
     embedded_text = tl['SURVEY_VIOSCREEN']
-    user_info = amgut.connections.ag_data.get_person_info(survey_id)
+    user_info = ag_data.get_person_info(survey_id)
     url = ("https://vioscreen.com/remotelogin.aspx?Key=%s&RegCode=KLUCB" %
            url_escape(encrypt_key(survey_id, user_info)))
     return embedded_text % url
