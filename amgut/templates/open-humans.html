@@ -1,0 +1,11 @@
+{% extends sitebase.html %}
+{% block head %}
+{% from amgut import text_locale, media_locale %}
+<!--
+<script
+  src="{% raw media_locale['SITEBASE'] %}/static/js/open-humans.js"></script>
+-->
+{% end %}
+{% block content %}
+  <a href="/authed/connect/open-humans/">Connect to Open Humans</a>
+{% end %}

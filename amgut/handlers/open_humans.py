@@ -9,10 +9,17 @@ except ImportError:
 
 from tornado import escape, web
 
+from amgut.handlers.base_handlers import BaseHandler
 from amgut.lib.config_manager import AMGUT_CONFIG
 
 
-class OpenHumansLoginHandler(web.RequestHandler, OpenHumansMixin):
+class OpenHumansHandler(BaseHandler):
+    @web.authenticated
+    def get(self):
+        self.render('open-humans.html', skid=self.current_user)
+
+
+class OpenHumansLoginHandler(BaseHandler, OpenHumansMixin):
     _OAUTH_REDIRECT_URL = urljoin(AMGUT_CONFIG.base_url,
                                   '/authed/connect/open-humans/')
 
@@ -30,8 +37,8 @@ class OpenHumansLoginHandler(web.RequestHandler, OpenHumansMixin):
         if self.get_argument('code', False):
             self.get_authenticated_user(
                 redirect_uri=redirect_uri,
-                client_id=AMGUT_CONFIG.open_humans_key,
-                client_secret=AMGUT_CONFIG.open_humans_secret,
+                client_id=AMGUT_CONFIG.open_humans_client_id,
+                client_secret=AMGUT_CONFIG.open_humans_client_secret,
                 code=self.get_argument('code'),
                 callback=self._on_login)
 
@@ -40,7 +47,7 @@ class OpenHumansLoginHandler(web.RequestHandler, OpenHumansMixin):
         # otherwise we need to request an authorization code
         self.authorize_redirect(
             redirect_uri=redirect_uri,
-            client_id=AMGUT_CONFIG.open_humans_key,
+            client_id=AMGUT_CONFIG.open_humans_client_id,
             extra_params={'scope': 'read+write'})
 
     def _on_login(self, user):
@@ -54,29 +61,20 @@ class OpenHumansLoginHandler(web.RequestHandler, OpenHumansMixin):
         else:
             self.clear_cookie('user')
 
-        self.redirect('/')
-
-
-class BaseOpenHumansHandler(web.RequestHandler):
-    def get_current_user(self):
-        user_json = self.get_secure_cookie('user')
-
-        if not user_json:
-            return None
-
-        return escape.json_decode(user_json)
+        self.redirect('/authed/open-humans/')
 
 
 # TODO: Connect this
-class OpenHumansConnectionHandler(BaseOpenHumansHandler, OpenHumansMixin):
+class OpenHumansConnectionHandler(BaseHandler, OpenHumansMixin):
     _API_URL = urljoin(AMGUT_CONFIG.open_humans_base_url, '/api')
 
     @web.authenticated
     @web.asynchronous
     def get(self):
-        self.open_humans_request('/american-gut/user-data/current/',
-                                 self._on_user_data,
-                                 access_token=self.current_user['access_token'])
+        self.open_humans_request(
+            '/american-gut/user-data/current/',
+            self._on_user_data,
+            access_token=self.current_user['access_token'])
 
     def _on_user_data(self, user_data):
         if user_data is None:
