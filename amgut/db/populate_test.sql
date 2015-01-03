@@ -76,7 +76,7 @@ insert into ag_handout_kits (kit_id, password, barcode, verification_code, swabs
           ('test_ha', '1234', '000000003', '5678', '3', 'n'),
           ('test_ha', '1234', '000000004', '5678', '3', 'n');
 insert into ag_participant_exceptions (ag_login_id, participant_name)
-    values ('d8592c74-7da1-2135-e040-8a80115d6401', 'execption');
+    values ('d8592c74-7da1-2135-e040-8a80115d6401', 'exception');
 insert into ag_consent (ag_login_id, participant_name, participant_email)
     values ('d8592c74-7da1-2135-e040-8a80115d6401', 'foo', 'foo@bar.com');
 insert into ag_login_surveys (ag_login_id, survey_id, participant_name)
