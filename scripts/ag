@@ -104,7 +104,7 @@ def migrate_passwords():
         if not bcrypt.identify(password):
             click.echo('migrating kit {} to a bcrypt hash'.format(kit_id))
 
-            ag_data.ag_update_kit_password(kit_id, bcrypt.encrypt(password))
+            ag_data.ag_update_kit_password(kit_id, password)
         else:
             click.echo('kit {} is already a bcrypt hash'.format(kit_id))
 
