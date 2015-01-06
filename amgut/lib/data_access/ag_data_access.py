@@ -15,10 +15,13 @@ Centralized database access for the American Gut web portal
 import urllib
 import httplib
 import json
+
 from time import sleep
 from random import choice
 
 import psycopg2
+
+from passlib.hash import bcrypt
 
 from amgut.lib.data_access.sql_connection import SQLConnectionHandler
 from amgut.lib.config_manager import AMGUT_CONFIG
@@ -78,7 +81,7 @@ class AGDataAccess(object):
         else:
             self.connection = con
         cur = self.get_cursor()
-        cur.execute('set search_path to public, ag')
+        cur.execute('set search_path to ag, public')
 
         self._sql = SQLConnectionHandler(con)
 
@@ -135,7 +138,12 @@ class AGDataAccess(object):
         data.close()
         if row:
             results = dict(zip(col_names, row))
+
+            if not bcrypt.verify(password, results['kit_password']):
+                return False
+
             results['ag_login_id'] = str(results['ag_login_id'])
+
             return results
         else:
             return False
@@ -189,6 +197,7 @@ class AGDataAccess(object):
 
         return return_res
 
+    # note: only used by the password migration
     def getAGKitsByLogin(self):
         results = self._sql.execute_proc_return_cursor('ag_get_kits_by_login',
                                                        [])
@@ -209,7 +218,7 @@ class AGDataAccess(object):
     def getAGBarcodesByLogin(self, ag_login_id):
         # returned tuple consists of:
         # site_sampled, sample_date, sample_time, participant_name,
-        #environment_sampled, notes
+        # environment_sampled, notes
         results = self._sql.execute_proc_return_cursor(
             'ag_get_barcodes_by_login',
             [ag_login_id])
@@ -312,6 +321,8 @@ class AGDataAccess(object):
         1:  success
         -1: insert failed due to IntegrityError
         """
+        kit_password = bcrypt.encrypt(kit_password)
+
         try:
             self.get_cursor().callproc('ag_insert_kit',
                                        [ag_login_id, kit_id,
@@ -326,6 +337,8 @@ class AGDataAccess(object):
 
     def updateAGKit(self, ag_kit_id, supplied_kit_id, kit_password,
                     swabs_per_kit, kit_verification_code):
+        kit_password = bcrypt.encrypt(kit_password)
+
         self.get_cursor().callproc('ag_update_kit',
                                    [ag_kit_id, supplied_kit_id,
                                     kit_password, swabs_per_kit,
@@ -427,15 +440,6 @@ class AGDataAccess(object):
             result = cur.fetchone()
             if result:
                 return {k: v for k, v in zip(colnames, result)}
-
-    def insertAGMultiple(self, ag_login_id, participant_name, field_name,
-                         field_value):
-        sql = ("insert into ag_survey_multiples (ag_login_id, "
-               "participant_name,item_name, item_value) values ('{0}','{1}',"
-               " '{2}', '{3}')").format(ag_login_id, participant_name,
-                                        field_name, field_value)
-        self.get_cursor().execute(sql)
-        self.connection.commit()
 
     def addAGGeneralValue(self, ag_login_id, participant_name, field_name,
                           field_value):
@@ -935,6 +939,8 @@ class AGDataAccess(object):
         kit_id is supplied_kit_id in the ag_kit table
         password is the new password
         """
+        password = bcrypt.encrypt(password)
+
         self.get_cursor().callproc('ag_update_kit_password',
                                    [kit_id, password])
         self.connection.commit()

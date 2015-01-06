@@ -1,7 +1,7 @@
 from wtforms import Form, SelectField, DateField, DateTimeField, TextField
 from tornado.web import authenticated
 
-from amgut.util import AG_DATA_ACCESS
+from amgut.connections import ag_data
 from amgut.handlers.base_handlers import BaseHandler
 from amgut import media_locale
 
@@ -34,20 +34,19 @@ class AddSample(BaseHandler):
         else:
             env_sampled = None
 
-        ag_login_id = AG_DATA_ACCESS.get_user_for_kit(self.current_user)
+        ag_login_id = ag_data.get_user_for_kit(self.current_user)
 
-        AG_DATA_ACCESS.logParticipantSample(ag_login_id, barcode, sample_site,
-                                            env_sampled, sample_date,
-                                            sample_time, participant_name,
-                                            notes)
+        ag_data.logParticipantSample(ag_login_id, barcode, sample_site,
+                                     env_sampled, sample_date,
+                                     sample_time, participant_name, notes)
 
         self.redirect(media_locale['SITEBASE'] + '/authed/portal/')
 
     @authenticated
     def get(self):
         kit_id = self.current_user
-        ag_login_id = AG_DATA_ACCESS.get_user_for_kit(kit_id)
-        kit_barcodes = AG_DATA_ACCESS.getAvailableBarcodes(ag_login_id)
+        ag_login_id = ag_data.get_user_for_kit(kit_id)
+        kit_barcodes = ag_data.getAvailableBarcodes(ag_login_id)
         participant_name = self.get_argument('participant_name',
                                              'environmental')
 
@@ -67,12 +66,12 @@ class AddSample(BaseHandler):
 
 
 class AddHumanSampleHandler(AddSample):
-    _sample_sites = AG_DATA_ACCESS.human_sites
+    _sample_sites = ag_data.human_sites
 
 
 class AddAnimalSampleHandler(AddSample):
-    _sample_sites = AG_DATA_ACCESS.animal_sites
+    _sample_sites = ag_data.animal_sites
 
 
 class AddGeneralSampleHandler(AddSample):
-    _sample_sites = AG_DATA_ACCESS.general_sites
+    _sample_sites = ag_data.general_sites

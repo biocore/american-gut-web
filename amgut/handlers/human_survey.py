@@ -5,11 +5,11 @@ from wtforms import Form
 from tornado.web import authenticated
 from tornado.escape import url_escape
 
-from amgut import AG_DATA_ACCESS
+from amgut import media_locale
+from amgut.connections import ag_data, redis
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.lib.util import store_survey
 from amgut.lib.survey_supp import primary_human_survey
-from amgut import r_server, media_locale
 
 
 def make_human_survey_class(group):
@@ -64,12 +64,12 @@ class HumanSurveyHandler(BaseHandler):
                 return
         else:
             # we came from participant_overview
-            consent = AG_DATA_ACCESS.getConsent(human_survey_id)
+            consent = ag_data.getConsent(human_survey_id)
             self.set_secure_cookie('human_survey_id', human_survey_id)
             data = primary_human_survey.fetch_survey(human_survey_id)
-            r_server.hset(human_survey_id, 'consent', dumps(consent))
-            r_server.hset(human_survey_id, 'existing', dumps(data))
-            r_server.expire(human_survey_id, 86400)
+            redis.hset(human_survey_id, 'consent', dumps(consent))
+            redis.hset(human_survey_id, 'existing', dumps(data))
+            redis.expire(human_survey_id, 86400)
 
         next_page_number = page_number + 1
 
@@ -78,7 +78,7 @@ class HumanSurveyHandler(BaseHandler):
             form_data.process(data=self.request.arguments)
             data = {'questions': form_data.data}
 
-            r_server.hset(human_survey_id, page_number, dumps(data))
+            redis.hset(human_survey_id, page_number, dumps(data))
 
         progress = int(100.0*(page_number+2)/(len(primary_human_survey.groups) + 1))
 
@@ -86,7 +86,7 @@ class HumanSurveyHandler(BaseHandler):
         if next_page_number < len(surveys):
             the_form = surveys[next_page_number]()
 
-            existing_responses = r_server.hget(human_survey_id, 'existing')
+            existing_responses = redis.hget(human_survey_id, 'existing')
             if existing_responses:
                 existing_responses = loads(existing_responses)
                 the_form = surveys[next_page_number](data=existing_responses)

@@ -1,6 +1,6 @@
 from amgut.lib.mail import send_email
 from amgut.handlers.base_handlers import BaseHandler
-from amgut.util import AG_DATA_ACCESS
+from amgut.connections import ag_data
 from amgut import text_locale
 
 
@@ -14,7 +14,7 @@ class KitIDHandler(BaseHandler):
         email = self.get_argument('email')
         tl = text_locale['handlers']
         if email:
-            kitids = AG_DATA_ACCESS.getAGKitIDsByEmail(email)
+            kitids = ag_data.getAGKitIDsByEmail(email)
         try:
             if len(kitids) > 0:
                 MESSAGE = tl['KIT_IDS_BODY'] % ", ".join(kitids)

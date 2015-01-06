@@ -3,7 +3,7 @@ import os
 from tornado.web import authenticated
 
 from amgut.lib.config_manager import AMGUT_CONFIG
-from amgut.util import AG_DATA_ACCESS
+from amgut.connections import ag_data
 from amgut.handlers.base_handlers import BaseHandler
 from amgut import media_locale
 
@@ -17,7 +17,7 @@ class SampleOverviewHandler(BaseHandler):
     def _sample_overview_renderer(self):
         barcode = self.get_argument('barcode')
 
-        sample_data = AG_DATA_ACCESS.getAGBarcodeDetails(barcode)
+        sample_data = ag_data.getAGBarcodeDetails(barcode)
 
         fs_base = AMGUT_CONFIG.base_data_dir
         web_base = "%s/results" % media_locale['SITEBASE']
@@ -68,8 +68,8 @@ class SampleOverviewHandler(BaseHandler):
     def post(self):
         bc_to_remove = self.get_argument("remove", None)
         if bc_to_remove:
-            ag_login_id = AG_DATA_ACCESS.get_user_for_kit(self.current_user)
-            AG_DATA_ACCESS.deleteSample(bc_to_remove, ag_login_id)
+            ag_login_id = ag_data.get_user_for_kit(self.current_user)
+            ag_data.deleteSample(bc_to_remove, ag_login_id)
             self.redirect(media_locale['SITEBASE'] + "/authed/portal/")
             return
 

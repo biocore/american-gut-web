@@ -1,8 +1,8 @@
 {% from future.utils import viewitems %}
-{% from amgut import media_locale, r_server %}
-{% from amgut.util import AG_DATA_ACCESS %}
-{% set human_participants, animal_participants, environmental_samples, kit_verified = AG_DATA_ACCESS.get_menu_items(skid) %}
-{% set maintenance = r_server.get('maintenance') %}
+{% from amgut import media_locale %}
+{% from amgut.connections import ag_data, redis %}
+{% set human_participants, animal_participants, environmental_samples, kit_verified = ag_data.get_menu_items(skid) %}
+{% set maintenance = redis.get('maintenance') %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
