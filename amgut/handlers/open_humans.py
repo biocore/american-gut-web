@@ -24,9 +24,9 @@ class OpenHumansLoginHandler(BaseHandler, OpenHumansMixin):
                                   '/authed/connect/open-humans/')
 
     _OAUTH_AUTHORIZE_URL = urljoin(AMGUT_CONFIG.open_humans_base_url,
-                                   '/oauth2/authorize')
+                                   '/oauth2/authorize/')
     _OAUTH_ACCESS_TOKEN_URL = urljoin(AMGUT_CONFIG.open_humans_base_url,
-                                      '/oauth2/access_token')
+                                      '/oauth2/token/')
 
     @web.authenticated
     @web.asynchronous
