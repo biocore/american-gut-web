@@ -20,8 +20,10 @@ class OpenHumansHandler(BaseHandler):
 
 
 class OpenHumansLoginHandler(BaseHandler, OpenHumansMixin):
+    _API_URL = urljoin(AMGUT_CONFIG.open_humans_base_url, '/api')
+
     _OAUTH_REDIRECT_URL = urljoin(AMGUT_CONFIG.base_url,
-                                  '/authed/connect/open-humans/')
+                                  '/authed/connect/open-humans/callback/')
 
     _OAUTH_AUTHORIZE_URL = urljoin(AMGUT_CONFIG.open_humans_base_url,
                                    '/oauth2/authorize/')
@@ -64,8 +66,7 @@ class OpenHumansLoginHandler(BaseHandler, OpenHumansMixin):
         self.redirect('/authed/open-humans/')
 
 
-# TODO: Connect this
-class OpenHumansConnectionHandler(BaseHandler, OpenHumansMixin):
+class OpenHumansCallbackHandler(BaseHandler, OpenHumansMixin):
     _API_URL = urljoin(AMGUT_CONFIG.open_humans_base_url, '/api')
 
     @web.authenticated
@@ -83,4 +84,5 @@ class OpenHumansConnectionHandler(BaseHandler, OpenHumansMixin):
 
             return
 
-        self.render('open-humans.html', user_data=user_data)
+        self.render('open-humans.html', skid=self.current_user,
+                    user_data=user_data)

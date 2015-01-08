@@ -45,7 +45,8 @@ from amgut.handlers.change_pass_verify import ChangePassVerifyHandler
 from amgut.handlers.change_password import ChangePasswordHandler
 
 from amgut.handlers.open_humans import (OpenHumansHandler,
-                                        OpenHumansLoginHandler)
+                                        OpenHumansLoginHandler,
+                                        OpenHumansCallbackHandler)
 
 define("port", default=8888, help="run on the given port", type=int)
 
@@ -73,7 +74,7 @@ class QiimeWebApplication(Application):
             (r"/authed/addendum/", AddendumHandler),
             (r"/authed/new_participant/", NewParticipantHandler),
             (r"/authed/new_participant_overview/",
-                NewParticipantOverviewHandler),
+             NewParticipantOverviewHandler),
             (r"/authed/sample_overview/", SampleOverviewHandler),
             (r"/authed/add_sample_overview/", AddSampleOverviewHandler),
             (r"/authed/survey_main/", SurveyMainHandler),
@@ -88,6 +89,8 @@ class QiimeWebApplication(Application):
             (r"/authed/add_animal/", AnimalSurveyHandler),
             (r"/authed/open-humans/", OpenHumansHandler),
             (r"/authed/connect/open-humans/", OpenHumansLoginHandler),
+            (r"/authed/connect/open-humans/callback/",
+             OpenHumansCallbackHandler),
             (r"/faq/", FAQHandler),
             (r"/participants/(.*)", ParticipantOverviewHandler),
             (r"/international_shipping/", InternationalHandler),
