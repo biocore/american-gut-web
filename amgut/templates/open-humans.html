@@ -1,11 +1,23 @@
 {% extends sitebase.html %}
+
 {% block head %}
 {% from amgut import text_locale, media_locale %}
-<!--
-<script
-  src="{% raw media_locale['SITEBASE'] %}/static/js/open-humans.js"></script>
--->
 {% end %}
+
 {% block content %}
-  <a href="/authed/connect/open-humans/">Connect to Open Humans</a>
+  <p>Open Humans is an exciting project that puts participants in charge of
+    data sharing.</p>
+
+  <p>Members of Open Humans can aggregate data from various research studies
+    and activities, and manage how they share this data with others – including
+    other researchers, who might want to recruit them to new studies! What you
+    share will always be your decision.</p>
+
+  <p>Interested in exporting your data to an Open Humans account? Click the
+    button below to begin the process.</p>
+
+  <a href="/authed/connect/open-humans/" title="Connect to Open Humans">
+    <img
+      src="{% raw media_locale['SITEBASE'] %}/static/img/open-humans-export.png">
+  </a>
 {% end %}
