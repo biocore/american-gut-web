@@ -13,17 +13,41 @@ from amgut.handlers.base_handlers import BaseHandler
 from amgut.lib.config_manager import AMGUT_CONFIG
 
 
-class OpenHumansHandler(BaseHandler):
+class OpenHumansHandler(BaseHandler, OpenHumansMixin):
+    _API_URL = urljoin(AMGUT_CONFIG.open_humans_base_url, '/api')
+
     @web.authenticated
+    @web.asynchronous
     def get(self):
-        self.render('open-humans.html', skid=self.current_user)
+        open_humans = self.get_secure_cookie('open-humans')
+
+        if not open_humans:
+            self.render('open-humans.html', skid=self.current_user,
+                        user_data=None, open_humans=None)
+
+            self.finish()
+
+            return
+
+        open_humans = escape.json_decode(open_humans)
+
+        self.open_humans_request(
+            '/american-gut/user-data/',
+            self._on_user_data,
+            access_token=open_humans['access_token'])
+
+    def _on_user_data(self, user_data):
+        open_humans = escape.json_decode(self.get_secure_cookie('open-humans'))
+
+        self.render('open-humans.html', skid=self.current_user,
+                    user_data=user_data, open_humans=open_humans)
 
 
 class OpenHumansLoginHandler(BaseHandler, OpenHumansMixin):
     _API_URL = urljoin(AMGUT_CONFIG.open_humans_base_url, '/api')
 
     _OAUTH_REDIRECT_URL = urljoin(AMGUT_CONFIG.base_url,
-                                  '/authed/connect/open-humans/callback/')
+                                  '/authed/connect/open-humans/')
 
     _OAUTH_AUTHORIZE_URL = urljoin(AMGUT_CONFIG.open_humans_base_url,
                                    '/oauth2/authorize/')
@@ -50,7 +74,7 @@ class OpenHumansLoginHandler(BaseHandler, OpenHumansMixin):
         self.authorize_redirect(
             redirect_uri=redirect_uri,
             client_id=AMGUT_CONFIG.open_humans_client_id,
-            extra_params={'scope': 'read+write'})
+            extra_params={'scope': 'read write'})
 
     def _on_login(self, user):
         """
@@ -59,30 +83,8 @@ class OpenHumansLoginHandler(BaseHandler, OpenHumansMixin):
         if user:
             logging.info('logged in user from openhumans: ' + str(user))
 
-            self.set_secure_cookie('user', escape.json_encode(user))
+            self.set_secure_cookie('open-humans', escape.json_encode(user))
         else:
-            self.clear_cookie('user')
+            self.clear_cookie('open-humans')
 
         self.redirect('/authed/open-humans/')
-
-
-class OpenHumansCallbackHandler(BaseHandler, OpenHumansMixin):
-    _API_URL = urljoin(AMGUT_CONFIG.open_humans_base_url, '/api')
-
-    @web.authenticated
-    @web.asynchronous
-    def get(self):
-        self.open_humans_request(
-            '/american-gut/user-data/current/',
-            self._on_user_data,
-            access_token=self.current_user['access_token'])
-
-    def _on_user_data(self, user_data):
-        if user_data is None:
-            # Session may have expired
-            self.redirect('/authed/connect/open-humans/')
-
-            return
-
-        self.render('open-humans.html', skid=self.current_user,
-                    user_data=user_data)
