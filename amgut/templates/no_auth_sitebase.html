@@ -132,6 +132,9 @@
                         {% if maintenance is None %}
                             <div style="color:red">{{loginerror}}</div>
                             <form method="post" action="{% raw media_locale['SITEBASE'] %}/auth/login/">
+                                {% if handler.get_argument('next', False) %}
+                                <input type="hidden" name="next" value="{{ handler.get_argument('next') }}">
+                                {% end %}
                                 <table width="100%">
                                   <tr><td><label for="skid">Kit ID</label></td><td><input type="text" id="skid" name="skid"></td></tr>
                                   <tr><td><label for="password">Password</label></td><td><input type="password" id="password" name="password"></td></tr>
