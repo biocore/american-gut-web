@@ -23,6 +23,8 @@ class OpenHumansHandler(BaseHandler, OpenHumansMixin):
     def get(self):
         open_humans = self.get_secure_cookie('open-humans')
 
+        # If the user isn't authenticated render the page to allow them to
+        # authenticate
         if not open_humans:
             self.render('open-humans.html', skid=self.current_user,
                         linked_barcodes=None, unlinked_barcodes=None,
@@ -44,7 +46,7 @@ class OpenHumansHandler(BaseHandler, OpenHumansMixin):
 
         skid = self.current_user
 
-        # At this point we jus deal with human participants
+        # At this point we just deal with human participants
         (human_participants, _, _, _) = ag_data.get_menu_items(skid)
 
         linked_barcodes = []
