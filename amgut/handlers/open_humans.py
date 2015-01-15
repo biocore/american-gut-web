@@ -1,5 +1,6 @@
 import logging
 
+from future.utils import viewitems
 from urlparse import urljoin
 
 try:
@@ -9,6 +10,7 @@ except ImportError:
 
 from tornado import escape, web
 
+from amgut.connections import ag_data
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.lib.config_manager import AMGUT_CONFIG
 
@@ -23,7 +25,8 @@ class OpenHumansHandler(BaseHandler, OpenHumansMixin):
 
         if not open_humans:
             self.render('open-humans.html', skid=self.current_user,
-                        user_data=None, open_humans=None)
+                        linked_barcodes=None, unlinked_barcodes=None,
+                        access_token=None, open_humans_url=self._API_URL)
 
             self.finish()
 
@@ -39,8 +42,30 @@ class OpenHumansHandler(BaseHandler, OpenHumansMixin):
     def _on_user_data(self, user_data):
         open_humans = escape.json_decode(self.get_secure_cookie('open-humans'))
 
-        self.render('open-humans.html', skid=self.current_user,
-                    user_data=user_data, open_humans=open_humans)
+        skid = self.current_user
+
+        # At this point we jus deal with human participants
+        (human_participants, _, _, _) = ag_data.get_menu_items(skid)
+
+        linked_barcodes = []
+        unlinked_barcodes = []
+
+        # Get the linked and unlinked barcodes and their participant IDs
+        for participant, barcodes in viewitems(human_participants):
+            for barcode in barcodes:
+                barcode['participant'] = participant
+
+                if barcode['barcode'] in user_data['barcodes']:
+                    linked_barcodes.append(barcode)
+                else:
+                    unlinked_barcodes.append(barcode)
+
+        self.render('open-humans.html',
+                    skid=skid,
+                    linked_barcodes=linked_barcodes,
+                    unlinked_barcodes=unlinked_barcodes,
+                    access_token=open_humans['access_token'],
+                    open_humans_url=self._API_URL)
 
 
 class OpenHumansLoginHandler(BaseHandler, OpenHumansMixin):

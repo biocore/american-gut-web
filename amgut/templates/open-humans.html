@@ -9,6 +9,14 @@
     padding: 1em;
   }
 </style>
+
+<script>
+  var accessToken = '{{ access_token }}';
+
+  var OPEN_HUMANS_URL = '{% raw open_humans_url %}';
+</script>
+
+<script src="{% raw media_locale['SITEBASE'] %}/static/js/open_humans.js"></script>
 {% end %}
 
 {% block content %}
@@ -23,6 +31,42 @@
       including other researchers, who might want to recruit them to new
       studies! What you share will always be your decision.</p>
 
+    {% if linked_barcodes or unlinked_barcodes %}
+      <hr>
+
+      {% if linked_barcodes %}
+      <p>You have the following barcodes linked with Open Humans:</p>
+
+      <ul>
+      {% for barcode in linked_barcodes %}
+        <li>
+          {{ barcode['participant'] }}: {{ barcode['barcode'] }},
+          {{ barcode['site_sampled'] }}
+          -
+          <a class="unlink-barcode" href="#"
+            data-barcode="{{ barcode['barcode'] }}">unlink</a>
+        </li>
+      {% end %}
+      </ul>
+      {% end %}
+
+      {% if unlinked_barcodes %}
+      <p>You have the following barcodes available to be linked with Open
+        Humans:</p>
+
+      <ul>
+        {% for barcode in unlinked_barcodes %}
+        <li>
+          {{ barcode['participant'] }}: {{ barcode['barcode'] }},
+          {{ barcode['site_sampled'] }}
+          -
+          <a class="link-barcode" href="#"
+            data-barcode="{{ barcode['barcode'] }}">link</a>
+        </li>
+        {% end %}
+      </ul>
+      {% end %}
+    {% else %}
     <p>Interested in exporting your data to an Open Humans account? Click the
       button below to begin the process.</p>
 
@@ -30,5 +74,6 @@
       <img
         src="{% raw media_locale['SITEBASE'] %}/static/img/open-humans-export-half.png">
     </a>
+    {% end %}
   </div>
 {% end %}
