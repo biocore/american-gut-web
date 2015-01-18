@@ -54,7 +54,7 @@ class AnimalSurveyHandler(BaseHandler):
 #                     if k.startswith('human_') or k.startswith('pet_')}
 #
 #        ag_login_id = ag_data.get_user_for_kit(skid)
-#        ag_data.deleteAGParticipant(ag_login_id, participant_name)
+#        ag_data.deleteAGParticipantSurvey(ag_login_id, participant_name)
 #
 #        for sample in ag_data.getParticipantSamples(ag_login_id,
 #                participant_name):
