@@ -224,6 +224,15 @@ class SQLConnectionHandler(object):
         if self._connection.closed:
             self._open_connection()
         cur = self._connection.cursor()
-        cur.callproc(procname, proc_args)
-        cur.close()
-        return self._connection.cursor('cur2')
+
+        try:
+            cur.callproc(procname, proc_args)
+        except Exception as e:
+            # catch any error from the database and raise for site to catch
+            self._connection.rollback()
+            raise RuntimeError("Failed to execute stored procedure !\n%s" %
+                               str(e))
+        else:
+            return self._connection.cursor('cur2')
+        finally:
+            cur.close()
