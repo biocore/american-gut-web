@@ -5,7 +5,7 @@ from tornado.web import authenticated
 from tornado.websocket import WebSocketHandler
 
 from amgut.handlers.base_handlers import BaseHandler
-from amgut.util import AG_DATA_ACCESS
+from amgut.connections import ag_data
 from amgut import text_locale, media_locale
 
 
@@ -53,32 +53,32 @@ class AnimalSurveyHandler(BaseHandler):
 #        multiples = {k: v[0] for k, v in self.request.body_arguments.items()
 #                     if k.startswith('human_') or k.startswith('pet_')}
 #
-#        ag_login_id = AG_DATA_ACCESS.get_user_for_kit(skid)
-#        AG_DATA_ACCESS.deleteAGParticipantSurvey(ag_login_id, participant_name)
+#        ag_login_id = ag_data.get_user_for_kit(skid)
+#        ag_data.deleteAGParticipant(ag_login_id, participant_name)
 #
-#        for sample in AG_DATA_ACCESS.getParticipantSamples(ag_login_id,
+#        for sample in ag_data.getParticipantSamples(ag_login_id,
 #                participant_name):
-#            AG_DATA_ACCESS.deleteSample(sample['barcode'], ag_login_id)
+#            ag_data.deleteSample(sample['barcode'], ag_login_id)
 #
 #        # Create the new participant if it doesn't exist (merges)
-#        AG_DATA_ACCESS.addAGAnimalParticipant(ag_login_id, participant_name)
+#        ag_data.addAGAnimalParticipant(ag_login_id, participant_name)
 #
 #        for field, value in singles.items():
 #            if value is None:
 #                continue
 #
-#            AG_DATA_ACCESS.addAGGeneralValue(ag_login_id, participant_name,
+#            ag_data.addAGGeneralValue(ag_login_id, participant_name,
 #                                             field, value)
-#            AG_DATA_ACCESS.addAGSingle(ag_login_id, participant_name,
+#            ag_data.addAGSingle(ag_login_id, participant_name,
 #                                       field, value, 'ag_animal_survey')
 #
 #        for field, value in multiples.items():
 #            if value is None:
 #                continue
 #
-#            AG_DATA_ACCESS.addAGGeneralValue(ag_login_id, participant_name,
+#            ag_data.addAGGeneralValue(ag_login_id, participant_name,
 #                                             field, value)
-#            AG_DATA_ACCESS.insertAGMultiple(ag_login_id, participant_name,
+#            ag_data.insertAGMultiple(ag_login_id, participant_name,
 #                                            field, value)
 #
 #        message = urlencode([('errmsg', tl['SUCCESSFULLY_ADDED'] %
@@ -93,9 +93,9 @@ class CheckParticipantName(WebSocketHandler, BaseHandler):
         skid = self.current_user
         participant_name = msg
 
-        ag_login_id = AG_DATA_ACCESS.get_user_for_kit(skid)
-        human_participants = AG_DATA_ACCESS.getHumanParticipants(ag_login_id)
-        animal_participants = AG_DATA_ACCESS.getAnimalParticipants(ag_login_id)
+        ag_login_id = ag_data.get_user_for_kit(skid)
+        human_participants = ag_data.getHumanParticipants(ag_login_id)
+        animal_participants = ag_data.getAnimalParticipants(ag_login_id)
 
         if participant_name in (human_participants + animal_participants):
             # if the participant already exists in the system, fail nicely

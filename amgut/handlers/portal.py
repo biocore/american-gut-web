@@ -1,7 +1,7 @@
 from tornado.web import authenticated
 
 from amgut.handlers.base_handlers import BaseHandler
-from amgut.util import AG_DATA_ACCESS
+from amgut.connections import ag_data
 
 
 class PortalHandler(BaseHandler):
@@ -10,16 +10,16 @@ class PortalHandler(BaseHandler):
         errmsg = self.get_argument('errmsg', "")
         kit_id = self.current_user
 
-        user_info = AG_DATA_ACCESS.get_user_info(kit_id)
+        user_info = ag_data.get_user_info(kit_id)
         user_name = user_info['name']
 
-        kit_details = AG_DATA_ACCESS.getAGKitDetails(kit_id)
+        kit_details = ag_data.getAGKitDetails(kit_id)
         kit_verified = True if kit_details['kit_verified'] == 'y' else False
 
-        results = AG_DATA_ACCESS.get_barcode_results(kit_id)
+        results = ag_data.get_barcode_results(kit_id)
         has_results = len(results) != 0
 
-        barcodes = AG_DATA_ACCESS.getBarcodesByKit(kit_id)
+        barcodes = ag_data.getBarcodesByKit(kit_id)
 
         kit_ver_error = False
         verification_textbox = ''
@@ -35,17 +35,17 @@ class PortalHandler(BaseHandler):
         kit_id = self.current_user
         errmsg = self.get_argument('errmsg', "")
         user_code = self.get_argument('user_verification_code')
-        kit_details = AG_DATA_ACCESS.getAGKitDetails(kit_id)
-        barcodes = AG_DATA_ACCESS.getBarcodesByKit(kit_id)
-        user_info = AG_DATA_ACCESS.get_user_info(kit_id)
+        kit_details = ag_data.getAGKitDetails(kit_id)
+        barcodes = ag_data.getBarcodesByKit(kit_id)
+        user_info = ag_data.get_user_info(kit_id)
         user_name = user_info['name']
-        results = AG_DATA_ACCESS.get_barcode_results(kit_id)
+        results = ag_data.get_barcode_results(kit_id)
         has_results = len(results) != 0
 
         kit_verified = True if kit_details['kit_verified'] == 'y' else False
 
         if kit_details['kit_verification_code'] == user_code:
-            AG_DATA_ACCESS.verifyKit(kit_id)
+            ag_data.verifyKit(kit_id)
             kit_ver_error = False
             verification_textbox = ''
         else:

@@ -24,7 +24,7 @@ class SQLConnectionHandler(object):
         else:
             self._connection = con
 
-        self.execute('set search_path to ag, public')
+        self.execute('SET search_path TO ag, public')
 
     def __del__(self):
         self._connection.close()
@@ -36,7 +36,6 @@ class SQLConnectionHandler(object):
                                        database=AMGUT_CONFIG.database,
                                        host=AMGUT_CONFIG.host,
                                        port=AMGUT_CONFIG.port)
-            self.execute('set search_path to ag, public')
         except Exception as e:
             # catch any error from the database and raise for site to catch
             raise RuntimeError("Cannot connect to database!\n%s" % str(e))
@@ -60,9 +59,6 @@ class SQLConnectionHandler(object):
             raise
         else:
             self._connection.commit()
-
-    def __del__(self):
-        self._connection.close()
 
     def _check_sql_args(self, sql_args):
         """ Checks that sql_args have the correct type
@@ -228,6 +224,15 @@ class SQLConnectionHandler(object):
         if self._connection.closed:
             self._open_connection()
         cur = self._connection.cursor()
-        cur.callproc(procname, proc_args)
-        cur.close()
-        return self._connection.cursor('cur2')
+
+        try:
+            cur.callproc(procname, proc_args)
+        except Exception as e:
+            # catch any error from the database and raise for site to catch
+            self._connection.rollback()
+            raise RuntimeError("Failed to execute stored procedure !\n%s" %
+                               str(e))
+        else:
+            return self._connection.cursor('cur2')
+        finally:
+            cur.close()

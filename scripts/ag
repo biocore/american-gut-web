@@ -8,16 +8,22 @@
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
 
-from os import listdir
-from os.path import abspath, join, dirname, split
+import subprocess
+
+from os.path import abspath, basename, dirname, join, split, splitext
 from glob import glob
 
-from psycopg2 import connect, OperationalError
-from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
-from natsort import natsorted
 import click
 
-from amgut import db_conn, AG_DATA_ACCESS
+from psycopg2 import connect, InternalError, OperationalError, ProgrammingError
+from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+
+from natsort import natsorted
+# pylint: disable=no-name-in-module
+from passlib.hash import bcrypt
+# pylint: enable=no-name-in-module
+
+from amgut.connections import ag_data, redis
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.lib.util import LAYOUT_FP, INITIALIZE_FP, POPULATE_FP, PATCHES_DIR
 from amgut.lib.data_access.sql_connection import SQLConnectionHandler
@@ -40,20 +46,15 @@ def _check_db_exists(db, cursor):
 
 @click.group()
 def cli():
-    pass
-
-
-@cli.group()
-def env():
-    pass
+    """Commands for managing the American Gut website and database."""
 
 
 @cli.command()
-@click.argument('mode', required=True, 
+@click.argument('mode_name', required=True,
                 type=click.Choice(['maintenance', 'production']))
-@click.option('--message', type=str, 
+@click.option('--message', type=str,
               default='The site is down for maintenance')
-def mode(mode, message):
+def mode(mode_name, message):
     """Enable maintenance or production mode.
 
     In maintenance mode, active connections will remain active during
@@ -65,39 +66,80 @@ def mode(mode, message):
     In production mode, the banner message is not displayed and logins are
     enabled.
     """
-    from amgut import r_server
-
-    if mode == 'maintenance':
-        r_server.set('maintenance', message)
+    if mode_name == 'maintenance':
+        redis.set('maintenance', message)
         click.echo("Warning, going into maintenance mode. Logins disabled!")
-    elif mode == 'production':
-        r_server.delete('maintenance')
+    elif mode_name == 'production':
+        redis.delete('maintenance')
         click.echo("Warning, going into production mode. Logins enabled!")
 
 
-@env.command()
+@cli.command()
 @click.argument('db', type=click.Choice(['test', 'production']))
-def make(db):
+@click.option('--force', is_flag=True, default=False,
+              help='Continue if the database already exists')
+def make(db, force):
+    """Creates the specified database."""
+
+    _create_database(force)
+    _build_and_initialize()
+    _make_settings_table()
+    _patch()
+
     if db == 'test':
-        _create_database()
-        _make_settings_table()
-        _build_and_initialize()
-        _patch()
         _populate_test_db()
-        print("Test environment successfully created")
 
-    if db == 'production':
-        _create_database()
-        _make_settings_table()
-        _build_and_initialize()
-        _patch()
-        print("Production environment successfully created")
+    click.echo("{} environment successfully created".format(db))
 
 
-@env.command()
-def clean_test():
-    db_conn._connection.close()
-    AG_DATA_ACCESS.connection.close()
+@cli.command()
+def migrate_passwords():
+    """Migrate passwords to bcrypt hashes."""
+
+    kits_by_login = ag_data.getAGKitsByLogin()
+
+    for kit_id in [d['supplied_kit_id'] for d in kits_by_login]:
+        password = ag_data.getAGKitDetails(kit_id)['kit_password']
+
+        if not bcrypt.identify(password):
+            click.echo('migrating kit {} to a bcrypt hash'.format(kit_id))
+
+            ag_data.ag_update_kit_password(kit_id, password)
+        else:
+            click.echo('kit {} is already a bcrypt hash'.format(kit_id))
+
+
+@cli.command()
+def drop_procedures():
+    """Drops the stored procedures."""
+    conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
+                   host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port)
+    cur = conn.cursor()
+
+    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+
+    for name in _procedure_names():
+        click.echo('Dropping function {}'.format(name))
+
+        try:
+            cur.execute('DROP FUNCTION IF EXISTS {} CASCADE'.format(name))
+        except InternalError as e:
+            click.echo('Failed to drop {}:'.format(name))
+
+            error = '\n'.join(['\t{}'.format(line)
+                               for line in str(e).strip().split('\n')])
+
+            click.echo(error)
+
+    cur.close()
+    conn.close()
+
+
+@cli.command()
+@click.option('--force', is_flag=True, default=False,
+              help='force removal')
+def drop_test(force):
+    """Drops the test database, schema, and role."""
 
     conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
                    host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
@@ -105,32 +147,118 @@ def clean_test():
 
     cur = conn.cursor()
 
-    cur.execute('select test_environment from settings')
-    is_test_db = cur.fetchone()[0].lower()
+    cur.execute('SET SEARCH_PATH TO ag, public')
+
+    try:
+        cur.execute('SELECT test_environment FROM settings')
+        is_test_db = cur.fetchone()[0].lower()
+    except ProgrammingError:
+        if not force:
+            raise
+
     cur.close()
     conn.close()
+
+    if not force and is_test_db != 'true':
+        raise OperationalError("The settings table indicates this is not "
+                               "a test database; aborting.")
+
+    conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
+                   host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
+                   database=AMGUT_CONFIG.database)
+    cur = conn.cursor()
+
+    cur.execute('SET SEARCH_PATH TO ag, public')
+
+    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+
+    click.echo("Dropping user ag_wwwuser")
+
+    try:
+        click.echo('Reassigning owned objects')
+        cur.execute('REASSIGN OWNED BY ag_wwwuser TO {}'
+                    .format(AMGUT_CONFIG.user))
+
+        # Database
+        click.echo('Revoking all privileges on {}'
+                   .format(AMGUT_CONFIG.database))
+        cur.execute('REVOKE ALL PRIVILEGES ON DATABASE {} '
+                    'FROM ag_wwwuser CASCADE'.format(AMGUT_CONFIG.database))
+
+        # public schema
+        click.echo('Revoking all privileges in schema public')
+        cur.execute('REVOKE ALL PRIVILEGES ON SCHEMA public FROM ag_wwwuser '
+                    'CASCADE')
+
+        click.echo('Revoking all privileges on all tables in public')
+        cur.execute('REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA public '
+                    'FROM ag_wwwuser CASCADE')
+
+        click.echo('Revoking all privileges on all functions in public')
+        cur.execute('REVOKE ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public '
+                    'FROM ag_wwwuser CASCADE')
+
+        # ag schema
+        click.echo('Revoking all privileges in schema ag')
+        cur.execute('REVOKE ALL PRIVILEGES ON SCHEMA ag FROM ag_wwwuser '
+                    'CASCADE')
+
+        click.echo('Revoking all privileges on all tables in ag')
+        cur.execute('REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA ag '
+                    'FROM ag_wwwuser CASCADE')
+
+        click.echo('Revoking all privileges on all functions in ag')
+        cur.execute('REVOKE ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA ag '
+                    'FROM ag_wwwuser CASCADE')
+    except:
+        # Some of these might not actually exist, just pass in that case
+        pass
+    finally:
+        cur.close()
+        conn.close()
 
     conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
                    host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port)
     cur = conn.cursor()
 
+    cur.execute('SET SEARCH_PATH TO ag, public')
+
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 
-    if is_test_db == 'false':
-        raise OperationalError("The settings table indicates this is not "
-                               "a test database; aborting.")
-    else:
-        cur.execute('drop database {}'.format(AMGUT_CONFIG.database))
-        print("Database %s dropped" % AMGUT_CONFIG.database)
-        cur.execute('drop role ag_wwwuser')
-        print("role ag_wwwuser dropped")
-        cur.close()
-        conn.close()
+    click.echo('Dropping user ag_wwwuser...')
+    cur.execute('DROP USER IF EXISTS ag_wwwuser')
+
+    click.echo('Dropping schema ag...')
+    cur.execute('DROP SCHEMA IF EXISTS ag CASCADE')
+
+    cur.close()
+    conn.close()
+
+    click.echo('Dropping database {}'.format(AMGUT_CONFIG.database))
+
+    command = ['dropdb', '--if-exists']
+
+    if AMGUT_CONFIG.host:
+        command.extend(['-h', AMGUT_CONFIG.host])
+
+    if AMGUT_CONFIG.port:
+        command.extend(['-p', str(AMGUT_CONFIG.port)])
+
+    if AMGUT_CONFIG.user:
+        command.extend(['-U', AMGUT_CONFIG.user])
+
+    command.append(AMGUT_CONFIG.database)
+
+    proc = subprocess.Popen(command,
+                            stdin=subprocess.PIPE,
+                            stdout=subprocess.PIPE)
+
+    proc.communicate('{}\n'.format(AMGUT_CONFIG.password))
 
 
-@env.command()
+@cli.command()
 def patch():
-    """Patches the database schema based on the SETTINGS table
+    """Applies any unapplied database patches.
 
     Pulls the current patch from the settings table and applies all subsequent
     patches found in the patches directory.
@@ -138,7 +266,7 @@ def patch():
     _patch()
 
 
-def _create_database():
+def _create_database(force=False):
     # Connect to the postgres server
     try:
         conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
@@ -150,55 +278,137 @@ def _create_database():
     # Set the isolation level to AUTOCOMMIT so we can execute a create database
     # sql query
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+
     # Get the cursor
     cur = conn.cursor()
-    # Check that the database does not already exists
-    if _check_db_exists(AMGUT_CONFIG.database, cur):
-        raise ValueError("Database '%s' already present on the system"
-                         % AMGUT_CONFIG.database)
+
+    cur.execute('SET SEARCH_PATH TO ag, public')
+
+    db_exists = _check_db_exists(AMGUT_CONFIG.database, cur)
+
+    # Check that the database does not already exist
+    if db_exists and force:
+        return
+    elif db_exists:
+        raise ValueError("Database '{}' already present on the system"
+                         .format(AMGUT_CONFIG.database))
+
     # Create the database
-    print("Creating database")
+    click.echo("Creating database")
     cur.execute('CREATE DATABASE %s' % AMGUT_CONFIG.database)
     cur.close()
     conn.close()
+
+
+def _procedures():
+    procedure_path = join(dirname(dirname(abspath(__file__))),
+                          "amgut", "lib", "data_access", "procedures")
+
+    return [join(procedure_path, p)
+            for p in glob(join(procedure_path, '*.sql'))]
+
+
+def _migrate_procedures(from_schema='public', to_schema='ag'):
+    click.echo('Migrating procedures from {} to {}'.format(from_schema,
+                                                           to_schema))
+
+    conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
+                   host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
+                   database=AMGUT_CONFIG.database)
+    cur = conn.cursor()
+
+    cur.execute('SET SEARCH_PATH TO {}'.format(from_schema))
+
+    sql = """SELECT format('%I.%I(%s)',
+                           pg_namespace.nspname,
+                           pg_proc.proname,
+                           pg_get_function_identity_arguments(pg_proc.oid))
+             FROM pg_proc
+             INNER JOIN pg_namespace
+                ON (pg_proc.pronamespace = pg_namespace.oid)
+             WHERE pg_namespace.nspname = '{}';""".format(from_schema)
+
+    cur.execute(sql)
+
+    for (full_name,) in cur.fetchall():
+        click.echo('Migrating {} to {}'.format(full_name, to_schema))
+
+        cur.execute('ALTER FUNCTION {} SET SCHEMA {}'.format(full_name,
+                                                             to_schema))
+
+    conn.commit()
+
+    cur.close()
+    conn.close()
+
+
+def _procedure_names():
+    conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
+                   host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
+                   database=AMGUT_CONFIG.database)
+    cur = conn.cursor()
+
+    cur.execute('SET SEARCH_PATH TO ag, public')
+
+    procedures = []
+
+    for procedure in _procedures():
+        name = splitext(basename(procedure))[0]
+
+        sql = """SELECT format('%s(%s)',
+                               oid::regproc,
+                               pg_get_function_identity_arguments(oid))
+                 FROM   pg_proc
+                 WHERE  proname = '{}'
+                 AND    pg_function_is_visible(oid)""".format(name)
+
+        cur.execute(sql)
+
+        for (full_name,) in cur.fetchall():
+            procedures.append(full_name)
+
+    cur.close()
+    conn.close()
+
+    return procedures
 
 
 def _build_and_initialize():
     conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
                    host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
                    database=AMGUT_CONFIG.database)
-    curr = conn.cursor()
+    cur = conn.cursor()
 
     # create the schema and set a search path
-    curr.execute('create schema ag')
-    curr.execute('set search_path to ag, public')
+    cur.execute('CREATE SCHEMA AG')
+    cur.execute('SET SEARCH_PATH TO ag, public')
 
-    print("Inserting procedures")
-    procedures_dirpath = join(dirname(dirname(abspath(__file__))), "amgut",
-                              "lib", "data_access", "procedures")
-    for procedure_f in glob(join(procedures_dirpath, '*.sql')):
-        with open(join(procedures_dirpath, procedure_f)) as f:
-            curr.execute(f.read())
+    click.echo('Inserting procedures')
 
-    print("Building SQL layout")
+    for procedure in _procedures():
+        with open(procedure) as f:
+            cur.execute(f.read())
+
+    click.echo("Building SQL layout")
+
     with open(LAYOUT_FP) as f:
         # We have to skip the "create schema" line here
-        curr.execute('\n'.join(f.readlines()[1:]))
+        cur.execute('\n'.join(f.readlines()[1:]))
 
     with open(INITIALIZE_FP) as f:
-        curr.execute(f.read())
+        cur.execute(f.read())
 
-    print('Granting privileges')
+    click.echo('Granting privileges')
 
-    # create 
-    curr.execute('create user "ag_wwwuser"')
-    curr.execute('grant usage on schema public, ag to "ag_wwwuser"') 
-    curr.execute('grant connect on database %s to "ag_wwwuser"' %
-                 AMGUT_CONFIG.database) 
-    curr.execute('GRANT INSERT, UPDATE, DELETE, SELECT ON ALL TABLES IN SCHEMA'
-                 ' public, ag TO "ag_wwwuser";')
-    curr.execute('GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public, ag TO '
-                 '"ag_wwwuser";')
+    # create
+    cur.execute('CREATE USER "ag_wwwuser"')
+    cur.execute('GRANT USAGE ON schema public, ag TO "ag_wwwuser"')
+    cur.execute('GRANT CONNECT ON DATABASE %s TO "ag_wwwuser"' %
+                AMGUT_CONFIG.database)
+    cur.execute('GRANT INSERT, UPDATE, DELETE, SELECT ON ALL TABLES IN SCHEMA'
+                ' public, ag TO "ag_wwwuser";')
+    cur.execute('GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public, ag TO '
+                '"ag_wwwuser";')
     conn.commit()
 
 
@@ -209,14 +419,15 @@ def _make_settings_table():
     columns = [' '.join([setting[0], 'varchar']) for setting in settings]
     column_names = [setting[0] for setting in settings]
 
-
     num_values = len(settings)
-    sql = "insert into settings ({}) values ({})".format(
-          ', '.join(column_names), ', '.join(['%s']*num_values))
+    sql = "INSERT INTO settings ({}) VALUES ({})".format(
+        ', '.join(column_names), ', '.join(['%s'] * num_values))
     args = [str(setting[1]) for setting in settings]
 
     with conn.get_postgres_cursor() as cur:
-        create_sql = "create table settings ({}, current_patch varchar not null default 'unpatched')"
+        create_sql = ("CREATE TABLE ag.settings ({}, current_patch varchar "
+                      "NOT NULL DEFAULT 'unpatched')")
+
         create_sql = create_sql.format(', '.join(columns))
 
         cur.execute(create_sql)
@@ -224,19 +435,22 @@ def _make_settings_table():
 
 
 def _populate_test_db():
-    print("Populating the test database")
+    click.echo("Populating the test database")
+
     conn = SQLConnectionHandler()
+
     with open(POPULATE_FP) as f:
         conn.execute(f.read())
 
 
 def _patch(patches_dir=PATCHES_DIR):
-    """Patches the database schema based on the SETTINGS table
+    """Patches the database schema based on the settings table
 
     Pulls the current patch from the settings table and applies all subsequent
     patches found in the patches directory.
     """
-    print("Patching the database...")
+    click.echo("Patching the database...")
+
     conn = SQLConnectionHandler()
 
     current_patch = conn.execute_fetchone(
@@ -258,12 +472,18 @@ def _patch(patches_dir=PATCHES_DIR):
     for patch_fp in patch_files[next_patch_index:]:
         patch_filename = split(patch_fp)[-1]
         with conn.get_postgres_cursor() as cur:
+            cur.execute('SET SEARCH_PATH TO ag, public')
+
             with open(patch_fp, 'U') as patch_file:
-                print('\tApplying patch %s...' % patch_filename)
+                click.echo('\tApplying patch %s...' % patch_filename)
+
                 cur.execute(patch_file.read())
                 cur.execute(patch_update_sql, [patch_filename])
 
         conn._connection.commit()
+
+    # Idempotent patches implemented in Python can be run here
+    _migrate_procedures('public', 'ag')
 
 
 if __name__ == '__main__':
