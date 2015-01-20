@@ -390,7 +390,7 @@ class AGDataAccess(object):
                                         participant_name])
         self.connection.commit()
 
-    def deleteAGParticipant(self, ag_login_id, participant_name):
+    def deleteAGParticipantSurvey(self, ag_login_id, participant_name):
         # Remove user using old stype DB Schema
         self.get_cursor().callproc('ag_delete_participant',
                                    [ag_login_id, participant_name])
@@ -409,6 +409,11 @@ class AGDataAccess(object):
             curr.execute(sql, [survey_id])
 
             sql = ("DELETE FROM survey_answers_other WHERE "
+                   "survey_id = %s")
+            curr.execute(sql, [survey_id])
+
+            # Reset survey attached to barcode(s)
+            sql = ("UPDATE ag_kit_barcodes SET survey_id = NULL WHERE "
                    "survey_id = %s")
             curr.execute(sql, [survey_id])
 

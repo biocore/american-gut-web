@@ -211,7 +211,7 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(rec[6], '')
         self.assertEqual(rec[7], '')
 
-    def test_deleteAGParticipant(self):
+    def test_deleteAGParticipantSurvey(self):
         cur = self.con.cursor()
         cur.execute('insert into ag_consent (ag_login_id, '
                     'participant_name, participant_email) values (%s, %s, %s)',
@@ -223,7 +223,7 @@ class TestAGDataAccess(TestCase):
                     ('d8592c74-7da1-2135-e040-8a80115d6401', '1235',
                         'sp_test'))
         self.con.commit()
-        self.data_access.deleteAGParticipant(
+        self.data_access.deleteAGParticipantSurvey(
             'd8592c747da12135e0408a80115d6401', 'sp_test')
         data = self.data_access.getHumanParticipants(
             'd8592c747da12135e0408a80115d6401')
