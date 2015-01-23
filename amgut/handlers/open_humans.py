@@ -101,7 +101,7 @@ class OpenHumansLoginHandler(BaseHandler, OpenHumansMixin):
         self.authorize_redirect(
             redirect_uri=redirect_uri,
             client_id=AMGUT_CONFIG.open_humans_client_id,
-            extra_params={'scope': 'read write'})
+            extra_params={'scope': 'read write american-gut'})
 
     def _on_login(self, user):
         """
