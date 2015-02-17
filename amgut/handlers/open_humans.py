@@ -33,8 +33,6 @@ class OpenHumansHandler(BaseHandler, OpenHumansMixin):
                         linked_barcodes=None, unlinked_barcodes=None,
                         access_token=None, open_humans_url=self._API_URL)
 
-            self.finish()
-
             return
 
         open_humans = escape.json_decode(open_humans)
