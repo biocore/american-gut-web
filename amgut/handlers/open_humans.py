@@ -6,6 +6,9 @@ from urlparse import urljoin
 try:
     from open_humans_tornado_oauth2 import OpenHumansMixin
 except ImportError:
+    logging.warn('Unable to load OpenHumansMixin, please install '
+                 'open_humans_tornado_oauth2')
+
     OpenHumansMixin = object
 
 from tornado import escape, web
