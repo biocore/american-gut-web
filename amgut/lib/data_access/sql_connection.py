@@ -11,7 +11,6 @@ from __future__ import division
 from contextlib import contextmanager
 from psycopg2 import connect, Error as PostgresError
 from psycopg2.extras import DictCursor
-from psycopg2 import OperationalError
 
 from amgut.lib.config_manager import AMGUT_CONFIG
 

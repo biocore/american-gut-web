@@ -101,8 +101,8 @@ class ConfigurationManager(object):
                           "existing file" % conf_fp)
 
         config = ConfigParser(defaults={
-            'open_humans_key': '',
-            'open_humans_secret': '',
+            'open_humans_client_id': '',
+            'open_humans_client_secret': '',
             'open_humans_base_url': 'https://openhumans.org',
         })
 
@@ -230,7 +230,7 @@ class ConfigurationManager(object):
 
         self.open_humans_base_url = get('OPEN_HUMANS_BASE_URL')
 
-        self.open_humans_key = get('OPEN_HUMANS_KEY')
-        self.open_humans_secret = get('OPEN_HUMANS_SECRET')
+        self.open_humans_client_id = get('OPEN_HUMANS_CLIENT_ID')
+        self.open_humans_client_secret = get('OPEN_HUMANS_CLIENT_SECRET')
 
 AMGUT_CONFIG = ConfigurationManager()

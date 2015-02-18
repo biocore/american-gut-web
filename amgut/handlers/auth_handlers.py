@@ -22,7 +22,7 @@ class AuthRegisterHandoutHandler(BaseHandler):
     @authenticated
     def post(self):
         skid = self.current_user
-        tl=text_locale['handlers']
+        tl = text_locale['handlers']
         info = {}
         for info_column in ("email", "participantname", "address", "city",
                             "state", "zip", "country"):
@@ -54,7 +54,8 @@ class AuthRegisterHandoutHandler(BaseHandler):
             barcode = row[0]
             success = ag_data.addAGBarcode(ag_kit_id, barcode)
             if success == -1:
-                self.redirect(media_locale['SITEBASE'] + '/db_error/?err=regbarcode')
+                self.redirect((media_locale['SITEBASE'] +
+                               '/db_error/?err=regbarcode'))
                 return
 
         # Email the verification code
@@ -88,7 +89,8 @@ class AuthLoginHandler(BaseHandler):
         if login:
             # everything good so log in
             self.set_current_user(skid)
-            self.redirect(media_locale['SITEBASE'] + "/authed/portal/")
+            default_redirect = media_locale['SITEBASE'] + '/authed/portal/'
+            self.redirect(self.get_argument('next', default_redirect))
             return
         else:
             is_handout = ag_data.handoutCheck(skid, password)

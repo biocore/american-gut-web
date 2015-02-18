@@ -10,7 +10,7 @@ from amgut import text_locale
 
 class BaseHandler(RequestHandler):
     def get_current_user(self):
-        '''Overrides default method of returning user curently connected'''
+        """Overrides default method of returning user currently connected"""
         skid = self.get_secure_cookie("skid")
         if skid is None:
             self.clear_cookie("skid")
@@ -19,7 +19,7 @@ class BaseHandler(RequestHandler):
             return skid.strip('" ')
 
     def write_error(self, status_code, **kwargs):
-        '''Overrides the error page created by Tornado'''
+        """Overrides the error page created by Tornado"""
         from traceback import format_exception
         user = self.current_user
         # render error page BEFORE handling the error
@@ -48,14 +48,14 @@ class BaseHandler(RequestHandler):
 
 
 class MainHandler(BaseHandler):
-    '''Index page'''
+    """Index page"""
     def get(self):
         latlong_db = ag_data.getMapMarkers()
         self.render("index.html", latlongs_db=latlong_db, loginerror="")
 
 
 class NoPageHandler(BaseHandler):
-    '''404 page'''
+    """404 page"""
     def get(self):
         self.set_status(404)
         if self.current_user:
