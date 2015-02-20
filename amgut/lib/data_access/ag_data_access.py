@@ -467,8 +467,16 @@ class AGDataAccess(object):
             # Get survey id
             sql = ("SELECT survey_id FROM ag_login_surveys WHERE ag_login_id = "
                    "%s AND participant_name = %s")
+
             survey_id = conn_handler.execute_fetchone(
-                sql, (ag_login_id, participant_name))[0]
+                sql, (ag_login_id, participant_name))
+            if survey_id:
+                # remove the list encapulation
+                survey_id = survey_id[0]
+            else:
+                raise RuntimeError("No survey ID for ag_login_id %s and "
+                                   "participant name %s" % (ag_login_id,
+                                                            participant_name))
         else:
             # otherwise, it is an environmental sample
             survey_id = None
