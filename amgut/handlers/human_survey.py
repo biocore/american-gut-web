@@ -104,3 +104,7 @@ class HumanSurveyHandler(BaseHandler):
             store_survey(primary_human_survey, human_survey_id)
             self.redirect(media_locale['SITEBASE'] +
                           '/authed/human_survey_completed/')
+
+    @authenticated
+    def get(self, *args, **kwargs):
+        self.redirect(media_locale['SITEBASE'] + "/")

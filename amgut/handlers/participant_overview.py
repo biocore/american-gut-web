@@ -43,5 +43,6 @@ class ParticipantOverviewHandler(BaseHandler):
                     participant_name=participant_name, survey_id=survey_id,
                     participant_type=participant_type, samples=samples)
 
+    @authenticated
     def get(self, *args, **kwargs):
         self.redirect(media_locale['SITEBASE'] + '/authed/portal/')
