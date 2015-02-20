@@ -112,6 +112,9 @@ class AuthLoginHandler(BaseHandler):
         else:
             self.clear_cookie("skid")
 
+    def get(self, *args, **kwargs):
+        self.redirect(media_locale['SITEBASE'] + "/")
+
 
 class AuthLogoutHandler(BaseHandler):
     """Logout handler, no page necessary"""
