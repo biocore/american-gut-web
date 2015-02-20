@@ -380,7 +380,7 @@ def _build_and_initialize():
     cur = conn.cursor()
 
     # create the schema and set a search path
-    cur.execute('CREATE SCHEMA AG')
+    cur.execute('CREATE SCHEMA IF NOT EXISTS AG')
     cur.execute('SET SEARCH_PATH TO ag, public')
 
     click.echo('Inserting procedures')
@@ -400,8 +400,13 @@ def _build_and_initialize():
 
     click.echo('Granting privileges')
 
-    # create
-    cur.execute('CREATE USER "ag_wwwuser"')
+    # test for user
+    cur.execute("""SELECT EXISTS(SELECT 1
+                                 FROM pg_catalog.pg_user
+                                 WHERE usename = 'ag_wwwuser')""")
+    if not cur.fetchone()[0]:
+        cur.execute('CREATE USER "ag_wwwuser"')
+
     cur.execute('GRANT USAGE ON schema public, ag TO "ag_wwwuser"')
     cur.execute('GRANT CONNECT ON DATABASE %s TO "ag_wwwuser"' %
                 AMGUT_CONFIG.database)
