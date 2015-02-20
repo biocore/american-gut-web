@@ -768,8 +768,14 @@ _SURVEY_MAIN = {
     'OTHER_SURVEYS': 'Following the questionnaire, you will be presented with a few other focused surveys. As with everything, those surveys are optional but your responses could help improve our understanding of the microbiome.'
 }
 
+_NOJS = {
+    'MESSAGE': 'You have JavaScript disabled, which this site requires in order to function properly. <br/>Please enable javascript and reload <a href="http://www.microbio.me/americangut">http://www.microbio.me/americangut</a>.',
+    'NEED_HELP': 'If you need help enabling JavaScript in your browser, <br/>Please email us at <a href="mailto:americangut@gmail.com">americangut@gmail.com</a>'
+}
+
 # Actual text locale
 text_locale = {
+    'nojs.html': _NOJS,
     '404.html': _404,
     'FAQ.html': _FAQ,
     'new_participant_overview.html': _NEW_PARTICIPANT_OVERVIEW,

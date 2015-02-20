@@ -43,6 +43,7 @@ from amgut.handlers.forgot_password import ForgotPasswordHandler
 from amgut.handlers.add_sample_overview import AddSampleOverviewHandler
 from amgut.handlers.change_pass_verify import ChangePassVerifyHandler
 from amgut.handlers.change_password import ChangePasswordHandler
+from amgut.handlers.nojs import NoJSHandler
 
 from amgut.handlers.open_humans import (OpenHumansHandler,
                                         OpenHumansLoginHandler)
@@ -96,6 +97,7 @@ class QiimeWebApplication(Application):
             (r"/retrieve_kitid/", KitIDHandler),
             (r"/forgot_password/", ForgotPasswordHandler),
             (r"/change_pass_verify/", ChangePassVerifyHandler),
+            (r"/nojs/", NoJSHandler),
             # 404 PAGE MUST BE LAST IN THIS LIST!
             (r".*", NoPageHandler)
         ]

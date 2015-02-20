@@ -746,8 +746,14 @@ _HUMAN_SURVEY_COMPLETED = {
     'SURVEY_VIOSCREEN': 'The British Gut Project and its sister projects are very interested in diet. If you\'d like to provide additional detail about your diet, please click <a href="%s">here</a> to take a detailed diet survey (known as an Food Frequency Questionnaire). This is a validated FFQ, and is the one used by the Mayo Clinic.'
 }
 
+_NOJS = {
+    'MESSAGE': 'You have JavaScript disabled, which this site requires in order to function properly. <br/>Please enable javascript and reload <a href="http://www.microbio.me/americangut">http://www.microbio.me/britishgut</a>.',
+    'NEED_HELP': 'If you need help enabling JavaScript in your browser, <br/>Please email us at <a href="mailto:americangut@gmail.com">americangut@gmail.com</a>'
+}
+
 # Actual text locale
 text_locale = {
+    'nojs.html': _NOJS,
     '404.html': _404,
     'FAQ.html': _FAQ,
     'new_participant_overview.html': _NEW_PARTICIPANT_OVERVIEW,
