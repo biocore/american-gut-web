@@ -1,0 +1,24 @@
+{% from amgut import text_locale, media_locale %}
+{% set tl = text_locale['nojs.html'] %}
+<html>
+<head>
+<title>Please enable Javascript!</title>
+<link rel="stylesheet" type="text/css" href="{% raw media_locale['SITEBASE'] %}/static/css/americangut.css">
+</head>
+<body>
+
+<div class="header clearfix">
+<center><img id="logo" src="{% raw media_locale['LOGO'] %}">
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<h2>{% raw tl['MESSAGE'] %}</h2>
+<br/>
+<h3>{% raw tl['NEED_HELP'] %}</h3>
+</body>
+</html
