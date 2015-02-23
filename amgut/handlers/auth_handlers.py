@@ -42,7 +42,7 @@ class AuthRegisterHandoutHandler(BaseHandler):
             ag_login_id, skid, kitinfo['password'],
             kitinfo['swabs_per_kit'], kitinfo['verification_code'],
             printresults)
-        if success == -1:
+        if success != 1:
             self.redirect(media_locale['SITEBASE'] + '/db_error/?err=regkit')
             return
 
@@ -53,7 +53,7 @@ class AuthRegisterHandoutHandler(BaseHandler):
         for row in results:
             barcode = row[0]
             success = ag_data.addAGBarcode(ag_kit_id, barcode)
-            if success == -1:
+            if success != 1:
                 self.redirect((media_locale['SITEBASE'] +
                                '/db_error/?err=regbarcode'))
                 return
@@ -76,7 +76,8 @@ class AuthRegisterHandoutHandler(BaseHandler):
 
             self.render('help_request.html', skid=skid, result=result)
 
-        self.redirect(media_locale['SITEBASE'] + '/authed/portal/')
+        # added person but not logged in so just go back to sitebase
+        self.redirect(media_locale['SITEBASE'])
 
 
 class AuthLoginHandler(BaseHandler):
