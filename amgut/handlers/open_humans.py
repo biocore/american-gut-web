@@ -75,7 +75,7 @@ class OpenHumansLoginHandler(BaseHandler, OpenHumansMixin):
     _API_URL = urljoin(AMGUT_CONFIG.open_humans_base_url, '/api')
 
     _OAUTH_REDIRECT_URL = urljoin(AMGUT_CONFIG.base_url,
-                                  '/authed/connect/open-humans/')
+                                  'authed/connect/open-humans/')
 
     _OAUTH_AUTHORIZE_URL = urljoin(AMGUT_CONFIG.open_humans_base_url,
                                    '/oauth2/authorize/')
