@@ -41,14 +41,13 @@ class AuthRegisterHandoutHandler(BaseHandler):
             printresults = 'n'
 
         # make sure kit has bcrypt encrypted password, and fix if not
-        if not bcrypt.identify(kitinfo['password']):
-            ag_data.ag_update_kit_password(skid, kitinfo['password'])
-            kitinfo = ag_data.getAGHandoutKitDetails(skid)
+        password = kitinfo['password']
+        if not bcrypt.identify(password):
+            password = bcrypt.encrypt(kitinfo['password'])
 
         success = ag_data.addAGKit(
-            ag_login_id, skid, kitinfo['password'],
-            kitinfo['swabs_per_kit'], kitinfo['verification_code'],
-            printresults)
+            ag_login_id, skid, password, kitinfo['swabs_per_kit'],
+            kitinfo['verification_code'], printresults)
         if success == -1:
             self.redirect(media_locale['SITEBASE'] + '/db_error/?err=regkit')
             return
@@ -80,10 +79,10 @@ class AuthRegisterHandoutHandler(BaseHandler):
                        sender=media_locale['HELP_EMAIL'])
         except:
             result = media_locale['EMAIL_ERROR']
+            self.render('no_auth_help_request.html', skid=skid, result=result)
+            return
 
-            self.render('help_request.html', skid=skid, result=result)
-
-        self.redirect(media_locale['SITEBASE'] + '/authed/portal/')
+        self.redirect(media_locale['SITEBASE'])
 
 
 class AuthLoginHandler(BaseHandler):
