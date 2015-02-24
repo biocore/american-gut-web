@@ -43,7 +43,7 @@ class AuthRegisterHandoutHandler(BaseHandler):
         # make sure kit has bcrypt encrypted password, and fix if not
         password = kitinfo['password']
         if not bcrypt.identify(password):
-            password = bcrypt.encrypt(kitinfo['password'])
+            password = bcrypt.encrypt(password)
 
         success = ag_data.addAGKit(
             ag_login_id, skid, password, kitinfo['swabs_per_kit'],
