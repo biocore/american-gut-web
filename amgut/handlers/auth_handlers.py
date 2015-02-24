@@ -2,6 +2,7 @@
 
 from tornado.web import authenticated
 from tornado.escape import json_encode
+from passlib.hash import bcrypt
 
 from amgut.connections import ag_data
 from amgut.lib.mail import send_email
@@ -38,6 +39,12 @@ class AuthRegisterHandoutHandler(BaseHandler):
         printresults = ag_data.checkPrintResults(skid)
         if printresults is None:
             printresults = 'n'
+
+        # make sure kit has bcrypt encrypted password, and fix if not
+        if not bcrypt.identify(kitinfo['password']):
+            ag_data.ag_update_kit_password(skid, kitinfo['password'])
+            kitinfo = ag_data.getAGHandoutKitDetails(skid)
+
         success = ag_data.addAGKit(
             ag_login_id, skid, kitinfo['password'],
             kitinfo['swabs_per_kit'], kitinfo['verification_code'],
