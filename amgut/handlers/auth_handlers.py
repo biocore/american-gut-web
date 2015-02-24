@@ -49,6 +49,8 @@ class AuthRegisterHandoutHandler(BaseHandler):
             ag_login_id, skid, password, kitinfo['swabs_per_kit'],
             kitinfo['verification_code'], printresults)
         if success == -1:
+            # log them out and send to error page
+            self.clear_cookie("skid")
             self.redirect(media_locale['SITEBASE'] + '/db_error/?err=regkit')
             return
 
@@ -60,6 +62,8 @@ class AuthRegisterHandoutHandler(BaseHandler):
             barcode = row[0]
             success = ag_data.addAGBarcode(ag_kit_id, barcode)
             if success == -1:
+                # log them out and send to error page
+                self.clear_cookie("skid")
                 self.redirect((media_locale['SITEBASE'] +
                                '/db_error/?err=regbarcode'))
                 return
@@ -79,10 +83,10 @@ class AuthRegisterHandoutHandler(BaseHandler):
                        sender=media_locale['HELP_EMAIL'])
         except:
             result = media_locale['EMAIL_ERROR']
-            self.render('no_auth_help_request.html', skid=skid, result=result)
+            self.render('help_request.html', skid=skid, result=result)
             return
 
-        self.redirect(media_locale['SITEBASE'])
+        self.redirect(media_locale['SITEBASE'] + "/authed/portal/")
 
 
 class AuthLoginHandler(BaseHandler):
