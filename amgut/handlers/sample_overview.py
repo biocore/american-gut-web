@@ -15,7 +15,10 @@ def _format_data_path(base, dir, barcode, ext):
 class SampleOverviewHandler(BaseHandler):
 
     def _sample_overview_renderer(self):
-        barcode = self.get_argument('barcode')
+        barcode = self.get_argument('barcode', None)
+        if barcode is None:
+            self.redirect(media_locale['SITEBASE'] + '/authed/portal/')
+            return
 
         sample_data = ag_data.getAGBarcodeDetails(barcode)
 
