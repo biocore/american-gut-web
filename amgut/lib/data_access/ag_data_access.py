@@ -272,7 +272,7 @@ class AGDataAccess(object):
         cur = self.get_cursor()
         cur.execute(sql)
 
-        return [(i[0], i[1]) for i in cur.fetchall()]
+        return cur.fetchall()
 
     def getAGCode(self, passwd_length, type='alpha'):
         if type == 'alpha':

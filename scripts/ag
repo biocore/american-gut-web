@@ -107,15 +107,14 @@ def migrate_passwords():
             ag_data.ag_update_kit_password(kit_id, password)
         else:
             click.echo('kit {} is already a bcrypt hash'.format(kit_id))
-    
-    for kit_id, password in ag_data.getAGHandoutKitIDsAndPasswords():
+
+    for kid, password in ag_data.getAGHandoutKitIDsAndPasswords():
         if not bcrypt.identify(password):
-            click.echo('migrating kit {} to a bcrypt hash'.format(kit_id))
+            click.echo('migrating handout kit {} to a bcrypt hash'.format(kid))
 
-            ag_data.ag_update_handout_kit_password(kit_id, password)
+            ag_data.ag_update_handout_kit_password(kid, password)
         else:
-            click.echo('kit {} is already a bcrypt hash'.format(kit_id))
-
+            click.echo('handout kit {} is already a bcrypt hash'.format(kid))
 
 
 @cli.command()
