@@ -42,6 +42,10 @@ class BaseHandler(RequestHandler):
         send_email(formatted_email, "SERVER ERROR!",
                    recipient=AMGUT_CONFIG.error_email)
 
+    def head(self, *args, **kwargs):
+        """Satisfy servers that this url exists"""
+        self.finish()
+
     def redirect(self, url, permanent=False, status=None):
         """
         Account for the SITEBASE when redirecting to relative URLs.
@@ -63,10 +67,6 @@ class BaseHandler(RequestHandler):
 
         super(BaseHandler, self).redirect(url, permanent, status)
 
-    def head(self):
-        """Satisfy servers that this url exists"""
-        self.finish()
-
 
 class MainHandler(BaseHandler):
     """Index page"""
@@ -77,14 +77,14 @@ class MainHandler(BaseHandler):
 
 class NoPageHandler(BaseHandler):
     """404 page"""
-    def get(self):
+    def get(self, *args, **kwargs):
         self.set_status(404)
         if self.current_user:
             self.render("404.html", skid=self.current_user)
         else:
             self.render("no_auth_404.html", loginerror="")
 
-    def head(self):
+    def head(self, *args, **kwargs):
         """Satisfy servers that this url exists"""
         self.set_status(404)
         self.finish()
