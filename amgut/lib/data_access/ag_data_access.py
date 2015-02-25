@@ -267,6 +267,13 @@ class AGDataAccess(object):
 
         return kit_details
 
+    def getAGHandoutKitIDsAndPasswords(self):
+        sql = "SELECT kit_id, password FROM ag_handout_kits"
+        cur = self.get_cursor()
+        cur.execute(sql)
+
+        return cur.fetchall()
+
     def getAGCode(self, passwd_length, type='alpha'):
         if type == 'alpha':
             x = ''.join([choice(KIT_ALPHA)
@@ -956,6 +963,20 @@ class AGDataAccess(object):
 
         self.get_cursor().callproc('ag_update_kit_password',
                                    [kit_id, password])
+        self.connection.commit()
+
+    def ag_update_handout_kit_password(self, kit_id, password):
+        """updates ag_handout_kits table with password
+
+        kit_id is kit_id in the ag_handout_kits table
+        password is the new password
+        """
+        password = bcrypt.encrypt(password)
+
+        cursor = self.get_cursor()
+        cursor.execute("""UPDATE ag_handout_kits
+                          SET password=%s
+                          WHERE kit_id=%s""", [password, kit_id])
         self.connection.commit()
 
     def ag_verify_kit_password_change_code(self, email, kitid, passcode):
