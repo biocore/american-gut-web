@@ -324,12 +324,17 @@ class AGDataAccess(object):
     def addAGKit(self, ag_login_id, kit_id, kit_password, swabs_per_kit,
                  kit_verification_code, printresults='n'):
         """
-        return values
-        1:  success
-        -1: insert failed due to IntegrityError
-        """
-        kit_password = bcrypt.encrypt(kit_password)
+        Returns
+        -------
+        int
+            1:  success
+            -1: insert failed due to IntegrityError
 
+        Notes
+        -----
+        Whatever is passed as kit_password will be added AS IS. This means you
+        must hash the password before passing, if desired.
+        """
         try:
             self.get_cursor().callproc('ag_insert_kit',
                                        [ag_login_id, kit_id,

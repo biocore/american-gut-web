@@ -2,6 +2,7 @@
 
 from tornado.web import authenticated
 from tornado.escape import json_encode
+from passlib.hash import bcrypt
 
 from amgut.connections import ag_data
 from amgut.lib.mail import send_email
@@ -38,11 +39,18 @@ class AuthRegisterHandoutHandler(BaseHandler):
         printresults = ag_data.checkPrintResults(skid)
         if printresults is None:
             printresults = 'n'
+
+        # make sure kit has bcrypt encrypted password, and fix if not
+        password = kitinfo['password']
+        if not bcrypt.identify(password):
+            password = bcrypt.encrypt(password)
+
         success = ag_data.addAGKit(
-            ag_login_id, skid, kitinfo['password'],
-            kitinfo['swabs_per_kit'], kitinfo['verification_code'],
-            printresults)
+            ag_login_id, skid, password, kitinfo['swabs_per_kit'],
+            kitinfo['verification_code'], printresults)
         if success == -1:
+            # log them out and send to error page
+            self.clear_cookie("skid")
             self.redirect(media_locale['SITEBASE'] + '/db_error/?err=regkit')
             return
 
@@ -54,6 +62,8 @@ class AuthRegisterHandoutHandler(BaseHandler):
             barcode = row[0]
             success = ag_data.addAGBarcode(ag_kit_id, barcode)
             if success == -1:
+                # log them out and send to error page
+                self.clear_cookie("skid")
                 self.redirect((media_locale['SITEBASE'] +
                                '/db_error/?err=regbarcode'))
                 return
@@ -73,10 +83,10 @@ class AuthRegisterHandoutHandler(BaseHandler):
                        sender=media_locale['HELP_EMAIL'])
         except:
             result = media_locale['EMAIL_ERROR']
-
             self.render('help_request.html', skid=skid, result=result)
+            return
 
-        self.redirect(media_locale['SITEBASE'] + '/authed/portal/')
+        self.redirect(media_locale['SITEBASE'] + "/authed/portal/")
 
 
 class AuthLoginHandler(BaseHandler):
