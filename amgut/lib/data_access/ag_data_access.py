@@ -344,7 +344,7 @@ class AGDataAccess(object):
                                         printresults])
             self.connection.commit()
         except psycopg2.IntegrityError:
-            logging.exception('')
+            logging.exception('Error on skid %s:' $ ag_login_id)
             self.connection.rollback()
             return -1
         return 1
@@ -370,7 +370,7 @@ class AGDataAccess(object):
                                        [ag_kit_id, barcode])
             self.connection.commit()
         except psycopg2.IntegrityError:
-            logging.exception('')
+            logging.exception('Error on barcode %s:' % barcode)
             self.connection.rollback()
             return -1
         return 1
