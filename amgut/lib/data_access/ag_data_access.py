@@ -344,7 +344,7 @@ class AGDataAccess(object):
                                         printresults])
             self.connection.commit()
         except psycopg2.IntegrityError:
-            logging.exception('Error on skid %s:' $ ag_login_id)
+            logging.exception('Error on skid %s:' % ag_login_id)
             self.connection.rollback()
             return -1
         return 1
