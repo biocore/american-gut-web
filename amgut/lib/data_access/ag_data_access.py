@@ -15,6 +15,7 @@ Centralized database access for the American Gut web portal
 import urllib
 import httplib
 import json
+import logging
 
 from time import sleep
 from random import choice
@@ -343,7 +344,8 @@ class AGDataAccess(object):
                                         printresults])
             self.connection.commit()
         except psycopg2.IntegrityError:
-            self.connection.commit()
+            logging.exception('Error on skid %s:' % ag_login_id)
+            self.connection.rollback()
             return -1
         return 1
 
@@ -368,7 +370,8 @@ class AGDataAccess(object):
                                        [ag_kit_id, barcode])
             self.connection.commit()
         except psycopg2.IntegrityError:
-            self.connection.commit()
+            logging.exception('Error on barcode %s:' % barcode)
+            self.connection.rollback()
             return -1
         return 1
 
