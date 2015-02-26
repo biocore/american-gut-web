@@ -94,7 +94,7 @@ class AuthLoginHandler(BaseHandler):
             return
         else:
             is_handout = ag_data.handoutCheck(skid, password)
-            if is_handout == 'y':
+            if is_handout:
                 # login user but have them register themselves
                 self.set_current_user(skid)
                 self.redirect(media_locale['SITEBASE'] + '/auth/register/')

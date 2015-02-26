@@ -323,7 +323,7 @@ class TestAGDataAccess(TestCase):
 
     def test_handoutCheck(self):
         is_handout = self.data_access.handoutCheck('test', 'wrongpass')
-        self.assertEqual(is_handout, 'n')
+        self.assertFalse(is_handout)
 
     def test_checkBarcode(self):
         data = self.data_access.checkBarcode('000000001')
