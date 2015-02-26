@@ -159,7 +159,7 @@
                     <form action="{% raw media_locale['SITEBASE'] %}/authed/sample_overview/" method="post" id="sample_overview2_{{ result['barcode'] }}">
                         <input type="hidden" name="barcode" id="barcode" value="{{ result['barcode'] }}"/>
                     </form>
-                    <a href="" onclick="document.forms['sample_overview2_{{ result['barcode'] }}'].submit(); return false;">{{ result['barcode'] }} ({{ escape(result['participant_name']) }})</a>
+                    <a href="" onclick="document.forms['sample_overview2_{{ result['barcode'] }}'].submit(); return false;">{{ result['barcode'] }} ({{ escape(result.get('participant_name', '') or '') }})</a>
                 </li>
     {% end %}
             </ul>
