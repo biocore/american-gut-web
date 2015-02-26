@@ -882,12 +882,16 @@ class AGDataAccess(object):
         self.connection.commit()
 
     def handoutCheck(self, username, password):
-        is_handout = 'n'
         cursor = self.get_cursor()
-        cursor.callproc('ag_is_handout', [username, password])
-        is_handout = cursor.fetchone()[0]
+        cursor.execute("""SELECT distinct(password)
+                          FROM ag.ag_handout_kits
+                          WHERE kit_id=%s""", [username])
+        to_check = cursor.fetchone()
 
-        return is_handout.strip()
+        if not to_check:
+            return False
+        else:
+            return bcrypt.verify(password, to_check[0])
 
     def checkBarcode(self, barcode):
         # return a tuple consists of:

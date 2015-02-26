@@ -40,13 +40,8 @@ class AuthRegisterHandoutHandler(BaseHandler):
         if printresults is None:
             printresults = 'n'
 
-        # make sure kit has bcrypt encrypted password, and fix if not
-        password = kitinfo['password']
-        if not bcrypt.identify(password):
-            password = bcrypt.encrypt(password)
-
         success = ag_data.addAGKit(
-            ag_login_id, skid, password, kitinfo['swabs_per_kit'],
+            ag_login_id, skid, kitinfo['password'], kitinfo['swabs_per_kit'],
             kitinfo['verification_code'], printresults)
         if success == -1:
             # log them out and send to error page
@@ -104,7 +99,7 @@ class AuthLoginHandler(BaseHandler):
             return
         else:
             is_handout = ag_data.handoutCheck(skid, password)
-            if is_handout == 'y':
+            if is_handout:
                 # login user but have them register themselves
                 self.set_current_user(skid)
                 self.redirect(media_locale['SITEBASE'] + '/auth/register/')
