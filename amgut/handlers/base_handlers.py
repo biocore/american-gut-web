@@ -2,10 +2,10 @@ import logging
 
 from tornado.web import RequestHandler, StaticFileHandler
 
+from amgut import media_locale, text_locale
 from amgut.connections import ag_data
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.lib.mail import send_email
-from amgut import text_locale
 
 
 class BaseHandler(RequestHandler):
@@ -42,9 +42,30 @@ class BaseHandler(RequestHandler):
         send_email(formatted_email, "SERVER ERROR!",
                    recipient=AMGUT_CONFIG.error_email)
 
-    def head(self):
+    def head(self, *args, **kwargs):
         """Satisfy servers that this url exists"""
         self.finish()
+
+    def redirect(self, url, permanent=False, status=None):
+        """
+        Account for the SITEBASE when redirecting to relative URLs.
+
+        This was easier than monkey-patching Request.full_url() or
+        re-implementing the authenticated decorator, which are the
+        alternatives.
+
+        If the SITEBASE is /AmericanGut, for example,
+        self.redirect('/authed/portal/') will redirect to
+        '/AmericanGut/authed/portal/'.
+        """
+        if (url.startswith('/') and
+                not url.lower().startswith(media_locale['SITEBASE'].lower())):
+            old_url = url
+            url = media_locale['SITEBASE'] + old_url
+
+            logging.info('redirecting {} to {}'.format(old_url, url))
+
+        super(BaseHandler, self).redirect(url, permanent, status)
 
 
 class MainHandler(BaseHandler):
@@ -56,14 +77,14 @@ class MainHandler(BaseHandler):
 
 class NoPageHandler(BaseHandler):
     """404 page"""
-    def get(self):
+    def get(self, *args, **kwargs):
         self.set_status(404)
         if self.current_user:
             self.render("404.html", skid=self.current_user)
         else:
             self.render("no_auth_404.html", loginerror="")
 
-    def head(self):
+    def head(self, *args, **kwargs):
         """Satisfy servers that this url exists"""
         self.set_status(404)
         self.finish()

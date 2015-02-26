@@ -106,7 +106,7 @@ class QiimeWebApplication(Application):
             "debug": DEBUG,
             "cookie_secret": COOKIE_SECRET,
             # Currently the only login form is on the homepage
-            "login_url": "/",
+            "login_url": media_locale['SITEBASE'] + '/',
         }
         super(QiimeWebApplication, self).__init__(handlers, **settings)
 

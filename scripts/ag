@@ -108,6 +108,14 @@ def migrate_passwords():
         else:
             click.echo('kit {} is already a bcrypt hash'.format(kit_id))
 
+    for kid, password in ag_data.getAGHandoutKitIDsAndPasswords():
+        if not bcrypt.identify(password):
+            click.echo('migrating handout kit {} to a bcrypt hash'.format(kid))
+
+            ag_data.ag_update_handout_kit_password(kid, password)
+        else:
+            click.echo('handout kit {} is already a bcrypt hash'.format(kid))
+
 
 @cli.command()
 def drop_procedures():
