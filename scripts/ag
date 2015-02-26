@@ -277,7 +277,8 @@ def patch():
 def _create_database(force=False):
     # Connect to the postgres server
     try:
-        conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
+        conn = connect(dbname='postgres',
+                       user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
                        host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port)
     except OperationalError as e:
         raise OperationalError("Cannot connect to the server, error is %s" %
