@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 
 from os.path import dirname, join
-from base64 import b64encode
-from uuid import uuid4
 from datetime import datetime
 
 from tornado.httpserver import HTTPServer
@@ -55,7 +53,6 @@ DIRNAME = dirname(__file__)
 STATIC_PATH = join(DIRNAME, "static")
 TEMPLATE_PATH = join(DIRNAME, "templates")  # base folder for webpages
 RES_PATH = join(DIRNAME, "results")
-COOKIE_SECRET = b64encode(uuid4().bytes + uuid4().bytes)
 DEBUG = True
 
 
@@ -104,7 +101,7 @@ class QiimeWebApplication(Application):
         settings = {
             "template_path": TEMPLATE_PATH,
             "debug": DEBUG,
-            "cookie_secret": COOKIE_SECRET,
+            "cookie_secret": AMGUT_CONFIG.cookie_secret,
             # Currently the only login form is on the homepage
             "login_url": media_locale['SITEBASE'] + '/',
         }
