@@ -1,5 +1,7 @@
 from tornado.web import authenticated
 
+from amgut import media_locale, text_locale
+from amgut.lib.mail import send_email
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.connections import ag_data
 
@@ -34,7 +36,7 @@ class PortalHandler(BaseHandler):
     def post(self):
         kit_id = self.current_user
         errmsg = self.get_argument('errmsg', "")
-        user_code = self.get_argument('user_verification_code')
+        user_code = self.get_argument('user_verification_code', "")
         kit_details = ag_data.getAGKitDetails(kit_id)
         barcodes = ag_data.getBarcodesByKit(kit_id)
         user_info = ag_data.get_user_info(kit_id)
@@ -44,13 +46,33 @@ class PortalHandler(BaseHandler):
 
         kit_verified = True if kit_details['kit_verified'] == 'y' else False
 
-        if kit_details['kit_verification_code'] == user_code:
-            ag_data.verifyKit(kit_id)
+        if not kit_verified and user_code == "":
+            # Resend kit verification code
+            tl = text_locale['handlers']
+            subject = tl['AUTH_SUBJECT']
+            addendum = ''
+            if self.current_user.startswith('PGP_'):
+                addendum = tl['AUTH_REGISTER_PGP']
+
+            body = tl['AUTH_REGISTER_BODY'].format(
+                kit_details['kit_verification_code'], addendum)
+
             kit_ver_error = False
             verification_textbox = ''
+            try:
+                send_email(body, subject, recipient=user_info['email'],
+                           sender=media_locale['HELP_EMAIL'])
+            except:
+                errmsg = media_locale['EMAIL_ERROR']
         else:
-            kit_ver_error = True
-            verification_textbox = ' highlight'
+            # Verify the given kit verification code
+            if kit_details['kit_verification_code'] == user_code:
+                ag_data.verifyKit(kit_id)
+                kit_ver_error = False
+                verification_textbox = ''
+            else:
+                kit_ver_error = True
+                verification_textbox = ' highlight'
 
         self.render("portal.html", skid=kit_id, user_name=user_name,
                     errmsg=errmsg, kit_verified=kit_verified,

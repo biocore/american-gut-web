@@ -48,7 +48,7 @@
     {% if kit_ver_error %}
         {% raw tl['VERIFICATION_CODE_ERROR'] %}
     {% end %}
-                        <input class="{{ verification_textbox }}"  type="text" name="user_verification_code" id="user_verification_code"></input>
+                        <input class="{{ verification_textbox }}"  type="text" name="user_verification_code" id="user_verification_code"></input> <input type="submit" value="{{ tl['RESEND_VERIFICATION'] }}"></input>
                         <h4>{% raw tl['VERIFY_BARCODES'] %}<a id="barcode_popup_trigger" class="help" title="" onmouseover="setVisible('barcode_popup')" onmouseout="setInvisible('barcode_popup')">(?)</a><div id="barcode_popup" class="help_popup invisible">{% raw tl['VERIFY_BARCODES_POPUP'] %}<br /><img src="{% raw media_locale['SITEBASE'] %}/static/img/sample_barcode.jpg"/></div></h4>
                         <table width="30%">
     {% for barcode in barcodes %}
