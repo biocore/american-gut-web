@@ -27,6 +27,12 @@ USER =
 #The password of the user.
 PASSWORD =
 
+# The user name of the admin account on the database
+ADMIN_USER =
+
+#The password of the admin account
+ADMIN_PASSWORD =
+
 # The database to connect to
 DATABASE = ag
 

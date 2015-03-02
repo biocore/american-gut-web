@@ -390,9 +390,9 @@ class AGDataAccess(object):
         """
         Returns
         -------
-        int
-            1:  success
-            -1: insert failed due to IntegrityError
+        bool
+            True:  success
+            False: insert failed due to IntegrityError
 
         Notes
         -----
@@ -445,8 +445,8 @@ class AGDataAccess(object):
                 "DELETE FROM ag_kit WHERE ag_kit_id = %s", [kit_id])
 
             logging.exception('Error on skid %s:' % ag_login_id)
-            return -1
-        return 1
+            return False
+        return True
 
     def addAGHumanParticipant(self, ag_login_id, participant_name):
         self.get_cursor().callproc('ag_add_participant',

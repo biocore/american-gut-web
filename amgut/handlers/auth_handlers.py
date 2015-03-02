@@ -38,11 +38,11 @@ class AuthRegisterHandoutHandler(BaseHandler):
             info['city'], info['state'], info['zip'], info['country'])
         # Create the kit and add the kit to the user
         success = ag_data.registerHandoutKit(ag_login_id, skid)
-        if success == -1:
+        if not success:
             self.redirect(media_locale['SITEBASE'] + '/db_error/?err=regkit')
             return
 
-        #log user back in since registered successfully
+        # log user back in since registered successfully
         self.set_secure_cookie("skid", json_encode(skid))
         self.redirect(media_locale['SITEBASE'] + "/authed/portal/")
 
