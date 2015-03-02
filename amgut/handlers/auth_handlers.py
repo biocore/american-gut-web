@@ -26,9 +26,11 @@ class AuthRegisterHandoutHandler(BaseHandler):
         # log user out for register process
         self.clear_cookie("skid")
         tl = text_locale['handlers']
-        info = {}
-        for info_column in ("email", "participantname", "address", "city",
-                            "state", "zip", "country"):
+        info = {
+            "email": self.get_argument("email"),
+            "participantname": self.get_argument("participantname")
+        }
+        for info_column in ("address", "city", "state", "zip", "country"):
             # Make sure that all fields were entered
             info[info_column] = self.get_argument(info_column, None)
 
