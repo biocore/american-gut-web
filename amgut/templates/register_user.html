@@ -7,6 +7,7 @@
 <script type="text/javascript">
 $.validator.setDefaults({
     submitHandler: function() {
+      $("#submit").prop('disabled', true);
       $("#newParticipant").submit();
     }
   });
@@ -75,7 +76,7 @@ $(document).ready(function() {
             <tr><td>{% raw tl['STATE'] %}</td><td><input type="text" name="state" id="state"></td></tr>        
             <tr><td>{% raw tl['ZIP'] %}</td><td><input type="text" name="zip" id="zip"></td></tr>
             <tr><td>{% raw tl['COUNTRY'] %}</td><td><input type="text" name="country" id="country"></td></tr>
-            <tr><td></td><td><input type="submit" value="{% raw tl['SUBMIT'] %}"/></td></tr>
+            <tr><td></td><td><input type="submit" id="submit" value="{% raw tl['SUBMIT'] %}"/></td></tr>
         </table>
     </form>
 </div>
