@@ -386,6 +386,68 @@ class AGDataAccess(object):
                                     refunded, withdrawn])
         self.connection.commit()
 
+    def registerHandoutKit(self, ag_login_id, supplied_kit_id):
+        """
+        Returns
+        -------
+        int
+            1:  success
+            -1: insert failed due to IntegrityError
+
+        Notes
+        -----
+        Whatever is passed as kit_password will be added AS IS. This means you
+        must hash the password before passing, if desired.
+        """
+        kitinfo = self.getAGHandoutKitDetails(supplied_kit_id)
+        printresults = self.checkPrintResults(supplied_kit_id)
+        if printresults is None:
+            printresults = 'n'
+
+        conn_handler = SQLConnectionHandler()
+        queue = "register_%s" % supplied_kit_id
+        conn_handler.create_queue(queue)
+        # insert the actual kit into the kit table.
+        # Needs to be done directly because ag_kit_id needed for rest
+        kit_id = conn_handler.execute_fetchone(
+            """INSERT INTO ag_kit
+            (ag_login_id, supplied_kit_id, kit_password, swabs_per_kit,
+            kit_verification_code, print_results)
+            VALUES (%s, %s, %s, %s, %s, %s) RETURNING ag_kit_id""",
+            (ag_login_id, supplied_kit_id, kitinfo['password'],
+             kitinfo['swabs_per_kit'], kitinfo['verification_code'],
+             printresults))[0]
+
+        # get the barcodes and add them to the queue
+        sql = "SELECT barcode FROM ag_handout_kits WHERE kit_id = %s"
+        for row in conn_handler.execute_fetchall(sql, [supplied_kit_id]):
+            barcode = row[0]
+            conn_handler.add_to_queue(
+                queue, "INSERT INTO barcode (barcode) VALUES (%s)", [barcode])
+            conn_handler.add_to_queue(
+                queue, "INSERT INTO project_barcode (project_id, barcode) "
+                "VALUES (1, %s)", [barcode])
+            conn_handler.add_to_queue(
+                queue, """INSERT  INTO ag_kit_barcodes
+                (ag_kit_id, barcode, sample_barcode_file)
+                VALUES (%s, %s, %s || '.jpg')""", [kit_id, barcode, barcode])
+
+        # remove from handout_kits table since now registered
+        conn_handler.add_to_queue(
+            queue, """DELETE FROM ag_handout_kits
+            WHERE kit_id = %s""", [supplied_kit_id])
+
+        try:
+            conn_handler.execute_queue(queue)
+        except psycopg2.IntegrityError:
+            # remove kit since registering barcodes failed
+            conn_handler.execute(
+                "DELETE FROM ag_kit WHERE ag_kit_id = %s", [kit_id])
+
+            logging.exception('Error on skid %s:' % ag_login_id)
+            return -1
+        return 1
+
     def addAGHumanParticipant(self, ag_login_id, participant_name):
         self.get_cursor().callproc('ag_add_participant',
                                    [ag_login_id, participant_name])
