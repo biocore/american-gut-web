@@ -18,6 +18,7 @@ with standard_library.hooks():
 
 from amgut.lib.locale_data import available_locales
 
+
 class MissingConfigSection(ConfigParser_Error):
     """Exception when the config file is missing a required section"""
     def __init__(self, section):
@@ -47,6 +48,8 @@ class ConfigurationManager(object):
         Whether we are in a test environment or not
     base_data_dir : str
         Path to the base directorys where all data file are stored
+    cookie_secret : str
+        The secret used to secure user session cookies
     locale : str
         The locale
     user : str
@@ -144,7 +147,7 @@ class ConfigurationManager(object):
         """Get the configuration of the main section"""
         expected_options = {'name', 'shorthand', 'test_environment',
                             'base_data_dir', 'locale', 'base_url',
-                            'error_email'}
+                            'cookie_secret', 'error_email'}
         _warn_on_extra(set(config.options('main')) - expected_options -
                        self.defaults, 'main section option(s)')
 
@@ -156,6 +159,7 @@ class ConfigurationManager(object):
         self.test_environment = getboolean('TEST_ENVIRONMENT')
         self.base_data_dir = get('BASE_DATA_DIR')
         self.base_url = get('BASE_URL')
+        self.cookie_secret = get('COOKIE_SECRET')
         self.locale = get('LOCALE')
         self.error_email = get('ERROR_EMAIL')
 
