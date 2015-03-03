@@ -696,7 +696,7 @@ class AGDataAccess(object):
 
             if r2 in ('unknown_error', 'not_OK', 'no_results'):
                 # Could not geocode, mark it so we don't try next time
-                self.updateGeoInfo(ag_login_id, '', '', '', 'y')
+                self.updateGeoInfo(ag_login_id, None, None, None, 'y')
                 continue
             elif r2 == 'over_limit':
                 # If the reason for failure is merely that we are over the
