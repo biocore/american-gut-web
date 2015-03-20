@@ -3,77 +3,110 @@
 {% from amgut import media_locale %}
 
 {% block head %}
-<style type="text/css">
-  #open-humans {
-    text-align: left;
-    padding: 1em;
-  }
-</style>
+  <style type="text/css">
+    #open-humans {
+      width: 80%;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      padding-bottom: 2em;
+      font-size: 12pt;
+      text-align: left;
+    }
 
-<script>
-  var accessToken = '{{ access_token }}';
+    #open-humans-logo {
+      float: right;
+      max-width: 200px;
+      padding-left: 2em;
+    }
+  </style>
 
-  var OPEN_HUMANS_URL = '{% raw open_humans_url %}';
-</script>
+  <script>
+    var accessToken = '{{ access_token }}';
 
-<script src="{% raw media_locale['SITEBASE'] %}/static/js/open_humans.js"></script>
+    var OPEN_HUMANS_URL = '{% raw open_humans_api_url %}';
+  </script>
+
+  <script
+    src="{% raw media_locale['SITEBASE'] %}/static/js/open_humans.js"></script>
 {% end %}
 
 {% block content %}
   <div id="open-humans">
+    <img id="open-humans-logo"
+      src="{% raw media_locale['SITEBASE'] %}/static/img/open-humans-logo.png">
+
     <h2>Open Humans Data Export</h2>
 
-    <p>Open Humans is an exciting project that puts participants in charge of
-      data sharing.</p>
+    <p><a href="{{ open_humans_home_url }}">Open Humans</a> is an exciting
+      project that puts participants in charge of data sharing.</p>
 
     <p>Members of Open Humans can aggregate data from various research studies
       and activities, and manage how they share this data with others –
       including other researchers, who might want to recruit them to new
       studies! What you share will always be your decision.</p>
 
-    {% if linked_barcodes or unlinked_barcodes %}
-      <hr>
+    <p>If you're an Open Humans member you can <a
+      href="{{ open_humans_research_url }}">go to your research data on Open
+      Humans</a>.</p>
 
-      {% if linked_barcodes %}
-      <p>You have the following barcodes linked with Open Humans:</p>
+    {% if access_token %}
+      <div class="separator"></div>
 
-      <ul>
-      {% for barcode in linked_barcodes %}
-        <li>
-          {{ barcode['participant'] }}: {{ barcode['barcode'] }},
-          {{ barcode['site_sampled'] }}
-          -
-          <a class="unlink-barcode" href="#"
-            data-barcode="{{ barcode['barcode'] }}">unlink</a>
-        </li>
-      {% end %}
-      </ul>
-      {% end %}
+      {% if linked_barcodes or unlinked_barcodes %}
+        {% if linked_barcodes %}
+          <h3>Unlink your data</h3>
 
-      {% if unlinked_barcodes %}
-      <p>You have the following barcodes available to be linked with Open
-        Humans:</p>
+          <p>You have the following barcodes linked with Open Humans:</p>
 
-      <ul>
-        {% for barcode in unlinked_barcodes %}
-        <li>
-          {{ barcode['participant'] }}: {{ barcode['barcode'] }},
-          {{ barcode['site_sampled'] }}
-          -
-          <a class="link-barcode" href="#"
-            data-barcode="{{ barcode['barcode'] }}">link</a>
-        </li>
+          <ul>
+            {% for barcode in linked_barcodes %}
+              <li>
+                {{ barcode['participant'] }}: {{ barcode['barcode'] }},
+                {{ barcode['site_sampled'] }}
+                -
+                <a class="unlink-barcode" href="#"
+                  data-barcode="{{ barcode['barcode'] }}">unlink</a>
+              </li>
+            {% end %}
+          </ul>
         {% end %}
-      </ul>
+
+        {% if unlinked_barcodes %}
+          <h3>Link your data</h3>
+
+          <p>You have the following barcodes available to be linked with Open
+            Humans:</p>
+
+          <ul>
+            {% for barcode in unlinked_barcodes %}
+              <li>
+                {{ barcode['participant'] }}: {{ barcode['barcode'] }},
+                {{ barcode['site_sampled'] }}
+                -
+                <a class="link-barcode" href="#"
+                  data-barcode="{{ barcode['barcode'] }}">link</a>
+              </li>
+            {% end %}
+          </ul>
+        {% end %}
+      {% else %}
+        <h3>You don't have American Gut data to link with Open Humans yet</h3>
+
+        You've successfully linked your Open Humans account with your American
+        Gut account but you don't currently have any kit barcodes to add to
+        your Open Humans profile. Once you've sent your kit to us and we've
+        processed it you'll see your available barcodes here.
       {% end %}
     {% else %}
-    <p>Interested in exporting your data to an Open Humans account? Click the
-      button below to begin the process.</p>
+      <p>Interested in exporting your data to an Open Humans account? Click the
+        button below to begin the process.</p>
 
-    <a href="{% raw media_locale['SITEBASE'] %}/authed/connect/open-humans/" title="Connect to Open Humans">
-      <img
-        src="{% raw media_locale['SITEBASE'] %}/static/img/open-humans-export-half.png">
-    </a>
+      <a href="{% raw media_locale['SITEBASE'] %}/authed/connect/open-humans/"
+        title="Connect to Open Humans">
+        <img
+          src="{% raw media_locale['SITEBASE'] %}/static/img/open-humans-export-half.png">
+      </a>
     {% end %}
   </div>
 {% end %}

@@ -1,7 +1,8 @@
 import logging
+import posixpath
+import urlparse
 
 from future.utils import viewitems
-from urlparse import urljoin
 
 try:
     from open_humans_tornado_oauth2 import OpenHumansMixin
@@ -18,8 +19,111 @@ from amgut.handlers.base_handlers import BaseHandler
 from amgut.lib.config_manager import AMGUT_CONFIG
 
 
+def basejoin(base, url):
+    """
+    Add the specified relative URL to the supplied base URL.
+
+    >>> tests = [
+    ...     ('https://abc.xyz',    'd/e'),
+    ...     ('https://abc.xyz/',   'd/e'),
+    ...     ('https://abc.xyz',    '/d/e'),
+    ...     ('https://abc.xyz/',   '/d/e'),
+    ...
+    ...     ('https://abc.xyz',    '/d/e?a=b'),
+    ...     ('https://abc.xyz/',   '/d/e?a=b'),
+    ...
+    ...     ('https://abc.xyz',    'd/e/'),
+    ...     ('https://abc.xyz/',   'd/e/'),
+    ...     ('https://abc.xyz',    '/d/e/'),
+    ...     ('https://abc.xyz/',   '/d/e/'),
+    ...
+    ...     ('https://abc.xyz',    'd/e/?a=b'),
+    ...     ('https://abc.xyz/',   'd/e/?a=b'),
+    ...
+    ...     ('https://abc.xyz/f',  'd/e/'),
+    ...     ('https://abc.xyz/f/', 'd/e/'),
+    ...     ('https://abc.xyz/f',  '/d/e/'),
+    ...     ('https://abc.xyz/f/', '/d/e/'),
+    ...
+    ...     ('https://abc.xyz/f',  './e/'),
+    ...     ('https://abc.xyz/f/', './e/'),
+    ...
+    ...     ('https://abc.xyz/f',  '../e/'),
+    ...     ('https://abc.xyz/f/', '../e/'),
+    ...
+    ...     ('https://abc.xyz/f',  'd/../e/'),
+    ...     ('https://abc.xyz/f/', 'd/../e/'),
+    ...     ('https://abc.xyz/f',  '/d/../e/'),
+    ...     ('https://abc.xyz/f/', '/d/../e/'),
+    ... ]
+    >>> for result in [basejoin(a, b) for a, b in tests]:
+    ...     print result
+    https://abc.xyz/d/e
+    https://abc.xyz/d/e
+    https://abc.xyz/d/e
+    https://abc.xyz/d/e
+    https://abc.xyz/d/e?a=b
+    https://abc.xyz/d/e?a=b
+    https://abc.xyz/d/e/
+    https://abc.xyz/d/e/
+    https://abc.xyz/d/e/
+    https://abc.xyz/d/e/
+    https://abc.xyz/d/e/?a=b
+    https://abc.xyz/d/e/?a=b
+    https://abc.xyz/f/d/e/
+    https://abc.xyz/f/d/e/
+    https://abc.xyz/f/d/e/
+    https://abc.xyz/f/d/e/
+    https://abc.xyz/f/e/
+    https://abc.xyz/f/e/
+    https://abc.xyz/f/e/
+    https://abc.xyz/f/e/
+    https://abc.xyz/f/e/
+    https://abc.xyz/f/e/
+    https://abc.xyz/f/e/
+    https://abc.xyz/f/e/
+    """
+    # The base URL is authoritative: a URL like '../' should not remove
+    # portions of the base URL.
+    if not base.endswith('/'):
+        base += '/'
+
+    # Handle internal compactions, e.g. "./e/../d/" becomes "./d/"
+    normalized_url = posixpath.normpath(url)
+
+    # Ditto authoritativeness.
+    if normalized_url.startswith('..'):
+        normalized_url = normalized_url[2:]
+
+    # Ditto authoritativeness.
+    if normalized_url.startswith('/'):
+        normalized_url = '.' + normalized_url
+
+    # normpath removes an ending slash, add it back if necessary
+    if url.endswith('/') and not normalized_url.endswith('/'):
+        normalized_url += '/'
+
+    join = urlparse.urljoin(base, normalized_url)
+    joined_url = urlparse.urlparse(join)
+
+    return urlparse.urlunparse((joined_url.scheme,
+                                joined_url.netloc,
+                                joined_url.path,
+                                joined_url.params,
+                                joined_url.query,
+                                joined_url.fragment))
+
+
 class OpenHumansHandler(BaseHandler, OpenHumansMixin):
-    _API_URL = urljoin(AMGUT_CONFIG.open_humans_base_url, '/api')
+    """
+    Handles rendering the page responsible for linking barcodes to Open Humans
+    accounts.
+    """
+
+    _API_URL = basejoin(AMGUT_CONFIG.open_humans_base_url, '/api')
+    _HOME_URL = basejoin(AMGUT_CONFIG.open_humans_base_url, '/')
+    _RESEARCH_URL = basejoin(AMGUT_CONFIG.open_humans_base_url,
+                             '/member/me/research-data/')
 
     @web.authenticated
     @web.asynchronous
@@ -29,9 +133,14 @@ class OpenHumansHandler(BaseHandler, OpenHumansMixin):
         # If the user isn't authenticated render the page to allow them to
         # authenticate
         if not open_humans:
-            self.render('open-humans.html', skid=self.current_user,
-                        linked_barcodes=None, unlinked_barcodes=None,
-                        access_token=None, open_humans_url=self._API_URL)
+            self.render('open-humans.html',
+                        skid=self.current_user,
+                        linked_barcodes=None,
+                        unlinked_barcodes=None,
+                        access_token=None,
+                        open_humans_home_url=self._HOME_URL,
+                        open_humans_research_url=self._RESEARCH_URL,
+                        open_humans_api_url=self._API_URL)
 
             return
 
@@ -68,19 +177,25 @@ class OpenHumansHandler(BaseHandler, OpenHumansMixin):
                     linked_barcodes=linked_barcodes,
                     unlinked_barcodes=unlinked_barcodes,
                     access_token=open_humans['access_token'],
-                    open_humans_url=self._API_URL)
+                    open_humans_home_url=self._HOME_URL,
+                    open_humans_research_url=self._RESEARCH_URL,
+                    open_humans_api_url=self._API_URL)
 
 
 class OpenHumansLoginHandler(BaseHandler, OpenHumansMixin):
-    _API_URL = urljoin(AMGUT_CONFIG.open_humans_base_url, '/api')
+    """
+    Handles the OAuth2 connection to Open Humans.
+    """
 
-    _OAUTH_REDIRECT_URL = urljoin(AMGUT_CONFIG.base_url,
-                                  'authed/connect/open-humans/')
+    _API_URL = basejoin(AMGUT_CONFIG.open_humans_base_url, '/api')
 
-    _OAUTH_AUTHORIZE_URL = urljoin(AMGUT_CONFIG.open_humans_base_url,
-                                   '/oauth2/authorize/')
-    _OAUTH_ACCESS_TOKEN_URL = urljoin(AMGUT_CONFIG.open_humans_base_url,
-                                      '/oauth2/token/')
+    _OAUTH_REDIRECT_URL = basejoin(AMGUT_CONFIG.base_url,
+                                   'authed/connect/open-humans/')
+
+    _OAUTH_AUTHORIZE_URL = basejoin(AMGUT_CONFIG.open_humans_base_url,
+                                    '/oauth2/authorize/')
+    _OAUTH_ACCESS_TOKEN_URL = basejoin(AMGUT_CONFIG.open_humans_base_url,
+                                       '/oauth2/token/')
 
     @web.authenticated
     @web.asynchronous
@@ -106,7 +221,7 @@ class OpenHumansLoginHandler(BaseHandler, OpenHumansMixin):
 
     def _on_login(self, user):
         """
-        This handles the user object from the login request
+        Handle the user object from the login request.
         """
         if user:
             logging.info('logged in user from openhumans: ' + str(user))
@@ -116,3 +231,10 @@ class OpenHumansLoginHandler(BaseHandler, OpenHumansMixin):
             self.clear_cookie('open-humans')
 
         self.redirect('/authed/open-humans/')
+
+
+if __name__ == '__main__':
+    import doctest
+
+    doctest.testmod(verbose=True, optionflags=(doctest.NORMALIZE_WHITESPACE |
+                                               doctest.REPORT_NDIFF))
