@@ -710,6 +710,7 @@ _PORTAL = {
     'VERIFICATION_TEXT_1': "We ask you to verify that you received the correct sample tubes and kit. Using a <strong>Verification Code</strong> helps us ensure that you receive the correct barcodes and Credentials Sheet.",
     'VERIFICATION_TEXT_2': 'our <strong>Verification Code</strong> will be sent to you via email to the address that you entered when you made your donation; if you made an anonymous donation, please <a href="%(sitebase)s/authed/help_request/">contact us directly</a>.' % {'sitebase': media_locale['SITEBASE']},
     'VERIFICATION_TEXT_3': 'If you cannot find your <strong>Verification Code</strong>, please make sure to check your spam folder. If you still cannot find the code, please <a href="%(sitebase)s/authed/help_request/">contact us</a>.' % {'sitebase': media_locale['SITEBASE']},
+    'RESEND_VERIFICATION': 'Resend verification code',
     'VERIFY_BARCODES': "Please verify that the barcode(s) you received in the mail match the barcode(s) here",
     'VERIFY_BARCODES_POPUP': "The barcode you need to verify is located on the outside of your sample tube.",
     'VERIFY_TAB': "Verify Your Kit",
