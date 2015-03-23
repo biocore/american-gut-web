@@ -5,7 +5,7 @@ from tornado.web import authenticated
 
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.lib.config_manager import AMGUT_CONFIG
-from amgut import text_locale
+from amgut import text_locale, media_locale
 
 
 class TaxaSummaryHandler(BaseHandler):
@@ -13,6 +13,7 @@ class TaxaSummaryHandler(BaseHandler):
     def get(self, barcode):
         # nothing else to do
         barcode = barcode.strip('/')  # for nginx rewrites
+
         if barcode is None:
             tl = text_locale['handlers']
             self.render('taxa_summary.html', skid=self.current_user,
@@ -24,7 +25,8 @@ class TaxaSummaryHandler(BaseHandler):
                                barcode+'.txt')
 
         # and we need this path for users to access the file
-        taxa_summary_url = join('/results', 'taxa-summaries', barcode+'.txt')
+        taxa_summary_url = join(media_locale['SITEBASE'], 'results',
+                                'taxa-summaries', barcode+'.txt')
 
         # read lines from taxa summary table, omit comment lines
         lines = [x.replace(';', '\t').strip() for x in
