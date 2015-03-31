@@ -257,7 +257,7 @@
 	group_questions references survey_group ( survey_group -> group_order )</title>
 </path>
 <text x='242' y='1615' transform='rotate(0 242,1615)' title='Foreign Key fk_human_survey_group_question
-	group_questions references survey_group ( survey_group -> group_order )' style='fill:#a1a0a0;'>survey_group</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 465 1635 L 592,1635 Q 600,1635 600,1642 L 600,1777 Q 600,1785 592,1785 L 585,1785' >
+	group_questions references survey_group ( survey_group -> group_order )' style='fill:#a1a0a0;'>survey_group</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 465 1635 L 607,1635 Q 615,1635 615,1642 L 615,1777 Q 615,1785 607,1785 L 600,1785' >
 	<title>Foreign Key fk_human_survey_group_question_0
 	group_questions references survey_question ( survey_question_id )</title>
 </path>
@@ -277,12 +277,12 @@
 	survey_answers_other references ag_login_surveys ( survey_id )</title>
 </path>
 <text x='1477' y='1390' transform='rotate(0 1477,1390)' title='Foreign Key fk_survey_answers_other
-	survey_answers_other references ag_login_surveys ( survey_id )' style='fill:#a1a0a0;'>survey_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1320 1410 L 967,1410 Q 960,1410 960,1417 L 960,1612 Q 960,1620 952,1620 L 607,1620 Q 600,1620 600,1627 L 600,1650' >
+	survey_answers_other references ag_login_surveys ( survey_id )' style='fill:#a1a0a0;'>survey_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1320 1410 L 967,1410 Q 960,1410 960,1417 L 960,1612 Q 960,1620 952,1620 L 622,1620 Q 615,1620 615,1627 L 615,1650' >
 	<title>Foreign Key fk_survey_answers_other_0
 	survey_answers_other references survey_question ( survey_question_id )</title>
 </path>
 <text x='1217' y='1405' transform='rotate(0 1217,1405)' title='Foreign Key fk_survey_answers_other_0
-	survey_answers_other references survey_question ( survey_question_id )' style='fill:#a1a0a0;'>survey_question_id</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 660 1710 L 607,1710 Q 600,1710 600,1717 L 600,1725' >
+	survey_answers_other references survey_question ( survey_question_id )' style='fill:#a1a0a0;'>survey_question_id</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 660 1710 L 622,1710 Q 615,1710 615,1717 L 615,1725' >
 	<title>Foreign Key fk_survey_question_triggers
 	survey_question_triggers references survey_question ( triggered_question -> survey_question_id )</title>
 </path>
@@ -312,7 +312,7 @@
 	iso_country_lookup references survey_response ( country -> american )</title>
 </path>
 <text x='875' y='1885' transform='rotate(0 875,1885)' title='Foreign Key fk_iso_country_lookup
-	iso_country_lookup references survey_response ( country -> american )' style='fill:#a1a0a0;'>country</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 705 1980 L 607,1980 Q 600,1980 600,1972 L 600,1792 Q 600,1785 592,1785 L 585,1785' >
+	iso_country_lookup references survey_response ( country -> american )' style='fill:#a1a0a0;'>country</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 705 1980 L 622,1980 Q 615,1980 615,1972 L 615,1792 Q 615,1785 607,1785 L 600,1785' >
 	<title>Foreign Key fk_human_survey_response_type
 	survey_question_response_type references survey_question ( survey_question_id )</title>
 </path>
@@ -731,26 +731,6 @@ Referred by survey_question_triggers ( survey_question_id, triggering_response -
 <a xlink:href='#display_index'><text x='738' y='1822'>display_index</text><title>display_index serial
 The display order of this response</title></a>
 
-<!-- ============= Table 'survey_question' ============= -->
-<rect class='table' x='450' y='1748' width='135' height='90' rx='7' ry='7' />
-<path d='M 450.50 1774.50 L 450.50 1755.50 Q 450.50 1748.50 457.50 1748.50 L 577.50 1748.50 Q 584.50 1748.50 584.50 1755.50 L 584.50 1774.50 L450.50 1774.50 ' style='fill:url(#tableHeaderGradient6); stroke:none;' />
-<a xlink:href='#survey_question'><text x='473' y='1762' class='tableTitle'>survey_question</text><title>Table ag.survey_question
-Stores the human survey questions</title></a>
-  <use id='nn' x='452' y='1782' xlink:href='#nn'/><a xlink:href='#survey_question_id'><use id='pk' x='452' y='1781' xlink:href='#pk'/><title>Primary Key  ( survey_question_id ) </title></a>
-<a xlink:href='#survey_question_id'><text x='468' y='1792'>survey_question_id</text><title>survey_question_id bigint not null
-The unique question ID</title></a>
-<a xlink:href='#survey_question_id'><use id='ref' x='573' y='1781' xlink:href='#ref'/><title>Referred by group_questions ( survey_question_id ) 
-Referred by survey_answers_other ( survey_question_id ) 
-Referred by survey_question_response ( survey_question_id ) 
-Referred by survey_question_response_type ( survey_question_id ) 
-Referred by survey_question_triggers ( triggered_question -> survey_question_id ) </title></a>
-  <a xlink:href='#american'><use id='unq' x='452' y='1796' xlink:href='#unq'/><title>Unique Index  ( american ) </title></a>
-<a xlink:href='#american'><text x='468' y='1807'>american</text><title>american varchar
-The american english version of the question</title></a>
-  <a xlink:href='#british'><use id='unq' x='452' y='1811' xlink:href='#unq'/><title>Unique Index  ( british ) </title></a>
-<a xlink:href='#british'><text x='468' y='1822'>british</text><title>british varchar
-The british english version of the question</title></a>
-
 <!-- ============= Table 'ag_human_survey' ============= -->
 <rect class='table' x='1695' y='638' width='180' height='1710' rx='7' ry='7' />
 <path d='M 1695.50 664.50 L 1695.50 645.50 Q 1695.50 638.50 1702.50 638.50 L 1867.50 638.50 Q 1874.50 638.50 1874.50 645.50 L 1874.50 664.50 L1695.50 664.50 ' style='fill:url(#tableHeaderGradient3); stroke:none;' />
@@ -956,10 +936,9 @@ References ag_consent ( ag_login_id, participant_name ) </title></a>
   <use id='nn' x='1457' y='1287' xlink:href='#nn'/><a xlink:href='#survey_id'><use id='pk' x='1457' y='1286' xlink:href='#pk'/><title>Primary Key  ( survey_id ) </title></a>
 <a xlink:href='#survey_id'><text x='1473' y='1297'>survey_id</text><title>survey_id varchar not null</title></a>
 <a xlink:href='#survey_id'><use id='ref' x='1578' y='1286' xlink:href='#ref'/><title>Referred by ag_kit_barcodes ( survey_id ) 
-Referred by survey_answers ( survey_id ) 
-Referred by survey_answers_other ( survey_id ) 
 Referred by promoted_survey_ids ( survey_id ) 
-Referred by promoted_survey_ids ( survey_id ) </title></a>
+Referred by survey_answers ( survey_id ) 
+Referred by survey_answers_other ( survey_id ) </title></a>
   <a xlink:href='#participant_name'><use id='idx' x='1457' y='1301' xlink:href='#idx'/><title>Index  ( participant_name ) Index  ( ag_login_id, participant_name ) </title></a>
 <a xlink:href='#participant_name'><text x='1473' y='1312'>participant_name</text><title>participant_name varchar</title></a>
 <a xlink:href='#participant_name'><use id='fk' x='1578' y='1301' xlink:href='#fk'/><title>References ag_consent ( ag_login_id, participant_name ) </title></a>
@@ -991,6 +970,29 @@ Keeps track of the survey&#095;ids that correspond to surveys that were ported f
   <use id='nn' x='1457' y='1167' xlink:href='#nn'/><a xlink:href='#survey_id'><use id='pk' x='1457' y='1166' xlink:href='#pk'/><title>Primary Key  ( survey_id ) </title></a>
 <a xlink:href='#survey_id'><text x='1473' y='1177'>survey_id</text><title>survey_id varchar not null</title></a>
 <a xlink:href='#survey_id'><use id='fk' x='1578' y='1166' xlink:href='#fk'/><title>References ag_login_surveys ( survey_id ) </title></a>
+
+<!-- ============= Table 'survey_question' ============= -->
+<rect class='table' x='450' y='1748' width='150' height='105' rx='7' ry='7' />
+<path d='M 450.50 1774.50 L 450.50 1755.50 Q 450.50 1748.50 457.50 1748.50 L 592.50 1748.50 Q 599.50 1748.50 599.50 1755.50 L 599.50 1774.50 L450.50 1774.50 ' style='fill:url(#tableHeaderGradient6); stroke:none;' />
+<a xlink:href='#survey_question'><text x='480' y='1762' class='tableTitle'>survey_question</text><title>Table ag.survey_question
+Stores the human survey questions</title></a>
+  <use id='nn' x='452' y='1782' xlink:href='#nn'/><a xlink:href='#survey_question_id'><use id='pk' x='452' y='1781' xlink:href='#pk'/><title>Primary Key  ( survey_question_id ) </title></a>
+<a xlink:href='#survey_question_id'><text x='468' y='1792'>survey_question_id</text><title>survey_question_id bigint not null
+The unique question ID</title></a>
+<a xlink:href='#survey_question_id'><use id='ref' x='588' y='1781' xlink:href='#ref'/><title>Referred by group_questions ( survey_question_id ) 
+Referred by survey_answers_other ( survey_question_id ) 
+Referred by survey_question_response ( survey_question_id ) 
+Referred by survey_question_response_type ( survey_question_id ) 
+Referred by survey_question_triggers ( triggered_question -> survey_question_id ) </title></a>
+  <use id='nn' x='452' y='1797' xlink:href='#nn'/><a xlink:href='#question_shortname'><use id='unq' x='452' y='1796' xlink:href='#unq'/><title>Unique Index  ( question_shortname ) </title></a>
+<a xlink:href='#question_shortname'><text x='468' y='1807'>question_shortname</text><title>question_shortname varchar&#040;100&#041; not null default &#039;TODO&#039;
+A QIIME mapping file&#045;compatible header that describes the question and can be used for metadata pulldown</title></a>
+  <a xlink:href='#american'><use id='unq' x='452' y='1811' xlink:href='#unq'/><title>Unique Index  ( american ) </title></a>
+<a xlink:href='#american'><text x='468' y='1822'>american</text><title>american varchar
+The american english version of the question</title></a>
+  <a xlink:href='#british'><use id='unq' x='452' y='1826' xlink:href='#unq'/><title>Unique Index  ( british ) </title></a>
+<a xlink:href='#british'><text x='468' y='1837'>british</text><title>british varchar
+The british english version of the question</title></a>
 
 </g></svg>
 
@@ -2213,44 +2215,6 @@ Keeps track of the survey&#095;ids that correspond to surveys that were ported f
 <br/><br/>
 <table id='dbs' >
 <thead>
-<tr><th colspan='3'><a name='survey_question'>survey_question</a></th></tr>
-<tr><td colspan='3'>Stores the human survey questions </td></tr>
-</thead>
-<tbody>
-	<tr>
-		<td><a name='survey_question_id'>survey&#095;question&#095;id</a></td>
-		<td width='40%'> bigint  NOT NULL  </td>
-		<td width='99%'> The unique question ID </td>
-	</tr>
-	<tr>
-		<td><a name='american'>american</a></td>
-		<td width='40%'> varchar   </td>
-		<td width='99%'> The american english version of the question </td>
-	</tr>
-	<tr>
-		<td><a name='british'>british</a></td>
-		<td width='40%'> varchar   </td>
-		<td width='99%'> The british english version of the question </td>
-	</tr>
-<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
-	<tr>		<td>pk&#095;human&#095;survey&#095;question primary key</td>
-		<td> ON survey&#095;question&#095;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;survey&#095;question unique</td>
-		<td> ON american</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;survey&#095;question&#095;0 unique</td>
-		<td> ON british</td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table id='dbs' >
-<thead>
 <tr><th colspan='3'><a name='ag_human_survey'>ag_human_survey</a></th></tr>
 </thead>
 <tbody>
@@ -3232,6 +3196,53 @@ Keeps track of the survey&#095;ids that correspond to surveys that were ported f
 	<tr>
 		<td>fk_promoted_survey_ids</td>
 		<td > ( survey&#095;id ) ref <a href='#ag&#095;login&#095;surveys'>ag&#095;login&#095;surveys</a> (survey&#095;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table id='dbs' >
+<thead>
+<tr><th colspan='3'><a name='survey_question'>survey_question</a></th></tr>
+<tr><td colspan='3'>Stores the human survey questions </td></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='survey_question_id'>survey&#095;question&#095;id</a></td>
+		<td width='40%'> bigint  NOT NULL  </td>
+		<td width='99%'> The unique question ID </td>
+	</tr>
+	<tr>
+		<td><a name='question_shortname'>question&#095;shortname</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;  NOT NULL  DEFO 'TODO' </td>
+		<td width='99%'> A QIIME mapping file&#045;compatible header that describes the question and can be used for metadata pulldown </td>
+	</tr>
+	<tr>
+		<td><a name='american'>american</a></td>
+		<td width='40%'> varchar   </td>
+		<td width='99%'> The american english version of the question </td>
+	</tr>
+	<tr>
+		<td><a name='british'>british</a></td>
+		<td width='40%'> varchar   </td>
+		<td width='99%'> The british english version of the question </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
+	<tr>		<td>pk&#095;human&#095;survey&#095;question primary key</td>
+		<td> ON survey&#095;question&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;survey&#095;question unique</td>
+		<td> ON american</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;survey&#095;question&#095;0 unique</td>
+		<td> ON british</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;survey&#095;question&#095;1 unique</td>
+		<td> ON question&#095;shortname</td>
 		<td>  </td>
 	</tr>
 </tbody>
