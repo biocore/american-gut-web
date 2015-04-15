@@ -586,6 +586,10 @@
 			<column name="survey_question_id" type="bigint" jt="-5" mandatory="y" >
 				<comment><![CDATA[The unique question ID]]></comment>
 			</column>
+			<column name="question_shortname" type="varchar" length="100" jt="12" mandatory="y" >
+				<defo>&#039;TODO&#039;</defo>
+				<comment><![CDATA[A QIIME mapping file-compatible header that describes the question and can be used for metadata pulldown]]></comment>
+			</column>
 			<column name="american" type="varchar" jt="12" >
 				<comment><![CDATA[The american english version of the question]]></comment>
 			</column>
@@ -600,6 +604,9 @@
 			</index>
 			<index name="idx_survey_question_0" unique="UNIQUE" >
 				<column name="british" />
+			</index>
+			<index name="idx_survey_question_1" unique="UNIQUE" >
+				<column name="question_shortname" />
 			</index>
 		</table>
 		<table name="survey_question_response" >
@@ -21329,7 +21336,6 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="survey_question_triggers" color="a8c4ef" x="675" y="1650" />
 		<entity schema="ag" name="survey_response" color="a8c4ef" x="720" y="1860" />
 		<entity schema="ag" name="survey_question_response" color="ffcccc" x="720" y="1755" />
-		<entity schema="ag" name="survey_question" color="a8c4ef" x="450" y="1755" />
 		<entity schema="ag" name="ag_human_survey" color="c6d9f7" x="1695" y="645" />
 		<entity schema="ag" name="iso_country_lookup" color="ffffff" x="930" y="1845" />
 		<entity schema="ag" name="survey_question_response_type" color="ffcccc" x="720" y="1950" />
@@ -21338,6 +21344,7 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="ag_login_surveys" color="ffcccc" x="1455" y="1245" />
 		<entity schema="ag" name="survey_answers" color="a8c4ef" x="1560" y="1425" />
 		<entity schema="ag" name="promoted_survey_ids" color="a8c4ef" x="1455" y="1140" />
+		<entity schema="ag" name="survey_question" color="a8c4ef" x="450" y="1755" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by : 
    american_gut_consent</comment>
