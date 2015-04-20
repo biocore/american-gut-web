@@ -406,27 +406,27 @@ class AGDataAccess(object):
         sql = """
             DO $do$
             DECLARE
-                ag_kit_id varchar;
+                k_id varchar;
                 bc varchar;
             BEGIN
                 INSERT INTO ag_kit
                 (ag_login_id, supplied_kit_id, kit_password, swabs_per_kit,
                  kit_verification_code, print_results)
-                VALUES (SELECT {0}, {1}, password, swabs_per_kit,
-                    verification_code, {2}
-                    FROM ag_handout_kits WHERE kit_id = {1})
-                RETURNING ag_kit_id INTO ag_kit_id;
+                SELECT '{0}', '{1}', password, swabs_per_kit,
+                    verification_code, '{2}'
+                    FROM ag_handout_kits WHERE kit_id = '{1}'
+                RETURNING ag_kit_id INTO k_id;
                 FOR bc IN
-                    SELECT barcode FROM ag_handout_kits WHERE kit_id = {1}
+                    SELECT barcode FROM ag_handout_kits WHERE kit_id = '{1}'
                 LOOP
                     INSERT INTO barcode (barcode) VALUES (bc);
                     INSERT INTO project_barcode (project_id, barcode)
-                        VALUES (1, bc);
+                        VALUES (1, 'bc');
                     INSERT  INTO ag_kit_barcodes
                         (ag_kit_id, barcode, sample_barcode_file)
-                        VALUES (ag_kit_id, bc, bc || '.jpg')
+                        VALUES (k_id, 'bc', 'bc' || '.jpg');
                 END LOOP;
-                DELETE FROM ag_handout_kits WHERE kit_id = {1};
+                DELETE FROM ag_handout_kits WHERE kit_id = '{1}';
             END $do$;
             """.format(ag_login_id, supplied_kit_id, printresults)
 
