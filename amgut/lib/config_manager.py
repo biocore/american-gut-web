@@ -183,9 +183,6 @@ class ConfigurationManager(object):
                 self.password = None
             else:
                 raise e
-
-        self.admin_user = get('ADMIN_USER')
-        self.admin_password = get('ADMIN_PASSWORD')
         self.database = get('DATABASE')
         self.host = get('HOST')
         self.port = getint('PORT')
