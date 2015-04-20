@@ -399,51 +399,41 @@ class AGDataAccess(object):
         Whatever is passed as kit_password will be added AS IS. This means you
         must hash the password before passing, if desired.
         """
-        kitinfo = self.getAGHandoutKitDetails(supplied_kit_id)
         printresults = self.checkPrintResults(supplied_kit_id)
         if printresults is None:
             printresults = 'n'
 
+        sql = """
+            DO $do$
+            DECLARE
+                ag_kit_id varchar;
+                bc varchar;
+            BEGIN
+                INSERT INTO ag_kit
+                (ag_login_id, supplied_kit_id, kit_password, swabs_per_kit,
+                 kit_verification_code, print_results)
+                VALUES (SELECT {0}, {1}, password, swabs_per_kit,
+                    verification_code, {2}
+                    FROM ag_handout_kits WHERE kit_id = {1})
+                RETURNING ag_kit_id INTO ag_kit_id;
+                FOR bc IN
+                    SELECT barcode FROM ag_handout_kits WHERE kit_id = {1}
+                LOOP
+                    INSERT INTO barcode (barcode) VALUES (bc);
+                    INSERT INTO project_barcode (project_id, barcode)
+                        VALUES (1, bc);
+                    INSERT  INTO ag_kit_barcodes
+                        (ag_kit_id, barcode, sample_barcode_file)
+                        VALUES (ag_kit_id, bc, bc || '.jpg')
+                END LOOP;
+                DELETE FROM ag_handout_kits WHERE kit_id = {1};
+            END $do$;
+            """.format(ag_login_id, supplied_kit_id, printresults)
+
         conn_handler = SQLConnectionHandler()
-        queue = "register_%s" % supplied_kit_id
-        conn_handler.create_queue(queue)
-        # insert the actual kit into the kit table.
-        # Needs to be done directly because ag_kit_id needed for rest
-        kit_id = conn_handler.execute_fetchone(
-            """INSERT INTO ag_kit
-            (ag_login_id, supplied_kit_id, kit_password, swabs_per_kit,
-            kit_verification_code, print_results)
-            VALUES (%s, %s, %s, %s, %s, %s) RETURNING ag_kit_id""",
-            (ag_login_id, supplied_kit_id, kitinfo['password'],
-             kitinfo['swabs_per_kit'], kitinfo['verification_code'],
-             printresults))[0]
-
-        # get the barcodes and add them to the queue
-        sql = "SELECT barcode FROM ag_handout_kits WHERE kit_id = %s"
-        for row in conn_handler.execute_fetchall(sql, [supplied_kit_id]):
-            barcode = row[0]
-            conn_handler.add_to_queue(
-                queue, "INSERT INTO barcode (barcode) VALUES (%s)", [barcode])
-            conn_handler.add_to_queue(
-                queue, "INSERT INTO project_barcode (project_id, barcode) "
-                "VALUES (1, %s)", [barcode])
-            conn_handler.add_to_queue(
-                queue, """INSERT  INTO ag_kit_barcodes
-                (ag_kit_id, barcode, sample_barcode_file)
-                VALUES (%s, %s, %s || '.jpg')""", [kit_id, barcode, barcode])
-
-        # remove from handout_kits table since now registered
-        conn_handler.add_to_queue(
-            queue, """DELETE FROM ag_handout_kits
-            WHERE kit_id = %s""", [supplied_kit_id])
-
         try:
-            conn_handler.execute_queue(queue)
+            conn_handler.execute(sql)
         except psycopg2.IntegrityError:
-            # remove kit since registering barcodes failed
-            conn_handler.execute(
-                "DELETE FROM ag_kit WHERE ag_kit_id = %s", [kit_id])
-
             logging.exception('Error on skid %s:' % ag_login_id)
             return False
         return True
