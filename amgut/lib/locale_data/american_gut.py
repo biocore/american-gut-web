@@ -532,6 +532,7 @@ The following tests are available:</p>
 <p>You have received a copy of this consent document and a copy of the "Experimental Subject's Bill of Rights" to keep.</p>
 
 <p>You agree to allow your child to participate.</p>''',
+    'BILL_OF_RIGHTS': '''Experimental Subject's Bill of Rights''',
     'TEXT_I_HAVE_READ_1': 'I have read (or someone has read to me) this form. I am aware that I am being asked to be in a research study. I voluntarily agree to be in this study.',
     'TEXT_I_HAVE_READ_PARENT': 'I have read (or someone has read to me) this form. I am aware that my child is being asked to be in a research study. I voluntarily agree for my child to be in this study.',
     'PARTICIPANT_NAME': 'Name of participant',
