@@ -432,6 +432,9 @@ class AGDataAccess(object):
                    "survey_id = %s")
             curr.execute(sql, [survey_id])
 
+            sql = "DELETE FROM promoted_survey_ids WHERE survey_id = %s"
+            curr.execute(sql, [survey_id])
+
             # Delete last due to foreign keys
             sql = ("DELETE FROM ag_login_surveys WHERE "
                    "survey_id = %s")
