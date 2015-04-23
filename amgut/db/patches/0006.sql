@@ -38,7 +38,7 @@ SET elevation = al.elevation
 FROM ag.ag_login al
 WHERE zipcode = al.zip;
 
-INSERT INTO ag.zipcodes
+INSERT INTO ag.zipcodes (zipcode, latitude, longitude, elevation)
 SELECT DISTINCT zip, min(latitude), min(longitude), min(elevation)
 FROM ag.ag_login
 WHERE zip NOT IN (SELECT zipcode FROM ag.zipcodes)
