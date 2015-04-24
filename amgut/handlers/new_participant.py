@@ -57,7 +57,7 @@ class NewParticipantHandler(BaseHandler):
                   'participant_email': participant_email,
                   'parent_1_name': parent_1_name,
                   'parent_2_name': parent_2_name,
-                  'is_juvenile': True if age_range != '18' else False,
+                  'is_juvenile': True if age_range != '18-plus' else False,
                   'deceased_parent': deceased_parent,
                   'obtainer_name': obtainer_name,
                   'age_range': age_range,

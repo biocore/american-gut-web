@@ -5,7 +5,7 @@
         $("#0-6-div").hide();
         $("#7-12-div").hide();
         $("#13-17-div").hide();
-        $("#18-div").hide();
+        $("#18-plus-div").hide();
         $("#"+ radio.value +"-div").show();
     }
 
@@ -13,7 +13,7 @@
         $("#0-6-div").hide();
         $("#7-12-div").hide();
         $("#13-17-div").hide();
-        $("#18-div").hide();
+        $("#18-plus-div").hide();
         //validate each form seperately
         $('form').each(function () {
             $(this).validate();
@@ -31,7 +31,7 @@
     <input type='radio' id='age-range-1' name='age-range' value='0-6' onchange="change_consent_div(this)"> <label for='age-range-1'>{% raw tl['AGE_0_6']%}</label><br />
     <input type='radio' id='age-range-2' name='age-range' value='7-12' onchange="change_consent_div(this)"> <label for='age-range-2'>{% raw tl['AGE_7_12']%}</label><br />
     <input type='radio' id='age-range-3' name='age-range' value='13-17' onchange="change_consent_div(this)"> <label for='age-range-3'>{% raw tl['AGE_13_17']%}</label><br />
-    <input type='radio' id='age-range-4' name='age-range' value='18' onchange="change_consent_div(this)"> <label for='age-range-4'>{% raw tl['AGE_18']%}</label>
+    <input type='radio' id='age-range-4' name='age-range' value='18-plus' onchange="change_consent_div(this)"> <label for='age-range-4'>{% raw tl['AGE_18']%}</label>
     <hr>
 </div>
 
@@ -117,7 +117,7 @@
     </form>
 </div>
 
-<div id="18-div" style='text-align: left;padding: 10px'>
+<div id="18-plus-div" style='text-align: left;padding: 10px'>
 {% raw tl['CONSENT_18']%}
 <div class="" id="consent">
         <hr>
