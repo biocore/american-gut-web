@@ -15,6 +15,8 @@ DROP INDEX ag.ix_zipcode_long;
 
 ALTER TABLE ag.zipcodes ADD elevation float8  ;
 
+ALTER TABLE ag.zipcodes ADD cannot_geocode bool;
+
 ALTER TABLE ag.zipcodes ALTER COLUMN zipcode TYPE varchar;
 
 ALTER TABLE ag.zipcodes ALTER COLUMN state TYPE varchar;
@@ -43,3 +45,9 @@ SELECT DISTINCT zip, min(latitude), min(longitude), min(elevation)
 FROM ag.ag_login
 WHERE zip NOT IN (SELECT zipcode FROM ag.zipcodes)
 GROUP BY zip;
+
+UPDATE ag.zipcodes
+SET cannot_geocode = False
+WHERE (latitude IS NOT NULL
+  and longitude IS NOT NULL
+  and elevation IS NOT NULL);

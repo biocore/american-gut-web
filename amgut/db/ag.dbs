@@ -285,7 +285,10 @@
 			<column name="state" type="varchar" length="100" jt="12" />
 			<column name="zip" type="varchar" length="10" jt="12" />
 			<column name="country" type="varchar" length="100" jt="12" />
+			<column name="latitude" type="float8" jt="6" />
+			<column name="longitude" type="float8" jt="6" />
 			<column name="cannot_geocode" type="char" length="1" jt="1" />
+			<column name="elevation" type="float8" jt="6" />
 			<index name="ag_login_pkey" unique="PRIMARY_KEY" >
 				<column name="ag_login_id" />
 			</index>
@@ -721,6 +724,7 @@
 			<column name="latitude" type="float8" jt="6" />
 			<column name="longitude" type="float8" jt="6" />
 			<column name="elevation" type="float8" jt="6" />
+			<column name="cannot_geocode" type="bool" jt="-7" />
 			<index name="zipcodes_pkey" unique="PRIMARY_KEY" >
 				<column name="zipcode" />
 			</index>
@@ -21335,8 +21339,8 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="survey_answers" color="a8c4ef" x="1560" y="1425" />
 		<entity schema="ag" name="promoted_survey_ids" color="a8c4ef" x="1455" y="1140" />
 		<entity schema="ag" name="survey_question" color="a8c4ef" x="450" y="1755" />
-		<entity schema="ag" name="zipcodes" color="c6c6f7" x="1125" y="270" />
 		<entity schema="ag" name="ag_login" color="f7e2c6" x="735" y="630" />
+		<entity schema="ag" name="zipcodes" color="c6c6f7" x="1125" y="270" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by : 
    american_gut_consent</comment>
