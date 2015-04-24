@@ -51,4 +51,3 @@ SET cannot_geocode = False
 WHERE (latitude IS NOT NULL
   and longitude IS NOT NULL
   and elevation IS NOT NULL);
->>>>>>> 935a1f26992f001255d17a3494564717f5351b00
