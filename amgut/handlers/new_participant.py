@@ -35,13 +35,13 @@ class NewParticipantHandler(BaseHandler):
     @authenticated
     def post(self):
         tl = text_locale['handlers']
-        deceased_parent = self.get_argument("deceased_parent", None)
         participant_name = self.get_argument("participant_name")
         participant_email = self.get_argument("participant_email")
         age_range = self.get_argument("age_range")
-        parent_1_name = self.get_argument("parent_1_name", None)
+        parent_1_name = self.get_argument("parent_1_name")
         parent_2_name = self.get_argument("parent_2_name", None)
         obtainer_name = self.get_argument("obtainer_name", None)
+        deceased_parent = self.get_argument("deceased_parent", None)
 
         ag_login_id = ag_data.get_user_for_kit(self.current_user)
 
