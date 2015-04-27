@@ -38,7 +38,7 @@ class NewParticipantHandler(BaseHandler):
         participant_name = self.get_argument("participant_name")
         participant_email = self.get_argument("participant_email")
         age_range = self.get_argument("age_range")
-        parent_1_name = self.get_argument("parent_1_name")
+        parent_1_name = self.get_argument("parent_1_name", None)
         parent_2_name = self.get_argument("parent_2_name", None)
         obtainer_name = self.get_argument("obtainer_name", None)
         deceased_parent = self.get_argument("deceased_parent", None)
