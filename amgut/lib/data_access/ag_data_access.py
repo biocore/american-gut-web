@@ -406,33 +406,33 @@ class AGDataAccess(object):
         sql = """
             DO $do$
             DECLARE
-                k_id varchar;
+                k_id uuid;
                 bc varchar;
             BEGIN
                 INSERT INTO ag_kit
                 (ag_login_id, supplied_kit_id, kit_password, swabs_per_kit,
                  kit_verification_code, print_results)
-                SELECT '{0}', '{1}', password, swabs_per_kit,
-                    verification_code, '{2}'
-                    FROM ag_handout_kits WHERE kit_id = '{1}'
+                SELECT '{0}', kit_id, password, swabs_per_kit,
+                    verification_code, '{1}'
+                    FROM ag_handout_kits WHERE kit_id = %s LIMIT 1
                 RETURNING ag_kit_id INTO k_id;
                 FOR bc IN
-                    SELECT barcode FROM ag_handout_kits WHERE kit_id = '{1}'
+                    SELECT barcode FROM ag_handout_kits WHERE kit_id = %s
                 LOOP
                     INSERT INTO barcode (barcode) VALUES (bc);
                     INSERT INTO project_barcode (project_id, barcode)
-                        VALUES (1, 'bc');
+                        VALUES (1, bc);
                     INSERT  INTO ag_kit_barcodes
                         (ag_kit_id, barcode, sample_barcode_file)
-                        VALUES (k_id, 'bc', 'bc' || '.jpg');
+                        VALUES (k_id, bc, bc || '.jpg');
                 END LOOP;
-                DELETE FROM ag_handout_kits WHERE kit_id = '{1}';
+                DELETE FROM ag_handout_kits WHERE kit_id = %s;
             END $do$;
-            """.format(ag_login_id, supplied_kit_id, printresults)
+            """.format(ag_login_id, printresults)
 
         conn_handler = SQLConnectionHandler()
         try:
-            conn_handler.execute(sql)
+            conn_handler.execute(sql, [supplied_kit_id] * 3)
         except psycopg2.IntegrityError:
             logging.exception('Error on skid %s:' % ag_login_id)
             return False
