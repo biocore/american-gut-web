@@ -107,10 +107,10 @@ _HANDLERS = {
 }
 
 _NEW_PARTICIPANT = {
-        'ADD_HUMAN_TITLE': 'Add a New Human Source',
+    'ADD_HUMAN_TITLE': 'Add a New Human Source',
     'SEL_AGE_RANGE': 'Select age range of participant:',
     'ADD_HUMAN_HELP_SUGGESTION': 'If you need help with the website, please use the contact mechanism in the menu to the left. Please do not email the people listed in this form for help, unless it has to do with an injury. ',
-    'AGE_0_6': '0-6 years',
+    'AGE_0_6': '6 weeks - 6 years',
     'AGE_7_12': '7-12 years',
     'AGE_13_17': '13-17 years',
     'AGE_18': '18+ years',
@@ -360,7 +360,7 @@ The following tests are available:</p>
     'PARTICIPANT_EMAIL': 'Email of participant',
     'PARTICIPANT_PARENT_1': 'Parent/Guardian name',
     'PARTICIPANT_PARENT_2': 'Parent/Guardian name of second parent',
-    'PARTICIPANT_DECEASED_PARENTS': 'One or both parents are deceased or unable to consent.'
+    'PARTICIPANT_DECEASED_PARENTS': 'One parent/guardian is deceased or unable to consent.'
 }
 
 _FAQ = {
