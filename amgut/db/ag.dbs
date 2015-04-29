@@ -40,9 +40,9 @@
 			<column name="parent_1_code" type="varchar" length="200" jt="12" />
 			<column name="parent_2_code" type="varchar" length="200" jt="12" />
 			<column name="deceased_parent" type="varchar" length="10" jt="12" />
+			<column name="date_signed" type="date" jt="91" />
 			<column name="assent_obtainer" type="varchar" jt="12" />
 			<column name="age_range" type="varchar" jt="12" />
-			<column name="date_signed" type="date" jt="91" />
 			<index name="pk_american_gut_consent" unique="PRIMARY_KEY" >
 				<column name="ag_login_id" />
 				<column name="participant_name" />
@@ -288,10 +288,10 @@
 			<column name="state" type="varchar" length="100" jt="12" />
 			<column name="zip" type="varchar" length="10" jt="12" />
 			<column name="country" type="varchar" length="100" jt="12" />
-			<column name="latitude" type="float8" length="17" decimal="17" jt="6" />
-			<column name="longitude" type="float8" length="17" decimal="17" jt="6" />
+			<column name="latitude" type="float8" jt="6" />
+			<column name="longitude" type="float8" jt="6" />
 			<column name="cannot_geocode" type="char" length="1" jt="1" />
-			<column name="elevation" type="float8" length="17" decimal="17" jt="6" />
+			<column name="elevation" type="float8" jt="6" />
 			<index name="ag_login_pkey" unique="PRIMARY_KEY" >
 				<column name="ag_login_id" />
 			</index>
@@ -720,20 +720,16 @@
 			</fk>
 		</table>
 		<table name="zipcodes" >
-			<column name="zipcode" type="varchar" length="5" jt="12" mandatory="y" />
-			<column name="state" type="varchar" length="2" jt="12" mandatory="y" />
-			<column name="fips_regions" type="varchar" length="2" jt="12" mandatory="y" />
-			<column name="city" type="varchar" length="64" jt="12" mandatory="y" />
-			<column name="latitude" type="float8" length="17" decimal="17" jt="6" mandatory="y" />
-			<column name="longitude" type="float8" length="17" decimal="17" jt="6" mandatory="y" />
+			<column name="zipcode" type="varchar" jt="12" mandatory="y" />
+			<column name="state" type="varchar" jt="12" />
+			<column name="fips_regions" type="varchar" jt="12" />
+			<column name="city" type="varchar" jt="12" />
+			<column name="latitude" type="float8" jt="6" />
+			<column name="longitude" type="float8" jt="6" />
+			<column name="elevation" type="float8" jt="6" />
+			<column name="cannot_geocode" type="bool" jt="-7" />
 			<index name="zipcodes_pkey" unique="PRIMARY_KEY" >
 				<column name="zipcode" />
-			</index>
-			<index name="ix_zipcode_lat" unique="NORMAL" >
-				<column name="latitude" />
-			</index>
-			<index name="ix_zipcode_long" unique="NORMAL" >
-				<column name="longitude" />
 			</index>
 		</table>
 	</schema>
@@ -21319,7 +21315,6 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="barcode_exceptions" color="c6c6f7" x="915" y="150" />
 		<entity schema="ag" name="controlled_vocab_values" color="c6c6f7" x="915" y="270" />
 		<entity schema="ag" name="controlled_vocabs" color="c6c6f7" x="705" y="270" />
-		<entity schema="ag" name="zipcodes" color="c6c6f7" x="1125" y="270" />
 		<entity schema="ag" name="ag_participant_exceptions" color="f7e2c6" x="1110" y="540" />
 		<entity schema="ag" name="ag_survey_multiples_backup" color="cef7c6" x="210" y="720" />
 		<entity schema="ag" name="ag_animal_survey" color="f7e2c6" x="915" y="510" />
@@ -21331,7 +21326,6 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="project" color="c6d9f7" x="1890" y="390" />
 		<entity schema="ag" name="group_questions" color="ffcccc" x="330" y="1590" />
 		<entity schema="ag" name="survey_response_types" color="ffffff" x="1020" y="1965" />
-		<entity schema="ag" name="ag_login" color="f7e2c6" x="735" y="630" />
 		<entity schema="ag" name="surveys" color="a8c4ef" x="75" y="1755" />
 		<entity schema="ag" name="survey_group" color="a8c4ef" x="75" y="1590" />
 		<entity schema="ag" name="ag_kit" color="f7e2c6" x="1140" y="915" />
@@ -21347,7 +21341,9 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="survey_answers" color="a8c4ef" x="1560" y="1425" />
 		<entity schema="ag" name="promoted_survey_ids" color="a8c4ef" x="1455" y="1140" />
 		<entity schema="ag" name="survey_question" color="a8c4ef" x="450" y="1755" />
-		<entity schema="ag" name="ag_consent" color="c6d9f7" x="1470" y="885" />
+		<entity schema="ag" name="ag_login" color="f7e2c6" x="735" y="630" />
+		<entity schema="ag" name="zipcodes" color="c6c6f7" x="1125" y="270" />
+		<entity schema="ag" name="ag_consent" color="c6d9f7" x="1470" y="900" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by : 
    american_gut_consent</comment>
@@ -21397,17 +21393,5 @@ AS $function$xpath_exists$function$
 			<entity schema="ag" name="survey_question_response" />
 			<entity schema="ag" name="iso_country_lookup" />
 		</group>
-		<script name="patch" id="SQL6779489" >
-			<string><![CDATA[CREATE TABLE ag.promoted_survey_ids ( 
-	survey_id            varchar  NOT NULL,
-	CONSTRAINT pk_promoted_survey_ids PRIMARY KEY ( survey_id )
- ) ;
-
-COMMENT ON TABLE ag.promoted_survey_ids IS 'Keeps track of the survey_ids that correspond to surveys that were ported from first questionnaire to the second';
-
-ALTER TABLE ag.promoted_survey_ids ADD CONSTRAINT fk_promoted_survey_ids FOREIGN KEY ( survey_id ) REFERENCES ag.ag_login_surveys( survey_id )    ;
-
-]]></string>
-		</script>
 	</layout>
 </project>
