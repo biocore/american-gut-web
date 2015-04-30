@@ -2,7 +2,7 @@
 
 from tornado.web import authenticated
 from tornado.escape import json_encode
-from passlib.hash import bcrypt
+import logging
 
 from amgut.connections import ag_data
 from amgut.lib.mail import send_email
@@ -23,10 +23,14 @@ class AuthRegisterHandoutHandler(BaseHandler):
     @authenticated
     def post(self):
         skid = self.current_user
+        # log user out for register process
+        self.clear_cookie("skid")
         tl = text_locale['handlers']
-        info = {}
-        for info_column in ("email", "participantname", "address", "city",
-                            "state", "zip", "country"):
+        info = {
+            "email": self.get_argument("email"),
+            "participantname": self.get_argument("participantname")
+        }
+        for info_column in ("address", "city", "state", "zip", "country"):
             # Make sure that all fields were entered
             info[info_column] = self.get_argument(info_column, None)
 
@@ -35,35 +39,19 @@ class AuthRegisterHandoutHandler(BaseHandler):
             info['email'], info['participantname'], info['address'],
             info['city'], info['state'], info['zip'], info['country'])
         # Create the kit and add the kit to the user
-        kitinfo = ag_data.getAGHandoutKitDetails(skid)
-        printresults = ag_data.checkPrintResults(skid)
-        if printresults is None:
-            printresults = 'n'
-
-        success = ag_data.addAGKit(
-            ag_login_id, skid, kitinfo['password'], kitinfo['swabs_per_kit'],
-            kitinfo['verification_code'], printresults)
-        if success == -1:
-            # log them out and send to error page
-            self.clear_cookie("skid")
+        success = ag_data.registerHandoutKit(ag_login_id, skid)
+        if not success:
             self.redirect(media_locale['SITEBASE'] + '/db_error/?err=regkit')
             return
 
-        # Add the barcodes
+        # log user back in since registered successfully
+        self.set_secure_cookie("skid", json_encode(skid))
+        self.redirect(media_locale['SITEBASE'] + "/authed/portal/")
+
         kitinfo = ag_data.getAGKitDetails(skid)
-        ag_kit_id = kitinfo['ag_kit_id']
-        results = ag_data.get_barcodes_from_handout_kit(skid)
-        for row in results:
-            barcode = row[0]
-            success = ag_data.addAGBarcode(ag_kit_id, barcode)
-            if success == -1:
-                # log them out and send to error page
-                self.clear_cookie("skid")
-                self.redirect((media_locale['SITEBASE'] +
-                               '/db_error/?err=regbarcode'))
-                return
 
         # Email the verification code
+        # send email after redirect since it takes so long
         subject = tl['AUTH_SUBJECT']
         addendum = ''
         if skid.startswith('PGP_'):
@@ -71,17 +59,11 @@ class AuthRegisterHandoutHandler(BaseHandler):
 
         body = tl['AUTH_REGISTER_BODY'].format(
             kitinfo['kit_verification_code'], addendum)
-
-        result = tl['KIT_REG_SUCCESS']
         try:
             send_email(body, subject, recipient=info['email'],
                        sender=media_locale['HELP_EMAIL'])
         except:
-            result = media_locale['EMAIL_ERROR']
-            self.render('help_request.html', skid=skid, result=result)
-            return
-
-        self.redirect(media_locale['SITEBASE'] + "/authed/portal/")
+            logging.exception('Error on skid %s:' % skid)
 
 
 class AuthLoginHandler(BaseHandler):

@@ -12,6 +12,7 @@ __email__ = "emily.teravest@colorado.edu"
 __status__ = "Production"
 
 from unittest import TestCase, main
+from datetime import datetime
 
 import psycopg2
 import psycopg2.extras
@@ -210,6 +211,49 @@ class TestAGDataAccess(TestCase):
         rec = cur.fetchone()
         self.assertEqual(rec[6], '')
         self.assertEqual(rec[7], '')
+
+    def test_registerHandoutKit(self):
+        ag_login_id = 'd8592c74-7da1-2135-e040-8a80115d6401'
+        self.data_access.registerHandoutKit(
+            ag_login_id, 'test_ha')
+        cur = self.con.cursor()
+        # make sure handout kit removed
+        cur.execute("SELECT * FROM ag_handout_kits")
+        obs = cur.fetchall()
+        self.assertEqual(obs, [])
+
+        # make sure handout kit registered as regular kit
+        cur.execute("SELECT * FROM ag_kit WHERE supplied_kit_id = 'test_ha'",
+                    [ag_login_id])
+        obs = cur.fetchall()
+        exp = [('a70a398c-a29e-4367-8ae2-f291d5217b29',
+                'd8592c74-7da1-2135-e040-8a80115d6401',
+                'test_ha', '1234', 3, '5678', 'n', 'n', None, None, 'n', None)]
+        self.assertEqual(obs, exp)
+        kit_id = obs[0][0]
+
+        # make sure barcodes registered
+        cur.execute("SELECT * FROM barcode JOIN ag_kit_barcodes USING "
+                    "(barcode) WHERE ag_kit_id = %s",
+                    [kit_id])
+        obs = cur.fetchall()
+        exp = [
+            ('000000004', datetime(2015, 4, 29, 9, 25, 51, 842222), None, None,
+             None, None, None, None, 'f3033ee2-391c-4f24-b0eb-f9ed1d26444a',
+             'a70a398c-a29e-4367-8ae2-f291d5217b29', None, '000000004.jpg',
+             None, None, None, None, None, None, None, None, None, None, None,
+             None, None, None, None),
+            ('000000003', datetime(2015, 4, 29, 9, 25, 51, 842222), None, None,
+             None, None, None, None, '8e3b037e-fc79-4523-9816-dc7e9d250ebb',
+             'a70a398c-a29e-4367-8ae2-f291d5217b29', None, '000000003.jpg',
+             None, None, None, None, None, None, None, None, None, None, None,
+             None, None, None, None),
+            ('000000002', datetime(2015, 4, 29, 9, 25, 51, 842222), None, None,
+             None, None, None, None, 'f98bf005-d308-4994-a1fd-9826ab3dbb9d',
+             'a70a398c-a29e-4367-8ae2-f291d5217b29', None, '000000002.jpg',
+             None, None, None, None, None, None, None, None, None, None, None,
+             None, None, None, None)]
+        self.assertItemsEqual(obs, exp)
 
     def test_deleteAGParticipantSurvey(self):
         cur = self.con.cursor()
