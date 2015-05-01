@@ -1,157 +1,141 @@
 {% extends sitebase.html %}
+{% block head %}
+<script type="text/javascript">
+    function change_consent_div(radio) {
+        $("#0-6-div").hide();
+        $("#7-12-div").hide();
+        $("#13-17-div").hide();
+        $("#18-plus-div").hide();
+        $("#"+ radio.value +"-div").show();
+    }
+
+    function relax_parents(box) {
+        var sec_parent = document.getElementById(box.form.id + "_parent_2_name");
+        if(box.checked) {
+            sec_parent.required = false;
+        } else {
+            sec_parent.required = true;
+        }
+    }
+
+    $(document).ready(function() {
+        $("#0-6-div").hide();
+        $("#7-12-div").hide();
+        $("#13-17-div").hide();
+        $("#18-plus-div").hide();
+    });
+</script>
+{% end %}
+
 {%block content%}
 {% from amgut import text_locale %}
 {% set tl = text_locale['new_participant.html'] %}
 <h2>{% raw tl['ADD_HUMAN_TITLE'] %}</h2>
-<table width="100%">
-    <tr>
-        <td width="20%"></td>
-        <td>
-            <h3>{% raw tl['ADD_HUMAN_HELP_SUGGESTION'] %}</h3>
-            <div class="scroll lefta">
-                <h4><div class="red left">MAIN</div>&nbsp;{% raw tl['CONSENT_TITLE'] %}</h4>
-                {% raw tl['TEXT_TITLE'] %}<br>
-                {% raw tl['TEXT_PI'] %}<br>
-                {% raw tl['TEXT_PERSONNEL_TITLE'] %}
-                <table class="keypersonnel">
-                    <tr><th>{% raw tl['TEXT_NAME'] %}</th><th>{% raw tl['TEXT_ROLE'] %}</th><th>{% raw tl['TEXT_DEPARTMENT'] %}</th><th>{% raw tl['TEXT_PHONE'] %}</th><th>{% raw tl['TEXT_EMAIL'] %}</th></tr>
-                    <tr><td>{% raw tl['TEXT_NAME_1'] %}</td><td>{% raw tl['TEXT_ROLE_1'] %}</td><td>{% raw tl['TEXT_DEPARTMENT_1'] %}</td><td>{% raw tl['TEXT_PHONE_1'] %}</td><td>{% raw tl['TEXT_EMAIL_1'] %}</td></tr>
-                    <tr><td>{% raw tl['TEXT_NAME_2'] %}</td><td>{% raw tl['TEXT_ROLE_2'] %}</td><td>{% raw tl['TEXT_DEPARTMENT_2'] %}</td><td>{% raw tl['TEXT_PHONE_2'] %}</td><td>{% raw tl['TEXT_EMAIL_2'] %}</td></tr>
-                </table>
-                <p>
-                    <b>{% raw tl['TEXT_PARTICIPATION_TITLE'] %}</b> {% raw tl['TEXT_PARTICIPATION_DESCRIPTION'] %} </p>
-                <ol>
-                    <li><h4>{% raw tl['TEXT_BACKGROUND_TITLE'] %}</h4>
-                        <p>{% raw tl['TEXT_BACKGROUND_DESCRIPTION_1'] %}</p>
-                        <p>{% raw tl['TEXT_BACKGROUND_DESCRIPTION_2'] %}</p>
-                    </li>
+<div id="age-ranges-div" style='text-align: left;padding: 10px'>
+    <h3>{% raw tl['SEL_AGE_RANGE'] %}</h3>
+    <input type='radio' id='age-range-1' name='age-range' value='0-6' onchange="change_consent_div(this)"> <label for='age-range-1'>{% raw tl['AGE_0_6']%}</label><br />
+    <input type='radio' id='age-range-2' name='age-range' value='7-12' onchange="change_consent_div(this)"> <label for='age-range-2'>{% raw tl['AGE_7_12']%}</label><br />
+    <input type='radio' id='age-range-3' name='age-range' value='13-17' onchange="change_consent_div(this)"> <label for='age-range-3'>{% raw tl['AGE_13_17']%}</label><br />
+    <input type='radio' id='age-range-4' name='age-range' value='18-plus' onchange="change_consent_div(this)"> <label for='age-range-4'>{% raw tl['AGE_18']%}</label>
+    <hr>
+</div>
 
-                    <li><h4>{% raw tl['TEXT_STUDY_TASK_TITLE'] %}</h4>
-                        <p>{% raw tl['TEXT_STUDY_TASK_DESCRIPTION'] %}</p>
-                        <p>{% raw tl['TEXT_STUDY_TASK_DESCRIPTION_LIST_TITLE'] %}  
-                            <ol>
-                                <li>{% raw tl['TEXT_STUDY_TASK_DESCRIPTION_LIST_1'] %}</li>
-                                <li>{% raw tl['TEXT_STUDY_TASK_DESCRIPTION_LIST_2'] %}</li>
-                                <li>{% raw tl['TEXT_STUDY_TASK_DESCRIPTION_LIST_3'] %}</li>
-                                <li>{% raw tl['TEXT_STUDY_TASK_DESCRIPTION_LIST_4'] %}</li>
-                                <li>{% raw tl['TEXT_STUDY_TASK_DESCRIPTION_LIST_5'] %}</li>
-                                <li>{% raw tl['TEXT_STUDY_TASK_DESCRIPTION_LIST_6'] %}</li>
-                                <li>{% raw tl['TEXT_STUDY_TASK_DESCRIPTION_LIST_7'] %}</li>
-                            </ol>
-                            <p>{% raw tl['TEXT_STUDY_TASK_DESCRIPTION_ADDITIONAL_1'] %}</p>
-                        </p>
-                        <p>{% raw tl['TEXT_STUDY_TASK_DESCRIPTION_ADDITIONAL_2'] %}</p>
-                        <h5>{% raw tl['TEXT_INTERNATIONAL_PARTICIPANT_TITLE'] %}</h5>
-                        <p>{% raw tl['TEXT_INTERNATIONAL_PARTICIPANT_DESCRIPTION_1'] %}</p>
-                        <p>{% raw tl['TEXT_INTERNATIONAL_PARTICIPANT_DESCRIPTION_2'] %}</p>
+<div id="0-6-div" style='text-align: left;padding: 10px'>
+{% raw tl['CONSENT_YOUR_CHILD']%}
+    <div class="" id="consent">
+        <hr>
+        <a href="http://oag.ca.gov/sites/all/files/agweb/pdfs/research/bill_of_rights.pdf">{% raw tl['BILL_OF_RIGHTS']%}</a><br/>
+        <form method="post" id="0-6-form" name="consent_info" action="{% raw media_locale['SITEBASE'] %}/authed/new_participant/">
+           <input type="hidden" name="age_range" value="0-6">
+           <p><input value="Yes" type="checkbox" name="consent_parent" id="consent_parent" required="required"> {% raw tl['TEXT_I_HAVE_READ_PARENT'] %}</p>
+    </div>
+    <table>
+        <tr><td><label for='participant_name'>{% raw tl['PARTICIPANT_NAME'] %}</label></td><td><input tabindex="2" type="text" name="participant_name" id="participant_name" required="required"><div class="red right">*</div></td></tr>
+        <tr><td>{% raw tl['PARTICIPANT_EMAIL'] %}</td><td><input tabindex="3" type="email" name="participant_email" id="participant_email" required="required"><div class="red right" required="required">*</div></td></tr>
+        <tr><td>{% raw tl['PARTICIPANT_PARENT_1'] %}</td><td><input tabindex="7" type="text" name="parent_1_name" id="0-6-form_parent_1_name" required></td></tr>
+        <tr><td>{% raw tl['PARTICIPANT_PARENT_2'] %}</td><td><input tabindex="8" type="text" name="parent_2_name" id="0-6-form_parent_2_name" required></td></tr>
+        <tr><td>{% raw tl['PARTICIPANT_DECEASED_PARENTS'] %}</td><td><input  tabindex="9" type="checkbox" name="deceased_parent" id="deceased_parent" value="yes" onclick="relax_parents(this)"></td></tr>
+        <tr><td><input type="submit" value="Submit"></td><td></td></tr>
+    </table>
+    </form>
+</div>
+<div id="7-12-div" style='text-align: left;padding: 10px'>
+{% raw tl['ASSENT_7_12']%}
+    <div class="" id="consent">
+        <hr>
+        <form method="post" id="7-12-form" name="consent_info" action="{% raw media_locale['SITEBASE'] %}/authed/new_participant/">
+           <input type="hidden" name="age_range" value="7-12">
+           <p><input value="Yes" type="checkbox" name="consent_child" id="consent_child" required="required"> {% raw tl['TEXT_I_HAVE_READ_SIMPLIFIED'] %}</p>
+    </div>
+    <p><table>
+        <tr><td><label for='participant_name'>{% raw tl['PARTICIPANT_NAME'] %}</label></td><td><input tabindex="2" type="text" name="participant_name" id="participant_name" required="required"><div class="red right">*</div></td></tr>
+        <tr><td>{% raw tl['PARTICIPANT_EMAIL'] %}</td><td><input tabindex="3" type="text" name="participant_email" id="participant_email" required="required"><div class="red right">*</div></td></tr>
+    </table></p>
+    <div>
+    <h4>{% raw tl['PERSON_ATTAINING_ASSENT'] %}</h4>
+    <p><input value="Yes" type="checkbox" name="consent_witness" id="consent_witness" required="required"> {% raw tl['TEXT_ASSENT_WITNESS'] %}</p>
+    </div>
+    <p><table>
+        <tr><td><label for='obtainer_name'>{% raw tl['OBTAINER_NAME'] %}</label></td><td><input tabindex="2" type="text" name="obtainer_name" id="obtainer_name" required="required"><div class="red right">*</div></td></tr>
+    </table></p>
+    <hr>
+{% raw tl['CONSENT_YOUR_CHILD']%}
+<div class="" id="consent">
+        <hr>
+            <a href="http://oag.ca.gov/sites/all/files/agweb/pdfs/research/bill_of_rights.pdf">{% raw tl['BILL_OF_RIGHTS']%}</a><br/>
+           <p><input value="Yes" type="checkbox" name="consent_parent" id="consent_parent" required="required"> {% raw tl['TEXT_I_HAVE_READ_PARENT'] %}</p>
+    </div>
+    <table>
+        <tr><td>{% raw tl['PARTICIPANT_PARENT_1'] %}</td><td><input tabindex="7" type="text" name="parent_1_name" id="7-12-form_parent_1_name" required></td></tr>
+        <tr><td>{% raw tl['PARTICIPANT_PARENT_2'] %}</td><td><input tabindex="8" type="text" name="parent_2_name" id="7-12-form_parent_2_name" required></td></tr>
+        <tr><td>{% raw tl['PARTICIPANT_DECEASED_PARENTS'] %}</td><td><input  tabindex="9" type="checkbox" name="deceased_parent" id="deceased_parent" value="yes" onclick="relax_parents(this)"></td></tr>
+        <tr><td><input type="submit" value="Submit"></td><td></td></tr>
+    </table>
+    </form>
+</div>
 
-                        <h5>{% raw tl['TEXT_SURVEY_DESCRIPTION_TITLE'] %}</h5>
-                        <p>{% raw tl['TEXT_SURVEY_DESCRIPTION_DESCRIPTION_1'] %}</p>
-                        <p>{% raw tl['TEXT_SURVEY_DESCRIPTION_DESCRIPTION_2'] %}</p>
-                        <p>{% raw tl['TEXT_SURVEY_DESCRIPTION_DESCRIPTION_3'] %}</p>
-                    </li>
+<div id="13-17-div" style='text-align: left;padding: 10px'>
+    {% raw tl['ASSENT_13_17']%}
+    <div class="" id="consent">
+        <hr>
+        <form method="post" id="13-17-form" name="consent_info" action="{% raw media_locale['SITEBASE'] %}/authed/new_participant/">
+           <input type="hidden" name="age_range" value="13-17">
+           <p><input value="Yes" type="checkbox" name="consent_child" id="consent_child" required="required"> {% raw tl['TEXT_I_HAVE_READ_1'] %}</p>
+    </div>
+    <p><table>
+        <tr><td><label for='participant_name'>{% raw tl['PARTICIPANT_NAME'] %}</label></td><td><input tabindex="2" type="text" name="participant_name" id="participant_name" required="required"><div class="red right">*</div></td></tr>
+        <tr><td>{% raw tl['PARTICIPANT_EMAIL'] %}</td><td><input tabindex="3" type="text" name="participant_email" id="participant_email" required="required"><div class="red right">*</div></td></tr>
+    </table></p>
+    <hr>
+    {% raw tl['CONSENT_YOUR_CHILD']%}
+    <div class="" id="consent">
+        <hr>
+        <a href="http://oag.ca.gov/sites/all/files/agweb/pdfs/research/bill_of_rights.pdf">{% raw tl['BILL_OF_RIGHTS']%}</a><br/>
+           <p><input value="Yes" type="checkbox" name="consent_parent" id="consent_parent" required="required"> {% raw tl['TEXT_I_HAVE_READ_PARENT'] %}</p>
+    </div>
+    <table>
+        <tr><td>{% raw tl['PARTICIPANT_PARENT_1'] %}</td><td><input tabindex="7" type="text" name="parent_1_name" id="13-17-form_parent_1_name" required></td></tr>
+        <tr><td>{% raw tl['PARTICIPANT_PARENT_2'] %}</td><td><input tabindex="7" type="text" name="parent_2_name" id="13-17-form_parent_2_name" required></td></tr>
+        <tr><td>{% raw tl['PARTICIPANT_DECEASED_PARENTS'] %}</td><td><input  tabindex="9" type="checkbox" name="deceased_parent" id="deceased_parent" value="yes" onclick="relax_parents(this)"></td></tr>
+        <tr><td><input type="submit" value="Submit"></td><td></td></tr>
+    </table>
+    </form>
+</div>
 
-                    <li><h4>{% raw tl['TEXT_DURATION_TITLE'] %}</h4>
-                        <p>{% raw tl['TEXT_DURATION_DESCRIPTION'] %}</p>
-                    </li>
-
-                    <li><h4>{% raw tl['TEXT_WITHDRAWAL_TITLE'] %}</h4>
-                        <p>{% raw tl['TEXT_WITHDRAWAL_DESCRIPTION_1'] %}</p>
-                        <p>{% raw tl['TEXT_WITHDRAWAL_DESCRIPTION_2'] %}</p>
-                    </li>
-
-                    <li><h4>{% raw tl['TEXT_RISKS_TITLE'] %}</h4>
-                        <p>{% raw tl['TEXT_RISKS_DESCRIPTION_1'] %}</p>
-                    </li>
-
-                    <li><h4>{% raw tl['TEXT_BENEFITS_TITLE'] %}</h4>
-                        <p>{% raw tl['TEXT_BENEFITS_DESCRIPTION'] %}</p>
-                    </li>
-
-                    <li><h4>{% raw tl['TEXT_CONFIDENTIALITY_TITLE'] %}</h4>
-                        <p>{% raw tl['TEXT_CONFIDENTIALITY_DESCRIPTION_1'] %}</p>
-                        <p>{% raw tl['TEXT_CONFIDENTIALITY_LIST_TITLE'] %}</p>
-                        <ul>
-                            <li>{% raw tl['TEXT_CONFIDENTIALITY_LIST_1'] %}</li>
-                            <li>{% raw tl['TEXT_CONFIDENTIALITY_LIST_2'] %}</li>
-                            <li><p>{% raw tl['TEXT_CONFIDENTIALITY_LIST_3'] %}</p>
-                                <ul>
-                                    <li>{% raw tl['TEXT_CONFIDENTIALITY_LIST_4'] %}</li>
-                                    <li>{% raw tl['TEXT_CONFIDENTIALITY_LIST_5'] %}</li>
-                                    <li>{% raw tl['TEXT_CONFIDENTIALITY_LIST_6'] %}</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li><h4>{% raw tl['TEXT_COMPENSATION_TITLE'] %}</h4>
-                        <p>{% raw tl['TEXT_COMPENSATION_DESCRIPTION'] %}</p>
-                    </li>
-
-                    <li><h4>{% raw tl['TEXT_RIGHTS_TITLE'] %}</h4>
-                        <p>{% raw tl['TEXT_RIGHTS_DESCRIPTION'] %}</p>
-                    </li>
-
-                    <li><h4>{% raw tl['TEXT_INJURIES_TITLE'] %}</h4>
-                        <p>{% raw tl['TEXT_INJURIES_DESCRIPTION'] %}</p>
-                    </li>
-
-                    <li><h4>{% raw tl['TEXT_QUESTIONS_TITLE'] %}</h4>
-                        <table>
-                            <tr>
-                                <td>{% raw tl['TEXT_QUESTIONS_DESCRIPTION_1'] %}</td>
-                            </tr>
-                            <tr>
-                                <td>{% raw tl['TEXT_QUESTIONS_DESCRIPTION_2'] %}</td>
-                            </tr>
-                            <tr>
-                                <td>{% raw tl['TEXT_QUESTIONS_DESCRIPTION_3'] %}</td>
-                            </tr>
-                        </table>
-                    </li>
-                </ol>
-            </div>
-        </td>
-        <td width="20%"></td>
-    </tr>
-    <tr>
-        <td width="20%"></td>
-        <td>
-            <br />
-            <div class="lefta">
-                <div class="" id="consent">
-                    <form method="post" id="consent_info" name="consent_info" action="{% raw media_locale['SITEBASE'] %}/authed/new_participant/">
-                       <p><input tabindex="1" value="Yes" type="checkbox" name="consent" id="consent"> {% raw tl['TEXT_I_HAVE_READ_1'] %}</p><p>{% raw tl['TEXT_I_HAVE_READ_2'] %}</p>
-                </div>
-                <br>
-                <br>
-                <table>
-                    <tr><td>{% raw tl['PARTICIPANT_NAME'] %}</td><td><input tabindex="2" type="text" name="participant_name" id="participant_name" onkeypress='validateText(event)'><div class="red right">*</div></td></tr>
-                    <tr><td>{% raw tl['PARTICIPANT_EMAIL'] %}</td><td><input tabindex="3" type="text" name="participant_email" id="participant_email"  onkeypress='validateEmail(event)'><div class="red right">*</div></td></tr>
-                    <tr><td>{% raw tl['PARTICIPANT_IS_YOUNG'] %}</td><td><input type="checkbox" tabindex="4" name="is_juvenile" id="is_juvenile" class="is_juvenile" onclick="toggleConsent()"></td></tr>
-                    <tr><td>{% raw tl['PARTICIPANT_PARENT_1'] %}</td><td><input tabindex="7" type="text" name="parent_1_name" id="parent_1_name" onkeypress='validateText(event)'></td></tr>
-                    <tr><td>{% raw tl['PARTICIPANT_PARENT_2'] %}</td><td><input tabindex="8" type="text" name="parent_2_name" id="parent_2_name" onkeypress='validateText(event)'></td></tr>
-                    <tr><td>{% raw tl['PARTICIPANT_DECEASED_PARENTS'] %}</td><td><input  tabindex="9" type="checkbox" name="deceased_parent" id="deceased_parent" value="yes"></td></tr>
-                </table>
-            </div>
-            <script>
-                $(function() {
-                    document.getElementById("parent_1_name").disabled = true
-                    document.getElementById("parent_2_name").disabled = true
-                    document.getElementById("deceased_parent").disabled = true
-                    document.getElementById("juvenile_age_less_than_7").disabled = true
-                    document.getElementById("juvenile_age_more_than_7").disabled = true
-                    document.getElementById("juvenile_age_less_than_7").checked = true
-                });
-            </script>
-        </td>
-        <td width="20%"></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td><input tabindex="10" type="button" value="Continue" id="submit_form" onclick="validateConsent()"></td>
-        <td></td>
-    </tr>
-                        </form>
-</table>
+<div id="18-plus-div" style='text-align: left;padding: 10px'>
+{% raw tl['CONSENT_18']%}
+<div class="" id="consent">
+        <hr>
+        <a href="http://oag.ca.gov/sites/all/files/agweb/pdfs/research/bill_of_rights.pdf">{% raw tl['BILL_OF_RIGHTS']%}</a><br/>
+        <form method="post" id="18-form" name="consent_info" action="{% raw media_locale['SITEBASE'] %}/authed/new_participant/">
+        <input type="hidden" name="age_range" value="18">
+           <p><input value="Yes" type="checkbox" name="consent" id="consent" required="required"> {% raw tl['TEXT_I_HAVE_READ_1'] %}</p>
+    </div>
+    <p><table>
+        <tr><td><label for='participant_name'>{% raw tl['PARTICIPANT_NAME'] %}</label></td><td><input tabindex="2" type="text" name="participant_name" id="participant_name" required="required"><div class="red right">*</div></td></tr>
+        <tr><td>{% raw tl['PARTICIPANT_EMAIL'] %}</td><td><input tabindex="3" type="text" name="participant_email" id="participant_email" required="required"><div class="red right">*</div></td></tr>
+        <tr><td><input type="submit" value="Submit"></td><td></td></tr>
+    </table></p>
+    </form>
+</div>
 {% end %}

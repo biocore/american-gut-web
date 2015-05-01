@@ -366,15 +366,18 @@ class Survey(object):
                     INSERT INTO ag_consent
                         (ag_login_id, participant_name, is_juvenile,
                          parent_1_name, parent_2_name, deceased_parent,
-                         participant_email)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s)""",
+                         participant_email, assent_obtainer, age_range,
+                         date_signed)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, NOW())""",
                             (consent_details['login_id'],
                              consent_details['participant_name'],
                              consent_details['is_juvenile'],
                              consent_details['parent_1_name'],
                              consent_details['parent_2_name'],
                              consent_details['deceased_parent'],
-                             consent_details['participant_email']))
+                             consent_details['participant_email'],
+                             consent_details['obtainer_name'],
+                             consent_details['age_range']))
 
                 cur.execute("""
                     INSERT INTO ag_login_surveys

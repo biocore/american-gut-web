@@ -107,90 +107,260 @@ _HANDLERS = {
 }
 
 _NEW_PARTICIPANT = {
-    'JUVENILE_CONSENT_EXPECTED': "We are expecting a manual consent form for the juvenile user (%s)",
     'ADD_HUMAN_TITLE': 'Add a New Human Source',
+    'SEL_AGE_RANGE': 'Select age range of participant:',
     'ADD_HUMAN_HELP_SUGGESTION': 'If you need help with the website, please use the contact mechanism in the menu to the left. Please do not email the people listed in this form for help, unless it has to do with an injury. ',
-    'CONSENT_TITLE': 'CONSENT TO PARTICIPATE IN A RESEARCH STUDY',
-    'TEXT_TITLE': 'Study Title: American Gut Project',
-    'TEXT_PI': 'Principal Investigator: Rob Knight',
-    'TEXT_PERSONNEL_TITLE': 'Key Personnel:',
-    'TEXT_NAME': 'Name',
-    'TEXT_ROLE': 'Role',
-    'TEXT_DEPARTMENT': 'Department',
-    'TEXT_PHONE': 'Phone Number',
-    'TEXT_EMAIL': 'E-mail',
-    'TEXT_NAME_1': 'Rob Knight',
-    'TEXT_ROLE_1': 'Principal Investigator',
-    'TEXT_DEPARTMENT_1': 'Biofrontiers Institute/HHMI',
-    'TEXT_PHONE_1': '303-492-1984',
-    'TEXT_EMAIL_1': 'Rob.Knight@colorado.edu',
-    'TEXT_NAME_2': 'Gail Ackermann',
-    'TEXT_ROLE_2': 'Co-I',
-    'TEXT_DEPARTMENT_2': 'Biofrontiers Institute',
-    'TEXT_PHONE_2': '303-492-7506',
-    'TEXT_EMAIL_2': 'Gail.Ackermann@colorado.edu',
-    'TEXT_PARTICIPATION_TITLE': 'Your participation in this research study is voluntary.',
-    'TEXT_PARTICIPATION_DESCRIPTION': ' Please think about the information below carefully. Feel free to ask questions before making your decision whether or not to participate. If you decide to participate, you will be asked to sign this form electronically and will receive a copy of the form by email at the address you supplied when you signed up for the study.',
-    'TEXT_BACKGROUND_TITLE': 'Purpose and Background',
-    'TEXT_BACKGROUND_DESCRIPTION_1': 'Trillions of microorganisms live on and within the human body, which is colonized at birth and continuously inhabited throughout a person\'s lifetime. Our resident microbes occupy many body habitats, including the skin and mucosal surfaces, and the gastrointestinal tract. Our microbial symbionts are largely harmless or beneficial; for example, we rely on our gut microbiota to aid in nutrition, resist pathogens, and educate our immune system.  We would like to survey a large number of volunteers from the US and other countries including all body types, all dietary preferences and both healthy and unhealthy people to more clearly define the range of these microbial communities.  We are interested in learning whether people with similar age, diet, environment, family, pets, body weight, or other features, also have similar microorganisms.',
-    'TEXT_BACKGROUND_DESCRIPTION_2': 'We anticipate that the entire study will be completed in 5 years. When the results are available for your samples we will provide you with an easy to understand summary of the microbial communities of your body and a summary of the combined results of other participants for comparison.  We anticipate that the results for your samples will be available within 3-6 months of receipt in the laboratory. These results will be sent to you by email. ',
-    'TEXT_STUDY_TASK_TITLE': 'Study Tasks and Procedures',
-    'TEXT_STUDY_TASK_DESCRIPTION': 'If you agree to participate in this study you will be asked for your name ,  and to donate samples, to complete a questionnaire and to provide updated personal information. We will send you a sample kit that includes the swabs (which are individually wrapped in plastic and include a plastic sleeve for returning the sample to us), coded labels for the sample tubes, and a pre-addressed envelope with instructions on how to safely  return the samples to us for analysis.  ',
-    'TEXT_STUDY_TASK_DESCRIPTION_LIST_TITLE': 'Samples may include',
-    'TEXT_STUDY_TASK_DESCRIPTION_LIST_1': 'Stool (fecal) by collecting a smear from used bathroom tissue using a sterile polyester-tip swab',
-    'TEXT_STUDY_TASK_DESCRIPTION_LIST_2': 'Saliva using a sterile polyester-tip swab inserted into the mouth and sampling the surface of the tongue or inside of your cheek',
-    'TEXT_STUDY_TASK_DESCRIPTION_LIST_3': 'Skin using a sterile polyester-tip swab',
-    'TEXT_STUDY_TASK_DESCRIPTION_LIST_4': 'Nostril mucus by inserting a sterile polyester-tip swab gently into a nostril',
-    'TEXT_STUDY_TASK_DESCRIPTION_LIST_5': 'Vaginal mucus by inserting a sterile polyester-tip swab into the introitus of the vagina',
-    'TEXT_STUDY_TASK_DESCRIPTION_LIST_6': 'Ear wax by inserting a sterile polyester-tip swab gently into the ear',
-    'TEXT_STUDY_TASK_DESCRIPTION_LIST_7': 'Tears by inserting a sterile polyester-tip swab gently along the inner corner of the eyelid (avoiding contact with the eye).',
-    'TEXT_STUDY_TASK_DESCRIPTION_ADDITIONAL_1': 'We are requesting that you contribute funding to the project at a level that is commensurate with the number of swabs and the kinds of tests you are requesting.  The basic package covers a single fecal swab.',
-    'TEXT_STUDY_TASK_DESCRIPTION_ADDITIONAL_2': 'After you submit your first set of samples, we may ask you to donate additional samples (up to 7 times) if you belong to a group that has specific diet, disease or age considerations.  You will be contacted by email if we would like to repeat the sampling. Some participants will be asked to provide a detailed food diary that includes a list of everything you eat and drink every day for up to 6 months. If this is required we will contact you by email to confirm that you are willing to contribute this information.',
-    'TEXT_INTERNATIONAL_PARTICIPANT_TITLE': 'International Participants',
-    'TEXT_INTERNATIONAL_PARTICIPANT_DESCRIPTION_1': 'If you are an international participant from the United Kingdom or Australia, sample aggregation sites have been established at King\'s College, London, UK and the University of Queensland, Brisbane, Australia.  Instructions for making use of these sites are available on the web site (http://www.britishgut.org)',
-    'TEXT_INTERNATIONAL_PARTICIPANT_DESCRIPTION_2': 'For other international participants to comply with amended federal regulations and IATA regulations we are requesting that you return your sample tubes through FedEx international and follow additional requirements for safely shipping human swab samples.  You will need label the airbill clearly for shipment identifying the samples as "human exempt specimens".  The samples should be packaged with secondary containment to ensure that they can be safely returned.  For this you will use tape to seal the plastic tube that contains the swab, wrap the sample tube in absorbent tissue then place the swab in a mailing envelope inside the Tyvek/plastic mailer prior to FedEx shipment.  If you do not follow these directions the sample may be intercepted at the port of entry into the USA and destroyed.',
-    'TEXT_SURVEY_DESCRIPTION_TITLE': 'Description of Surveys/Questionnaires/Interview Questions',
-    'TEXT_SURVEY_DESCRIPTION_DESCRIPTION_1': 'You will be asked questions about your general personal information (age, sex, height, weight, ethnicity, place of birth, current ZIP code. We will ask if you recently moved and where you moved from., We will ask questions about general diet information (including whether you follow a special diet, if you have food allergies, whether you have cultural or religious food restrictions). Other questions address whether you have pets and the type of contact you have with these pets and your relationship to other people in this study.  There is a section on health information including a history of allergies/asthma, if you suffer from migraines and if you have a history of irritable bowel disease.  The questionnaire also asks you to complete a food log to assess the amount of protein, fat, carbohydrate, grains and vegetables in your diet. For this we suggest that you contact a free website that will allow you to estimate these amounts.',
-    'TEXT_SURVEY_DESCRIPTION_DESCRIPTION_2': 'Participants will be presented with the option of completing a Frequent Foods Questionnaire at a third party site (www.vioscreen.com).',
-    'TEXT_SURVEY_DESCRIPTION_DESCRIPTION_3': 'Some participants may be asked to keep a detailed food diary for up to 6 months listing all the foods they eat and drink in a day.',
-    'TEXT_DURATION_TITLE': 'Duration',
-    'TEXT_DURATION_DESCRIPTION': 'We anticipate that participant time commitment for sampling will be less than 15 minutes; to complete the questionnaire online will take no more than 45 minutes; and completing the food diary should take no more than10 minutes/day.  If you choose to complete the FFQ at VioScreen, this will take an additional 40 minutes. The study will be conducted over a maximum period of 5 years to include all the people we are requesting permission to sample.  We anticipate that results will be available within 3-6 months of sample receipt.',
-    'TEXT_WITHDRAWAL_TITLE': 'Study Withdrawal',
-    'TEXT_WITHDRAWAL_DESCRIPTION_1': 'Taking part in this study is completely <strong>voluntary</strong>.  You do not have to participate if you don\'t want to.  You may also leave the study at any time.  If you leave the study before it is finished, there will be no penalty to you, and you will not lose any benefits to which you are otherwise entitled.',
-    'TEXT_WITHDRAWAL_DESCRIPTION_2': 'To withdraw from the study send email to the American Gut Project (info@britishgut.org) using the email address you used to contact us about the study and include your access code so that we can delete your records.',
-    'TEXT_RISKS_TITLE': 'Risks and Discomforts',
-    'TEXT_RISKS_DESCRIPTION_1': 'There are no foreseeable risks for participating in this study.  You should be aware that the samples you submit are not anonymous but we will make every effort to ensure that they remain confidential.  The only staff associated with the study that will have access to confidential information (your name and address) will be those responsible for shipping the sample kit and questionnaire to you.  When the samples are returned they will have an associated code but no personally identifiable information.',
-    'TEXT_BENEFITS_TITLE': 'Benefits',
-    'TEXT_BENEFITS_DESCRIPTION': 'You may not receive any direct benefit from taking part in this study other than you or your child\'s intrinsic interest in the scientific outcome.',
-    'TEXT_CONFIDENTIALITY_TITLE': 'Confidentiality',
-    'TEXT_CONFIDENTIALITY_DESCRIPTION_1': 'We will make every effort to maintain the privacy of your or your child\'s data. All data will transferred electronically to a secure database stored on a server (The beast) in a CU card access-controlled server room. There is no public accessibility to this server without VPN and a password. The code key will be stored in a single location on a password-protected database on a server in a CU-access card controlled server room. The code will be destroyed by deletion from the server at the end of the study.  All other data including all electronic data will be de-identified (coded).',
-    'TEXT_CONFIDENTIALITY_LIST_TITLE': 'These are some reasons that we may need to share the information you give us with others:',
-    'TEXT_CONFIDENTIALITY_LIST_1': 'If it is required by law.',
-    'TEXT_CONFIDENTIALITY_LIST_2': 'If we think you or someone else could be harmed.',
-    'TEXT_CONFIDENTIALITY_LIST_3': 'Sponsors, government agencies or research staff sometimes look at forms like this and other study records. They do this to make sure the research is done safely and legally. Organizations that may look at study records include:',
-    'TEXT_CONFIDENTIALITY_LIST_4': 'Office for Human Research Protections or other federal, state, or international regulatory agencies',
-    'TEXT_CONFIDENTIALITY_LIST_5': 'The University of Colorado Boulder Institutional Review Board',
-    'TEXT_CONFIDENTIALITY_LIST_6': 'The sponsor or agency supporting the study: Howard Hughes Medical Institute and the American Gut Project',
-    'TEXT_COMPENSATION_TITLE': 'Compensation',
-    'TEXT_COMPENSATION_DESCRIPTION': 'You will not receive any compensation for participating in this research.',
-    'TEXT_RIGHTS_TITLE': 'Participant Rights',
-    'TEXT_RIGHTS_DESCRIPTION': 'Taking part in this study is your choice. You may choose either to take part or not take part in the study. If you decide to take part in this study, you may leave the study at any time. No matter what decision you make, there will be no penalty to you in any way. You will not lose any of your regular benefits. We will tell you if we learn any new information that could change your mind about being in this research study. For example, we will tell you about information that could affect your health or well-being.',
-    'TEXT_INJURIES_TITLE': 'If You are Injured',
-    'TEXT_INJURIES_DESCRIPTION': 'Please call Rob Knight at 303-492-1984 or email <a href="mailto:Rob.Knight@colorado.edu">Rob Knight</a>.',
-    'TEXT_QUESTIONS_TITLE': 'Contacts and Questions',
-    'TEXT_QUESTIONS_DESCRIPTION_1': 'For questions, concerns, or complaints about this study, call please call Rob Knight at 303-492-1984 or email <a href="mailto:Rob.Knight@colorado.edu">Rob Knight</a>.',
-    'TEXT_QUESTIONS_DESCRIPTION_2': 'If you are injured as a result of participating in this study or for questions about a study-related injury, call Please call Rob Knight at 303-492-1984 or email <a href="mailto:Rob.Knight@colorado.edu">Rob Knight</a>.',
-    'TEXT_QUESTIONS_DESCRIPTION_3': 'If you have questions about your rights as a research study participant, you can call the Institutional Review Board (IRB). The IRB is independent from the research team. You can contact the IRB if you have concerns or complaints that you do not want to talk to the study team about. The IRB phone number is (303) 735-3702.',
-    'TEXT_I_HAVE_READ_1': 'I have read (or someone has read to me) this form. I am aware that I am being asked to be in a research study. I have had a chance to ask all the questions I have at this time. I have had my questions answered in a way that is clear. I voluntarily agree to be in this study.',
-    'TEXT_I_HAVE_READ_2': 'I am not giving up any legal rights by signing this form. I will be sent a copy of this form to the email address I used to sign up for the study.',
+    'AGE_0_6': '6 weeks - 6 years',
+    'AGE_7_12': '7-12 years',
+    'AGE_13_17': '13-17 years',
+    'AGE_18': '18+ years',
+    'ASSENT_7_12': '''<p align='center'>University of California, San Diego<br/>
+Assent to Act as a Research Subject<br/>
+(Ages 7-12 years)</p>
+
+<p align='center'><b>Human bugs: why and where they live on you</b></p>
+
+
+<p>Dr Rob Knight and his research team are doing a research study to find out more about the trillions of  tiny living things likes bacteria that live in you or on you. You are being asked if you want to be in this study because you are different (in a good way) from everybody else and they are different from each other.</p>
+<p>If you decide you want to be in this research study, this is what will happen to you:</p>
+<p>We will ask you or your mom or dad to sample some place on your body (like skin or mouth) or your poop (from toilet paper) with something that looks like 2 Q-tips.</p>
+<p>Sometimes kids don't feel good while being in this study. You might feel a little bit sore where your skin is rubbed with the Q-tip.  Most people don't feel this.</p>
+<p>If you feel any of these things, or other things, be sure to tell your mom or dad.</p>
+<p>You don't have to be in this research study if you don't want to. Nobody will be mad at you if you say no. Even if you say yes now and change your mind after you start doing this study, you can stop and no one will be mad.</p>
+<p>Be sure to ask Dr. Knight or his research team to tell you more about anything you don't understand.</p>
+''',
+    'ASSENT_13_17':
+    '''<p align='center'>University of California, San Diego<br/>
+Assent to Act as a Research Subject<br/>
+(Ages 13-17 years)</p>
+
+<p align='center'><b>Explaining variability in the human microbiome</b></p>
+
+
+<p style='font-weight: bold;'>Who is conducting the study, why you have been asked to participate, how you were selected, and what is the approximate number of participants in the study?</p>
+<p>Professor Rob Knight is conducting a research study to find out more about the microbiome (harmless or beneficial microorganisms (tiny living things such as bacteria) that live on and within your body). You have been asked to participate in this study because you, and everyone else on earth have a unique microbiome, and the more people we study of all ages will help us to understand how the micro-organisms may help or harm us. There will be approximately 1000 participants in total.</p>
+
+<p style='font-weight: bold;'>Why is this study being done?</p>
+<p>The purpose of this study is to try to understand why different kinds of microorganisms live on and within different people. We are interested in learning whether people with similar age, diet, environment, family, pets, body weight, or other features, also have similar microorganisms. Investigating this question will help us determine how microorganisms contribute to human biology and human health.</p>
+
+<p style='font-weight: bold;'>What will happen to you in this study and which procedures are standard of care and which are experimental?</p>
+<p>If you agree to to take part in this study, the following will happen to you: You will be asked to sign this assent form and then complete a survey about what you eat, how old you, are, whether you are a boy or girl, how tall you are and how much you weigh.</p>
+<p>Then you will be asked to sample yourself  with the swabs (look like Q-tips) we give you.  The most common sample is of your poop (stool) where you apply a small smear to the tips of the swab from used toilet tissue.  You may also sample any area of skin, your tongue or mouth, your nostrils, ear wax, vagina, hair or nails. The sampling is usually done by you at home or with the help of your mom or dad if it is in a hard to reach place.  We will ask you if you are willing to let us use what is left of your sample for other studies.</p>
+
+<p style='font-weight: bold;'>None of these samples will allow us to make a diagnosis of disease.</p>
+<p>We intend to look at the different types of bacteria in your sample by getting out their DNA - we won't take out any of your DNA.</p>
+
+<p style='font-weight: bold;'>How much time will each study procedure take, what is your total time commitment, and how long will the study last?</p>
+<p>It should take you about 30 minutes to answer the survey questions and less than 15 minutes each time we ask you for a sample.</p>
+
+<p style='font-weight: bold;'>What risks are associated with this study?</p>
+<p>It is unlikely that there are risks to you from taking part in the study.  The investigation staff have taken precautions to ensure that there is minimal risk of your private information leaking out.  If the information about you were to become public the impilications are minimal because the tests cannot be used for diagnosis.</p>
+
+<p>Because this is a research study, there may be some unknown risks that are currently unforeseeable. You will be informed of any significant new findings.</p>
+
+<p style='font-weight: bold;'>What are the alternatives to participating in this study?</p>
+<p>You do not have to participate. No harm would come to you.</p>
+
+<p style='font-weight: bold;'>What benefits can be reasonably expected?</p>
+<p>There is no direct benefit to you from taking part in this study. The investigator may learn more about the human microbiome in health and disease and benefit everyone.</p>
+
+<p style='font-weight: bold;'>Can you choose to not participate or withdraw from the study without penalty or loss of benefits?</p>
+<p>Participation in research is entirely voluntary. You may refuse to participate or withdraw at any time without upsetting the researchers. You will be told if any important new information is found during the course of this study that may affect your wanting to continue.</p>
+
+<p style='font-weight: bold;'>Can you be withdrawn from the study without your assent?</p>
+<p>You may be withdrawn from if you do not sign this form. You may also be withdrawn from the study if you do not follow the instructions given you by the study personnel.</p>
+
+<p style='font-weight: bold;'>Will you be compensated for participating in this study?</p>
+<p>You will not be financially compensated in this study.</p>
+
+<p style='font-weight: bold;'>What if you are injured as a direct result of being in this study?</p>
+<p>If you are injured or become ill as a direct result of this research study, you will be provided with medical care.</p>
+
+<p style='font-weight: bold;'>What about your confidentiality?</p>
+<p>Research records will be kept confidential to the extent allowed by law. All data about you that is entered on the survey is stored on a password-protected server located at the SDSC card access controlled facility at UCSD. The code key (that records which barcode or sample name was on your sample) is stored on a separate password-protected server that is accessible only to Professor Knightand Dr Gail Ackermann.  All analysis is done on data that has no record of who you are.  We will put the data into a place where other reseachers can access it, but there will not be a way of determining who you are from what is in there.</p>
+
+<p>Research records may be reviewed by the UCSD Institutional Review Board.</p>
+
+<p style='font-weight: bold;'>Who can you call if you have questions?</p>
+<p>Dr Rob Knight and/or Gail Ackermann has explained this study to you and answered your questions. If you have other questions or research-related problems, you may reach Dr Knight at 858-246-1194</p>
+
+<p>You may call the Human Research Protections Program Office at (858) 657-5100 to inquire about your rights as a research subject or to report research-related problems.</p>
+
+<p style='font-weight: bold;'>Your Signature and Assent</p>
+<p>You have received a copy of this assent document and a copy of the "Experimental Subject's Bill of Rights" to keep.</p>
+
+<p>You agree to participate.</p>''',
+    'CONSENT_18':
+        '''<p align='center'>University of California, San Diego<br/>
+Consent to Act as a Research Subject</p>
+
+<p style='font-weight: bold;' align='center'>American Gut Project</p>
+
+<p style='font-weight: bold;'>Who is conducting the study, why you have been asked to participate, how you were selected, and what is the approximate number of participants in the study?</p>
+<p>Dr Rob Knight is conducting a research study to find out more about the trillions of bacteria and other organisms (called your microbiome) that live in and on your body. You have been asked to participate in this study because your microbiome is unique - not the same as anyone else on earth. There will be approximately 20,000 participants in the study from across the USA and from other countries around the world.</p>
+
+<p style='font-weight: bold;'>Why is this study being done?</p>
+<p>The purpose of this study is to more accurately assess the differences between people and whether these differences can be attributable to lifestyle, diet, body type, age or the presence of associated diseases.  The results will be used to create a database of sequence data derived from bacterial DNA in various body sites (e.g. skin, mouth, gut) and details about the participant supplying the sample from these different people that can be used by other researchers when they need samples to compare to what they are studying e.g. certain diseases where gut abnormalities are common.</p>
+
+<p style='font-weight: bold;'>What will happen to you in this study?</p>
+<p>You are being asked if you want to be in this study because you signed up for microbial analysis on the American gut website. When you signed up we sent you a sample kit with instructions on how to login to the website so that you can consent to the study formally.</p>
+
+<p>The level of analysis available to you will depend on your contribution but all participants will have to consent to be a part of the study.
+The following tests are available:</p>
+<ol>
+<li>Find out who is in your microbiome - which bacteria and other microbes that are similar to bacteria called archaea are present in your child's sample ($99/swab kit);</li>
+<li>You plus the world - This is two kits: 1 for your child and one for someone from Africa, South America or Asia. Your support of for the second sample will allow us to sequence more people from around the world as part of our ongoing research ($129/kit);</li>
+<li>Microbes for two, three or four - which bacteria and other microbes that are similar to bacteria called archaea are present in your child's sample and one, two or three other samples;</li>
+<li>A week of feces - seven stool swab samples to be used any way you want - to track the effects of an antibiotic on your gut, effect of foreign travel e.g. ($500/7sample kit);</li>
+<li>All in the Family - Where bacterial DNA is sliced up into fragments and then reassembled to see what genes are present (also called "shallow shotgun metagenomic analysis") of up to four fecal samples with analysis of the pathways used by bacteria to signal other bacteria or within themselves;</li>
+<li>Beyond Bacteria - Deeper shotgun metagenome and virome characterization (where bacterial DNA is sliced up into fragments and then reassembled to see what genes are present making use of additional gene parts that can tell us if there are any associated viruses or virus products that "talk " with bacteria, fungus and parasites that may be present in the sample from your gut.  Requires shipment of a whole stool sample (materials and return FedEx postage included) ($2500/kit);</li>
+<li>Functional Feces - Additional characterization of gut samples over time (up to 7 stool samples, providing an analysis of the variability of functions over time. Here too the DNA is sliced up into fragments and then reassembled to see what genes are present (also called "shotgun metagenomic analysis").</li>
+</ol>
+<p>We will analyze all samples where the consent form and questionnaire is completed.  The samples in the project (including yours) will be analyzed and published as a scientific article defining the range of diversity in the human microbiome.  You will get a link to view, download and print a high-resolution certificate suitable for framing of your results and access to a more detailed list of the different organisms present in your sample (taxonomy summary).</p>
+<p>We would like you to understand from the consent what we will do with your sample and what you will get in return.</p>
+
+<p>We will ask you to complete an online questionnaire about you your lifestyle and what you eat.  We estimate that this should take no more than 30 minutes. You will then sample a part of your body (of interest to you) with a sterile Q-tip like swab by rubbing the surface of your skin, rubbing the surface of your tongue or sampling your stool by inserting the tip of the swab into used toilet tissue.  You can also sample other parts of your body - ear, nose, vagina, scalp, sole of foot. The swabs should be returned to us in the envelope provided using regular US mail service. DNA will be extracted from the sample and amplified by PCR (polymerase chain reaction) and then sequenced to see what bacteria are present and in what proportion in your sample. We estimate that it will take 2 months for you to learn the results.</p>
+<p>For the Beyond Bacteria package you will submit a whole stool sample in a designated collection device on special ice packs (that reliably cool the sample to -20 degrees celsius/-4 degrees Fahrenheit) in a container that we will provide.  The results for "Beyond Bacteria" and "All in the family" will take longer to analyze because more extensive analysis is provided.  Results will be uploaded to your American Gut account when they are available.  We are also asking you to consent to having your sample or the bacterial DNA from it to be used in future studies.</p>
+
+<p style='font-weight: bold;'>Please Note: The sequencing is not for diagnostic purposes and does not target human DNA.
+
+<p style='font-weight: bold;'>How much time will each study procedure take, what is your total time commitment, and how long will the study last?</p>
+<p>To complete the online questionnaire should take 30 minutes or less.  Each sample you send can be obtained in 5 minutes or less.  We expect the study to continue for 5 years but your results will be available to you before the end of the study (usually within 2 months of us receiving the sample).  You can elect to sample yourself more than once. If your personal details change (e.g. address, or your heath status) we request that you voluntarily re-enter your responses to the questionnaire.</p>
+
+<p style='font-weight: bold;'>What risks are associated with this study?</p>
+<p>The sampling techniques have been used for ~5 years with no reported side effects. We do not target the human DNA that may be in the sample so personal information about your genome will not be available to us.  The investigation personnel have taken precautions to ensure that there is minimal risk of loss of confidentiality.  Should confidentiality be compromised, the implications to you are minimal since the results are not diagnostic and have no implications for insurance companies that could compromise your insurability.</p>
+<p>Because this is a research study, there may be some unknown risks that are currently unforeseeable. You will be informed of any significant new findings.</p>
+
+<p style='font-weight: bold;'>What are the alternatives to participating in this study?</p>
+<p>The study is entirely voluntary and not participating will have no consequence.  There is no alternative test.</p>
+
+<p style='font-weight: bold;'>What benefits can be reasonably expected?</p>
+<p>There is no direct benefit to you for participating in this study. We believe that there may be natural curiosity to know what microbes are in your sample and how this compares to other people of the same gender and age. The investigator, however, will learn more about the human microbiome in health and disease and provide a valuable resource for other researchers in other studies.  Your contribution to the project may be eligible as a tax-deduction.  The receipt will be sent to you from the site that handles financial contributions.</p>
+
+<p>We will analyze all samples where the consent form and questionnaire is completed.  The samples in the project (including yours) will be analyzed and published as a scientific article.  You will get a link to view, download and print a high-resolution certificate suitable for framing of your results and access to more detailed taxa report of your results.</p>
+<p>The results from analysis of your sample/s cannot be used by you or your doctor to confirm a clinical diagnosis and we are not testing for infectious disease.</p>
+
+<p style='font-weight: bold;'>Can you choose to not participate or withdraw from the study without penalty or loss of benefits?</p>
+<p>Participation in research is entirely voluntary. You may refuse to participate or withdraw at any time without penalty or loss of benefits to which you are entitled. If you decide that you no longer wish to continue in this study, you will be requested to contact the American Gut Project helpline to inform us of your intent to withdraw.  If your sample has not been processed you may request a refund which will be processed through the site where you contributed to the project.</p>
+<p>You will be told if any important new information is found during the course of this study that may affect your wanting to continue.</p>
+
+<p style='font-weight: bold;'>Can you be withdrawn from the study without your consent?</p>
+<p>You may be withdrawn from the study if you do not complete the consent. You may also be withdrawn from the study if you do not follow the instructions given you by the study personnel.</p>
+
+<p style='font-weight: bold;'>Will you be compensated for participating in this study?</p>
+<p>You will not be financially compensated in this study.</p>
+
+<p style='font-weight: bold;'>Are there any costs associated with participating in this study?</p>
+<p>You will be asked to contribute money to the project commensurate with the investigation you request ($99 for one sample, $1500 for "All in the family" (shallow shotgun metagenomic sequencing) and $2500 for "Beyond Bacteria" (deeper shotgun metagenome and virome characterization of one sample, plus additional sequencing). A receipt will be sent to you after you pay for the analysis you are requesting.  These contributions are used to partially finance the project.  Any additional funds required are provided from the funds UCSD has provided to Dr. Knight to set up his laboratory.</p>
+
+<p style='font-weight: bold;'>What if you are injured as a direct result of being in this study?</p>
+<p>If you are injured as a direct result of participation in this research, the University of California will provide any medical care you need to treat those injuries. The University will not provide any other form of compensation to you if you are injured. You may call the Human Research Protections Program Office at (858) 657-5100 for more information about this, to inquire about your rights as a research subject or to report research-related problems.</p>
+
+<p style='font-weight: bold;'>What about your confidentiality?</p>
+<p>Research records will be kept confidential to the extent allowed by law. All data about you that is entered on the web site is stored on a password-protected server located at the SDSC (San Diego Supercomputer Center) card access controlled facility at UCSD.  Financial information from participants contributing to the project is not accessible to the researchers.  The code key (that relates participant personal information to sample barcodes) is retained on a separate password-protected server that is accessible only to the PI, Co-I, sample coordinator and the database coders.  All analysis is done on de-identified data and the data deposited in a public repository for use by other investigators, is similarly de-identified. Research records may be reviewed by the UCSD Institutional Review Board.</p>
+<p>You will provide information about yourself that could allow you to be identified if it was made public e.g. name, age, birthdate, address.  We have made every effort to ensure that you cannot be identified from the data you supply about yourself but retaining critical information like gender, age without compromising your personal information or the data integrity.</p>
+
+<p>We may need to report information about known or reasonably suspected incidents of abuse or neglect of a child, dependent adult or elder including physical, sexual, emotional, and financial abuse or neglect. The only way we could discover such abuse is if it is self-reported by the participant or the legal guardian, so this is not likely.  If any investigator has or is given such information, he or she may report such information to the appropriate authorities.</p>
+
+<p style='font-weight: bold;'>Who can you call if you have questions?</p>
+<p>If you have questions or research-related problems, you may reach Rob Knight at 858-246-1194 or contact Elaine Wolfe at 858-246-1964.</p>
+
+<p>You may call the Human Research Protections Program Office at (858) 657-5100 to inquire about your rights as a research subject or to report research-related problems.</p>
+
+<p style='font-weight: bold;'>Your Signature and Consent</p>
+<p>You have received a copy of this consent document and a copy of the "Experimental Subject's Bill of Rights" to keep.</p>
+<p>You agree to participate.</p>''',
+    'CONSENT_YOUR_CHILD': '''<p align='center'>University of California, San Diego<br/>
+Parent Consent for Child to Act as a Research Subject<br/></p>
+
+<p align='center' style='font-weight: bold;'>American Gut Project</p>
+
+<p style='font-weight: bold;'>Who is conducting the study, why your child been asked to participate, how your child was selected, and what is the approximate number of participants in the study?</p>
+<p>Dr. Rob Knight is conducting a research study to find out more about the trillions of bacteria and other organisms (called the microbiome) that live in and on the body. You are volunteering your child for this study because you want to know more about the microbiome of your child. Children like all humans have a unique microbiome and including them in the study will help elucidate the development of the microbiome. There will be approximately 20,000 participants in the study from across the USA and from other countries around the world.</p>
+
+<p style='font-weight: bold;'>Why is this study being done?</p>
+<p>The purpose of this study is to more accurately assess the differences between people and whether these differences can be attributable to lifestyle, diet, body type, age or the presence of associated diseases.  The results will be used to create a database of sequence data derived from bacterial DNA in various body sites (e.g. skin, mouth, gut) and details about the child participant supplying the sample  that can be used by other researchers when they need samples to compare to what they are studying e.g. certain diseases where gut abnormalities are common.</p>
+
+<p style='font-weight: bold;'>What will happen to your child in this study and which procedures are standard of care and which are experimental?</p>
+<p>You are being asked if you want your child to be in this study because you signed up for microbial testing on the American gut website. When you signed up we sent you a sample kit with instructions on how to login to the website so that you can consent to the study formally.</p>
+
+<p>The level of analysis available to you will depend on your contribution but all participants will have to consent to be a part of the study.
+The following tests are available:</p>
+<ol>
+<li>Find out who is in your microbiome - which bacteria and other microbes that are similar to bacteria called archaea are present in your child's sample ($99/swab kit);</li>
+<li>You plus the world - This is two kits: 1 for your child and one for someone from Africa, South America or Asia. Your support of for the second sample will allow us to sequence more people from around the world as part of our ongoing research ($129/kit);</li>
+<li>Microbes for two, three or four - which bacteria and other microbes that are similar to bacteria called archaea are present in your child's sample and one, two or three other samples;</li>
+<li>A week of feces - seven stool swab samples to be used any way you want - to track the effects of an antibiotic on your gut, effect of foreign travel e.g. ($500/7sample kit);</li>
+<li>All in the Family - Where bacterial DNA is sliced up into fragments and then reassembled to see what genes are present (also called "shallow shotgun metagenomic analysis") of up to four fecal samples with analysis of the pathways used by bacteria to signal other bacteria or within themselves;</li>
+<li>Beyond Bacteria - Deeper shotgun metagenome and virome characterization (where bacterial DNA is sliced up into fragments and then reassembled to see what genes are present making use of additional gene parts that can tell us if there are any associated viruses or virus products that "talk " with bacteria, fungus and parasites that may be present in the sample from your gut.  Requires shipment of a whole stool sample (materials and return FedEx postage included) ($2500/kit);</li>
+<li>Functional Feces - Additional characterization of gut samples over time (up to 7 stool samples, providing an analysis of the variability of functions over time. Here too the DNA is sliced up into fragments and then reassembled to see what genes are present (also called "shotgun metagenomic analysis").</li>
+</ol>
+<p>We will analyze all samples where the consent form and questionnaire is completed.  The samples in the project (including your child's) will be analyzed and published as a scientific article defining the range of diversity in the human microbiome.  You will get a link to view, download and print a high-resolution certificate suitable for framing of your results and access to more detailed list of the different organisms present in your sample (taxonomy summary).</p>
+<p>We would like you to understand from the consent what we will do with your child's sample and what you will get in return.</p>
+
+<p>We will ask you to complete an online questionnaire about your child's lifestyle and what he/she eats.  We estimate that this should take no more than 30 minutes. You will then sample a part of your child's body (of interest to you) with a sterile Q-tip like swab by rubbing the surface of your skin, rubbing the surface of your tongue or sampling your stool by inserting the tip of the swab into used toilet tissue.  You can also sample other parts of her/his body - ear, nose, vagina, scalp, sole of foot. The swabs should be returned to us in the envelope provided using regular US mail service. DNA will be extracted from the sample and amplified by PCR (polymerase chain reaction) and then sequenced to see what bacteria are present and in what proportion in your sample. We estimate that it will take 2 months for you to learn the results.</p>
+<p>For the Beyond Bacteria package you will submit a whole stool sample in a designated collection device on special ice packs (that reliably cool the sample to -20 degrees celsius/-4 degrees Fahrenheit) packed in a container that we will provide. The results for "Beyond Bacteria" and "All in the family" will take longer because more extensive analysis is provided.  Results will be uploaded to your American Gut account when they are available.  We are also asking you to consent to having your child's sample or the bacterial DNA from it to be used in future studies.</p>
+
+<p style='font-weight: bold;'>Please Note: The sequencing is not for diagnostic purposes.</p>
+
+<p style='font-weight: bold;'>How much time will each study procedure take, what is your child's total time commitment, and how long will the study last?</p>
+<p>To complete the online questionnaire should take 30 minutes or less.  Each sample you send can be obtained in 5 minutes or less.  We expect the study to continue for 5 years but the results will be available to you before the end of the study (usually within 2 months of us receiving the sample).  You can choose to sample your child more than once.  If your child's personal details change (e.g. address, or heath status) we request that you voluntarily re-enter that information into the questionnaire.</p>
+
+<p style='font-weight: bold;'>What risks are associated with this study?</p>
+<p>The sampling techniques have been used for ~5 years with no reported side effects. We do not target the human DNA that may be in the sample so personal information about your child's genome will not be available.  The investigation personnel have taken precautions to ensure that there is minimal risk of loss of confidentiality.  Should confidentiality be compromised, the implications to your child are minimal since the results are not diagnostic and have no implications for insurance companies that could compromise your child's insurability.</p>
+<p>Because this is a research study, there may be some unknown risks that are currently unforeseeable. You will be informed of any significant new findings.</p>
+
+<p style='font-weight: bold;'>What are the alternatives to participating in this study?</p>
+<p>The study is entirely voluntary and not allowing your child to participate will have no consequence.  There is no alternative test.</p>
+
+<p style='font-weight: bold;'>What benefits can be reasonably expected?</p>
+<p>There is no direct benefit to your child for participating in this study. The investigator, however, may learn more about the human microbiome in health and disease and provide a valuable resource for other researchers in other studies.</p>
+
+<p style='font-weight: bold;'>Can you choose to not to have your child participate or withdraw from the study without penalty or loss of benefits?</p>
+<p>There is no direct benefit to you or your child for participating in this study. We believe that there may be natural curiosity to know what bacteria are in your sample and how this compares to other people of the same gender and age. The investigator, however, will learn more about the human microbiome in health and disease and provide a valuable resource for other researchers in other studies.  Your contribution to the project may be eligible as a tax-deduction.  The receipt will be sent to you from the site that handles financial contributions.</p>
+
+<p style='font-weight: bold;'>We will analyze all samples where the consent form and questionnaire is completed.  The samples in the project (including your child's) will be analyzed and published as a scientific article.  You will get a link to view, download and print a high-resolution certificate suitable for framing of your results and access to more detailed taxa report of your results.</p>
+<p>The results from analysis of your sample/s cannot be used by you or your doctor to confirm a clinical diagnosis and we are not testing for infectious disease.</p>
+
+<p style='font-weight: bold;'>Can your child be withdrawn from the study without your consent?</p>
+<p>Participation in research is entirely voluntary. You may refuse to participate or withdraw your child from the study at any time, without penalty or loss of benefits to which you are entitled. If you decide that you no longer wish to continue in this study, you will be requested to contact the American Gut Project helpline to inform us of your intent to withdraw.  If your sample has not been processed you may request a refund which will be processed through the site where you contributed to the project.</p>
+<p>You will be told if any important new information is found during the course of this study that may affect your wanting to continue.</p>
+
+<p style='font-weight: bold;'>Will you be compensated for participating in this study?</p>
+<p>You will not be financially compensated in this study.</p>
+
+<p style='font-weight: bold;'>Are there any costs associated with participating in this study?</p>
+<p>You will be asked to contribute money to the project commensurate with the investigation you request ($99 for one sample, $1500 for "All in the family" (shallow shotgun metagenomic sequencing) and $2500 for "Beyond Bacteria" (deeper shotgun metagenome and virome characterization of one sample, plus additional sequencing). A receipt will be sent to you after you pay for the analysis you are requesting.  These contributions are used to partially finance the project.  Any additional funds required are provided from the funds UCSD has provided to Dr. Knight to set up his laboratory.</p>
+
+<p style='font-weight: bold;'>What if your child is injured as a direct result of being in this study?</p>
+<p>If your child is injured as a direct result of participation in this research, the University of California will provide any medical care you need to treat those injuries. The University will not provide any other form of compensation to you if your child is injured. You or your child may call the Human Research Protections Program Office at (858) 657-5100 for more information about this, to inquire about your rights as a research subject or to report research-related problems.</p>
+
+<p style='font-weight: bold;'>What about your confidentiality?</p>
+<p>Research records will be kept confidential to the extent allowed by law. All data about your child that is entered on the web site is stored on a password-protected server located at the SDSC (San Diego Supercomputer Center) card access controlled facility at UCSD.  Financial information from participants contributing to the project is not accessible to the researchers.  The code key (that relates participant personal information to sample barcodes) is retained on a separate password-protected server that is accessible only to the PI, Co-I, sample coordinator and the database coders.  All analysis is done on de-identified data and the data deposited in a public repository for use by other investigators, is similarly de-identified. Research records may be reviewed by the UCSD Institutional Review Board.</p>
+<p>You will provide information about yourself that could allow you to be identified if it was made public e.g. name, age, birthdate, address.  We have made every effort to ensure that you cannot be identified from the data you supply about yourself but retaining critical information like gender, age without compromising your personal information or the data integrity.</p>
+<p>We may need to report information about known or reasonably suspected incidents of abuse or neglect of a child, dependent adult or elder including physical, sexual, emotional, and financial abuse or neglect. The only way we could discover such abuse is if it is self-reported by the participant or the legal guardian, so this is not likely.  If any investigator has or is given such information, he or she may report such information to the appropriate authorities.</p>
+
+<p style='font-weight: bold;'>Who can you call if you have questions?</p>
+<p>If you have questions or research-related problems, you may reach Rob Knight at 858-246-1194 or contact Elaine Wolfe at 858-246-1964.</p>
+
+<p>You may call the Human Research Protections Program Office at (858) 657-5100 to inquire about your rights as a research subject or to report research-related problems.</p>
+
+<p style='font-weight: bold;'>Your Signature and Consent</p>
+<p>You have received a copy of this consent document and a copy of the "Experimental Subject's Bill of Rights" to keep.</p>
+
+<p>You agree to allow your child to participate.</p>''',
+    'BILL_OF_RIGHTS': '''Experimental Subject's Bill of Rights''',
+    'TEXT_I_HAVE_READ_1': 'I have read (or someone has read to me) this form. I am aware that I am being asked to be in a research study. I voluntarily agree to be in this study.',
+    'TEXT_I_HAVE_READ_SIMPLIFIED': 'Yes, you will be in this research study.',
+    'PERSON_ATTAINING_ASSENT': 'Signature Of Person Obtaining Assent',
+    'TEXT_ASSENT_WITNESS': 'In my judgment, the participant is voluntarily and knowingly giving assent and possesses the legal capacity to give assent to participate in the study.',
+    'OBTAINER_NAME': 'Name of person obtaining assent',
+    'TEXT_I_HAVE_READ_PARENT': 'I have read (or someone has read to me) this form. I am aware that my child is being asked to be in a research study. I voluntarily agree for my child to be in this study.',
     'PARTICIPANT_NAME': 'Name of participant',
     'PARTICIPANT_EMAIL': 'Email of participant',
-    'PARTICIPANT_AGE_CONFIRMATION': 'Participant is 13 years of age or younger',
-    'PARTICIPANT_IS_YOUNG': 'Participant is older than 3 months and younger than 7 years of age',
-    'PARTICIPANT_IS_YOUNG_2': 'Participant is between 7 and 13 years of age',
-    'PARTICIPANT_PARENT_1': 'Name of parent/guardian 1',
-    'PARTICIPANT_PARENT_2': 'Name of parent/guardian 2',
-    'PARTICIPANT_DECEASED_PARENTS': 'One or both parents are deceased or unable to consent.'
+    'PARTICIPANT_PARENT_1': 'Parent/Guardian name',
+    'PARTICIPANT_PARENT_2': 'Parent/Guardian name of second parent',
+    'PARTICIPANT_DECEASED_PARENTS': 'One parent/guardian is deceased or unable to consent.'
 }
 
 _FAQ = {
@@ -214,7 +384,7 @@ _FAQ = {
     'HOW_PROCESS_SAMPLES': "How are the samples and data processed?",
     'HOW_PROCESS_SAMPLES_ANS_1': 'The majority of the samples in the %(project_name)s are run through a processing pipeline designed to amplify a small region of a gene that is believed to be common to all Bacteria and Archaea. This gene, the 16S ribosomal RNA gene is like a barcode you find on your groceries, and serves as a marker for different organisms. There are quite a few different ways to assess the types of Bacteria and Archaea in a sample, including a variety of techniques even to look at this single gene. Every method has its biases, and comparing data between different methods is <a href="http://www.ncbi.nlm.nih.gov/pubmed/23861384">non-trivial</a> and can sometimes be nearly impossible. One of the primary goals of the Gut Project is to provide data that can be used and reused by researchers worldwide, we have opted to use the standard protocols adopted by the <a href="http://earthmicrobiome.org">Earth Microbiome Project</a>, (<a href="http://www.ncbi.nlm.nih.gov/pubmed/22402401">Caporaso et al 2012</a>, and more detailed description of the <a href="http://www.earthmicrobiome.org/emp-standard-protocols/16s/">protocol</a>). This ensures that the data generated by the project can be combined with the other 80,000 samples so far indexed by the EMP (as scientists, we get giddy about things like this).' % {'project_name': AMGUT_CONFIG.project_name},
     'HOW_PROCESS_SAMPLES_ANS_2': 'DNA sequencing is a complex challenge that involves an army of robots, ultra pure water that costs $75 per 10ml, and an amazing <a href="http://www.illumina.com/systems/miseq.ilmn">digital camera</a> that actually determines individual sequences one nucleotide at a time. The number of stunningly brilliant minds whose footprints exist in these methods is astounding. However, the challenges don\'t end once you get the DNA sequence - some might say they are just beginning. It turns out that figuring out what actually is in your sample, that is, what organisms these sequences correspond to, requires cutting edge computational approaches, supercomputers and caffeine for the people operating them. The questions being asked of the data are themselves complex, and volume of data being processed is simply phenomenal. To give you some idea, for each sample sequenced we obtain around 6 million nucleotides which we represent as letters (A, T, G or C, see <a href="http://en.wikipedia.org/wiki/Nucleotide">here</a> for more info), whereas Shakespeare\'s Hamlet only contains around 150,000 letters (ignoring spaces).',
-    'HOW_PROCESS_SAMPLES_ANS_3': 'The primary software package we use for processing 16S sequence data is called Quantitative Insights into Microbial Ecology (<a href="http://www.qiime.org">QIIME</a>; <a href="http://www.ncbi.nlm.nih.gov/pubmed/20383131">Caporaso et al. 2010</a>). Using this package, we are able to start with raw sequence data and process it to so that we end up be able to explore the relationships within and between samples using a variety of statistical methods and metrics. To help in the process, we leverage a standard and comprehensive (to date) reference database called Greengenes (<a href="http://www.ncbi.nlm.nih.gov/pubmed/22134646">McDonald  et al. 2011</a>; <a href="http://www.ncbi.nlm.nih.gov/pubmed/16820507">DeSantis et al. 2006</a>) that includes information on a few hundred thousand Bacteria and Archaea (it is likely that there are millions or more species of bacteria). Due to the molecular limitations of our approach, and the lack of a complete reference database (because the total diversity of microbes on Earth is still unknown), our ability to determine whether a specific organism is present has a margin of error on the order of millions of years, which limits our ability to assess specific strains or even species using this inexpensive technique (more expensive techniques, such as some of the higher-level perks, can provide this information). But all is not lost! By using the evolutionary history of the organisms as inferred by the small pieces of DNA that we have, we can begin to ask broad questions about the diversity within (see <a href="http://www.ncbi.nlm.nih.gov/pubmed/7972354">Faith 1994</a>) and between samples (see <a href="http://www.ncbi.nlm.nih.gov/pubmed/16332807">Lozupone and Knight 2005</a>), and whether the patterns observed relate to study variables (e.g., BMI, exercise frequency, etc).',
+    'HOW_PROCESS_SAMPLES_ANS_3': 'The primary software package we use for processing 16S sequence data is called Quantitative Insights into Microbial Ecology (<a href="http://www.qiime.org">QIIME</a>; <a href="http://www.ncbi.nlm.nih.gov/pubmed/20383131">Caporaso et al. 2010</a>). Using this package, we are able to start with raw sequence data and process it to so that we end up be able to explore the relationships within and between samples using a variety of statistical methods and metrics. To help in the process, we leverage a standard and comprehensive (to date) reference database called Greengenes (<a href="http://www.ncbi.nlm.nih.gov/pubmed/22134646">McDonald  et al. 2011</a>; <a href="http://www.ncbi.nlm.nih.gov/pubmed/16820507">DeSantis et al. 2006</a>) that includes information on a few hundred thousand Bacteria and Archaea (it is likely that there are millions or more species of bacteria). Due to the molecular limitations of our approach, and the lack of a complete reference database (because the total diversity of microbes on Earth is still unknown), our ability to determine whether a specific organism is present has a margin of error on the order of millions of years, which limits our ability to assess specific strains or even species using this inexpensive technique (more expensive techniques, such as some of the higher-level contributions, can provide this information). But all is not lost! By using the evolutionary history of the organisms as inferred by the small pieces of DNA that we have, we can begin to ask broad questions about the diversity within (see <a href="http://www.ncbi.nlm.nih.gov/pubmed/7972354">Faith 1994</a>) and between samples (see <a href="http://www.ncbi.nlm.nih.gov/pubmed/16332807">Lozupone and Knight 2005</a>), and whether the patterns observed relate to study variables (e.g., BMI, exercise frequency, etc).',
     'HOW_PROCESS_SAMPLES_ANS_4': 'The specifics on how the %(project_shorthand)s sequence data are processed can be found <a href="http://nbviewer.ipython.org/github/biocore/American-Gut/blob/master/ipynb/module2_v1.0.ipynb">here</a>, and are written up in an executable <a href="http://ipython.org/notebook">IPython Notebook</a>, which provides all the relevant processing steps in an open-source format. Be warned, processing the full %(project_shorthand)s datasets takes over 5,000 CPU hours right now (i.e. if you do it on your laptop it might take 7 months, even if you don\'t run out of memory: this might put the time it takes to get your results in perspective). This is the processing pipeline that we use on your data. As this project is a work in progress, we are versioning the processing pipeline as there will continue to be improvements to the process as the project moves forward.' % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
     'HOW_PROCESS_SAMPLES_ANS_5': 'Additional information about the tools used in the %(project_name)s and our contributions to the microbiome community can be found in the following publications:' % {'project_name': AMGUT_CONFIG.project_name},
     'HOW_PROCESS_SAMPLES_ANS_6': '<ul> <li><a href="http://www.ncbi.nlm.nih.gov/pubmed/21552244">Minimum information about a marker gene sequence (MIMARKS) and minimum information about any (x) sequence (MIxS) specifications.</a></li> <li><a href="http://www.ncbi.nlm.nih.gov/pubmed/24280061">EMPeror: a tool for visualizing high-throughput microbial community data.</a></li> <li><a href="http://www.ncbi.nlm.nih.gov/pubmed/16332807">UniFrac: a new phylogenetic method for comparing microbial communities.</a></li> <li><a href="http://www.ncbi.nlm.nih.gov/pubmed/16893466">UniFrac--an online tool for comparing microbial community diversity in a phylogenetic context.</a></li> <li><a href="http://www.ncbi.nlm.nih.gov/pubmed/17220268">Quantitative and qualitative beta diversity measures lead to different insights into factors that structure microbial communities.</a></li> <li><a href="http://www.ncbi.nlm.nih.gov/pubmed/19710709">Fast UniFrac: facilitating high-throughput phylogenetic analyses of microbial communities including analysis of pyrosequencing and PhyloChip data.</a></li> <li><a href="http://www.ncbi.nlm.nih.gov/pubmed/20827291">UniFrac: an effective distance metric for microbial community comparison.</a></li> <li><a href="http://www.ncbi.nlm.nih.gov/pubmed/21885731">Linking long-term dietary patterns with gut microbial enterotypes.</a></li> <li><a href="http://www.ncbi.nlm.nih.gov/pubmed/23326225">A guide to enterotypes across the human body: meta-analysis of microbial community structures in human microbiome datasets.</a></li> <li><a href="http://www.ncbi.nlm.nih.gov/pubmed/22699609">Structure, function and diversity of the healthy human microbiome.</a></li> <li><a href="http://www.ncbi.nlm.nih.gov/pubmed/22699610">A framework for human microbiome research.</a></li> <li><a href="http://www.ncbi.nlm.nih.gov/pubmed/23587224">The Biological Observation Matrix (BIOM) format or: how I learned to stop worrying and love the ome-ome.</a></li> <li><a href="http://www.ncbi.nlm.nih.gov/pubmed/22134646">An improved Greengenes taxonomy with explicit ranks for ecological and evolutionary analyses of bacteria and archaea.</a></li> <li><a href="http://www.ncbi.nlm.nih.gov/pubmed/21304728">The Earth Microbiome Project: Meeting report of the "1 EMP meeting on sample selection and acquisition" at Argonne National Laboratory October 6 2010.</a></li> <li><a href="http://www.ncbi.nlm.nih.gov/pubmed/21304727">Meeting report: the terabase metagenomics workshop and the vision of an Earth microbiome project.</a></li> </ul>' % {'project_name': AMGUT_CONFIG.project_name},
@@ -258,7 +428,7 @@ _FAQ = {
     'MULTIPLE_KITS_DIFFERENT_TIMES': "I have a 2+ sample kit, and would like to collect and send them in at different times",
     'MULTIPLE_KITS_DIFFERENT_TIMES_ANS': "For best results, we recommend that you mail each sample within 24 hours of collection.",
     'NOT_A_BUSINESS': "We are not a business",
-    'NOT_A_BUSINESS_ANS': 'We have had many enquiries about our "service" or "business". %(project_shorthand)s is a donation-supported academic project that is a collaboration between the <a href="http://www.earthmicrobiome.org">Earth Microbiome Project</a> and the <a href="http://humanfoodproject.com/">Human Food Project</a>, primarily run out of the <a href="https://knightlab.colorado.edu/">Knight Lab</a> at the University of Colorado at Boulder, and is not a business or service.  In particular, the project is not a diagnostic test (although the information gained through the project may in future contribute to the development of diagnostic tests). All data except for information that needs to be kept confidential for privacy reasons is openly and freely released into public databases, and the project is not intended to make a profit (any surplus funds would be recycled back into furthering human microbiome research).' % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
+    'NOT_A_BUSINESS_ANS': 'We have had many enquiries about our "service" or "business". %(project_shorthand)s is a contribution-supported academic project that is a collaboration between the <a href="http://www.earthmicrobiome.org">Earth Microbiome Project</a> and the <a href="http://humanfoodproject.com/">Human Food Project</a>, primarily run out of the <a href="https://knightlab.colorado.edu/">Knight Lab</a> at the University of Colorado at Boulder, and is not a business or service.  In particular, the project is not a diagnostic test (although the information gained through the project may in future contribute to the development of diagnostic tests). All data except for information that needs to be kept confidential for privacy reasons is openly and freely released into public databases, and the project is not intended to make a profit (any surplus funds would be recycled back into furthering human microbiome research).' % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
     'ONLY_FECAL_RESULTS': "I sent more than one kind of sample, but I only received data for my faecal sample. What happened to my other samples?",
     'ONLY_FECAL_RESULTS_ANS': 'We have only sent out results for faecal samples and are in the process of evaluating how best to present the other sample types. Please see <a href="#faq12">the previous question </a>',
     'PARTICIPATE_WITH_DIAGNOSIS': "Can I participate in the project if I am diagnosed with ...?",
@@ -710,7 +880,7 @@ _PORTAL = {
     'VERIFICATION_HEADER_1': "Verification",
     'VERIFICATION_HEADER_2': "Verify your identity and kit barcode(s)",
     'VERIFICATION_TEXT_1': "We ask you to verify that you received the correct sample tubes and kit. Using a <strong>Verification Code</strong> helps us ensure that you receive the correct barcodes and Credentials Sheet.",
-    'VERIFICATION_TEXT_2': 'our <strong>Verification Code</strong> will be sent to you via email to the address that you entered when you made your donation; if you made an anonymous donation, please <a href="%(sitebase)s/authed/help_request/">contact us directly</a>.' % {'sitebase': media_locale['SITEBASE']},
+    'VERIFICATION_TEXT_2': 'our <strong>Verification Code</strong> will be sent to you via email to the address that you entered when you made your contribution; if you made an anonymous contribution, please <a href="%(sitebase)s/authed/help_request/">contact us directly</a>.' % {'sitebase': media_locale['SITEBASE']},
     'VERIFICATION_TEXT_3': 'If you cannot find your <strong>Verification Code</strong>, please make sure to check your spam folder. If you still cannot find the code, please <a href="%(sitebase)s/authed/help_request/">contact us</a>.' % {'sitebase': media_locale['SITEBASE']},
     'RESEND_VERIFICATION': 'Resend verification code',
     'VERIFY_BARCODES': "Please verify that the barcode(s) you received in the mail match the barcode(s) here",

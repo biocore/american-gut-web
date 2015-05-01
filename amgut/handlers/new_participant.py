@@ -35,20 +35,15 @@ class NewParticipantHandler(BaseHandler):
     @authenticated
     def post(self):
         tl = text_locale['handlers']
-        deceased_parent = self.get_argument("deceased_parent", None)
         participant_name = self.get_argument("participant_name")
         participant_email = self.get_argument("participant_email")
-        is_juvenile = self.get_argument("is_juvenile", 'off')
+        age_range = self.get_argument("age_range")
         parent_1_name = self.get_argument("parent_1_name", None)
         parent_2_name = self.get_argument("parent_2_name", None)
+        obtainer_name = self.get_argument("obtainer_name", None)
+        deceased_parent = self.get_argument("deceased_parent", None)
 
         ag_login_id = ag_data.get_user_for_kit(self.current_user)
-        kit_email = ag_data.get_user_info(self.current_user)['email']
-
-        # Check if the participant is on the exceptions list
-        is_exception = (
-            participant_name
-            in ag_data.getParticipantExceptions(ag_login_id))
 
         # If the participant already exists, stop them outright
         if ag_data.check_if_consent_exists(ag_login_id, participant_name):
@@ -56,42 +51,16 @@ class NewParticipantHandler(BaseHandler):
             self.redirect(media_locale['SITEBASE'] + "/authed/portal/?errmsg=%s" % errmsg)
             return
 
-        if is_juvenile == 'off' and is_exception:
-            errmsg = url_escape(tl["JUVENILE_CONSENT_EXPECTED"] %
-                                participant_name)
-            self.redirect(media_locale['SITEBASE'] + "/authed/portal/?errmsg=%s" % errmsg)
-            return
-
-        if is_juvenile == 'on':
-            # If they aren't already an exception, we need to verify them
-            if not is_exception:
-                alert_message = tl['MINOR_PARENTAL_BODY']
-
-                subject = ("AGJUVENILE: %s (ag_login_id: %s) is a child"
-                           % (participant_name, ag_login_id))
-
-                message = MESSAGE_TEMPLATE % (participant_name,
-                                              parent_1_name, parent_2_name,
-                                              deceased_parent,
-                                              self.current_user, kit_email)
-
-                try:
-                    send_email(message, subject, sender=kit_email)
-                    alert_message = tl['MESSAGE_SENT']
-                except:
-                    alert_message = media_locale['EMAIL_ERROR']
-
-                self.redirect(media_locale['SITEBASE'] + "/authed/portal/?errmsg=%s" % alert_message)
-                return
-
         human_survey_id = binascii.hexlify(os.urandom(8))
 
         consent= {'participant_name': participant_name,
                   'participant_email': participant_email,
                   'parent_1_name': parent_1_name,
                   'parent_2_name': parent_2_name,
-                  'is_juvenile': True if is_juvenile == 'on' else False,
+                  'is_juvenile': True if age_range != '18-plus' else False,
                   'deceased_parent': deceased_parent,
+                  'obtainer_name': obtainer_name,
+                  'age_range': age_range,
                   'login_id': ag_login_id,
                   'survey_id': human_survey_id}
 

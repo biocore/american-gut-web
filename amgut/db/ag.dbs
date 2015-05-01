@@ -40,6 +40,9 @@
 			<column name="parent_1_code" type="varchar" length="200" jt="12" />
 			<column name="parent_2_code" type="varchar" length="200" jt="12" />
 			<column name="deceased_parent" type="varchar" length="10" jt="12" />
+			<column name="date_signed" type="date" jt="91" />
+			<column name="assent_obtainer" type="varchar" jt="12" />
+			<column name="age_range" type="varchar" jt="12" />
 			<index name="pk_american_gut_consent" unique="PRIMARY_KEY" >
 				<column name="ag_login_id" />
 				<column name="participant_name" />
@@ -21334,13 +21337,13 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="iso_country_lookup" color="ffffff" x="930" y="1845" />
 		<entity schema="ag" name="survey_question_response_type" color="ffcccc" x="720" y="1950" />
 		<entity schema="ag" name="ag_kit_barcodes" color="f7e2c6" x="765" y="1110" />
-		<entity schema="ag" name="ag_consent" color="c6d9f7" x="1470" y="945" />
 		<entity schema="ag" name="ag_login_surveys" color="ffcccc" x="1455" y="1245" />
 		<entity schema="ag" name="survey_answers" color="a8c4ef" x="1560" y="1425" />
 		<entity schema="ag" name="promoted_survey_ids" color="a8c4ef" x="1455" y="1140" />
 		<entity schema="ag" name="survey_question" color="a8c4ef" x="450" y="1755" />
 		<entity schema="ag" name="ag_login" color="f7e2c6" x="735" y="630" />
 		<entity schema="ag" name="zipcodes" color="c6c6f7" x="1125" y="270" />
+		<entity schema="ag" name="ag_consent" color="c6d9f7" x="1470" y="900" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by : 
    american_gut_consent</comment>
