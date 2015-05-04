@@ -2,6 +2,7 @@
 {% from amgut import media_locale %}
 {% from amgut.connections import ag_data, redis %}
 {% set human_participants, animal_participants, environmental_samples, kit_verified = ag_data.get_menu_items(skid) %}
+{% set avail_barcodes = ag_data.getAvailableBarcodes(ag_data.get_user_for_kit(skid)) %}
 {% set maintenance = redis.get('maintenance') %}
 <!DOCTYPE html>
 <html lang="en">
@@ -151,7 +152,7 @@
 {% end %}
                         </ul>
                     </li>
-{% if kit_verified %}
+{% if avail_barcodes %}
                     <li class="last"><a href="{% raw media_locale['SITEBASE'] %}/authed/add_sample_overview/"><strong>{% raw media_locale['NAV_LOG_SAMPLE'] %}</strong></a></li>
 {% end %}
                 </ul>
