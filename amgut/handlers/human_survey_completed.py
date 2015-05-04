@@ -22,13 +22,13 @@ def build_consent_form(consent_info):
              tl['PARTICIPANT_PARENT_2'], consent_info['parent_2_name'],
              tl['PARTICIPANT_DECEASED_PARENTS'],
              consent_info['deceased_parent'],
-             tl['DATE_SIGNED'], consent_info['date_signed'])
+             tl['DATE_SIGNED'], str(consent_info['date_signed']))
 
     elif consent_info['age_range'] == '7-12':
         message = ("%s<p>%s: %s</p><p>%s: %s</p><p>%s: %s</p>"
                    "%s<p>%s: %s</p><p>%s: %s</p><p>%s: %s</p>"
                    "<p>%s: %s</p>") %\
-            (tl['assent_7_12'],
+            (tl['ASSENT_7_12'],
              tl['PARTICIPANT_NAME'], consent_info['participant_name'],
              tl['PARTICIPANT_EMAIL'], consent_info['participant_email'],
              tl['OBTAINER_NAME'], consent_info['assent_obtainer'],
@@ -37,13 +37,13 @@ def build_consent_form(consent_info):
              tl['PARTICIPANT_PARENT_2'], consent_info['parent_2_name'],
              tl['PARTICIPANT_DECEASED_PARENTS'],
              consent_info['deceased_parent'],
-             tl['DATE_SIGNED'], consent_info['date_signed'])
+             tl['DATE_SIGNED'], str(consent_info['date_signed']))
 
     elif consent_info['age_range'] == '13-17':
         message = ("%s<p>%s: %s</p><p>%s: %s</p>"
                    "%s<p>%s: %s</p><p>%s: %s</p><p>%s: %s</p>"
                    "<p>%s: %s</p>") %\
-            (tl['assent_13_17'],
+            (tl['ASSENT_13_17'],
              tl['PARTICIPANT_NAME'], consent_info['participant_name'],
              tl['PARTICIPANT_EMAIL'], consent_info['participant_email'],
              tl['CONSENT_YOUR_CHILD'],
@@ -51,13 +51,14 @@ def build_consent_form(consent_info):
              tl['PARTICIPANT_PARENT_2'], consent_info['parent_2_name'],
              tl['PARTICIPANT_DECEASED_PARENTS'],
              consent_info['deceased_parent'],
-             tl['DATE_SIGNED'], consent_info['date_signed'])
+             tl['DATE_SIGNED'], str(consent_info['date_signed']))
+
     elif consent_info['age_range'] == '18-plus':
         message = "%s<p>%s: %s</p><p>%s: %s</p><p>%s: %s</p>" %\
             (tl['CONSENT_18'],
              tl['PARTICIPANT_NAME'], consent_info['participant_name'],
              tl['PARTICIPANT_EMAIL'], consent_info['participant_email'],
-             tl['DATE_SIGNED'], consent_info['date_signed'])
+             tl['DATE_SIGNED'], str(consent_info['date_signed']))
 
     else:
         # old consent so no idea of age range and text, only juv/non-juv
