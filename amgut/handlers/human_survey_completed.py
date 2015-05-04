@@ -88,7 +88,9 @@ class HumanSurveyCompletedHandler(BaseHandler):
                            recipient=consent_info['participant_email'])
             except:
                 Logger.exception('Error sending signed consent form for '
-                                 'survey ID: %s' % human_survey_id)
+                                 'survey ID: %s to email: %s' %
+                                 (human_survey_id,
+                                  consent_info['participant_email']))
 
     @authenticated
     def post(self):
