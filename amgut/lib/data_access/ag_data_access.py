@@ -506,10 +506,13 @@ class AGDataAccess(object):
                                   agc.is_juvenile,
                                   agc.deceased_parent,
                                   agc.ag_login_id,
+                                  agc.date_signed,
+                                  agc.assent_obtainer,
+                                  agc.age_range,
                                   agl.survey_id
                            FROM ag_consent agc JOIN
-                                ag_login_surveys agl ON agc.ag_login_id=agl.ag_login_id AND
-                                                        agc.participant_name=agl.participant_name
+                                ag_login_surveys agl
+                                USING (ag_login_id, participant_name)
                            WHERE agl.survey_id=%s""", [survey_id])
             colnames = [x[0] for x in cur.description]
             result = cur.fetchone()
