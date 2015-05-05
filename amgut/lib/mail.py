@@ -2,7 +2,7 @@ import errno
 import smtplib
 import socket
 
-from email.mime.text import MIMEText, MIME
+from email.mime.text import MIMEText
 
 from amgut import media_locale
 from amgut.lib.config_manager import AMGUT_CONFIG
