@@ -2,18 +2,21 @@ import errno
 import smtplib
 import socket
 
-from email.mime.text import MIMEText
+from email.mime.text import MIMEText, MIME
 
 from amgut import media_locale
 from amgut.lib.config_manager import AMGUT_CONFIG
 
 
 def send_email(message, subject, recipient='americangut@gmail.com',
-               sender=media_locale['HELP_EMAIL']):
+               sender=media_locale['HELP_EMAIL'], html=False):
     """Send an email from your local host"""
 
-    # Create a text/plain message
-    msg = MIMEText(message)
+    if html:
+        mail_type = "html"
+    else:
+        mail_type = "plain"
+    msg = MIMEText(message, mail_type)
 
     # me == the sender's email address
     # you == the recipient's email address
