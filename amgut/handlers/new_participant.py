@@ -41,7 +41,7 @@ class NewParticipantHandler(BaseHandler):
         parent_1_name = self.get_argument("parent_1_name", None)
         parent_2_name = self.get_argument("parent_2_name", None)
         obtainer_name = self.get_argument("obtainer_name", None)
-        deceased_parent = self.get_argument("deceased_parent", None)
+        deceased_parent = self.get_argument("deceased_parent", 'No')
 
         ag_login_id = ag_data.get_user_for_kit(self.current_user)
 
