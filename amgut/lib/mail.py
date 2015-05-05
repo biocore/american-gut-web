@@ -12,11 +12,7 @@ def send_email(message, subject, recipient='americangut@gmail.com',
                sender=media_locale['HELP_EMAIL'], html=False):
     """Send an email from your local host"""
 
-    if html:
-        mail_type = "html"
-    else:
-        mail_type = "plain"
-    msg = MIMEText(message, mail_type)
+    msg = MIMEText(message, "html" if html else "plain")
 
     # me == the sender's email address
     # you == the recipient's email address
