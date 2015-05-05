@@ -360,7 +360,8 @@ The following tests are available:</p>
     'PARTICIPANT_EMAIL': 'Email of participant',
     'PARTICIPANT_PARENT_1': 'Parent/Guardian name',
     'PARTICIPANT_PARENT_2': 'Parent/Guardian name of second parent',
-    'PARTICIPANT_DECEASED_PARENTS': 'One parent/guardian is deceased or unable to consent.'
+    'PARTICIPANT_DECEASED_PARENTS': 'One parent/guardian is deceased or unable to consent.',
+    'DATE_SIGNED': 'Date Signed'
 }
 
 _FAQ = {

@@ -9,11 +9,10 @@ from amgut.lib.config_manager import AMGUT_CONFIG
 
 
 def send_email(message, subject, recipient='americangut@gmail.com',
-               sender=media_locale['HELP_EMAIL']):
+               sender=media_locale['HELP_EMAIL'], html=False):
     """Send an email from your local host"""
 
-    # Create a text/plain message
-    msg = MIMEText(message)
+    msg = MIMEText(message, "html" if html else "plain")
 
     # me == the sender's email address
     # you == the recipient's email address
