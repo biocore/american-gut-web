@@ -419,9 +419,6 @@ class AGDataAccess(object):
                 FOR bc IN
                     SELECT barcode FROM ag_handout_kits WHERE kit_id = %s
                 LOOP
-                    INSERT INTO barcode (barcode) VALUES (bc);
-                    INSERT INTO project_barcode (project_id, barcode)
-                        VALUES (1, bc);
                     INSERT  INTO ag_kit_barcodes
                         (ag_kit_id, barcode, sample_barcode_file)
                         VALUES (k_id, bc, bc || '.jpg');
