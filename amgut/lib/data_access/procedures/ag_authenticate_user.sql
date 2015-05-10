@@ -19,12 +19,6 @@ BEGIN
     where   agk.supplied_kit_id = ag_kit_id_;
 
 end;
-/*BEGIN;
-emte4531=# select ag_authenticate_user('DctkP', 'z077$Wcz', 'a');
-select all in a;
-COMMIT;
-*/
-
  
 $body$
 LANGUAGE PLPGSQL;
