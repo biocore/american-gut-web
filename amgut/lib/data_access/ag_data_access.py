@@ -514,7 +514,10 @@ class AGDataAccess(object):
             colnames = [x[0] for x in cur.description]
             result = cur.fetchone()
             if result:
-                return {k: v for k, v in zip(colnames, result)}
+                result = {k: v for k, v in zip(colnames, result)}
+                if 'date_signed' in result:
+                    result['date_signed'] = str(result['date_signed'])
+                return result
 
     def addAGGeneralValue(self, ag_login_id, participant_name, field_name,
                           field_value):
