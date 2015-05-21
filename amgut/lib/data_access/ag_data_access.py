@@ -954,6 +954,23 @@ class AGDataAccess(object):
         else:
             return bcrypt.verify(password, to_check[0])
 
+    def check_access(self, user, barcode):
+        """Check if the user has access to the barcode
+
+        Parameters
+        ----------
+        user : str
+            The user's supplied kit ID
+        barcode : str
+            The barcode to check access for
+
+        Returns
+        -------
+        boolean
+            True if the user can access the barcode, False otherwise
+        """
+        return True
+
     def checkBarcode(self, barcode):
         # return a tuple consists of:
         # site_sampled, sample_date, sample_time, participant_name,

@@ -42,6 +42,7 @@ from amgut.handlers.add_sample_overview import AddSampleOverviewHandler
 from amgut.handlers.change_pass_verify import ChangePassVerifyHandler
 from amgut.handlers.change_password import ChangePasswordHandler
 from amgut.handlers.nojs import NoJSHandler
+from amgut.handlers.download import DownloadHandler
 
 from amgut.handlers.open_humans import (OpenHumansHandler,
                                         OpenHumansLoginHandler)
@@ -59,8 +60,6 @@ DEBUG = True
 class QiimeWebApplication(Application):
     def __init__(self):
         handlers = [
-            (r"/results/(.*)", BaseStaticFileHandler,
-             {"path": AMGUT_CONFIG.base_data_dir}),
             (r"/static/(.*)", BaseStaticFileHandler, {"path": STATIC_PATH}),
             (r"/", MainHandler),
             (r"/db_error/", DBErrorHandler),
@@ -86,6 +85,7 @@ class QiimeWebApplication(Application):
             (r"/authed/add_animal/", AnimalSurveyHandler),
             (r"/authed/open-humans/", OpenHumansHandler),
             (r"/authed/connect/open-humans/", OpenHumansLoginHandler),
+            (r"/authed/download/(.*)", DownloadHandler),
             (r"/faq/", FAQHandler),
             (r"/participants/(.*)", ParticipantOverviewHandler),
             (r"/international_shipping/", InternationalHandler),
