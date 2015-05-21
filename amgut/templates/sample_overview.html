@@ -17,6 +17,7 @@
                 <td>{% raw tl['DATA_VIS_TITLE'] %}</td>
 {% if barcode_pdf %}
                 <td><a href="{{ barcode_pdf }}" title="{% raw tl['RESULTS_PDF_LINK'] % fmt %}" target="blank">{{ barcode }}.pdf</a>
+                <td><a href="{% raw media_locale['SITEBASE'] %}/authed/download/?barcode={{ barcode }}&filetype=result-pdf" title="{% raw tl['RESULTS_PDF_LINK'] % fmt %}" target="blank">{{ barcode }}.pdf</a>
 {% else %}
                 <td>{% raw tl['SAMPLE_NOT_PROCESSED'] %}</td>
 {% end %}
