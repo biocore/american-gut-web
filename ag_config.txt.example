@@ -8,7 +8,10 @@ TEST_ENVIRONMENT = TRUE
 
 # Path to the base directory where the data files are going to be stored
 BASE_DATA_DIR =
-SITEBASE = 
+
+# URL base (e.g., foo.bar.com/<SITEBASE>)
+SITEBASE =
+
 # The URL where the site is served from, e.g. https://microbio.me/AmericanGut/
 BASE_URL =
 
