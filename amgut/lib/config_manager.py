@@ -147,7 +147,7 @@ class ConfigurationManager(object):
         """Get the configuration of the main section"""
         expected_options = {'name', 'shorthand', 'test_environment',
                             'base_data_dir', 'locale', 'base_url',
-                            'cookie_secret', 'error_email'}
+                            'cookie_secret', 'error_email', 'sitebase'}
         _warn_on_extra(set(config.options('main')) - expected_options -
                        self.defaults, 'main section option(s)')
 
@@ -162,6 +162,7 @@ class ConfigurationManager(object):
         self.cookie_secret = get('COOKIE_SECRET')
         self.locale = get('LOCALE')
         self.error_email = get('ERROR_EMAIL')
+        self.sitebase = get('SITEBASE')
 
         if not exists(self.base_data_dir):
             raise IOError("Directory %s does not exist!" % self.base_data_dir)

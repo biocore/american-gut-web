@@ -8,7 +8,7 @@
     <br>
 	{% raw tl['PERCENTAGES_NOTE'] %}
 </div>
-<a href="{{file_path}}" download>{% raw tl['DOWNLOAD_LINK'] %}</a>
+<a href="{% raw media_locale['SITEBASE'] %}/authed/download/?barcode={{ barcode }}&filetype=taxa" download>{% raw tl['DOWNLOAD_LINK'] %}</a>
 <center>
 <table cellspacing="15">
     {% for header in headers %}
