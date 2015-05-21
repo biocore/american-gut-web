@@ -969,7 +969,13 @@ class AGDataAccess(object):
         boolean
             True if the user can access the barcode, False otherwise
         """
-        return True
+        cursor = self.get_cursor()
+        cursor.execute("""SELECT barcode
+                          FROM ag.ag_kit JOIN
+                               ag.ag_kit_barcodes USING(ag_kit_id)
+                          WHERE supplied_kit_id=%s""", [user])
+        barcodes = {i[0] for i in cursor.fetchall()}
+        return barcode in barcodes
 
     def checkBarcode(self, barcode):
         # return a tuple consists of:

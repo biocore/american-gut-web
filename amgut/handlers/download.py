@@ -1,6 +1,6 @@
 from tornado.web import authenticated, HTTPError
 
-from os.path import join
+from os.path import join, exists
 
 from .base_handlers import BaseHandler
 from amgut import AMGUT_CONFIG
@@ -14,7 +14,13 @@ FILETYPES = {'taxa': ('taxa-summaries', '.txt'),
 
 class DownloadHandler(BaseHandler):
     @authenticated
-    def get(self, barcode, filetype):
+    def get(self, *args, **kwargs):
+        barcode = self.get_argument('barcode', None)
+        filetype = self.get_argument('filetype', None)
+
+        if barcode is None or filetype is None:
+            raise HTTPError(500, "Incorrectly formed GET request")
+
         # Check access to file
         has_access = ag_data.check_access(self.current_user, barcode)
 
@@ -25,14 +31,11 @@ class DownloadHandler(BaseHandler):
             raise HTTPError(500, "Unrecognized filetype")
 
         filetype_path, filetype_suffix = FILETYPES[filetype]
-        basepath = join(AMGUT_CONFIG.base_data_dir, filetype_path)
         fname = barcode + filetype_suffix
-        fullpath = join(basepath, fname)
+        fullpath = join(filetype_path, fname)
 
-        # If we don't have nginx, write a file that indicates this
-        self.write("This installation of AG was not equipped with nginx, "
-                   "so it is incapable of serving files. The file you "
-                   "attempted to download is located at %s" % fullpath)
+        if not exists(join(AMGUT_CONFIG.base_data_dir, fullpath)):
+            raise HTTPError(500, "File %s is not available" % fullpath)
 
         self.set_header('Content-Description', 'File Transfer')
         self.set_header('Content-Type', 'application/octet-stream')
