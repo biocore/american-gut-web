@@ -15,7 +15,7 @@ from amgut.lib.config_manager import AMGUT_CONFIG
 # Any media specific localizations
 HELP_EMAIL = "info@britishgut.org"
 
-_SITEBASE = ''
+_SITEBASE = AMGUT_CONFIG.sitebase
 
 media_locale = {
     'LOCALE': AMGUT_CONFIG.locale,
