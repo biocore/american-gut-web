@@ -16,7 +16,7 @@ from amgut.lib.mail import send_email
 
 def build_consent_form(consent_info):
     tl = text_locale['new_participant.html']
-    # email out the consent form
+    # build out the consent form
     if consent_info['age_range'] == '0-6':
         message = ("%s<p>%s: %s</p><p>%s: %s</p><p>%s: %s</p>"
                    "<p>%s: %s</p><p>%s: %s</p><p>%s: %s</p>") %\
