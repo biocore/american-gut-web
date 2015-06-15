@@ -954,12 +954,12 @@ class AGDataAccess(object):
         else:
             return bcrypt.verify(password, to_check[0])
 
-    def check_access(self, user, barcode):
+    def check_access(self, supplied_kit_id, barcode):
         """Check if the user has access to the barcode
 
         Parameters
         ----------
-        user : str
+        supplied_kit_id : str
             The user's supplied kit ID
         barcode : str
             The barcode to check access for
@@ -969,13 +969,14 @@ class AGDataAccess(object):
         boolean
             True if the user can access the barcode, False otherwise
         """
+        ag_login_id = self.get_user_for_kit(supplied_kit_id)
         cursor = self.get_cursor()
         cursor.execute("""SELECT EXISTS (
                               SELECT barcode
                               FROM ag.ag_kit JOIN
                                    ag.ag_kit_barcodes USING(ag_kit_id)
-                              WHERE supplied_kit_id=%s AND
-                                    barcode=%s)""", [user, barcode])
+                              WHERE ag_login_id = %s AND
+                                    barcode = %s)""", [ag_login_id, barcode])
         return cursor.fetchone()[0]
 
     def checkBarcode(self, barcode):
