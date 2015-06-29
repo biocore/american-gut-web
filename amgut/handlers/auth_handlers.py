@@ -111,9 +111,9 @@ class AuthLoginHandler(AuthBasehandler):
             return
 
 
-class AuthLogoutHandler(BaseHandler):
+class AuthLogoutHandler(AuthBasehandler):
     """Logout handler, no page necessary"""
     @authenticated
     def get(self):
-        self.clear_cookie("skid")
+        self.set_current_user()
         self.redirect(media_locale['SITEBASE'] + "/")
