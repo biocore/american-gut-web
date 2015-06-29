@@ -1230,7 +1230,7 @@ class AGDataAccess(object):
                  where   lower(email) like %s or lower(name) like
                  %s or lower(address) like %s"""
         cursor = self.get_cursor()
-        liketerm = '%%' + term + '%%'
+        liketerm = '%%' + term.lower() + '%%'
         cursor.execute(sql, [liketerm, liketerm, liketerm])
         results = cursor.fetchall()
         cursor.close()
@@ -1243,7 +1243,7 @@ class AGDataAccess(object):
                  lower(kit_password) like %s or
                  lower(kit_verification_code) = %s"""
         cursor = self.get_cursor()
-        liketerm = '%%' + term + '%%'
+        liketerm = '%%' + term.lower() + '%%'
         cursor.execute(sql, [liketerm, liketerm, term])
         results = cursor.fetchall()
         cursor.close()
@@ -1255,7 +1255,7 @@ class AGDataAccess(object):
                  where   lower(participant_name) like %s or
                  lower(participant_email) like %s"""
         conn_handler = SQLConnectionHandler()
-        liketerm = '%%' + term + '%%'
+        liketerm = '%%' + term.lower() + '%%'
         return [x[0] for x in conn_handler.execute_fetchall(
             sql, [liketerm, liketerm])]
 
@@ -1267,7 +1267,7 @@ class AGDataAccess(object):
                  where   barcode like %s or lower(participant_name) like
                  %s or lower(notes) like %s"""
         cursor = self.get_cursor()
-        liketerm = '%%' + term + '%%'
+        liketerm = '%%' + term.lower() + '%%'
         cursor.execute(sql, [liketerm, liketerm, liketerm])
         results = cursor.fetchall()
         cursor.close()
