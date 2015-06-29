@@ -22,9 +22,8 @@ class AuthBasehandler(BaseHandler):
 class AuthRegisterHandoutHandler(AuthBasehandler):
     """User Creation"""
     def get(self):
-        skid = self.get_argument("skid").strip()
         latlong_db = ag_data.getMapMarkers()
-        self.render("register_user.html", skid=skid,
+        self.render("register_user.html",
                     latlongs_db=latlong_db, loginerror='')
 
     def post(self):
@@ -36,7 +35,6 @@ class AuthRegisterHandoutHandler(AuthBasehandler):
             tl = text_locale['handlers']
             self.redirect(media_locale['SITEBASE'] +
                           "/?loginerror=" + tl['INVALID_KITID'])
-            print ">>>REDIRECT", media_locale['SITEBASE'] + "/?loginerror=" + tl['INVALID_KITID']
             return
 
         # Register handout
@@ -94,8 +92,8 @@ class AuthLoginHandler(AuthBasehandler):
         is_handout = ag_data.handoutCheck(skid, password)
         if is_handout:
             # have them register themselves
-            self.redirect(media_locale['SITEBASE'] + '/auth/register/?skid=%s'
-                          % skid)
+            self.redirect(media_locale['SITEBASE'] + '/?loginerror=' +
+                          tl['REGISTER_KIT'])
             return
 
         login = ag_data.authenticateWebAppUser(skid, password)
