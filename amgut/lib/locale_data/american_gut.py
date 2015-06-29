@@ -244,13 +244,15 @@ _PARTICIPANT_OVERVIEW = {
     'OVERVIEW_FOR_PARTICPANT': 'Overview for participant'
 }
 
-_ADD_SAMPLE_OVERIVIEW = {
+_ADD_SAMPLE_OVERVIEW = {
     'ADD_SAMPLE_TITLE': 'Choose your sample source ',
     'ADD_SAMPLE_TITLE_HELP': 'The sample source is the person, animal or environment that the sample you are currently logging came from. If you took the sample from yourself, you should select yourself as the sample source.',
     'ENVIRONMENTAL': 'Environmental',
     'ADD_SAMPLE_1': 'If you don\'t see the sample source you want here, you need to add it. You can do this in ',
     'ADD_SAMPLE_2': 'Step 2',
     'ADD_SAMPLE_3': ' on the main page when you log in.',
+    'HUMAN_SOURCE': 'Human Source',
+    'ANIMAL_SOURCE': 'Animal Source'
 }
 
 _SAMPLE_OVERVIEW = {
@@ -965,7 +967,7 @@ text_locale = {
     'help_request.html': _HELP_REQUEST,
     'new_participant.html': _NEW_PARTICIPANT,
     'international.html': _INTERNATIONAL,
-    'add_sample_overview.html': _ADD_SAMPLE_OVERIVIEW,
+    'add_sample_overview.html': _ADD_SAMPLE_OVERVIEW,
     'participant_overview.html': _PARTICIPANT_OVERVIEW,
     'sample_overview.html': _SAMPLE_OVERVIEW,
     'taxa_summary.html': _TAXA_SUMMARY,
