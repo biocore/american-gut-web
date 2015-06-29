@@ -74,7 +74,9 @@ class MainHandler(BaseHandler):
     """Index page"""
     def get(self):
         latlong_db = ag_data.getMapMarkers()
-        self.render("index.html", latlongs_db=latlong_db, loginerror="")
+        loginerror = self.get_argument("loginerror", "")
+        self.render("index.html", latlongs_db=latlong_db,
+                    loginerror=loginerror)
 
 
 class NoPageHandler(BaseHandler):
