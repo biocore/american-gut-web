@@ -590,6 +590,7 @@ _ADD_SAMPLE = {
 }
 
 _REGISTER_USER = {
+    'ENTER_PASSWORD': 'Please enter your kit password',
     'ENTER_NAME': 'Please enter your name',
     'ENTER_EMAIL': 'Please enter your email',
     'REQUIRED_EMAIL': 'You must supply a valid email',
@@ -606,6 +607,7 @@ _REGISTER_USER = {
     'STATE': 'State',
     'ZIP': 'Zip',
     'COUNTRY': 'Country',
+    'PASSWORD': 'Password',
     'SUBMIT': 'Submit My Information'
 }
 

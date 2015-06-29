@@ -690,6 +690,7 @@ _REGISTER_USER = {
     'CITY': "City",
     'COUNTRY': "Country",
     'EMAIL': "Email",
+    'ENTER_PASSWORD': 'Please enter your kit password',
     'ENTER_ADDRESS': "Please enter your address",
     'ENTER_CITY': "Please enter your city",
     'ENTER_COUNTRY': "Please enter your country",
@@ -701,6 +702,7 @@ _REGISTER_USER = {
     'REQUIRED_EMAIL': "You must supply a valid email",
     'REQUIRED_ZIP': "Your postcode must consist of at least 6 characters",
     'STATE': "State",
+    'PASSWORD': 'Password',
     'SUBMIT': "Submit My Information",
     'ZIP': "Postcode",
 }

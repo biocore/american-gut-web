@@ -25,7 +25,8 @@ $(document).ready(function() {
         city: "required",
         state: "required",
         zip: "required",
-        country: "required"
+        country: "required",
+        password: "required"
       },
       messages: {
         participantname: {
@@ -50,6 +51,9 @@ $(document).ready(function() {
         },
         country: {
           required: "{% raw tl['ENTER_COUNTRY'] %}",
+        },
+        password: {
+          required: "{% raw tl['ENTER_PASSWORD'] %}",
         }
       }
     });
@@ -69,11 +73,12 @@ $(document).ready(function() {
         <input type="hidden" name="kit_id" id="kit_id" value="{{skid}}">
         <h3>New User Registration</h3>
         <table>
-            <tr><td>{% raw tl['EMAIL'] %}</td><td><input type="text" name="email" id="email"></td></tr>            
+            <tr><td>{% raw tl['PASSWORD'] %}</td><td><input type="password" name="password" id="password"></td></tr>
+            <tr><td>{% raw tl['EMAIL'] %}</td><td><input type="text" name="email" id="email"></td></tr>
             <tr><td>{% raw tl['NAME'] %}</td><td><input type="text" name="participantname" id="participantname"></td></tr>
-            <tr><td>{% raw tl['ADDRESS'] %}</td><td><input type="text" name="address" id="address"></td></tr>      
-            <tr><td>{% raw tl['CITY'] %}</td><td><input type="text" name="city" id="city"></td></tr>               
-            <tr><td>{% raw tl['STATE'] %}</td><td><input type="text" name="state" id="state"></td></tr>        
+            <tr><td>{% raw tl['ADDRESS'] %}</td><td><input type="text" name="address" id="address"></td></tr>
+            <tr><td>{% raw tl['CITY'] %}</td><td><input type="text" name="city" id="city"></td></tr>
+            <tr><td>{% raw tl['STATE'] %}</td><td><input type="text" name="state" id="state"></td></tr>
             <tr><td>{% raw tl['ZIP'] %}</td><td><input type="text" name="zip" id="zip"></td></tr>
             <tr><td>{% raw tl['COUNTRY'] %}</td><td><input type="text" name="country" id="country"></td></tr>
             <tr><td></td><td><input type="submit" id="submit" value="{% raw tl['SUBMIT'] %}"/></td></tr>
