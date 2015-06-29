@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from tornado.web import authenticated
+from tornado.web import authenticated, HTTPError
 from tornado.escape import json_encode
 import logging
 
@@ -10,21 +10,31 @@ from amgut.handlers.base_handlers import BaseHandler
 from amgut import media_locale, text_locale
 
 # login code modified from https://gist.github.com/guillaumevincent/4771570
-
+def set_current_user(self, user):
+    if user:
+        self.set_secure_cookie("skid", json_encode(user))
+    else:
+        self.clear_cookie("skid")
 
 class AuthRegisterHandoutHandler(BaseHandler):
     """User Creation"""
-    @authenticated
     def get(self):
+        skid = self.get_argument("skid").strip()
         latlong_db = ag_data.getMapMarkers()
-        self.render("register_user.html", skid=self.current_user,
+        self.render("register_user.html", skid=skid,
                     latlongs_db=latlong_db, loginerror='')
 
-    @authenticated
     def post(self):
-        skid = self.current_user
-        # log user out for register process
-        self.clear_cookie("skid")
+        # Check handout
+        skid = self.get_argument("skid").strip()
+        password = self.get_argument("password")
+        is_handout = ag_data.handoutCheck(skid, password)
+        if not is_handout:
+            self.redirect(media_locale['SITEBASE'] +
+                          "/?loginerror=Invalid%40password")
+            return
+
+        # Register handout
         tl = text_locale['handlers']
         info = {
             "email": self.get_argument("email"),
@@ -44,8 +54,8 @@ class AuthRegisterHandoutHandler(BaseHandler):
             self.redirect(media_locale['SITEBASE'] + '/db_error/?err=regkit')
             return
 
-        # log user back in since registered successfully
-        self.set_secure_cookie("skid", json_encode(skid))
+        # log user in since registered successfully
+        set_current_user(skid)
         self.redirect(media_locale['SITEBASE'] + "/authed/portal/")
 
         kitinfo = ag_data.getAGKitDetails(skid)
@@ -68,43 +78,39 @@ class AuthRegisterHandoutHandler(BaseHandler):
 
 class AuthLoginHandler(BaseHandler):
     """user login, no page necessary"""
+    def get(self, *args, **kwargs):
+        self.redirect(media_locale['SITEBASE'] + "/")
+
     def post(self):
         skid = self.get_argument("skid", "").strip()
         password = self.get_argument("password", "")
         tl = text_locale['handlers']
+
+        is_handout = ag_data.handoutCheck(skid, password)
+        if is_handout:
+            # have them register themselves
+            self.redirect(media_locale['SITEBASE'] + '/auth/register/?skid=%s'
+                          % skid)
+            return
+
         login = ag_data.authenticateWebAppUser(skid, password)
         if login:
             # everything good so log in
-            self.set_current_user(skid)
+            set_current_user(skid)
             default_redirect = media_locale['SITEBASE'] + '/authed/portal/'
             self.redirect(self.get_argument('next', default_redirect))
             return
         else:
-            is_handout = ag_data.handoutCheck(skid, password)
-            if is_handout:
-                # login user but have them register themselves
-                self.set_current_user(skid)
-                self.redirect(media_locale['SITEBASE'] + '/auth/register/')
-                return
-            else:
-                msg = tl['INVALID_KITID']
-                latlongs_db = ag_data.getMapMarkers()
-                self.render("index.html", user=None, loginerror=msg,
-                            latlongs_db=latlongs_db)
-                return
-
-    def set_current_user(self, user):
-        if user:
-            self.set_secure_cookie("skid", json_encode(user))
-        else:
-            self.clear_cookie("skid")
-
-    def get(self, *args, **kwargs):
-        self.redirect(media_locale['SITEBASE'] + "/")
+            msg = tl['INVALID_KITID']
+            latlongs_db = ag_data.getMapMarkers()
+            self.render("index.html", user=None, loginerror=msg,
+                        latlongs_db=latlongs_db)
+            return
 
 
 class AuthLogoutHandler(BaseHandler):
     """Logout handler, no page necessary"""
+    @authenticated
     def get(self):
         self.clear_cookie("skid")
         self.redirect(media_locale['SITEBASE'] + "/")
