@@ -12,8 +12,8 @@ from amgut import media_locale, text_locale
 
 # login code modified from https://gist.github.com/guillaumevincent/4771570
 class AuthBasehandler(BaseHandler):
-    def set_current_user(self, user):
-        if user:
+    def set_current_user(self, user=None):
+        if user is not None:
             self.set_secure_cookie("skid", json_encode(user))
         else:
             self.clear_cookie("skid")
