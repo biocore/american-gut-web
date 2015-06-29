@@ -9,14 +9,17 @@ from amgut.lib.mail import send_email
 from amgut.handlers.base_handlers import BaseHandler
 from amgut import media_locale, text_locale
 
-# login code modified from https://gist.github.com/guillaumevincent/4771570
-def set_current_user(self, user):
-    if user:
-        self.set_secure_cookie("skid", json_encode(user))
-    else:
-        self.clear_cookie("skid")
 
-class AuthRegisterHandoutHandler(BaseHandler):
+# login code modified from https://gist.github.com/guillaumevincent/4771570
+class AuthBasehandler(BaseHandler):
+    def set_current_user(self, user):
+        if user:
+            self.set_secure_cookie("skid", json_encode(user))
+        else:
+            self.clear_cookie("skid")
+
+
+class AuthRegisterHandoutHandler(AuthBasehandler):
     """User Creation"""
     def get(self):
         skid = self.get_argument("skid").strip()
@@ -26,12 +29,14 @@ class AuthRegisterHandoutHandler(BaseHandler):
 
     def post(self):
         # Check handout
-        skid = self.get_argument("skid").strip()
+        skid = self.get_argument("kit_id").strip()
         password = self.get_argument("password")
         is_handout = ag_data.handoutCheck(skid, password)
         if not is_handout:
+            tl = text_locale['handlers']
             self.redirect(media_locale['SITEBASE'] +
-                          "/?loginerror=Invalid%40password")
+                          "/?loginerror=" + tl['INVALID_KITID'])
+            print ">>>REDIRECT", media_locale['SITEBASE'] + "/?loginerror=" + tl['INVALID_KITID']
             return
 
         # Register handout
@@ -55,7 +60,7 @@ class AuthRegisterHandoutHandler(BaseHandler):
             return
 
         # log user in since registered successfully
-        set_current_user(skid)
+        self.set_current_user(skid)
         self.redirect(media_locale['SITEBASE'] + "/authed/portal/")
 
         kitinfo = ag_data.getAGKitDetails(skid)
@@ -76,7 +81,7 @@ class AuthRegisterHandoutHandler(BaseHandler):
             logging.exception('Error on skid %s:' % skid)
 
 
-class AuthLoginHandler(BaseHandler):
+class AuthLoginHandler(AuthBasehandler):
     """user login, no page necessary"""
     def get(self, *args, **kwargs):
         self.redirect(media_locale['SITEBASE'] + "/")
@@ -96,7 +101,7 @@ class AuthLoginHandler(BaseHandler):
         login = ag_data.authenticateWebAppUser(skid, password)
         if login:
             # everything good so log in
-            set_current_user(skid)
+            self.set_current_user(skid)
             default_redirect = media_locale['SITEBASE'] + '/authed/portal/'
             self.redirect(self.get_argument('next', default_redirect))
             return
