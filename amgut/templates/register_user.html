@@ -5,13 +5,6 @@
 
 <script src="{% raw media_locale['SITEBASE'] %}/static/vendor/js/jquery.validate.min.js"></script>
 <script type="text/javascript">
-$.validator.setDefaults({
-    submitHandler: function() {
-      $("#submit").prop('disabled', true);
-      $("#newParticipant").submit();
-    }
-  });
-
 $(document).ready(function() {
     // validate register form on keyup and submit
     $("#newParticipant").validate({
@@ -61,6 +54,10 @@ $(document).ready(function() {
         kit_id: {
           required: "{% raw tl['ENTER_KIT_ID'] %}"
         }
+      },
+      submitHandler: function(form) {
+        $("#submit").hide("slow");
+        form.submit();
       }
     });
   });
