@@ -24,7 +24,9 @@ $(document).ready(function() {
         address: "required",
         city: "required",
         state: "required",
-        zip: "required",
+        zip: {"required": true,
+              "maxlength": 10
+        },
         country: "required",
         password: "required"
       },
@@ -47,7 +49,7 @@ $(document).ready(function() {
         },
         zip: {
           required: "{% raw tl['ENTER_ZIP'] %}",
-          minlength: "{% raw tl['REQUIRED_ZIP'] %}"
+          maxlength: "{% raw tl['REQUIRED_ZIP'] %}"
         },
         country: {
           required: "{% raw tl['ENTER_COUNTRY'] %}",
@@ -68,7 +70,7 @@ $(document).ready(function() {
 {% block content %}
 {% from amgut import text_locale %}
 {% set tl = text_locale['register_user.html'] %}
-<div class="registerwrapper" style="position:absolute; top:16px; left:285px; padding:15px;">
+<div class="registerwrapper" style="position:absolute; left:285px; padding:15px;">
     <form name="newParticipant" id="newParticipant" method="post" action="{% raw media_locale['SITEBASE'] %}/auth/register/">
         <input type="hidden" name="kit_id" id="kit_id" value="{{skid}}">
         <h3>New User Registration</h3>

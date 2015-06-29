@@ -700,7 +700,7 @@ _REGISTER_USER = {
     'ENTER_ZIP': "Please enter your postcode",
     'NAME': "Name",
     'REQUIRED_EMAIL': "You must supply a valid email",
-    'REQUIRED_ZIP': "Your postcode must consist of at least 6 characters",
+    'REQUIRED_ZIP': 'Your postcode must be 10 or fewer characters',
     'STATE': "State",
     'PASSWORD': 'Password',
     'SUBMIT': "Submit My Information",

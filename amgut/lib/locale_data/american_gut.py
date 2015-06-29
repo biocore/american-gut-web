@@ -599,7 +599,7 @@ _REGISTER_USER = {
     'ENTER_STATE': 'Please enter your state',
     'ENTER_ZIP': 'Please enter your zip',
     'ENTER_COUNTRY': 'Please enter your country',
-    'REQUIRED_ZIP': 'Your zip must consist of at least 5 characters',
+    'REQUIRED_ZIP': 'Your zip must be 10 or fewer characters',
     'EMAIL': 'Email',
     'NAME': 'Name',
     'ADDRESS': 'Address',
