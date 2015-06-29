@@ -57,6 +57,7 @@ media_locale = {
     'NAV_JOIN_PROJECT': 'Join The Project',
     'NAV_KIT_INSTRUCTIONS': 'Kit Instructions',
     'NAV_PARTICIPANT_LOGIN': 'Participant Log In',
+    'NAV_REGISTER_KIT': 'Register Kit',
     'NAV_FORGOT_KITID': 'I forgot my kit ID',
     'NAV_INTERNATIONAL': 'International Shipping',
     'NAV_FORGOT_PASSWORD': 'I forgot my password',
@@ -103,7 +104,8 @@ _HANDLERS = {
     'KIT_IDS_BODY': 'Your {1} Kit IDs are %s. You are receiving this email because you requested your Kit ID from the {1} web page If you did not request your Kit ID please email {0} Thank you,\n The {1} Team\n'.format(media_locale['HELP_EMAIL'], AMGUT_CONFIG.project_shorthand),
     'KIT_IDS_SUBJECT': '%(project_shorthand)s Kit ID' % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
     'BARCODE_ERROR': "ERROR: No barcode was requested",
-    'AUTH_SUBJECT': "You have registered your kit!  Your verification code is below."
+    'AUTH_SUBJECT': "You have registered your kit!  Your verification code is below.",
+    'REGISTER_KIT': 'Kit has not been registered. Please click "Register Kit" link.'
 }
 
 # Template specific dicts
@@ -590,6 +592,7 @@ _ADD_SAMPLE = {
 }
 
 _REGISTER_USER = {
+    'ENTER_KIT_ID': "Please enter your kit ID",
     'ENTER_PASSWORD': 'Please enter your kit password',
     'ENTER_NAME': 'Please enter your name',
     'ENTER_EMAIL': 'Please enter your email',
@@ -608,6 +611,7 @@ _REGISTER_USER = {
     'ZIP': 'Zip',
     'COUNTRY': 'Country',
     'PASSWORD': 'Password',
+    'KIT_ID': 'Kit ID',
     'SUBMIT': 'Submit My Information'
 }
 

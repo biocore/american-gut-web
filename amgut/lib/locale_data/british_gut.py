@@ -60,6 +60,7 @@ media_locale = {
     'NAV_CONTACT_US': "Contact Us",
     'NAV_ENV_SAMPLES': "Environmental Samples",
     'NAV_FAQ': "FAQ",
+    'NAV_REGISTER_KIT': 'Register Kit',
     'NAV_FORGOT_KITID': "I forgot my kit ID",
     'NAV_FORGOT_PASSWORD': "I forgot my password",
     'NAV_HOME': "Home",
@@ -103,7 +104,8 @@ _HANDLERS = {
     'KIT_IDS_BODY': 'Your {1} Kit IDs are %s. You are receiving this email because you requested your Kit ID from the {1} web page If you did not request your Kit ID please email {0} Thank you,\n The {1} Team\n'.format(media_locale['HELP_EMAIL'], AMGUT_CONFIG.project_shorthand),
     'KIT_IDS_SUBJECT': '%(project_shorthand)s Kit ID' % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
     'BARCODE_ERROR': "ERROR: No barcode was requested",
-    'AUTH_SUBJECT': "You have registered your kit!  Your verification code is below."
+    'AUTH_SUBJECT': "You have registered your kit!  Your verification code is below.",
+    'REGISTER_KIT': 'Kit has not been registered. Please click "Register Kit" link.'
 }
 
 _NEW_PARTICIPANT = {
@@ -690,6 +692,7 @@ _REGISTER_USER = {
     'CITY': "City",
     'COUNTRY': "Country",
     'EMAIL': "Email",
+    'ENTER_KIT_ID': "Please enter your kit ID",
     'ENTER_PASSWORD': 'Please enter your kit password',
     'ENTER_ADDRESS': "Please enter your address",
     'ENTER_CITY': "Please enter your city",
@@ -705,6 +708,7 @@ _REGISTER_USER = {
     'PASSWORD': 'Password',
     'SUBMIT': "Submit My Information",
     'ZIP': "Postcode",
+    'KIT_ID': 'Kit ID'
 }
 
 _ADDENDUM = {

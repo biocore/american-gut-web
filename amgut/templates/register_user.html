@@ -28,7 +28,8 @@ $(document).ready(function() {
               "maxlength": 10
         },
         country: "required",
-        password: "required"
+        password: "required",
+        kit_id: "required"
       },
       messages: {
         participantname: {
@@ -56,6 +57,9 @@ $(document).ready(function() {
         },
         password: {
           required: "{% raw tl['ENTER_PASSWORD'] %}",
+        },
+        kit_id: {
+          required: "{% raw tl['ENTER_KIT_ID'] %}"
         }
       }
     });
@@ -72,9 +76,9 @@ $(document).ready(function() {
 {% set tl = text_locale['register_user.html'] %}
 <div class="registerwrapper" style="position:absolute; left:285px; padding:15px;">
     <form name="newParticipant" id="newParticipant" method="post" action="{% raw media_locale['SITEBASE'] %}/auth/register/">
-        <input type="hidden" name="kit_id" id="kit_id" value="{{skid}}">
         <h3>New User Registration</h3>
         <table>
+            <tr><td>{% raw tl['KIT_ID'] %}</td><td><input type="text" name="kit_id" id="kit_id"></td></tr>
             <tr><td>{% raw tl['PASSWORD'] %}</td><td><input type="password" name="password" id="password"></td></tr>
             <tr><td>{% raw tl['EMAIL'] %}</td><td><input type="text" name="email" id="email"></td></tr>
             <tr><td>{% raw tl['NAME'] %}</td><td><input type="text" name="participantname" id="participantname"></td></tr>
