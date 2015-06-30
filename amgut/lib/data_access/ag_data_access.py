@@ -1207,12 +1207,16 @@ class AGDataAccess(object):
         return info
 
     def get_barcode_results(self, supplied_kit_id):
-        sql = """select akb.barcode, akb.participant_name
-                 from ag_kit_barcodes akb
-                 inner join ag_kit agk  on akb.ag_kit_id = agk.ag_kit_id
-                 where agk.supplied_kit_id =  %s and akb.results_ready = 'Y'"""
+        """Get the results associated with the login ID of the kit"""
+        ag_login_id = self.get_user_for_kit(supplied_kit_id)
         cursor = self.get_cursor()
-        cursor.execute(sql, [supplied_kit_id])
+
+        sql = """SELECT akb.barcode, akb.participant_name
+                 FROM ag_kit_barcodes akb
+                 INNER JOIN ag_kit agk USING(ag_kit_id)
+                 WHERE agk.ag_login_id = %s AND akb.results_ready = 'Y'"""
+
+        cursor.execute(sql, [ag_login_id])
         results = cursor.fetchall()
         col_names = self._get_col_names_from_cursor(cursor)
         return [dict(zip(col_names, row)) for row in results]
