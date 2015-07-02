@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from tornado.web import authenticated, HTTPError
-from tornado.escape import json_encode
+from tornado.escape import json_encode, url_escape
 import logging
 
 from amgut.connections import ag_data
@@ -34,7 +34,7 @@ class AuthRegisterHandoutHandler(AuthBasehandler):
         if not is_handout:
             tl = text_locale['handlers']
             self.redirect(media_locale['SITEBASE'] +
-                          "/?loginerror=" + tl['INVALID_KITID'])
+                          "/?loginerror=" + url_escape(tl['INVALID_KITID']))
             return
 
         # Register handout
