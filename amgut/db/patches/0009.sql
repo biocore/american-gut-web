@@ -25,5 +25,5 @@ DELETE FROM ag.ag_handout_kits WHERE barcode NOT IN (SELECT max(barcode) FROM ag
 ALTER TABLE ag.ag_handout_kits DROP COLUMN barcode, DROP COLUMN sample_barcode_file;
 
 -- Add unique constraint to the kit_id column and the foreign key for new table
-ALTER TABLE ag.ag_handout_kits ADD UNIQUE (kit_id);
+ALTER TABLE ag.ag_handout_kits ADD PRIMARY KEY (kit_id);
 ALTER TABLE ag.handout_barcode ADD CONSTRAINT fk_handout_barcode_0 FOREIGN KEY ( kit_id ) REFERENCES ag.ag_handout_kits( kit_id ) ON DELETE CASCADE ON UPDATE CASCADE;
