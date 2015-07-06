@@ -257,7 +257,13 @@ class AGDataAccess(object):
         return kit_details
 
     def getAGHandoutKitDetails(self, supplied_kit_id):
-        sql = "SELECT * FROM ag_handout_kits WHERE kit_id = %s"
+        sql = """SELECT * FROM ag.ag_handout_kits
+                 JOIN (SELECT
+                    kit_id, array_agg(barcode ORDER BY barcode) AS barcodes,
+                    sample_barcode_file FROM ag.handout_barcode
+                    GROUP BY kit_id, sample_barcode_file) AS hb
+                 USING (kit_id)
+                 WHERE kit_id = %s"""
         cur = self.get_cursor()
         cur.execute(sql, [supplied_kit_id])
         row = cur.fetchone()
@@ -417,7 +423,7 @@ class AGDataAccess(object):
                     FROM ag_handout_kits WHERE kit_id = %s LIMIT 1
                 RETURNING ag_kit_id INTO k_id;
                 FOR bc IN
-                    SELECT barcode FROM ag_handout_kits WHERE kit_id = %s
+                    SELECT barcode FROM handout_barcode WHERE kit_id = %s
                 LOOP
                     INSERT  INTO ag_kit_barcodes
                         (ag_kit_id, barcode, sample_barcode_file)
