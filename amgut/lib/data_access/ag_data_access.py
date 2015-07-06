@@ -950,7 +950,7 @@ class AGDataAccess(object):
 
     def handoutCheck(self, username, password):
         cursor = self.get_cursor()
-        cursor.execute("""SELECT distinct(password)
+        cursor.execute("""SELECT DISTINCT (password)
                           FROM ag.ag_handout_kits
                           WHERE kit_id=%s""", [username])
         to_check = cursor.fetchone()
@@ -1228,7 +1228,7 @@ class AGDataAccess(object):
         return [dict(zip(col_names, row)) for row in results]
 
     def get_barcodes_from_handout_kit(self, supplied_kit_id):
-        sql = "select barcode from ag_handout_kits where kit_id = %s"
+        sql = "select barcode from handout_barcode where kit_id = %s"
         cursor = self.get_cursor()
         cursor.execute(sql, [supplied_kit_id])
         results = cursor.fetchall()
@@ -1325,9 +1325,13 @@ class AGDataAccess(object):
         return results
 
     def search_handout_kits(self, term):
-        sql = """select kit_id, password, barcode, verification_code
-                 from ag_handout_kits where kit_id like %s
-                 or barcode like %s"""
+        sql = """SELECT kit_id, password, barcodes, verification_code
+                 FROM ag_handout_kits
+                 JOIN (SELECT
+                    kit_id, array_agg(barcode ORDER BY barcode) AS barcodes
+                    FROM ag.handout_barcode
+                    GROUP BY kit_id, sample_barcode_file) AS hb USING (kit_id)
+                 WHERE kit_id LIKE %s or barcode LIKE %s"""
         cursor = self.get_cursor()
         liketerm = '%%' + term + '%%'
         cursor.execute(sql, [liketerm, liketerm])
