@@ -1325,12 +1325,11 @@ class AGDataAccess(object):
         return results
 
     def search_handout_kits(self, term):
-        sql = """SELECT kit_id, password, barcodes, verification_code
+        sql = """SELECT kit_id, password, barcode, verification_code
                  FROM ag_handout_kits
-                 JOIN (SELECT
-                    kit_id, array_agg(barcode ORDER BY barcode) AS barcodes
+                 JOIN (SELECT kit_id, barcode, sample_barcode_file
                     FROM ag.handout_barcode
-                    GROUP BY kit_id, sample_barcode_file) AS hb USING (kit_id)
+                    GROUP BY kit_id, barcode) AS hb USING (kit_id)
                  WHERE kit_id LIKE %s or barcode LIKE %s"""
         cursor = self.get_cursor()
         liketerm = '%%' + term + '%%'
