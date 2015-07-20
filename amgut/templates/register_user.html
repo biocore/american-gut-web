@@ -5,13 +5,6 @@
 
 <script src="{% raw media_locale['SITEBASE'] %}/static/vendor/js/jquery.validate.min.js"></script>
 <script type="text/javascript">
-$.validator.setDefaults({
-    submitHandler: function() {
-      $("#submit").prop('disabled', true);
-      $("#newParticipant").submit();
-    }
-  });
-
 $(document).ready(function() {
     // validate register form on keyup and submit
     $("#newParticipant").validate({
@@ -24,8 +17,12 @@ $(document).ready(function() {
         address: "required",
         city: "required",
         state: "required",
-        zip: "required",
-        country: "required"
+        zip: {"required": true,
+              "maxlength": 10
+        },
+        country: "required",
+        password: "required",
+        kit_id: "required"
       },
       messages: {
         participantname: {
@@ -46,11 +43,21 @@ $(document).ready(function() {
         },
         zip: {
           required: "{% raw tl['ENTER_ZIP'] %}",
-          minlength: "{% raw tl['REQUIRED_ZIP'] %}"
+          maxlength: "{% raw tl['REQUIRED_ZIP'] %}"
         },
         country: {
           required: "{% raw tl['ENTER_COUNTRY'] %}",
+        },
+        password: {
+          required: "{% raw tl['ENTER_PASSWORD'] %}",
+        },
+        kit_id: {
+          required: "{% raw tl['ENTER_KIT_ID'] %}"
         }
+      },
+      submitHandler: function(form) {
+        $("#submit").hide("slow");
+        form.submit();
       }
     });
   });
@@ -64,16 +71,17 @@ $(document).ready(function() {
 {% block content %}
 {% from amgut import text_locale %}
 {% set tl = text_locale['register_user.html'] %}
-<div class="registerwrapper" style="position:absolute; top:16px; left:285px; padding:15px;">
+<div class="registerwrapper" style="position:absolute; left:285px; padding:15px;">
     <form name="newParticipant" id="newParticipant" method="post" action="{% raw media_locale['SITEBASE'] %}/auth/register/">
-        <input type="hidden" name="kit_id" id="kit_id" value="{{skid}}">
         <h3>New User Registration</h3>
         <table>
-            <tr><td>{% raw tl['EMAIL'] %}</td><td><input type="text" name="email" id="email"></td></tr>            
+            <tr><td>{% raw tl['KIT_ID'] %}</td><td><input type="text" name="kit_id" id="kit_id"></td></tr>
+            <tr><td>{% raw tl['PASSWORD'] %}</td><td><input type="password" name="password" id="password"></td></tr>
+            <tr><td>{% raw tl['EMAIL'] %}</td><td><input type="text" name="email" id="email"></td></tr>
             <tr><td>{% raw tl['NAME'] %}</td><td><input type="text" name="participantname" id="participantname"></td></tr>
-            <tr><td>{% raw tl['ADDRESS'] %}</td><td><input type="text" name="address" id="address"></td></tr>      
-            <tr><td>{% raw tl['CITY'] %}</td><td><input type="text" name="city" id="city"></td></tr>               
-            <tr><td>{% raw tl['STATE'] %}</td><td><input type="text" name="state" id="state"></td></tr>        
+            <tr><td>{% raw tl['ADDRESS'] %}</td><td><input type="text" name="address" id="address"></td></tr>
+            <tr><td>{% raw tl['CITY'] %}</td><td><input type="text" name="city" id="city"></td></tr>
+            <tr><td>{% raw tl['STATE'] %}</td><td><input type="text" name="state" id="state"></td></tr>
             <tr><td>{% raw tl['ZIP'] %}</td><td><input type="text" name="zip" id="zip"></td></tr>
             <tr><td>{% raw tl['COUNTRY'] %}</td><td><input type="text" name="country" id="country"></td></tr>
             <tr><td></td><td><input type="submit" id="submit" value="{% raw tl['SUBMIT'] %}"/></td></tr>
