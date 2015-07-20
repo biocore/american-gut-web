@@ -267,7 +267,7 @@
 	ag_kit references ag_login ( ag_login_id )</title>
 </path>
 <text x='1035' y='730' transform='rotate(0 1035,730)' title='Foreign Key fk_ag_kit_to_login_id
-	ag_kit references ag_login ( ag_login_id )' style='fill:#a1a0a0;'>ag_login_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1440 1170 L 1492,1170 Q 1500,1170 1500,1162 L 1500,1155' >
+	ag_kit references ag_login ( ag_login_id )' style='fill:#a1a0a0;'>ag_login_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1440 1170 L 1597,1170 Q 1605,1170 1605,1162 L 1605,1155' >
 	<title>Foreign Key fk_survey_answers_other
 	survey_answers_other references ag_login_surveys ( survey_id )</title>
 </path>
@@ -332,22 +332,7 @@
 	ag_kit_barcodes references ag_login_surveys ( survey_id )</title>
 </path>
 <text x='922' y='955' transform='rotate(0 922,955)' title='Foreign Key fk_ag_kit_barcodes_1
-	ag_kit_barcodes references ag_login_surveys ( survey_id )' style='fill:#a1a0a0;'>survey_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1560 1050 L 1582,1050 Q 1590,1050 1590,1042 L 1590,457 Q 1590,450 1582,450 L 1575,450' >
-	<title>Foreign Key fk_ag_login_surveys
-	ag_login_surveys references ag_login ( ag_login_id )</title>
-</path>
-<text x='1567' y='1045' transform='rotate(0 1567,1045)' title='Foreign Key fk_ag_login_surveys
-	ag_login_surveys references ag_login ( ag_login_id )' style='fill:#a1a0a0;'>ag_login_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 1515 1260 L 877,1260 Q 870,1260 870,1267 L 870,1567 Q 870,1575 862,1575 L 855,1575' >
-	<title>Foreign Key fk_survey_answers
-	survey_answers references survey_question_response ( survey_question_id, response )</title>
-</path>
-<text x='1359' y='1255' transform='rotate(0 1359,1255)' title='Foreign Key fk_survey_answers
-	survey_answers references survey_question_response ( survey_question_id, response )' style='fill:#a1a0a0;'>survey_question_id,response</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 1515 1230 L 1507,1230 Q 1500,1230 1500,1222 L 1500,1147 Q 1500,1140 1507,1140 L 1567,1140 Q 1575,1140 1575,1132 L 1575,1072 Q 1575,1065 1567,1065 L 1560,1065' >
-	<title>Foreign Key fk_survey_answers_0
-	survey_answers references ag_login_surveys ( survey_id )</title>
-</path>
-<text x='1465' y='1225' transform='rotate(0 1465,1225)' title='Foreign Key fk_survey_answers_0
-	survey_answers references ag_login_surveys ( survey_id )' style='fill:#a1a0a0;'>survey_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1410 945 L 1402,945 Q 1395,945 1395,952 L 1395,975' >
+	ag_kit_barcodes references ag_login_surveys ( survey_id )' style='fill:#a1a0a0;'>survey_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1410 945 L 1402,945 Q 1395,945 1395,952 L 1395,975' >
 	<title>Foreign Key fk_promoted_survey_ids
 	promoted_survey_ids references ag_login_surveys ( survey_id )</title>
 </path>
@@ -392,7 +377,32 @@
 	handout_barcode references ag_handout_kits ( kit_id )</title>
 </path>
 <text x='213' y='445' transform='rotate(0 213,445)' title='Foreign Key fk_handout_barcode_0
-	handout_barcode references ag_handout_kits ( kit_id )' style='fill:#a1a0a0;'>kit_id</text><!-- ============= Table 'ag_survey_answer' ============= -->
+	handout_barcode references ag_handout_kits ( kit_id )' style='fill:#a1a0a0;'>kit_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1560 1050 L 1582,1050 Q 1590,1050 1590,1042 L 1590,457 Q 1590,450 1582,450 L 1575,450' >
+	<title>Foreign Key fk_ag_login_surveys
+	ag_login_surveys references ag_login ( ag_login_id )</title>
+</path>
+<text x='1567' y='1045' transform='rotate(0 1567,1045)' title='Foreign Key fk_ag_login_surveys
+	ag_login_surveys references ag_login ( ag_login_id )' style='fill:#a1a0a0;'>ag_login_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 1395 1290 L 877,1290 Q 870,1290 870,1297 L 870,1567 Q 870,1575 862,1575 L 855,1575' >
+	<title>Foreign Key fk_survey_answers
+	survey_answers references survey_question_response ( survey_question_id, response )</title>
+</path>
+<text x='1239' y='1285' transform='rotate(0 1239,1285)' title='Foreign Key fk_survey_answers
+	survey_answers references survey_question_response ( survey_question_id, response )' style='fill:#a1a0a0;'>survey_question_id,response</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1545 1260 L 1597,1260 Q 1605,1260 1605,1252 L 1605,1245' >
+	<title>Foreign Key fk_survey_answers_0
+	survey_answers references ag_login_surveys ( survey_id )</title>
+</path>
+<text x='1552' y='1255' transform='rotate(0 1552,1255)' title='Foreign Key fk_survey_answers_0
+	survey_answers references ag_login_surveys ( survey_id )' style='fill:#a1a0a0;'>survey_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 1590 1380 L 1597,1380 Q 1605,1380 1605,1372 L 1605,1072 Q 1605,1065 1597,1065 L 1560,1065' >
+	<title>Foreign Key fk_third_party_surveys
+	external_survey_answers references ag_login_surveys ( survey_id )</title>
+</path>
+<text x='1597' y='1375' transform='rotate(0 1597,1375)' title='Foreign Key fk_third_party_surveys
+	external_survey_answers references ag_login_surveys ( survey_id )' style='fill:#a1a0a0;'>survey_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 1590 1395 L 1597,1395 Q 1605,1395 1605,1402 L 1605,1492 Q 1605,1500 1597,1500 L 1590,1500' >
+	<title>Foreign Key fk_external_survey
+	external_survey_answers references external_survey ( external_survey_id )</title>
+</path>
+<text x='1597' y='1390' transform='rotate(0 1597,1390)' title='Foreign Key fk_external_survey
+	external_survey_answers references external_survey ( external_survey_id )' style='fill:#a1a0a0;'>external_survey_id</text><!-- ============= Table 'ag_survey_answer' ============= -->
 <rect class='table' x='675' y='683' width='150' height='120' rx='7' ry='7' />
 <path d='M 675.50 709.50 L 675.50 690.50 Q 675.50 683.50 682.50 683.50 L 817.50 683.50 Q 824.50 683.50 824.50 690.50 L 824.50 709.50 L675.50 709.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
 <a xlink:href='#ag_survey_answer'><text x='700' y='697' class='tableTitle'>ag_survey_answer</text><title>Table ag.ag_survey_answer</title></a>
@@ -782,43 +792,6 @@ Stores the type of response for each question</title></a>
   <a xlink:href='#withdrawn'><text x='753' y='1192'>withdrawn</text><title>withdrawn varchar&#040;1&#041;</title></a>
   <a xlink:href='#refunded'><text x='753' y='1207'>refunded</text><title>refunded varchar&#040;1&#041;</title></a>
 
-<!-- ============= Table 'ag_login_surveys' ============= -->
-<rect class='table' x='1425' y='1013' width='135' height='105' rx='7' ry='7' />
-<path d='M 1425.50 1039.50 L 1425.50 1020.50 Q 1425.50 1013.50 1432.50 1013.50 L 1552.50 1013.50 Q 1559.50 1013.50 1559.50 1020.50 L 1559.50 1039.50 L1425.50 1039.50 ' style='fill:url(#tableHeaderGradient2); stroke:none;' />
-<a xlink:href='#ag_login_surveys'><text x='1445' y='1027' class='tableTitle'>ag_login_surveys</text><title>Table ag.ag_login_surveys</title></a>
-  <use id='nn' x='1427' y='1047' xlink:href='#nn'/><a xlink:href='#ag_login_id'><use id='idx' x='1427' y='1046' xlink:href='#idx'/><title>Index  ( ag_login_id, participant_name ) </title></a>
-<a xlink:href='#ag_login_id'><text x='1443' y='1057'>ag_login_id</text><title>ag_login_id uuid not null</title></a>
-<a xlink:href='#ag_login_id'><use id='fk' x='1548' y='1046' xlink:href='#fk'/><title>References ag_login ( ag_login_id ) 
-References ag_consent ( ag_login_id, participant_name ) </title></a>
-  <use id='nn' x='1427' y='1062' xlink:href='#nn'/><a xlink:href='#survey_id'><use id='pk' x='1427' y='1061' xlink:href='#pk'/><title>Primary Key  ( survey_id ) </title></a>
-<a xlink:href='#survey_id'><text x='1443' y='1072'>survey_id</text><title>survey_id varchar not null</title></a>
-<a xlink:href='#survey_id'><use id='ref' x='1548' y='1061' xlink:href='#ref'/><title>Referred by ag_kit_barcodes ( survey_id ) 
-Referred by promoted_survey_ids ( survey_id ) 
-Referred by survey_answers ( survey_id ) 
-Referred by survey_answers_other ( survey_id ) </title></a>
-  <a xlink:href='#participant_name'><use id='idx' x='1427' y='1076' xlink:href='#idx'/><title>Index  ( participant_name ) Index  ( ag_login_id, participant_name ) </title></a>
-<a xlink:href='#participant_name'><text x='1443' y='1087'>participant_name</text><title>participant_name varchar</title></a>
-<a xlink:href='#participant_name'><use id='fk' x='1548' y='1076' xlink:href='#fk'/><title>References ag_consent ( ag_login_id, participant_name ) </title></a>
-  <a xlink:href='#vioscreen_status'><text x='1443' y='1102'>vioscreen_status</text><title>vioscreen_status integer</title></a>
-
-<!-- ============= Table 'survey_answers' ============= -->
-<rect class='table' x='1530' y='1193' width='135' height='90' rx='7' ry='7' />
-<path d='M 1530.50 1219.50 L 1530.50 1200.50 Q 1530.50 1193.50 1537.50 1193.50 L 1657.50 1193.50 Q 1664.50 1193.50 1664.50 1200.50 L 1664.50 1219.50 L1530.50 1219.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
-<a xlink:href='#survey_answers'><text x='1554' y='1207' class='tableTitle'>survey_answers</text><title>Table ag.survey_answers
-Stores answers to questions of type SINGLE and MULTIPLE</title></a>
-  <use id='nn' x='1532' y='1227' xlink:href='#nn'/><a xlink:href='#survey_id'><use id='pk' x='1532' y='1226' xlink:href='#pk'/><title>Primary Key  ( survey_id, survey_question_id, response ) Index  ( survey_id ) </title></a>
-<a xlink:href='#survey_id'><text x='1548' y='1237'>survey_id</text><title>survey_id varchar not null
-The unique identifier for the survey</title></a>
-<a xlink:href='#survey_id'><use id='fk' x='1653' y='1226' xlink:href='#fk'/><title>References ag_login_surveys ( survey_id ) </title></a>
-  <use id='nn' x='1532' y='1242' xlink:href='#nn'/><a xlink:href='#survey_question_id'><use id='pk' x='1532' y='1241' xlink:href='#pk'/><title>Primary Key  ( survey_id, survey_question_id, response ) Index  ( survey_question_id, response ) </title></a>
-<a xlink:href='#survey_question_id'><text x='1548' y='1252'>survey_question_id</text><title>survey_question_id bigint not null
-The question being answered</title></a>
-<a xlink:href='#survey_question_id'><use id='fk' x='1653' y='1241' xlink:href='#fk'/><title>References survey_question_response ( survey_question_id, response ) </title></a>
-  <use id='nn' x='1532' y='1257' xlink:href='#nn'/><a xlink:href='#response'><use id='pk' x='1532' y='1256' xlink:href='#pk'/><title>Primary Key  ( survey_id, survey_question_id, response ) Index  ( survey_question_id, response ) </title></a>
-<a xlink:href='#response'><text x='1548' y='1267'>response</text><title>response varchar not null
-The answer the question being asked</title></a>
-<a xlink:href='#response'><use id='fk' x='1653' y='1256' xlink:href='#fk'/><title>References survey_question_response ( survey_question_id, response ) </title></a>
-
 <!-- ============= Table 'promoted_survey_ids' ============= -->
 <rect class='table' x='1425' y='908' width='135' height='60' rx='7' ry='7' />
 <path d='M 1425.50 934.50 L 1425.50 915.50 Q 1425.50 908.50 1432.50 908.50 L 1552.50 908.50 Q 1559.50 908.50 1559.50 915.50 L 1559.50 934.50 L1425.50 934.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
@@ -1043,6 +1016,70 @@ Referred by project_barcode ( barcode ) </title></a>
   <a xlink:href='#swabs_per_kit'><text x='63' y='502'>swabs_per_kit</text><title>swabs_per_kit bigint</title></a>
   <a xlink:href='#print_results'><text x='63' y='517'>print_results</text><title>print_results varchar&#040;1&#041; default &#039;n&#039;&#058;&#058;character varying</title></a>
   <use id='nn' x='47' y='522' xlink:href='#nn'/><a xlink:href='#created_on'><text x='63' y='532'>created_on</text><title>created_on timestamp not null default current&#095;timestamp</title></a>
+
+<!-- ============= Table 'ag_login_surveys' ============= -->
+<rect class='table' x='1425' y='1013' width='135' height='105' rx='7' ry='7' />
+<path d='M 1425.50 1039.50 L 1425.50 1020.50 Q 1425.50 1013.50 1432.50 1013.50 L 1552.50 1013.50 Q 1559.50 1013.50 1559.50 1020.50 L 1559.50 1039.50 L1425.50 1039.50 ' style='fill:url(#tableHeaderGradient2); stroke:none;' />
+<a xlink:href='#ag_login_surveys'><text x='1445' y='1027' class='tableTitle'>ag_login_surveys</text><title>Table ag.ag_login_surveys</title></a>
+  <use id='nn' x='1427' y='1047' xlink:href='#nn'/><a xlink:href='#ag_login_id'><use id='idx' x='1427' y='1046' xlink:href='#idx'/><title>Index  ( ag_login_id, participant_name ) </title></a>
+<a xlink:href='#ag_login_id'><text x='1443' y='1057'>ag_login_id</text><title>ag_login_id uuid not null</title></a>
+<a xlink:href='#ag_login_id'><use id='fk' x='1548' y='1046' xlink:href='#fk'/><title>References ag_login ( ag_login_id ) 
+References ag_consent ( ag_login_id, participant_name ) </title></a>
+  <use id='nn' x='1427' y='1062' xlink:href='#nn'/><a xlink:href='#survey_id'><use id='pk' x='1427' y='1061' xlink:href='#pk'/><title>Primary Key  ( survey_id ) </title></a>
+<a xlink:href='#survey_id'><text x='1443' y='1072'>survey_id</text><title>survey_id varchar not null</title></a>
+<a xlink:href='#survey_id'><use id='ref' x='1548' y='1061' xlink:href='#ref'/><title>Referred by ag_kit_barcodes ( survey_id ) 
+Referred by promoted_survey_ids ( survey_id ) 
+Referred by survey_answers ( survey_id ) 
+Referred by survey_answers_other ( survey_id ) 
+Referred by external_survey_answers ( survey_id ) 
+Referred by external_survey_answers ( survey_id ) </title></a>
+  <a xlink:href='#participant_name'><use id='idx' x='1427' y='1076' xlink:href='#idx'/><title>Index  ( participant_name ) Index  ( ag_login_id, participant_name ) </title></a>
+<a xlink:href='#participant_name'><text x='1443' y='1087'>participant_name</text><title>participant_name varchar</title></a>
+<a xlink:href='#participant_name'><use id='fk' x='1548' y='1076' xlink:href='#fk'/><title>References ag_consent ( ag_login_id, participant_name ) </title></a>
+  <a xlink:href='#vioscreen_status'><text x='1443' y='1102'>vioscreen_status</text><title>vioscreen_status integer</title></a>
+
+<!-- ============= Table 'survey_answers' ============= -->
+<rect class='table' x='1410' y='1223' width='135' height='90' rx='7' ry='7' />
+<path d='M 1410.50 1249.50 L 1410.50 1230.50 Q 1410.50 1223.50 1417.50 1223.50 L 1537.50 1223.50 Q 1544.50 1223.50 1544.50 1230.50 L 1544.50 1249.50 L1410.50 1249.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
+<a xlink:href='#survey_answers'><text x='1434' y='1237' class='tableTitle'>survey_answers</text><title>Table ag.survey_answers
+Stores answers to questions of type SINGLE and MULTIPLE</title></a>
+  <use id='nn' x='1412' y='1257' xlink:href='#nn'/><a xlink:href='#survey_id'><use id='pk' x='1412' y='1256' xlink:href='#pk'/><title>Primary Key  ( survey_id, survey_question_id, response ) Index  ( survey_id ) </title></a>
+<a xlink:href='#survey_id'><text x='1428' y='1267'>survey_id</text><title>survey_id varchar not null
+The unique identifier for the survey</title></a>
+<a xlink:href='#survey_id'><use id='fk' x='1533' y='1256' xlink:href='#fk'/><title>References ag_login_surveys ( survey_id ) </title></a>
+  <use id='nn' x='1412' y='1272' xlink:href='#nn'/><a xlink:href='#survey_question_id'><use id='pk' x='1412' y='1271' xlink:href='#pk'/><title>Primary Key  ( survey_id, survey_question_id, response ) Index  ( survey_question_id, response ) </title></a>
+<a xlink:href='#survey_question_id'><text x='1428' y='1282'>survey_question_id</text><title>survey_question_id bigint not null
+The question being answered</title></a>
+<a xlink:href='#survey_question_id'><use id='fk' x='1533' y='1271' xlink:href='#fk'/><title>References survey_question_response ( survey_question_id, response ) </title></a>
+  <use id='nn' x='1412' y='1287' xlink:href='#nn'/><a xlink:href='#response'><use id='pk' x='1412' y='1286' xlink:href='#pk'/><title>Primary Key  ( survey_id, survey_question_id, response ) Index  ( survey_question_id, response ) </title></a>
+<a xlink:href='#response'><text x='1428' y='1297'>response</text><title>response varchar not null
+The answer the question being asked</title></a>
+<a xlink:href='#response'><use id='fk' x='1533' y='1286' xlink:href='#fk'/><title>References survey_question_response ( survey_question_id, response ) </title></a>
+
+<!-- ============= Table 'external_survey_answers' ============= -->
+<rect class='table' x='1440' y='1343' width='150' height='105' rx='7' ry='7' />
+<path d='M 1440.50 1369.50 L 1440.50 1350.50 Q 1440.50 1343.50 1447.50 1343.50 L 1582.50 1343.50 Q 1589.50 1343.50 1589.50 1350.50 L 1589.50 1369.50 L1440.50 1369.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
+<a xlink:href='#external_survey_answers'><text x='1447' y='1357' class='tableTitle'>external_survey_answers</text><title>Table ag.external_survey_answers
+This stores answers to third party surveys in JSON format&#044; keyed to the original survey ID</title></a>
+  <use id='nn' x='1442' y='1377' xlink:href='#nn'/><a xlink:href='#survey_id'><use id='pk' x='1442' y='1376' xlink:href='#pk'/><title>Primary Key  ( survey_id ) </title></a>
+<a xlink:href='#survey_id'><text x='1458' y='1387'>survey_id</text><title>survey_id varchar not null</title></a>
+<a xlink:href='#survey_id'><use id='fk' x='1578' y='1376' xlink:href='#fk'/><title>References ag_login_surveys ( survey_id ) </title></a>
+  <use id='nn' x='1442' y='1392' xlink:href='#nn'/><a xlink:href='#external_survey_id'><use id='idx' x='1442' y='1391' xlink:href='#idx'/><title>Index  ( external_survey_id ) </title></a>
+<a xlink:href='#external_survey_id'><text x='1458' y='1402'>external_survey_id</text><title>external_survey_id bigint not null</title></a>
+<a xlink:href='#external_survey_id'><use id='fk' x='1578' y='1391' xlink:href='#fk'/><title>References external_survey ( external_survey_id ) </title></a>
+  <use id='nn' x='1442' y='1407' xlink:href='#nn'/><a xlink:href='#pulldown_date'><text x='1458' y='1417'>pulldown_date</text><title>pulldown_date date not null</title></a>
+  <use id='nn' x='1442' y='1422' xlink:href='#nn'/><a xlink:href='#answers'><text x='1458' y='1432'>answers</text><title>answers varchar not null</title></a>
+
+<!-- ============= Table 'external_survey' ============= -->
+<rect class='table' x='1395' y='1463' width='195' height='90' rx='7' ry='7' />
+<path d='M 1395.50 1489.50 L 1395.50 1470.50 Q 1395.50 1463.50 1402.50 1463.50 L 1582.50 1463.50 Q 1589.50 1463.50 1589.50 1470.50 L 1589.50 1489.50 L1395.50 1489.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
+<a xlink:href='#external_survey'><text x='1449' y='1477' class='tableTitle'>external_survey</text><title>Table ag.external_survey</title></a>
+  <use id='nn' x='1397' y='1497' xlink:href='#nn'/><a xlink:href='#external_survey_id'><use id='pk' x='1397' y='1496' xlink:href='#pk'/><title>Primary Key  ( external_survey_id ) </title></a>
+<a xlink:href='#external_survey_id'><text x='1413' y='1507'>external_survey_id</text><title>external_survey_id bigserial not null</title></a>
+<a xlink:href='#external_survey_id'><use id='ref' x='1578' y='1496' xlink:href='#ref'/><title>Referred by external_survey_answers ( external_survey_id ) 
+Referred by external_survey_answers ( external_survey_id ) </title></a>
+  <use id='nn' x='1397' y='1512' xlink:href='#nn'/><a xlink:href='#external_survey'><text x='1413' y='1522'>external_survey</text><title>external_survey varchar not null</title></a>
+  <a xlink:href='#external_survey_description'><text x='1413' y='1537'>external_survey_description</text><title>external_survey_description varchar</title></a>
 
 </g></svg>
 
@@ -2551,108 +2588,6 @@ Referred by project_barcode ( barcode ) </title></a>
 <br/><br/>
 <table id='dbs' >
 <thead>
-<tr><th colspan='3'><a name='ag_login_surveys'>ag_login_surveys</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td><a name='ag_login_id'>ag&#095;login&#095;id</a></td>
-		<td width='40%'> uuid  NOT NULL  </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='survey_id'>survey&#095;id</a></td>
-		<td width='40%'> varchar  NOT NULL  </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='participant_name'>participant&#095;name</a></td>
-		<td width='40%'> varchar   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='vioscreen_status'>vioscreen&#095;status</a></td>
-		<td width='40%'> integer   </td>
-		<td width='99%'>  </td>
-	</tr>
-<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
-	<tr>		<td>pk&#095;ag&#095;login&#095;surveys primary key</td>
-		<td> ON survey&#095;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;ag&#095;login&#095;surveys </td>
-		<td> ON participant&#095;name</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;ag&#095;login&#095;surveys&#095;0 </td>
-		<td> ON ag&#095;login&#095;id&#044; participant&#095;name</td>
-		<td>  </td>
-	</tr>
-<tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
-	<tr>
-		<td>fk_ag_login_surveys</td>
-		<td > ( ag&#095;login&#095;id ) ref <a href='#ag&#095;login'>ag&#095;login</a> (ag&#095;login&#095;id) </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>fk_ag_login_surveys0</td>
-		<td > ( ag&#095;login&#095;id&#044; participant&#095;name ) ref <a href='#ag&#095;consent'>ag&#095;consent</a> (ag&#095;login&#095;id&#044; participant&#095;name) </td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table id='dbs' >
-<thead>
-<tr><th colspan='3'><a name='survey_answers'>survey_answers</a></th></tr>
-<tr><td colspan='3'>Stores answers to questions of type SINGLE and MULTIPLE </td></tr>
-</thead>
-<tbody>
-	<tr>
-		<td><a name='survey_id'>survey&#095;id</a></td>
-		<td width='40%'> varchar  NOT NULL  </td>
-		<td width='99%'> The unique identifier for the survey </td>
-	</tr>
-	<tr>
-		<td><a name='survey_question_id'>survey&#095;question&#095;id</a></td>
-		<td width='40%'> bigint  NOT NULL  </td>
-		<td width='99%'> The question being answered </td>
-	</tr>
-	<tr>
-		<td><a name='response'>response</a></td>
-		<td width='40%'> varchar  NOT NULL  </td>
-		<td width='99%'> The answer the question being asked </td>
-	</tr>
-<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
-	<tr>		<td>pk&#095;survey&#095;answers primary key</td>
-		<td> ON survey&#095;id&#044; survey&#095;question&#095;id&#044; response</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;survey&#095;answers </td>
-		<td> ON survey&#095;question&#095;id&#044; response</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;survey&#095;answers&#095;0 </td>
-		<td> ON survey&#095;id</td>
-		<td>  </td>
-	</tr>
-<tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
-	<tr>
-		<td>fk_survey_answers</td>
-		<td > ( survey&#095;question&#095;id&#044; response ) ref <a href='#survey&#095;question&#095;response'>survey&#095;question&#095;response</a> (survey&#095;question&#095;id&#044; response) </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>fk_survey_answers_0</td>
-		<td > ( survey&#095;id ) ref <a href='#ag&#095;login&#095;surveys'>ag&#095;login&#095;surveys</a> (survey&#095;id) </td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table id='dbs' >
-<thead>
 <tr><th colspan='3'><a name='promoted_survey_ids'>promoted_survey_ids</a></th></tr>
 <tr><td colspan='3'>Keeps track of the survey&#095;ids that correspond to surveys that were ported from first questionnaire to the second </td></tr>
 </thead>
@@ -3369,6 +3304,187 @@ Referred by project_barcode ( barcode ) </title></a>
 <tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
 	<tr>		<td>pk&#095;ag&#095;handout&#095;kits primary key</td>
 		<td> ON kit&#095;id</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table id='dbs' >
+<thead>
+<tr><th colspan='3'><a name='ag_login_surveys'>ag_login_surveys</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='ag_login_id'>ag&#095;login&#095;id</a></td>
+		<td width='40%'> uuid  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='survey_id'>survey&#095;id</a></td>
+		<td width='40%'> varchar  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='participant_name'>participant&#095;name</a></td>
+		<td width='40%'> varchar   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='vioscreen_status'>vioscreen&#095;status</a></td>
+		<td width='40%'> integer   </td>
+		<td width='99%'>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
+	<tr>		<td>pk&#095;ag&#095;login&#095;surveys primary key</td>
+		<td> ON survey&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;ag&#095;login&#095;surveys </td>
+		<td> ON participant&#095;name</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;ag&#095;login&#095;surveys&#095;0 </td>
+		<td> ON ag&#095;login&#095;id&#044; participant&#095;name</td>
+		<td>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
+	<tr>
+		<td>fk_ag_login_surveys</td>
+		<td > ( ag&#095;login&#095;id ) ref <a href='#ag&#095;login'>ag&#095;login</a> (ag&#095;login&#095;id) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>fk_ag_login_surveys0</td>
+		<td > ( ag&#095;login&#095;id&#044; participant&#095;name ) ref <a href='#ag&#095;consent'>ag&#095;consent</a> (ag&#095;login&#095;id&#044; participant&#095;name) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table id='dbs' >
+<thead>
+<tr><th colspan='3'><a name='survey_answers'>survey_answers</a></th></tr>
+<tr><td colspan='3'>Stores answers to questions of type SINGLE and MULTIPLE </td></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='survey_id'>survey&#095;id</a></td>
+		<td width='40%'> varchar  NOT NULL  </td>
+		<td width='99%'> The unique identifier for the survey </td>
+	</tr>
+	<tr>
+		<td><a name='survey_question_id'>survey&#095;question&#095;id</a></td>
+		<td width='40%'> bigint  NOT NULL  </td>
+		<td width='99%'> The question being answered </td>
+	</tr>
+	<tr>
+		<td><a name='response'>response</a></td>
+		<td width='40%'> varchar  NOT NULL  </td>
+		<td width='99%'> The answer the question being asked </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
+	<tr>		<td>pk&#095;survey&#095;answers primary key</td>
+		<td> ON survey&#095;id&#044; survey&#095;question&#095;id&#044; response</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;survey&#095;answers </td>
+		<td> ON survey&#095;question&#095;id&#044; response</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;survey&#095;answers&#095;0 </td>
+		<td> ON survey&#095;id</td>
+		<td>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
+	<tr>
+		<td>fk_survey_answers</td>
+		<td > ( survey&#095;question&#095;id&#044; response ) ref <a href='#survey&#095;question&#095;response'>survey&#095;question&#095;response</a> (survey&#095;question&#095;id&#044; response) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>fk_survey_answers_0</td>
+		<td > ( survey&#095;id ) ref <a href='#ag&#095;login&#095;surveys'>ag&#095;login&#095;surveys</a> (survey&#095;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table id='dbs' >
+<thead>
+<tr><th colspan='3'><a name='external_survey_answers'>external_survey_answers</a></th></tr>
+<tr><td colspan='3'>This stores answers to third party surveys in JSON format&#044; keyed to the original survey ID </td></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='survey_id'>survey&#095;id</a></td>
+		<td width='40%'> varchar  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='external_survey_id'>external&#095;survey&#095;id</a></td>
+		<td width='40%'> bigint  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='pulldown_date'>pulldown&#095;date</a></td>
+		<td width='40%'> date  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='answers'>answers</a></td>
+		<td width='40%'> varchar  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
+	<tr>		<td>pk&#095;third&#095;party&#095;surveys primary key</td>
+		<td> ON survey&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;external&#095;survey </td>
+		<td> ON external&#095;survey&#095;id</td>
+		<td>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
+	<tr>
+		<td>fk_third_party_surveys</td>
+		<td > ( survey&#095;id ) ref <a href='#ag&#095;login&#095;surveys'>ag&#095;login&#095;surveys</a> (survey&#095;id) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>fk_external_survey</td>
+		<td > ( external&#095;survey&#095;id ) ref <a href='#external&#095;survey'>external&#095;survey</a> (external&#095;survey&#095;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table id='dbs' >
+<thead>
+<tr><th colspan='3'><a name='external_survey'>external_survey</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='external_survey_id'>external&#095;survey&#095;id</a></td>
+		<td width='40%'> bigserial  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='external_survey'>external&#095;survey</a></td>
+		<td width='40%'> varchar  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='external_survey_description'>external&#095;survey&#095;description</a></td>
+		<td width='40%'> varchar   </td>
+		<td width='99%'>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
+	<tr>		<td>pk&#095;external&#095;surveys primary key</td>
+		<td> ON external&#095;survey&#095;id</td>
 		<td>  </td>
 	</tr>
 </tbody>
