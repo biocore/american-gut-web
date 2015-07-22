@@ -61,7 +61,7 @@ INSERT INTO group_questions (survey_group, survey_question_id, display_index) VA
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (127, 'STRING');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (128, 'SINGLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (129, 'SINGLE');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (130, 'SINGLE');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (130, 'STRING');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (131, 'SINGLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (132, 'SINGLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (133, 'SINGLE');
