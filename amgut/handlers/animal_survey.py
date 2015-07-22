@@ -12,13 +12,14 @@ from amgut import text_locale, media_locale
 
 
 class AnimalSurveyHandler(BaseHandler):
-    animal_survey = [make_survey_class(g, survey_type='AnimalSurvey') for g in
-                     primary_animal_survey.groups]
+    animal_survey = make_survey_class(primary_animal_survey.groups[0],
+                                      survey_type='AnimalSurvey')
+
     @authenticated
     def get(self):
         skid = self.current_user
         self.render('animal_survey.html', skid=skid,
-                    the_form=self.animal_survey[0]())
+                    the_form=self.animal_survey())
 
     @authenticated
     def post(self):
