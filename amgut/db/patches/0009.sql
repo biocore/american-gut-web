@@ -7,7 +7,7 @@ INSERT INTO survey_group (group_order, american, british) VALUES (-2, 'Pet Infor
 ----------------------------------------------------------
 -- surveys
 ----------------------------------------------------------
-INSERT INTO surveys (survey_id, survey_group) VALUES (1, -2);
+INSERT INTO surveys (survey_id, survey_group) VALUES (2, -2);
 
 ----------------------------------------------------------
 -- survey_question
