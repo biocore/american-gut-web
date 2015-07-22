@@ -8,10 +8,12 @@
 from json import loads, dumps
 from os.path import abspath, join, dirname
 from functools import partial
+from collections import defaultdict
 
 from future.utils import viewitems
 from psycopg2 import connect
 from tornado.escape import url_escape
+from wtforms import Form
 
 from amgut import media_locale, text_locale
 from amgut.connections import ag_data, redis
@@ -113,6 +115,38 @@ class PartitionResponse(object):
 
     def _store(self, d, qid, value):
         d[qid] = value
+
+
+def make_survey_class(group, survey_type):
+    """Creates a form class for a group of questions
+
+    The top-level attributes of the generated class correspond to the question_ids from
+    amgut.lib.human_survey_supp structures
+
+    Select fields are generated for questions that require a single response, and sets
+    of checkboxes for questions that can have multiple responses
+    """
+    attrs = {}
+    prompts = {}
+    triggers = defaultdict(list)
+    triggered = defaultdict(list)
+
+    for q in group.questions:
+        for eid, element in zip(q.interface_element_ids, q.interface_elements):
+            attrs[eid] = element
+            prompts[eid] = q.question
+
+            if q.triggers:
+                for triggered_id, triggering_responses in q.triggers.items():
+                    triggers[eid].extend(triggering_responses)
+                    triggered[eid].extend(group.id_to_eid[triggered_id])
+
+    attrs['prompts'] = prompts
+    attrs['triggers'] = triggers
+    attrs['triggered'] = triggered
+    attrs['supplemental_eids'] = group.supplemental_eids
+
+    return type(survey_type, (Form,), attrs)
 
 
 def store_survey(survey, survey_id):

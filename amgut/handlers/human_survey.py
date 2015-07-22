@@ -1,15 +1,13 @@
 from json import dumps, loads
-from collections import defaultdict
 import logging
 
-from wtforms import Form
 from tornado.web import authenticated
 from tornado.escape import url_escape
 
 from amgut import media_locale, text_locale
 from amgut.connections import ag_data, redis
 from amgut.handlers.base_handlers import BaseHandler
-from amgut.lib.util import store_survey
+from amgut.lib.util import store_survey, make_survey_class
 from amgut.lib.survey_supp import primary_human_survey
 from amgut.lib.mail import send_email
 
@@ -71,39 +69,7 @@ def build_consent_form(consent_info):
     return message
 
 
-def make_human_survey_class(group):
-    """Creates a form class for a group of questions
-
-    The top-level attributes of the generated class correspond to the question_ids from
-    amgut.lib.human_survey_supp structures
-
-    Select fields are generated for questions that require a single response, and sets
-    of checkboxes for questions that can have multiple responses
-    """
-    attrs = {}
-    prompts = {}
-    triggers = defaultdict(list)
-    triggered = defaultdict(list)
-
-    for q in group.questions:
-        for eid, element in zip(q.interface_element_ids, q.interface_elements):
-            attrs[eid] = element
-            prompts[eid] = q.question
-
-            if q.triggers:
-                for triggered_id, triggering_responses in q.triggers.items():
-                    triggers[eid].extend(triggering_responses)
-                    triggered[eid].extend(group.id_to_eid[triggered_id])
-
-    attrs['prompts'] = prompts
-    attrs['triggers'] = triggers
-    attrs['triggered'] = triggered
-    attrs['supplemental_eids'] = group.supplemental_eids
-
-    return type('HumanSurvey', (Form,), attrs)
-
-
-surveys = [make_human_survey_class(group)
+surveys = [make_survey_class(group, survey_type='HumanSurvey')
            for group in primary_human_survey.groups]
 
 
