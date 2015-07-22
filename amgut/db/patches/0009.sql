@@ -138,79 +138,92 @@ INSERT INTO survey_response (american, british) VALUES ('Low', 'Low');
 ----------------------------------------------------------
 -- survey_question_response
 ----------------------------------------------------------
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (128, 'Dog', 0);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (128, 'Cat', 1);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (128, 'Small Mammal', 2);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (128, 'Large Mammal', 3);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (128, 'Fish', 4);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (128, 'Bird', 5);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (128, 'Reptile', 6);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (128, 'Amphibian', 7);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (128, 'Other', 8);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (128, 'Unspecified', 0);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (128, 'Dog', 1);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (128, 'Cat', 2);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (128, 'Small Mammal', 3);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (128, 'Large Mammal', 4);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (128, 'Fish', 5);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (128, 'Bird', 6);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (128, 'Reptile', 7);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (128, 'Amphibian', 8);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (128, 'Other', 9);
 
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (129, 'Breeder', 0);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (129, 'Shelter', 1);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (129, 'Home', 2);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (129, 'Wild', 3);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (129, 'Unspecified', 0);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (129, 'Breeder', 1);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (129, 'Shelter', 2);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (129, 'Home', 3);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (129, 'Wild', 4);
 
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (131, 'Male', 0);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (131, 'Female', 1);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (131, 'Unspecified', 0);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (131, 'Male', 1);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (131, 'Female', 2);
 
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (132, 'Urban', 0);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (132, 'Suburban', 1);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (132, 'Rural', 2);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (132, 'Unspecified', 0);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (132, 'Urban', 1);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (132, 'Suburban', 2);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (132, 'Rural', 3);
 
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (133, 'Underweight', 0);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (133, 'Skinny', 1);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (133, 'Normal', 2);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (133, 'Chubby', 3);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (133, 'Overweight', 4);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (133, 'Unspecified', 0);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (133, 'Underweight', 1);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (133, 'Skinny', 2);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (133, 'Normal', 3);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (133, 'Chubby', 4);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (133, 'Overweight', 5);
 
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (134, 'Carnivore', 0);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (134, 'Omnivore', 1);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (134, 'Herbivore', 2);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (134, 'Unspecified', 0);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (134, 'Carnivore', 1);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (134, 'Omnivore', 2);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (134, 'Herbivore', 3);
 
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (135, 'Pet store food', 0);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (135, 'Human food', 1);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (135, 'Wild food', 2);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (135, 'Unspecified', 0);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (135, 'Pet store food', 1);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (135, 'Human food', 2);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (135, 'Wild food', 3);
 
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (136, 'Dry', 0);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (136, 'Wet', 1);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (136, 'Both', 2);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (136, 'Unspecified', 0);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (136, 'Dry', 1);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (136, 'Wet', 2);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (136, 'Both', 3);
 
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (137, 'Organic', 0);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (137, 'Grain free', 1);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (137, 'Unspecified', 0);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (137, 'Organic', 1);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (137, 'Grain free', 2);
 
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (138, 'Lives alone with humans', 0);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (138, 'Lives alone no/limited humans (shelter)', 1);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (138, 'Lives with other animals and humans', 2);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (138, 'Lives with other animals/limited humans', 3);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (138, 'Unspecified', 0);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (138, 'Lives alone with humans', 1);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (138, 'Lives alone no/limited humans (shelter)', 2);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (138, 'Lives with other animals and humans', 3);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (138, 'Lives with other animals/limited humans', 4);
 
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Dog', 0);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Cat', 1);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Small Mammal', 2);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Large Mammal', 3);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Fish', 4);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Bird', 5);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Reptile', 6);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Amphibian', 7);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Other', 8);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Unspecified', 0);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Dog', 1);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Cat', 2);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Small Mammal', 3);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Large Mammal', 4);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Fish', 5);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Bird', 6);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Reptile', 7);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Amphibian', 8);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Other', 9);
 
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (141, 'Unspecified', 0);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (141, 'None', 1);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (141, 'Less than 2', 2);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (141, '2-4', 3);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (141, '4-8', 4);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (141, '8+', 5);
 
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (141, 'None', 0);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (141, 'Less than 2', 1);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (141, '2-4', 2);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (141, '4-8', 3);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (141, '8+', 4);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (142, 'Unspecified', 0);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (142, 'Regular', 1);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (142, 'Sometimes', 2);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (142, 'Never', 3);
 
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (142, 'Regular', 0);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (142, 'Sometimes', 1);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (142, 'Never', 2);
-
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (143, 'High', 0);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (143, 'Moderate', 1);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (143, 'Low', 2);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (143, 'Never', 3);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (143, 'Unspecified', 0);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (143, 'High', 1);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (143, 'Moderate', 2);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (143, 'Low', 3);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (143, 'Never', 4);
 ----------------------------------------------------------
 -- survey_question_triggers
 ----------------------------------------------------------
