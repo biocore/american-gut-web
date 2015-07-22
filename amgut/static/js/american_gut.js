@@ -716,6 +716,21 @@ function validateUnknownPasswordReset() {
     }
 }
 
+function validateAnimalSurvey() {
+    var ret = true;
+    $('#Pet_Information_127_0').removeClass("highlight");
+    $('#Pet_Information_128_0').removeClass("highlight");
+    if($('#Pet_Information_127_0').val().length == 0) {
+        $('#Pet_Information_127_0').addClass("highlight");
+        ret = false;
+    }
+    if($('#Pet_Information_128_0').val() == 0) {
+        $('#Pet_Information_128_0').addClass("highlight");
+        ret = false;
+    }
+    return ret;
+}
+
 /*clear empty boxes for survey3*/
 function validateSurvey3() {
     for(var i = 0; i < document.survey_3.length; i++) 

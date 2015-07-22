@@ -1,5 +1,12 @@
 {% extends sitebase.html %}
+{% from wtforms import validators %}
 {% block head %}
+<import >
+<script type="text/javascript">
+    $('document').ready(function() {
+        $()
+    });
+</script>
 <style>
 input[type="checkbox"] {
     float:left;
@@ -32,20 +39,21 @@ ul {
 {% block content %}
 <h2>Animal Participant Survey</h2>
 <h3 style="color: red"><span name="status_message" id="status_message"></span></h3>
-<div class="lefta">
-    <table id="mainsurveytable">
-    {% for form_item in the_form %}
-      {% set kwargs = {} %}
-      <tr class="questionrow">
-        <td width="50%" class="tdmainform">{% raw the_form.prompts[form_item.id] %}</td>
-        <td>{% raw form_item(**kwargs) %}</td>
-      </tr>
-    {% end %}
-      <tr>
-        <td colspan=2><input type="submit"></td>
-      </tr>
-    </table>
-</div>
+<form action='{% raw media_locale["SITEBASE"] %}/authed/add_animal/' id="human_survey" method="POST" onsubmit="return validateAnimalSurvey();">
+    <div class="lefta">
+        <table id="mainsurveytable">
+        {% for form_item in the_form %}
+          <tr class="questionrow">
+            <td width="50%" class="tdmainform">{% raw the_form.prompts[form_item.id] %}</td>
+            <td>{% raw form_item(class_="required") %}</td>
+          </tr>
+        {% end %}
+          <tr>
+            <td colspan=2><input type="submit"></td>
+          </tr>
+        </table>
+    </div>
+</form>
 
     <script>
       $(function() {
