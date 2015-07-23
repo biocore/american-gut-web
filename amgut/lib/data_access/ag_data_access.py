@@ -625,12 +625,18 @@ class AGDataAccess(object):
         return return_res
 
     def getAnimalParticipants(self, ag_login_id):
-        results = self._sql.execute_proc_return_cursor(
-            'ag_get_animal_participants', [ag_login_id])
-
-        return_res = [row[0] for row in results]
-        results.close()
-        return return_res
+        sql = """SELECT participant_name FROM ag_animal_survey
+                 WHERE  ag_login_id = %s
+                 UNION
+                 SELECT participant_name from ag.ag_login_surveys
+                 JOIN ag.survey_answers USING (survey_id)
+                 JOIN ag.group_questions gq USING (survey_question_id)
+                 JOIN ag.surveys ags USING (survey_group)
+                 WHERE ag_login_id = %s AND ags.survey_id = %s"""
+        conn_handler = SQLConnectionHandler()
+        return [row[0] for row in
+                conn_handler.execute_fetchall(
+                    sql, [ag_login_id, ag_login_id, 2])]
 
     def getParticipantExceptions(self, ag_login_id):
         results = self._sql.execute_proc_return_cursor(
