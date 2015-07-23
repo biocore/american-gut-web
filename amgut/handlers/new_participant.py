@@ -30,7 +30,7 @@ class NewParticipantHandler(BaseHandler):
     """"""
     @authenticated
     def get(self):
-        self.render("new_participant.html", skid=self.current_user)
+        self.render("new_participant.html", skid=self.current_user, message='')
 
     @authenticated
     def post(self):
@@ -45,9 +45,8 @@ class NewParticipantHandler(BaseHandler):
 
         if not participant_name or not participant_email:
             self.render("new_participant.html", skid=self.current_user,
-                        message='Missing participant name or email')
+                        message=tl['MISSING_NAME_EMAIL'])
             return
-
 
         ag_login_id = ag_data.get_user_for_kit(self.current_user)
 

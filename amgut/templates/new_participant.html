@@ -31,6 +31,9 @@
 {% from amgut import text_locale %}
 {% set tl = text_locale['new_participant.html'] %}
 <h2>{% raw tl['ADD_HUMAN_TITLE'] %}</h2>
+{% if message %}
+<h3 style="color: red">{{message}}</h3>
+{% end %}
 <div id="age-ranges-div" style='text-align: left;padding: 10px'>
     <h3>{% raw tl['SEL_AGE_RANGE'] %}</h3>
     <input type='radio' id='age-range-1' name='age-range' value='0-6' onchange="change_consent_div(this)"> <label for='age-range-1'>{% raw tl['AGE_0_6']%}</label><br />
