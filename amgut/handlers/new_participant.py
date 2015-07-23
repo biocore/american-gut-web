@@ -43,6 +43,12 @@ class NewParticipantHandler(BaseHandler):
         obtainer_name = self.get_argument("obtainer_name", None)
         deceased_parent = self.get_argument("deceased_parent", 'No')
 
+        if not participant_name or not participant_email:
+            self.render("new_participant.html", skid=self.current_user,
+                        message='Missing participant name or email')
+            return
+
+
         ag_login_id = ag_data.get_user_for_kit(self.current_user)
 
         # If the participant already exists, stop them outright
