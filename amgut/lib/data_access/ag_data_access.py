@@ -582,9 +582,12 @@ class AGDataAccess(object):
     def getHumanParticipants(self, ag_login_id):
         conn_handler = SQLConnectionHandler()
         # get people from new survey setup
-        new_survey_sql = ("SELECT participant_name FROM ag_consent "
-                          "WHERE ag_login_id = %s")
-        results = conn_handler.execute_fetchall(new_survey_sql, [ag_login_id])
+        sql = """SELECT participant_name from ag.ag_login_surveys
+                 JOIN ag.survey_answers USING (survey_id)
+                 JOIN ag.group_questions gq USING (survey_question_id)
+                 JOIN ag.surveys ags USING (survey_group)
+                 WHERE ag_login_id = %s AND ags.survey_id = %s"""
+        results = conn_handler.execute_fetchall(sql, [ag_login_id, 1])
         return [row[0] for row in results]
 
     def is_old_survey(self, survey_id):
