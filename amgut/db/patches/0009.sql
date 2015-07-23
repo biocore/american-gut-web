@@ -72,7 +72,7 @@ INSERT INTO survey_question_response_type (survey_question_id, survey_response_t
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (138, 'SINGLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (139, 'SINGLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (140, 'STRING');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (141, 'STRING');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (141, 'SINGLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (142, 'SINGLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (143, 'SINGLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (144, 'TEXT');
