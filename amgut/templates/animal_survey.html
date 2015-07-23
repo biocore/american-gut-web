@@ -3,9 +3,10 @@
 {% block head %}
 <import >
 <script type="text/javascript">
-    $('document').ready(function() {
-        $()
-    });
+    function clone_pet() {
+      clone = $("#Pet_Information_139_0").clone(false,false,false).appendTo($("#otherpet-div"));
+
+    }
 </script>
 <style>
 input[type="checkbox"] {
@@ -45,7 +46,16 @@ ul {
         {% for form_item in the_form %}
           <tr class="questionrow">
             <td width="50%" class="tdmainform">{% raw the_form.prompts[form_item.id] %}</td>
-            <td>{% raw form_item(class_="required") %}</td>
+            <td>
+              {% if  form_item.id == 'Pet_Information_139_0' %}
+              <div id="otherpet-div">
+              {% raw form_item() %}
+              </div>
+              <a href="#" onclick="clone_pet(); return false;">+</a>
+              {% else %}
+              {% raw form_item() %}
+              {% end %}
+            </td>
           </tr>
         {% end %}
           <tr>
