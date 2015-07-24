@@ -4,7 +4,7 @@ ALTER TABLE ag.ag_handout_kits ADD created_on timestamp DEFAULT current_timestam
 -- Create new ag_handout_barcodes table
 CREATE TABLE ag.ag_handout_barcodes ( 
 	kit_id               varchar  NOT NULL,
-	barcode              varchar(9)  NOT NULL,
+	barcode              varchar(9)  NOT NULL UNIQUE,
 	sample_barcode_file  varchar(13),
 	CONSTRAINT idx_ag_handout_barcodes PRIMARY KEY ( kit_id, barcode )
  );
