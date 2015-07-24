@@ -2,18 +2,17 @@
 {% block content %}
 {% from amgut import text_locale, media_locale %}
 {% set tl = text_locale['human_survey_completed.html'] %}
-
 <h2>{% raw tl['COMPLETED_HEADER'] %}</h2>
+<div style="text-align: left; padding-left: 10px; padding-right: 10px">
 <p>{% raw tl['COMPLETED_TEXT'] %}</p>
 <p>{% raw tl['AVAILABLE_SURVEYS'] %}</p>
 
 {% for payload in surveys %}
     <p>{% raw payload %}</p>
 {% end %}
-
+</div>
 <form action='{% raw media_locale["SITEBASE"] %}/authed/human_survey_completed/' id="human_survey_completed" method="POST">
     <input type="hidden" name="go_home" value="Done">
     <input type="submit" value="Back to portal"></td>
 </form>
-
 {% end %}
