@@ -260,7 +260,7 @@ class AGDataAccess(object):
         sql = """SELECT * FROM ag.ag_handout_kits
                  JOIN (SELECT
                     kit_id, array_agg(barcode ORDER BY barcode) AS barcodes,
-                    sample_barcode_file FROM ag.handout_barcode
+                    sample_barcode_file FROM ag.ag_handout_barcodes
                     GROUP BY kit_id, sample_barcode_file) AS hb
                  USING (kit_id)
                  WHERE kit_id = %s"""
@@ -423,7 +423,7 @@ class AGDataAccess(object):
                     FROM ag_handout_kits WHERE kit_id = %s LIMIT 1
                 RETURNING ag_kit_id INTO k_id;
                 FOR bc IN
-                    SELECT barcode FROM handout_barcode WHERE kit_id = %s
+                    SELECT barcode FROM ag_handout_barcodes WHERE kit_id = %s
                 LOOP
                     INSERT  INTO ag_kit_barcodes
                         (ag_kit_id, barcode, sample_barcode_file)
@@ -1228,7 +1228,7 @@ class AGDataAccess(object):
         return [dict(zip(col_names, row)) for row in results]
 
     def get_barcodes_from_handout_kit(self, supplied_kit_id):
-        sql = "select barcode from handout_barcode where kit_id = %s"
+        sql = "select barcode from ag_handout_barcodes where kit_id = %s"
         cursor = self.get_cursor()
         cursor.execute(sql, [supplied_kit_id])
         results = cursor.fetchall()
@@ -1328,7 +1328,7 @@ class AGDataAccess(object):
         sql = """SELECT kit_id, password, barcode, verification_code
                  FROM ag_handout_kits
                  JOIN (SELECT kit_id, barcode, sample_barcode_file
-                    FROM ag.handout_barcode
+                    FROM ag.ag_handout_barcodes
                     GROUP BY kit_id, barcode) AS hb USING (kit_id)
                  WHERE kit_id LIKE %s or barcode LIKE %s"""
         cursor = self.get_cursor()

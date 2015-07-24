@@ -1,22 +1,22 @@
 -- Add created_on timestamp for handout kits
 ALTER TABLE ag.ag_handout_kits ADD created_on timestamp DEFAULT current_timestamp NOT NULL;
 
--- Create new handout_barcode table
-CREATE TABLE ag.handout_barcode ( 
+-- Create new ag_handout_barcodes table
+CREATE TABLE ag.ag_handout_barcodes ( 
 	kit_id               varchar  NOT NULL,
-	barcode              varchar(9)  NOT NULL,
+	barcode              varchar(9)  NOT NULL UNIQUE,
 	sample_barcode_file  varchar(13),
-	CONSTRAINT idx_handout_barcode PRIMARY KEY ( kit_id, barcode )
+	CONSTRAINT idx_ag_handout_barcodes PRIMARY KEY ( kit_id, barcode )
  );
 
-CREATE INDEX idx_handout_barcode_0 ON ag.handout_barcode ( barcode );
+CREATE INDEX idx_ag_handout_barcodes_0 ON ag.ag_handout_barcodes ( barcode );
 
-CREATE INDEX idx_handout_barcode_1 ON ag.handout_barcode ( kit_id );
+CREATE INDEX idx_ag_handout_barcodes_1 ON ag.ag_handout_barcodes ( kit_id );
 
-ALTER TABLE ag.handout_barcode ADD CONSTRAINT fk_handout_barcode FOREIGN KEY ( barcode ) REFERENCES ag.barcode( barcode );
+ALTER TABLE ag.ag_handout_barcodes ADD CONSTRAINT fk_ag_handout_barcodes FOREIGN KEY ( barcode ) REFERENCES ag.barcode( barcode );
 
 -- Copy needed data to new table
-INSERT INTO ag.handout_barcode (kit_id, barcode, sample_barcode_file)
+INSERT INTO ag.ag_handout_barcodes (kit_id, barcode, sample_barcode_file)
 SELECT kit_id, barcode, sample_barcode_file FROM ag.ag_handout_kits;
 
 -- Delete duplicate handout rows and unneded columns from handouts table
@@ -26,4 +26,4 @@ ALTER TABLE ag.ag_handout_kits DROP COLUMN barcode, DROP COLUMN sample_barcode_f
 
 -- Add unique constraint to the kit_id column and the foreign key for new table
 ALTER TABLE ag.ag_handout_kits ADD PRIMARY KEY (kit_id);
-ALTER TABLE ag.handout_barcode ADD CONSTRAINT fk_handout_barcode_0 FOREIGN KEY ( kit_id ) REFERENCES ag.ag_handout_kits( kit_id ) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE ag.ag_handout_barcodes ADD CONSTRAINT fk_ag_handout_barcodes_0 FOREIGN KEY ( kit_id ) REFERENCES ag.ag_handout_kits( kit_id ) ON DELETE CASCADE ON UPDATE CASCADE;

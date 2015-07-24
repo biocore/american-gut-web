@@ -322,7 +322,7 @@
 	ag_kit_barcodes references ag_kit ( ag_kit_id )</title>
 </path>
 <text x='922' y='925' transform='rotate(0 922,925)' title='Foreign Key fk_ag_kit_barcodes
-	ag_kit_barcodes references ag_kit ( ag_kit_id )' style='fill:#a1a0a0;'>ag_kit_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 720 945 L 562,945 Q 555,945 555,937 L 555,667 Q 555,660 547,660 L 540,660' >
+	ag_kit_barcodes references ag_kit ( ag_kit_id )' style='fill:#a1a0a0;'>ag_kit_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 720 945 L 562,945 Q 555,945 555,937 L 555,667 Q 555,660 547,660 L 540,660' >
 	<title>Foreign Key fk_ag_kit_barcodes_0
 	ag_kit_barcodes references barcode ( barcode )</title>
 </path>
@@ -367,17 +367,7 @@
 	barcode_exceptions references barcode ( barcode )</title>
 </path>
 <text x='172' y='1090' transform='rotate(0 172,1090)' title='Foreign Key fk_barcode_exceptions
-	barcode_exceptions references barcode ( barcode )' style='fill:#a1a0a0;'>barcode</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 405 465 L 547,465 Q 555,465 555,472 L 555,652 Q 555,660 547,660 L 540,660' >
-	<title>Foreign Key fk_handout_barcode
-	handout_barcode references barcode ( barcode )</title>
-</path>
-<text x='412' y='460' transform='rotate(0 412,460)' title='Foreign Key fk_handout_barcode
-	handout_barcode references barcode ( barcode )' style='fill:#a1a0a0;'>barcode</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 240 450 L 180,450' >
-	<title>Foreign Key fk_handout_barcode_0
-	handout_barcode references ag_handout_kits ( kit_id )</title>
-</path>
-<text x='213' y='445' transform='rotate(0 213,445)' title='Foreign Key fk_handout_barcode_0
-	handout_barcode references ag_handout_kits ( kit_id )' style='fill:#a1a0a0;'>kit_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1560 1050 L 1582,1050 Q 1590,1050 1590,1042 L 1590,457 Q 1590,450 1582,450 L 1575,450' >
+	barcode_exceptions references barcode ( barcode )' style='fill:#a1a0a0;'>barcode</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1560 1050 L 1582,1050 Q 1590,1050 1590,1042 L 1590,457 Q 1590,450 1582,450 L 1575,450' >
 	<title>Foreign Key fk_ag_login_surveys
 	ag_login_surveys references ag_login ( ag_login_id )</title>
 </path>
@@ -402,7 +392,17 @@
 	external_survey_answers references external_survey ( external_survey_id )</title>
 </path>
 <text x='1597' y='1390' transform='rotate(0 1597,1390)' title='Foreign Key fk_external_survey
-	external_survey_answers references external_survey ( external_survey_id )' style='fill:#a1a0a0;'>external_survey_id</text><!-- ============= Table 'ag_survey_answer' ============= -->
+	external_survey_answers references external_survey ( external_survey_id )' style='fill:#a1a0a0;'>external_survey_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 405 465 L 547,465 Q 555,465 555,472 L 555,652 Q 555,660 547,660 L 540,660' >
+	<title>Foreign Key fk_handout_barcode
+	ag_handout_barcodes references barcode ( barcode )</title>
+</path>
+<text x='412' y='460' transform='rotate(0 412,460)' title='Foreign Key fk_handout_barcode
+	ag_handout_barcodes references barcode ( barcode )' style='fill:#a1a0a0;'>barcode</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 240 450 L 180,450' >
+	<title>Foreign Key fk_handout_barcode_0
+	ag_handout_barcodes references ag_handout_kits ( kit_id )</title>
+</path>
+<text x='213' y='445' transform='rotate(0 213,445)' title='Foreign Key fk_handout_barcode_0
+	ag_handout_barcodes references ag_handout_kits ( kit_id )' style='fill:#a1a0a0;'>kit_id</text><!-- ============= Table 'ag_survey_answer' ============= -->
 <rect class='table' x='675' y='683' width='150' height='120' rx='7' ry='7' />
 <path d='M 675.50 709.50 L 675.50 690.50 Q 675.50 683.50 682.50 683.50 L 817.50 683.50 Q 824.50 683.50 824.50 690.50 L 824.50 709.50 L675.50 709.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
 <a xlink:href='#ag_survey_answer'><text x='700' y='697' class='tableTitle'>ag_survey_answer</text><title>Table ag.ag_survey_answer</title></a>
@@ -920,9 +920,9 @@ Referred by ag_login_surveys ( ag_login_id, participant_name ) </title></a>
 <a xlink:href='#barcode'><text x='435' y='637' class='tableTitle'>barcode</text><title>Table ag.barcode</title></a>
   <use id='nn' x='377' y='657' xlink:href='#nn'/><a xlink:href='#barcode'><use id='pk' x='377' y='656' xlink:href='#pk'/><title>Primary Key  ( barcode ) </title></a>
 <a xlink:href='#barcode'><text x='393' y='667'>barcode</text><title>barcode varchar not null</title></a>
-<a xlink:href='#barcode'><use id='ref' x='528' y='656' xlink:href='#ref'/><title>Referred by ag_kit_barcodes ( barcode ) 
+<a xlink:href='#barcode'><use id='ref' x='528' y='656' xlink:href='#ref'/><title>Referred by ag_handout_barcodes ( barcode ) 
+Referred by ag_kit_barcodes ( barcode ) 
 Referred by barcode_exceptions ( barcode ) 
-Referred by handout_barcode ( barcode ) 
 Referred by plate_barcode ( barcode ) 
 Referred by project_barcode ( barcode ) </title></a>
   <a xlink:href='#create_date_time'><text x='393' y='682'>create_date_time</text><title>create_date_time timestamp default &#040;&#039;now&#039;&#058;&#058;text&#041;&#058;&#058;timestamp without time zone</title></a>
@@ -992,25 +992,13 @@ Referred by project_barcode ( barcode ) </title></a>
   <a xlink:href='#marker_color'><text x='78' y='172'>marker_color</text><title>marker_color varchar&#040;10&#041;</title></a>
   <a xlink:href='#order_by'><text x='78' y='187'>order_by</text><title>order_by bigint</title></a>
 
-<!-- ============= Table 'handout_barcode' ============= -->
-<rect class='table' x='255' y='413' width='150' height='90' rx='7' ry='7' />
-<path d='M 255.50 439.50 L 255.50 420.50 Q 255.50 413.50 262.50 413.50 L 397.50 413.50 Q 404.50 413.50 404.50 420.50 L 404.50 439.50 L255.50 439.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
-<a xlink:href='#handout_barcode'><text x='282' y='427' class='tableTitle'>handout_barcode</text><title>Table ag.handout_barcode</title></a>
-  <use id='nn' x='257' y='447' xlink:href='#nn'/><a xlink:href='#kit_id'><use id='pk' x='257' y='446' xlink:href='#pk'/><title>Primary Key  ( kit_id, barcode ) Index  ( kit_id ) </title></a>
-<a xlink:href='#kit_id'><text x='273' y='457'>kit_id</text><title>kit_id varchar not null</title></a>
-<a xlink:href='#kit_id'><use id='fk' x='393' y='446' xlink:href='#fk'/><title>References ag_handout_kits ( kit_id ) </title></a>
-  <use id='nn' x='257' y='462' xlink:href='#nn'/><a xlink:href='#barcode'><use id='pk' x='257' y='461' xlink:href='#pk'/><title>Primary Key  ( kit_id, barcode ) Index  ( barcode ) </title></a>
-<a xlink:href='#barcode'><text x='273' y='472'>barcode</text><title>barcode varchar&#040;9&#041; not null</title></a>
-<a xlink:href='#barcode'><use id='fk' x='393' y='461' xlink:href='#fk'/><title>References barcode ( barcode ) </title></a>
-  <use id='nn' x='257' y='477' xlink:href='#nn'/><a xlink:href='#sample_barcode_file'><text x='273' y='487'>sample_barcode_file</text><title>sample_barcode_file varchar&#040;13&#041; not null</title></a>
-
 <!-- ============= Table 'ag_handout_kits' ============= -->
 <rect class='table' x='45' y='413' width='135' height='135' rx='7' ry='7' />
 <path d='M 45.50 439.50 L 45.50 420.50 Q 45.50 413.50 52.50 413.50 L 172.50 413.50 Q 179.50 413.50 179.50 420.50 L 179.50 439.50 L45.50 439.50 ' style='fill:url(#tableHeaderGradient7); stroke:none;' />
 <a xlink:href='#ag_handout_kits'><text x='68' y='427' class='tableTitle'>ag_handout_kits</text><title>Table ag.ag_handout_kits</title></a>
   <use id='nn' x='47' y='447' xlink:href='#nn'/><a xlink:href='#kit_id'><use id='pk' x='47' y='446' xlink:href='#pk'/><title>Primary Key  ( kit_id ) </title></a>
 <a xlink:href='#kit_id'><text x='63' y='457'>kit_id</text><title>kit_id varchar&#040;9&#041; not null</title></a>
-<a xlink:href='#kit_id'><use id='ref' x='168' y='446' xlink:href='#ref'/><title>Referred by handout_barcode ( kit_id ) </title></a>
+<a xlink:href='#kit_id'><use id='ref' x='168' y='446' xlink:href='#ref'/><title>Referred by ag_handout_barcodes ( kit_id ) </title></a>
   <a xlink:href='#password'><text x='63' y='472'>password</text><title>password varchar&#040;11&#041;</title></a>
   <a xlink:href='#verification_code'><text x='63' y='487'>verification_code</text><title>verification_code varchar&#040;5&#041;</title></a>
   <a xlink:href='#swabs_per_kit'><text x='63' y='502'>swabs_per_kit</text><title>swabs_per_kit bigint</title></a>
@@ -1028,11 +1016,10 @@ References ag_consent ( ag_login_id, participant_name ) </title></a>
   <use id='nn' x='1427' y='1062' xlink:href='#nn'/><a xlink:href='#survey_id'><use id='pk' x='1427' y='1061' xlink:href='#pk'/><title>Primary Key  ( survey_id ) </title></a>
 <a xlink:href='#survey_id'><text x='1443' y='1072'>survey_id</text><title>survey_id varchar not null</title></a>
 <a xlink:href='#survey_id'><use id='ref' x='1548' y='1061' xlink:href='#ref'/><title>Referred by ag_kit_barcodes ( survey_id ) 
+Referred by external_survey_answers ( survey_id ) 
 Referred by promoted_survey_ids ( survey_id ) 
 Referred by survey_answers ( survey_id ) 
-Referred by survey_answers_other ( survey_id ) 
-Referred by external_survey_answers ( survey_id ) 
-Referred by external_survey_answers ( survey_id ) </title></a>
+Referred by survey_answers_other ( survey_id ) </title></a>
   <a xlink:href='#participant_name'><use id='idx' x='1427' y='1076' xlink:href='#idx'/><title>Index  ( participant_name ) Index  ( ag_login_id, participant_name ) </title></a>
 <a xlink:href='#participant_name'><text x='1443' y='1087'>participant_name</text><title>participant_name varchar</title></a>
 <a xlink:href='#participant_name'><use id='fk' x='1548' y='1076' xlink:href='#fk'/><title>References ag_consent ( ag_login_id, participant_name ) </title></a>
@@ -1076,10 +1063,21 @@ This stores answers to third party surveys in JSON format&#044; keyed to the ori
 <a xlink:href='#external_survey'><text x='1449' y='1477' class='tableTitle'>external_survey</text><title>Table ag.external_survey</title></a>
   <use id='nn' x='1397' y='1497' xlink:href='#nn'/><a xlink:href='#external_survey_id'><use id='pk' x='1397' y='1496' xlink:href='#pk'/><title>Primary Key  ( external_survey_id ) </title></a>
 <a xlink:href='#external_survey_id'><text x='1413' y='1507'>external_survey_id</text><title>external_survey_id bigserial not null</title></a>
-<a xlink:href='#external_survey_id'><use id='ref' x='1578' y='1496' xlink:href='#ref'/><title>Referred by external_survey_answers ( external_survey_id ) 
-Referred by external_survey_answers ( external_survey_id ) </title></a>
+<a xlink:href='#external_survey_id'><use id='ref' x='1578' y='1496' xlink:href='#ref'/><title>Referred by external_survey_answers ( external_survey_id ) </title></a>
   <use id='nn' x='1397' y='1512' xlink:href='#nn'/><a xlink:href='#external_survey'><text x='1413' y='1522'>external_survey</text><title>external_survey varchar not null</title></a>
   <a xlink:href='#external_survey_description'><text x='1413' y='1537'>external_survey_description</text><title>external_survey_description varchar</title></a>
+
+<!-- ============= Table 'ag_handout_barcodes' ============= -->
+<rect class='table' x='255' y='413' width='150' height='90' rx='7' ry='7' />
+<path d='M 255.50 439.50 L 255.50 420.50 Q 255.50 413.50 262.50 413.50 L 397.50 413.50 Q 404.50 413.50 404.50 420.50 L 404.50 439.50 L255.50 439.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
+<a xlink:href='#ag_handout_barcodes'><text x='270' y='427' class='tableTitle'>ag_handout_barcodes</text><title>Table ag.ag_handout_barcodes</title></a>
+  <use id='nn' x='257' y='447' xlink:href='#nn'/><a xlink:href='#kit_id'><use id='pk' x='257' y='446' xlink:href='#pk'/><title>Primary Key  ( kit_id, barcode ) Index  ( kit_id ) </title></a>
+<a xlink:href='#kit_id'><text x='273' y='457'>kit_id</text><title>kit_id varchar not null</title></a>
+<a xlink:href='#kit_id'><use id='fk' x='393' y='446' xlink:href='#fk'/><title>References ag_handout_kits ( kit_id ) </title></a>
+  <use id='nn' x='257' y='462' xlink:href='#nn'/><a xlink:href='#barcode'><use id='pk' x='257' y='461' xlink:href='#pk'/><title>Primary Key  ( kit_id, barcode ) Index  ( barcode ) </title></a>
+<a xlink:href='#barcode'><text x='273' y='472'>barcode</text><title>barcode varchar&#040;9&#041; not null</title></a>
+<a xlink:href='#barcode'><use id='fk' x='393' y='461' xlink:href='#fk'/><title>References barcode ( barcode ) </title></a>
+  <use id='nn' x='257' y='477' xlink:href='#nn'/><a xlink:href='#sample_barcode_file'><text x='273' y='487'>sample_barcode_file</text><title>sample_barcode_file varchar&#040;13&#041; not null</title></a>
 
 </g></svg>
 
@@ -3220,54 +3218,6 @@ Referred by external_survey_answers ( external_survey_id ) </title></a>
 <br/><br/>
 <table id='dbs' >
 <thead>
-<tr><th colspan='3'><a name='handout_barcode'>handout_barcode</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td><a name='kit_id'>kit&#095;id</a></td>
-		<td width='40%'> varchar  NOT NULL  </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='barcode'>barcode</a></td>
-		<td width='40%'> varchar&#040; 9 &#041;  NOT NULL  </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='sample_barcode_file'>sample&#095;barcode&#095;file</a></td>
-		<td width='40%'> varchar&#040; 13 &#041;  NOT NULL  </td>
-		<td width='99%'>  </td>
-	</tr>
-<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
-	<tr>		<td>idx&#095;handout&#095;barcode primary key</td>
-		<td> ON kit&#095;id&#044; barcode</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;handout&#095;barcode&#095;0 </td>
-		<td> ON barcode</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;handout&#095;barcode&#095;1 </td>
-		<td> ON kit&#095;id</td>
-		<td>  </td>
-	</tr>
-<tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
-	<tr>
-		<td>fk_handout_barcode</td>
-		<td > ( barcode ) ref <a href='#barcode'>barcode</a> (barcode) </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>fk_handout_barcode_0</td>
-		<td > ( kit&#095;id ) ref <a href='#ag&#095;handout&#095;kits'>ag&#095;handout&#095;kits</a> (kit&#095;id) </td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table id='dbs' >
-<thead>
 <tr><th colspan='3'><a name='ag_handout_kits'>ag_handout_kits</a></th></tr>
 </thead>
 <tbody>
@@ -3485,6 +3435,54 @@ Referred by external_survey_answers ( external_survey_id ) </title></a>
 <tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
 	<tr>		<td>pk&#095;external&#095;surveys primary key</td>
 		<td> ON external&#095;survey&#095;id</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table id='dbs' >
+<thead>
+<tr><th colspan='3'><a name='ag_handout_barcodes'>ag_handout_barcodes</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='kit_id'>kit&#095;id</a></td>
+		<td width='40%'> varchar  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='barcode'>barcode</a></td>
+		<td width='40%'> varchar&#040; 9 &#041;  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='sample_barcode_file'>sample&#095;barcode&#095;file</a></td>
+		<td width='40%'> varchar&#040; 13 &#041;  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
+	<tr>		<td>idx&#095;handout&#095;barcode primary key</td>
+		<td> ON kit&#095;id&#044; barcode</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;handout&#095;barcode&#095;0 </td>
+		<td> ON barcode</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;handout&#095;barcode&#095;1 </td>
+		<td> ON kit&#095;id</td>
+		<td>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
+	<tr>
+		<td>fk_handout_barcode</td>
+		<td > ( barcode ) ref <a href='#barcode'>barcode</a> (barcode) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>fk_handout_barcode_0</td>
+		<td > ( kit&#095;id ) ref <a href='#ag&#095;handout&#095;kits'>ag&#095;handout&#095;kits</a> (kit&#095;id) </td>
 		<td>  </td>
 	</tr>
 </tbody>
