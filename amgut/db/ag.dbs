@@ -54,6 +54,27 @@
 				<fk_column name="ag_login_id" pk="ag_login_id" />
 			</fk>
 		</table>
+		<table name="ag_handout_barcodes" >
+			<column name="kit_id" type="varchar" jt="12" mandatory="y" />
+			<column name="barcode" type="varchar" length="9" jt="12" mandatory="y" />
+			<column name="sample_barcode_file" type="varchar" length="13" jt="12" mandatory="y" />
+			<index name="idx_handout_barcode" unique="PRIMARY_KEY" >
+				<column name="kit_id" />
+				<column name="barcode" />
+			</index>
+			<index name="idx_handout_barcode_0" unique="NORMAL" >
+				<column name="barcode" />
+			</index>
+			<index name="idx_handout_barcode_1" unique="NORMAL" >
+				<column name="kit_id" />
+			</index>
+			<fk name="fk_handout_barcode" to_schema="ag" to_table="barcode" >
+				<fk_column name="barcode" pk="barcode" />
+			</fk>
+			<fk name="fk_handout_barcode_0" to_schema="ag" to_table="ag_handout_kits" delete_action="cascade" update_action="cascade" >
+				<fk_column name="kit_id" pk="kit_id" />
+			</fk>
+		</table>
 		<table name="ag_handout_kits" >
 			<column name="kit_id" type="varchar" length="9" jt="12" mandatory="y" />
 			<column name="password" type="varchar" length="11" jt="12" />
@@ -450,27 +471,6 @@
 			</fk>
 			<fk name="fk_human_survey_group_question_0" to_schema="ag" to_table="survey_question" >
 				<fk_column name="survey_question_id" pk="survey_question_id" />
-			</fk>
-		</table>
-		<table name="handout_barcode" >
-			<column name="kit_id" type="varchar" jt="12" mandatory="y" />
-			<column name="barcode" type="varchar" length="9" jt="12" mandatory="y" />
-			<column name="sample_barcode_file" type="varchar" length="13" jt="12" mandatory="y" />
-			<index name="idx_handout_barcode" unique="PRIMARY_KEY" >
-				<column name="kit_id" />
-				<column name="barcode" />
-			</index>
-			<index name="idx_handout_barcode_0" unique="NORMAL" >
-				<column name="barcode" />
-			</index>
-			<index name="idx_handout_barcode_1" unique="NORMAL" >
-				<column name="kit_id" />
-			</index>
-			<fk name="fk_handout_barcode" to_schema="ag" to_table="barcode" >
-				<fk_column name="barcode" pk="barcode" />
-			</fk>
-			<fk name="fk_handout_barcode_0" to_schema="ag" to_table="ag_handout_kits" delete_action="cascade" update_action="cascade" >
-				<fk_column name="kit_id" pk="kit_id" />
 			</fk>
 		</table>
 		<table name="iso_country_lookup" >
@@ -21374,8 +21374,8 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="project" color="c6d9f7" x="405" y="855" />
 		<entity schema="ag" name="barcode_exceptions" color="c6c6f7" x="45" y="1065" />
 		<entity schema="ag" name="ag_map_markers" color="cef7c6" x="60" y="90" />
-		<entity schema="ag" name="handout_barcode" color="a8c4ef" x="255" y="420" />
 		<entity schema="ag" name="ag_handout_kits" color="ccccff" x="45" y="420" />
+		<entity schema="ag" name="ag_handout_barcodes" color="a8c4ef" x="255" y="420" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by : 
    american_gut_consent</comment>
@@ -21429,7 +21429,7 @@ AS $function$xpath_exists$function$
 		</group>
 		<group name="Group_handout_kits" color="c4e0f9" >
 			<entity schema="ag" name="ag_handout_kits" />
-			<entity schema="ag" name="handout_barcode" />
+			<entity schema="ag" name="ag_handout_barcodes" />
 		</group>
 	</layout>
 </project>
