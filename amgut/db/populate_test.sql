@@ -79,7 +79,7 @@ insert into project_barcode (project_id, barcode) values (1, '000010860'), (1, '
             'MAKE SURE THIS IS BEING PASSED','12:05 PM','','','','','','','','','','');
 insert into ag_handout_kits (kit_id, password, verification_code, swabs_per_kit, print_results)
     values('test_ha', '$2a$12$GfYI6sxlVGTamDJ3FEQzMuQ46eSV6YJ.DxUxiZvKJaAn1NJtTDtFS', '5678', '3', 'n');
-insert into handout_barcode (kit_id, barcode)
+insert into ag_handout_barcodes (kit_id, barcode)
     values ('test_ha', '000000002'),('test_ha', '000000003'),('test_ha', '000000004');
 insert into ag_participant_exceptions (ag_login_id, participant_name)
     values ('d8592c74-7da1-2135-e040-8a80115d6401', 'exception');
