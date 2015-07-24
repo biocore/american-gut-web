@@ -12,6 +12,7 @@ INSERT INTO surveys (survey_id, survey_group) VALUES (2, -2);
 ----------------------------------------------------------
 -- survey_question
 ----------------------------------------------------------
+ALTER TABLE survey_question ADD UNIQUE (question_shortname);
 INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (127, 'NAME', 'Name', 'Name');
 INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (128, 'ANIMAL_TYPE', 'Animal type', 'Animal type');
 INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (129, 'ANIMAL_ORIGIN', 'Origin', 'Origin');
