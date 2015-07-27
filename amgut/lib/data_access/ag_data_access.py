@@ -950,7 +950,7 @@ class AGDataAccess(object):
 
     def handoutCheck(self, username, password):
         cursor = self.get_cursor()
-        cursor.execute("""SELECT DISTINCT (password)
+        cursor.execute("""SELECT password
                           FROM ag.ag_handout_kits
                           WHERE kit_id=%s""", [username])
         to_check = cursor.fetchone()
