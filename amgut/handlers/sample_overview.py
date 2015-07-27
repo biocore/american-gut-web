@@ -1,6 +1,6 @@
 import os
 
-from tornado.web import authenticated
+from tornado.web import authenticated, HTTPError
 
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.connections import ag_data
@@ -20,7 +20,16 @@ class SampleOverviewHandler(BaseHandler):
             self.redirect(media_locale['SITEBASE'] + '/authed/portal/')
             return
 
+        has_access = ag_data.check_access(self.current_user, barcode)
+        if not has_access:
+            raise HTTPError(403, "Access forbidden")
+
         sample_data = ag_data.getAGBarcodeDetails(barcode)
+
+        if not sample_data:
+            self.set_status(404)
+            self.render("404.html", skid=self.current_user)
+            return
 
         fs_base = AMGUT_CONFIG.base_data_dir
         web_base = "%s/results" % media_locale['SITEBASE']
