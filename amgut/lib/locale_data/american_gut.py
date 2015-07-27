@@ -86,7 +86,6 @@ media_locale = {
 }
 
 _HANDLERS = {
-    'JUVENILE_CONSENT_EXPECTED': "We are expecting a manual consent form for the juvenile user (%s)",
     'PARTICIPANT_EXISTS': 'Participant %s already exists!',
     'MISSING_NAME_EMAIL': 'Missing participant name or email. Please retry, adding all required information.',
     'SUCCESSFULLY_ADDED': "Successfully added %s!",
