@@ -490,6 +490,11 @@ _404 = {
     'MAIN_WARNING': '404: Page not found!'
 }
 
+_403 = {
+    'MAIN_WARNING': '403: Unauthorized access!',
+    'HELP_TEXT': 'Click <a href="mailto:%(help_email)s">HERE</a> to email us about the issue. Please include the URL you were trying to access:' % {'help_email': media_locale['HELP_EMAIL']}
+}
+
 _PARTICIPANT_OVERVIEW = {
     'COMPLETED_CONSENT': "Completed consent",
     'COMPLETED_SURVEY': "Completed survey",
@@ -937,6 +942,7 @@ _NOJS = {
 text_locale = {
     'nojs.html': _NOJS,
     '404.html': _404,
+    '403.html': _403,
     'FAQ.html': _FAQ,
     'new_participant_overview.html': _NEW_PARTICIPANT_OVERVIEW,
     'addendum.html': _ADDENDUM,

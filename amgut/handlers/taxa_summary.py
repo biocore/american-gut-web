@@ -1,7 +1,7 @@
 from os.path import join
 from re import sub
 
-from tornado.web import authenticated, HTTPError
+from tornado.web import authenticated
 
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.lib.config_manager import AMGUT_CONFIG
@@ -23,7 +23,9 @@ class TaxaSummaryHandler(BaseHandler):
 
         has_access = ag_data.check_access(self.current_user, barcode)
         if not has_access:
-            raise HTTPError(403, "Access forbidden")
+            self.set_status(403)
+            self.render("403.html", skid=self.current_user)
+            return
 
         # we need this path to access the filesystem
         taxa_summary_fp = join(AMGUT_CONFIG.base_data_dir, 'taxa-summaries',

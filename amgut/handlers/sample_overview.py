@@ -1,6 +1,6 @@
 import os
 
-from tornado.web import authenticated, HTTPError
+from tornado.web import authenticated
 
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.connections import ag_data
@@ -22,7 +22,9 @@ class SampleOverviewHandler(BaseHandler):
 
         has_access = ag_data.check_access(self.current_user, barcode)
         if not has_access:
-            raise HTTPError(403, "Access forbidden")
+            self.set_status(403)
+            self.render("403.html", skid=self.current_user)
+            return
 
         sample_data = ag_data.getAGBarcodeDetails(barcode)
 
