@@ -297,12 +297,7 @@
 	survey_question_response references survey_question ( survey_question_id )</title>
 </path>
 <text x='572' y='1555' transform='rotate(0 572,1555)' title='Foreign Key fk_question_response_0
-	survey_question_response references survey_question ( survey_question_id )' style='fill:#a1a0a0;'>survey_question_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1650 450 L 1057,450 Q 1050,450 1050,457 L 1050,637 Q 1050,645 1042,645 L 847,645 Q 840,645 840,637 L 840,442 Q 840,435 832,435 L 825,435' >
-	<title>Foreign Key fk_ag_hum_surv_to_ag_login
-	ag_human_survey references ag_login ( ag_login_id )</title>
-</path>
-<text x='1590' y='445' transform='rotate(0 1590,445)' title='Foreign Key fk_ag_hum_surv_to_ag_login
-	ag_human_survey references ag_login ( ag_login_id )' style='fill:#a1a0a0;'>ag_login_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 885 1665 L 795,1665' >
+	survey_question_response references survey_question ( survey_question_id )' style='fill:#a1a0a0;'>survey_question_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 885 1665 L 795,1665' >
 	<title>Foreign Key fk_iso_country_lookup
 	iso_country_lookup references survey_response ( country -> american )</title>
 </path>
@@ -382,17 +377,22 @@
 	survey_answers references ag_login_surveys ( survey_id )</title>
 </path>
 <text x='1552' y='1255' transform='rotate(0 1552,1255)' title='Foreign Key fk_survey_answers_0
-	survey_answers references ag_login_surveys ( survey_id )' style='fill:#a1a0a0;'>survey_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 1590 1380 L 1597,1380 Q 1605,1380 1605,1372 L 1605,1072 Q 1605,1065 1597,1065 L 1560,1065' >
+	survey_answers references ag_login_surveys ( survey_id )' style='fill:#a1a0a0;'>survey_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1650 450 L 1057,450 Q 1050,450 1050,457 L 1050,637 Q 1050,645 1042,645 L 847,645 Q 840,645 840,637 L 840,442 Q 840,435 832,435 L 825,435' >
+	<title>Foreign Key fk_ag_hum_surv_to_ag_login
+	ag_human_survey references ag_login ( ag_login_id )</title>
+</path>
+<text x='1590' y='445' transform='rotate(0 1590,445)' title='Foreign Key fk_ag_hum_surv_to_ag_login
+	ag_human_survey references ag_login ( ag_login_id )' style='fill:#a1a0a0;'>ag_login_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 1590 1380 L 1597,1380 Q 1605,1380 1605,1372 L 1605,1072 Q 1605,1065 1597,1065 L 1560,1065' >
 	<title>Foreign Key fk_third_party_surveys
 	external_survey_answers references ag_login_surveys ( survey_id )</title>
 </path>
 <text x='1597' y='1375' transform='rotate(0 1597,1375)' title='Foreign Key fk_third_party_surveys
 	external_survey_answers references ag_login_surveys ( survey_id )' style='fill:#a1a0a0;'>survey_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 1590 1395 L 1597,1395 Q 1605,1395 1605,1402 L 1605,1492 Q 1605,1500 1597,1500 L 1590,1500' >
 	<title>Foreign Key fk_external_survey
-	external_survey_answers references external_survey ( external_survey_id )</title>
+	external_survey_answers references external_survey_sources ( external_survey_id )</title>
 </path>
 <text x='1597' y='1390' transform='rotate(0 1597,1390)' title='Foreign Key fk_external_survey
-	external_survey_answers references external_survey ( external_survey_id )' style='fill:#a1a0a0;'>external_survey_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 405 465 L 547,465 Q 555,465 555,472 L 555,652 Q 555,660 547,660 L 540,660' >
+	external_survey_answers references external_survey_sources ( external_survey_id )' style='fill:#a1a0a0;'>external_survey_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 405 465 L 547,465 Q 555,465 555,472 L 555,652 Q 555,660 547,660 L 540,660' >
 	<title>Foreign Key fk_handout_barcode
 	ag_handout_barcodes references barcode ( barcode )</title>
 </path>
@@ -616,125 +616,6 @@ Referred by survey_question_triggers ( survey_question_id, triggering_response -
   <a xlink:href='#display_index'><use id='unq' x='692' y='1586' xlink:href='#unq'/><title>Unique Index  ( survey_question_id, display_index ) </title></a>
 <a xlink:href='#display_index'><text x='708' y='1597'>display_index</text><title>display_index serial
 The display order of this response</title></a>
-
-<!-- ============= Table 'ag_human_survey' ============= -->
-<rect class='table' x='1665' y='413' width='180' height='1710' rx='7' ry='7' />
-<path d='M 1665.50 439.50 L 1665.50 420.50 Q 1665.50 413.50 1672.50 413.50 L 1837.50 413.50 Q 1844.50 413.50 1844.50 420.50 L 1844.50 439.50 L1665.50 439.50 ' style='fill:url(#tableHeaderGradient5); stroke:none;' />
-<a xlink:href='#ag_human_survey'><text x='1706' y='427' class='tableTitle'>ag_human_survey</text><title>Table ag.ag_human_survey</title></a>
-  <use id='nn' x='1667' y='447' xlink:href='#nn'/><a xlink:href='#ag_login_id'><use id='pk' x='1667' y='446' xlink:href='#pk'/><title>Primary Key  ( ag_login_id, participant_name ) </title></a>
-<a xlink:href='#ag_login_id'><text x='1683' y='457'>ag_login_id</text><title>ag_login_id uuid not null</title></a>
-<a xlink:href='#ag_login_id'><use id='fk' x='1833' y='446' xlink:href='#fk'/><title>References ag_login ( ag_login_id ) </title></a>
-  <use id='nn' x='1667' y='462' xlink:href='#nn'/><a xlink:href='#participant_name'><use id='pk' x='1667' y='461' xlink:href='#pk'/><title>Primary Key  ( ag_login_id, participant_name ) </title></a>
-<a xlink:href='#participant_name'><text x='1683' y='472'>participant_name</text><title>participant_name varchar&#040;200&#041; not null</title></a>
-  <a xlink:href='#consent'><text x='1683' y='487'>consent</text><title>consent varchar&#040;20&#041;</title></a>
-  <a xlink:href='#juvenile_age'><text x='1683' y='502'>juvenile_age</text><title>juvenile_age varchar&#040;20&#041;</title></a>
-  <a xlink:href='#parent_1_name'><text x='1683' y='517'>parent_1_name</text><title>parent_1_name varchar&#040;200&#041;</title></a>
-  <a xlink:href='#parent_2_name'><text x='1683' y='532'>parent_2_name</text><title>parent_2_name varchar&#040;200&#041;</title></a>
-  <a xlink:href='#deceased_parent'><text x='1683' y='547'>deceased_parent</text><title>deceased_parent varchar&#040;20&#041;</title></a>
-  <a xlink:href='#country_of_birth'><text x='1683' y='562'>country_of_birth</text><title>country_of_birth varchar&#040;100&#041;</title></a>
-  <a xlink:href='#birth_date'><text x='1683' y='577'>birth_date</text><title>birth_date varchar&#040;100&#041;</title></a>
-  <a xlink:href='#gender'><text x='1683' y='592'>gender</text><title>gender varchar&#040;100&#041;</title></a>
-  <a xlink:href='#height_in'><text x='1683' y='607'>height_in</text><title>height_in varchar&#040;100&#041;</title></a>
-  <a xlink:href='#height_cm'><text x='1683' y='622'>height_cm</text><title>height_cm varchar&#040;100&#041;</title></a>
-  <a xlink:href='#weight_lbs'><text x='1683' y='637'>weight_lbs</text><title>weight_lbs varchar&#040;100&#041;</title></a>
-  <a xlink:href='#weight_kg'><text x='1683' y='652'>weight_kg</text><title>weight_kg varchar&#040;100&#041;</title></a>
-  <a xlink:href='#phone_num'><text x='1683' y='667'>phone_num</text><title>phone_num varchar&#040;100&#041;</title></a>
-  <a xlink:href='#zip_code'><text x='1683' y='682'>zip_code</text><title>zip_code varchar&#040;100&#041;</title></a>
-  <a xlink:href='#diet_type'><text x='1683' y='697'>diet_type</text><title>diet_type varchar&#040;100&#041;</title></a>
-  <a xlink:href='#multivitamin'><text x='1683' y='712'>multivitamin</text><title>multivitamin varchar&#040;100&#041;</title></a>
-  <a xlink:href='#supplements'><text x='1683' y='727'>supplements</text><title>supplements varchar&#040;100&#041;</title></a>
-  <a xlink:href='#lactose'><text x='1683' y='742'>lactose</text><title>lactose varchar&#040;100&#041;</title></a>
-  <a xlink:href='#gluten'><text x='1683' y='757'>gluten</text><title>gluten varchar&#040;100&#041;</title></a>
-  <a xlink:href='#foodallergies_peanuts'><text x='1683' y='772'>foodallergies_peanuts</text><title>foodallergies_peanuts varchar&#040;100&#041;</title></a>
-  <a xlink:href='#foodallergies_treenuts'><text x='1683' y='787'>foodallergies_treenuts</text><title>foodallergies_treenuts varchar&#040;100&#041;</title></a>
-  <a xlink:href='#foodallergies_shellfish'><text x='1683' y='802'>foodallergies_shellfish</text><title>foodallergies_shellfish varchar&#040;100&#041;</title></a>
-  <a xlink:href='#foodallergies_other'><text x='1683' y='817'>foodallergies_other</text><title>foodallergies_other varchar&#040;100&#041;</title></a>
-  <a xlink:href='#foodallergies_other_text'><text x='1683' y='832'>foodallergies_other_text</text><title>foodallergies_other_text varchar&#040;400&#041;</title></a>
-  <a xlink:href='#special_restrictions'><text x='1683' y='847'>special_restrictions</text><title>special_restrictions varchar&#040;100&#041;</title></a>
-  <a xlink:href='#drinking_water_source'><text x='1683' y='862'>drinking_water_source</text><title>drinking_water_source varchar&#040;100&#041;</title></a>
-  <a xlink:href='#race'><text x='1683' y='877'>race</text><title>race varchar&#040;100&#041;</title></a>
-  <a xlink:href='#race_other'><text x='1683' y='892'>race_other</text><title>race_other varchar&#040;100&#041;</title></a>
-  <a xlink:href='#current_residence_duration'><text x='1683' y='907'>current_residence_duration</text><title>current_residence_duration varchar&#040;100&#041;</title></a>
-  <a xlink:href='#last_travel'><text x='1683' y='922'>last_travel</text><title>last_travel varchar&#040;100&#041;</title></a>
-  <a xlink:href='#livingwith'><text x='1683' y='937'>livingwith</text><title>livingwith varchar&#040;100&#041;</title></a>
-  <a xlink:href='#dog'><text x='1683' y='952'>dog</text><title>dog varchar&#040;100&#041;</title></a>
-  <a xlink:href='#cat'><text x='1683' y='967'>cat</text><title>cat varchar&#040;100&#041;</title></a>
-  <a xlink:href='#hand'><text x='1683' y='982'>hand</text><title>hand varchar&#040;100&#041;</title></a>
-  <a xlink:href='#shared_housing'><text x='1683' y='997'>shared_housing</text><title>shared_housing varchar&#040;100&#041;</title></a>
-  <a xlink:href='#tanning_beds'><text x='1683' y='1012'>tanning_beds</text><title>tanning_beds varchar&#040;100&#041;</title></a>
-  <a xlink:href='#tanning_sprays'><text x='1683' y='1027'>tanning_sprays</text><title>tanning_sprays varchar&#040;100&#041;</title></a>
-  <a xlink:href='#exercise_frequency'><text x='1683' y='1042'>exercise_frequency</text><title>exercise_frequency varchar&#040;100&#041;</title></a>
-  <a xlink:href='#exercise_location'><text x='1683' y='1057'>exercise_location</text><title>exercise_location varchar&#040;100&#041;</title></a>
-  <a xlink:href='#nails'><text x='1683' y='1072'>nails</text><title>nails varchar&#040;100&#041;</title></a>
-  <a xlink:href='#pool_frequency'><text x='1683' y='1087'>pool_frequency</text><title>pool_frequency varchar&#040;100&#041;</title></a>
-  <a xlink:href='#smoking_frequency'><text x='1683' y='1102'>smoking_frequency</text><title>smoking_frequency varchar&#040;100&#041;</title></a>
-  <a xlink:href='#alcohol_frequency'><text x='1683' y='1117'>alcohol_frequency</text><title>alcohol_frequency varchar&#040;100&#041;</title></a>
-  <a xlink:href='#teethbrushing_frequency'><text x='1683' y='1132'>teethbrushing_frequency</text><title>teethbrushing_frequency varchar&#040;100&#041;</title></a>
-  <a xlink:href='#flossing_frequency'><text x='1683' y='1147'>flossing_frequency</text><title>flossing_frequency varchar&#040;100&#041;</title></a>
-  <a xlink:href='#cosmetics_frequency'><text x='1683' y='1162'>cosmetics_frequency</text><title>cosmetics_frequency varchar&#040;100&#041;</title></a>
-  <a xlink:href='#deoderant_use'><text x='1683' y='1177'>deoderant_use</text><title>deoderant_use varchar&#040;100&#041;</title></a>
-  <a xlink:href='#sleep_duration'><text x='1683' y='1192'>sleep_duration</text><title>sleep_duration varchar&#040;100&#041;</title></a>
-  <a xlink:href='#softener'><text x='1683' y='1207'>softener</text><title>softener varchar&#040;100&#041;</title></a>
-  <a xlink:href='#antibiotic_select'><text x='1683' y='1222'>antibiotic_select</text><title>antibiotic_select varchar&#040;100&#041;</title></a>
-  <a xlink:href='#antibiotic_condition'><text x='1683' y='1237'>antibiotic_condition</text><title>antibiotic_condition varchar&#040;100&#041;</title></a>
-  <a xlink:href='#flu_vaccine_date'><text x='1683' y='1252'>flu_vaccine_date</text><title>flu_vaccine_date varchar&#040;100&#041;</title></a>
-  <a xlink:href='#weight_change'><text x='1683' y='1267'>weight_change</text><title>weight_change varchar&#040;100&#041;</title></a>
-  <a xlink:href='#tonsils_removed'><text x='1683' y='1282'>tonsils_removed</text><title>tonsils_removed varchar&#040;100&#041;</title></a>
-  <a xlink:href='#appendix_removed'><text x='1683' y='1297'>appendix_removed</text><title>appendix_removed varchar&#040;100&#041;</title></a>
-  <a xlink:href='#chickenpox'><text x='1683' y='1312'>chickenpox</text><title>chickenpox varchar&#040;100&#041;</title></a>
-  <a xlink:href='#acne_medication'><text x='1683' y='1327'>acne_medication</text><title>acne_medication varchar&#040;100&#041;</title></a>
-  <a xlink:href='#acne_medication_otc'><text x='1683' y='1342'>acne_medication_otc</text><title>acne_medication_otc varchar&#040;100&#041;</title></a>
-  <a xlink:href='#conditions_medication'><text x='1683' y='1357'>conditions_medication</text><title>conditions_medication varchar&#040;100&#041;</title></a>
-  <a xlink:href='#csection'><text x='1683' y='1372'>csection</text><title>csection varchar&#040;100&#041;</title></a>
-  <a xlink:href='#pku'><text x='1683' y='1387'>pku</text><title>pku varchar&#040;100&#041;</title></a>
-  <a xlink:href='#asthma'><text x='1683' y='1402'>asthma</text><title>asthma varchar&#040;100&#041;</title></a>
-  <a xlink:href='#seasonal_allergies'><text x='1683' y='1417'>seasonal_allergies</text><title>seasonal_allergies varchar&#040;100&#041;</title></a>
-  <a xlink:href='#nonfoodallergies_drug'><text x='1683' y='1432'>nonfoodallergies_drug</text><title>nonfoodallergies_drug varchar&#040;100&#041;</title></a>
-  <a xlink:href='#nonfoodallergies_dander'><text x='1683' y='1447'>nonfoodallergies_dander</text><title>nonfoodallergies_dander varchar&#040;100&#041;</title></a>
-  <a xlink:href='#nonfoodallergies_beestings'><text x='1683' y='1462'>nonfoodallergies_beestings</text><title>nonfoodallergies_beestings varchar&#040;100&#041;</title></a>
-  <a xlink:href='#nonfoodallergies_poisonivy'><text x='1683' y='1477'>nonfoodallergies_poisonivy</text><title>nonfoodallergies_poisonivy varchar&#040;100&#041;</title></a>
-  <a xlink:href='#nonfoodallergies_sun'><text x='1683' y='1492'>nonfoodallergies_sun</text><title>nonfoodallergies_sun varchar&#040;100&#041;</title></a>
-  <a xlink:href='#nonfoodallergies_no'><text x='1683' y='1507'>nonfoodallergies_no</text><title>nonfoodallergies_no varchar&#040;100&#041;</title></a>
-  <a xlink:href='#ibd'><text x='1683' y='1522'>ibd</text><title>ibd varchar&#040;100&#041;</title></a>
-  <a xlink:href='#skin_condition'><text x='1683' y='1537'>skin_condition</text><title>skin_condition varchar&#040;100&#041;</title></a>
-  <a xlink:href='#diabetes'><text x='1683' y='1552'>diabetes</text><title>diabetes varchar&#040;100&#041;</title></a>
-  <a xlink:href='#migraine'><text x='1683' y='1567'>migraine</text><title>migraine varchar&#040;100&#041;</title></a>
-  <a xlink:href='#protein_per'><text x='1683' y='1582'>protein_per</text><title>protein_per varchar&#040;100&#041;</title></a>
-  <a xlink:href='#fat_per'><text x='1683' y='1597'>fat_per</text><title>fat_per varchar&#040;100&#041;</title></a>
-  <a xlink:href='#carbohydrate_per'><text x='1683' y='1612'>carbohydrate_per</text><title>carbohydrate_per varchar&#040;100&#041;</title></a>
-  <a xlink:href='#plant_per'><text x='1683' y='1627'>plant_per</text><title>plant_per varchar&#040;100&#041;</title></a>
-  <a xlink:href='#animal_per'><text x='1683' y='1642'>animal_per</text><title>animal_per varchar&#040;100&#041;</title></a>
-  <a xlink:href='#fiber_grams'><text x='1683' y='1657'>fiber_grams</text><title>fiber_grams varchar&#040;100&#041;</title></a>
-  <a xlink:href='#types_of_plants'><text x='1683' y='1672'>types_of_plants</text><title>types_of_plants varchar&#040;100&#041;</title></a>
-  <a xlink:href='#percentage_from_carbs'><text x='1683' y='1687'>percentage_from_carbs</text><title>percentage_from_carbs varchar&#040;100&#041;</title></a>
-  <a xlink:href='#primary_vegetable'><text x='1683' y='1702'>primary_vegetable</text><title>primary_vegetable varchar&#040;100&#041;</title></a>
-  <a xlink:href='#primary_carb'><text x='1683' y='1717'>primary_carb</text><title>primary_carb varchar&#040;100&#041;</title></a>
-  <a xlink:href='#diabetes_diagnose_date'><text x='1683' y='1732'>diabetes_diagnose_date</text><title>diabetes_diagnose_date varchar&#040;100&#041;</title></a>
-  <a xlink:href='#diabetes_medication'><text x='1683' y='1747'>diabetes_medication</text><title>diabetes_medication varchar&#040;100&#041;</title></a>
-  <a xlink:href='#contraceptive'><text x='1683' y='1762'>contraceptive</text><title>contraceptive varchar&#040;100&#041;</title></a>
-  <a xlink:href='#pregnant'><text x='1683' y='1777'>pregnant</text><title>pregnant varchar&#040;100&#041;</title></a>
-  <a xlink:href='#pregnant_due_date'><text x='1683' y='1792'>pregnant_due_date</text><title>pregnant_due_date varchar&#040;100&#041;</title></a>
-  <a xlink:href='#frat'><text x='1683' y='1807'>frat</text><title>frat varchar&#040;100&#041;</title></a>
-  <a xlink:href='#communal_dining'><text x='1683' y='1822'>communal_dining</text><title>communal_dining varchar&#040;100&#041;</title></a>
-  <a xlink:href='#roommates'><text x='1683' y='1837'>roommates</text><title>roommates varchar&#040;100&#041;</title></a>
-  <a xlink:href='#migraine_frequency'><text x='1683' y='1852'>migraine_frequency</text><title>migraine_frequency varchar&#040;100&#041;</title></a>
-  <a xlink:href='#migraine_factor_1'><text x='1683' y='1867'>migraine_factor_1</text><title>migraine_factor_1 varchar&#040;100&#041;</title></a>
-  <a xlink:href='#mainfactor_other_1'><text x='1683' y='1882'>mainfactor_other_1</text><title>mainfactor_other_1 varchar&#040;100&#041;</title></a>
-  <a xlink:href='#migraine_factor_2'><text x='1683' y='1897'>migraine_factor_2</text><title>migraine_factor_2 varchar&#040;100&#041;</title></a>
-  <a xlink:href='#mainfactor_other_2'><text x='1683' y='1912'>mainfactor_other_2</text><title>mainfactor_other_2 varchar&#040;100&#041;</title></a>
-  <a xlink:href='#migraine_factor_3'><text x='1683' y='1927'>migraine_factor_3</text><title>migraine_factor_3 varchar&#040;100&#041;</title></a>
-  <a xlink:href='#mainfactor_other_3'><text x='1683' y='1942'>mainfactor_other_3</text><title>mainfactor_other_3 varchar&#040;100&#041;</title></a>
-  <a xlink:href='#migraine_pain'><text x='1683' y='1957'>migraine_pain</text><title>migraine_pain varchar&#040;100&#041;</title></a>
-  <a xlink:href='#migraine_photophobia'><text x='1683' y='1972'>migraine_photophobia</text><title>migraine_photophobia varchar&#040;100&#041;</title></a>
-  <a xlink:href='#migraine_phonophobia'><text x='1683' y='1987'>migraine_phonophobia</text><title>migraine_phonophobia varchar&#040;100&#041;</title></a>
-  <a xlink:href='#migraine_nausea'><text x='1683' y='2002'>migraine_nausea</text><title>migraine_nausea varchar&#040;100&#041;</title></a>
-  <a xlink:href='#migraine_aggravation'><text x='1683' y='2017'>migraine_aggravation</text><title>migraine_aggravation varchar&#040;100&#041;</title></a>
-  <a xlink:href='#migraine_aura'><text x='1683' y='2032'>migraine_aura</text><title>migraine_aura varchar&#040;100&#041;</title></a>
-  <a xlink:href='#migraine_relatives'><text x='1683' y='2047'>migraine_relatives</text><title>migraine_relatives varchar&#040;100&#041;</title></a>
-  <a xlink:href='#migrainemeds'><text x='1683' y='2062'>migrainemeds</text><title>migrainemeds varchar&#040;100&#041;</title></a>
-  <a xlink:href='#about_yourself_text'><text x='1683' y='2077'>about_yourself_text</text><title>about_yourself_text varchar&#040;2000&#041;</title></a>
-  <a xlink:href='#participant_email'><text x='1683' y='2092'>participant_email</text><title>participant_email varchar&#040;300&#041;</title></a>
-  <a xlink:href='#participant_name_u'><text x='1683' y='2107'>participant_name_u</text><title>participant_name_u varchar&#040;400&#041;</title></a>
 
 <!-- ============= Table 'iso_country_lookup' ============= -->
 <rect class='table' x='900' y='1613' width='120' height='75' rx='7' ry='7' />
@@ -992,19 +873,6 @@ Referred by project_barcode ( barcode ) </title></a>
   <a xlink:href='#marker_color'><text x='78' y='172'>marker_color</text><title>marker_color varchar&#040;10&#041;</title></a>
   <a xlink:href='#order_by'><text x='78' y='187'>order_by</text><title>order_by bigint</title></a>
 
-<!-- ============= Table 'ag_handout_kits' ============= -->
-<rect class='table' x='45' y='413' width='135' height='135' rx='7' ry='7' />
-<path d='M 45.50 439.50 L 45.50 420.50 Q 45.50 413.50 52.50 413.50 L 172.50 413.50 Q 179.50 413.50 179.50 420.50 L 179.50 439.50 L45.50 439.50 ' style='fill:url(#tableHeaderGradient7); stroke:none;' />
-<a xlink:href='#ag_handout_kits'><text x='68' y='427' class='tableTitle'>ag_handout_kits</text><title>Table ag.ag_handout_kits</title></a>
-  <use id='nn' x='47' y='447' xlink:href='#nn'/><a xlink:href='#kit_id'><use id='pk' x='47' y='446' xlink:href='#pk'/><title>Primary Key  ( kit_id ) </title></a>
-<a xlink:href='#kit_id'><text x='63' y='457'>kit_id</text><title>kit_id varchar&#040;9&#041; not null</title></a>
-<a xlink:href='#kit_id'><use id='ref' x='168' y='446' xlink:href='#ref'/><title>Referred by ag_handout_barcodes ( kit_id ) </title></a>
-  <a xlink:href='#password'><text x='63' y='472'>password</text><title>password varchar&#040;11&#041;</title></a>
-  <a xlink:href='#verification_code'><text x='63' y='487'>verification_code</text><title>verification_code varchar&#040;5&#041;</title></a>
-  <a xlink:href='#swabs_per_kit'><text x='63' y='502'>swabs_per_kit</text><title>swabs_per_kit bigint</title></a>
-  <a xlink:href='#print_results'><text x='63' y='517'>print_results</text><title>print_results varchar&#040;1&#041; default &#039;n&#039;&#058;&#058;character varying</title></a>
-  <use id='nn' x='47' y='522' xlink:href='#nn'/><a xlink:href='#created_on'><text x='63' y='532'>created_on</text><title>created_on timestamp not null default current&#095;timestamp</title></a>
-
 <!-- ============= Table 'ag_login_surveys' ============= -->
 <rect class='table' x='1425' y='1013' width='135' height='105' rx='7' ry='7' />
 <path d='M 1425.50 1039.50 L 1425.50 1020.50 Q 1425.50 1013.50 1432.50 1013.50 L 1552.50 1013.50 Q 1559.50 1013.50 1559.50 1020.50 L 1559.50 1039.50 L1425.50 1039.50 ' style='fill:url(#tableHeaderGradient2); stroke:none;' />
@@ -1043,41 +911,175 @@ The question being answered</title></a>
 The answer the question being asked</title></a>
 <a xlink:href='#response'><use id='fk' x='1533' y='1286' xlink:href='#fk'/><title>References survey_question_response ( survey_question_id, response ) </title></a>
 
+<!-- ============= Table 'ag_human_survey' ============= -->
+<rect class='table' x='1665' y='413' width='180' height='1710' rx='7' ry='7' />
+<path d='M 1665.50 439.50 L 1665.50 420.50 Q 1665.50 413.50 1672.50 413.50 L 1837.50 413.50 Q 1844.50 413.50 1844.50 420.50 L 1844.50 439.50 L1665.50 439.50 ' style='fill:url(#tableHeaderGradient5); stroke:none;' />
+<a xlink:href='#ag_human_survey'><text x='1706' y='427' class='tableTitle'>ag_human_survey</text><title>Table ag.ag_human_survey</title></a>
+  <use id='nn' x='1667' y='447' xlink:href='#nn'/><a xlink:href='#ag_login_id'><use id='pk' x='1667' y='446' xlink:href='#pk'/><title>Primary Key  ( ag_login_id, participant_name ) </title></a>
+<a xlink:href='#ag_login_id'><text x='1683' y='457'>ag_login_id</text><title>ag_login_id uuid not null</title></a>
+<a xlink:href='#ag_login_id'><use id='fk' x='1833' y='446' xlink:href='#fk'/><title>References ag_login ( ag_login_id ) </title></a>
+  <use id='nn' x='1667' y='462' xlink:href='#nn'/><a xlink:href='#participant_name'><use id='pk' x='1667' y='461' xlink:href='#pk'/><title>Primary Key  ( ag_login_id, participant_name ) </title></a>
+<a xlink:href='#participant_name'><text x='1683' y='472'>participant_name</text><title>participant_name varchar&#040;200&#041; not null</title></a>
+  <a xlink:href='#consent'><text x='1683' y='487'>consent</text><title>consent varchar&#040;20&#041;</title></a>
+  <a xlink:href='#juvenile_age'><text x='1683' y='502'>juvenile_age</text><title>juvenile_age varchar&#040;20&#041;</title></a>
+  <a xlink:href='#parent_1_name'><text x='1683' y='517'>parent_1_name</text><title>parent_1_name varchar&#040;200&#041;</title></a>
+  <a xlink:href='#parent_2_name'><text x='1683' y='532'>parent_2_name</text><title>parent_2_name varchar&#040;200&#041;</title></a>
+  <a xlink:href='#deceased_parent'><text x='1683' y='547'>deceased_parent</text><title>deceased_parent varchar&#040;20&#041;</title></a>
+  <a xlink:href='#country_of_birth'><text x='1683' y='562'>country_of_birth</text><title>country_of_birth varchar&#040;100&#041;</title></a>
+  <a xlink:href='#birth_date'><text x='1683' y='577'>birth_date</text><title>birth_date varchar&#040;100&#041;</title></a>
+  <a xlink:href='#gender'><text x='1683' y='592'>gender</text><title>gender varchar&#040;100&#041;</title></a>
+  <a xlink:href='#height_in'><text x='1683' y='607'>height_in</text><title>height_in varchar&#040;100&#041;</title></a>
+  <a xlink:href='#height_cm'><text x='1683' y='622'>height_cm</text><title>height_cm varchar&#040;100&#041;</title></a>
+  <a xlink:href='#weight_lbs'><text x='1683' y='637'>weight_lbs</text><title>weight_lbs varchar&#040;100&#041;</title></a>
+  <a xlink:href='#weight_kg'><text x='1683' y='652'>weight_kg</text><title>weight_kg varchar&#040;100&#041;</title></a>
+  <a xlink:href='#phone_num'><text x='1683' y='667'>phone_num</text><title>phone_num varchar&#040;100&#041;</title></a>
+  <a xlink:href='#zip_code'><text x='1683' y='682'>zip_code</text><title>zip_code varchar&#040;100&#041;</title></a>
+  <a xlink:href='#diet_type'><text x='1683' y='697'>diet_type</text><title>diet_type varchar&#040;100&#041;</title></a>
+  <a xlink:href='#multivitamin'><text x='1683' y='712'>multivitamin</text><title>multivitamin varchar&#040;100&#041;</title></a>
+  <a xlink:href='#supplements'><text x='1683' y='727'>supplements</text><title>supplements varchar&#040;100&#041;</title></a>
+  <a xlink:href='#lactose'><text x='1683' y='742'>lactose</text><title>lactose varchar&#040;100&#041;</title></a>
+  <a xlink:href='#gluten'><text x='1683' y='757'>gluten</text><title>gluten varchar&#040;100&#041;</title></a>
+  <a xlink:href='#foodallergies_peanuts'><text x='1683' y='772'>foodallergies_peanuts</text><title>foodallergies_peanuts varchar&#040;100&#041;</title></a>
+  <a xlink:href='#foodallergies_treenuts'><text x='1683' y='787'>foodallergies_treenuts</text><title>foodallergies_treenuts varchar&#040;100&#041;</title></a>
+  <a xlink:href='#foodallergies_shellfish'><text x='1683' y='802'>foodallergies_shellfish</text><title>foodallergies_shellfish varchar&#040;100&#041;</title></a>
+  <a xlink:href='#foodallergies_other'><text x='1683' y='817'>foodallergies_other</text><title>foodallergies_other varchar&#040;100&#041;</title></a>
+  <a xlink:href='#foodallergies_other_text'><text x='1683' y='832'>foodallergies_other_text</text><title>foodallergies_other_text varchar&#040;400&#041;</title></a>
+  <a xlink:href='#special_restrictions'><text x='1683' y='847'>special_restrictions</text><title>special_restrictions varchar&#040;100&#041;</title></a>
+  <a xlink:href='#drinking_water_source'><text x='1683' y='862'>drinking_water_source</text><title>drinking_water_source varchar&#040;100&#041;</title></a>
+  <a xlink:href='#race'><text x='1683' y='877'>race</text><title>race varchar&#040;100&#041;</title></a>
+  <a xlink:href='#race_other'><text x='1683' y='892'>race_other</text><title>race_other varchar&#040;100&#041;</title></a>
+  <a xlink:href='#current_residence_duration'><text x='1683' y='907'>current_residence_duration</text><title>current_residence_duration varchar&#040;100&#041;</title></a>
+  <a xlink:href='#last_travel'><text x='1683' y='922'>last_travel</text><title>last_travel varchar&#040;100&#041;</title></a>
+  <a xlink:href='#livingwith'><text x='1683' y='937'>livingwith</text><title>livingwith varchar&#040;100&#041;</title></a>
+  <a xlink:href='#dog'><text x='1683' y='952'>dog</text><title>dog varchar&#040;100&#041;</title></a>
+  <a xlink:href='#cat'><text x='1683' y='967'>cat</text><title>cat varchar&#040;100&#041;</title></a>
+  <a xlink:href='#hand'><text x='1683' y='982'>hand</text><title>hand varchar&#040;100&#041;</title></a>
+  <a xlink:href='#shared_housing'><text x='1683' y='997'>shared_housing</text><title>shared_housing varchar&#040;100&#041;</title></a>
+  <a xlink:href='#tanning_beds'><text x='1683' y='1012'>tanning_beds</text><title>tanning_beds varchar&#040;100&#041;</title></a>
+  <a xlink:href='#tanning_sprays'><text x='1683' y='1027'>tanning_sprays</text><title>tanning_sprays varchar&#040;100&#041;</title></a>
+  <a xlink:href='#exercise_frequency'><text x='1683' y='1042'>exercise_frequency</text><title>exercise_frequency varchar&#040;100&#041;</title></a>
+  <a xlink:href='#exercise_location'><text x='1683' y='1057'>exercise_location</text><title>exercise_location varchar&#040;100&#041;</title></a>
+  <a xlink:href='#nails'><text x='1683' y='1072'>nails</text><title>nails varchar&#040;100&#041;</title></a>
+  <a xlink:href='#pool_frequency'><text x='1683' y='1087'>pool_frequency</text><title>pool_frequency varchar&#040;100&#041;</title></a>
+  <a xlink:href='#smoking_frequency'><text x='1683' y='1102'>smoking_frequency</text><title>smoking_frequency varchar&#040;100&#041;</title></a>
+  <a xlink:href='#alcohol_frequency'><text x='1683' y='1117'>alcohol_frequency</text><title>alcohol_frequency varchar&#040;100&#041;</title></a>
+  <a xlink:href='#teethbrushing_frequency'><text x='1683' y='1132'>teethbrushing_frequency</text><title>teethbrushing_frequency varchar&#040;100&#041;</title></a>
+  <a xlink:href='#flossing_frequency'><text x='1683' y='1147'>flossing_frequency</text><title>flossing_frequency varchar&#040;100&#041;</title></a>
+  <a xlink:href='#cosmetics_frequency'><text x='1683' y='1162'>cosmetics_frequency</text><title>cosmetics_frequency varchar&#040;100&#041;</title></a>
+  <a xlink:href='#deoderant_use'><text x='1683' y='1177'>deoderant_use</text><title>deoderant_use varchar&#040;100&#041;</title></a>
+  <a xlink:href='#sleep_duration'><text x='1683' y='1192'>sleep_duration</text><title>sleep_duration varchar&#040;100&#041;</title></a>
+  <a xlink:href='#softener'><text x='1683' y='1207'>softener</text><title>softener varchar&#040;100&#041;</title></a>
+  <a xlink:href='#antibiotic_select'><text x='1683' y='1222'>antibiotic_select</text><title>antibiotic_select varchar&#040;100&#041;</title></a>
+  <a xlink:href='#antibiotic_condition'><text x='1683' y='1237'>antibiotic_condition</text><title>antibiotic_condition varchar&#040;100&#041;</title></a>
+  <a xlink:href='#flu_vaccine_date'><text x='1683' y='1252'>flu_vaccine_date</text><title>flu_vaccine_date varchar&#040;100&#041;</title></a>
+  <a xlink:href='#weight_change'><text x='1683' y='1267'>weight_change</text><title>weight_change varchar&#040;100&#041;</title></a>
+  <a xlink:href='#tonsils_removed'><text x='1683' y='1282'>tonsils_removed</text><title>tonsils_removed varchar&#040;100&#041;</title></a>
+  <a xlink:href='#appendix_removed'><text x='1683' y='1297'>appendix_removed</text><title>appendix_removed varchar&#040;100&#041;</title></a>
+  <a xlink:href='#chickenpox'><text x='1683' y='1312'>chickenpox</text><title>chickenpox varchar&#040;100&#041;</title></a>
+  <a xlink:href='#acne_medication'><text x='1683' y='1327'>acne_medication</text><title>acne_medication varchar&#040;100&#041;</title></a>
+  <a xlink:href='#acne_medication_otc'><text x='1683' y='1342'>acne_medication_otc</text><title>acne_medication_otc varchar&#040;100&#041;</title></a>
+  <a xlink:href='#conditions_medication'><text x='1683' y='1357'>conditions_medication</text><title>conditions_medication varchar&#040;100&#041;</title></a>
+  <a xlink:href='#csection'><text x='1683' y='1372'>csection</text><title>csection varchar&#040;100&#041;</title></a>
+  <a xlink:href='#pku'><text x='1683' y='1387'>pku</text><title>pku varchar&#040;100&#041;</title></a>
+  <a xlink:href='#asthma'><text x='1683' y='1402'>asthma</text><title>asthma varchar&#040;100&#041;</title></a>
+  <a xlink:href='#seasonal_allergies'><text x='1683' y='1417'>seasonal_allergies</text><title>seasonal_allergies varchar&#040;100&#041;</title></a>
+  <a xlink:href='#nonfoodallergies_drug'><text x='1683' y='1432'>nonfoodallergies_drug</text><title>nonfoodallergies_drug varchar&#040;100&#041;</title></a>
+  <a xlink:href='#nonfoodallergies_dander'><text x='1683' y='1447'>nonfoodallergies_dander</text><title>nonfoodallergies_dander varchar&#040;100&#041;</title></a>
+  <a xlink:href='#nonfoodallergies_beestings'><text x='1683' y='1462'>nonfoodallergies_beestings</text><title>nonfoodallergies_beestings varchar&#040;100&#041;</title></a>
+  <a xlink:href='#nonfoodallergies_poisonivy'><text x='1683' y='1477'>nonfoodallergies_poisonivy</text><title>nonfoodallergies_poisonivy varchar&#040;100&#041;</title></a>
+  <a xlink:href='#nonfoodallergies_sun'><text x='1683' y='1492'>nonfoodallergies_sun</text><title>nonfoodallergies_sun varchar&#040;100&#041;</title></a>
+  <a xlink:href='#nonfoodallergies_no'><text x='1683' y='1507'>nonfoodallergies_no</text><title>nonfoodallergies_no varchar&#040;100&#041;</title></a>
+  <a xlink:href='#ibd'><text x='1683' y='1522'>ibd</text><title>ibd varchar&#040;100&#041;</title></a>
+  <a xlink:href='#skin_condition'><text x='1683' y='1537'>skin_condition</text><title>skin_condition varchar&#040;100&#041;</title></a>
+  <a xlink:href='#diabetes'><text x='1683' y='1552'>diabetes</text><title>diabetes varchar&#040;100&#041;</title></a>
+  <a xlink:href='#migraine'><text x='1683' y='1567'>migraine</text><title>migraine varchar&#040;100&#041;</title></a>
+  <a xlink:href='#protein_per'><text x='1683' y='1582'>protein_per</text><title>protein_per varchar&#040;100&#041;</title></a>
+  <a xlink:href='#fat_per'><text x='1683' y='1597'>fat_per</text><title>fat_per varchar&#040;100&#041;</title></a>
+  <a xlink:href='#carbohydrate_per'><text x='1683' y='1612'>carbohydrate_per</text><title>carbohydrate_per varchar&#040;100&#041;</title></a>
+  <a xlink:href='#plant_per'><text x='1683' y='1627'>plant_per</text><title>plant_per varchar&#040;100&#041;</title></a>
+  <a xlink:href='#animal_per'><text x='1683' y='1642'>animal_per</text><title>animal_per varchar&#040;100&#041;</title></a>
+  <a xlink:href='#fiber_grams'><text x='1683' y='1657'>fiber_grams</text><title>fiber_grams varchar&#040;100&#041;</title></a>
+  <a xlink:href='#types_of_plants'><text x='1683' y='1672'>types_of_plants</text><title>types_of_plants varchar&#040;100&#041;</title></a>
+  <a xlink:href='#percentage_from_carbs'><text x='1683' y='1687'>percentage_from_carbs</text><title>percentage_from_carbs varchar&#040;100&#041;</title></a>
+  <a xlink:href='#primary_vegetable'><text x='1683' y='1702'>primary_vegetable</text><title>primary_vegetable varchar&#040;100&#041;</title></a>
+  <a xlink:href='#primary_carb'><text x='1683' y='1717'>primary_carb</text><title>primary_carb varchar&#040;100&#041;</title></a>
+  <a xlink:href='#diabetes_diagnose_date'><text x='1683' y='1732'>diabetes_diagnose_date</text><title>diabetes_diagnose_date varchar&#040;100&#041;</title></a>
+  <a xlink:href='#diabetes_medication'><text x='1683' y='1747'>diabetes_medication</text><title>diabetes_medication varchar&#040;100&#041;</title></a>
+  <a xlink:href='#contraceptive'><text x='1683' y='1762'>contraceptive</text><title>contraceptive varchar&#040;100&#041;</title></a>
+  <a xlink:href='#pregnant'><text x='1683' y='1777'>pregnant</text><title>pregnant varchar&#040;100&#041;</title></a>
+  <a xlink:href='#pregnant_due_date'><text x='1683' y='1792'>pregnant_due_date</text><title>pregnant_due_date varchar&#040;100&#041;</title></a>
+  <a xlink:href='#frat'><text x='1683' y='1807'>frat</text><title>frat varchar&#040;100&#041;</title></a>
+  <a xlink:href='#communal_dining'><text x='1683' y='1822'>communal_dining</text><title>communal_dining varchar&#040;100&#041;</title></a>
+  <a xlink:href='#roommates'><text x='1683' y='1837'>roommates</text><title>roommates varchar&#040;100&#041;</title></a>
+  <a xlink:href='#migraine_frequency'><text x='1683' y='1852'>migraine_frequency</text><title>migraine_frequency varchar&#040;100&#041;</title></a>
+  <a xlink:href='#migraine_factor_1'><text x='1683' y='1867'>migraine_factor_1</text><title>migraine_factor_1 varchar&#040;100&#041;</title></a>
+  <a xlink:href='#mainfactor_other_1'><text x='1683' y='1882'>mainfactor_other_1</text><title>mainfactor_other_1 varchar&#040;100&#041;</title></a>
+  <a xlink:href='#migraine_factor_2'><text x='1683' y='1897'>migraine_factor_2</text><title>migraine_factor_2 varchar&#040;100&#041;</title></a>
+  <a xlink:href='#mainfactor_other_2'><text x='1683' y='1912'>mainfactor_other_2</text><title>mainfactor_other_2 varchar&#040;100&#041;</title></a>
+  <a xlink:href='#migraine_factor_3'><text x='1683' y='1927'>migraine_factor_3</text><title>migraine_factor_3 varchar&#040;100&#041;</title></a>
+  <a xlink:href='#mainfactor_other_3'><text x='1683' y='1942'>mainfactor_other_3</text><title>mainfactor_other_3 varchar&#040;100&#041;</title></a>
+  <a xlink:href='#migraine_pain'><text x='1683' y='1957'>migraine_pain</text><title>migraine_pain varchar&#040;100&#041;</title></a>
+  <a xlink:href='#migraine_photophobia'><text x='1683' y='1972'>migraine_photophobia</text><title>migraine_photophobia varchar&#040;100&#041;</title></a>
+  <a xlink:href='#migraine_phonophobia'><text x='1683' y='1987'>migraine_phonophobia</text><title>migraine_phonophobia varchar&#040;100&#041;</title></a>
+  <a xlink:href='#migraine_nausea'><text x='1683' y='2002'>migraine_nausea</text><title>migraine_nausea varchar&#040;100&#041;</title></a>
+  <a xlink:href='#migraine_aggravation'><text x='1683' y='2017'>migraine_aggravation</text><title>migraine_aggravation varchar&#040;100&#041;</title></a>
+  <a xlink:href='#migraine_aura'><text x='1683' y='2032'>migraine_aura</text><title>migraine_aura varchar&#040;100&#041;</title></a>
+  <a xlink:href='#migraine_relatives'><text x='1683' y='2047'>migraine_relatives</text><title>migraine_relatives varchar&#040;100&#041;</title></a>
+  <a xlink:href='#migrainemeds'><text x='1683' y='2062'>migrainemeds</text><title>migrainemeds varchar&#040;100&#041;</title></a>
+  <a xlink:href='#about_yourself_text'><text x='1683' y='2077'>about_yourself_text</text><title>about_yourself_text varchar&#040;2000&#041;</title></a>
+  <a xlink:href='#participant_email'><text x='1683' y='2092'>participant_email</text><title>participant_email varchar&#040;300&#041;</title></a>
+  <a xlink:href='#participant_name_u'><text x='1683' y='2107'>participant_name_u</text><title>participant_name_u varchar&#040;400&#041;</title></a>
+
 <!-- ============= Table 'external_survey_answers' ============= -->
 <rect class='table' x='1440' y='1343' width='150' height='105' rx='7' ry='7' />
 <path d='M 1440.50 1369.50 L 1440.50 1350.50 Q 1440.50 1343.50 1447.50 1343.50 L 1582.50 1343.50 Q 1589.50 1343.50 1589.50 1350.50 L 1589.50 1369.50 L1440.50 1369.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
 <a xlink:href='#external_survey_answers'><text x='1447' y='1357' class='tableTitle'>external_survey_answers</text><title>Table ag.external_survey_answers
 This stores answers to third party surveys in JSON format&#044; keyed to the original survey ID</title></a>
-  <use id='nn' x='1442' y='1377' xlink:href='#nn'/><a xlink:href='#survey_id'><use id='pk' x='1442' y='1376' xlink:href='#pk'/><title>Primary Key  ( survey_id ) </title></a>
+  <use id='nn' x='1442' y='1377' xlink:href='#nn'/><a xlink:href='#survey_id'><use id='pk' x='1442' y='1376' xlink:href='#pk'/><title>Primary Key  ( survey_id, external_survey_id, pulldown_date ) </title></a>
 <a xlink:href='#survey_id'><text x='1458' y='1387'>survey_id</text><title>survey_id varchar not null</title></a>
 <a xlink:href='#survey_id'><use id='fk' x='1578' y='1376' xlink:href='#fk'/><title>References ag_login_surveys ( survey_id ) </title></a>
-  <use id='nn' x='1442' y='1392' xlink:href='#nn'/><a xlink:href='#external_survey_id'><use id='idx' x='1442' y='1391' xlink:href='#idx'/><title>Index  ( external_survey_id ) </title></a>
+  <use id='nn' x='1442' y='1392' xlink:href='#nn'/><a xlink:href='#external_survey_id'><use id='pk' x='1442' y='1391' xlink:href='#pk'/><title>Index  ( external_survey_id ) Primary Key  ( survey_id, external_survey_id, pulldown_date ) </title></a>
 <a xlink:href='#external_survey_id'><text x='1458' y='1402'>external_survey_id</text><title>external_survey_id bigint not null</title></a>
-<a xlink:href='#external_survey_id'><use id='fk' x='1578' y='1391' xlink:href='#fk'/><title>References external_survey ( external_survey_id ) </title></a>
-  <use id='nn' x='1442' y='1407' xlink:href='#nn'/><a xlink:href='#pulldown_date'><text x='1458' y='1417'>pulldown_date</text><title>pulldown_date date not null</title></a>
+<a xlink:href='#external_survey_id'><use id='fk' x='1578' y='1391' xlink:href='#fk'/><title>References external_survey_sources ( external_survey_id ) </title></a>
+  <use id='nn' x='1442' y='1407' xlink:href='#nn'/><a xlink:href='#pulldown_date'><use id='pk' x='1442' y='1406' xlink:href='#pk'/><title>Primary Key  ( survey_id, external_survey_id, pulldown_date ) </title></a>
+<a xlink:href='#pulldown_date'><text x='1458' y='1417'>pulldown_date</text><title>pulldown_date date not null</title></a>
   <use id='nn' x='1442' y='1422' xlink:href='#nn'/><a xlink:href='#answers'><text x='1458' y='1432'>answers</text><title>answers varchar not null</title></a>
 
-<!-- ============= Table 'external_survey' ============= -->
-<rect class='table' x='1395' y='1463' width='195' height='90' rx='7' ry='7' />
-<path d='M 1395.50 1489.50 L 1395.50 1470.50 Q 1395.50 1463.50 1402.50 1463.50 L 1582.50 1463.50 Q 1589.50 1463.50 1589.50 1470.50 L 1589.50 1489.50 L1395.50 1489.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
-<a xlink:href='#external_survey'><text x='1449' y='1477' class='tableTitle'>external_survey</text><title>Table ag.external_survey</title></a>
-  <use id='nn' x='1397' y='1497' xlink:href='#nn'/><a xlink:href='#external_survey_id'><use id='pk' x='1397' y='1496' xlink:href='#pk'/><title>Primary Key  ( external_survey_id ) </title></a>
-<a xlink:href='#external_survey_id'><text x='1413' y='1507'>external_survey_id</text><title>external_survey_id bigserial not null</title></a>
-<a xlink:href='#external_survey_id'><use id='ref' x='1578' y='1496' xlink:href='#ref'/><title>Referred by external_survey_answers ( external_survey_id ) </title></a>
-  <use id='nn' x='1397' y='1512' xlink:href='#nn'/><a xlink:href='#external_survey'><text x='1413' y='1522'>external_survey</text><title>external_survey varchar not null</title></a>
-  <a xlink:href='#external_survey_description'><text x='1413' y='1537'>external_survey_description</text><title>external_survey_description varchar</title></a>
+<!-- ============= Table 'ag_handout_kits' ============= -->
+<rect class='table' x='45' y='413' width='135' height='135' rx='7' ry='7' />
+<path d='M 45.50 439.50 L 45.50 420.50 Q 45.50 413.50 52.50 413.50 L 172.50 413.50 Q 179.50 413.50 179.50 420.50 L 179.50 439.50 L45.50 439.50 ' style='fill:url(#tableHeaderGradient7); stroke:none;' />
+<a xlink:href='#ag_handout_kits'><text x='68' y='427' class='tableTitle'>ag_handout_kits</text><title>Table ag.ag_handout_kits</title></a>
+  <use id='nn' x='47' y='447' xlink:href='#nn'/><a xlink:href='#kit_id'><use id='pk' x='47' y='446' xlink:href='#pk'/><title>Primary Key  ( kit_id ) </title></a>
+<a xlink:href='#kit_id'><text x='63' y='457'>kit_id</text><title>kit_id varchar&#040;9&#041; not null</title></a>
+<a xlink:href='#kit_id'><use id='ref' x='168' y='446' xlink:href='#ref'/><title>Referred by ag_handout_barcodes ( kit_id ) </title></a>
+  <a xlink:href='#password'><text x='63' y='472'>password</text><title>password varchar&#040;11&#041;</title></a>
+  <a xlink:href='#verification_code'><text x='63' y='487'>verification_code</text><title>verification_code varchar&#040;5&#041;</title></a>
+  <a xlink:href='#swabs_per_kit'><text x='63' y='502'>swabs_per_kit</text><title>swabs_per_kit bigint</title></a>
+  <a xlink:href='#print_results'><text x='63' y='517'>print_results</text><title>print_results varchar&#040;1&#041; default &#039;n&#039;&#058;&#058;character varying</title></a>
+  <use id='nn' x='47' y='522' xlink:href='#nn'/><a xlink:href='#created_on'><text x='63' y='532'>created_on</text><title>created_on timestamp not null default current&#095;timestamp</title></a>
 
 <!-- ============= Table 'ag_handout_barcodes' ============= -->
 <rect class='table' x='255' y='413' width='150' height='90' rx='7' ry='7' />
 <path d='M 255.50 439.50 L 255.50 420.50 Q 255.50 413.50 262.50 413.50 L 397.50 413.50 Q 404.50 413.50 404.50 420.50 L 404.50 439.50 L255.50 439.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
 <a xlink:href='#ag_handout_barcodes'><text x='270' y='427' class='tableTitle'>ag_handout_barcodes</text><title>Table ag.ag_handout_barcodes</title></a>
-  <use id='nn' x='257' y='447' xlink:href='#nn'/><a xlink:href='#kit_id'><use id='pk' x='257' y='446' xlink:href='#pk'/><title>Primary Key  ( kit_id, barcode ) Index  ( kit_id ) </title></a>
+  <use id='nn' x='257' y='447' xlink:href='#nn'/><a xlink:href='#kit_id'><use id='idx' x='257' y='446' xlink:href='#idx'/><title>Index  ( kit_id ) </title></a>
 <a xlink:href='#kit_id'><text x='273' y='457'>kit_id</text><title>kit_id varchar not null</title></a>
 <a xlink:href='#kit_id'><use id='fk' x='393' y='446' xlink:href='#fk'/><title>References ag_handout_kits ( kit_id ) </title></a>
-  <use id='nn' x='257' y='462' xlink:href='#nn'/><a xlink:href='#barcode'><use id='pk' x='257' y='461' xlink:href='#pk'/><title>Primary Key  ( kit_id, barcode ) Index  ( barcode ) </title></a>
+  <use id='nn' x='257' y='462' xlink:href='#nn'/><a xlink:href='#barcode'><use id='pk' x='257' y='461' xlink:href='#pk'/><title>Primary Key  ( barcode ) </title></a>
 <a xlink:href='#barcode'><text x='273' y='472'>barcode</text><title>barcode varchar&#040;9&#041; not null</title></a>
 <a xlink:href='#barcode'><use id='fk' x='393' y='461' xlink:href='#fk'/><title>References barcode ( barcode ) </title></a>
   <use id='nn' x='257' y='477' xlink:href='#nn'/><a xlink:href='#sample_barcode_file'><text x='273' y='487'>sample_barcode_file</text><title>sample_barcode_file varchar&#040;13&#041; not null</title></a>
+
+<!-- ============= Table 'external_survey_sources' ============= -->
+<rect class='table' x='1395' y='1463' width='195' height='105' rx='7' ry='7' />
+<path d='M 1395.50 1489.50 L 1395.50 1470.50 Q 1395.50 1463.50 1402.50 1463.50 L 1582.50 1463.50 Q 1589.50 1463.50 1589.50 1470.50 L 1589.50 1489.50 L1395.50 1489.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
+<a xlink:href='#external_survey_sources'><text x='1425' y='1477' class='tableTitle'>external_survey_sources</text><title>Table ag.external_survey_sources</title></a>
+  <use id='nn' x='1397' y='1497' xlink:href='#nn'/><a xlink:href='#external_survey_id'><use id='pk' x='1397' y='1496' xlink:href='#pk'/><title>Primary Key  ( external_survey_id ) </title></a>
+<a xlink:href='#external_survey_id'><text x='1413' y='1507'>external_survey_id</text><title>external_survey_id bigserial not null</title></a>
+<a xlink:href='#external_survey_id'><use id='ref' x='1578' y='1496' xlink:href='#ref'/><title>Referred by external_survey_answers ( external_survey_id ) </title></a>
+  <use id='nn' x='1397' y='1512' xlink:href='#nn'/><a xlink:href='#external_survey'><text x='1413' y='1522'>external_survey</text><title>external_survey varchar not null</title></a>
+  <a xlink:href='#external_survey_description'><text x='1413' y='1537'>external_survey_description</text><title>external_survey_description varchar</title></a>
+  <use id='nn' x='1397' y='1542' xlink:href='#nn'/><a xlink:href='#external_survey_url'><text x='1413' y='1552'>external_survey_url</text><title>external_survey_url varchar not null</title></a>
 
 </g></svg>
 
@@ -1786,581 +1788,6 @@ This stores answers to third party surveys in JSON format&#044; keyed to the ori
 	<tr>
 		<td>fk_question_response_0</td>
 		<td > ( survey&#095;question&#095;id ) ref <a href='#survey&#095;question'>survey&#095;question</a> (survey&#095;question&#095;id) </td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table id='dbs' >
-<thead>
-<tr><th colspan='3'><a name='ag_human_survey'>ag_human_survey</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td><a name='ag_login_id'>ag&#095;login&#095;id</a></td>
-		<td width='40%'> uuid  NOT NULL  </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='participant_name'>participant&#095;name</a></td>
-		<td width='40%'> varchar&#040; 200 &#041;  NOT NULL  </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='consent'>consent</a></td>
-		<td width='40%'> varchar&#040; 20 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='juvenile_age'>juvenile&#095;age</a></td>
-		<td width='40%'> varchar&#040; 20 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='parent_1_name'>parent&#095;1&#095;name</a></td>
-		<td width='40%'> varchar&#040; 200 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='parent_2_name'>parent&#095;2&#095;name</a></td>
-		<td width='40%'> varchar&#040; 200 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='deceased_parent'>deceased&#095;parent</a></td>
-		<td width='40%'> varchar&#040; 20 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='country_of_birth'>country&#095;of&#095;birth</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='birth_date'>birth&#095;date</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='gender'>gender</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='height_in'>height&#095;in</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='height_cm'>height&#095;cm</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='weight_lbs'>weight&#095;lbs</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='weight_kg'>weight&#095;kg</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='phone_num'>phone&#095;num</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='zip_code'>zip&#095;code</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='diet_type'>diet&#095;type</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='multivitamin'>multivitamin</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='supplements'>supplements</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='lactose'>lactose</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='gluten'>gluten</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='foodallergies_peanuts'>foodallergies&#095;peanuts</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='foodallergies_treenuts'>foodallergies&#095;treenuts</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='foodallergies_shellfish'>foodallergies&#095;shellfish</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='foodallergies_other'>foodallergies&#095;other</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='foodallergies_other_text'>foodallergies&#095;other&#095;text</a></td>
-		<td width='40%'> varchar&#040; 400 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='special_restrictions'>special&#095;restrictions</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='drinking_water_source'>drinking&#095;water&#095;source</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='race'>race</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='race_other'>race&#095;other</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='current_residence_duration'>current&#095;residence&#095;duration</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='last_travel'>last&#095;travel</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='livingwith'>livingwith</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='dog'>dog</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='cat'>cat</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='hand'>hand</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='shared_housing'>shared&#095;housing</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='tanning_beds'>tanning&#095;beds</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='tanning_sprays'>tanning&#095;sprays</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='exercise_frequency'>exercise&#095;frequency</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='exercise_location'>exercise&#095;location</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='nails'>nails</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='pool_frequency'>pool&#095;frequency</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='smoking_frequency'>smoking&#095;frequency</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='alcohol_frequency'>alcohol&#095;frequency</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='teethbrushing_frequency'>teethbrushing&#095;frequency</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='flossing_frequency'>flossing&#095;frequency</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='cosmetics_frequency'>cosmetics&#095;frequency</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='deoderant_use'>deoderant&#095;use</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='sleep_duration'>sleep&#095;duration</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='softener'>softener</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='antibiotic_select'>antibiotic&#095;select</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='antibiotic_condition'>antibiotic&#095;condition</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='flu_vaccine_date'>flu&#095;vaccine&#095;date</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='weight_change'>weight&#095;change</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='tonsils_removed'>tonsils&#095;removed</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='appendix_removed'>appendix&#095;removed</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='chickenpox'>chickenpox</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='acne_medication'>acne&#095;medication</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='acne_medication_otc'>acne&#095;medication&#095;otc</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='conditions_medication'>conditions&#095;medication</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='csection'>csection</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='pku'>pku</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='asthma'>asthma</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='seasonal_allergies'>seasonal&#095;allergies</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='nonfoodallergies_drug'>nonfoodallergies&#095;drug</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='nonfoodallergies_dander'>nonfoodallergies&#095;dander</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='nonfoodallergies_beestings'>nonfoodallergies&#095;beestings</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='nonfoodallergies_poisonivy'>nonfoodallergies&#095;poisonivy</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='nonfoodallergies_sun'>nonfoodallergies&#095;sun</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='nonfoodallergies_no'>nonfoodallergies&#095;no</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='ibd'>ibd</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='skin_condition'>skin&#095;condition</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='diabetes'>diabetes</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='migraine'>migraine</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='protein_per'>protein&#095;per</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='fat_per'>fat&#095;per</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='carbohydrate_per'>carbohydrate&#095;per</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='plant_per'>plant&#095;per</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='animal_per'>animal&#095;per</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='fiber_grams'>fiber&#095;grams</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='types_of_plants'>types&#095;of&#095;plants</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='percentage_from_carbs'>percentage&#095;from&#095;carbs</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='primary_vegetable'>primary&#095;vegetable</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='primary_carb'>primary&#095;carb</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='diabetes_diagnose_date'>diabetes&#095;diagnose&#095;date</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='diabetes_medication'>diabetes&#095;medication</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='contraceptive'>contraceptive</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='pregnant'>pregnant</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='pregnant_due_date'>pregnant&#095;due&#095;date</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='frat'>frat</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='communal_dining'>communal&#095;dining</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='roommates'>roommates</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='migraine_frequency'>migraine&#095;frequency</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='migraine_factor_1'>migraine&#095;factor&#095;1</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='mainfactor_other_1'>mainfactor&#095;other&#095;1</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='migraine_factor_2'>migraine&#095;factor&#095;2</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='mainfactor_other_2'>mainfactor&#095;other&#095;2</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='migraine_factor_3'>migraine&#095;factor&#095;3</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='mainfactor_other_3'>mainfactor&#095;other&#095;3</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='migraine_pain'>migraine&#095;pain</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='migraine_photophobia'>migraine&#095;photophobia</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='migraine_phonophobia'>migraine&#095;phonophobia</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='migraine_nausea'>migraine&#095;nausea</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='migraine_aggravation'>migraine&#095;aggravation</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='migraine_aura'>migraine&#095;aura</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='migraine_relatives'>migraine&#095;relatives</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='migrainemeds'>migrainemeds</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='about_yourself_text'>about&#095;yourself&#095;text</a></td>
-		<td width='40%'> varchar&#040; 2000 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='participant_email'>participant&#095;email</a></td>
-		<td width='40%'> varchar&#040; 300 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='participant_name_u'>participant&#095;name&#095;u</a></td>
-		<td width='40%'> varchar&#040; 400 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
-	<tr>		<td>ag&#095;human&#095;survey&#095;pkey primary key</td>
-		<td> ON ag&#095;login&#095;id&#044; participant&#095;name</td>
-		<td>  </td>
-	</tr>
-<tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
-	<tr>
-		<td>fk_ag_hum_surv_to_ag_login</td>
-		<td > ( ag&#095;login&#095;id ) ref <a href='#ag&#095;login'>ag&#095;login</a> (ag&#095;login&#095;id) </td>
 		<td>  </td>
 	</tr>
 </tbody>
@@ -3218,50 +2645,6 @@ This stores answers to third party surveys in JSON format&#044; keyed to the ori
 <br/><br/>
 <table id='dbs' >
 <thead>
-<tr><th colspan='3'><a name='ag_handout_kits'>ag_handout_kits</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td><a name='kit_id'>kit&#095;id</a></td>
-		<td width='40%'> varchar&#040; 9 &#041;  NOT NULL  </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='password'>password</a></td>
-		<td width='40%'> varchar&#040; 11 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='verification_code'>verification&#095;code</a></td>
-		<td width='40%'> varchar&#040; 5 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='swabs_per_kit'>swabs&#095;per&#095;kit</a></td>
-		<td width='40%'> bigint   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='print_results'>print&#095;results</a></td>
-		<td width='40%'> varchar&#040; 1 &#041;   DEFO 'n'::character varying </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='created_on'>created&#095;on</a></td>
-		<td width='40%'> timestamp  NOT NULL  DEFO current_timestamp </td>
-		<td width='99%'>  </td>
-	</tr>
-<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
-	<tr>		<td>pk&#095;ag&#095;handout&#095;kits primary key</td>
-		<td> ON kit&#095;id</td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table id='dbs' >
-<thead>
 <tr><th colspan='3'><a name='ag_login_surveys'>ag_login_surveys</a></th></tr>
 </thead>
 <tbody>
@@ -3364,6 +2747,581 @@ This stores answers to third party surveys in JSON format&#044; keyed to the ori
 <br/><br/>
 <table id='dbs' >
 <thead>
+<tr><th colspan='3'><a name='ag_human_survey'>ag_human_survey</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='ag_login_id'>ag&#095;login&#095;id</a></td>
+		<td width='40%'> uuid  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='participant_name'>participant&#095;name</a></td>
+		<td width='40%'> varchar&#040; 200 &#041;  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='consent'>consent</a></td>
+		<td width='40%'> varchar&#040; 20 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='juvenile_age'>juvenile&#095;age</a></td>
+		<td width='40%'> varchar&#040; 20 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='parent_1_name'>parent&#095;1&#095;name</a></td>
+		<td width='40%'> varchar&#040; 200 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='parent_2_name'>parent&#095;2&#095;name</a></td>
+		<td width='40%'> varchar&#040; 200 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='deceased_parent'>deceased&#095;parent</a></td>
+		<td width='40%'> varchar&#040; 20 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='country_of_birth'>country&#095;of&#095;birth</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='birth_date'>birth&#095;date</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='gender'>gender</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='height_in'>height&#095;in</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='height_cm'>height&#095;cm</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='weight_lbs'>weight&#095;lbs</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='weight_kg'>weight&#095;kg</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='phone_num'>phone&#095;num</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='zip_code'>zip&#095;code</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='diet_type'>diet&#095;type</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='multivitamin'>multivitamin</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='supplements'>supplements</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='lactose'>lactose</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='gluten'>gluten</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='foodallergies_peanuts'>foodallergies&#095;peanuts</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='foodallergies_treenuts'>foodallergies&#095;treenuts</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='foodallergies_shellfish'>foodallergies&#095;shellfish</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='foodallergies_other'>foodallergies&#095;other</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='foodallergies_other_text'>foodallergies&#095;other&#095;text</a></td>
+		<td width='40%'> varchar&#040; 400 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='special_restrictions'>special&#095;restrictions</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='drinking_water_source'>drinking&#095;water&#095;source</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='race'>race</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='race_other'>race&#095;other</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='current_residence_duration'>current&#095;residence&#095;duration</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='last_travel'>last&#095;travel</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='livingwith'>livingwith</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='dog'>dog</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='cat'>cat</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='hand'>hand</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='shared_housing'>shared&#095;housing</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='tanning_beds'>tanning&#095;beds</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='tanning_sprays'>tanning&#095;sprays</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='exercise_frequency'>exercise&#095;frequency</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='exercise_location'>exercise&#095;location</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='nails'>nails</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='pool_frequency'>pool&#095;frequency</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='smoking_frequency'>smoking&#095;frequency</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='alcohol_frequency'>alcohol&#095;frequency</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='teethbrushing_frequency'>teethbrushing&#095;frequency</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='flossing_frequency'>flossing&#095;frequency</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='cosmetics_frequency'>cosmetics&#095;frequency</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='deoderant_use'>deoderant&#095;use</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='sleep_duration'>sleep&#095;duration</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='softener'>softener</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='antibiotic_select'>antibiotic&#095;select</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='antibiotic_condition'>antibiotic&#095;condition</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='flu_vaccine_date'>flu&#095;vaccine&#095;date</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='weight_change'>weight&#095;change</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='tonsils_removed'>tonsils&#095;removed</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='appendix_removed'>appendix&#095;removed</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='chickenpox'>chickenpox</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='acne_medication'>acne&#095;medication</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='acne_medication_otc'>acne&#095;medication&#095;otc</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='conditions_medication'>conditions&#095;medication</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='csection'>csection</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='pku'>pku</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='asthma'>asthma</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='seasonal_allergies'>seasonal&#095;allergies</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='nonfoodallergies_drug'>nonfoodallergies&#095;drug</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='nonfoodallergies_dander'>nonfoodallergies&#095;dander</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='nonfoodallergies_beestings'>nonfoodallergies&#095;beestings</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='nonfoodallergies_poisonivy'>nonfoodallergies&#095;poisonivy</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='nonfoodallergies_sun'>nonfoodallergies&#095;sun</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='nonfoodallergies_no'>nonfoodallergies&#095;no</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='ibd'>ibd</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='skin_condition'>skin&#095;condition</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='diabetes'>diabetes</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='migraine'>migraine</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='protein_per'>protein&#095;per</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='fat_per'>fat&#095;per</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='carbohydrate_per'>carbohydrate&#095;per</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='plant_per'>plant&#095;per</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='animal_per'>animal&#095;per</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='fiber_grams'>fiber&#095;grams</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='types_of_plants'>types&#095;of&#095;plants</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='percentage_from_carbs'>percentage&#095;from&#095;carbs</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='primary_vegetable'>primary&#095;vegetable</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='primary_carb'>primary&#095;carb</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='diabetes_diagnose_date'>diabetes&#095;diagnose&#095;date</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='diabetes_medication'>diabetes&#095;medication</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='contraceptive'>contraceptive</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='pregnant'>pregnant</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='pregnant_due_date'>pregnant&#095;due&#095;date</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='frat'>frat</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='communal_dining'>communal&#095;dining</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='roommates'>roommates</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='migraine_frequency'>migraine&#095;frequency</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='migraine_factor_1'>migraine&#095;factor&#095;1</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='mainfactor_other_1'>mainfactor&#095;other&#095;1</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='migraine_factor_2'>migraine&#095;factor&#095;2</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='mainfactor_other_2'>mainfactor&#095;other&#095;2</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='migraine_factor_3'>migraine&#095;factor&#095;3</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='mainfactor_other_3'>mainfactor&#095;other&#095;3</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='migraine_pain'>migraine&#095;pain</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='migraine_photophobia'>migraine&#095;photophobia</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='migraine_phonophobia'>migraine&#095;phonophobia</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='migraine_nausea'>migraine&#095;nausea</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='migraine_aggravation'>migraine&#095;aggravation</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='migraine_aura'>migraine&#095;aura</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='migraine_relatives'>migraine&#095;relatives</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='migrainemeds'>migrainemeds</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='about_yourself_text'>about&#095;yourself&#095;text</a></td>
+		<td width='40%'> varchar&#040; 2000 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='participant_email'>participant&#095;email</a></td>
+		<td width='40%'> varchar&#040; 300 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='participant_name_u'>participant&#095;name&#095;u</a></td>
+		<td width='40%'> varchar&#040; 400 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
+	<tr>		<td>ag&#095;human&#095;survey&#095;pkey primary key</td>
+		<td> ON ag&#095;login&#095;id&#044; participant&#095;name</td>
+		<td>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
+	<tr>
+		<td>fk_ag_hum_surv_to_ag_login</td>
+		<td > ( ag&#095;login&#095;id ) ref <a href='#ag&#095;login'>ag&#095;login</a> (ag&#095;login&#095;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table id='dbs' >
+<thead>
 <tr><th colspan='3'><a name='external_survey_answers'>external_survey_answers</a></th></tr>
 <tr><td colspan='3'>This stores answers to third party surveys in JSON format&#044; keyed to the original survey ID </td></tr>
 </thead>
@@ -3389,12 +3347,12 @@ This stores answers to third party surveys in JSON format&#044; keyed to the ori
 		<td width='99%'>  </td>
 	</tr>
 <tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
-	<tr>		<td>pk&#095;third&#095;party&#095;surveys primary key</td>
-		<td> ON survey&#095;id</td>
-		<td>  </td>
-	</tr>
 	<tr>		<td>idx&#095;external&#095;survey </td>
 		<td> ON external&#095;survey&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>pk&#095;third&#095;party&#095;surveys primary key</td>
+		<td> ON survey&#095;id&#044; external&#095;survey&#095;id&#044; pulldown&#095;date</td>
 		<td>  </td>
 	</tr>
 <tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
@@ -3405,7 +3363,7 @@ This stores answers to third party surveys in JSON format&#044; keyed to the ori
 	</tr>
 	<tr>
 		<td>fk_external_survey</td>
-		<td > ( external&#095;survey&#095;id ) ref <a href='#external&#095;survey'>external&#095;survey</a> (external&#095;survey&#095;id) </td>
+		<td > ( external&#095;survey&#095;id ) ref <a href='#external&#095;survey&#095;sources'>external&#095;survey&#095;sources</a> (external&#095;survey&#095;id) </td>
 		<td>  </td>
 	</tr>
 </tbody>
@@ -3414,27 +3372,42 @@ This stores answers to third party surveys in JSON format&#044; keyed to the ori
 <br/><br/>
 <table id='dbs' >
 <thead>
-<tr><th colspan='3'><a name='external_survey'>external_survey</a></th></tr>
+<tr><th colspan='3'><a name='ag_handout_kits'>ag_handout_kits</a></th></tr>
 </thead>
 <tbody>
 	<tr>
-		<td><a name='external_survey_id'>external&#095;survey&#095;id</a></td>
-		<td width='40%'> bigserial  NOT NULL  </td>
+		<td><a name='kit_id'>kit&#095;id</a></td>
+		<td width='40%'> varchar&#040; 9 &#041;  NOT NULL  </td>
 		<td width='99%'>  </td>
 	</tr>
 	<tr>
-		<td><a name='external_survey'>external&#095;survey</a></td>
-		<td width='40%'> varchar  NOT NULL  </td>
+		<td><a name='password'>password</a></td>
+		<td width='40%'> varchar&#040; 11 &#041;   </td>
 		<td width='99%'>  </td>
 	</tr>
 	<tr>
-		<td><a name='external_survey_description'>external&#095;survey&#095;description</a></td>
-		<td width='40%'> varchar   </td>
+		<td><a name='verification_code'>verification&#095;code</a></td>
+		<td width='40%'> varchar&#040; 5 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='swabs_per_kit'>swabs&#095;per&#095;kit</a></td>
+		<td width='40%'> bigint   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='print_results'>print&#095;results</a></td>
+		<td width='40%'> varchar&#040; 1 &#041;   DEFO 'n'::character varying </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='created_on'>created&#095;on</a></td>
+		<td width='40%'> timestamp  NOT NULL  DEFO current_timestamp </td>
 		<td width='99%'>  </td>
 	</tr>
 <tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
-	<tr>		<td>pk&#095;external&#095;surveys primary key</td>
-		<td> ON external&#095;survey&#095;id</td>
+	<tr>		<td>pk&#095;ag&#095;handout&#095;kits primary key</td>
+		<td> ON kit&#095;id</td>
 		<td>  </td>
 	</tr>
 </tbody>
@@ -3462,16 +3435,12 @@ This stores answers to third party surveys in JSON format&#044; keyed to the ori
 		<td width='99%'>  </td>
 	</tr>
 <tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
-	<tr>		<td>idx&#095;handout&#095;barcode primary key</td>
-		<td> ON kit&#095;id&#044; barcode</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;handout&#095;barcode&#095;0 </td>
-		<td> ON barcode</td>
-		<td>  </td>
-	</tr>
 	<tr>		<td>idx&#095;handout&#095;barcode&#095;1 </td>
 		<td> ON kit&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>pk&#095;ag&#095;handout&#095;barcodes primary key</td>
+		<td> ON barcode</td>
 		<td>  </td>
 	</tr>
 <tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
@@ -3483,6 +3452,40 @@ This stores answers to third party surveys in JSON format&#044; keyed to the ori
 	<tr>
 		<td>fk_handout_barcode_0</td>
 		<td > ( kit&#095;id ) ref <a href='#ag&#095;handout&#095;kits'>ag&#095;handout&#095;kits</a> (kit&#095;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table id='dbs' >
+<thead>
+<tr><th colspan='3'><a name='external_survey_sources'>external_survey_sources</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='external_survey_id'>external&#095;survey&#095;id</a></td>
+		<td width='40%'> bigserial  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='external_survey'>external&#095;survey</a></td>
+		<td width='40%'> varchar  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='external_survey_description'>external&#095;survey&#095;description</a></td>
+		<td width='40%'> varchar   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='external_survey_url'>external&#095;survey&#095;url</a></td>
+		<td width='40%'> varchar  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
+	<tr>		<td>pk&#095;external&#095;surveys primary key</td>
+		<td> ON external&#095;survey&#095;id</td>
 		<td>  </td>
 	</tr>
 </tbody>
