@@ -89,6 +89,7 @@ media_locale = {
 _HANDLERS = {
     'PARTICIPANT_EXISTS': 'Participant %s already exists!',
     'SUCCESSFULLY_ADDED': "Successfully added %s!",
+    'MISSING_NAME_EMAIL': 'Missing participant name or email. Please retry, adding all required information.',
     'AUTH_REGISTER_SUBJECT': "%(project_shorthand)s Verification Code" % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
     'AUTH_REGISTER_PGP': "\n\nFor the PGP cohort, we are requesting that you collect one sample from each of the following sites:\n\nLeft hand\nRight hand\nForehead\nMouth\nFaecal\n\nThis is important to ensure that we have the same types of samples for all PGP participants which, in turn, could be helpful in downstream analysis when looking for relationships between the microbiome and the human genome\n\n.",
     'AUTH_REGISTER_BODY': "Thank you for registering with the %(project_name)s! Your verification code is:\n\n{0}\n\nYou will need this code to verifiy your kit on the %(project_shorthand)s webstite. To get started, please log into:\n\nhttp://microbio.me/BritishGut\n\nEnter the kit_id and password found inside your kit, verify the contents of your kit, and enter the verification code found in this email.{1}\n\nSincerely,\nThe %(project_shorthand)s Team" % {'project_shorthand': AMGUT_CONFIG.project_shorthand, 'project_name': AMGUT_CONFIG.project_name},
@@ -924,8 +925,8 @@ _HUMAN_SURVEY_COMPLETED = {
     'COMPLETED_HEADER': 'Congratulations!',
     'COMPLETED_TEXT': 'You are now an enrolled participant in the %(PROJECT_TITLE)s!' % media_locale,
     'AVAILABLE_SURVEYS': 'Below are a few additional surveys that you may be interested in completing. There is no requirement to take these surveys, and your decision does not affect your involvement in the project in any way.',
-    'SURVEY_ASD': '<a href="http://www.anl.gov/contributors/jack-gilbert">Dr. Jack Gilbert</a> is exploring the relationship between gut dysbiosis and Autism Spectrum Disorders, and in conjunction with the British Gut Project, we started an ASD-Cohort study. This additional survey contains questions specific to that cohort, but it is open to any participant to take if they so choose. Please click <a href="%s">here</a> to take the ASD-Cohort survey.',
-    'SURVEY_VIOSCREEN': 'The British Gut Project and its sister projects are very interested in diet. If you\'d like to provide additional detail about your diet, please click <a href="%s">here</a> to take a detailed diet survey (known as an Food Frequency Questionnaire). This is a validated FFQ, and is the one used by the Mayo Clinic.'
+    'SURVEY_ASD': '<h3 style="text-align: center"><a href="%s">ASD-Cohort survey</a></h3><a href="http://www.anl.gov/contributors/jack-gilbert">Dr. Jack Gilbert</a> is exploring the relationship between gut dysbiosis and Autism Spectrum Disorders, and in conjunction with the British Gut Project, we started an ASD-Cohort study. This additional survey contains questions specific to that cohort, but it is open to any participant to take if they so choose.',
+    'SURVEY_VIOSCREEN': '<h3 style="text-align: center"><a href="%s">Dietary Survey</a></h3>The British Gut Project and its sister projects are very interested in diet. If you\'d like to provide additional detail about your diet, please click above to take a detailed diet survey (known as an Food Frequency Questionnaire). This is a validated FFQ, and is the one used by the Mayo Clinic.'
 }
 
 _NOJS = {
