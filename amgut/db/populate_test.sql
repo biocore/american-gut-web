@@ -90,3 +90,7 @@ insert into survey_answers (survey_id, survey_question_id, response)
     values (19, 1, 'Unspecified');
 insert into survey_answers (survey_id, survey_question_id, response)
     values (19, 2, 'Yes');
+insert into external_survey_sources (external_survey, external_survey_description, external_survey_url)
+    values ('vioscreen', 'dietary survey', 'http://fakevioscreenurl.com/%s');
+insert into external_survey_answers (survey_id, external_survey_id, pulldown_date, answers)
+    values (19, 1, '2015-07-20', '{"chicken":"lots","grains":"some","greens":5}');
