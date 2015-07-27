@@ -77,10 +77,10 @@ insert into project_barcode (project_id, barcode) values (1, '000010860'), (1, '
             '12/02/2013','foo','06:20 AM','','','N','N','N','','None','Y','N','N'),
         ('ded369ec-7d0f-4d8c-e040-8a80115d6742','d8592c74-7da2-2135-e040-8a80115d6401','000006616',19,'000006616.jpg','','Nasal mucus','08/12/2014',
             'MAKE SURE THIS IS BEING PASSED','12:05 PM','','','','','','','','','','');
-insert into ag_handout_kits (kit_id, password, barcode, verification_code, swabs_per_kit, print_results)
-    values('test_ha', '$2a$12$GfYI6sxlVGTamDJ3FEQzMuQ46eSV6YJ.DxUxiZvKJaAn1NJtTDtFS', '000000002', '5678', '3', 'n'),
-          ('test_ha', '$2a$12$GfYI6sxlVGTamDJ3FEQzMuQ46eSV6YJ.DxUxiZvKJaAn1NJtTDtFS', '000000003', '5678', '3', 'n'),
-          ('test_ha', '$2a$12$GfYI6sxlVGTamDJ3FEQzMuQ46eSV6YJ.DxUxiZvKJaAn1NJtTDtFS', '000000004', '5678', '3', 'n');
+insert into ag_handout_kits (kit_id, password, verification_code, swabs_per_kit, print_results)
+    values('test_ha', '$2a$12$GfYI6sxlVGTamDJ3FEQzMuQ46eSV6YJ.DxUxiZvKJaAn1NJtTDtFS', '5678', '3', 'n');
+insert into ag_handout_barcodes (kit_id, barcode)
+    values ('test_ha', '000000002'),('test_ha', '000000003'),('test_ha', '000000004');
 insert into ag_participant_exceptions (ag_login_id, participant_name)
     values ('d8592c74-7da1-2135-e040-8a80115d6401', 'exception');
 insert into ag_login_surveys (ag_login_id, survey_id, participant_name)
