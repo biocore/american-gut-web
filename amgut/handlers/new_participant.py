@@ -30,18 +30,23 @@ class NewParticipantHandler(BaseHandler):
     """"""
     @authenticated
     def get(self):
-        self.render("new_participant.html", skid=self.current_user)
+        self.render("new_participant.html", skid=self.current_user, message='')
 
     @authenticated
     def post(self):
         tl = text_locale['handlers']
-        participant_name = self.get_argument("participant_name")
-        participant_email = self.get_argument("participant_email")
+        participant_name = self.get_argument("participant_name").strip()
+        participant_email = self.get_argument("participant_email").strip()
         age_range = self.get_argument("age_range")
         parent_1_name = self.get_argument("parent_1_name", None)
         parent_2_name = self.get_argument("parent_2_name", None)
         obtainer_name = self.get_argument("obtainer_name", None)
         deceased_parent = self.get_argument("deceased_parent", 'No')
+
+        if not participant_name or not participant_email:
+            self.render("new_participant.html", skid=self.current_user,
+                        message=tl['MISSING_NAME_EMAIL'])
+            return
 
         ag_login_id = ag_data.get_user_for_kit(self.current_user)
 
