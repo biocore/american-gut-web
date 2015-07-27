@@ -2,11 +2,11 @@
 ALTER TABLE ag.ag_handout_kits ADD created_on timestamp DEFAULT current_timestamp NOT NULL;
 
 -- Create new ag_handout_barcodes table
-CREATE TABLE ag.ag_handout_barcodes ( 
+CREATE TABLE ag.ag_handout_barcodes (
 	kit_id               varchar  NOT NULL,
-	barcode              varchar(9)  NOT NULL UNIQUE,
+	barcode              varchar(9)  NOT NULL,
 	sample_barcode_file  varchar(13),
-	CONSTRAINT idx_ag_handout_barcodes PRIMARY KEY ( kit_id, barcode )
+	CONSTRAINT idx_ag_handout_barcodes PRIMARY KEY ( barcode )
  );
 
 CREATE INDEX idx_ag_handout_barcodes_0 ON ag.ag_handout_barcodes ( barcode );
@@ -19,7 +19,7 @@ ALTER TABLE ag.ag_handout_barcodes ADD CONSTRAINT fk_ag_handout_barcodes FOREIGN
 INSERT INTO ag.ag_handout_barcodes (kit_id, barcode, sample_barcode_file)
 SELECT kit_id, barcode, sample_barcode_file FROM ag.ag_handout_kits;
 
--- Delete duplicate handout rows and unneded columns from handouts table
+-- Delete duplicate handout rows and unneeded columns from handouts table
 DELETE FROM ag.ag_handout_kits WHERE barcode NOT IN (SELECT max(barcode) FROM ag.ag_handout_kits);
 
 ALTER TABLE ag.ag_handout_kits DROP COLUMN barcode, DROP COLUMN sample_barcode_file;
