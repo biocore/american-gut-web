@@ -1,4 +1,4 @@
-SET search_path TO ag, public, barcodes;
+SET search_path TO ag, barcodes, public;
 ----------------------------------------------------------
 -- survey_group
 ----------------------------------------------------------
