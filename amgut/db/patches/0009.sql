@@ -9,8 +9,6 @@ CREATE TABLE ag.ag_handout_barcodes (
 	CONSTRAINT idx_ag_handout_barcodes PRIMARY KEY ( barcode )
  );
 
-CREATE INDEX idx_ag_handout_barcodes_0 ON ag.ag_handout_barcodes ( barcode );
-
 CREATE INDEX idx_ag_handout_barcodes_1 ON ag.ag_handout_barcodes ( kit_id );
 
 ALTER TABLE ag.ag_handout_barcodes ADD CONSTRAINT fk_ag_handout_barcodes FOREIGN KEY ( barcode ) REFERENCES ag.barcode( barcode );
@@ -20,7 +18,7 @@ INSERT INTO ag.ag_handout_barcodes (kit_id, barcode, sample_barcode_file)
 SELECT kit_id, barcode, sample_barcode_file FROM ag.ag_handout_kits;
 
 -- Delete duplicate handout rows and unneeded columns from handouts table
-DELETE FROM ag.ag_handout_kits WHERE barcode NOT IN (SELECT max(barcode) FROM ag.ag_handout_kits);
+DELETE FROM ag.ag_handout_kits WHERE barcode NOT IN (SELECT max(barcode) FROM ag.ag_handout_kits GROUP BY kit_id);
 
 ALTER TABLE ag.ag_handout_kits DROP COLUMN barcode, DROP COLUMN sample_barcode_file;
 
