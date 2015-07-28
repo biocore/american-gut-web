@@ -1,5 +1,5 @@
 -- Populates the test database
-SET search_path TO ag, public;
+SET search_path TO ag, barcodes, public;
 
 INSERT INTO ag_login (
   ag_login_id,
