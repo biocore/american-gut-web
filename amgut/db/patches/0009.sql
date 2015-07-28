@@ -225,6 +225,3 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (143, 'Moderate', 2);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (143, 'Low', 3);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (143, 'Never', 4);
-----------------------------------------------------------
--- survey_question_triggers
-----------------------------------------------------------

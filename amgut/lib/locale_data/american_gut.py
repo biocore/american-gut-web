@@ -86,8 +86,8 @@ media_locale = {
 }
 
 _HANDLERS = {
-    'JUVENILE_CONSENT_EXPECTED': "We are expecting a manual consent form for the juvenile user (%s)",
     'PARTICIPANT_EXISTS': 'Participant %s already exists!',
+    'MISSING_NAME_EMAIL': 'Missing participant name or email. Please retry, adding all required information.',
     'SUCCESSFULLY_ADDED': "Successfully added %s!",
     'AUTH_REGISTER_SUBJECT': "%(project_shorthand)s Verification Code" % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
     'AUTH_REGISTER_PGP': "\n\nFor the PGP cohort, we are requesting that you collect one sample from each of the following sites:\n\nLeft hand\nRight hand\nForehead\nMouth\nFecal\n\nThis is important to ensure that we have the same types of samples for all PGP participants which, in turn, could be helpful in downstream analysis when looking for relationships between the microbiome and the human genome\n\n.",
@@ -939,8 +939,8 @@ _HUMAN_SURVEY_COMPLETED = {
     'COMPLETED_HEADER': 'Congratulations!',
     'COMPLETED_TEXT': 'You are now an enrolled participant in the %(PROJECT_TITLE)s!' % media_locale,
     'AVAILABLE_SURVEYS': 'Below are a few additional surveys that you may be interested in completing. There is no requirement to take these surveys, and your decision does not affect your involvement in the project in any way.',
-    'SURVEY_ASD': '<a href="http://www.anl.gov/contributors/jack-gilbert">Dr. Jack Gilbert</a> is exploring the relationship between gut dysbiosis and Autism Spectrum Disorders, and in conjunction with the American Gut Project, we started an ASD-Cohort study. This additional survey contains questions specific to that cohort, but it is open to any participant to take if they so choose. Please click <a href="%s">here</a> to take the ASD-Cohort survey.',
-    'SURVEY_VIOSCREEN': 'The American Gut Project and its sister projects are very interested in diet. If you\'d like to provide additional detail about your diet, please click <a href="%s">here</a> to take a detailed diet survey (known as an Food Frequency Questionnaire). This is a validated FFQ, and is the one used by the Mayo Clinic.'
+    'SURVEY_ASD': '<h3 style="text-align: center"><a href="%s">ASD-Cohort survey</a></h3><a href="http://www.anl.gov/contributors/jack-gilbert">Dr. Jack Gilbert</a> is exploring the relationship between gut dysbiosis and Autism Spectrum Disorders, and in conjunction with the American Gut Project, we started an ASD-Cohort study. This additional survey contains questions specific to that cohort, but it is open to any participant to take if they so choose.',
+    'SURVEY_VIOSCREEN': '<h3 style="text-align: center"><a href="%s">Dietary Survey</a></h3>The American Gut Project and its sister projects are very interested in diet. If you\'d like to provide additional detail about your diet, please click the link above to take a detailed diet survey (known as an Food Frequency Questionnaire). This is a validated FFQ, and is the one used by the Mayo Clinic.'
 }
 
 _SURVEY_MAIN = {
