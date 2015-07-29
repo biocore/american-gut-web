@@ -1,0 +1,16 @@
+{% extends sitebase.html %}
+{% block head %}
+<script type="text/javascript">
+$(document).ready(function() {
+  document.getElementById('badurl').innerHTML = "<h2>" + document.URL + "</h2>";
+});
+</script>
+{% end %}
+{%block content%}
+{% from amgut import text_locale %}
+{% set tl = text_locale['403.html'] %}
+<h1>{% raw tl['MAIN_WARNING'] %}</h1>
+{% raw tl['HELP_TEXT'] %}
+
+<div id='badurl'></div>
+{% end %}
