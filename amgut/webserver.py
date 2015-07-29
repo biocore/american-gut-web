@@ -90,7 +90,7 @@ class QiimeWebApplication(Application):
             (r"/participants/(.*)", ParticipantOverviewHandler),
             (r"/international_shipping/", InternationalHandler),
             (r"/check_participant_name/", CheckParticipantName),
-            (r"/taxa_summaries/(.*)", TaxaSummaryHandler),
+            (r"/authed/taxa_summaries/(.*)", TaxaSummaryHandler),
             (r"/retrieve_kitid/", KitIDHandler),
             (r"/forgot_password/", ForgotPasswordHandler),
             (r"/change_pass_verify/", ChangePassVerifyHandler),
