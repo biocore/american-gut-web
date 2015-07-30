@@ -68,8 +68,7 @@ def create_database(force=False):
 
 
 def procedures():
-    procedure_path = join(dirname(dirname(abspath(__file__))),
-                          "amgut", "lib", "data_access", "procedures")
+    procedure_path = join(dirname(abspath(__file__)), "procedures")
 
     return [join(procedure_path, p)
             for p in glob(join(procedure_path, '*.sql'))]
