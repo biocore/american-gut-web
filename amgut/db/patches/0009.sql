@@ -55,7 +55,7 @@ INSERT INTO group_questions (survey_group, survey_question_id, display_index) VA
 INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-2, 142, 15);
 INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-2, 143, 16);
 INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-2, 144, 17);
-INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-2, 145, 17);
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-2, 145, 18);
 
 
 ----------------------------------------------------------
@@ -75,7 +75,7 @@ INSERT INTO survey_question_response_type (survey_question_id, survey_response_t
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (138, 'SINGLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (139, 'SINGLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (140, 'STRING');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (141, 'STRING');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (141, 'MULTIPLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (142, 'SINGLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (143, 'SINGLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (144, 'SINGLE');
@@ -210,6 +210,10 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Reptile', 7);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Amphibian', 8);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Other', 9);
+
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (141, 'Unspecified', 0);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (141, 'Male', 1);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (141, 'Female', 2);
 
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (142, 'Unspecified', 0);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (142, 'None', 1);
