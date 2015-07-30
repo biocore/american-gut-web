@@ -25,7 +25,9 @@ class DownloadHandler(BaseHandler):
         has_access = ag_data.check_access(self.current_user, barcode)
 
         if not has_access:
-            raise HTTPError(403, "Access forbidden")
+            self.set_status(403)
+            self.render("403.html", skid=self.current_user)
+            return
 
         if filetype not in FILETYPES:
             raise HTTPError(400, "Unrecognized filetype")

@@ -23,7 +23,7 @@ class SQLConnectionHandler(object):
         else:
             self._connection = con
 
-        self.execute('SET search_path TO ag, public')
+        self.execute('SET search_path TO ag, barcodes, public')
 
     def __del__(self):
         self._connection.close()

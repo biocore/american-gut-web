@@ -6,12 +6,9 @@
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
 from json import loads, dumps
-from os.path import abspath, join, dirname
-from functools import partial
 from collections import defaultdict
 
 from future.utils import viewitems
-from psycopg2 import connect
 from tornado.escape import url_escape
 from wtforms import Form
 
@@ -19,13 +16,9 @@ from amgut import media_locale, text_locale
 from amgut.connections import ag_data, redis
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.lib.vioscreen import encrypt_key
-
-
-get_db_file = partial(join, join(dirname(dirname(abspath(__file__))), 'db'))
-LAYOUT_FP = get_db_file('ag_unpatched.sql')
-INITIALIZE_FP = get_db_file('initialize.sql')
-POPULATE_FP = get_db_file('populate_test.sql')
-PATCHES_DIR = get_db_file('patches')
+from amgut.lib.data_access.env_management import (
+    create_database, build_and_initialize, make_settings_table, patch_db,
+    populate_test_db, drop_schema)
 
 
 def reset_test_database(wrapped_fn):
@@ -34,31 +27,11 @@ def reset_test_database(wrapped_fn):
     """
 
     def decorated_wrapped_fn(*args, **kwargs):
-        conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
-                       host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
-                       database=AMGUT_CONFIG.database)
-        cur = conn.cursor()
-        # Drop the schema
-        # cur.execute("DROP SCHEMA public CASCADE")
-
-        # Create the public schema
-        # cur.execute("CREATE SCHEMA public")
-
-        # Build the SQL layout
-        # with open(LAYOUT_FP, 'U') as f:
-        #     cur.execute(f.read())
-
-        # Initialize the test db
-        # with open(INITIALIZE_FP) as f:
-        #     cur.execute(f.read)
-
-        # Populate the test db
-        # with open(POPULATE_FP) as f:
-        #     cur.execute(f.read)
-
-        conn.commit()
-        cur.close()
-        conn.close()
+        drop_schema()
+        build_and_initialize()
+        make_settings_table()
+        patch_db()
+        populate_test_db()
 
         return wrapped_fn(*args, **kwargs)
 
