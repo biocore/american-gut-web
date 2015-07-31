@@ -728,6 +728,18 @@ function validateAnimalSurvey() {
         $('#Pet_Information_128_0').addClass("highlight");
         ret = false;
     }
+
+    intcheck = $('.integer')
+    for(i=0;i<intcheck.length;i++) {
+        textbox = intcheck[i];
+        var value = Number(textbox.value);
+        if (Math.floor(value) == value) {
+            $(textbox).removeClass('highlight');
+        } else {
+            $(textbox).addClass('highlight');
+            ret = false;
+        }
+    }
     return ret;
 }
 
