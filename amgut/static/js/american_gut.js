@@ -1001,3 +1001,14 @@ function kgToLbs() {
 function reset(formID) {
     document.getElementById(formID).reset();
 }
+
+function toggle_div(div_id, form_item_id, indices) {
+    var selected_index = $("#"+form_item_id).prop("selectedIndex");
+
+    if (indices.indexOf(selected_index) > -1) {
+        $("#"+div_id).slideDown(100);
+    }
+    else {
+        $("#"+div_id).slideUp(100);
+    };
+}

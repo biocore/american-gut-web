@@ -10,6 +10,20 @@
     function clone_human() {
       clone = $("#questions").clone(false,false,false).appendTo($("#otherhuman-div"));
     }
+
+    function checkInt(textbox) {
+      var value = Number(textbox.value);
+      if (Math.floor(value) == value) {
+        $(textbox).removeClass('highlight');
+        } else {
+        $(textbox).addClass('highlight');
+        $(textbox).val('');
+      }
+    }
+
+    $(document).ready(function() {
+      $("div[id^=supp_]").hide();
+    });
 </script>
 <style>
 input[type="checkbox"] {
@@ -47,30 +61,53 @@ ul {
     <div class="lefta">
         <table id="mainsurveytable">
         {% for form_item in the_form %}
+        {% if form_item.id in the_form.supplemental_eids %}
+            {% continue %}
+        {% end %}
+        {% set kwargs = {} %}
+        {% if form_item.id in the_form.triggers %}
+            {% set supp_div_id = "supp_" + form_item.id + "_div" %}
+            {% set kwargs["onchange"] = "toggle_div('" + supp_div_id + "', '" + form_item.id + "', " + repr(the_form.triggers[form_item.id]) + ");" %}
+        {% end %}
         {% if  form_item.id == 'Pet_Information_141_0' %}
           {% continue %}
+        {% end %}
+        {% if  form_item.id in {'Pet_Information_130_0', 'Pet_Information_140_0'} %}
+          {% set kwargs["onchange"] = "checkInt(this)" %}
         {% end %}
           <tr class="questionrow">
             <td width="50%" class="tdmainform">{% raw the_form.prompts[form_item.id] %}</td>
             <td>
               {% if  form_item.id == 'Pet_Information_139_0' %}
               <div id="otherpet-div">
-              {% raw form_item() %}
+              {% raw form_item(**kwargs) %}
               </div>
               <a href="#" onclick="clone_pet(); return false;">+ Add another animal</a>
               {% elif  form_item.id == 'Pet_Information_140_0' %}
               <div id="otherhuman-div">
                 <div id="questions">
-                {% raw form_item() %} years<br/>
+                {% raw form_item(**kwargs) %} years<br/>
                 {% raw the_form['Pet_Information_141_0']() %}<br/>
                 </div>
               </div>
               <a href="#" onclick="clone_human(); return false;">+ Add another person</a>
               {% else %}
-              {% raw form_item() %}
+              {% raw form_item(**kwargs) %}
               {% end %}
             </td>
           </tr>
+          {% if form_item.id in the_form.triggers %}
+          <tr>
+              <td colspan="2">
+                  <div id="{{ supp_div_id }}" style="text-align: center"> 
+                      {% for eid in the_form.triggered[form_item.id] %}
+                          {% raw the_form.prompts[eid] %}
+                          {% raw the_form[eid]() %}
+                      {% end %}
+                  </div>
+              </td>
+          </tr>
+          {% end %}
         {% end %}
           <tr>
             <td colspan=2><center><input type="submit" class="ui-button-text"></center></td>

@@ -26,12 +26,13 @@ INSERT INTO survey_question (survey_question_id, question_shortname, american, b
 INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (137, 'FOOD_SPECIAL', 'Food special attributes', 'Food special attributes');
 INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (138, 'LIVING_STATUS', 'Living status', 'Living status');
 INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (139, 'OTHER_ANIMALS', 'Add any pets that the current animal lives with', 'Add any pets that the current animal lives with');
-INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (140, 'HUMANS_AGE', 'Add the age of any humans that the current animal lives with', 'Add the age of any humans that the current animal lives with');
+INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (140, 'HUMANS_AGE', 'Add the age (in years) of any humans that the current animal lives with', 'Add the age (in years) of any humans that the current animal lives with');
 INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (141, 'HUMANS_GENDER', 'Add the gender of any humans that the current animal lives with', 'Add the gender of any humans that the current animal lives with');
 INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (142, 'HOURS_OUTSIDE', 'Hours spent outside', 'Hours spent outside');
 INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (143, 'TOILET_WATER_ACCESS', 'Toilet water access', 'Toilet water access');
 INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (144, 'COPROPHAGE', 'Coprophage', 'Coprophage');
 INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (145, 'ANIMAL_FREE_TEXT', 'Please write anything else about this animal that you think might affect its microorganisms.', 'Please write anything else about this animal that you think might affect its microorganisms.');
+INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (146, 'ANIMAL_TYPE_FREE_TEXT', 'Please enter the animal type', 'Please enter the animal type');
 
 ----------------------------------------------------------
 -- group_questions
@@ -56,6 +57,7 @@ INSERT INTO group_questions (survey_group, survey_question_id, display_index) VA
 INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-2, 143, 16);
 INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-2, 144, 17);
 INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-2, 145, 18);
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-2, 146, 19);
 
 
 ----------------------------------------------------------
@@ -80,6 +82,7 @@ INSERT INTO survey_question_response_type (survey_question_id, survey_response_t
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (143, 'SINGLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (144, 'SINGLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (145, 'TEXT');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (146, 'STRING');
 
 ----------------------------------------------------------
 -- survey_response
@@ -232,3 +235,7 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (144, 'Moderate', 2);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (144, 'Low', 3);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (144, 'Never', 4);
+----------------------------------------------------------
+-- survey_question_triggers
+----------------------------------------------------------
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (128, 146, 'Other');
