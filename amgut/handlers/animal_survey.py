@@ -1,5 +1,5 @@
 from urllib import urlencode
-from json import loads, dumps
+from json import dumps
 import binascii
 import os
 
@@ -21,8 +21,13 @@ class AnimalSurveyHandler(BaseHandler):
     @authenticated
     def get(self):
         skid = self.current_user
+        survey_id = self.get_argument('survey', '')
+
+        form = self.animal_survey()
+        if survey_id:
+            form.process(data=primary_animal_survey.fetch_survey(survey_id))
         self.render('animal_survey.html', skid=skid,
-                    the_form=self.animal_survey())
+                    the_form=form, survey_id=survey_id)
 
     @authenticated
     def post(self):
@@ -30,7 +35,9 @@ class AnimalSurveyHandler(BaseHandler):
         tl = text_locale['handlers']
         ag_login_id = ag_data.get_user_for_kit(skid)
         ag_login_info = ag_data.get_login_info(ag_login_id)[0]
-        animal_survey_id = binascii.hexlify(os.urandom(8))
+        animal_survey_id = self.get_argument('survey_id', None)
+        if not animal_survey_id:
+            animal_survey_id = binascii.hexlify(os.urandom(8))
 
         form = self.animal_survey()
         form.process(data=self.request.arguments)
