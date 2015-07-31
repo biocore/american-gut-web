@@ -25,14 +25,13 @@ INSERT INTO survey_question (survey_question_id, question_shortname, american, b
 INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (136, 'FOOD_TYPE', 'Food type', 'Food type');
 INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (137, 'FOOD_SPECIAL', 'Food special attributes', 'Food special attributes');
 INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (138, 'LIVING_STATUS', 'Living status', 'Living status');
-INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (139, 'OTHER_ANIMALS', 'Add any pets that the current animal lives with', 'Add any pets that the current animal lives with');
-INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (140, 'HUMANS_AGE', 'Add the age (in years) of any humans that the current animal lives with', 'Add the age (in years) of any humans that the current animal lives with');
-INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (141, 'HUMANS_GENDER', 'Add the gender of any humans that the current animal lives with', 'Add the gender of any humans that the current animal lives with');
-INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (142, 'HOURS_OUTSIDE', 'Hours spent outside', 'Hours spent outside');
-INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (143, 'TOILET_WATER_ACCESS', 'Toilet water access', 'Toilet water access');
-INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (144, 'COPROPHAGE', 'Coprophage', 'Coprophage');
-INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (145, 'ANIMAL_FREE_TEXT', 'Please write anything else about this animal that you think might affect its microorganisms.', 'Please write anything else about this animal that you think might affect its microorganisms.');
-INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (146, 'ANIMAL_TYPE_FREE_TEXT', 'Please enter the animal type', 'Please enter the animal type');
+INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (139, 'HOURS_OUTSIDE', 'Hours spent outside', 'Hours spent outside');
+INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (140, 'TOILET_WATER_ACCESS', 'Toilet water access', 'Toilet water access');
+INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (141, 'COPROPHAGE', 'Coprophage', 'Coprophage');
+INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (142, 'ANIMAL_FREE_TEXT', 'Please write anything else about this animal that you think might affect its microorganisms.', 'Please write anything else about this animal that you think might affect its microorganisms.');
+INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (143, 'ANIMAL_TYPE_FREE_TEXT', 'Please enter the animal type', 'Please enter the animal type');
+INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (144, 'OTHER_ANIMALS_FREE_TEXT', 'Please enter the other animal types', 'Please enter the other animal types');
+INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (145, 'HUMANS_FREE_TEXT', 'Please enter the age (in years) and gender of any humans that the current animal lives with', 'Please enter the age (in years) and gender of any humans that the current animal lives with');
 
 ----------------------------------------------------------
 -- group_questions
@@ -57,7 +56,6 @@ INSERT INTO group_questions (survey_group, survey_question_id, display_index) VA
 INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-2, 143, 16);
 INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-2, 144, 17);
 INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-2, 145, 18);
-INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-2, 146, 19);
 
 
 ----------------------------------------------------------
@@ -76,13 +74,12 @@ INSERT INTO survey_question_response_type (survey_question_id, survey_response_t
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (137, 'MULTIPLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (138, 'SINGLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (139, 'SINGLE');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (140, 'STRING');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (141, 'MULTIPLE');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (142, 'SINGLE');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (143, 'SINGLE');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (144, 'SINGLE');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (140, 'SINGLE');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (141, 'SINGLE');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (142, 'TEXT');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (143, 'STRING');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (144, 'TEXT');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (145, 'TEXT');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (146, 'STRING');
 
 ----------------------------------------------------------
 -- survey_response
@@ -204,38 +201,27 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (138, 'Lives with other animals/limited humans', 4);
 
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Unspecified', 0);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Dog', 1);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Cat', 2);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Small Mammal', 3);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Large Mammal', 4);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Fish', 5);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Bird', 6);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Reptile', 7);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Amphibian', 8);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Other', 9);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'None', 1);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, 'Less than 2', 2);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, '2-4', 3);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, '4-8', 4);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (139, '8+', 5);
+
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (140, 'Unspecified', 0);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (140, 'Regular', 1);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (140, 'Sometimes', 2);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (140, 'Never', 3);
 
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (141, 'Unspecified', 0);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (141, 'Male', 1);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (141, 'Female', 2);
-
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (142, 'Unspecified', 0);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (142, 'None', 1);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (142, 'Less than 2', 2);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (142, '2-4', 3);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (142, '4-8', 4);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (142, '8+', 5);
-
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (143, 'Unspecified', 0);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (143, 'Regular', 1);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (143, 'Sometimes', 2);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (143, 'Never', 3);
-
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (144, 'Unspecified', 0);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (144, 'High', 1);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (144, 'Moderate', 2);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (144, 'Low', 3);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (144, 'Never', 4);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (141, 'High', 1);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (141, 'Moderate', 2);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (141, 'Low', 3);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (141, 'Never', 4);
 ----------------------------------------------------------
 -- survey_question_triggers
 ----------------------------------------------------------
-INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (128, 146, 'Other');
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (128, 143, 'Other');
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (138, 144, 'Lives with other animals and humans');
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (138, 144, 'Lives with other animals/limited humans');
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (138, 145, 'Lives alone with humans');
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES (138, 145, 'Lives with other animals and humans');
