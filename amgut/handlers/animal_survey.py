@@ -4,6 +4,7 @@ import binascii
 import os
 
 from tornado.web import authenticated
+from tornado.escape import url_escape
 from tornado.websocket import WebSocketHandler
 
 from amgut.handlers.base_handlers import BaseHandler
@@ -35,6 +36,12 @@ class AnimalSurveyHandler(BaseHandler):
         form.process(data=self.request.arguments)
         data = {'questions': form.data}
         participant_name = form['Pet_Information_127_0'].data[0]
+        # If the participant already exists, stop them outright
+        if ag_data.check_if_consent_exists(ag_login_id, participant_name):
+            errmsg = url_escape(tl['PARTICIPANT_EXISTS'] % participant_name)
+            self.redirect(media_locale['SITEBASE'] + "/authed/portal/?errmsg=%s" % errmsg)
+            return
+
         consent = {
             'login_id': ag_login_id,
             'participant_name': participant_name,
