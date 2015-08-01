@@ -44,7 +44,8 @@ class AnimalSurveyHandler(BaseHandler):
         data = {'questions': form.data}
         participant_name = form['Pet_Information_127_0'].data[0]
         # If the participant already exists, stop them outright
-        if ag_data.check_if_consent_exists(ag_login_id, participant_name):
+        if not animal_survey_id and \
+                ag_data.check_if_consent_exists(ag_login_id, participant_name):
             errmsg = url_escape(tl['PARTICIPANT_EXISTS'] % participant_name)
             self.redirect(media_locale['SITEBASE'] + "/authed/portal/?errmsg=%s" % errmsg)
             return
@@ -67,9 +68,12 @@ class AnimalSurveyHandler(BaseHandler):
         redis.expire(animal_survey_id, 86400)
 
         store_survey(primary_animal_survey, animal_survey_id)
-
-        message = urlencode([('errmsg', tl['SUCCESSFULLY_ADDED'] %
-                             participant_name)])
+        if animal_survey_id:
+            message = urlencode([('errmsg', tl['SUCCESSFULLY_EDITED'] %
+                                 participant_name)])
+        else:
+            message = urlencode([('errmsg', tl['SUCCESSFULLY_ADDED'] %
+                                 participant_name)])
         self.redirect(media_locale['SITEBASE'] + '/authed/portal/?%s' % message)
 
 
