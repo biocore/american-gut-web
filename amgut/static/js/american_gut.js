@@ -716,6 +716,33 @@ function validateUnknownPasswordReset() {
     }
 }
 
+function validateAnimalSurvey() {
+    var ret = true;
+    $('#Pet_Information_127_0').removeClass("highlight");
+    $('#Pet_Information_128_0').removeClass("highlight");
+    if($('#Pet_Information_127_0').val().length == 0) {
+        $('#Pet_Information_127_0').addClass("highlight");
+        ret = false;
+    }
+    if($('#Pet_Information_128_0').val() == 0) {
+        $('#Pet_Information_128_0').addClass("highlight");
+        ret = false;
+    }
+
+    intcheck = $('.integer')
+    for(i=0;i<intcheck.length;i++) {
+        textbox = intcheck[i];
+        var value = Number(textbox.value);
+        if (Math.floor(value) == value) {
+            $(textbox).removeClass('highlight');
+        } else {
+            $(textbox).addClass('highlight');
+            ret = false;
+        }
+    }
+    return ret;
+}
+
 /*clear empty boxes for survey3*/
 function validateSurvey3() {
     for(var i = 0; i < document.survey_3.length; i++) 
@@ -985,4 +1012,15 @@ function kgToLbs() {
 
 function reset(formID) {
     document.getElementById(formID).reset();
+}
+
+function toggle_div(div_id, form_item_id, indices) {
+    var selected_index = $("#"+form_item_id).prop("selectedIndex");
+
+    if (indices.indexOf(selected_index) > -1) {
+        $("#"+div_id).slideDown(100);
+    }
+    else {
+        $("#"+div_id).slideUp(100);
+    };
 }

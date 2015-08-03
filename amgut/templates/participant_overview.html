@@ -30,6 +30,12 @@
                         <input type="hidden" name="page_number" value=-1>
                         <input type="button" name="submit_button" id="submit_button" value="edit" onclick="submitEdit()">
                     </form>
+{% elif participant_type == 'animal' and not ag_data.is_old_survey(survey_id) %}
+                    <form id="edit_survey" name="edit_survey" method="get" action="{% raw media_locale['SITEBASE'] %}/authed/add_animal/">
+                        <input type="hidden" name="survey" value={{ survey_id}}>
+                        <input type="button" name="submit_button" id="submit_button" value="edit" onclick="submitEdit()">
+                    </form>
+
 {% end %}
                 </td>
                 <td><img src="{% raw media_locale['SITEBASE'] %}/static/img/icon-green-checkmark.png"/></td>
