@@ -213,9 +213,9 @@
 <rect style='fill:url(#groupUnderTitleLine); stroke-width:2;' x='55' y='403' width='355' height='2' />
 
 <!-- ============= Group 'Schema_barcodes' ============= -->
-<rect class='grp' style='fill:#c4e0f9;' x='89' y='760' width='362' height='410' />
+<rect class='grp' style='fill:#c4e0f9;' x='89' y='760' width='377' height='515' />
 <text x='100' y='775'>Schema_barcodes</text>
-<rect style='fill:url(#groupUnderTitleLine); stroke-width:2;' x='100' y='778' width='340' height='2' />
+<rect style='fill:url(#groupUnderTitleLine); stroke-width:2;' x='100' y='778' width='355' height='2' />
 
 <path transform='translate(7,0)' marker-start='url(#foot)'     d='M 825 720 L 832,720 Q 840,720 840,712 L 840,630' >
 	<title>Foreign Key fk_sur_an_to_ag_login
@@ -347,27 +347,7 @@
 	external_survey_answers references external_survey_sources ( external_survey_id )</title>
 </path>
 <text x='1597' y='1390' transform='rotate(0 1597,1390)' title='Foreign Key fk_external_survey
-	external_survey_answers references external_survey_sources ( external_survey_id )' style='fill:#a1a0a0;'>external_survey_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 435 1020 L 442,1020 Q 450,1020 450,1012 L 450,930' >
-	<title>Foreign Key fk_pb_to_barcode
-	project_barcode references barcode ( barcode )</title>
-</path>
-<text x='442' y='1015' transform='rotate(0 442,1015)' title='Foreign Key fk_pb_to_barcode
-	project_barcode references barcode ( barcode )' style='fill:#a1a0a0;'>barcode</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 315 1005 L 307,1005 Q 300,1005 300,997 L 300,922 Q 300,915 307,915 L 330,915' >
-	<title>Foreign Key fk_pb_to_project
-	project_barcode references project ( project_id )</title>
-</path>
-<text x='263' y='1000' transform='rotate(0 263,1000)' title='Foreign Key fk_pb_to_project
-	project_barcode references project ( project_id )' style='fill:#a1a0a0;'>project_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 120 1110 L 82,1110 Q 75,1110 75,1102 L 75,907 Q 75,900 82,900 L 90,900' >
-	<title>Foreign Key fk_plate_barcode
-	plate_barcode references barcode ( barcode )</title>
-</path>
-<text x='78' y='1105' transform='rotate(0 78,1105)' title='Foreign Key fk_plate_barcode
-	plate_barcode references barcode ( barcode )' style='fill:#a1a0a0;'>barcode</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 225 1095 L 285,1095' >
-	<title>Foreign Key fk_plate_barcode_0
-	plate_barcode references plate ( plate_id )</title>
-</path>
-<text x='232' y='1090' transform='rotate(0 232,1090)' title='Foreign Key fk_plate_barcode_0
-	plate_barcode references plate ( plate_id )' style='fill:#a1a0a0;'>plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'  style='stroke-dasharray:4,2;'  d='M 915 930 L 1072,930 Q 1080,930 1080,922 L 1080,727 Q 1080,720 1087,720 L 1095,720' >
+	external_survey_answers references external_survey_sources ( external_survey_id )' style='fill:#a1a0a0;'>external_survey_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'  style='stroke-dasharray:4,2;'  d='M 915 930 L 1072,930 Q 1080,930 1080,922 L 1080,727 Q 1080,720 1087,720 L 1095,720' >
 	<title>Foreign Key fk_ag_kit_barcodes
 	ag_kit_barcodes references ag_kit ( ag_kit_id )</title>
 </path>
@@ -377,7 +357,7 @@
 	ag_kit_barcodes references ag_login_surveys ( survey_id )</title>
 </path>
 <text x='922' y='955' transform='rotate(0 922,955)' title='Foreign Key fk_ag_kit_barcodes_1
-	ag_kit_barcodes references ag_login_surveys ( survey_id )' style='fill:#a1a0a0;'>survey_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 720 945 L 457,945 Q 450,945 450,937 L 450,862 Q 450,855 442,855 L 405,855' >
+	ag_kit_barcodes references ag_login_surveys ( survey_id )' style='fill:#a1a0a0;'>survey_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 720 945 L 442,945 Q 435,945 435,937 L 435,862 Q 435,855 427,855 L 405,855' >
 	<title>Foreign Key fk_ag_kit_barcodes_barcode
 	ag_kit_barcodes references barcode ( barcode )</title>
 </path>
@@ -397,7 +377,37 @@
 	barcode_exceptions references barcode ( barcode )</title>
 </path>
 <text x='247' y='820' transform='rotate(0 247,820)' title='Foreign Key fk_barcode_exceptions
-	barcode_exceptions references barcode ( barcode )' style='fill:#a1a0a0;'>barcode</text><!-- ============= Table 'ag_survey_answer' ============= -->
+	barcode_exceptions references barcode ( barcode )' style='fill:#a1a0a0;'>barcode</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 420 930 L 427,930 Q 435,930 435,922 L 435,915' >
+	<title>Foreign Key fk_pb_to_barcode
+	project_barcode references barcode ( barcode )</title>
+</path>
+<text x='427' y='925' transform='rotate(0 427,925)' title='Foreign Key fk_pb_to_barcode
+	project_barcode references barcode ( barcode )' style='fill:#a1a0a0;'>barcode</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 300 915 L 292,915 Q 285,915 285,922 L 285,982 Q 285,990 292,990 L 315,990' >
+	<title>Foreign Key fk_pb_to_project
+	project_barcode references project ( project_id )</title>
+</path>
+<text x='248' y='910' transform='rotate(0 248,910)' title='Foreign Key fk_pb_to_project
+	project_barcode references project ( project_id )' style='fill:#a1a0a0;'>project_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 120 1215 L 82,1215 Q 75,1215 75,1207 L 75,907 Q 75,900 82,900 L 90,900' >
+	<title>Foreign Key fk_plate_barcode
+	plate_barcode references barcode ( barcode )</title>
+</path>
+<text x='78' y='1210' transform='rotate(0 78,1210)' title='Foreign Key fk_plate_barcode
+	plate_barcode references barcode ( barcode )' style='fill:#a1a0a0;'>barcode</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 225 1200 L 285,1200' >
+	<title>Foreign Key fk_plate_barcode_0
+	plate_barcode references plate ( plate_id )</title>
+</path>
+<text x='232' y='1195' transform='rotate(0 232,1195)' title='Foreign Key fk_plate_barcode_0
+	plate_barcode references plate ( plate_id )' style='fill:#a1a0a0;'>plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 285 1215 L 277,1215 Q 270,1215 270,1207 L 270,1087 Q 270,1080 277,1080 L 285,1080' >
+	<title>Foreign Key fk_plate_0
+	plate references protocol ( protocol_id )</title>
+</path>
+<text x='225' y='1210' transform='rotate(0 225,1210)' title='Foreign Key fk_plate_0
+	plate references protocol ( protocol_id )' style='fill:#a1a0a0;'>protocol_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 405 1230 L 457,1230 Q 465,1230 465,1222 L 465,952 Q 465,945 457,945 L 450,945' >
+	<title>Foreign Key fk_plate
+	plate references barcode ( barcode )</title>
+</path>
+<text x='412' y='1225' transform='rotate(0 412,1225)' title='Foreign Key fk_plate
+	plate references barcode ( barcode )' style='fill:#a1a0a0;'>barcode</text><!-- ============= Table 'ag_survey_answer' ============= -->
 <rect class='table' x='675' y='683' width='150' height='120' rx='7' ry='7' />
 <path d='M 675.50 709.50 L 675.50 690.50 Q 675.50 683.50 682.50 683.50 L 817.50 683.50 Q 824.50 683.50 824.50 690.50 L 824.50 709.50 L675.50 709.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
 <a xlink:href='#ag_survey_answer'><text x='700' y='697' class='tableTitle'>ag_survey_answer</text><title>Table ag.ag_survey_answer</title></a>
@@ -942,57 +952,6 @@ This stores answers to third party surveys in JSON format&#044; keyed to the ori
 <a xlink:href='#pulldown_date'><text x='1458' y='1417'>pulldown_date</text><title>pulldown_date date not null</title></a>
   <use id='nn' x='1442' y='1422' xlink:href='#nn'/><a xlink:href='#answers'><text x='1458' y='1432'>answers</text><title>answers json not null</title></a>
 
-<!-- ============= Table 'plate' ============= -->
-<rect class='table' x='300' y='1058' width='120' height='90' rx='7' ry='7' />
-<path d='M 300.50 1084.50 L 300.50 1065.50 Q 300.50 1058.50 307.50 1058.50 L 412.50 1058.50 Q 419.50 1058.50 419.50 1065.50 L 419.50 1084.50 L300.50 1084.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
-<a xlink:href='#plate'><text x='347' y='1072' class='tableTitle'>plate</text><title>Table barcodes.plate</title></a>
-  <use id='nn' x='302' y='1092' xlink:href='#nn'/><a xlink:href='#plate_id'><use id='pk' x='302' y='1091' xlink:href='#pk'/><title>Primary Key  ( plate_id ) </title></a>
-<a xlink:href='#plate_id'><text x='318' y='1102'>plate_id</text><title>plate_id bigint not null</title></a>
-<a xlink:href='#plate_id'><use id='ref' x='408' y='1091' xlink:href='#ref'/><title>Referred by plate_barcode ( plate_id ) </title></a>
-  <a xlink:href='#plate'><text x='318' y='1117'>plate</text><title>plate varchar&#040;50&#041;</title></a>
-  <a xlink:href='#sequence_date'><text x='318' y='1132'>sequence_date</text><title>sequence_date varchar&#040;20&#041;</title></a>
-
-<!-- ============= Table 'project_barcode' ============= -->
-<rect class='table' x='330' y='968' width='105' height='75' rx='7' ry='7' />
-<path d='M 330.50 994.50 L 330.50 975.50 Q 330.50 968.50 337.50 968.50 L 427.50 968.50 Q 434.50 968.50 434.50 975.50 L 434.50 994.50 L330.50 994.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
-<a xlink:href='#project_barcode'><text x='338' y='982' class='tableTitle'>project_barcode</text><title>Table barcodes.project_barcode</title></a>
-  <use id='nn' x='332' y='1002' xlink:href='#nn'/><a xlink:href='#project_id'><use id='pk' x='332' y='1001' xlink:href='#pk'/><title>Primary Key  ( project_id, barcode ) </title></a>
-<a xlink:href='#project_id'><text x='348' y='1012'>project_id</text><title>project_id bigint not null</title></a>
-<a xlink:href='#project_id'><use id='fk' x='423' y='1001' xlink:href='#fk'/><title>References project ( project_id ) </title></a>
-  <use id='nn' x='332' y='1017' xlink:href='#nn'/><a xlink:href='#barcode'><use id='pk' x='332' y='1016' xlink:href='#pk'/><title>Primary Key  ( project_id, barcode ) </title></a>
-<a xlink:href='#barcode'><text x='348' y='1027'>barcode</text><title>barcode char&#040;9&#041; not null</title></a>
-<a xlink:href='#barcode'><use id='fk' x='423' y='1016' xlink:href='#fk'/><title>References barcode ( barcode ) </title></a>
-
-<!-- ============= Table 'barcode' ============= -->
-<rect class='table' x='105' y='863' width='165' height='165' rx='7' ry='7' />
-<path d='M 105.50 889.50 L 105.50 870.50 Q 105.50 863.50 112.50 863.50 L 262.50 863.50 Q 269.50 863.50 269.50 870.50 L 269.50 889.50 L105.50 889.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
-<a xlink:href='#barcode'><text x='165' y='877' class='tableTitle'>barcode</text><title>Table barcodes.barcode</title></a>
-  <use id='nn' x='107' y='897' xlink:href='#nn'/><a xlink:href='#barcode'><use id='pk' x='107' y='896' xlink:href='#pk'/><title>Primary Key  ( barcode ) </title></a>
-<a xlink:href='#barcode'><text x='123' y='907'>barcode</text><title>barcode varchar&#040;2147483647&#041; not null</title></a>
-<a xlink:href='#barcode'><use id='ref' x='258' y='896' xlink:href='#ref'/><title>Referred by ag_handout_barcodes ( barcode ) 
-Referred by ag_kit_barcodes ( barcode ) 
-Referred by barcode_exceptions ( barcode ) 
-Referred by plate_barcode ( barcode ) 
-Referred by project_barcode ( barcode ) </title></a>
-  <a xlink:href='#create_date_time'><text x='123' y='922'>create_date_time</text><title>create_date_time timestamp default &#040;&#039;now&#039;&#058;&#058;text&#041;&#058;&#058;timestamp without time zone</title></a>
-  <a xlink:href='#status'><text x='123' y='937'>status</text><title>status varchar&#040;100&#041;</title></a>
-  <a xlink:href='#scan_date'><text x='123' y='952'>scan_date</text><title>scan_date varchar&#040;20&#041;</title></a>
-  <a xlink:href='#sample_postmark_date'><text x='123' y='967'>sample_postmark_date</text><title>sample_postmark_date varchar&#040;20&#041;</title></a>
-  <a xlink:href='#biomass_remaining'><text x='123' y='982'>biomass_remaining</text><title>biomass_remaining varchar&#040;1&#041;</title></a>
-  <a xlink:href='#sequencing_status'><text x='123' y='997'>sequencing_status</text><title>sequencing_status varchar&#040;20&#041;</title></a>
-  <a xlink:href='#obsolete'><text x='123' y='1012'>obsolete</text><title>obsolete varchar&#040;1&#041;</title></a>
-
-<!-- ============= Table 'plate_barcode' ============= -->
-<rect class='table' x='135' y='1058' width='90' height='75' rx='7' ry='7' />
-<path d='M 135.50 1084.50 L 135.50 1065.50 Q 135.50 1058.50 142.50 1058.50 L 217.50 1058.50 Q 224.50 1058.50 224.50 1065.50 L 224.50 1084.50 L135.50 1084.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
-<a xlink:href='#plate_barcode'><text x='142' y='1072' class='tableTitle'>plate_barcode</text><title>Table barcodes.plate_barcode</title></a>
-  <use id='nn' x='137' y='1092' xlink:href='#nn'/><a xlink:href='#plate_id'><use id='idx' x='137' y='1091' xlink:href='#idx'/><title>Index  ( plate_id ) </title></a>
-<a xlink:href='#plate_id'><text x='153' y='1102'>plate_id</text><title>plate_id bigint not null</title></a>
-<a xlink:href='#plate_id'><use id='fk' x='213' y='1091' xlink:href='#fk'/><title>References plate ( plate_id ) </title></a>
-  <use id='nn' x='137' y='1107' xlink:href='#nn'/><a xlink:href='#barcode'><use id='idx' x='137' y='1106' xlink:href='#idx'/><title>Index  ( barcode ) </title></a>
-<a xlink:href='#barcode'><text x='153' y='1117'>barcode</text><title>barcode varchar&#040;2147483647&#041; not null</title></a>
-<a xlink:href='#barcode'><use id='fk' x='213' y='1106' xlink:href='#fk'/><title>References barcode ( barcode ) </title></a>
-
 <!-- ============= Table 'settings' ============= -->
 <rect class='table' x='105' y='638' width='135' height='105' rx='7' ry='7' />
 <path d='M 105.50 664.50 L 105.50 645.50 Q 105.50 638.50 112.50 638.50 L 232.50 638.50 Q 239.50 638.50 239.50 645.50 L 239.50 664.50 L105.50 664.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
@@ -1078,14 +1037,101 @@ Referred by project_barcode ( barcode ) </title></a>
 <a xlink:href='#barcode'><text x='138' y='832'>barcode</text><title>barcode varchar&#040;100&#041; not null</title></a>
 <a xlink:href='#barcode'><use id='fk' x='228' y='821' xlink:href='#fk'/><title>References barcode ( barcode ) </title></a>
 
+<!-- ============= Table 'barcode' ============= -->
+<rect class='table' x='105' y='863' width='165' height='195' rx='7' ry='7' />
+<path d='M 105.50 889.50 L 105.50 870.50 Q 105.50 863.50 112.50 863.50 L 262.50 863.50 Q 269.50 863.50 269.50 870.50 L 269.50 889.50 L105.50 889.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
+<a xlink:href='#barcode'><text x='165' y='877' class='tableTitle'>barcode</text><title>Table barcodes.barcode</title></a>
+  <use id='nn' x='107' y='897' xlink:href='#nn'/><a xlink:href='#barcode'><use id='pk' x='107' y='896' xlink:href='#pk'/><title>Primary Key  ( barcode ) </title></a>
+<a xlink:href='#barcode'><text x='123' y='907'>barcode</text><title>barcode varchar&#040;2147483647&#041; not null</title></a>
+<a xlink:href='#barcode'><use id='ref' x='258' y='896' xlink:href='#ref'/><title>Referred by ag_handout_barcodes ( barcode ) 
+Referred by ag_kit_barcodes ( barcode ) 
+Referred by barcode_exceptions ( barcode ) 
+Referred by plate_barcode ( barcode ) 
+Referred by project_barcode ( barcode ) 
+Referred by plate ( plate_id -> barcode ) 
+Referred by plate ( barcode ) 
+Referred by plate ( barcode ) </title></a>
+  <a xlink:href='#create_date_time'><text x='123' y='922'>create_date_time</text><title>create_date_time timestamp default &#040;&#039;now&#039;&#058;&#058;text&#041;&#058;&#058;timestamp without time zone</title></a>
+  <a xlink:href='#status'><text x='123' y='937'>status</text><title>status varchar&#040;100&#041;</title></a>
+  <a xlink:href='#scan_date'><text x='123' y='952'>scan_date</text><title>scan_date varchar&#040;20&#041;</title></a>
+  <a xlink:href='#sample_postmark_date'><text x='123' y='967'>sample_postmark_date</text><title>sample_postmark_date varchar&#040;20&#041;</title></a>
+  <a xlink:href='#biomass_remaining'><text x='123' y='982'>biomass_remaining</text><title>biomass_remaining varchar&#040;1&#041;</title></a>
+  <a xlink:href='#sequencing_status'><text x='123' y='997'>sequencing_status</text><title>sequencing_status varchar&#040;20&#041;</title></a>
+  <a xlink:href='#obsolete'><text x='123' y='1012'>obsolete</text><title>obsolete varchar&#040;1&#041;</title></a>
+  <a xlink:href='#barcode_type_id'><use id='idx' x='107' y='1016' xlink:href='#idx'/><title>Index  ( barcode_type_id ) </title></a>
+<a xlink:href='#barcode_type_id'><text x='123' y='1027'>barcode_type_id</text><title>barcode_type_id bigint
+what type of item this is barcoding &#040;sample tube&#044; plate&#044; etc&#041;</title></a>
+<a xlink:href='#barcode_type_id'><use id='fk' x='258' y='1016' xlink:href='#fk'/><title>References barcode_type ( barcode_type_id ) </title></a>
+  <use id='nn' x='107' y='1032' xlink:href='#nn'/><a xlink:href='#step'><text x='123' y='1042'>step</text><title>step varchar not null
+What rough step of the process &#040;Arrived&#044; Extracted&#044; PCR&#044; Sequencing&#044; Sequenced&#041;</title></a>
+
+<!-- ============= Table 'project_barcode' ============= -->
+<rect class='table' x='315' y='878' width='105' height='75' rx='7' ry='7' />
+<path d='M 315.50 904.50 L 315.50 885.50 Q 315.50 878.50 322.50 878.50 L 412.50 878.50 Q 419.50 878.50 419.50 885.50 L 419.50 904.50 L315.50 904.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
+<a xlink:href='#project_barcode'><text x='323' y='892' class='tableTitle'>project_barcode</text><title>Table barcodes.project_barcode</title></a>
+  <use id='nn' x='317' y='912' xlink:href='#nn'/><a xlink:href='#project_id'><use id='pk' x='317' y='911' xlink:href='#pk'/><title>Primary Key  ( project_id, barcode ) </title></a>
+<a xlink:href='#project_id'><text x='333' y='922'>project_id</text><title>project_id bigint not null</title></a>
+<a xlink:href='#project_id'><use id='fk' x='408' y='911' xlink:href='#fk'/><title>References project ( project_id ) </title></a>
+  <use id='nn' x='317' y='927' xlink:href='#nn'/><a xlink:href='#barcode'><use id='pk' x='317' y='926' xlink:href='#pk'/><title>Primary Key  ( project_id, barcode ) </title></a>
+<a xlink:href='#barcode'><text x='333' y='937'>barcode</text><title>barcode char&#040;9&#041; not null</title></a>
+<a xlink:href='#barcode'><use id='fk' x='408' y='926' xlink:href='#fk'/><title>References barcode ( barcode ) </title></a>
+
 <!-- ============= Table 'project' ============= -->
-<rect class='table' x='345' y='878' width='90' height='75' rx='7' ry='7' />
-<path d='M 345.50 904.50 L 345.50 885.50 Q 345.50 878.50 352.50 878.50 L 427.50 878.50 Q 434.50 878.50 434.50 885.50 L 434.50 904.50 L345.50 904.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
-<a xlink:href='#project'><text x='371' y='892' class='tableTitle'>project</text><title>Table barcodes.project</title></a>
-  <use id='nn' x='347' y='912' xlink:href='#nn'/><a xlink:href='#project_id'><use id='pk' x='347' y='911' xlink:href='#pk'/><title>Primary Key  ( project_id ) </title></a>
-<a xlink:href='#project_id'><text x='363' y='922'>project_id</text><title>project_id bigint not null</title></a>
-<a xlink:href='#project_id'><use id='ref' x='423' y='911' xlink:href='#ref'/><title>Referred by project_barcode ( project_id ) </title></a>
-  <a xlink:href='#project'><text x='363' y='937'>project</text><title>project varchar&#040;1000&#041;</title></a>
+<rect class='table' x='330' y='953' width='90' height='75' rx='7' ry='7' />
+<path d='M 330.50 979.50 L 330.50 960.50 Q 330.50 953.50 337.50 953.50 L 412.50 953.50 Q 419.50 953.50 419.50 960.50 L 419.50 979.50 L330.50 979.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
+<a xlink:href='#project'><text x='356' y='967' class='tableTitle'>project</text><title>Table barcodes.project</title></a>
+  <use id='nn' x='332' y='987' xlink:href='#nn'/><a xlink:href='#project_id'><use id='pk' x='332' y='986' xlink:href='#pk'/><title>Primary Key  ( project_id ) </title></a>
+<a xlink:href='#project_id'><text x='348' y='997'>project_id</text><title>project_id bigint not null</title></a>
+<a xlink:href='#project_id'><use id='ref' x='408' y='986' xlink:href='#ref'/><title>Referred by project_barcode ( project_id ) </title></a>
+  <a xlink:href='#project'><text x='348' y='1012'>project</text><title>project varchar&#040;1000&#041;</title></a>
+
+<!-- ============= Table 'barcode_type' ============= -->
+<rect class='table' x='120' y='1073' width='120' height='75' rx='7' ry='7' />
+<path d='M 120.50 1099.50 L 120.50 1080.50 Q 120.50 1073.50 127.50 1073.50 L 232.50 1073.50 Q 239.50 1073.50 239.50 1080.50 L 239.50 1099.50 L120.50 1099.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
+<a xlink:href='#barcode_type'><text x='143' y='1087' class='tableTitle'>barcode_type</text><title>Table barcodes.barcode_type</title></a>
+  <use id='nn' x='122' y='1107' xlink:href='#nn'/><a xlink:href='#barcode_type_id'><use id='pk' x='122' y='1106' xlink:href='#pk'/><title>Primary Key  ( barcode_type_id ) </title></a>
+<a xlink:href='#barcode_type_id'><text x='138' y='1117'>barcode_type_id</text><title>barcode_type_id bigserial not null</title></a>
+<a xlink:href='#barcode_type_id'><use id='ref' x='228' y='1106' xlink:href='#ref'/><title>Referred by barcode ( barcode_type_id ) 
+Referred by barcode ( barcode_type_id ) </title></a>
+  <use id='nn' x='122' y='1122' xlink:href='#nn'/><a xlink:href='#barcode_type'><text x='138' y='1132'>barcode_type</text><title>barcode_type varchar not null</title></a>
+
+<!-- ============= Table 'plate_barcode' ============= -->
+<rect class='table' x='135' y='1163' width='90' height='90' rx='7' ry='7' />
+<path d='M 135.50 1189.50 L 135.50 1170.50 Q 135.50 1163.50 142.50 1163.50 L 217.50 1163.50 Q 224.50 1163.50 224.50 1170.50 L 224.50 1189.50 L135.50 1189.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
+<a xlink:href='#plate_barcode'><text x='142' y='1177' class='tableTitle'>plate_barcode</text><title>Table barcodes.plate_barcode</title></a>
+  <use id='nn' x='137' y='1197' xlink:href='#nn'/><a xlink:href='#plate_id'><use id='idx' x='137' y='1196' xlink:href='#idx'/><title>Index  ( plate_id ) </title></a>
+<a xlink:href='#plate_id'><text x='153' y='1207'>plate_id</text><title>plate_id varchar not null</title></a>
+<a xlink:href='#plate_id'><use id='fk' x='213' y='1196' xlink:href='#fk'/><title>References plate ( plate_id ) </title></a>
+  <use id='nn' x='137' y='1212' xlink:href='#nn'/><a xlink:href='#barcode'><use id='idx' x='137' y='1211' xlink:href='#idx'/><title>Index  ( barcode ) </title></a>
+<a xlink:href='#barcode'><text x='153' y='1222'>barcode</text><title>barcode varchar not null</title></a>
+<a xlink:href='#barcode'><use id='fk' x='213' y='1211' xlink:href='#fk'/><title>References barcode ( barcode ) </title></a>
+  <use id='nn' x='137' y='1227' xlink:href='#nn'/><a xlink:href='#well'><text x='153' y='1237'>well</text><title>well varchar&#040;5&#041; not null</title></a>
+
+<!-- ============= Table 'protocol' ============= -->
+<rect class='table' x='300' y='1043' width='150' height='105' rx='7' ry='7' />
+<path d='M 300.50 1069.50 L 300.50 1050.50 Q 300.50 1043.50 307.50 1043.50 L 442.50 1043.50 Q 449.50 1043.50 449.50 1050.50 L 449.50 1069.50 L300.50 1069.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
+<a xlink:href='#protocol'><text x='352' y='1057' class='tableTitle'>protocol</text><title>Table barcodes.protocol</title></a>
+  <use id='nn' x='302' y='1077' xlink:href='#nn'/><a xlink:href='#protocol_id'><use id='pk' x='302' y='1076' xlink:href='#pk'/><title>Primary Key  ( protocol_id ) </title></a>
+<a xlink:href='#protocol_id'><text x='318' y='1087'>protocol_id</text><title>protocol_id bigserial not null</title></a>
+<a xlink:href='#protocol_id'><use id='ref' x='438' y='1076' xlink:href='#ref'/><title>Referred by plate ( protocol_id ) 
+Referred by plate ( protocol_id ) </title></a>
+  <use id='nn' x='302' y='1092' xlink:href='#nn'/><a xlink:href='#step'><text x='318' y='1102'>step</text><title>step varchar not null</title></a>
+  <use id='nn' x='302' y='1107' xlink:href='#nn'/><a xlink:href='#protocol_shortname'><text x='318' y='1117'>protocol_shortname</text><title>protocol_shortname varchar&#040;100&#041; not null</title></a>
+  <use id='nn' x='302' y='1122' xlink:href='#nn'/><a xlink:href='#protocol'><text x='318' y='1132'>protocol</text><title>protocol text not null</title></a>
+
+<!-- ============= Table 'plate' ============= -->
+<rect class='table' x='300' y='1163' width='105' height='90' rx='7' ry='7' />
+<path d='M 300.50 1189.50 L 300.50 1170.50 Q 300.50 1163.50 307.50 1163.50 L 397.50 1163.50 Q 404.50 1163.50 404.50 1170.50 L 404.50 1189.50 L300.50 1189.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
+<a xlink:href='#plate'><text x='339' y='1177' class='tableTitle'>plate</text><title>Table barcodes.plate</title></a>
+  <use id='nn' x='302' y='1197' xlink:href='#nn'/><a xlink:href='#plate_id'><use id='pk' x='302' y='1196' xlink:href='#pk'/><title>Primary Key  ( plate_id ) </title></a>
+<a xlink:href='#plate_id'><text x='318' y='1207'>plate_id</text><title>plate_id varchar not null</title></a>
+<a xlink:href='#plate_id'><use id='ref' x='393' y='1196' xlink:href='#ref'/><title>Referred by plate_barcode ( plate_id ) </title></a>
+  <use id='nn' x='302' y='1212' xlink:href='#nn'/><a xlink:href='#protocol_id'><use id='idx' x='302' y='1211' xlink:href='#idx'/><title>Index  ( protocol_id ) </title></a>
+<a xlink:href='#protocol_id'><text x='318' y='1222'>protocol_id</text><title>protocol_id bigint not null</title></a>
+<a xlink:href='#protocol_id'><use id='fk' x='393' y='1211' xlink:href='#fk'/><title>References protocol ( protocol_id ) </title></a>
+  <use id='nn' x='302' y='1227' xlink:href='#nn'/><a xlink:href='#barcode'><use id='idx' x='302' y='1226' xlink:href='#idx'/><title>Index  ( barcode ) </title></a>
+<a xlink:href='#barcode'><text x='318' y='1237'>barcode</text><title>barcode varchar not null</title></a>
+<a xlink:href='#barcode'><use id='fk' x='393' y='1226' xlink:href='#fk'/><title>References barcode ( barcode ) </title></a>
 
 </g></svg>
 
@@ -3031,163 +3077,6 @@ Referred by project_barcode ( barcode ) </title></a>
 <br/><br/>
 <table id='dbs' >
 <thead>
-<tr><th colspan='3'><a name='plate'>plate</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td><a name='plate_id'>plate&#095;id</a></td>
-		<td width='40%'> bigint  NOT NULL  </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='plate'>plate</a></td>
-		<td width='40%'> varchar&#040; 50 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='sequence_date'>sequence&#095;date</a></td>
-		<td width='40%'> varchar&#040; 20 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
-	<tr>		<td>plate&#095;pkey primary key</td>
-		<td> ON plate&#095;id</td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table id='dbs' >
-<thead>
-<tr><th colspan='3'><a name='project_barcode'>project_barcode</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td><a name='project_id'>project&#095;id</a></td>
-		<td width='40%'> bigint  NOT NULL  </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='barcode'>barcode</a></td>
-		<td width='40%'> char&#040; 9 &#041;  NOT NULL  </td>
-		<td width='99%'>  </td>
-	</tr>
-<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
-	<tr>		<td>project&#095;barcode&#095;pkey primary key</td>
-		<td> ON project&#095;id&#044; barcode</td>
-		<td>  </td>
-	</tr>
-<tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
-	<tr>
-		<td>fk_pb_to_barcode</td>
-		<td > ( barcode ) ref <a href='#barcode'>barcode</a> (barcode) </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>fk_pb_to_project</td>
-		<td > ( project&#095;id ) ref <a href='#project'>project</a> (project&#095;id) </td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table id='dbs' >
-<thead>
-<tr><th colspan='3'><a name='barcode'>barcode</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td><a name='barcode'>barcode</a></td>
-		<td width='40%'> varchar&#040; 2147483647 &#041;  NOT NULL  </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='create_date_time'>create&#095;date&#095;time</a></td>
-		<td width='40%'> timestamp   DEFO ('now'::text)::timestamp without time zone </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='status'>status</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='scan_date'>scan&#095;date</a></td>
-		<td width='40%'> varchar&#040; 20 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='sample_postmark_date'>sample&#095;postmark&#095;date</a></td>
-		<td width='40%'> varchar&#040; 20 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='biomass_remaining'>biomass&#095;remaining</a></td>
-		<td width='40%'> varchar&#040; 1 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='sequencing_status'>sequencing&#095;status</a></td>
-		<td width='40%'> varchar&#040; 20 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='obsolete'>obsolete</a></td>
-		<td width='40%'> varchar&#040; 1 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
-	<tr>		<td>barcode&#095;pkey primary key</td>
-		<td> ON barcode</td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table id='dbs' >
-<thead>
-<tr><th colspan='3'><a name='plate_barcode'>plate_barcode</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td><a name='plate_id'>plate&#095;id</a></td>
-		<td width='40%'> bigint  NOT NULL  </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='barcode'>barcode</a></td>
-		<td width='40%'> varchar&#040; 2147483647 &#041;  NOT NULL  </td>
-		<td width='99%'>  </td>
-	</tr>
-<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
-	<tr>		<td>idx&#095;plate&#095;barcode </td>
-		<td> ON barcode</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;plate&#095;barcode&#095;0 </td>
-		<td> ON plate&#095;id</td>
-		<td>  </td>
-	</tr>
-<tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
-	<tr>
-		<td>fk_plate_barcode</td>
-		<td > ( barcode ) ref <a href='#barcode'>barcode</a> (barcode) </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>fk_plate_barcode_0</td>
-		<td > ( plate&#095;id ) ref <a href='#plate'>plate</a> (plate&#095;id) </td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table id='dbs' >
-<thead>
 <tr><th colspan='3'><a name='settings'>settings</a></th></tr>
 </thead>
 <tbody>
@@ -3510,6 +3399,115 @@ Referred by project_barcode ( barcode ) </title></a>
 <br/><br/>
 <table id='dbs' >
 <thead>
+<tr><th colspan='3'><a name='barcode'>barcode</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='barcode'>barcode</a></td>
+		<td width='40%'> varchar&#040; 2147483647 &#041;  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='create_date_time'>create&#095;date&#095;time</a></td>
+		<td width='40%'> timestamp   DEFO ('now'::text)::timestamp without time zone </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='status'>status</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='scan_date'>scan&#095;date</a></td>
+		<td width='40%'> varchar&#040; 20 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='sample_postmark_date'>sample&#095;postmark&#095;date</a></td>
+		<td width='40%'> varchar&#040; 20 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='biomass_remaining'>biomass&#095;remaining</a></td>
+		<td width='40%'> varchar&#040; 1 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='sequencing_status'>sequencing&#095;status</a></td>
+		<td width='40%'> varchar&#040; 20 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='obsolete'>obsolete</a></td>
+		<td width='40%'> varchar&#040; 1 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='barcode_type_id'>barcode&#095;type&#095;id</a></td>
+		<td width='40%'> bigint   </td>
+		<td width='99%'> what type of item this is barcoding &#040;sample tube&#044; plate&#044; etc&#041; </td>
+	</tr>
+	<tr>
+		<td><a name='step'>step</a></td>
+		<td width='40%'> varchar  NOT NULL  </td>
+		<td width='99%'> What rough step of the process &#040;Arrived&#044; Extracted&#044; PCR&#044; Sequencing&#044; Sequenced&#041; </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
+	<tr>		<td>barcode&#095;pkey primary key</td>
+		<td> ON barcode</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;barcode </td>
+		<td> ON barcode&#095;type&#095;id</td>
+		<td>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
+	<tr>
+		<td>fk_barcode</td>
+		<td > ( barcode&#095;type&#095;id ) ref <a href='#barcode&#095;type'>barcode&#095;type</a> (barcode&#095;type&#095;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table id='dbs' >
+<thead>
+<tr><th colspan='3'><a name='project_barcode'>project_barcode</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='project_id'>project&#095;id</a></td>
+		<td width='40%'> bigint  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='barcode'>barcode</a></td>
+		<td width='40%'> char&#040; 9 &#041;  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
+	<tr>		<td>project&#095;barcode&#095;pkey primary key</td>
+		<td> ON project&#095;id&#044; barcode</td>
+		<td>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
+	<tr>
+		<td>fk_pb_to_barcode</td>
+		<td > ( barcode ) ref <a href='#barcode'>barcode</a> (barcode) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>fk_pb_to_project</td>
+		<td > ( project&#095;id ) ref <a href='#project'>project</a> (project&#095;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table id='dbs' >
+<thead>
 <tr><th colspan='3'><a name='project'>project</a></th></tr>
 </thead>
 <tbody>
@@ -3526,6 +3524,156 @@ Referred by project_barcode ( barcode ) </title></a>
 <tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
 	<tr>		<td>project&#095;pkey primary key</td>
 		<td> ON project&#095;id</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table id='dbs' >
+<thead>
+<tr><th colspan='3'><a name='barcode_type'>barcode_type</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='barcode_type_id'>barcode&#095;type&#095;id</a></td>
+		<td width='40%'> bigserial  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='barcode_type'>barcode&#095;type</a></td>
+		<td width='40%'> varchar  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
+	<tr>		<td>pk&#095;barcode&#095;type primary key</td>
+		<td> ON barcode&#095;type&#095;id</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table id='dbs' >
+<thead>
+<tr><th colspan='3'><a name='plate_barcode'>plate_barcode</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='plate_id'>plate&#095;id</a></td>
+		<td width='40%'> varchar  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='barcode'>barcode</a></td>
+		<td width='40%'> varchar  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='well'>well</a></td>
+		<td width='40%'> varchar&#040; 5 &#041;  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
+	<tr>		<td>idx&#095;plate&#095;barcode </td>
+		<td> ON barcode</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;plate&#095;barcode&#095;0 </td>
+		<td> ON plate&#095;id</td>
+		<td>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
+	<tr>
+		<td>fk_plate_barcode</td>
+		<td > ( barcode ) ref <a href='#barcode'>barcode</a> (barcode) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>fk_plate_barcode_0</td>
+		<td > ( plate&#095;id ) ref <a href='#plate'>plate</a> (plate&#095;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table id='dbs' >
+<thead>
+<tr><th colspan='3'><a name='protocol'>protocol</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='protocol_id'>protocol&#095;id</a></td>
+		<td width='40%'> bigserial  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='step'>step</a></td>
+		<td width='40%'> varchar  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='protocol_shortname'>protocol&#095;shortname</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='protocol'>protocol</a></td>
+		<td width='40%'> text  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
+	<tr>		<td>pk&#095;protocol primary key</td>
+		<td> ON protocol&#095;id</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table id='dbs' >
+<thead>
+<tr><th colspan='3'><a name='plate'>plate</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='plate_id'>plate&#095;id</a></td>
+		<td width='40%'> varchar  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='protocol_id'>protocol&#095;id</a></td>
+		<td width='40%'> bigint  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='barcode'>barcode</a></td>
+		<td width='40%'> varchar  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
+	<tr>		<td>plate&#095;pkey primary key</td>
+		<td> ON plate&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;plate </td>
+		<td> ON protocol&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;plate&#095;0 </td>
+		<td> ON barcode</td>
+		<td>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
+	<tr>
+		<td>fk_plate_0</td>
+		<td > ( protocol&#095;id ) ref <a href='#protocol'>protocol</a> (protocol&#095;id) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>fk_plate</td>
+		<td > ( barcode ) ref <a href='#barcode'>barcode</a> (barcode) </td>
 		<td>  </td>
 	</tr>
 </tbody>

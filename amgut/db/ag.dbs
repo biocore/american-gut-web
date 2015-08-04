@@ -796,9 +796,21 @@
 			<column name="biomass_remaining" type="varchar" length="1" jt="12" />
 			<column name="sequencing_status" type="varchar" length="20" jt="12" />
 			<column name="obsolete" type="varchar" length="1" jt="12" />
+			<column name="barcode_type_id" type="bigint" jt="-5" >
+				<comment><![CDATA[what type of item this is barcoding (sample tube, plate, etc)]]></comment>
+			</column>
+			<column name="step" type="varchar" jt="12" mandatory="y" >
+				<comment><![CDATA[What rough step of the process (Arrived, Extracted, PCR, Sequencing, Sequenced)]]></comment>
+			</column>
 			<index name="barcode_pkey" unique="PRIMARY_KEY" >
 				<column name="barcode" />
 			</index>
+			<index name="idx_barcode" unique="NORMAL" >
+				<column name="barcode_type_id" />
+			</index>
+			<fk name="fk_barcode" to_schema="barcodes" to_table="barcode_type" >
+				<fk_column name="barcode_type_id" pk="barcode_type_id" />
+			</fk>
 		</table>
 		<table name="barcode_exceptions" >
 			<column name="barcode" type="varchar" length="100" jt="12" mandatory="y" />
@@ -809,17 +821,37 @@
 				<fk_column name="barcode" pk="barcode" />
 			</fk>
 		</table>
+		<table name="barcode_type" >
+			<column name="barcode_type_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="barcode_type" type="varchar" jt="12" mandatory="y" />
+			<index name="pk_barcode_type" unique="PRIMARY_KEY" >
+				<column name="barcode_type_id" />
+			</index>
+		</table>
 		<table name="plate" >
-			<column name="plate_id" type="bigint" length="19" jt="-5" mandatory="y" />
-			<column name="plate" type="varchar" length="50" jt="12" />
-			<column name="sequence_date" type="varchar" length="20" jt="12" />
+			<column name="plate_id" type="varchar" jt="12" mandatory="y" />
+			<column name="protocol_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="barcode" type="varchar" jt="12" mandatory="y" />
 			<index name="plate_pkey" unique="PRIMARY_KEY" >
 				<column name="plate_id" />
 			</index>
+			<index name="idx_plate" unique="NORMAL" >
+				<column name="protocol_id" />
+			</index>
+			<index name="idx_plate_0" unique="NORMAL" >
+				<column name="barcode" />
+			</index>
+			<fk name="fk_plate_0" to_schema="barcodes" to_table="protocol" >
+				<fk_column name="protocol_id" pk="protocol_id" />
+			</fk>
+			<fk name="fk_plate" to_schema="barcodes" to_table="barcode" >
+				<fk_column name="barcode" pk="barcode" />
+			</fk>
 		</table>
 		<table name="plate_barcode" >
-			<column name="plate_id" type="bigint" length="19" jt="-5" mandatory="y" />
-			<column name="barcode" type="varchar" length="2147483647" jt="12" mandatory="y" />
+			<column name="plate_id" type="varchar" jt="12" mandatory="y" />
+			<column name="barcode" type="varchar" jt="12" mandatory="y" />
+			<column name="well" type="varchar" length="5" jt="12" mandatory="y" />
 			<index name="idx_plate_barcode" unique="NORMAL" >
 				<column name="barcode" />
 			</index>
@@ -853,6 +885,15 @@
 			<fk name="fk_pb_to_project" to_schema="barcodes" to_table="project" >
 				<fk_column name="project_id" pk="project_id" />
 			</fk>
+		</table>
+		<table name="protocol" >
+			<column name="protocol_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="step" type="varchar" jt="12" mandatory="y" />
+			<column name="protocol_shortname" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="protocol" type="text" jt="12" mandatory="y" />
+			<index name="pk_protocol" unique="PRIMARY_KEY" >
+				<column name="protocol_id" />
+			</index>
 		</table>
 	</schema>
 	<schema name="information_schema" catalogname="ag" schemaname="information_schema" defo="y" >
@@ -22538,17 +22579,19 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="survey_answers" color="a8c4ef" x="1410" y="1230" />
 		<entity schema="ag" name="ag_human_survey" color="c6d9f7" x="1665" y="420" />
 		<entity schema="ag" name="external_survey_answers" color="a8c4ef" x="1440" y="1350" />
-		<entity schema="barcodes" name="plate" color="a8c4ef" x="300" y="1065" />
-		<entity schema="barcodes" name="project_barcode" color="a8c4ef" x="330" y="975" />
-		<entity schema="barcodes" name="barcode" color="a8c4ef" x="105" y="870" />
-		<entity schema="barcodes" name="plate_barcode" color="a8c4ef" x="135" y="1065" />
 		<entity schema="ag" name="settings" color="a8c4ef" x="105" y="645" />
 		<entity schema="ag" name="ag_kit_barcodes" color="f7e2c6" x="735" y="885" />
 		<entity schema="ag" name="external_survey_sources" color="a8c4ef" x="1395" y="1500" />
 		<entity schema="ag" name="ag_handout_barcodes" color="a8c4ef" x="255" y="420" />
 		<entity schema="ag" name="ag_handout_kits" color="a8c4ef" x="60" y="420" />
 		<entity schema="barcodes" name="barcode_exceptions" color="a8c4ef" x="120" y="795" />
-		<entity schema="barcodes" name="project" color="a8c4ef" x="345" y="885" />
+		<entity schema="barcodes" name="barcode" color="a8c4ef" x="105" y="870" />
+		<entity schema="barcodes" name="project_barcode" color="a8c4ef" x="315" y="885" />
+		<entity schema="barcodes" name="project" color="a8c4ef" x="330" y="960" />
+		<entity schema="barcodes" name="barcode_type" color="a8c4ef" x="120" y="1080" />
+		<entity schema="barcodes" name="plate_barcode" color="a8c4ef" x="135" y="1170" />
+		<entity schema="barcodes" name="protocol" color="a8c4ef" x="300" y="1050" />
+		<entity schema="barcodes" name="plate" color="a8c4ef" x="300" y="1170" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by : 
    american_gut_consent</comment>
@@ -22604,6 +22647,8 @@ AS $function$xpath_exists$function$
 			<entity schema="barcodes" name="project" />
 			<entity schema="barcodes" name="barcode" />
 			<entity schema="barcodes" name="barcode_exceptions" />
+			<entity schema="barcodes" name="barcode_type" />
+			<entity schema="barcodes" name="protocol" />
 		</group>
 	</layout>
 </project>
