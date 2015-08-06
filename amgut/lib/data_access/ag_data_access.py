@@ -105,16 +105,6 @@ class AGDataAccess(object):
     # Helper Functions
     #####################################
 
-    def testDatabase(self):
-        """Attempt to connect to the database
-
-        Attempt a database connection. Will throw an exception if it fails.
-        Returns
-        "True" if successful.
-        """
-        if self.connection:
-            return True
-
     def _get_col_names_from_cursor(self, cur):
         if cur.description:
             return [x[0] for x in cur.description]
@@ -173,16 +163,6 @@ class AGDataAccess(object):
                                    address, city, state, zip, country])
         self.connection.commit()
 
-    def getAGLogins(self):
-        results = self._sql.execute_proc_return_cursor('ag_get_logins', [])
-        rows = results.fetchall()
-        col_names = self._get_col_names_from_cursor(results)
-        results.close()
-
-        return_res = [dict(zip(col_names, row)) for row in rows]
-
-        return return_res
-
     # note: only used by the password migration
     def getAGKitsByLogin(self):
         results = self._sql.execute_proc_return_cursor('ag_get_kits_by_login',
@@ -200,21 +180,6 @@ class AGDataAccess(object):
         return_res = [row[0] for row in results]
         results.close()
         return return_res
-
-    def getAGBarcodesByLogin(self, ag_login_id):
-        # returned tuple consists of:
-        # site_sampled, sample_date, sample_time, participant_name,
-        # environment_sampled, notes
-        results = self._sql.execute_proc_return_cursor(
-            'ag_get_barcodes_by_login',
-            [ag_login_id])
-        rows = results.fetchall()
-        col_names = self._get_col_names_from_cursor(results)
-        results.close()
-
-        barcode_info = [dict(zip(col_names, row)) for row in rows]
-
-        return barcode_info
 
     def getAGBarcodeDetails(self, barcode):
         results = self._sql.execute_proc_return_cursor(
@@ -888,11 +853,6 @@ class AGDataAccess(object):
                                     cannot_geocode])
         self.connection.commit()
 
-    def addParticipantException(self, ag_login_id, participant_name):
-        self.get_cursor().callproc('ag_insert_participant_exception',
-                                   [ag_login_id, participant_name])
-        self.connection.commit()
-
     def handoutCheck(self, username, password):
         cursor = self.get_cursor()
         cursor.execute("""SELECT password
@@ -929,23 +889,6 @@ class AGDataAccess(object):
                               WHERE ag_login_id = %s AND
                                     barcode = %s)""", [ag_login_id, barcode])
         return cursor.fetchone()[0]
-
-    def checkBarcode(self, barcode):
-        # return a tuple consists of:
-        # site_sampled, sample_date, sample_time, participant_name,
-        # environment_sampled, notes, etc (please refer to
-        # ag_check_barcode_status.sql).
-        results = self._sql.execute_proc_return_cursor(
-            'ag_check_barcode_status', [barcode])
-        row = results.fetchone()
-        col_names = self._get_col_names_from_cursor(results)
-        results.close()
-
-        barcode_details = {}
-        if row:
-            barcode_details = dict(zip(col_names, row))
-
-        return barcode_details
 
     def getAGStats(self):
         # returned tuple consists of:
@@ -1089,15 +1032,6 @@ class AGDataAccess(object):
         cursor.execute(sql, (ag_login_id, participant_name))
         return cursor.fetchone()[0]
 
-    def get_verification_code(self, supplied_kit_id):
-        """returns the verification code for the kit"""
-        sql = ("select kit_verification_code from ag_kit where "
-               "supplied_kit_id = %s")
-        cursor = self.get_cursor()
-        cursor.execute(sql, [supplied_kit_id])
-        results = cursor.fetchone()[0]
-        return results
-
     def get_user_info(self, supplied_kit_id):
         sql = """SELECT  cast(agl.ag_login_id as varchar(100)) as ag_login_id,
                         agl.email, agl.name, agl.address, agl.city,
@@ -1161,13 +1095,6 @@ class AGDataAccess(object):
         results = cursor.fetchall()
         col_names = self._get_col_names_from_cursor(cursor)
         return [dict(zip(col_names, row)) for row in results]
-
-    def get_barcodes_from_handout_kit(self, supplied_kit_id):
-        sql = "select barcode from ag_handout_barcodes where kit_id = %s"
-        cursor = self.get_cursor()
-        cursor.execute(sql, [supplied_kit_id])
-        results = cursor.fetchall()
-        return results
 
     def search_participant_info(self, term):
         sql = """select   cast(ag_login_id as varchar(100)) as ag_login_id
