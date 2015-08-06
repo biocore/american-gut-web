@@ -90,11 +90,6 @@ class TestAGDataAccess(TestCase):
                          'ag_kit_id': 'd8592c74-7da2-2135-e040-8a80115d6401'}
                         in data)
 
-    def test_getAGBarcodes(self):
-        data = self.data_access.getAGBarcodes()
-        self.assertEqual(data[0], '000000001')
-        self.assertEqual(data[-1], '000010860')
-
     def test_getAGBarcodeDetails(self):
         data = self.data_access.getAGBarcodeDetails('000000001')
         self.assertEqual(data['participant_name'], 'foo')
@@ -110,38 +105,6 @@ class TestAGDataAccess(TestCase):
         data = self.data_access.getAGBarcodes()
         self.assertTrue(barcode_text not in data)
 
-    def test_reassignAGBarcode(self):
-        test = "d8592c74-7da2-2135-e040-8a80115d6401"
-        oneone = "dbd466b5-651b-bfb2-e040-8a80115d6775"
-        self.data_access.reassignAGBarcode(oneone, '000010860')
-        data = self.data_access.getBarcodesByKit('1111')
-        self.assertEqual(len(data), 1)
-        self.data_access.reassignAGBarcode(test, '000010860')
-        data = self.data_access.getBarcodesByKit('1111')
-        self.assertEqual(len(data), 0)
-
-    def test_addAGKit(self):
-        result = self.data_access.addAGKit('d8592c747da12135e0408a80115d6401',
-                                           'somekit', 'pass', 2, 'ver', 'n')
-        self.assertEqual(result, 1)
-        cur = self.con.cursor()
-        cur.execute('select * from ag_kit where ag_login_id = %s',
-                    ('d8592c747da12135e0408a80115d6401',))
-        rec = cur.fetchall()
-        self.assertEqual(len(rec), 3)
-        cur.execute(
-            'delete from ag_kit where ag_login_id = %s '
-            'and supplied_kit_id = %s', ('d8592c747da12135e0408a80115d6401',
-                                         'somekit',))
-        self.con.commit()
-        cur.execute('select * from ag_kit where ag_login_id = %s',
-                    ('d8592c747da12135e0408a80115d6401',))
-        rec = cur.fetchall()
-        self.assertEqual(len(rec), 2)
-        result = self.data_access.addAGKit('d8592c747da12135e0408a80115d6401',
-                                           'test', 'pass', 2, 'ver', 'n')
-        self.assertEqual(result, -1)
-
     def test_updateAGKit(self):
         self.data_access.updateAGKit('d8592c74-7da2-2135-e040-8a80115d6401',
                                      'test22', 'newpass', 24, 'ver')
@@ -156,25 +119,6 @@ class TestAGDataAccess(TestCase):
                     ('d8592c74-7da2-2135-e040-8a80115d6401',))
         rec = cur.fetchone()
         self.assertEqual(rec[2], 'test')
-
-    def test_addAGBarcode(self):
-        self.data_access.addAGBarcode('d8592c74-7da2-2135-e040-8a80115d6401',
-                                      '991299')
-        cur = self.con.cursor()
-        cur.execute('select * from ag_kit_barcodes where barcode = %s',
-                    ('991299',))
-        rec = cur.fetchone()
-        self.assertEqual(rec[1],  'd8592c74-7da2-2135-e040-8a80115d6401')
-        cur.execute('select * from project_barcode where barcode = %s',
-                    ('991299',))
-        rec = cur.fetchone()
-        self.assertEqual(rec[0], 1)
-        cur.execute('delete from ag_kit_barcodes where barcode = %s',
-                    ('991299',))
-        cur.execute('delete from project_barcode where barcode = %s',
-                    ('991299',))
-        cur.execute('delete from barcode where barcode = %s', ('991299', ))
-        self.con.commit()
 
     def test_updateAGBarcode(self):
         self.data_access.updateAGBarcode(
@@ -295,11 +239,6 @@ class TestAGDataAccess(TestCase):
             'd8592c74-7da1-2135-e040-8a80115d6401')
         # this test needs updated when the test database is updated
         self.assertEqual(len(data), 0)
-
-    def test_getParticipantExceptions(self):
-        data = self.data_access.getParticipantExceptions(
-            'd8592c74-7da1-2135-e040-8a80115d6401')
-        self.assertEqual(len(data), 1)
 
     def test_getParticipantSamples(self):
         data = self.data_access.getParticipantSamples(
