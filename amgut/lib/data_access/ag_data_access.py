@@ -175,12 +175,6 @@ class AGDataAccess(object):
 
         return return_res
 
-    def getAGBarcodes(self):
-        results = self._sql.execute_proc_return_cursor('ag_get_barcodes', [])
-        return_res = [row[0] for row in results]
-        results.close()
-        return return_res
-
     def getAGBarcodeDetails(self, barcode):
         results = self._sql.execute_proc_return_cursor(
             'ag_get_barcode_details', [barcode])
@@ -213,24 +207,6 @@ class AGDataAccess(object):
 
         return cur.fetchall()
 
-    def getAGCode(self, passwd_length, type='alpha'):
-        if type == 'alpha':
-            x = ''.join([choice(KIT_ALPHA)
-                for i in range(passwd_length-1)])
-            return x
-        if type == 'numeric':
-            x = ''.join([choice(KIT_PASSWD)
-                for i in range(passwd_length-1)])
-            return choice(KIT_PASSWD_NOZEROS) + x
-
-    def getNewAGKitId(self):
-        def get_used_kit_ids(cursor):
-            """Grab in use kit IDs, return set of them
-            """
-            cursor.execute("select supplied_kit_id from ag_kit")
-            kits = set([i[0] for i in cursor.fetchall()])
-            return kits
-
         def make_kit_id(kit_id_length=8):
             kit_id = ''.join([choice(KIT_ALPHA) for i in range(kit_id_length)])
             return kit_id
@@ -255,38 +231,6 @@ class AGDataAccess(object):
         results.close()
         return next_barcode, text_barcode
 
-    def reassignAGBarcode(self, ag_kit_id, barcode):
-        self.get_cursor().callproc('ag_reassign_barcode', [ag_kit_id,
-                                                           barcode])
-        self.connection.commit()
-
-    def addAGKit(self, ag_login_id, kit_id, kit_password, swabs_per_kit,
-                 kit_verification_code, printresults='n'):
-        """
-        Returns
-        -------
-        int
-            1:  success
-            -1: insert failed due to IntegrityError
-
-        Notes
-        -----
-        Whatever is passed as kit_password will be added AS IS. This means you
-        must hash the password before passing, if desired.
-        """
-        try:
-            self.get_cursor().callproc('ag_insert_kit',
-                                       [ag_login_id, kit_id,
-                                        kit_password, swabs_per_kit,
-                                        kit_verification_code,
-                                        printresults])
-            self.connection.commit()
-        except psycopg2.IntegrityError:
-            logging.exception('Error on skid %s:' % ag_login_id)
-            self.connection.rollback()
-            return -1
-        return 1
-
     def updateAGKit(self, ag_kit_id, supplied_kit_id, kit_password,
                     swabs_per_kit, kit_verification_code):
         kit_password = bcrypt.encrypt(kit_password)
@@ -296,22 +240,6 @@ class AGDataAccess(object):
                                     kit_password, swabs_per_kit,
                                     kit_verification_code])
         self.connection.commit()
-
-    def addAGBarcode(self, ag_kit_id, barcode):
-        """
-        return values
-        1:  success
-        -1: insert failed due to IntegrityError
-        """
-        try:
-            self.get_cursor().callproc('ag_insert_barcode',
-                                       [ag_kit_id, barcode])
-            self.connection.commit()
-        except psycopg2.IntegrityError:
-            logging.exception('Error on barcode %s:' % barcode)
-            self.connection.rollback()
-            return -1
-        return 1
 
     def updateAGBarcode(self, barcode, ag_kit_id, site_sampled,
                         environment_sampled, sample_date, sample_time,
@@ -547,14 +475,6 @@ class AGDataAccess(object):
         return [row[0] for row in
                 conn_handler.execute_fetchall(
                     sql, [ag_login_id, ag_login_id, 2])]
-
-    def getParticipantExceptions(self, ag_login_id):
-        results = self._sql.execute_proc_return_cursor(
-            'ag_get_participant_exceptions', [ag_login_id])
-
-        return_res = [row[0] for row in results]
-        results.close()
-        return return_res
 
     def getParticipantSamples(self, ag_login_id, participant_name):
         results = self._sql.execute_proc_return_cursor(
