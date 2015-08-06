@@ -863,7 +863,7 @@ _PORTAL = {
     'RESULTS_HEADER_1': "Sequencing &amp; Results",
     'RESULTS_READY_HEADER_1': "Your results are ready!",
     'RESULTS_READY_TEXT_1': "One or more of the samples you submitted have been sequenced, and the results are now available online! Currently, we have only processed fecal samples, but we will be processing samples from other body sites soon.",
-    'RESULTS_READY_TEXT_2': 'To access your available results, hover over "Human Samples" in the menu on the left, hover over your name, then click on your sample to view your results, or click one of the links below. The following barcodes are ready:',
+    'RESULTS_READY_TEXT_2': 'To access your available results, hover over "Human Samples" in the menu on the left, hover over your name, then click on your sample to view your results, or click one of the links below. <b>For help interpreting your results, <a href="%s/authed/addendum/">click here</a></b>. The following barcodes are ready:' % _SITEBASE,
     'RESULTS_READY_TEXT_3': "You will be able to view your results here on this website once they are available.",
     'RESULTS_TEXT_1': 'Once you have added a <a href="#" onclick="selectTab(\'source\')">sample source, completed the relevant survey</a> (if applicable), <a href="#" onclick="selectTab(\'sample\')">taken</a> and <a href="#" onclick="selectTab(\'log\')">logged your samples</a> and you have <a href="#" onclick="selectTab(\'mail\')">mailed the samples back to us</a>, we will then perform sequencing and analysis on your samples.',
     'RESULTS_TEXT_2': "Sequencing and data analysis can take up to 6 months, please be patient! We will let you know as soon as your samples have been sequenced and analyzed.",

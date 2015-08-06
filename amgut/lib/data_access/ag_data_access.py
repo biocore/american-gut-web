@@ -105,16 +105,6 @@ class AGDataAccess(object):
     # Helper Functions
     #####################################
 
-    def testDatabase(self):
-        """Attempt to connect to the database
-
-        Attempt a database connection. Will throw an exception if it fails.
-        Returns
-        "True" if successful.
-        """
-        if self.connection:
-            return True
-
     def _get_col_names_from_cursor(self, cur):
         if cur.description:
             return [x[0] for x in cur.description]
@@ -173,31 +163,6 @@ class AGDataAccess(object):
                                    address, city, state, zip, country])
         self.connection.commit()
 
-    def getAGSurveyDetails(self, ag_login_id, participant_name):
-        results = self._sql.execute_proc_return_cursor('ag_get_survey_details',
-                                                       [ag_login_id,
-                                                        participant_name])
-        rows = results.fetchall()
-        col_names = self._get_col_names_from_cursor(results)
-        results.close()
-
-        rows = [dict(zip(col_names, row)) for row in rows]
-
-        data = {row['question']: row['answer'] for row in rows
-                if row['answer']}
-
-        return data
-
-    def getAGLogins(self):
-        results = self._sql.execute_proc_return_cursor('ag_get_logins', [])
-        rows = results.fetchall()
-        col_names = self._get_col_names_from_cursor(results)
-        results.close()
-
-        return_res = [dict(zip(col_names, row)) for row in rows]
-
-        return return_res
-
     # note: only used by the password migration
     def getAGKitsByLogin(self):
         results = self._sql.execute_proc_return_cursor('ag_get_kits_by_login',
@@ -215,21 +180,6 @@ class AGDataAccess(object):
         return_res = [row[0] for row in results]
         results.close()
         return return_res
-
-    def getAGBarcodesByLogin(self, ag_login_id):
-        # returned tuple consists of:
-        # site_sampled, sample_date, sample_time, participant_name,
-        # environment_sampled, notes
-        results = self._sql.execute_proc_return_cursor(
-            'ag_get_barcodes_by_login',
-            [ag_login_id])
-        rows = results.fetchall()
-        col_names = self._get_col_names_from_cursor(results)
-        results.close()
-
-        barcode_info = [dict(zip(col_names, row)) for row in rows]
-
-        return barcode_info
 
     def getAGBarcodeDetails(self, barcode):
         results = self._sql.execute_proc_return_cursor(
@@ -254,24 +204,6 @@ class AGDataAccess(object):
         kit_details = {}
         if row:
             kit_details = dict(zip(col_names, row))
-        return kit_details
-
-    def getAGHandoutKitDetails(self, supplied_kit_id):
-        sql = """SELECT * FROM ag.ag_handout_kits
-                 JOIN (SELECT
-                    kit_id, array_agg(barcode ORDER BY barcode) AS barcodes,
-                    sample_barcode_file FROM ag.ag_handout_barcodes
-                    GROUP BY kit_id, sample_barcode_file) AS hb
-                 USING (kit_id)
-                 WHERE kit_id = %s"""
-        cur = self.get_cursor()
-        cur.execute(sql, [supplied_kit_id])
-        row = cur.fetchone()
-        col_names = self._get_col_names_from_cursor(cur)
-        cur.close()
-
-        kit_details = dict(zip(col_names, row))
-
         return kit_details
 
     def getAGHandoutKitIDsAndPasswords(self):
@@ -441,25 +373,6 @@ class AGDataAccess(object):
             return False
         return True
 
-    def addAGHumanParticipant(self, ag_login_id, participant_name):
-        self.get_cursor().callproc('ag_add_participant',
-                                   [ag_login_id, participant_name])
-        self.connection.commit()
-
-    def addAGAnimalParticipant(self, ag_login_id, participant_name):
-        self.get_cursor().callproc('ag_add_animal_participant',
-                                   [ag_login_id, participant_name])
-        self.connection.commit()
-
-    def addAGSingle(self, ag_login_id, participant_name, field_name,
-                    field_value, table_name):
-        table = "update %s set %s" % (table_name, field_name)
-        sql = table + ("= %s where ag_login_id = %s and "
-                       "participant_name = %s")
-        self.get_cursor().execute(sql, [field_value, ag_login_id,
-                                        participant_name])
-        self.connection.commit()
-
     def deleteAGParticipantSurvey(self, ag_login_id, participant_name):
         # Remove user using old stype DB Schema
         self.get_cursor().callproc('ag_delete_participant',
@@ -524,18 +437,6 @@ class AGDataAccess(object):
                 if 'date_signed' in result:
                     result['date_signed'] = str(result['date_signed'])
                 return result
-
-    def addAGGeneralValue(self, ag_login_id, participant_name, field_name,
-                          field_value):
-        self.get_cursor().callproc('ag_insert_survey_answer',
-                                   [ag_login_id, participant_name,
-                                    field_name, field_value])
-        self.connection.commit()
-
-    def deleteAGGeneralValues(self, ag_login_id, participant_name):
-        self.get_cursor().callproc('ag_delete_survey_answer',
-                                   [ag_login_id, participant_name])
-        self.connection.commit()
 
     def logParticipantSample(self, ag_login_id, barcode, sample_site,
                              environment_sampled, sample_date, sample_time,
@@ -952,11 +853,6 @@ class AGDataAccess(object):
                                     cannot_geocode])
         self.connection.commit()
 
-    def addParticipantException(self, ag_login_id, participant_name):
-        self.get_cursor().callproc('ag_insert_participant_exception',
-                                   [ag_login_id, participant_name])
-        self.connection.commit()
-
     def handoutCheck(self, username, password):
         cursor = self.get_cursor()
         cursor.execute("""SELECT password
@@ -993,33 +889,6 @@ class AGDataAccess(object):
                               WHERE ag_login_id = %s AND
                                     barcode = %s)""", [ag_login_id, barcode])
         return cursor.fetchone()[0]
-
-    def checkBarcode(self, barcode):
-        # return a tuple consists of:
-        # site_sampled, sample_date, sample_time, participant_name,
-        # environment_sampled, notes, etc (please refer to
-        # ag_check_barcode_status.sql).
-        results = self._sql.execute_proc_return_cursor(
-            'ag_check_barcode_status', [barcode])
-        row = results.fetchone()
-        col_names = self._get_col_names_from_cursor(results)
-        results.close()
-
-        barcode_details = {}
-        if row:
-            barcode_details = dict(zip(col_names, row))
-
-        return barcode_details
-
-    def updateAGSurvey(self, ag_login_id, participant_name, field, value):
-        # Make sure no single quotes get passed as it will break the sql string
-        value = str(value).replace("'", "''")
-        participant_name = str(participant_name).replace("'", "''")
-        table = "update ag_human_survey set %s" % field
-        sql = table + "= %s where ag_login_id = %s and participant_name = %s"
-        self.get_cursor().execute(sql, [value, ag_login_id,
-                                        participant_name])
-        self.connection.commit()
 
     def getAGStats(self):
         # returned tuple consists of:
@@ -1163,15 +1032,6 @@ class AGDataAccess(object):
         cursor.execute(sql, (ag_login_id, participant_name))
         return cursor.fetchone()[0]
 
-    def get_verification_code(self, supplied_kit_id):
-        """returns the verification code for the kit"""
-        sql = ("select kit_verification_code from ag_kit where "
-               "supplied_kit_id = %s")
-        cursor = self.get_cursor()
-        cursor.execute(sql, [supplied_kit_id])
-        results = cursor.fetchone()[0]
-        return results
-
     def get_user_info(self, supplied_kit_id):
         sql = """SELECT  cast(agl.ag_login_id as varchar(100)) as ag_login_id,
                         agl.email, agl.name, agl.address, agl.city,
@@ -1236,13 +1096,6 @@ class AGDataAccess(object):
         col_names = self._get_col_names_from_cursor(cursor)
         return [dict(zip(col_names, row)) for row in results]
 
-    def get_barcodes_from_handout_kit(self, supplied_kit_id):
-        sql = "select barcode from ag_handout_barcodes where kit_id = %s"
-        cursor = self.get_cursor()
-        cursor.execute(sql, [supplied_kit_id])
-        results = cursor.fetchall()
-        return results
-
     def search_participant_info(self, term):
         sql = """select   cast(ag_login_id as varchar(100)) as ag_login_id
                  from    ag_login al
@@ -1267,16 +1120,6 @@ class AGDataAccess(object):
         results = cursor.fetchall()
         cursor.close()
         return [x[0] for x in results]
-
-    def search_participants(self, term):
-        sql = """ select  cast(ag_login_id as varchar(100)) as ag_login_id
-                 from    ag_consent
-                 where   lower(participant_name) like %s or
-                 lower(participant_email) like %s"""
-        conn_handler = SQLConnectionHandler()
-        liketerm = '%%' + term.lower() + '%%'
-        return [x[0] for x in conn_handler.execute_fetchall(
-            sql, [liketerm, liketerm])]
 
     def search_barcodes(self, term):
         sql = """select  cast(ak.ag_login_id as varchar(100)) as ag_login_id

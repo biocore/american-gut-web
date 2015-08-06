@@ -42,9 +42,6 @@ class TestAGDataAccess(TestCase):
                                                 AMGUT_CONFIG.goodpassword)
         self.con.close()
 
-    def test_testDatabase(self):
-        self.assertTrue(self.data_access.testDatabase())
-
     def test_authenticateWebAppUser(self):
         self.assertFalse(self.data_access.authenticateWebAppUser('bad',
                                                                  'wrong'))
@@ -86,11 +83,6 @@ class TestAGDataAccess(TestCase):
         rec = cur.fetchone()
         self.assertEqual(rec[1], 'test@microbio.me')
 
-    def test_getAGLogins(self):
-        data = self.data_access.getAGLogins()
-        self.assertTrue({'ag_login_id': 'd8592c74-7da1-2135-e040-8a80115d6401',
-                         'email': 'test@microbio.me', 'name': 'Test'} in data)
-
     def test_getAGKitsByLogin(self):
         data = self.data_access.getAGKitsByLogin()
         self.assertTrue({'email': 'test@microbio.me',
@@ -102,15 +94,6 @@ class TestAGDataAccess(TestCase):
         data = self.data_access.getAGBarcodes()
         self.assertEqual(data[0], '000000001')
         self.assertEqual(data[-1], '000010860')
-
-    def test_getAGBarcodesByLogin(self):
-        data = self.data_access.getAGBarcodesByLogin(
-            'd8592c74-7da1-2135-e040-8a80115d6401')
-        expected = {
-            '000010860', '000006616',
-            '000000001'}
-        observed = {row['barcode'] for row in data}
-        self.assertEqual(observed, expected)
 
     def test_getAGBarcodeDetails(self):
         data = self.data_access.getAGBarcodeDetails('000000001')
@@ -353,26 +336,9 @@ class TestAGDataAccess(TestCase):
         data = self.data_access.getMapMarkers()
         self.assertNotEqual(len(data), 0)
 
-    def test_addParticipantException(self):
-        self.data_access.addParticipantException(
-            'd8592c747da12135e0408a80115d6401', 'random kid')
-        data = self.data_access.getParticipantExceptions(
-            'd8592c747da12135e0408a80115d6401')
-        self.assertTrue('random kid' in data)
-        cur = self.con.cursor()
-        cur.execute('delete from ag_participant_exceptions where '
-                    'ag_login_id = %s and participant_name = %s',
-                    ('d8592c747da12135e0408a80115d6401', 'random kid',))
-        self.con.commit()
-
     def test_handoutCheck(self):
         is_handout = self.data_access.handoutCheck('test', 'wrongpass')
         self.assertFalse(is_handout)
-
-    def test_checkBarcode(self):
-        data = self.data_access.checkBarcode('000000001')
-        self.assertEqual(data['site_sampled'], 'Stool')
-        self.assertEqual(data['name'], 'Test')
 
     def test_getAGStats(self):
         data = self.data_access.getAGStats()
@@ -447,10 +413,6 @@ class TestAGDataAccess(TestCase):
         data = self.data_access.get_menu_items('test')
         self.assertEqual(data[0]['foo'][0]['barcode'], '000000001')
 
-    def test_get_verification_code(self):
-        data = self.data_access.get_verification_code('test')
-        self.assertEqual(data, 'test')
-
     def test_get_user_info(self):
         data = self.data_access.get_user_info('test')
         self.assertEqual(data['email'], 'test@microbio.me')
@@ -460,10 +422,6 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(len(data), 1)
         data = self.data_access.get_barcode_results('1111')
         self.assertEqual(len(data), 0)
-
-    def test_get_barcodes_from_handout_kit(self):
-        data = self.data_access.get_barcodes_from_handout_kit('test_ha')
-        self.assertEqual(len(data), 3)
 
 
 if __name__ == "__main__":
