@@ -46,6 +46,7 @@ from amgut.handlers.download import DownloadHandler
 
 from amgut.handlers.open_humans import (OpenHumansHandler,
                                         OpenHumansLoginHandler)
+from amgut.lib.startup_tests import startup_tests
 
 define("port", default=8888, help="run on the given port", type=int)
 
@@ -109,6 +110,7 @@ class QiimeWebApplication(Application):
 
 
 def main():
+    startup_tests()
     # replace spaces for underscores to autocomplete easily in a shell
     # format looks like american_gut_8888_2014-10-06_15:30:20.256035.log
     prefix = ("%s_%d_%s.log" % (media_locale['LOCALE'], options.port,
