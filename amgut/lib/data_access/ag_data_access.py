@@ -463,10 +463,7 @@ class AGDataAccess(object):
         return return_res
 
     def getAnimalParticipants(self, ag_login_id):
-        sql = """SELECT participant_name FROM ag_animal_survey
-                 WHERE  ag_login_id = %s
-                 UNION
-                 SELECT participant_name from ag.ag_login_surveys
+        sql = """SELECT participant_name from ag.ag_login_surveys
                  JOIN ag.survey_answers USING (survey_id)
                  JOIN ag.group_questions gq USING (survey_question_id)
                  JOIN ag.surveys ags USING (survey_group)
