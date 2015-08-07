@@ -12,7 +12,7 @@ def patch_number():
     conn_handler = SQLConnectionHandler()
     system = conn_handler.execute_fetchone("SELECT current_patch FROM ag.settings")[0]
     patches_dir = join(dirname(abspath(__file__)), '../db/patches')
-    latest = listdir(patches_dir).pop()
+    latest = sorted(listdir(patches_dir)).pop()
     if latest != system:
         raise EnvironmentError("Not running latest patch! System: %s Latest: %s" %
                                (system, latest))
