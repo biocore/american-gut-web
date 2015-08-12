@@ -48,3 +48,8 @@ LOOP
 	END;
 END LOOP;
 END $do$;
+
+-- Change name of column so it reflects what it stores
+ALTER TABLE barcodes.barcode RENAME COLUMN create_date_time TO assigned_on;
+ALTER TABLE barcodes.barcode ALTER COLUMN assigned_on DROP DEFAULT;
+COMMENT ON COLUMN barcodes.barcode.assigned_on IS 'Date the barcode was assigned to a project';
