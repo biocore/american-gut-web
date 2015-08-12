@@ -796,7 +796,7 @@
 			<column name="biomass_remaining" type="varchar" length="1" jt="12" />
 			<column name="sequencing_status" type="varchar" length="20" jt="12" />
 			<column name="obsolete" type="varchar" length="1" jt="12" />
-			<column name="create_date_time" type="timestamp" jt="93" >
+			<column name="create_date_time" type="timestamp" jt="93" mandatory="y" >
 				<defo>current_timestamp</defo>
 				<comment><![CDATA[Date barcode created on the system]]></comment>
 			</column>

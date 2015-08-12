@@ -1087,7 +1087,7 @@ date barcode assigned to a project</title></a>
   <a xlink:href='#biomass_remaining'><text x='123' y='982'>biomass_remaining</text><title>biomass_remaining varchar&#040;1&#041;</title></a>
   <a xlink:href='#sequencing_status'><text x='123' y='997'>sequencing_status</text><title>sequencing_status varchar&#040;20&#041;</title></a>
   <a xlink:href='#obsolete'><text x='123' y='1012'>obsolete</text><title>obsolete varchar&#040;1&#041;</title></a>
-  <a xlink:href='#create_date_time'><text x='123' y='1027'>create_date_time</text><title>create_date_time timestamp default current&#095;timestamp
+  <use id='nn' x='107' y='1017' xlink:href='#nn'/><a xlink:href='#create_date_time'><text x='123' y='1027'>create_date_time</text><title>create_date_time timestamp not null default current&#095;timestamp
 Date barcode created on the system</title></a>
 
 </g></svg>
@@ -3528,7 +3528,7 @@ Date barcode created on the system</title></a>
 	</tr>
 	<tr>
 		<td><a name='create_date_time'>create&#095;date&#095;time</a></td>
-		<td width='40%'> timestamp   DEFO current_timestamp </td>
+		<td width='40%'> timestamp  NOT NULL  DEFO current_timestamp </td>
 		<td width='99%'> Date barcode created on the system </td>
 	</tr>
 <tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
