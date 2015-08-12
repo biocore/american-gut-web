@@ -47,6 +47,16 @@ LOOP
 		--Do nothing on exception because that means there are still barcodes attached to the kit
 	END;
 END LOOP;
+
+-- Wipe out test barcodes that are not attached to AG
+FOR bc IN
+	SELECT barcode FROM barcodes.barcode WHERE barcode::integer >= 800000000
+LOOP
+	DELETE FROM barcodes.barcode_exceptions WHERE barcode = bc;
+	DELETE FROM barcodes.plate_barcode WHERE barcode = bc;
+	DELETE FROM barcodes.project_barcode WHERE barcode = bc;
+	DELETE FROM barcodes.barcode WHERE barcode = bc;
+END LOOP;
 END $do$;
 
 -- Change name of column so it reflects what it stores
