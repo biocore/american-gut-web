@@ -787,8 +787,8 @@
 	<schema name="barcodes" catalogname="ag_test" schemaname="barcodes" defo="y" >
 		<table name="barcode" >
 			<column name="barcode" type="varchar" length="2147483647" jt="12" mandatory="y" />
-			<column name="create_date_time" type="timestamp" length="29" decimal="6" jt="93" >
-				<defo>(&#039;now&#039;::text)::timestamp without time zone</defo>
+			<column name="assigned_on" type="timestamp" length="29" decimal="6" jt="93" >
+				<comment><![CDATA[date barcode assigned to a project]]></comment>
 			</column>
 			<column name="status" type="varchar" length="100" jt="12" />
 			<column name="scan_date" type="varchar" length="20" jt="12" />
@@ -796,6 +796,10 @@
 			<column name="biomass_remaining" type="varchar" length="1" jt="12" />
 			<column name="sequencing_status" type="varchar" length="20" jt="12" />
 			<column name="obsolete" type="varchar" length="1" jt="12" />
+			<column name="create_date_time" type="timestamp" jt="93" >
+				<defo>current_timestamp</defo>
+				<comment><![CDATA[Date barcode created on the system]]></comment>
+			</column>
 			<index name="barcode_pkey" unique="PRIMARY_KEY" >
 				<column name="barcode" />
 			</index>
@@ -22540,7 +22544,6 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="external_survey_answers" color="a8c4ef" x="1440" y="1350" />
 		<entity schema="barcodes" name="plate" color="a8c4ef" x="300" y="1065" />
 		<entity schema="barcodes" name="project_barcode" color="a8c4ef" x="330" y="975" />
-		<entity schema="barcodes" name="barcode" color="a8c4ef" x="105" y="870" />
 		<entity schema="barcodes" name="plate_barcode" color="a8c4ef" x="135" y="1065" />
 		<entity schema="ag" name="settings" color="a8c4ef" x="105" y="645" />
 		<entity schema="ag" name="ag_kit_barcodes" color="f7e2c6" x="735" y="885" />
@@ -22549,6 +22552,7 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="ag_handout_kits" color="a8c4ef" x="60" y="420" />
 		<entity schema="barcodes" name="barcode_exceptions" color="a8c4ef" x="120" y="795" />
 		<entity schema="barcodes" name="project" color="a8c4ef" x="345" y="885" />
+		<entity schema="barcodes" name="barcode" color="a8c4ef" x="105" y="870" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by : 
    american_gut_consent</comment>
