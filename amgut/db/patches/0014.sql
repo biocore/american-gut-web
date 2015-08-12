@@ -28988,7 +28988,6 @@ UPDATE barcodes.barcode SET create_date_time='2014-05-16T13:15:21.945375' WHERE 
 UPDATE barcodes.barcode SET create_date_time='2014-05-16T13:15:21.945375' WHERE barcode='000020869';
 UPDATE barcodes.barcode SET create_date_time='2014-05-16T13:15:21.945375' WHERE barcode='000020870';
 UPDATE barcodes.barcode SET create_date_time='2014-05-16T13:15:21.945375' WHERE barcode='000020871';
-UPDATE barcodes.barcode SET create_date_time='' WHERE barcode='ls';
 UPDATE barcodes.barcode SET create_date_time='2013-03-13 17:58:59 -0600' WHERE barcode='000001000';
 UPDATE barcodes.barcode SET create_date_time='2013-03-13 17:58:59 -0600' WHERE barcode='000001001';
 UPDATE barcodes.barcode SET create_date_time='2013-03-13 17:58:59 -0600' WHERE barcode='000001002';
