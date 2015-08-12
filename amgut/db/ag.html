@@ -1069,7 +1069,7 @@ This stores answers to third party surveys in JSON format&#044; keyed to the ori
   <a xlink:href='#project'><text x='363' y='937'>project</text><title>project varchar&#040;1000&#041;</title></a>
 
 <!-- ============= Table 'barcode' ============= -->
-<rect class='table' x='105' y='863' width='165' height='165' rx='7' ry='7' />
+<rect class='table' x='105' y='863' width='165' height='180' rx='7' ry='7' />
 <path d='M 105.50 889.50 L 105.50 870.50 Q 105.50 863.50 112.50 863.50 L 262.50 863.50 Q 269.50 863.50 269.50 870.50 L 269.50 889.50 L105.50 889.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
 <a xlink:href='#barcode'><text x='165' y='877' class='tableTitle'>barcode</text><title>Table barcodes.barcode</title></a>
   <use id='nn' x='107' y='897' xlink:href='#nn'/><a xlink:href='#barcode'><use id='pk' x='107' y='896' xlink:href='#pk'/><title>Primary Key  ( barcode ) </title></a>
@@ -1087,6 +1087,8 @@ date barcode assigned to a project</title></a>
   <a xlink:href='#biomass_remaining'><text x='123' y='982'>biomass_remaining</text><title>biomass_remaining varchar&#040;1&#041;</title></a>
   <a xlink:href='#sequencing_status'><text x='123' y='997'>sequencing_status</text><title>sequencing_status varchar&#040;20&#041;</title></a>
   <a xlink:href='#obsolete'><text x='123' y='1012'>obsolete</text><title>obsolete varchar&#040;1&#041;</title></a>
+  <a xlink:href='#create_date_time'><text x='123' y='1027'>create_date_time</text><title>create_date_time timestamp default current&#095;timestamp
+Date barcode created on the system</title></a>
 
 </g></svg>
 
@@ -3523,6 +3525,11 @@ date barcode assigned to a project</title></a>
 		<td><a name='obsolete'>obsolete</a></td>
 		<td width='40%'> varchar&#040; 1 &#041;   </td>
 		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='create_date_time'>create&#095;date&#095;time</a></td>
+		<td width='40%'> timestamp   DEFO current_timestamp </td>
+		<td width='99%'> Date barcode created on the system </td>
 	</tr>
 <tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
 	<tr>		<td>barcode&#095;pkey primary key</td>

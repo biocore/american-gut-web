@@ -65,3 +65,4 @@ ALTER TABLE barcodes.barcode ALTER COLUMN assigned_on DROP DEFAULT;
 ALTER TABLE barcodes.barcode ALTER COLUMN assigned_on DROP NOT NULL;
 ALTER TABLE barcodes.barcode ADD COLUMN create_date_time timestamp DEFAULT NOW();
 COMMENT ON COLUMN barcodes.barcode.assigned_on IS 'Date the barcode was assigned to a project';
+COMMENT ON COLUMN barcodes.barcode.create_date_time IS 'Date barcode created on the system';
