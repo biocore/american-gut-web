@@ -8,7 +8,7 @@ DECLARE
 	agk uuid;
 	pn varchar;
 BEGIN
--- Wipe out test barcodes taht are already attached to kits and surveys
+-- Wipe out test barcodes that are already attached to kits and surveys
 FOR bc, sid IN
 	SELECT barcode, survey_id FROM ag.ag_kit_barcodes WHERE barcode::integer >= 800000000
 LOOP
