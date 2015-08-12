@@ -41182,3 +41182,4 @@ UPDATE barcodes.barcode SET create_date_time='2013-07-23 13:30:56 -0600' WHERE b
 UPDATE barcodes.barcode SET create_date_time='2013-07-23 13:30:56 -0600' WHERE barcode='000013670';
 UPDATE barcodes.barcode SET create_date_time='2013-07-23 13:30:56 -0600' WHERE barcode='000013671';
 UPDATE barcodes.barcode SET create_date_time='2013-07-23 13:30:56 -0600' WHERE barcode='000013672';
+ALTER TABLE barcodes.barcode ALTER COLUMN create_date_time SET NOT NULL;
