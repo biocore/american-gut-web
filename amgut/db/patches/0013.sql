@@ -35,7 +35,12 @@ FOR bc IN
 	SELECT barcode FROM ag.ag_handout_barcodes WHERE barcode::integer >= 800000000
 LOOP
 	DELETE FROM ag.ag_handout_barcodes WHERE barcode = bc RETURNING kit_id INTO agk;
+
+	DELETE FROM barcodes.barcode_exceptions WHERE barcode = bc;
+	DELETE FROM barcodes.plate_barcode WHERE barcode = bc;
+	DELETE FROM barcodes.project_barcode WHERE barcode = bc;
 	DELETE FROM barcodes.barcode WHERE barcode = bc;
+
 	BEGIN
 		DELETE FROM ag.ag_handout_kits WHERE kit_id = agk;
 	EXCEPTION WHEN foreign_key_violation THEN CONTINUE;
