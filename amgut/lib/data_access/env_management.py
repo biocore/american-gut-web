@@ -256,7 +256,6 @@ def patch_db(patches_dir=PATCHES_DIR, verbose=False):
         conn._connection.commit()
 
     # Idempotent patches implemented in Python can be run here
-    migrate_procedures('public', 'ag', verbose=verbose)
 
 
 def drop_schema(verbose=False):

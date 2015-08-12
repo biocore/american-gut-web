@@ -20,7 +20,7 @@ from amgut.connections import ag_data, redis
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.lib.data_access.env_management import (
     create_database, build_and_initialize, make_settings_table, patch_db,
-    populate_test_db, procedure_names, drop_test)
+    populate_test_db, procedure_names, drop_test, migrate_procedures)
 
 
 @click.group()
@@ -66,6 +66,7 @@ def make(db, force):
     make_settings_table()
     click.echo("Applying patches to database")
     patch_db(verbose=True)
+    migrate_procedures('public', 'ag', verbose=True)
 
     if db == 'test':
         click.echo("Populating the test database")
