@@ -134,13 +134,15 @@ def drop_test(force):
 
 
 @cli.command()
-def patch():
+@click.option('-v', '--verbose', is_flag=True, default=False,
+              help='Verbose mode')
+def patch(verbose):
     """Applies any unapplied database patches.
 
     Pulls the current patch from the settings table and applies all subsequent
     patches found in the patches directory.
     """
-    patch_db()
+    patch_db(verbose=verbose)
 
 
 if __name__ == '__main__':
