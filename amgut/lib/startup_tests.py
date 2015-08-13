@@ -24,5 +24,5 @@ def barcodes_correct():
     conn_handler = SQLConnectionHandler()
     sql = "SELECT barcode FROM barcodes.barcode WHERE barcode::integer >= 800000000"
     bcs = conn_handler.execute_fetchall(sql)
-    if bcs is not None:
+    if bcs:
         raise EnvironmentError("Invalid barcodes found: %s" % ", ".join([x[0] for x in bcs]))
