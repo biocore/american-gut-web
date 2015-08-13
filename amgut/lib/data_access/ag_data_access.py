@@ -471,7 +471,7 @@ class AGDataAccess(object):
         conn_handler = SQLConnectionHandler()
         return [row[0] for row in
                 conn_handler.execute_fetchall(
-                    sql, [ag_login_id, ag_login_id, 2])]
+                    sql, [ag_login_id, 2])]
 
     def getParticipantSamples(self, ag_login_id, participant_name):
         results = self._sql.execute_proc_return_cursor(
