@@ -156,13 +156,6 @@ class AGDataAccess(object):
             self.connection.commit()
         return ag_login_id[0]
 
-    def updateAGLogin(self, ag_login_id, email, name, address, city, state,
-                      zip, country):
-        self.get_cursor().callproc('ag_update_login', [ag_login_id,
-                                   email.strip().lower(), name,
-                                   address, city, state, zip, country])
-        self.connection.commit()
-
     # note: only used by the password migration
     def getAGKitsByLogin(self):
         results = self._sql.execute_proc_return_cursor('ag_get_kits_by_login',
@@ -218,39 +211,6 @@ class AGDataAccess(object):
             kit_id = make_kit_id(8)
 
         return kit_id
-
-    def getNextAGBarcode(self):
-        results = self._sql.execute_proc_return_cursor('ag_get_next_barcode',
-                                                       [])
-        next_barcode = results.fetchone()[0]
-        text_barcode = '{0}'.format(str(next_barcode))
-        # Pad out the barcode until it's 9 digits long
-        while len(text_barcode) < 9:
-            text_barcode = '0{0}'.format(text_barcode)
-
-        results.close()
-        return next_barcode, text_barcode
-
-    def updateAGKit(self, ag_kit_id, supplied_kit_id, kit_password,
-                    swabs_per_kit, kit_verification_code):
-        kit_password = bcrypt.encrypt(kit_password)
-
-        self.get_cursor().callproc('ag_update_kit',
-                                   [ag_kit_id, supplied_kit_id,
-                                    kit_password, swabs_per_kit,
-                                    kit_verification_code])
-        self.connection.commit()
-
-    def updateAGBarcode(self, barcode, ag_kit_id, site_sampled,
-                        environment_sampled, sample_date, sample_time,
-                        participant_name, notes, refunded, withdrawn):
-        self.get_cursor().callproc('ag_update_barcode',
-                                   [barcode, ag_kit_id, site_sampled,
-                                    environment_sampled,
-                                    sample_date, sample_time,
-                                    participant_name, notes,
-                                    refunded, withdrawn])
-        self.connection.commit()
 
     def registerHandoutKit(self, ag_login_id, supplied_kit_id):
         """
@@ -443,25 +403,6 @@ class AGDataAccess(object):
                "survey_id = %s")
         conn_handler.execute(sql, (status, survey_id))
 
-    def AGGetBarcodeMetadata(self, barcode):
-        results = self._sql.execute_proc_return_cursor(
-            'ag_get_barcode_metadata', [barcode])
-        rows = results.fetchall()
-        col_names = self._get_col_names_from_cursor(results)
-        results.close()
-
-        return_res = [dict(zip(col_names, row)) for row in rows]
-
-        return return_res
-
-    def AGGetBarcodeMetadataAnimal(self, barcode):
-        results = self._sql.execute_proc_return_cursor(
-            'ag_get_barcode_md_animal', [barcode])
-        col_names = self._get_col_names_from_cursor(results)
-        return_res = [dict(zip(col_names, row)) for row in results]
-        results.close()
-        return return_res
-
     def getAnimalParticipants(self, ag_login_id):
         sql = """SELECT participant_name from ag.ag_login_surveys
                  JOIN ag.survey_answers USING (survey_id)
@@ -599,25 +540,6 @@ class AGDataAccess(object):
             elevation = r2
 
             self.updateGeoInfo(ag_login_id, lat, lon, elevation, '')
-
-    def getGeocodeStats(self):
-        stat_queries = [
-            ("Total Rows",
-             "select count(*) from ag_login"),
-            ("Cannot Geocode",
-             "select count(*) from ag_login where cannot_geocode = 'y'"),
-            ("Null Latitude Field",
-             "select count(*) from ag_login where latitude is null"),
-            ("Null Elevation Field",
-             "select count(*) from ag_login where elevation is null")
-        ]
-        results = []
-        for name, sql in stat_queries:
-            cur = self.get_cursor()
-            cur.execute(sql)
-            total = cur.fetchone()[0]
-            results.append((name, total))
-        return results
 
     def getMapMarkers(self):
         cur_completed = self.get_cursor()
@@ -807,25 +729,6 @@ class AGDataAccess(object):
                                     barcode = %s)""", [ag_login_id, barcode])
         return cursor.fetchone()[0]
 
-    def getAGStats(self):
-        # returned tuple consists of:
-        # site_sampled, sample_date, sample_time, participant_name,
-        #environment_sampled, notes
-        results = self._sql.execute_proc_return_cursor('ag_stats', [])
-        ag_stats = results.fetchall()
-        results.close()
-        return ag_stats
-
-    def updateAKB(self, barcode, moldy, overloaded, other, other_text,
-                  date_of_last_email):
-        """ Update ag_kit_barcodes table.
-        """
-        self.get_cursor().callproc('update_akb', [barcode, moldy,
-                                                  overloaded, other,
-                                                  other_text,
-                                                  date_of_last_email])
-        self.connection.commit()
-
     def getAGKitIDsByEmail(self, email):
         """Returns a list of kitids based on email
 
@@ -1013,64 +916,11 @@ class AGDataAccess(object):
         col_names = self._get_col_names_from_cursor(cursor)
         return [dict(zip(col_names, row)) for row in results]
 
-    def search_participant_info(self, term):
-        sql = """select   cast(ag_login_id as varchar(100)) as ag_login_id
-                 from    ag_login al
-                 where   lower(email) like %s or lower(name) like
-                 %s or lower(address) like %s"""
-        cursor = self.get_cursor()
-        liketerm = '%%' + term.lower() + '%%'
-        cursor.execute(sql, [liketerm, liketerm, liketerm])
-        results = cursor.fetchall()
-        cursor.close()
-        return [x[0] for x in results]
-
-    def search_kits(self, term):
-        sql = """ select  cast(ag_login_id as varchar(100)) as ag_login_id
-                 from    ag_kit
-                 where   lower(supplied_kit_id) like %s or
-                 lower(kit_password) like %s or
-                 lower(kit_verification_code) = %s"""
-        cursor = self.get_cursor()
-        liketerm = '%%' + term.lower() + '%%'
-        cursor.execute(sql, [liketerm, liketerm, term])
-        results = cursor.fetchall()
-        cursor.close()
-        return [x[0] for x in results]
-
-    def search_barcodes(self, term):
-        sql = """select  cast(ak.ag_login_id as varchar(100)) as ag_login_id
-                 from    ag_kit ak
-                 inner join ag_kit_barcodes akb
-                 on ak.ag_kit_id = akb.ag_kit_id
-                 where   barcode like %s or lower(participant_name) like
-                 %s or lower(notes) like %s"""
-        cursor = self.get_cursor()
-        liketerm = '%%' + term.lower() + '%%'
-        cursor.execute(sql, [liketerm, liketerm, liketerm])
-        results = cursor.fetchall()
-        cursor.close()
-        return [x[0] for x in results]
-
     def get_login_info(self, ag_login_id):
         sql = """select  ag_login_id, email, name, address, city, state, zip,
                          country
                  from    ag_login
                  where   ag_login_id = %s"""
-        cursor = self.get_cursor()
-        cursor.execute(sql, [ag_login_id])
-        col_names = [x[0] for x in cursor.description]
-        results = [dict(zip(col_names, row)) for row in cursor.fetchall()]
-        cursor.close()
-        return results
-
-    def get_kit_info_by_login(self, ag_login_id):
-        sql = """select  cast(ag_kit_id as varchar(100)) as ag_kit_id,
-                        cast(ag_login_id as varchar(100)) as ag_login_id,
-                        supplied_kit_id, kit_password, swabs_per_kit,
-                        kit_verification_code, kit_verified
-                from    ag_kit
-                where   ag_login_id = %s"""
         cursor = self.get_cursor()
         cursor.execute(sql, [ag_login_id])
         col_names = [x[0] for x in cursor.description]
@@ -1092,47 +942,6 @@ class AGDataAccess(object):
         results = [dict(zip(col_names, row)) for row in cursor.fetchall()]
         cursor.close()
         return results
-
-    def search_handout_kits(self, term):
-        sql = """SELECT kit_id, password, barcode, verification_code
-                 FROM ag_handout_kits
-                 JOIN (SELECT kit_id, barcode, sample_barcode_file
-                    FROM ag.ag_handout_barcodes
-                    GROUP BY kit_id, barcode) AS hb USING (kit_id)
-                 WHERE kit_id LIKE %s or barcode LIKE %s"""
-        cursor = self.get_cursor()
-        liketerm = '%%' + term + '%%'
-        cursor.execute(sql, [liketerm, liketerm])
-        col_names = [x[0] for x in cursor.description]
-        results = [dict(zip(col_names, row)) for row in cursor.fetchall()]
-        cursor.close()
-        return results
-
-    def get_login_by_email(self, email):
-        sql = """select name, address, city, state, zip, country, ag_login_id
-                 from ag_login where email = %s"""
-        cursor = self.get_cursor()
-        cursor.execute(sql, [email])
-        col_names = self._get_col_names_from_cursor(cursor)
-        row = cursor.fetchone()
-
-        login = {}
-        if row:
-            login = dict(zip(col_names, row))
-            login['email'] = email
-
-        return login
-
-    def ag_new_survey_exists(self, barcode):
-        """
-        Returns metadata for an american gut barcode in the new database
-        tables
-        """
-        sql = "select survey_id from ag_kit_barcodes where barcode = %s"
-        cursor = self.connection.cursor()
-        cursor.execute(sql, [barcode])
-        survey_id = cursor.fetchone()
-        return survey_id is not None
 
 #################################################
 ### GENERAL DATA ACCESS  #######################
@@ -1156,70 +965,6 @@ class AGDataAccess(object):
             return results[0]
         else:
             return {}
-
-    def get_plate_for_barcode(self, barcode):
-        """
-        Gets the sequencing plates a barcode is on
-        """
-        sql = """select  p.plate, p.sequence_date
-                 from    plate p inner join plate_barcode pb on
-                 pb.plate_id = p.plate_id \
-                where   pb.barcode = %s"""
-        cursor = self.get_cursor()
-        cursor.execute(sql, [barcode])
-        col_names = [x[0] for x in cursor.description]
-        results = [dict(zip(col_names, row)) for row in cursor.fetchall()]
-        cursor.close()
-        return results
-
-    def getBarcodeProjType(self, barcode):
-        """ Get the project type of the barcode.
-            Return a tuple of project and project type.
-        """
-        sql = """select p.project from project p inner join
-                 project_barcode pb on (pb.project_id = p.project_id)
-                 where pb.barcode = %s"""
-        cursor = self.get_cursor()
-        cursor.execute(sql, [barcode])
-        results = cursor.fetchone()
-        proj = results[0]
-        #this will get changed to get the project type from the db
-        if proj in ('American Gut Project', 'ICU Microbiome', 'Handout Kits',
-                    'Office Succession Study',
-                    'American Gut Project: Functional Feces',
-                    'Down Syndrome Microbiome', 'Beyond Bacteria',
-                    'All in the Family', 'American Gut Handout kit',
-                    'Personal Genome Project', 'Sleep Study',
-                    'Anxiety/Depression cohort', 'Alzheimers Study'):
-            proj_type = 'American Gut'
-        else:
-            proj_type = proj
-        return (proj, proj_type)
-
-    def setBarcodeProjType(self, project, barcode):
-        """sets the project type of the barcodel
-
-            project is the project name from the project table
-            barcode is the barcode
-        """
-        sql = """update project_barcode set project_id =
-                (select project_id from project where project = %s)
-                where barcode = %s"""
-        result = self.get_cursor()
-        cursor = self.get_cursor()
-        cursor.execute(sql, [project, barcode])
-        self.connection.commit()
-        cursor.close()
-
-    def getProjectNames(self):
-        """Returns a list of project names
-        """
-        sql = """select project from project"""
-        result = self.get_cursor()
-        cursor = self.get_cursor()
-        cursor.execute(sql)
-        results = cursor.fetchall()
-        return [x[0] for x in results]
 
     def updateBarcodeStatus(self, status, postmark, scan_date, barcode,
                             biomass_remaining, sequencing_status, obsolete):
