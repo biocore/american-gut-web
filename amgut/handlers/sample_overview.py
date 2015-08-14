@@ -1,6 +1,8 @@
 import os
+import json
 
 from tornado.web import authenticated
+import requests
 
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.connections import ag_data
@@ -48,6 +50,18 @@ class SampleOverviewHandler(BaseHandler):
         if not os.path.exists(fs_barcode_txt):
             web_barcode_txt = None
 
+        agrest = requests.get('http://127.0.0.1:8081/sample/%s' % barcode)
+        if agrest.status_code == 200 and agrest.content != "(null)":
+            bc_with_suf = json.loads(agrest.content)[0]
+
+            sequence_url = 'http://127.0.0.1:8081/sequence/%s' % bc_with_suf
+            biomv1_url = 'http://127.0.0.1:8081/otu/%s/json' % bc_with_suf
+            classic_url = 'http://127.0.0.1:8081/otu/%s/txt' % bc_with_suf
+        else:
+            sequence_url = None
+            biomv1_url = None
+            classic_url = None
+
         sample_time = sample_data['sample_time']
         sample_date = sample_data['sample_date']
 
@@ -72,7 +86,9 @@ class SampleOverviewHandler(BaseHandler):
                     barcode_pdf=web_barcode_pdf, barcode_txt=web_barcode_txt,
                     bgcolor=bgcolor, status=status, barcode=barcode,
                     sample_origin=sample_origin, sample_date=sample_date,
-                    sample_time=sample_time, notes=notes)
+                    sample_time=sample_time, notes=notes,
+                    sequence_url=sequence_url, biomv1_url=biomv1_url,
+                    classic_url=classic_url)
 
     @authenticated
     def get(self):

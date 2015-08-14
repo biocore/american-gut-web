@@ -640,6 +640,8 @@ _SAMPLE_OVERVIEW = {
     'SAMPLE_STATUS': "Sample Status",
     'SAMPLE_TIME': "Sample Time",
     'TAXA_SUM_TITLE': "Taxa Summary",
+    'RAW_SEQUENCE_TITLE': 'Raw sequences',
+    'BIOM_TABLE_TITLE': 'Summarized data',
     'VIEW_TAXA_SUMMARY': "View Taxa Summary",
 }
 

@@ -270,6 +270,8 @@ _SAMPLE_OVERVIEW = {
     'SAMPLE_NOT_PROCESSED': 'This sample has not yet been processed. Please check back later.',
     'DATA_VIS_TITLE': 'Data Visualization',
     'TAXA_SUM_TITLE': 'Taxa Summary',
+    'RAW_SEQUENCE_TITLE': 'Raw sequences',
+    'BIOM_TABLE_TITLE': 'Summarized data',
     'VIEW_TAXA_SUMMARY': 'View Taxa Summary',
     'SAMPLE_STATUS': 'Sample Status',
     'SAMPLE_SITE': 'Sample Site',
