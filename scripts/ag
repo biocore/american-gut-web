@@ -76,31 +76,6 @@ def make(db, force):
 
 
 @cli.command()
-def migrate_passwords():
-    """Migrate passwords to bcrypt hashes."""
-
-    kits_by_login = ag_data.getAGKitsByLogin()
-
-    for kit_id in [d['supplied_kit_id'] for d in kits_by_login]:
-        password = ag_data.getAGKitDetails(kit_id)['kit_password']
-
-        if not bcrypt.identify(password):
-            click.echo('migrating kit {} to a bcrypt hash'.format(kit_id))
-
-            ag_data.ag_update_kit_password(kit_id, password)
-        else:
-            click.echo('kit {} is already a bcrypt hash'.format(kit_id))
-
-    for kid, password in ag_data.getAGHandoutKitIDsAndPasswords():
-        if not bcrypt.identify(password):
-            click.echo('migrating handout kit {} to a bcrypt hash'.format(kid))
-
-            ag_data.ag_update_handout_kit_password(kid, password)
-        else:
-            click.echo('handout kit {} is already a bcrypt hash'.format(kid))
-
-
-@cli.command()
 def drop_procedures():
     """Drops the stored procedures."""
     conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,

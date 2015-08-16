@@ -189,25 +189,6 @@ class AGDataAccess(object):
             kit_details = dict(zip(col_names, row))
         return kit_details
 
-    def getAGHandoutKitIDsAndPasswords(self):
-        sql = "SELECT kit_id, password FROM ag_handout_kits"
-        cur = self.get_cursor()
-        cur.execute(sql)
-
-        return cur.fetchall()
-
-        def make_kit_id(kit_id_length=8):
-            kit_id = ''.join([choice(KIT_ALPHA) for i in range(kit_id_length)])
-            return kit_id
-
-        cur = self.get_cursor()
-        obs_kit_ids = get_used_kit_ids(cur)
-        kit_id = make_kit_id(8)
-        while kit_id in obs_kit_ids:
-            kit_id = make_kit_id(8)
-
-        return kit_id
-
     def registerHandoutKit(self, ag_login_id, supplied_kit_id):
         """
         Returns
