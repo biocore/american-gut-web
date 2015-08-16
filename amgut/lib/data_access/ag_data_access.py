@@ -152,18 +152,6 @@ class AGDataAccess(object):
             self.connection.commit()
         return ag_login_id[0]
 
-    # note: only used by the password migration
-    def getAGKitsByLogin(self):
-        results = self._sql.execute_proc_return_cursor('ag_get_kits_by_login',
-                                                       [])
-        rows = results.fetchall()
-        col_names = self._get_col_names_from_cursor(results)
-        results.close()
-
-        return_res = [dict(zip(col_names, row)) for row in rows]
-
-        return return_res
-
     def getAGBarcodeDetails(self, barcode):
         results = self._sql.execute_proc_return_cursor(
             'ag_get_barcode_details', [barcode])
@@ -545,20 +533,6 @@ class AGDataAccess(object):
                                    [kit_id, password])
         self.connection.commit()
 
-    def ag_update_handout_kit_password(self, kit_id, password):
-        """updates ag_handout_kits table with password
-
-        kit_id is kit_id in the ag_handout_kits table
-        password is the new password
-        """
-        password = bcrypt.encrypt(password)
-
-        cursor = self.get_cursor()
-        cursor.execute("""UPDATE ag_handout_kits
-                          SET password=%s
-                          WHERE kit_id=%s""", [password, kit_id])
-        self.connection.commit()
-
     def ag_verify_kit_password_change_code(self, email, kitid, passcode):
         """returns true if it still in the password change window
 
@@ -709,61 +683,10 @@ class AGDataAccess(object):
         cursor.close()
         return results
 
-    def get_barcode_info_by_kit_id(self, ag_kit_id):
-        sql = """select  cast(ag_kit_barcode_id as varchar(100)) as
-                  ag_kit_barcode_id, cast(ag_kit_id as varchar(100)) as
-                  ag_kit_id, barcode, sample_date, sample_time, site_sampled,
-                  participant_name, environment_sampled, notes, results_ready,
-                  withdrawn, refunded
-                from    ag_kit_barcodes
-                where   ag_kit_id = %s"""
-        cursor = self.get_cursor()
-        cursor.execute(sql, [ag_kit_id])
-        col_names = [x[0] for x in cursor.description]
-        results = [dict(zip(col_names, row)) for row in cursor.fetchall()]
-        cursor.close()
-        return results
-
 #################################################
 ### GENERAL DATA ACCESS  #######################
 ################################################
 # not sure where these should end up
-    def get_barcode_details(self, barcode):
-        """
-        Returns the genral barcode details for a barcode
-        """
-        sql = """select  create_date_time, status, scan_date,
-                  sample_postmark_date,
-                  biomass_remaining, sequencing_status, obsolete
-                  from    barcode
-                  where barcode = %s"""
-        cursor = self.get_cursor()
-        cursor.execute(sql, [barcode])
-        col_names = [x[0] for x in cursor.description]
-        results = [dict(zip(col_names, row)) for row in cursor.fetchall()]
-        cursor.close()
-        if results:
-            return results[0]
-        else:
-            return {}
-
-    def updateBarcodeStatus(self, status, postmark, scan_date, barcode,
-                            biomass_remaining, sequencing_status, obsolete):
-        """ Updates a barcode's status
-        """
-        sql = """update  barcode
-        set     status = %s,
-            sample_postmark_date = %s,
-            scan_date = %s,
-            biomass_remaining = %s,
-            sequencing_status = %s,
-            obsolete = %s
-        where   barcode = %s"""
-        cursor = self.get_cursor()
-        cursor.execute(sql, [status, postmark, scan_date, biomass_remaining,
-                             sequencing_status, obsolete, barcode])
-        self.connection.commit()
-        cursor.close()
 
     def get_survey_id(self, ag_login_id, participant_name):
         """Return the survey ID associated with a participant or None"""
