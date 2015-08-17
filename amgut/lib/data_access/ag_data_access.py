@@ -36,10 +36,6 @@ KIT_PASSWD_NOZEROS = KIT_PASSWD[0:-1]
 KIT_VERCODE_NOZEROS = KIT_PASSWD_NOZEROS
 
 
-class GoogleAPILimitExceeded(Exception):
-    pass
-
-
 class AGDataAccess(object):
     """Data Access implementation for all the American Gut web portal
     """
@@ -156,25 +152,6 @@ class AGDataAccess(object):
             self.connection.commit()
         return ag_login_id[0]
 
-    def updateAGLogin(self, ag_login_id, email, name, address, city, state,
-                      zip, country):
-        self.get_cursor().callproc('ag_update_login', [ag_login_id,
-                                   email.strip().lower(), name,
-                                   address, city, state, zip, country])
-        self.connection.commit()
-
-    # note: only used by the password migration
-    def getAGKitsByLogin(self):
-        results = self._sql.execute_proc_return_cursor('ag_get_kits_by_login',
-                                                       [])
-        rows = results.fetchall()
-        col_names = self._get_col_names_from_cursor(results)
-        results.close()
-
-        return_res = [dict(zip(col_names, row)) for row in rows]
-
-        return return_res
-
     def getAGBarcodeDetails(self, barcode):
         results = self._sql.execute_proc_return_cursor(
             'ag_get_barcode_details', [barcode])
@@ -199,58 +176,6 @@ class AGDataAccess(object):
         if row:
             kit_details = dict(zip(col_names, row))
         return kit_details
-
-    def getAGHandoutKitIDsAndPasswords(self):
-        sql = "SELECT kit_id, password FROM ag_handout_kits"
-        cur = self.get_cursor()
-        cur.execute(sql)
-
-        return cur.fetchall()
-
-        def make_kit_id(kit_id_length=8):
-            kit_id = ''.join([choice(KIT_ALPHA) for i in range(kit_id_length)])
-            return kit_id
-
-        cur = self.get_cursor()
-        obs_kit_ids = get_used_kit_ids(cur)
-        kit_id = make_kit_id(8)
-        while kit_id in obs_kit_ids:
-            kit_id = make_kit_id(8)
-
-        return kit_id
-
-    def getNextAGBarcode(self):
-        results = self._sql.execute_proc_return_cursor('ag_get_next_barcode',
-                                                       [])
-        next_barcode = results.fetchone()[0]
-        text_barcode = '{0}'.format(str(next_barcode))
-        # Pad out the barcode until it's 9 digits long
-        while len(text_barcode) < 9:
-            text_barcode = '0{0}'.format(text_barcode)
-
-        results.close()
-        return next_barcode, text_barcode
-
-    def updateAGKit(self, ag_kit_id, supplied_kit_id, kit_password,
-                    swabs_per_kit, kit_verification_code):
-        kit_password = bcrypt.encrypt(kit_password)
-
-        self.get_cursor().callproc('ag_update_kit',
-                                   [ag_kit_id, supplied_kit_id,
-                                    kit_password, swabs_per_kit,
-                                    kit_verification_code])
-        self.connection.commit()
-
-    def updateAGBarcode(self, barcode, ag_kit_id, site_sampled,
-                        environment_sampled, sample_date, sample_time,
-                        participant_name, notes, refunded, withdrawn):
-        self.get_cursor().callproc('ag_update_barcode',
-                                   [barcode, ag_kit_id, site_sampled,
-                                    environment_sampled,
-                                    sample_date, sample_time,
-                                    participant_name, notes,
-                                    refunded, withdrawn])
-        self.connection.commit()
 
     def registerHandoutKit(self, ag_login_id, supplied_kit_id):
         """
@@ -443,25 +368,6 @@ class AGDataAccess(object):
                "survey_id = %s")
         conn_handler.execute(sql, (status, survey_id))
 
-    def AGGetBarcodeMetadata(self, barcode):
-        results = self._sql.execute_proc_return_cursor(
-            'ag_get_barcode_metadata', [barcode])
-        rows = results.fetchall()
-        col_names = self._get_col_names_from_cursor(results)
-        results.close()
-
-        return_res = [dict(zip(col_names, row)) for row in rows]
-
-        return return_res
-
-    def AGGetBarcodeMetadataAnimal(self, barcode):
-        results = self._sql.execute_proc_return_cursor(
-            'ag_get_barcode_md_animal', [barcode])
-        col_names = self._get_col_names_from_cursor(results)
-        return_res = [dict(zip(col_names, row)) for row in results]
-        results.close()
-        return return_res
-
     def getAnimalParticipants(self, ag_login_id):
         sql = """SELECT participant_name from ag.ag_login_surveys
                  JOIN ag.survey_answers USING (survey_id)
@@ -509,116 +415,6 @@ class AGDataAccess(object):
                                    [supplied_kit_id])
         self.connection.commit()
 
-    def addGeocodingInfo(self, limit=None, retry=False):
-        """Adds latitude, longitude, and elevation to ag_login_table
-
-        Uses the city, state, zip, and country from the database to retrieve
-        lat, long, and elevation from the google maps API.
-
-        If any of that information cannot be retrieved, then cannot_geocode
-        is set to 'y' in the ag_login table, and it will not be tried again
-        on subsequent calls to this function.  Pass retry=True to retry all
-        (or maximum of limit) previously failed geocodings.
-        """
-
-        # clear previous geocoding attempts if retry is True
-        if retry:
-            sql = (
-                "select cast(ag_login_id as varchar(100))from ag_login "
-                "where cannot_geocode = 'y'"
-            )
-            cursor = self.connection.cursor()
-            cursor.execute(sql)
-            logins = cursor.fetchall()
-
-            for row in logins:
-                ag_login_id = row[0]
-                self.updateGeoInfo(ag_login_id, None, None, None, '')
-
-        # get logins that have not been geocoded yet
-        sql = (
-            'select city, state, zip, country, '
-            'cast(ag_login_id as varchar(100))'
-            'from ag_login '
-            'where elevation is null '
-            'and cannot_geocode is null'
-        )
-
-        cursor = self.connection.cursor()
-        cursor.execute(sql)
-        logins = cursor.fetchall()
-
-        row_counter = 0
-        for row in logins:
-            row_counter += 1
-            if limit is not None and row_counter > limit:
-                break
-
-            ag_login_id = row[4]
-            # Attempt to geocode
-            address = '{0} {1} {2} {3}'.format(row[0], row[1], row[2], row[3])
-            encoded_address = urllib.urlencode({'address': address})
-            url = '/maps/api/geocode/json?{0}&sensor=false'.format(
-                encoded_address)
-
-            r = self.getGeocodeJSON(url)
-
-            if r in ('unknown_error', 'not_OK', 'no_results'):
-                # Could not geocode, mark it so we don't try next time
-                self.updateGeoInfo(ag_login_id, None, None, None, 'y')
-                continue
-            elif r == 'over_limit':
-                # If the reason for failure is merely that we are over the
-                # Google API limit, then we should try again next time
-                # ... but we should stop hitting their servers, so raise an
-                # exception
-                raise GoogleAPILimitExceeded("Exceeded Google API limit")
-
-            # Unpack it and write to DB
-            lat, lon = r
-
-            encoded_lat_lon = urllib.urlencode(
-                {'locations': ','.join(map(str, [lat, lon]))})
-
-            url2 = '/maps/api/elevation/json?{0}&sensor=false'.format(
-                encoded_lat_lon)
-
-            r2 = self.getElevationJSON(url2)
-
-            if r2 in ('unknown_error', 'not_OK', 'no_results'):
-                # Could not geocode, mark it so we don't try next time
-                self.updateGeoInfo(ag_login_id, None, None, None, 'y')
-                continue
-            elif r2 == 'over_limit':
-                # If the reason for failure is merely that we are over the
-                # Google API limit, then we should try again next time
-                # ... but we should stop hitting their servers, so raise an
-                # exception
-                raise GoogleAPILimitExceeded("Exceeded Google API limit")
-
-            elevation = r2
-
-            self.updateGeoInfo(ag_login_id, lat, lon, elevation, '')
-
-    def getGeocodeStats(self):
-        stat_queries = [
-            ("Total Rows",
-             "select count(*) from ag_login"),
-            ("Cannot Geocode",
-             "select count(*) from ag_login where cannot_geocode = 'y'"),
-            ("Null Latitude Field",
-             "select count(*) from ag_login where latitude is null"),
-            ("Null Elevation Field",
-             "select count(*) from ag_login where elevation is null")
-        ]
-        results = []
-        for name, sql in stat_queries:
-            cur = self.get_cursor()
-            cur.execute(sql)
-            total = cur.fetchone()[0]
-            results.append((name, total))
-        return results
-
     def getMapMarkers(self):
         cur_completed = self.get_cursor()
         cur_ver = self.get_cursor()
@@ -665,111 +461,6 @@ class AGDataAccess(object):
 
         return [[lat, lng, c] for ((lat, lng), c) in res.items()]
 
-    def getGeocodeJSON(self, url):
-        conn = httplib.HTTPConnection('maps.googleapis.com')
-        success = False
-        num_tries = 0
-        while num_tries < 2 and not success:
-            conn.request('GET', url)
-            result = conn.getresponse()
-
-            # Make sure we get an 'OK' status
-            if result.status != 200:
-                return 'not_OK'
-
-            data = json.loads(result.read())
-
-            # if we're over the query limit, wait 2 seconds and try again,
-            # it may just be that we're submitting requests too fast
-            if data.get('status', None) == 'OVER_QUERY_LIMIT':
-                num_tries += 1
-                sleep(2)
-            elif 'results' in data:
-                success = True
-            else:
-                return 'unknown_error'
-
-        conn.close()
-
-        # if we got here without getting an unknown_error or succeeding, then
-        # we are over the request limit for the 24 hour period
-        if not success:
-            return 'over_limit'
-
-        # sanity check the data returned by Google and return the lat/lng
-        if len(data['results']) == 0:
-            return 'no_results'
-
-        geometry = data['results'][0].get('geometry', {})
-        location = geometry.get('location', {})
-        lat = location.get('lat', {})
-        lon = location.get('lng', {})
-
-        if not lat or not lon:
-            return 'unknown_error'
-
-        return (lat, lon)
-
-    def getElevationJSON(self, url):
-        """Use Google's Maps API to retrieve an elevation
-
-        url should be formatted as described here:
-        https://developers.google.com/maps/documentation/elevation
-        /#ElevationRequests
-
-        The number of API requests is limited to 2500 per 24 hour period.
-        If this function is called and the limit is surpassed, the return value
-        will be "over_limit".  Other errors will cause the return value to be
-        "unknown_error".  On success, the return value is the elevation of the
-        location requested in the url.
-        """
-        conn = httplib.HTTPConnection('maps.googleapis.com')
-        success = False
-        num_tries = 0
-        while num_tries < 2 and not success:
-            conn.request('GET', url)
-            result = conn.getresponse()
-
-            # Make sure we get an 'OK' status
-            if result.status != 200:
-                return 'not_OK'
-
-            data = json.loads(result.read())
-
-            # if we're over the query limit, wait 2 seconds and try again,
-            # it may just be that we're submitting requests too fast
-            if data.get('status', None) == 'OVER_QUERY_LIMIT':
-                num_tries += 1
-                sleep(2)
-            elif 'results' in data:
-                success = True
-            else:
-                return 'unknown_error'
-
-        conn.close()
-
-        # if we got here without getting an unknown_error or succeeding, then
-        # we are over the request limit for the 24 hour period
-        if not success:
-            return 'over_limit'
-
-        # sanity check the data returned by Google and return the lat/lng
-        if len(data['results']) == 0:
-            return 'no_results'
-
-        elevation = data['results'][0].get('elevation', {})
-
-        if not elevation:
-            return 'unknown_error'
-
-        return elevation
-
-    def updateGeoInfo(self, ag_login_id, lat, lon, elevation, cannot_geocode):
-        self.get_cursor().callproc('ag_update_geo_info',
-                                   [ag_login_id, lat, lon, elevation,
-                                    cannot_geocode])
-        self.connection.commit()
-
     def handoutCheck(self, username, password):
         cursor = self.get_cursor()
         cursor.execute("""SELECT password
@@ -807,25 +498,6 @@ class AGDataAccess(object):
                                     barcode = %s)""", [ag_login_id, barcode])
         return cursor.fetchone()[0]
 
-    def getAGStats(self):
-        # returned tuple consists of:
-        # site_sampled, sample_date, sample_time, participant_name,
-        #environment_sampled, notes
-        results = self._sql.execute_proc_return_cursor('ag_stats', [])
-        ag_stats = results.fetchall()
-        results.close()
-        return ag_stats
-
-    def updateAKB(self, barcode, moldy, overloaded, other, other_text,
-                  date_of_last_email):
-        """ Update ag_kit_barcodes table.
-        """
-        self.get_cursor().callproc('update_akb', [barcode, moldy,
-                                                  overloaded, other,
-                                                  other_text,
-                                                  date_of_last_email])
-        self.connection.commit()
-
     def getAGKitIDsByEmail(self, email):
         """Returns a list of kitids based on email
 
@@ -859,20 +531,6 @@ class AGDataAccess(object):
 
         self.get_cursor().callproc('ag_update_kit_password',
                                    [kit_id, password])
-        self.connection.commit()
-
-    def ag_update_handout_kit_password(self, kit_id, password):
-        """updates ag_handout_kits table with password
-
-        kit_id is kit_id in the ag_handout_kits table
-        password is the new password
-        """
-        password = bcrypt.encrypt(password)
-
-        cursor = self.get_cursor()
-        cursor.execute("""UPDATE ag_handout_kits
-                          SET password=%s
-                          WHERE kit_id=%s""", [password, kit_id])
         self.connection.commit()
 
     def ag_verify_kit_password_change_code(self, email, kitid, passcode):
@@ -1013,45 +671,6 @@ class AGDataAccess(object):
         col_names = self._get_col_names_from_cursor(cursor)
         return [dict(zip(col_names, row)) for row in results]
 
-    def search_participant_info(self, term):
-        sql = """select   cast(ag_login_id as varchar(100)) as ag_login_id
-                 from    ag_login al
-                 where   lower(email) like %s or lower(name) like
-                 %s or lower(address) like %s"""
-        cursor = self.get_cursor()
-        liketerm = '%%' + term.lower() + '%%'
-        cursor.execute(sql, [liketerm, liketerm, liketerm])
-        results = cursor.fetchall()
-        cursor.close()
-        return [x[0] for x in results]
-
-    def search_kits(self, term):
-        sql = """ select  cast(ag_login_id as varchar(100)) as ag_login_id
-                 from    ag_kit
-                 where   lower(supplied_kit_id) like %s or
-                 lower(kit_password) like %s or
-                 lower(kit_verification_code) = %s"""
-        cursor = self.get_cursor()
-        liketerm = '%%' + term.lower() + '%%'
-        cursor.execute(sql, [liketerm, liketerm, term])
-        results = cursor.fetchall()
-        cursor.close()
-        return [x[0] for x in results]
-
-    def search_barcodes(self, term):
-        sql = """select  cast(ak.ag_login_id as varchar(100)) as ag_login_id
-                 from    ag_kit ak
-                 inner join ag_kit_barcodes akb
-                 on ak.ag_kit_id = akb.ag_kit_id
-                 where   barcode like %s or lower(participant_name) like
-                 %s or lower(notes) like %s"""
-        cursor = self.get_cursor()
-        liketerm = '%%' + term.lower() + '%%'
-        cursor.execute(sql, [liketerm, liketerm, liketerm])
-        results = cursor.fetchall()
-        cursor.close()
-        return [x[0] for x in results]
-
     def get_login_info(self, ag_login_id):
         sql = """select  ag_login_id, email, name, address, city, state, zip,
                          country
@@ -1064,180 +683,10 @@ class AGDataAccess(object):
         cursor.close()
         return results
 
-    def get_kit_info_by_login(self, ag_login_id):
-        sql = """select  cast(ag_kit_id as varchar(100)) as ag_kit_id,
-                        cast(ag_login_id as varchar(100)) as ag_login_id,
-                        supplied_kit_id, kit_password, swabs_per_kit,
-                        kit_verification_code, kit_verified
-                from    ag_kit
-                where   ag_login_id = %s"""
-        cursor = self.get_cursor()
-        cursor.execute(sql, [ag_login_id])
-        col_names = [x[0] for x in cursor.description]
-        results = [dict(zip(col_names, row)) for row in cursor.fetchall()]
-        cursor.close()
-        return results
-
-    def get_barcode_info_by_kit_id(self, ag_kit_id):
-        sql = """select  cast(ag_kit_barcode_id as varchar(100)) as
-                  ag_kit_barcode_id, cast(ag_kit_id as varchar(100)) as
-                  ag_kit_id, barcode, sample_date, sample_time, site_sampled,
-                  participant_name, environment_sampled, notes, results_ready,
-                  withdrawn, refunded
-                from    ag_kit_barcodes
-                where   ag_kit_id = %s"""
-        cursor = self.get_cursor()
-        cursor.execute(sql, [ag_kit_id])
-        col_names = [x[0] for x in cursor.description]
-        results = [dict(zip(col_names, row)) for row in cursor.fetchall()]
-        cursor.close()
-        return results
-
-    def search_handout_kits(self, term):
-        sql = """SELECT kit_id, password, barcode, verification_code
-                 FROM ag_handout_kits
-                 JOIN (SELECT kit_id, barcode, sample_barcode_file
-                    FROM ag.ag_handout_barcodes
-                    GROUP BY kit_id, barcode) AS hb USING (kit_id)
-                 WHERE kit_id LIKE %s or barcode LIKE %s"""
-        cursor = self.get_cursor()
-        liketerm = '%%' + term + '%%'
-        cursor.execute(sql, [liketerm, liketerm])
-        col_names = [x[0] for x in cursor.description]
-        results = [dict(zip(col_names, row)) for row in cursor.fetchall()]
-        cursor.close()
-        return results
-
-    def get_login_by_email(self, email):
-        sql = """select name, address, city, state, zip, country, ag_login_id
-                 from ag_login where email = %s"""
-        cursor = self.get_cursor()
-        cursor.execute(sql, [email])
-        col_names = self._get_col_names_from_cursor(cursor)
-        row = cursor.fetchone()
-
-        login = {}
-        if row:
-            login = dict(zip(col_names, row))
-            login['email'] = email
-
-        return login
-
-    def ag_new_survey_exists(self, barcode):
-        """
-        Returns metadata for an american gut barcode in the new database
-        tables
-        """
-        sql = "select survey_id from ag_kit_barcodes where barcode = %s"
-        cursor = self.connection.cursor()
-        cursor.execute(sql, [barcode])
-        survey_id = cursor.fetchone()
-        return survey_id is not None
-
 #################################################
 ### GENERAL DATA ACCESS  #######################
 ################################################
 # not sure where these should end up
-    def get_barcode_details(self, barcode):
-        """
-        Returns the genral barcode details for a barcode
-        """
-        sql = """select  create_date_time, status, scan_date,
-                  sample_postmark_date,
-                  biomass_remaining, sequencing_status, obsolete
-                  from    barcode
-                  where barcode = %s"""
-        cursor = self.get_cursor()
-        cursor.execute(sql, [barcode])
-        col_names = [x[0] for x in cursor.description]
-        results = [dict(zip(col_names, row)) for row in cursor.fetchall()]
-        cursor.close()
-        if results:
-            return results[0]
-        else:
-            return {}
-
-    def get_plate_for_barcode(self, barcode):
-        """
-        Gets the sequencing plates a barcode is on
-        """
-        sql = """select  p.plate, p.sequence_date
-                 from    plate p inner join plate_barcode pb on
-                 pb.plate_id = p.plate_id \
-                where   pb.barcode = %s"""
-        cursor = self.get_cursor()
-        cursor.execute(sql, [barcode])
-        col_names = [x[0] for x in cursor.description]
-        results = [dict(zip(col_names, row)) for row in cursor.fetchall()]
-        cursor.close()
-        return results
-
-    def getBarcodeProjType(self, barcode):
-        """ Get the project type of the barcode.
-            Return a tuple of project and project type.
-        """
-        sql = """select p.project from project p inner join
-                 project_barcode pb on (pb.project_id = p.project_id)
-                 where pb.barcode = %s"""
-        cursor = self.get_cursor()
-        cursor.execute(sql, [barcode])
-        results = cursor.fetchone()
-        proj = results[0]
-        #this will get changed to get the project type from the db
-        if proj in ('American Gut Project', 'ICU Microbiome', 'Handout Kits',
-                    'Office Succession Study',
-                    'American Gut Project: Functional Feces',
-                    'Down Syndrome Microbiome', 'Beyond Bacteria',
-                    'All in the Family', 'American Gut Handout kit',
-                    'Personal Genome Project', 'Sleep Study',
-                    'Anxiety/Depression cohort', 'Alzheimers Study'):
-            proj_type = 'American Gut'
-        else:
-            proj_type = proj
-        return (proj, proj_type)
-
-    def setBarcodeProjType(self, project, barcode):
-        """sets the project type of the barcodel
-
-            project is the project name from the project table
-            barcode is the barcode
-        """
-        sql = """update project_barcode set project_id =
-                (select project_id from project where project = %s)
-                where barcode = %s"""
-        result = self.get_cursor()
-        cursor = self.get_cursor()
-        cursor.execute(sql, [project, barcode])
-        self.connection.commit()
-        cursor.close()
-
-    def getProjectNames(self):
-        """Returns a list of project names
-        """
-        sql = """select project from project"""
-        result = self.get_cursor()
-        cursor = self.get_cursor()
-        cursor.execute(sql)
-        results = cursor.fetchall()
-        return [x[0] for x in results]
-
-    def updateBarcodeStatus(self, status, postmark, scan_date, barcode,
-                            biomass_remaining, sequencing_status, obsolete):
-        """ Updates a barcode's status
-        """
-        sql = """update  barcode
-        set     status = %s,
-            sample_postmark_date = %s,
-            scan_date = %s,
-            biomass_remaining = %s,
-            sequencing_status = %s,
-            obsolete = %s
-        where   barcode = %s"""
-        cursor = self.get_cursor()
-        cursor.execute(sql, [status, postmark, scan_date, biomass_remaining,
-                             sequencing_status, obsolete, barcode])
-        self.connection.commit()
-        cursor.close()
 
     def get_survey_id(self, ag_login_id, participant_name):
         """Return the survey ID associated with a participant or None"""
