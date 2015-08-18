@@ -15,7 +15,6 @@ def _format_data_path(base, dir, barcode, ext):
 
 
 class SampleOverviewHandler(BaseHandler):
-
     def _sample_overview_renderer(self):
         barcode = self.get_argument('barcode', None)
         if barcode is None:
@@ -50,13 +49,12 @@ class SampleOverviewHandler(BaseHandler):
         if not os.path.exists(fs_barcode_txt):
             web_barcode_txt = None
 
-        agrest = requests.get('http://127.0.0.1:8081/sample/%s' % barcode)
-        if agrest.status_code == 200 and agrest.content != "(null)":
-            bc_with_suf = json.loads(agrest.content)[0]
-
-            sequence_url = 'http://127.0.0.1:8081/sequence/%s' % bc_with_suf
-            biomv1_url = 'http://127.0.0.1:8081/otu/%s/json' % bc_with_suf
-            classic_url = 'http://127.0.0.1:8081/otu/%s/txt' % bc_with_suf
+        req = requests.get('http://api.microbio.me/americangut/1/sample/%s' % barcode)
+        if req.status_code == 200 and req.content != "(null)":
+            bc_with_suf = json.loads(req.content)[0]
+            sequence_url = 'http://api.microbio.me/americangut/1/sequence/%s' % bc_with_suf
+            biomv1_url = 'http://api.microbio.me/americangut/1/otu/%s/json' % bc_with_suf
+            classic_url = 'http://api.microbio.me/americangut/1/otu/%s/txt' % bc_with_suf
         else:
             sequence_url = None
             biomv1_url = None
