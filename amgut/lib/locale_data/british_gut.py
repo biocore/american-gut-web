@@ -641,7 +641,8 @@ _SAMPLE_OVERVIEW = {
     'SAMPLE_TIME': "Sample Time",
     'TAXA_SUM_TITLE': "Taxa Summary",
     'RAW_SEQUENCE_TITLE': 'Raw sequences',
-    'BIOM_TABLE_TITLE': 'Summarized data',
+    'BIOM_TABLE_TITLE': 'Summarized data (<a href="http://biom-format.org">biom-format.org</a>)',
+    'EXCEL_TABLE_TITLE': 'Summarized data',
     'VIEW_TAXA_SUMMARY': "View Taxa Summary",
 }
 
