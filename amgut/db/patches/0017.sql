@@ -167,7 +167,6 @@ INSERT INTO project (project_id, project)
     SELECT max(project_id)+1, 'Amnon Oral Timeseries' FROM project;
 
 pid := (SELECT project_id FROM barcodes.project WHERE project = 'Amnon Oral Timeseries');
-
 INSERT INTO hold_table (project_id, barcode)
     SELECT pid, barcode FROM (
         SELECT barcode FROM ag.ag_kit_barcodes
