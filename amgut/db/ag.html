@@ -367,22 +367,7 @@
 	plate_barcode references plate ( plate_id )</title>
 </path>
 <text x='232' y='1090' transform='rotate(0 232,1090)' title='Foreign Key fk_plate_barcode_0
-	plate_barcode references plate ( plate_id )' style='fill:#a1a0a0;'>plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'  style='stroke-dasharray:4,2;'  d='M 915 930 L 1072,930 Q 1080,930 1080,922 L 1080,727 Q 1080,720 1087,720 L 1095,720' >
-	<title>Foreign Key fk_ag_kit_barcodes
-	ag_kit_barcodes references ag_kit ( ag_kit_id )</title>
-</path>
-<text x='922' y='925' transform='rotate(0 922,925)' title='Foreign Key fk_ag_kit_barcodes
-	ag_kit_barcodes references ag_kit ( ag_kit_id )' style='fill:#a1a0a0;'>ag_kit_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'  style='stroke-dasharray:4,2;'  d='M 915 960 L 1387,960 Q 1395,960 1395,967 L 1395,1057 Q 1395,1065 1402,1065 L 1410,1065' >
-	<title>Foreign Key fk_ag_kit_barcodes_1
-	ag_kit_barcodes references ag_login_surveys ( survey_id )</title>
-</path>
-<text x='922' y='955' transform='rotate(0 922,955)' title='Foreign Key fk_ag_kit_barcodes_1
-	ag_kit_barcodes references ag_login_surveys ( survey_id )' style='fill:#a1a0a0;'>survey_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 720 945 L 457,945 Q 450,945 450,937 L 450,862 Q 450,855 442,855 L 405,855' >
-	<title>Foreign Key fk_ag_kit_barcodes_barcode
-	ag_kit_barcodes references barcode ( barcode )</title>
-</path>
-<text x='678' y='940' transform='rotate(0 678,940)' title='Foreign Key fk_ag_kit_barcodes_barcode
-	ag_kit_barcodes references barcode ( barcode )' style='fill:#a1a0a0;'>barcode</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 240 450 L 195,450' >
+	plate_barcode references plate ( plate_id )' style='fill:#a1a0a0;'>plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 240 450 L 195,450' >
 	<title>Foreign Key fk_handout_barcode_0
 	ag_handout_barcodes references ag_handout_kits ( kit_id )</title>
 </path>
@@ -397,7 +382,22 @@
 	barcode_exceptions references barcode ( barcode )</title>
 </path>
 <text x='247' y='820' transform='rotate(0 247,820)' title='Foreign Key fk_barcode_exceptions
-	barcode_exceptions references barcode ( barcode )' style='fill:#a1a0a0;'>barcode</text><!-- ============= Table 'ag_survey_answer' ============= -->
+	barcode_exceptions references barcode ( barcode )' style='fill:#a1a0a0;'>barcode</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'  style='stroke-dasharray:4,2;'  d='M 915 930 L 1072,930 Q 1080,930 1080,922 L 1080,727 Q 1080,720 1087,720 L 1095,720' >
+	<title>Foreign Key fk_ag_kit_barcodes
+	ag_kit_barcodes references ag_kit ( ag_kit_id )</title>
+</path>
+<text x='922' y='925' transform='rotate(0 922,925)' title='Foreign Key fk_ag_kit_barcodes
+	ag_kit_barcodes references ag_kit ( ag_kit_id )' style='fill:#a1a0a0;'>ag_kit_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'  style='stroke-dasharray:4,2;'  d='M 915 960 L 1387,960 Q 1395,960 1395,967 L 1395,1057 Q 1395,1065 1402,1065 L 1410,1065' >
+	<title>Foreign Key fk_ag_kit_barcodes_1
+	ag_kit_barcodes references ag_login_surveys ( survey_id )</title>
+</path>
+<text x='922' y='955' transform='rotate(0 922,955)' title='Foreign Key fk_ag_kit_barcodes_1
+	ag_kit_barcodes references ag_login_surveys ( survey_id )' style='fill:#a1a0a0;'>survey_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 720 945 L 457,945 Q 450,945 450,937 L 450,862 Q 450,855 442,855 L 405,855' >
+	<title>Foreign Key fk_ag_kit_barcodes_barcode
+	ag_kit_barcodes references barcode ( barcode )</title>
+</path>
+<text x='678' y='940' transform='rotate(0 678,940)' title='Foreign Key fk_ag_kit_barcodes_barcode
+	ag_kit_barcodes references barcode ( barcode )' style='fill:#a1a0a0;'>barcode</text><!-- ============= Table 'ag_survey_answer' ============= -->
 <rect class='table' x='675' y='683' width='150' height='120' rx='7' ry='7' />
 <path d='M 675.50 709.50 L 675.50 690.50 Q 675.50 683.50 682.50 683.50 L 817.50 683.50 Q 824.50 683.50 824.50 690.50 L 824.50 709.50 L675.50 709.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
 <a xlink:href='#ag_survey_answer'><text x='700' y='697' class='tableTitle'>ag_survey_answer</text><title>Table ag.ag_survey_answer</title></a>
@@ -983,38 +983,6 @@ This stores answers to third party surveys in JSON format&#044; keyed to the ori
   <a xlink:href='#locale'><text x='123' y='712'>locale</text><title>locale varchar&#040;2147483647&#041;</title></a>
   <use id='nn' x='107' y='717' xlink:href='#nn'/><a xlink:href='#current_patch'><text x='123' y='727'>current_patch</text><title>current_patch varchar&#040;2147483647&#041; not null default &#039;unpatched&#039;&#058;&#058;character varying</title></a>
 
-<!-- ============= Table 'ag_kit_barcodes' ============= -->
-<rect class='table' x='735' y='878' width='180' height='345' rx='7' ry='7' />
-<path d='M 735.50 904.50 L 735.50 885.50 Q 735.50 878.50 742.50 878.50 L 907.50 878.50 Q 914.50 878.50 914.50 885.50 L 914.50 904.50 L735.50 904.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
-<a xlink:href='#ag_kit_barcodes'><text x='781' y='892' class='tableTitle'>ag_kit_barcodes</text><title>Table ag.ag_kit_barcodes</title></a>
-  <use id='nn' x='737' y='912' xlink:href='#nn'/><a xlink:href='#ag_kit_barcode_id'><use id='pk' x='737' y='911' xlink:href='#pk'/><title>Primary Key  ( ag_kit_barcode_id ) </title></a>
-<a xlink:href='#ag_kit_barcode_id'><text x='753' y='922'>ag_kit_barcode_id</text><title>ag_kit_barcode_id uuid not null default ag&#046;uuid&#095;generate&#095;v4&#040;&#041;</title></a>
-  <a xlink:href='#ag_kit_id'><use id='idx' x='737' y='926' xlink:href='#idx'/><title>Index  ( ag_kit_id ) </title></a>
-<a xlink:href='#ag_kit_id'><text x='753' y='937'>ag_kit_id</text><title>ag_kit_id uuid</title></a>
-<a xlink:href='#ag_kit_id'><use id='fk' x='903' y='926' xlink:href='#fk'/><title>References ag_kit ( ag_kit_id ) </title></a>
-  <use id='nn' x='737' y='942' xlink:href='#nn'/><a xlink:href='#barcode'><use id='unq' x='737' y='941' xlink:href='#unq'/><title>Unique Index  ( barcode ) </title></a>
-<a xlink:href='#barcode'><text x='753' y='952'>barcode</text><title>barcode varchar&#040;2147483647&#041; not null</title></a>
-<a xlink:href='#barcode'><use id='fk' x='903' y='941' xlink:href='#fk'/><title>References barcode ( barcode ) </title></a>
-  <a xlink:href='#survey_id'><use id='idx' x='737' y='956' xlink:href='#idx'/><title>Index  ( survey_id ) </title></a>
-<a xlink:href='#survey_id'><text x='753' y='967'>survey_id</text><title>survey_id varchar&#040;2147483647&#041;</title></a>
-<a xlink:href='#survey_id'><use id='fk' x='903' y='956' xlink:href='#fk'/><title>References ag_login_surveys ( survey_id ) </title></a>
-  <a xlink:href='#sample_barcode_file'><text x='753' y='982'>sample_barcode_file</text><title>sample_barcode_file varchar&#040;500&#041;</title></a>
-  <a xlink:href='#sample_barcode_file_md5'><text x='753' y='997'>sample_barcode_file_md5</text><title>sample_barcode_file_md5 varchar&#040;50&#041;</title></a>
-  <a xlink:href='#site_sampled'><text x='753' y='1012'>site_sampled</text><title>site_sampled varchar&#040;200&#041;</title></a>
-  <a xlink:href='#sample_date'><text x='753' y='1027'>sample_date</text><title>sample_date varchar&#040;20&#041;</title></a>
-  <a xlink:href='#participant_name'><text x='753' y='1042'>participant_name</text><title>participant_name varchar&#040;200&#041;</title></a>
-  <a xlink:href='#sample_time'><text x='753' y='1057'>sample_time</text><title>sample_time varchar&#040;100&#041;</title></a>
-  <a xlink:href='#notes'><text x='753' y='1072'>notes</text><title>notes varchar&#040;2000&#041;</title></a>
-  <a xlink:href='#environment_sampled'><text x='753' y='1087'>environment_sampled</text><title>environment_sampled varchar&#040;100&#041;</title></a>
-  <a xlink:href='#moldy'><text x='753' y='1102'>moldy</text><title>moldy char&#040;1&#041;</title></a>
-  <a xlink:href='#overloaded'><text x='753' y='1117'>overloaded</text><title>overloaded char&#040;1&#041;</title></a>
-  <a xlink:href='#other'><text x='753' y='1132'>other</text><title>other char&#040;1&#041;</title></a>
-  <a xlink:href='#other_text'><text x='753' y='1147'>other_text</text><title>other_text varchar&#040;2000&#041;</title></a>
-  <a xlink:href='#date_of_last_email'><text x='753' y='1162'>date_of_last_email</text><title>date_of_last_email varchar&#040;20&#041;</title></a>
-  <a xlink:href='#results_ready'><text x='753' y='1177'>results_ready</text><title>results_ready varchar&#040;1&#041;</title></a>
-  <a xlink:href='#withdrawn'><text x='753' y='1192'>withdrawn</text><title>withdrawn varchar&#040;1&#041;</title></a>
-  <a xlink:href='#refunded'><text x='753' y='1207'>refunded</text><title>refunded varchar&#040;1&#041;</title></a>
-
 <!-- ============= Table 'external_survey_sources' ============= -->
 <rect class='table' x='1395' y='1493' width='195' height='105' rx='7' ry='7' />
 <path d='M 1395.50 1519.50 L 1395.50 1500.50 Q 1395.50 1493.50 1402.50 1493.50 L 1582.50 1493.50 Q 1589.50 1493.50 1589.50 1500.50 L 1589.50 1519.50 L1395.50 1519.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
@@ -1082,13 +1050,45 @@ Referred by project_barcode ( barcode ) </title></a>
   <a xlink:href='#assigned_on'><text x='123' y='922'>assigned_on</text><title>assigned_on timestamp
 date barcode assigned to a project</title></a>
   <a xlink:href='#status'><text x='123' y='937'>status</text><title>status varchar&#040;100&#041;</title></a>
-  <a xlink:href='#scan_date'><text x='123' y='952'>scan_date</text><title>scan_date varchar&#040;20&#041;</title></a>
-  <a xlink:href='#sample_postmark_date'><text x='123' y='967'>sample_postmark_date</text><title>sample_postmark_date varchar&#040;20&#041;</title></a>
+  <a xlink:href='#scan_date'><text x='123' y='952'>scan_date</text><title>scan_date date</title></a>
+  <a xlink:href='#sample_postmark_date'><text x='123' y='967'>sample_postmark_date</text><title>sample_postmark_date date</title></a>
   <a xlink:href='#biomass_remaining'><text x='123' y='982'>biomass_remaining</text><title>biomass_remaining varchar&#040;1&#041;</title></a>
   <a xlink:href='#sequencing_status'><text x='123' y='997'>sequencing_status</text><title>sequencing_status varchar&#040;20&#041;</title></a>
   <a xlink:href='#obsolete'><text x='123' y='1012'>obsolete</text><title>obsolete varchar&#040;1&#041;</title></a>
   <use id='nn' x='107' y='1017' xlink:href='#nn'/><a xlink:href='#create_date_time'><text x='123' y='1027'>create_date_time</text><title>create_date_time timestamp not null default current&#095;timestamp
 Date barcode created on the system</title></a>
+
+<!-- ============= Table 'ag_kit_barcodes' ============= -->
+<rect class='table' x='735' y='878' width='180' height='345' rx='7' ry='7' />
+<path d='M 735.50 904.50 L 735.50 885.50 Q 735.50 878.50 742.50 878.50 L 907.50 878.50 Q 914.50 878.50 914.50 885.50 L 914.50 904.50 L735.50 904.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#ag_kit_barcodes'><text x='781' y='892' class='tableTitle'>ag_kit_barcodes</text><title>Table ag.ag_kit_barcodes</title></a>
+  <use id='nn' x='737' y='912' xlink:href='#nn'/><a xlink:href='#ag_kit_barcode_id'><use id='pk' x='737' y='911' xlink:href='#pk'/><title>Primary Key  ( ag_kit_barcode_id ) </title></a>
+<a xlink:href='#ag_kit_barcode_id'><text x='753' y='922'>ag_kit_barcode_id</text><title>ag_kit_barcode_id uuid not null default ag&#046;uuid&#095;generate&#095;v4&#040;&#041;</title></a>
+  <a xlink:href='#ag_kit_id'><use id='idx' x='737' y='926' xlink:href='#idx'/><title>Index  ( ag_kit_id ) </title></a>
+<a xlink:href='#ag_kit_id'><text x='753' y='937'>ag_kit_id</text><title>ag_kit_id uuid</title></a>
+<a xlink:href='#ag_kit_id'><use id='fk' x='903' y='926' xlink:href='#fk'/><title>References ag_kit ( ag_kit_id ) </title></a>
+  <use id='nn' x='737' y='942' xlink:href='#nn'/><a xlink:href='#barcode'><use id='unq' x='737' y='941' xlink:href='#unq'/><title>Unique Index  ( barcode ) </title></a>
+<a xlink:href='#barcode'><text x='753' y='952'>barcode</text><title>barcode varchar&#040;2147483647&#041; not null</title></a>
+<a xlink:href='#barcode'><use id='fk' x='903' y='941' xlink:href='#fk'/><title>References barcode ( barcode ) </title></a>
+  <a xlink:href='#survey_id'><use id='idx' x='737' y='956' xlink:href='#idx'/><title>Index  ( survey_id ) </title></a>
+<a xlink:href='#survey_id'><text x='753' y='967'>survey_id</text><title>survey_id varchar&#040;2147483647&#041;</title></a>
+<a xlink:href='#survey_id'><use id='fk' x='903' y='956' xlink:href='#fk'/><title>References ag_login_surveys ( survey_id ) </title></a>
+  <a xlink:href='#sample_barcode_file'><text x='753' y='982'>sample_barcode_file</text><title>sample_barcode_file varchar&#040;500&#041;</title></a>
+  <a xlink:href='#sample_barcode_file_md5'><text x='753' y='997'>sample_barcode_file_md5</text><title>sample_barcode_file_md5 varchar&#040;50&#041;</title></a>
+  <a xlink:href='#site_sampled'><text x='753' y='1012'>site_sampled</text><title>site_sampled varchar&#040;200&#041;</title></a>
+  <a xlink:href='#sample_date'><text x='753' y='1027'>sample_date</text><title>sample_date date</title></a>
+  <a xlink:href='#participant_name'><text x='753' y='1042'>participant_name</text><title>participant_name varchar&#040;200&#041;</title></a>
+  <a xlink:href='#sample_time'><text x='753' y='1057'>sample_time</text><title>sample_time time</title></a>
+  <a xlink:href='#notes'><text x='753' y='1072'>notes</text><title>notes varchar&#040;2000&#041;</title></a>
+  <a xlink:href='#environment_sampled'><text x='753' y='1087'>environment_sampled</text><title>environment_sampled varchar&#040;100&#041;</title></a>
+  <a xlink:href='#moldy'><text x='753' y='1102'>moldy</text><title>moldy char&#040;1&#041;</title></a>
+  <a xlink:href='#overloaded'><text x='753' y='1117'>overloaded</text><title>overloaded char&#040;1&#041;</title></a>
+  <a xlink:href='#other'><text x='753' y='1132'>other</text><title>other char&#040;1&#041;</title></a>
+  <a xlink:href='#other_text'><text x='753' y='1147'>other_text</text><title>other_text varchar&#040;2000&#041;</title></a>
+  <a xlink:href='#date_of_last_email'><text x='753' y='1162'>date_of_last_email</text><title>date_of_last_email varchar&#040;20&#041;</title></a>
+  <a xlink:href='#results_ready'><text x='753' y='1177'>results_ready</text><title>results_ready varchar&#040;1&#041;</title></a>
+  <a xlink:href='#withdrawn'><text x='753' y='1192'>withdrawn</text><title>withdrawn varchar&#040;1&#041;</title></a>
+  <a xlink:href='#refunded'><text x='753' y='1207'>refunded</text><title>refunded varchar&#040;1&#041;</title></a>
 
 </g></svg>
 
@@ -3166,148 +3166,6 @@ Date barcode created on the system</title></a>
 <br/><br/>
 <table id='dbs' >
 <thead>
-<tr><th colspan='3'><a name='ag_kit_barcodes'>ag_kit_barcodes</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td><a name='ag_kit_barcode_id'>ag&#095;kit&#095;barcode&#095;id</a></td>
-		<td width='40%'> uuid  NOT NULL  DEFO ag.uuid_generate_v4() </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='ag_kit_id'>ag&#095;kit&#095;id</a></td>
-		<td width='40%'> uuid   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='barcode'>barcode</a></td>
-		<td width='40%'> varchar&#040; 2147483647 &#041;  NOT NULL  </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='survey_id'>survey&#095;id</a></td>
-		<td width='40%'> varchar&#040; 2147483647 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='sample_barcode_file'>sample&#095;barcode&#095;file</a></td>
-		<td width='40%'> varchar&#040; 500 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='sample_barcode_file_md5'>sample&#095;barcode&#095;file&#095;md5</a></td>
-		<td width='40%'> varchar&#040; 50 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='site_sampled'>site&#095;sampled</a></td>
-		<td width='40%'> varchar&#040; 200 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='sample_date'>sample&#095;date</a></td>
-		<td width='40%'> varchar&#040; 20 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='participant_name'>participant&#095;name</a></td>
-		<td width='40%'> varchar&#040; 200 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='sample_time'>sample&#095;time</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='notes'>notes</a></td>
-		<td width='40%'> varchar&#040; 2000 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='environment_sampled'>environment&#095;sampled</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='moldy'>moldy</a></td>
-		<td width='40%'> char&#040; 1 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='overloaded'>overloaded</a></td>
-		<td width='40%'> char&#040; 1 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='other'>other</a></td>
-		<td width='40%'> char&#040; 1 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='other_text'>other&#095;text</a></td>
-		<td width='40%'> varchar&#040; 2000 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='date_of_last_email'>date&#095;of&#095;last&#095;email</a></td>
-		<td width='40%'> varchar&#040; 20 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='results_ready'>results&#095;ready</a></td>
-		<td width='40%'> varchar&#040; 1 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='withdrawn'>withdrawn</a></td>
-		<td width='40%'> varchar&#040; 1 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-	<tr>
-		<td><a name='refunded'>refunded</a></td>
-		<td width='40%'> varchar&#040; 1 &#041;   </td>
-		<td width='99%'>  </td>
-	</tr>
-<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
-	<tr>		<td>ag&#095;kit&#095;barcodes&#095;pkey primary key</td>
-		<td> ON ag&#095;kit&#095;barcode&#095;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>ag&#095;kit&#095;barcodes&#095;barcode&#095;key unique</td>
-		<td> ON barcode</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>ix&#095;ag&#095;kit&#095;bc&#095;kit </td>
-		<td> ON ag&#095;kit&#095;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;ag&#095;kit&#095;barcodes </td>
-		<td> ON survey&#095;id</td>
-		<td>  </td>
-	</tr>
-<tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
-	<tr>
-		<td>fk_ag_kit_barcodes</td>
-		<td > ( ag&#095;kit&#095;id ) ref <a href='#ag&#095;kit'>ag&#095;kit</a> (ag&#095;kit&#095;id) </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>fk_ag_kit_barcodes_1</td>
-		<td > ( survey&#095;id ) ref <a href='#ag&#095;login&#095;surveys'>ag&#095;login&#095;surveys</a> (survey&#095;id) </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>fk_ag_kit_barcodes_barcode</td>
-		<td > ( barcode ) ref <a href='#barcode'>barcode</a> (barcode) </td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table id='dbs' >
-<thead>
 <tr><th colspan='3'><a name='external_survey_sources'>external_survey_sources</a></th></tr>
 </thead>
 <tbody>
@@ -3503,12 +3361,12 @@ Date barcode created on the system</title></a>
 	</tr>
 	<tr>
 		<td><a name='scan_date'>scan&#095;date</a></td>
-		<td width='40%'> varchar&#040; 20 &#041;   </td>
+		<td width='40%'> date   </td>
 		<td width='99%'>  </td>
 	</tr>
 	<tr>
 		<td><a name='sample_postmark_date'>sample&#095;postmark&#095;date</a></td>
-		<td width='40%'> varchar&#040; 20 &#041;   </td>
+		<td width='40%'> date   </td>
 		<td width='99%'>  </td>
 	</tr>
 	<tr>
@@ -3534,6 +3392,148 @@ Date barcode created on the system</title></a>
 <tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
 	<tr>		<td>barcode&#095;pkey primary key</td>
 		<td> ON barcode</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table id='dbs' >
+<thead>
+<tr><th colspan='3'><a name='ag_kit_barcodes'>ag_kit_barcodes</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='ag_kit_barcode_id'>ag&#095;kit&#095;barcode&#095;id</a></td>
+		<td width='40%'> uuid  NOT NULL  DEFO ag.uuid_generate_v4() </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='ag_kit_id'>ag&#095;kit&#095;id</a></td>
+		<td width='40%'> uuid   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='barcode'>barcode</a></td>
+		<td width='40%'> varchar&#040; 2147483647 &#041;  NOT NULL  </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='survey_id'>survey&#095;id</a></td>
+		<td width='40%'> varchar&#040; 2147483647 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='sample_barcode_file'>sample&#095;barcode&#095;file</a></td>
+		<td width='40%'> varchar&#040; 500 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='sample_barcode_file_md5'>sample&#095;barcode&#095;file&#095;md5</a></td>
+		<td width='40%'> varchar&#040; 50 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='site_sampled'>site&#095;sampled</a></td>
+		<td width='40%'> varchar&#040; 200 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='sample_date'>sample&#095;date</a></td>
+		<td width='40%'> date   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='participant_name'>participant&#095;name</a></td>
+		<td width='40%'> varchar&#040; 200 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='sample_time'>sample&#095;time</a></td>
+		<td width='40%'> time   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='notes'>notes</a></td>
+		<td width='40%'> varchar&#040; 2000 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='environment_sampled'>environment&#095;sampled</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='moldy'>moldy</a></td>
+		<td width='40%'> char&#040; 1 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='overloaded'>overloaded</a></td>
+		<td width='40%'> char&#040; 1 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='other'>other</a></td>
+		<td width='40%'> char&#040; 1 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='other_text'>other&#095;text</a></td>
+		<td width='40%'> varchar&#040; 2000 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='date_of_last_email'>date&#095;of&#095;last&#095;email</a></td>
+		<td width='40%'> varchar&#040; 20 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='results_ready'>results&#095;ready</a></td>
+		<td width='40%'> varchar&#040; 1 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='withdrawn'>withdrawn</a></td>
+		<td width='40%'> varchar&#040; 1 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+	<tr>
+		<td><a name='refunded'>refunded</a></td>
+		<td width='40%'> varchar&#040; 1 &#041;   </td>
+		<td width='99%'>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
+	<tr>		<td>ag&#095;kit&#095;barcodes&#095;pkey primary key</td>
+		<td> ON ag&#095;kit&#095;barcode&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>ag&#095;kit&#095;barcodes&#095;barcode&#095;key unique</td>
+		<td> ON barcode</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>ix&#095;ag&#095;kit&#095;bc&#095;kit </td>
+		<td> ON ag&#095;kit&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;ag&#095;kit&#095;barcodes </td>
+		<td> ON survey&#095;id</td>
+		<td>  </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Foreign Keys</b></td></tr>
+	<tr>
+		<td>fk_ag_kit_barcodes</td>
+		<td > ( ag&#095;kit&#095;id ) ref <a href='#ag&#095;kit'>ag&#095;kit</a> (ag&#095;kit&#095;id) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>fk_ag_kit_barcodes_1</td>
+		<td > ( survey&#095;id ) ref <a href='#ag&#095;login&#095;surveys'>ag&#095;login&#095;surveys</a> (survey&#095;id) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>fk_ag_kit_barcodes_barcode</td>
+		<td > ( barcode ) ref <a href='#barcode'>barcode</a> (barcode) </td>
 		<td>  </td>
 	</tr>
 </tbody>
