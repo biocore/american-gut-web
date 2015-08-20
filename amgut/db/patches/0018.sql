@@ -63,3 +63,16 @@ USING CASE
     ELSE
         NULL
 END;
+
+-- Make sure all barcodes in AG kits are assigned to AG project
+DO $do$
+DECLARE
+    pid integer;
+BEGIN
+    pid := (SELECT project_id FROM barcodes.project WHERE project = 'American Gut Project');
+    INSERT INTO barcodes.project_barcode (project_id, barcode)
+        SELECT pid, barcode FROM (ag.ag_kit_barcodes akb
+        FULL OUTER JOIN ag.ag_handout_barcodes ahb USING (barcode))
+        LEFT JOIN barcodes.project_barcode pb USING (barcode)
+        WHERE project_id IS NULL;
+END $do$;
