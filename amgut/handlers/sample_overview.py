@@ -52,9 +52,13 @@ class SampleOverviewHandler(BaseHandler):
         req = requests.get('http://api.microbio.me/americangut/1/sample/%s' % barcode)
         if req.status_code == 200 and req.content != "(null)":
             bc_with_suf = json.loads(req.content)[0]
-            sequence_url = 'http://api.microbio.me/americangut/1/sequence/%s' % bc_with_suf
             biomv1_url = 'http://api.microbio.me/americangut/1/otu/%s/json' % bc_with_suf
             classic_url = 'http://api.microbio.me/americangut/1/otu/%s/txt' % bc_with_suf
+
+            seq_req = requests.get('http://api.microbio.me/americangut/1/sequence/%s' % bc_with_suf)
+            if seq_req.status_code == 200:
+                sequence_url = json.loads(seq_req.content)[0]['fastq_url']
+
         else:
             sequence_url = None
             biomv1_url = None
