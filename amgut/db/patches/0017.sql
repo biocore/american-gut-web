@@ -168,7 +168,7 @@ INSERT INTO project (project_id, project)
 
 pid := (SELECT project_id FROM barcodes.project WHERE project = 'Amnon Oral Timeseries');
 
-INSERT INTO hold_table (project_id, barcode)
+INSERT INTO barcodes.project_barcode (project_id, barcode)
     SELECT pid, barcode FROM (
         SELECT barcode FROM ag.ag_kit_barcodes
         JOIN ag.ag_kit USING (ag_kit_id)
@@ -181,11 +181,6 @@ INSERT INTO hold_table (project_id, barcode)
         WHERE lower(kit_id) LIKE '%mts\_%'
         OR lower(kit_id) LIKE '%osc\_%'
         OR lower(kit_id) LIKE '%pulse\_%') AS b;
-
-INSERT INTO barcodes.project_barcode (project_id, barcode)
-    SELECT ag_pid, barcode FROM hold_table
-    WHERE (ag_pid, barcode) NOT IN
-        (SELECT project_id, barcode FROM barcodes.project_barcode);
 
 DELETE FROM barcodes.project_barcode
 WHERE barcode IN (SELECT DISTINCT barcode FROM hold_table)
