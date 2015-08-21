@@ -1,7 +1,7 @@
 -- August 21, 2015
 -- Add current country question to questionare
 INSERT INTO ag.survey_question (survey_question_id, question_shortname, american, british) VALUES
-(146, 'COUNTRY', 'Current country of residence', 'Current country of residence');
+(146, 'COUNTRY', 'Current country of residence:', 'Current country of residence:');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (146, 'SINGLE');
 
 -- Add to survey as question right before current zipcode
