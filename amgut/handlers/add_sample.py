@@ -26,8 +26,6 @@ class AddSample(BaseHandler):
         form = self.build_form()
         args = {k: v[0] for k, v in viewitems(self.request.arguments)}
         form.process(data=args)
-        print form.data
-        print args
         if not form.validate():
             self.render('add_sample.html', skid=self.current_user,
                     participant_name=participant_name,

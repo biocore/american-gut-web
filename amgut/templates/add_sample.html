@@ -42,21 +42,21 @@
                     <td><p>{% raw tl['NEW_SAMPLE_DESCRIPTION_1'] %}</p>
                     <p>{% raw tl['NEW_SAMPLE_DESCRIPTION_2'] %}</td>
                     <td>
-    {% raw form.barcode() %}
+    {% raw form.barcode(tabindex=1) %}
                     </td>
                 </tr>
                 <tr>
                     <td>{% raw tl['SITE_SAMPLED'] %}</td>
                     <td>
                         <div id="sample_site_div" class="">
-    {% raw form.sample_site() %}
+    {% raw form.sample_site(tabindex=2) %}
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>{% raw tl['DATE'] %}</td>
                     <td>
-    {% raw form.sample_date() %}{% raw tl['DATE_EXAMPLE'] %}
+    {% raw form.sample_date(tabindex=3) %}{% raw tl['DATE_EXAMPLE'] %}
     {% if form.sample_date.errors %}
         <ul class="errors">{% for error in form.sample_date.errors %}<li>{{ error }}</li>{% end %}</ul>
     {% end %}
@@ -65,7 +65,7 @@
                 <tr>
                     <td>{% raw tl['TIME'] %}</td>
                     <td>
-    {% raw form.sample_time() %}{% raw tl['TIME_EXAMPLE'] %}
+    {% raw form.sample_time(tabindex=4) %}{% raw tl['TIME_EXAMPLE'] %}
     {% if form.sample_time.errors %}
         <ul class="errors">{% for error in form.sample_time.errors %}<li>{{ error }}</li>{% end %}</ul>
     {% end %}
@@ -74,7 +74,7 @@
                 <tr>
                     <td>{% raw tl['NOTES'] %}</td>
                     <td>
-    {% raw form.notes(style="width:300px;") %}
+    {% raw form.notes(tabindex=5, style="width:300px;") %}
                     </td>
                 </tr>
             </table>
@@ -82,7 +82,7 @@
             <table id="survey" width="100%">
                 <tr>
                     <td>
-                    <input type="button" value="Add Sample" onclick="verifyAddSample()">
+                    <input type="button" value="Add Sample" onclick="verifyAddSample()", tabindex=6>
                     </td>
                 </tr>
             </table>
