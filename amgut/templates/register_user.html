@@ -83,7 +83,14 @@ $(document).ready(function() {
             <tr><td>{% raw tl['CITY'] %}</td><td><input type="text" name="city" id="city"></td></tr>
             <tr><td>{% raw tl['STATE'] %}</td><td><input type="text" name="state" id="state"></td></tr>
             <tr><td>{% raw tl['ZIP'] %}</td><td><input type="text" name="zip" id="zip"></td></tr>
-            <tr><td>{% raw tl['COUNTRY'] %}</td><td><input type="text" name="country" id="country"></td></tr>
+            <tr><td>{% raw tl['COUNTRY'] %}</td><td>
+              <select name="country" id="country">
+              <option value=''></option>
+              {% for country in countries %}
+                <option value='{{country}}'>{{country}}</option>
+              {% end %}
+              </select>
+            </td></tr>
             <tr><td></td><td><input type="submit" id="submit" value="{% raw tl['SUBMIT'] %}"/></td></tr>
         </table>
     </form>
