@@ -698,3 +698,14 @@ class AGDataAccess(object):
         id_ = cursor.fetchone()
 
         return id_[0] if id_ else None
+
+    def get_countries(self):
+        """
+        Returns
+        -------
+        list of str
+         All country names in database"""
+        conn_handler = SQLConnectionHandler()
+        return [x[0] for x in conn_handler.execute_fetchall(
+            'SELECT country FROM ag.iso_country_lookup')]
+
