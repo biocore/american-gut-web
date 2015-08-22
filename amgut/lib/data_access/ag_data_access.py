@@ -707,5 +707,5 @@ class AGDataAccess(object):
          All country names in database"""
         conn_handler = SQLConnectionHandler()
         return [x[0] for x in conn_handler.execute_fetchall(
-            'SELECT country FROM ag.iso_country_lookup')]
+            'SELECT country FROM ag.iso_country_lookup ORDER BY country')]
 
