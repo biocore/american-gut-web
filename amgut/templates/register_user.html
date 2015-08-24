@@ -4,9 +4,12 @@
 {% set tl = text_locale['register_user.html'] %}
 
 <script src="{% raw media_locale['SITEBASE'] %}/static/vendor/js/jquery.validate.min.js"></script>
+<script src="{% raw media_locale['SITEBASE'] %}/static/vendor/js/chosen.jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{% raw media_locale['SITEBASE'] %}/static/vendor/css/chosen.css">
 <script type="text/javascript">
 $(document).ready(function() {
     // validate register form on keyup and submit
+    $(".chosen-dropdown").chosen();
     $("#newParticipant").validate({
       rules: {
         participantname: "required",
@@ -84,7 +87,7 @@ $(document).ready(function() {
             <tr><td>{% raw tl['STATE'] %}</td><td><input type="text" name="state" id="state"></td></tr>
             <tr><td>{% raw tl['ZIP'] %}</td><td><input type="text" name="zip" id="zip"></td></tr>
             <tr><td>{% raw tl['COUNTRY'] %}</td><td>
-              <select name="country" id="country">
+              <select name="country" id="country" class="chosen-dropdown">
               <option value=''></option>
               {% for country in countries %}
                 <option value='{{country}}'>{{country}}</option>
