@@ -565,11 +565,11 @@ class AGDataAccess(object):
         passcode is the password change verification value
         """
         sql = """SELECT EXISTS(SELECT pass_reset_time
-                 FROM ag_kit
-                 INNER JOIN ag_login USING (ag_login_id)
+                 FROM ag.ag_kit
+                 INNER JOIN ag.ag_login USING (ag_login_id)
                  WHERE pass_reset_code = %s and email = %s
                  AND supplied_kit_id = %s
-                 AND current_time_ < pass_reset_time)"""
+                 AND NOW() < pass_reset_time)"""
         return self._sql.execute_fetchone(sql, [passcode, email, kitid])[0]
 
     def getBarcodesByKit(self, kitid):
