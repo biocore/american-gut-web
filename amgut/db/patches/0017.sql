@@ -181,7 +181,7 @@ INSERT INTO hold_table (project_id, barcode)
         OR lower(kit_id) LIKE '%osc\_%'
         OR lower(kit_id) LIKE '%pulse\_%') AS b;
 
-INSERT INTO barcodes.barcode (project_id, barcode)
+INSERT INTO barcodes.project_barcode (project_id, barcode)
     SELECT project_id, barcode FROM hold_table;
 
 DELETE FROM barcodes.project_barcode
