@@ -579,7 +579,7 @@ class AGDataAccess(object):
         """
         sql = """SELECT barcode
                  FROM ag_kit_barcodes
-                 INNER JOIN ag_kit kUSING(ag_kit_id)
+                 INNER JOIN ag_kit USING (ag_kit_id)
                  WHERE supplied_kit_id = %s"""
         results = self._sql.execute_fetchall(sql, [kitid])
         return [row[0] for row in results]
