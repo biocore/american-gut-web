@@ -66,81 +66,6 @@ def create_database(force=False):
     cur.close()
     conn.close()
 
-
-def procedures():
-    procedure_path = join(dirname(abspath(__file__)), "procedures")
-
-    return [join(procedure_path, p)
-            for p in glob(join(procedure_path, '*.sql'))]
-
-
-def migrate_procedures(from_schema='public', to_schema='ag', verbose=False):
-    if verbose:
-        echo('Migrating procedures from {} to {}'.format(from_schema,
-                                                         to_schema))
-
-    conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
-                   host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
-                   database=AMGUT_CONFIG.database)
-    cur = conn.cursor()
-
-    cur.execute('SET SEARCH_PATH TO {}'.format(from_schema))
-
-    sql = """SELECT format('%I.%I(%s)',
-                           pg_namespace.nspname,
-                           pg_proc.proname,
-                           pg_get_function_identity_arguments(pg_proc.oid))
-             FROM pg_proc
-             INNER JOIN pg_namespace
-                ON (pg_proc.pronamespace = pg_namespace.oid)
-             WHERE pg_namespace.nspname = '{}';""".format(from_schema)
-
-    cur.execute(sql)
-
-    for (full_name,) in cur.fetchall():
-        if verbose:
-            echo('Migrating {} to {}'.format(full_name, to_schema))
-
-        cur.execute('ALTER FUNCTION {} SET SCHEMA {}'.format(full_name,
-                                                             to_schema))
-
-    conn.commit()
-
-    cur.close()
-    conn.close()
-
-
-def procedure_names():
-    conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
-                   host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
-                   database=AMGUT_CONFIG.database)
-    cur = conn.cursor()
-
-    cur.execute('SET SEARCH_PATH TO ag, barcodes, public')
-
-    procedures = []
-
-    for procedure in procedures():
-        name = splitext(basename(procedure))[0]
-
-        sql = """SELECT format('%s(%s)',
-                               oid::regproc,
-                               pg_get_function_identity_arguments(oid))
-                 FROM   pg_proc
-                 WHERE  proname = '{}'
-                 AND    pg_function_is_visible(oid)""".format(name)
-
-        cur.execute(sql)
-
-        for (full_name,) in cur.fetchall():
-            procedures.append(full_name)
-
-    cur.close()
-    conn.close()
-
-    return procedures
-
-
 def build_and_initialize(verbose=False):
     conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
                    host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
@@ -151,12 +76,6 @@ def build_and_initialize(verbose=False):
     cur.execute('CREATE SCHEMA IF NOT EXISTS ag')
     cur.execute('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"')
 
-    if verbose:
-        echo('Inserting procedures')
-
-    for procedure in procedures():
-        with open(procedure) as f:
-            cur.execute(f.read())
     if verbose:
         echo("Building SQL layout")
 
