@@ -21,7 +21,7 @@ UPDATE ag.iso_country_lookup SET country = 'Iran' WHERE country = 'Iran, Islamic
 UPDATE ag.iso_country_lookup SET country = 'Laos' WHERE country = 'Lao People''s Democratic Republic';
 UPDATE ag.iso_country_lookup SET country = 'Libya' WHERE country = 'Libyan Arab Jamahiriya';
 UPDATE ag.iso_country_lookup SET country = 'Macau' WHERE country = 'Macao';
-UPDATE ag.iso_country_lookup SET country = 'Macedonia' WHERE country = 'Macedonia, The Former Yugoslav Republic of';
+UPDATE ag.iso_country_lookup SET country = 'Macedonia (FYROM)' WHERE country = 'Macedonia, The Former Yugoslav Republic of';
 UPDATE ag.iso_country_lookup SET country = 'Tanzania' WHERE country = 'The United Republic of Tanzania';
 
 -- Add EBI country name column and populate it
