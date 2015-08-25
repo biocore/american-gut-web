@@ -4,17 +4,17 @@
 ALTER TABLE ag.ag_kit_barcodes
 ALTER COLUMN sample_time TYPE time without time zone
 USING CASE
-    WHEN trim(both ' ' FROM sample_time) ~ '00\:[0-9]{2} {0,1}(AM|aM|Am|am)' THEN
-        to_timestamp(trim(both ' pPaAmM' FROM sample_time), '12:MI am')
-    WHEN trim(both ' ' FROM sample_time) ~ '(1[3-9]|2[0-3])\:.*' THEN
+    WHEN lower(trim(both ' ' FROM sample_time)) ~ '00\:[0-9]{2} {0,1}.*' THEN
         to_timestamp(trim(both ' pPaAmM' FROM sample_time), 'HH24:MI')
-    WHEN trim(both ' ' FROM sample_time) ~ '[0-9]{1,2}\:[0-9]{2} {0,1}(AM|aM|Am|am)' THEN
+    WHEN lower(trim(both ' ' FROM sample_time)) ~ '(1[3-9]|2[0-3])\:.*' THEN
+        to_timestamp(trim(both ' pPaAmM' FROM sample_time), 'HH24:MI')
+    WHEN lower(trim(both ' ' FROM sample_time)) ~ '[0-9]{1,2}\:[0-9]{2} {0,1}am' THEN
         to_timestamp(trim(both ' pPaAmM' FROM sample_time), 'HH:MI am')
-    WHEN trim(both ' ' FROM sample_time) ~ '[0-9]{1,2}\:[0-9]{2} {0,1}(PM|pM|Pm|pm)' THEN
+    WHEN lower(trim(both ' ' FROM sample_time)) ~ '[0-9]{1,2}\:[0-9]{2} {0,1}pm' THEN
         to_timestamp(trim(both ' pPaAmM' FROM sample_time), 'HH:MI pm')
-    WHEN trim(both ' ' FROM sample_time) ~ '[0-9]{1,2}\.[0-9]{2} {0,1}(AM|aM|Am|am)' THEN
+    WHEN lower(trim(both ' ' FROM sample_time)) ~ '[0-9]{1,2}\.[0-9]{2} {0,1}am' THEN
         to_timestamp(trim(both ' pPaAmM' FROM sample_time), 'HH.MI am')
-    WHEN trim(both ' ' FROM sample_time) ~ '[0-9]{1,2}\.[0-9]{2} {0,1}(PM|pM|Pm|pm)' THEN
+    WHEN lower(trim(both ' ' FROM sample_time)) ~ '[0-9]{1,2}\.[0-9]{2} {0,1}pm' THEN
         to_timestamp(trim(both ' pPaAmM' FROM sample_time), 'HH.MI pm')
     ELSE
         NULL
