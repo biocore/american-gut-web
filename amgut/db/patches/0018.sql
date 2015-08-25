@@ -12,7 +12,7 @@ UPDATE ag.iso_country_lookup SET country = 'South Korea' WHERE country = 'Korea,
 UPDATE ag.iso_country_lookup SET country = 'Syria' WHERE country = 'Syrian Arab Republic';
 UPDATE ag.iso_country_lookup SET country = 'Taiwan' WHERE country = 'Taiwan, Province of China';
 UPDATE ag.iso_country_lookup SET country = 'Tanzania' WHERE country = 'Tanzania, United Republic of';
-UPDATE ag.iso_country_lookup SET country = 'Virgin Islands' WHERE country = 'Virgin Islands, U.S.';
+UPDATE ag.iso_country_lookup SET country = 'U.S. Virgin Islands' WHERE country = 'Virgin Islands, U.S.';
 UPDATE ag.iso_country_lookup SET country = 'Brunei' WHERE country = 'Brunei Darussalam';
 UPDATE ag.iso_country_lookup SET country = 'Democratic Republic of the Congo' WHERE country = 'Congo, The Democratic Republic of The';
 UPDATE ag.iso_country_lookup SET country = 'Falkland Islands (Islas Malvinas)' WHERE country = 'Falkland Islands (Malvinas)';
