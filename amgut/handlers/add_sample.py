@@ -1,4 +1,5 @@
-from wtforms import Form, SelectField, DateField, DateTimeField, TextField
+from wtforms import (Form, SelectField, DateField, DateTimeField, TextField,
+                     validators)
 from tornado.web import authenticated
 from future.utils import viewitems
 
@@ -8,10 +9,12 @@ from amgut import media_locale
 
 
 class LogSample(Form):
-    barcode = SelectField()
-    sample_site = SelectField()
-    sample_date = DateField(format='%m/%d/%Y')
-    sample_time = DateTimeField(format='%I:%M %p')
+    barcode = SelectField(validators=[validators.required("Required field")])
+    sample_site = SelectField(validators=[validators.required("Required field")])
+    sample_date = DateField(validators=[validators.required("Required field")],
+                            format='%m/%d/%Y')
+    sample_time = DateTimeField(validators=[validators.required("Required field")],
+                                format='%I:%M %p')
     notes = TextField('notes')
 
 
