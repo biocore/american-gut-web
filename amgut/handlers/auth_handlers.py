@@ -23,8 +23,9 @@ class AuthRegisterHandoutHandler(AuthBasehandler):
     """User Creation"""
     def get(self):
         latlong_db = ag_data.getMapMarkers()
+        countries = ag_data.get_countries()
         self.render("register_user.html",
-                    latlongs_db=latlong_db, loginerror='')
+                    latlongs_db=latlong_db, loginerror='', countries=countries)
 
     def post(self):
         # Check handout
