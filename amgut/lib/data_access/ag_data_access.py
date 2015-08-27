@@ -118,17 +118,18 @@ class AGDataAccess(object):
         web_app_user table. If successful, a dict with user innformation is
         returned. If not, the function returns False.
         """
-        data = self._sql.execute_proc_return_cursor(
-            'ag_authenticate_user', [username, password])
-        row = data.fetchone()
-        col_names = self._get_col_names_from_cursor(data)
-        data.close()
+        sql = """SELECT  cast(ag_login_id as varchar(100)) as ag_login_id,
+                  email, name, address, city,
+                  state, zip, country,kit_password
+                FROM ag_login
+            INNER JOIN ag_kit USING (ag_login_id)
+            WHERE agk.supplied_kit_id = %s"""
+        row = self._sql.execute_fetchone(sql, [username])
         if row:
-            results = dict(zip(col_names, row))
+            results = dict(row)
 
             if not bcrypt.verify(password, results['kit_password']):
                 return False
-
             results['ag_login_id'] = str(results['ag_login_id'])
 
             return results
@@ -153,28 +154,36 @@ class AGDataAccess(object):
         return ag_login_id[0]
 
     def getAGBarcodeDetails(self, barcode):
-        results = self._sql.execute_proc_return_cursor(
-            'ag_get_barcode_details', [barcode])
-        barcode_details = results.fetchone()
-        col_names = self._get_col_names_from_cursor(results)
-        results.close()
+        sql = """SELECT  email,
+                    cast(ag_kit_barcode_id as varchar(100)),
+                    cast(ag_kit_id as varchar(100)),
+                    barcode, site_sampled, environment_sampled, sample_date,
+                    sample_time, participant_name, notes, refunded, withdrawn,
+                    moldy, other, other_text, date_of_last_email ,overloaded,
+                    name, status
+                  FROM ag_kit_barcodes
+                  INNER JOIN ag_kit USING (ag_kit_id)
+                  INNER JOIN ag_login USING (ag_login_id)
+                  INNER JOIN barcode USING (barcode)
+                  WHERE barcode = %s"""
+        row = self._sql.execute_fetchone(sql, [barcode])
 
         row_dict = {}
-        if barcode_details:
-            row_dict = dict(zip(col_names, barcode_details))
-
+        if row:
+            row_dict = dict(row)
         return row_dict
 
     def getAGKitDetails(self, supplied_kit_id):
-        results = self._sql.execute_proc_return_cursor('ag_get_kit_details',
-                                                       [supplied_kit_id])
-        row = results.fetchone()
-        col_names = self._get_col_names_from_cursor(results)
-        results.close()
+        sql = """SELECT cast(ag_kit_id as varchar(100)),
+                    supplied_kit_id, kit_password, swabs_per_kit, kit_verified,
+                    kit_verification_code, verification_email_sent
+                 FROM ag_kit
+                 WHERE supplied_kit_id = %s"""
+        row = self._sql.execute_fetchone(sql, [supplied_kit_id])
 
         kit_details = {}
         if row:
-            kit_details = dict(zip(col_names, row))
+            kit_details = dict(row)
         return kit_details
 
     def registerHandoutKit(self, ag_login_id, supplied_kit_id):
@@ -380,40 +389,50 @@ class AGDataAccess(object):
                     sql, [ag_login_id, 2])]
 
     def getParticipantSamples(self, ag_login_id, participant_name):
-        results = self._sql.execute_proc_return_cursor(
-            'ag_get_participant_samples', [ag_login_id, participant_name])
-        rows = results.fetchall()
-        col_names = self._get_col_names_from_cursor(results)
-        results.close()
+        sql = """SELECT  barcode, site_sampled, sample_date, sample_time,
+                    notes, status
+                 FROM ag_kit_barcodes akb
+                 INNER JOIN barcode USING (barcode)
+                 INNER JOIN ag_kit ak USING (ag_kit_id)
+                 WHERE (site_sampled IS NOT NULL AND site_sampled::text <> '')
+                 AND ag_login_id = %s AND participant_name = %s"""
 
-        barcodes = [dict(zip(col_names, row)) for row in rows]
+        conn_handler = SQLConnectionHandler()
+        rows = conn_handler.execute_fetchall(
+            sql, [ag_login_id, participant_name])
+        barcodes = [dict(row) for row in rows]
 
         return barcodes
 
     def getEnvironmentalSamples(self, ag_login_id):
-        barcodes = []
-        results = self._sql.execute_proc_return_cursor(
-            'ag_get_environmental_samples', [ag_login_id])
-        rows = results.fetchall()
-        col_names = self._get_col_names_from_cursor(results)
-        results.close()
-
-        barcodes = [dict(zip(col_names, row)) for row in rows]
+        sql = """SELECT  barcode, site_sampled, sample_date, sample_time,
+                    notes, status
+                 FROM ag_kit_barcodes
+                 INNER JOIN barcode USING (barcode)
+                 INNER JOIN ag_kit USING(ag_kit_id)
+                 WHERE (environment_sampled IS NOT NULL AND
+                    environment_sampled::text <> '')
+                    AND ag_login_id = %s"""
+        rows = self._sql.execute_fetchall(sql, [ag_login_id])
+        barcodes = [dict(row) for row in rows]
 
         return barcodes
 
     def getAvailableBarcodes(self, ag_login_id):
-        results = self._sql.execute_proc_return_cursor('ag_available_barcodes',
-                                                       [ag_login_id])
-        return_res = [row[0] for row in results]
-        results.close()
-        return return_res
+        sql = """SELECT barcode
+                 FROM ag_kit_barcodes
+                 INNER JOIN ag_kit USING (ag_kit_id)
+                 WHERE coalesce(sample_date::text, '') = ''
+                 AND kit_verified = 'y' AND ag_login_id = %s"""
+        results = self._sql.execute_fetchall(sql, [ag_login_id])
+        return [row[0] for row in results]
 
     def verifyKit(self, supplied_kit_id):
         """Set the KIT_VERIFIED for the supplied_kit_id to 'y'"""
-        self.get_cursor().callproc('ag_verify_kit_status',
-                                   [supplied_kit_id])
-        self.connection.commit()
+        sql = """UPDATE AG_KIT
+                 SET kit_verified='y'
+                 WHERE supplied_kit_id=%s"""
+        self._sql.execute(sql, [supplied_kit_id])
 
     def getMapMarkers(self):
         cur_completed = self.get_cursor()
@@ -504,22 +523,26 @@ class AGDataAccess(object):
         email is email address of login
         returns a list of kit_id's associated with the email or an empty list
         """
-        results = self._sql.execute_proc_return_cursor(
-            'ag_get_kit_id_by_email', [email.lower()])
-        kit_ids = [row[0] for row in results]
-        results.close()
-        return kit_ids
+        sql = """SELECT  supplied_kit_id
+                 FROM ag_kit
+                 INNER JOIN ag_login USING (ag_login_id)
+                 WHERE email = %s"""
+        return [row[0] for row in self._sql.execute_fetchall(
+            sql, [email.lower()])]
 
     def ag_set_pass_change_code(self, email, kitid, pass_code):
         """updates ag_kit table with the supplied pass_code
 
         email is email address of participant
-        kitid is supplied_kit_kd in the ag_kit table
+        kitid is supplied_kit_id in the ag_kit table
         pass_code is the password change verfication value
         """
-        self.get_cursor().callproc('ag_set_pass_change_code',
-                                   [email, kitid, pass_code])
-        self.connection.commit()
+        sql = """UPDATE ag_kit
+                 SET pass_reset_code = %s,
+                     pass_reset_time = clock_timestamp() + interval '2' hour
+                 WHERE supplied_kit_id = %s AND ag_login_id in
+                     (SELECT ag_login_id FROM ag_login WHERE email = %s)"""
+        self._sql.execute(sql, [pass_code, kitid, email])
 
     def ag_update_kit_password(self, kit_id, password):
         """updates ag_kit table with password
@@ -529,9 +552,10 @@ class AGDataAccess(object):
         """
         password = bcrypt.encrypt(password)
 
-        self.get_cursor().callproc('ag_update_kit_password',
-                                   [kit_id, password])
-        self.connection.commit()
+        sql = """UPDATE AG_KIT
+                 SET kit_password = %s, pass_reset_code = NULL
+                 WHERE supplied_kit_id = %s"""
+        self.connection.commit(sql, [password, kit_id])
 
     def ag_verify_kit_password_change_code(self, email, kitid, passcode):
         """returns true if it still in the password change window
@@ -540,31 +564,33 @@ class AGDataAccess(object):
         kitid is the supplied_kit_id in the ag_kit table
         passcode is the password change verification value
         """
-        cursor = self.get_cursor()
-        cursor.callproc('ag_verify_password_change_code', [email, kitid,
-                                                           passcode])
-        return cursor.fetchone()[0]
+        sql = """SELECT EXISTS(SELECT pass_reset_time
+                 FROM ag.ag_kit
+                 INNER JOIN ag.ag_login USING (ag_login_id)
+                 WHERE pass_reset_code = %s and email = %s
+                 AND supplied_kit_id = %s
+                 AND NOW() < pass_reset_time)"""
+        return self._sql.execute_fetchone(sql, [passcode, email, kitid])[0]
 
-    def getBarcodesByKit(self, kitID):
+    def getBarcodesByKit(self, kitid):
         """Returns a list of barcodes in a kit
 
-        kitID is the supplied_kit_id from the ag_kit table
+        kitid is the supplied_kit_id from the ag_kit table
         """
-        results = self._sql.execute_proc_return_cursor(
-            'ag_get_barcodes_by_kit', [kitID])
-        barcodes = [row[0] for row in results]
-        results.close()
-        return barcodes
+        sql = """SELECT barcode
+                 FROM ag_kit_barcodes
+                 INNER JOIN ag_kit USING (ag_kit_id)
+                 WHERE supplied_kit_id = %s"""
+        results = self._sql.execute_fetchall(sql, [kitid])
+        return [row[0] for row in results]
 
     def checkPrintResults(self, kit_id):
-        results = self._sql.execute_proc_return_cursor('ag_get_print_results',
-                                                       [kit_id])
-        print_results = results.fetchone()
-        results.close()
-        if print_results is None:
+        sql = "SELECT print_results FROM ag_handout_kits WHERE kit_id = %s"
+        results = self._sql.execute_fetchone(sql, [kit_id])
+        if results is None:
             return None
         else:
-            return print_results[0].strip()
+            return results[0].strip()
 
     def get_user_for_kit(self, supplied_kit_id):
         sql = ("select AK.ag_login_id from ag_kit AK "

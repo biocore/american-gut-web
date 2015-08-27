@@ -20,7 +20,7 @@ from amgut.connections import ag_data, redis
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.lib.data_access.env_management import (
     create_database, build_and_initialize, make_settings_table, patch_db,
-    populate_test_db, procedure_names, drop_test, migrate_procedures)
+    populate_test_db, drop_test)
 
 
 @click.group()
@@ -66,39 +66,12 @@ def make(db, force):
     make_settings_table()
     click.echo("Applying patches to database")
     patch_db(verbose=True)
-    migrate_procedures('public', 'ag', verbose=True)
 
     if db == 'test':
         click.echo("Populating the test database")
         populate_test_db()
 
     click.echo("{} environment successfully created".format(db))
-
-
-@cli.command()
-def drop_procedures():
-    """Drops the stored procedures."""
-    conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
-                   host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port)
-    cur = conn.cursor()
-
-    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-
-    for name in procedure_names():
-        click.echo('Dropping function {}'.format(name))
-
-        try:
-            cur.execute('DROP FUNCTION IF EXISTS {} CASCADE'.format(name))
-        except InternalError as e:
-            click.echo('Failed to drop {}:'.format(name))
-
-            error = '\n'.join(['\t{}'.format(line)
-                               for line in str(e).strip().split('\n')])
-
-            click.echo(error)
-
-    cur.close()
-    conn.close()
 
 
 @cli.command()
