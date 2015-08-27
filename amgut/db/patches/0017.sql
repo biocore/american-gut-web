@@ -167,7 +167,6 @@ INSERT INTO project (project_id, project)
     SELECT max(project_id)+1, 'Amnon Oral Timeseries' FROM project;
 
 pid := (SELECT project_id FROM barcodes.project WHERE project = 'Amnon Oral Timeseries');
-
 INSERT INTO hold_table (project_id, barcode)
     SELECT pid, barcode FROM (
         SELECT barcode FROM ag.ag_kit_barcodes
@@ -183,12 +182,10 @@ INSERT INTO hold_table (project_id, barcode)
         OR lower(kit_id) LIKE '%pulse\_%') AS b;
 
 INSERT INTO barcodes.project_barcode (project_id, barcode)
-    SELECT ag_pid, barcode FROM hold_table
-    WHERE (ag_pid, barcode) NOT IN
-        (SELECT project_id, barcode FROM barcodes.project_barcode);
+    SELECT project_id, barcode FROM hold_table;
 
 DELETE FROM barcodes.project_barcode
-WHERE barcode IN (SELECT DISTINCT barcode FROM hold_table)
+WHERE barcode IN (SELECT barcode FROM hold_table)
 AND project_id = ag_pid;
 
 DROP TABLE hold_table;

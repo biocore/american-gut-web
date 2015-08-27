@@ -58,11 +58,13 @@ class SampleOverviewHandler(BaseHandler):
             seq_req = requests.get('http://api.microbio.me/americangut/1/sequence/%s' % bc_with_suf)
             if seq_req.status_code == 200:
                 sequence_url = json.loads(seq_req.content)[0]['fastq_url']
-
+            else:
+                sequence_url = None
         else:
             sequence_url = None
             biomv1_url = None
             classic_url = None
+            sequence_url = None
 
         sample_time = sample_data['sample_time']
         sample_date = sample_data['sample_date']
