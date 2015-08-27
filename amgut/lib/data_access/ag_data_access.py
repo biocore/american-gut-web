@@ -123,7 +123,7 @@ class AGDataAccess(object):
                   state, zip, country,kit_password
                 FROM ag_login
             INNER JOIN ag_kit USING (ag_login_id)
-            WHERE agk.supplied_kit_id = %s"""
+            WHERE supplied_kit_id = %s"""
         row = self._sql.execute_fetchone(sql, [username])
         if row:
             results = dict(row)
