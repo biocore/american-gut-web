@@ -1,11 +1,18 @@
--- August 24, 2015
--- add country column to zipcode table
-ALTER TABLE ag.zipcodes ADD COLUMN country varchar NOT NULL DEFAULT '';
-ALTER TABLE ag.zipcodes ALTER COLUMN country DROP DEFAULT;
-ALTER TABLE ag.zipcodes DROP CONSTRAINT zipcodes_pkey;
-ALTER TABLE ag.zipcodes ADD CONSTRAINT idx_zipcodes PRIMARY KEY ( zipcode, country );
-
-UPDATE ag.zipcodes SET country = 'United States' WHERE state IN ('AL','AK','AZ','AR','CA','CO','CT','DC','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY');
-UPDATE ag.zipcodes SET country = 'Canada' WHERE state IN ('AB','BC','MB','NB','NL','NS','NT','NU','ON','PE','QC','SK','YT');
--- Delete the rest so the table can repopulate correctly
-DELETE FROM ag.zipcodes WHERE country = '';
+-- 8.27.15
+-- Associate 15 barcodes with Mind and Microbiome that didn't get associated
+-- originally
+INSERT INTO barcodes.project_barcode (barcode, project_id) VALUES ('000023387', 15);
+INSERT INTO barcodes.project_barcode (barcode, project_id) VALUES ('000023389', 15);
+INSERT INTO barcodes.project_barcode (barcode, project_id) VALUES ('000023379', 15);
+INSERT INTO barcodes.project_barcode (barcode, project_id) VALUES ('000023392', 15);
+INSERT INTO barcodes.project_barcode (barcode, project_id) VALUES ('000023378', 15);
+INSERT INTO barcodes.project_barcode (barcode, project_id) VALUES ('000023383', 15);
+INSERT INTO barcodes.project_barcode (barcode, project_id) VALUES ('000023384', 15);
+INSERT INTO barcodes.project_barcode (barcode, project_id) VALUES ('000023388', 15);
+INSERT INTO barcodes.project_barcode (barcode, project_id) VALUES ('000023380', 15);
+INSERT INTO barcodes.project_barcode (barcode, project_id) VALUES ('000023386', 15);
+INSERT INTO barcodes.project_barcode (barcode, project_id) VALUES ('000023382', 15);
+INSERT INTO barcodes.project_barcode (barcode, project_id) VALUES ('000023385', 15);
+INSERT INTO barcodes.project_barcode (barcode, project_id) VALUES ('000023390', 15);
+INSERT INTO barcodes.project_barcode (barcode, project_id) VALUES ('000023391', 15);
+INSERT INTO barcodes.project_barcode (barcode, project_id) VALUES ('000023381', 15);
