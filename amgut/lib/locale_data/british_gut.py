@@ -100,7 +100,7 @@ _HANDLERS = {
     'ADD_BARCODE_ERROR': "Could not add barcode to database. Did you hit the back button while registering and press 'register user' again?",
     'CHANGE_PASS_BODY': 'This is a courtesy email to confirm that you have changed your password for your kit with ID %s. If you did not request this change, please email us immediately at {0}'.format(media_locale['HELP_EMAIL']),
     'CHANGE_PASS_SUBJECT': '%(project_shorthand)s Password Reset' % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
-    'RESET_PASS_BODY': 'The password on British Gut Kit ID %s  has been reset please click the link below within two hours\nhttp://microbio.me/britishgut/change_pass_verify/?email=%s;kitid=%s;passcode=%s',
+    'RESET_PASS_BODY': 'The password on British Gut Kit ID %s  has been reset please click the link below within two hours\nhttp://microbio.me/britishgut/change_pass_verify/?email=%s&kitid=%s&passcode=%s',
     'MINOR_PARENTAL_BODY': "Thank you for your interest in this study. Because of your status as a minor, we will contact you within 24 hours to verify parent/guardian consent.",
     'MESSAGE_SENT': "Your message has been sent. We will reply shortly",
     'KIT_IDS_BODY': 'Your {1} Kit IDs are %s. You are receiving this email because you requested your Kit ID from the {1} web page If you did not request your Kit ID please email {0} Thank you,\n The {1} Team\n'.format(media_locale['HELP_EMAIL'], AMGUT_CONFIG.project_shorthand),

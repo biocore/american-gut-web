@@ -555,7 +555,7 @@ class AGDataAccess(object):
         sql = """UPDATE AG_KIT
                  SET kit_password = %s, pass_reset_code = NULL
                  WHERE supplied_kit_id = %s"""
-        self.connection.commit(sql, [password, kit_id])
+        self._sql.execute(sql, [password, kit_id])
 
     def ag_verify_kit_password_change_code(self, email, kitid, passcode):
         """returns true if it still in the password change window
