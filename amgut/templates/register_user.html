@@ -10,6 +10,7 @@
 $(document).ready(function() {
     // validate register form on keyup and submit
     $(".chosen-dropdown").chosen();
+    $.validator.setDefaults({ ignore: ":hidden:not(.chosen-dropdown)" });
     $("#newParticipant").validate({
       rules: {
         participantname: "required",
