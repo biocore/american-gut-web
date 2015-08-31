@@ -21,6 +21,7 @@ class LogSample(Form):
 
 class AddSample(BaseHandler):
     _sample_sites = []
+    page_type = ''
 
     @authenticated
     def post(self):
