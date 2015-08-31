@@ -1,5 +1,5 @@
 from wtforms import (Form, SelectField, DateField, DateTimeField, TextField,
-                     validators)
+                     HiddenField, validators)
 from tornado.web import authenticated
 from future.utils import viewitems
 
@@ -9,6 +9,7 @@ from amgut import media_locale
 
 
 class LogSample(Form):
+    participant_name = HiddenField(u'participant_name')
     barcode = SelectField(validators=[validators.required("Required field")])
     sample_site = SelectField(validators=[validators.required("Required field")])
     sample_date = DateField(validators=[validators.required("Required field")],
@@ -20,6 +21,7 @@ class LogSample(Form):
 
 class AddSample(BaseHandler):
     _sample_sites = []
+    page_type = ''
 
     @authenticated
     def post(self):
@@ -31,8 +33,8 @@ class AddSample(BaseHandler):
         form.process(data=args)
         if not form.validate():
             self.render('add_sample.html', skid=self.current_user,
-                    participant_name=participant_name,
-                    form=form)
+                        participant_name=participant_name,
+                        form=form, page_type=self.page_type)
             return
 
         barcode = form.barcode.data
@@ -63,7 +65,7 @@ class AddSample(BaseHandler):
         form = self.build_form()
         self.render('add_sample.html', skid=self.current_user,
                     participant_name=participant_name,
-                    form=form)
+                    form=form, page_type=self.page_type)
 
     def build_form(self):
         kit_id = self.current_user
@@ -83,11 +85,14 @@ class AddSample(BaseHandler):
 
 class AddHumanSampleHandler(AddSample):
     _sample_sites = ag_data.human_sites
+    page_type = 'add_sample_human'
 
 
 class AddAnimalSampleHandler(AddSample):
     _sample_sites = ag_data.animal_sites
+    page_type = 'add_sample_animal'
 
 
 class AddGeneralSampleHandler(AddSample):
     _sample_sites = ag_data.general_sites
+    page_type = 'add_sample_general'
