@@ -43,7 +43,7 @@ setup(name='American Gut participant UI',
       packages=['amgut'],
       package_data={'amgut': ['db/*', 'db/patches/*.sql'],
                     'amgut.lib': [],
-                    'amgut.lib.data_access': [],
+                    'amgut.lib.data_access': ['tests/*'],
                     'amgut.handlers': []},
       extras_require={
           'test': [
