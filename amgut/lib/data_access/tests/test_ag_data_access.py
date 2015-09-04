@@ -112,15 +112,11 @@ class TestAGDataAccess(TestCase):
                 test_sql, [skid])
         finally:
             # reset to old password and pass_reset_code
-            sql = '''UPDATE ag.ag_kit
-                     SET kit_password = %s
-                     WHERE supplied_kit_id = %s'''
-            self.conn_handler.execute(sql, [old_pass, skid])
-            sql = '''UPDATE ag.ag_kit
-                     SET pass_reset_code = %s
-                     WHERE supplied_kit_id = %s'''
             code = re_code if re_code != 'T3ST' else None
-            self.conn_handler.execute(sql, [code, skid])
+            sql = '''UPDATE ag.ag_kit
+                     SET kit_password = %s, pass_reset_code = %s
+                     WHERE supplied_kit_id = %s'''
+            self.conn_handler.execute(sql, [old_pass, code, skid])
 
         self.assertEqual(new_code, None)
         self.assertTrue(bcrypt.verify('password', new_pass))
