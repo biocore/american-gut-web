@@ -1,8 +1,13 @@
 from unittest import TestCase, main
+from passlib.hash import bcrypt
+from amgut.lib.data_access.sql_connection import SQLConnectionHandler
 from amgut.lib.data_access.ag_data_access import AGDataAccess
 
 
 class TestAGDataAccess(TestCase):
+    conn_handler = SQLConnectionHandler()
+    ag_data = AGDataAccess()
+
     def test_create_AGDataAccess(self):
         raise NotImplementedError()
 
@@ -85,7 +90,40 @@ class TestAGDataAccess(TestCase):
         raise NotImplementedError()
 
     def test_ag_update_kit_password(self):
-        raise NotImplementedError()
+        skid = 'test'
+        # Check and set pass_reset_code if needed
+        sql = '''UPDATE ag.ag_kit
+                 SET pass_reset_code = %s
+                 WHERE supplied_kit_id = %s AND pass_reset_code IS NULL
+                 RETURNING pass_reset_code'''
+        re_code = self.conn_handler.execute_fetchone(sql, ['T3ST', skid])[0]
+        # Verify password is not what we are changing it to
+        sql = 'SELECT kit_password FROM ag.ag_kit WHERE supplied_kit_id = %s'
+        old_pass = self.conn_handler.execute_fetchone(sql, [skid])[0]
+        self.assertFalse(bcrypt.verify('password', old_pass))
+
+        # Verify password change
+        test_sql = '''SELECT kit_password, pass_reset_code
+                      FROM ag.ag_kit
+                      WHERE supplied_kit_id = %s'''
+        try:
+            self.ag_data.ag_update_kit_password(skid, 'password')
+            new_pass, new_code = self.conn_handler.execute_fetchone(
+                test_sql, [skid])
+        finally:
+            # reset to old password and pass_reset_code
+            sql = '''UPDATE ag.ag_kit
+                     SET kit_password = %s
+                     WHERE supplied_kit_id = %s'''
+            self.conn_handler.execute(sql, [old_pass, skid])
+            sql = '''UPDATE ag.ag_kit
+                     SET pass_reset_code = %s
+                     WHERE supplied_kit_id = %s'''
+            code = re_code if re_code != 'T3ST' else None
+            self.conn_handler.execute(sql, [code, skid])
+
+        self.assertEqual(new_code, None)
+        self.assertTrue(bcrypt.verify('password', new_pass))
 
     def test_ag_verify_kit_password_change_code(self):
         raise NotImplementedError()
