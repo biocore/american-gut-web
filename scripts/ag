@@ -68,8 +68,11 @@ def make(db, force):
         click.echo("Applying patches to database")
         patch_db(verbose=True)
     elif db == 'test':
-        click.echo("Creating the test database")
+        click.echo("Creating database")
+        create_database(force)
+        click.echo("Populating the test database")
         populate_test_db()
+        click.echo("Applying patches to database")
         patch_db(verbose=True)
 
     click.echo("{} environment successfully created".format(db))

@@ -1,7 +1,7 @@
 from os.path import abspath, basename, dirname, join, split, splitext
 from glob import glob
 from functools import partial
-import subprocess
+from subprocess import Popen, PIPE
 import gzip
 
 from click import echo
@@ -134,7 +134,11 @@ def populate_test_db():
     conn = SQLConnectionHandler()
 
     with gzip.open(POPULATE_FP, 'rb') as f:
-        conn.execute(f.read())
+        test_db = f.read()
+
+    command = ['psql', '-d', AMGUT_CONFIG.database]
+    proc = Popen(command, stdin=PIPE, stdout=PIPE)
+    proc.communicate(test_db)
 
 
 def patch_db(patches_dir=PATCHES_DIR, verbose=False):
@@ -298,8 +302,6 @@ def drop_test(force, verbose=False):
 
     command.append(AMGUT_CONFIG.database)
 
-    proc = subprocess.Popen(command,
-                            stdin=subprocess.PIPE,
-                            stdout=subprocess.PIPE)
+    proc = Popen(command, stdin=PIPE, stdout=PIPE)
 
     proc.communicate('{}\n'.format(AMGUT_CONFIG.password))
