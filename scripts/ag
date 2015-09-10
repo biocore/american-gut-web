@@ -59,17 +59,18 @@ def mode(mode_name, message):
               help='Continue if the database already exists')
 def make(db, force):
     """Creates the specified database."""
-    click.echo("Creating database")
-    create_database(force)
-    build_and_initialize(verbose=True)
-    click.echo("Making settings table")
-    make_settings_table()
-    click.echo("Applying patches to database")
-    patch_db(verbose=True)
-
-    if db == 'test':
-        click.echo("Populating the test database")
+    if db == 'production':
+        click.echo("Creating database")
+        create_database(force)
+        build_and_initialize(verbose=True)
+        click.echo("Making settings table")
+        make_settings_table()
+        click.echo("Applying patches to database")
+        patch_db(verbose=True)
+    elif db == 'test':
+        click.echo("Creating the test database")
         populate_test_db()
+        patch_db(verbose=True)
 
     click.echo("{} environment successfully created".format(db))
 

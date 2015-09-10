@@ -2,6 +2,7 @@ from os.path import abspath, basename, dirname, join, split, splitext
 from glob import glob
 from functools import partial
 import subprocess
+import gzip
 
 from click import echo
 from psycopg2 import (connect, OperationalError, ProgrammingError)
@@ -14,7 +15,7 @@ from amgut.lib.data_access.sql_connection import SQLConnectionHandler
 get_db_file = partial(join, join(dirname(dirname(abspath(__file__))), '..', 'db'))
 LAYOUT_FP = get_db_file('ag_unpatched.sql')
 INITIALIZE_FP = get_db_file('initialize.sql')
-POPULATE_FP = get_db_file('populate_test.sql')
+POPULATE_FP = get_db_file('ag_test_patch22.sql.gz')
 PATCHES_DIR = get_db_file('patches')
 
 
@@ -132,7 +133,7 @@ def make_settings_table():
 def populate_test_db():
     conn = SQLConnectionHandler()
 
-    with open(POPULATE_FP) as f:
+    with gzip.open(POPULATE_FP, 'rb') as f:
         conn.execute(f.read())
 
 
