@@ -435,50 +435,9 @@ class AGDataAccess(object):
         self._sql.execute(sql, [supplied_kit_id])
 
     def getMapMarkers(self):
-        cur_completed = self.get_cursor()
-        cur_ver = self.get_cursor()
-        cur_ll = self.get_cursor()
-
-        # fetch all latitide/longitude by kit id
-        cur_ll.execute("""SELECT ak.supplied_kit_id, al.latitude, al.longitude
-                          FROM ag_login al
-                               INNER JOIN ag_kit ak
-                               ON ak.ag_login_id=al.ag_login_id
-                          WHERE al.latitude IS NOT NULL AND
-                                al.longitude IS NOT NULL""")
-        ll = {res[0]: (res[1], res[2]) for res in cur_ll.fetchall()}
-
-        # determine all completed kits
-        cur_completed.execute("""SELECT ak.supplied_kit_id
-                                 FROM ag_kit ak
-                                 WHERE (
-                                       SELECT  count(*)
-                                       FROM ag_kit_barcodes akb
-                                       WHERE akb.ag_kit_id = ak.ag_kit_id
-                                       ) =
-                                       (
-                                       SELECT  count(*)
-                                       FROM ag_kit_barcodes akb
-                                       WHERE akb.ag_kit_id = ak.ag_kit_id AND
-                                             akb.site_sampled IS NOT NULL
-                                       )""")
-        completed = (res[0] for res in cur_completed.fetchall())
-
-        # determine what kit are not verified
-        cur_ver.execute("""SELECT supplied_kit_id, kit_verified
-                           FROM ag_kit""")
-        notverified = (res[0] for res in cur_ver.fetchall() if res[1] == 'n')
-
-        # set green for completed kits
-        res = {ll[kid]: '00FF00' for kid in completed if kid in ll}
-
-        # set blue for unverified kits
-        res.update({ll[kid]: '00B2FF' for kid in notverified if kid in ll})
-
-        # set yellow for all others
-        res.update({v: 'FFFF00' for k, v in ll.items() if v not in res})
-
-        return [[lat, lng, c] for ((lat, lng), c) in res.items()]
+        sql = """SELECT country, count(country)::integer
+                 FROM ag.ag_login GROUP BY country"""
+        return dict(self._sql.execute_fetchall(sql))
 
     def handoutCheck(self, username, password):
         cursor = self.get_cursor()
