@@ -75,7 +75,7 @@ class MainHandler(BaseHandler):
     def get(self):
         latlong_db = ag_data.getMapMarkers()
         loginerror = self.get_argument("loginerror", "")
-        self.render("index.html", latlongs_db=latlong_db,
+        self.render("index.html", kit_counts=latlong_db,
                     loginerror=loginerror)
 
 

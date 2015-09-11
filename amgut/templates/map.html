@@ -1,28 +1,137 @@
-{% from amgut import text_locale, media_locale %}
-{% set tl = text_locale['map.html'] %}
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-<script type="text/javascript" src="{% raw media_locale['SITEBASE'] %}/static/js/map.js"></script>
-<script type="text/javascript">
-    var latlongs_db = {% raw latlongs_db %};
-    var LAT = {{media_locale['LATITUDE']}}
-    var LONG = {{media_locale['LONGITUDE']}}
-    var ZOOM = {{media_locale['ZOOM']}}
-</script>
-
-<div style="width:100%; height:100%; background-color:#000;">
-    <div id="map_canvas" style="width:100%; height:100%; opacity:0.8;"></div>
+<div id="map_wrapper" style="width:100%; height:100%; background-color:#000;">
+  <div id="map_canvas" style="position:absolute; bottom:0px; right:0px; width:85%; height:85%; background-color:#000;"></div>
 </div>
 
 <div style="position:absolute; bottom: 30px; right:0px; opacity:0.9; width:260px;">
     <div class="left menuheader" style="margin-top:10px;">
-        <p>{% raw tl['MAP_TITLE'] %}</p>
+        <p>American Gut Particiapant Map</p>
     </div>
 
     <div class="left keywrapper">
         <ul class="key">
-            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|00B2FF"/>{% raw tl['MAP_PARTICIPANT'] %}</li>
-            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|ffff00"/>{% raw tl['MAP_KIT'] %}</li>
-            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|00ff00"/>{% raw tl['MAP_SAMPLE'] %}</li>
+            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|ccece6"/>1-10 Participants</li>
+            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|99d8c9"/>11-100 Participants</li>
+            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|66c2a4"/>101-1000 participants</li>
+            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|2ca25f"/>1001-10000 participants</li>
+            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|006d2c"/>> 10000 participants</li>
         </ul>
     </div>
 </div>
+<script src="/static/vendor/js/d3.min.js"></script>
+<script src="/static/vendor/js/topojson.v1.min.js"></script>
+<script>
+d3.select(window).on("resize", throttle);
+
+var zoom = d3.behavior.zoom()
+    .scaleExtent([1, 9])
+    .on("zoom", move);
+
+var width = document.getElementById('map_canvas').offsetWidth;
+var height = document.getElementById('map_canvas').offsetHeight;
+var topo,projection,path,svg,g;
+var graticule = d3.geo.graticule();
+var tooltip = d3.select("#map_canvas").append("div").attr("class", "tooltip hidden");
+
+setup(width,height);
+
+function setup(width,height){
+  var projection = d3.geo.equirectangular()
+    .scale(240)
+    .translate([width / 2, height / 2])
+    .precision(.1);
+
+  path = d3.geo.path().projection(projection);
+
+  svg = d3.select("#map_canvas").append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .call(zoom)
+      .append("g");
+
+  g = svg.append("g");
+
+}
+
+d3.json("/static/vendor/data/world-topo-min.json", function(error, world) {
+
+  var countries = topojson.feature(world, world.objects.countries).features;
+
+  topo = countries;
+  draw(topo);
+
+});
+
+function draw(topo) {
+
+  svg.append("path")
+     .datum(graticule)
+     .attr("class", "graticule")
+     .attr("d", path);
+
+
+  g.append("path")
+   .datum({type: "LineString", coordinates: [[-180, 0], [-90, 0], [0, 0], [90, 0], [180, 0]]})
+   .attr("class", "equator")
+   .attr("d", path);
+
+
+  var country = g.selectAll(".country").data(topo);
+  var kit_counts = {% raw kit_counts %};
+  country.enter().insert("path")
+      .attr("class", "country")
+      .attr("d", path)
+      .attr("id", function(d,i) { return d.id; })
+      .style("fill", function(d, i) {
+        var counts = kit_counts[d.properties.name];
+          if(counts <= 10) { return '#ccece6'; }
+          else if(counts <= 100) { return '#99d8c9'; }
+          else if(counts <= 1000) { return '#66c2a4'; }
+          else if(counts <= 10000) { return '#2ca25f'; }
+          else if (counts > 10000) { return '#006d2c'; }
+          else { return '#edf8fb'; }
+      });
+}
+
+function redraw() {
+  width = document.getElementById('map_canvas').offsetWidth;
+  height = document.getElementById('map_canvas').offsetHeight;
+  d3.select('svg').remove();
+  setup(width,height);
+  draw(topo);
+}
+
+function move() {
+
+  var t = d3.event.translate;
+  var s = d3.event.scale; 
+  zscale = s;
+  var h = height/4;
+
+
+  t[0] = Math.min(
+    (width/height)  * (s - 1), 
+    Math.max( width * (1 - s), t[0] )
+  );
+
+  t[1] = Math.min(
+    h * (s - 1) + h * s, 
+    Math.max(height  * (1 - s) - h * s, t[1])
+  );
+
+  zoom.translate(t);
+  g.attr("transform", "translate(" + t + ")scale(" + s + ")");
+
+  //adjust the country hover stroke width based on zoom level
+  d3.selectAll(".country").style("stroke-width", 1.5 / s);
+
+}
+
+var throttleTimer;
+function throttle() {
+  window.clearTimeout(throttleTimer);
+    throttleTimer = window.setTimeout(function() {
+      redraw();
+    }, 200);
+}
+$(document).ready($(window).resize(function() { redraw(); }));
+</script>
