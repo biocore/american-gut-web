@@ -7,10 +7,12 @@ from amgut import text_locale
 
 class KitIDHandler(BaseHandler):
     def get(self):
+        kit_counts = ag_data.getMapMarkers()
         self.render('retrieve_kitid.html', message='', output='form',
-                    loginerror='')
+                    loginerror='', kit_counts=kit_counts)
 
     def post(self):
+        kit_counts = ag_data.getMapMarkers()
         email = self.get_argument('email')
         tl = text_locale['handlers']
         if email:
@@ -21,14 +23,14 @@ class KitIDHandler(BaseHandler):
                 try:
                     send_email(MESSAGE, tl['KIT_IDS_SUBJECT'], email)
                     self.render('retrieve_kitid.html', message='',
-                                output='success', loginerror='')
+                                output='success', loginerror='', kit_counts=kit_counts)
                 except:
                     self.render('retrieve_kitid.html', message=MESSAGE,
-                                output='noemail', loginerror='')
+                                output='noemail', loginerror='', kit_counts=kit_counts)
             else:
                 self.render('retrieve_kitid.html', message='nokit',
-                            output='form', loginerror='')
+                            output='form', loginerror='', kit_counts=kit_counts)
 
         except:
             self.render('retrieve_kitid.html', message='', output='exception',
-                        loginerror='')
+                        loginerror='', kit_counts=kit_counts)
