@@ -1,25 +1,20 @@
-<div id="map_wrapper" style="width:100%; height:100%; background-color:#000;">
-  <div id="map_canvas" style="position:absolute; bottom:0px; right:0px; width:85%; height:85%; background-color:#000;"></div>
+<div id="map_wrapper" style="width:100%; height:100%; background:#9ecae1;">
+  <div id="map_canvas" style="position:absolute; bottom:0px; right:0px; width:85%; height:85%; background:#9ecae1;"></div>
 </div>
-
-<div style="position:absolute; bottom: 30px; right:0px; opacity:0.9; width:260px;">
-    <div class="left menuheader" style="margin-top:10px;">
-        <p>American Gut Particiapant Map</p>
-    </div>
-
-    <div class="left keywrapper">
-        <ul class="key">
-            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|ccece6"/>1-10 Participants</li>
-            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|99d8c9"/>11-100 Participants</li>
-            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|66c2a4"/>101-1000 participants</li>
-            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|2ca25f"/>1001-10000 participants</li>
-            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|006d2c"/>> 10000 participants</li>
-        </ul>
-    </div>
-</div>
+<style>
+.legend {
+  color:white;
+}
+</style>
 <script src="/static/vendor/js/d3.min.js"></script>
 <script src="/static/vendor/js/topojson.v1.min.js"></script>
 <script>
+var color_domain = [11, 101, 1001, 10001, 9999999999999];
+var legend_labels = ["1-10 kits", "11-100 kits", "101-1000 kits", "1001-10000 kits", ">10000 kits"];
+var color = d3.scale.threshold()
+  .domain(color_domain)
+  .range(["#adfcad", "#ffcb40", "#ffba00", "#ff7d73", "#ff4e40", "#ff1300"]);
+
 d3.select(window).on("resize", throttle);
 
 var zoom = d3.behavior.zoom()
@@ -81,15 +76,7 @@ function draw(topo) {
       .attr("class", "country")
       .attr("d", path)
       .attr("id", function(d,i) { return d.id; })
-      .style("fill", function(d, i) {
-        var counts = kit_counts[d.properties.name];
-          if(counts <= 10) { return '#ccece6'; }
-          else if(counts <= 100) { return '#99d8c9'; }
-          else if(counts <= 1000) { return '#66c2a4'; }
-          else if(counts <= 10000) { return '#2ca25f'; }
-          else if (counts > 10000) { return '#006d2c'; }
-          else { return '#edf8fb'; }
-      });
+      .style("fill", function(d, i) { return color(kit_counts[d.properties.name]); });
 }
 
 function redraw() {
@@ -133,5 +120,27 @@ function throttle() {
       redraw();
     }, 200);
 }
+
+var legend = svg.selectAll("g.legend")
+  .data(color_domain)
+  .enter().append("g")
+  .attr("class", "legend");
+
+  var ls_w = 20, ls_h = 20;
+
+  legend.append("rect")
+  .attr("x", 20)
+  .attr("y", function(d, i){ return height - (i*ls_h) - 2*ls_h;})
+  .attr("width", ls_w)
+  .attr("height", ls_h)
+  .style("fill", function(d, i) { return color(d-1); })
+  .style("opacity", 0.8);
+
+  legend.append("text")
+  .attr("x", 50)
+  .attr("y", function(d, i){ return height - (i*ls_h) - ls_h - 4;})
+  .style("fill", function(d, i) { return "#FFF"; })
+  .text(function(d, i){ return legend_labels[i]; });
+
 $(document).ready($(window).resize(function() { redraw(); }));
 </script>
