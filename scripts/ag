@@ -67,6 +67,7 @@ def make(db, force):
         click.echo("Making settings table")
         make_settings_table()
     elif db == 'test':
+        # Test database includes initialization and settings table already
         click.echo("Populating the test database")
         populate_test_db()
 
