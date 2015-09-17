@@ -649,6 +649,20 @@
 				<fk_column name="survey_response_type" pk="survey_response_type" />
 			</fk>
 		</table>
+		<table name="survey_question_retired" >
+			<column name="survey_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="survey_question_id" type="bigint" jt="-5" mandatory="y" />
+			<index name="pk_survey_question_retired" unique="PRIMARY_KEY" >
+				<column name="survey_id" />
+				<column name="survey_question_id" />
+			</index>
+			<index name="idx_survey_question_retired" unique="NORMAL" >
+				<column name="survey_question_id" />
+			</index>
+			<fk name="fk_survey_question_retired" to_schema="ag" to_table="survey_question" >
+				<fk_column name="survey_question_id" pk="survey_question_id" />
+			</fk>
+		</table>
 		<table name="survey_question_triggers" >
 			<comment>Which question/answer combos trigger other questions</comment>
 			<column name="survey_question_id" type="bigint" jt="-5" >
@@ -22531,7 +22545,6 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="iso_country_lookup" color="ffffff" x="900" y="1620" />
 		<entity schema="ag" name="survey_question_response_type" color="ffcccc" x="690" y="1725" />
 		<entity schema="ag" name="promoted_survey_ids" color="a8c4ef" x="1425" y="915" />
-		<entity schema="ag" name="survey_question" color="a8c4ef" x="420" y="1530" />
 		<entity schema="ag" name="ag_login" color="f7e2c6" x="705" y="405" />
 		<entity schema="ag" name="zipcodes" color="c6c6f7" x="1095" y="45" />
 		<entity schema="ag" name="ag_consent" color="c6d9f7" x="1440" y="675" />
@@ -22553,6 +22566,8 @@ AS $function$xpath_exists$function$
 		<entity schema="barcodes" name="project" color="a8c4ef" x="345" y="885" />
 		<entity schema="barcodes" name="barcode" color="a8c4ef" x="105" y="870" />
 		<entity schema="ag" name="ag_kit_barcodes" color="f7e2c6" x="735" y="885" />
+		<entity schema="ag" name="survey_question" color="a8c4ef" x="420" y="1530" />
+		<entity schema="ag" name="survey_question_retired" color="a8c4ef" x="405" y="1665" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by : 
    american_gut_consent</comment>
