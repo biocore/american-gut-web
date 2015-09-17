@@ -35,18 +35,47 @@ INSERT INTO survey_question_retired (survey_id, survey_question_id) VALUES (1, 1
 -- Promote answers
 DO $do$
 DECLARE
-    top varchar;
+    ans varchar;
     survey varchar;
     pid varchar;
     login varchar;
 BEGIN
     -- Make sure not in test database so there's actually something to promote
-    IF SELECT NOT EXISTS(SELECT 1
-                         FROM information_schema.tables 
-                         WHERE table_schema = 'ag' AND table_name = 'ag_human_survey')
+    IF NOT EXISTS(SELECT 1 FROM information_schema.tables WHERE table_schema = 'ag' AND table_name = 'ag_human_survey')
     THEN
         RETURN;
     END IF;
 
-    
+    FOR pid, login IN
+        SELECT participant_name, ag_login_id FROM ag.ag_human_survey
+    LOOP
+        SELECT survey_id FROM ag.ag_login_surveys WHERE participant_name = pid AND ag_login_id::varchar = login INTO survey;
+        -- If unpromoted survey, don't convert answers
+        IF survey = NULL
+        THEN
+            CONTINUE;
+        END IF;
+        -- Assign uninterpretable answers to 'Unspecified'
+        SELECT CASE(types_of_plants)
+           WHEN '28' THEN '21 to 30'
+           WHEN 'Less than 5' THEN 'Less than 5'
+           WHEN '6 to 10' THEN '6 to 10'
+           WHEN '11 to 20' THEN '11 to 20'
+           WHEN '21 to 30' THEN '21 to 30'
+           WHEN 'More than 30' THEN 'More than 30'
+           ELSE 'Unspecified'
+        END
+        FROM ag.ag_human_survey WHERE participant_name = pid AND ag_login_id::varchar = login INTO ans;
+
+        INSERT INTO ag.survey_answers (survey_id, survey_question_id, response) VALUES (survey, 146, ans);
+    END LOOP;
 END $do$
+
+-- Make the rest of the answers Unspecified
+INSERT INTO ag.survey_answers (survey_id, survey_question_id, response)
+    SELECT survey_id, 146, 'Unspecified'
+    FROM ag.ag_login_surveys
+    WHERE survey_id NOT IN (
+        SELECT survey_id
+        FROM ag.survey_answers
+        WHERE survey_question_id = 146);
