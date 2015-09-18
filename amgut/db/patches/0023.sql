@@ -2,18 +2,10 @@
 -- Add way to retire questions
 --promote unmappable questions from old survey
 
-CREATE TABLE ag.survey_question_retired (
-    survey_id            bigint  NOT NULL,
-    survey_question_id   bigint  NOT NULL,
-    CONSTRAINT pk_survey_question_retired PRIMARY KEY ( survey_id, survey_question_id )
- );
-CREATE INDEX idx_survey_question_retired_0 ON ag.survey_question_retired ( survey_question_id );
--- No FK to survey_id so we can retire whole surveys
-ALTER TABLE ag.survey_question_retired ADD CONSTRAINT fk_survey_question_retired FOREIGN KEY ( survey_question_id ) REFERENCES ag.survey_question( survey_question_id );
-GRANT INSERT, UPDATE, DELETE, SELECT ON ALL TABLES IN SCHEMA ag, public, barcodes TO "ag_wwwuser";
-
+ALTER TABLE ag.survey_question ADD COLUMN retired boolean DEFAULT FALSE;
 -- Add plants question back as a retired question
-INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES (146, 'TYPES_OF_PLANTS', 'How many different species of plants did you consume during the last 7-day period?', 'How many different species of plants did you consume during the last 7-day period?');
+INSERT INTO survey_question (survey_question_id, question_shortname, american, british, retired) VALUES
+(146, 'TYPES_OF_PLANTS', 'How many different species of plants did you consume during the last 7-day period?', 'How many different species of plants did you consume during the last 7-day period?', TRUE);
 
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (146, 'SINGLE');
 
@@ -30,7 +22,7 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (146, '21 to 30', 4);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (146, 'More than 30', 5);
 
-INSERT INTO survey_question_retired (survey_id, survey_question_id) VALUES (1, 146);
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 146, 50);
 
 -- Promote answers
 DO $do$
