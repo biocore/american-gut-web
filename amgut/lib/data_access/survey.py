@@ -194,18 +194,22 @@ class Group(object):
     """
     _group_table = 'survey_group'
     _group_questions_table = 'group_questions'
+    _questions_table = 'survey_question'
 
     def __init__(self, ID):
         self.id = ID
         n = self.american_name
         qs = [Question.factory(x[0], n) for x in db_conn.execute_fetchall('''
-            select gq.survey_question_id
-            from {0} sg join {1} gq on sg.group_order = gq.survey_group
-            where sg.group_order = %s
-            order by gq.display_index
+            SELECT gq.survey_question_id
+            FROM {0} sg
+            JOIN {1} gq ON sg.group_order = gq.survey_group
+            LEFT JOIN {2} sq USING (survey_question_id)
+            WHERE sg.group_order = %s AND sq.retired = FALSE
+            ORDER BY gq.display_index
             '''.format(
                 self._group_table,
-                self._group_questions_table),
+                self._group_questions_table,
+                self._questions_table),
             [self.id])]
 
         self.id_to_eid = {q.id: q.interface_element_ids for q in qs}
