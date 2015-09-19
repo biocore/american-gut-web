@@ -61,6 +61,7 @@ setup(name='American Gut participant UI',
           'psycopg2',
           'pycrypto==2.6.1',
           'redis',
+          'requests',
           'tornado==3.2.2',
           'WTForms==2.0.1',
           'natsort'
