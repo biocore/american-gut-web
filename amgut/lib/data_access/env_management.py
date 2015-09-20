@@ -105,13 +105,13 @@ def initialize(verbose=False):
     if verbose:
         echo('Granting privileges')
 
-    cur.execute('GRANT USAGE ON schema public, ag, barcodes TO "%s"' % AMGUT_CONFIG.user)
-    cur.execute('GRANT CONNECT ON DATABASE %s TO "%s"' %
+    cur.execute('GRANT USAGE ON schema public, ag, barcodes TO %s' % AMGUT_CONFIG.user)
+    cur.execute('GRANT CONNECT ON DATABASE %s TO %s' %
                 (AMGUT_CONFIG.database, AMGUT_CONFIG.user))
     cur.execute('GRANT INSERT, UPDATE, DELETE, SELECT ON ALL TABLES IN SCHEMA'
-                ' public, ag, barcodes TO "%s";' % AMGUT_CONFIG.user)
+                ' public, ag, barcodes TO %s;' % AMGUT_CONFIG.user)
     cur.execute('GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public, ag, barcodes '
-                'TO "%s";' % AMGUT_CONFIG.user)
+                'TO %s;' % AMGUT_CONFIG.user)
     conn.commit()
 
 
@@ -197,7 +197,7 @@ def rebuild_test(verbose=False):
     with conn.cursor() as cur:
         test = cur.execute("SELECT test_environment FROM ag.settings")
         test = cur.fetchone()[0]
-        if test == 'false':
+        if test != 'true':
             print "ABORTING: Not working on test database"
             return
     conn.close()
@@ -217,4 +217,6 @@ def rebuild_test(verbose=False):
     create_database()
     populate_test_db()
     initialize(verbose)
+    if verbose:
+        print "Patching database"
     patch_db(verbose=verbose)
