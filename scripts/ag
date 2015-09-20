@@ -19,8 +19,8 @@ from passlib.hash import bcrypt
 from amgut.connections import ag_data, redis
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.lib.data_access.env_management import (
-    create_database, build_and_initialize, make_settings_table, patch_db,
-    populate_test_db, drop_test as drop_test_inner)
+    create_database, build, initialize, make_settings_table, patch_db,
+    populate_test_db, rebuild_test)
 
 
 @click.group()
@@ -63,25 +63,25 @@ def make(db, force):
     create_database(force)
 
     if db == 'production':
-        build_and_initialize(verbose=True)
+        build(verbose=True)
+        initialize(verbose=True)
         click.echo("Making settings table")
         make_settings_table()
     elif db == 'test':
         # Test database includes initialization and settings table already
         click.echo("Populating the test database")
         populate_test_db()
+        initialize(verbose=True)
 
     click.echo("Applying patches to database")
     patch_db(verbose=True)
     click.echo("{} environment successfully created".format(db))
 
 
-@cli.command()
-@click.option('--force', is_flag=True, default=False,
-              help='force removal')
-def drop_test(force):
-    """Drops the test database, schema, and role."""
-    drop_test_inner(force=force, verbose=True)
+@cli.command('rebuild-test-db')
+def rebuild_test(force):
+    """Drops and rebuilds the test database."""
+    rebuild_test(verbose=True)
 
 
 @cli.command()
