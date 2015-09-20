@@ -79,7 +79,7 @@ def make(db, force):
 
 
 @cli.command('rebuild-test-db')
-def rebuild_test(force):
+def reset_test():
     """Drops and rebuilds the test database."""
     rebuild_test(verbose=True)
 

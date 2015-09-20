@@ -191,21 +191,30 @@ def patch_db(patches_dir=PATCHES_DIR, verbose=False):
 
 
 def rebuild_test(verbose=False):
-    conn = SQLConnectionHandler()
-
-    test = conn.execute_fetchone("SELECT test_environment FROM ag.settings")[0]
-    if not test:
-        print "ABORTING: Not working on test database"
-        return
-
+    conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
+                   host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
+                   database=AMGUT_CONFIG.database)
+    with conn.cursor() as cur:
+        test = cur.execute("SELECT test_environment FROM ag.settings")
+        test = cur.fetchone()[0]
+        if test == 'false':
+            print "ABORTING: Not working on test database"
+            return
+    conn.close()
 
     if verbose:
         print "Dropping database %s" % AMGUT_CONFIG.database
 
-    conn.execute("DROP DATABASE IF EXISTS %s" % AMGUT_CONFIG.database)
+    p = Popen(['dropdb', '--if-exists', AMGUT_CONFIG.database])
+    retcode = p.wait()
+
+    if retcode != 0:
+        raise RuntimeError("Could not delete database %s: retcode %d" %
+                           (AMGUT_CONFIG.database, retcode))
 
     if verbose:
         print "Rebuilding database"
+    create_database()
     populate_test_db()
     initialize(verbose)
     patch_db(verbose=verbose)
