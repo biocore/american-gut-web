@@ -14,57 +14,8 @@ from wtforms import Form
 
 from amgut import media_locale, text_locale
 from amgut.connections import ag_data, redis
-from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.lib.vioscreen import encrypt_key
-from amgut.lib.data_access.env_management import (
-    create_database, build_and_initialize, make_settings_table, patch_db,
-    populate_test_db, drop_schema)
 
-
-def reset_test_database(wrapped_fn):
-    """Decorator that drops the public schema, rebuilds and repopulates the
-    schema with test data, then executes wrapped_fn
-    """
-
-    def decorated_wrapped_fn(*args, **kwargs):
-        drop_schema()
-        build_and_initialize()
-        make_settings_table()
-        patch_db()
-        populate_test_db()
-
-        return wrapped_fn(*args, **kwargs)
-
-    return decorated_wrapped_fn
-
-
-def ag_test_checker():
-    """Decorator that allows the execution of all methods in a test class only
-    and only if the AG site is set up to work in a test environment
-
-    Raises
-    ------
-    RuntimeError
-        If the AG site is set up to work in a production environment
-    """
-    def class_modifier(cls):
-        # First, we check that we are not in a production environment
-        if not AMGUT_CONFIG.test_environment \
-                or AMGUT_CONFIG.database != "ag_test":
-            raise RuntimeError("Working in a production environment. Not "
-                               "executing the tests to keep the production "
-                               "database safe.")
-
-        # Now, we decorate the setup and teardown functions
-        class DecoratedClass(cls):
-            def setUp(self):
-                super(DecoratedClass, self).setUp()
-
-            @reset_test_database
-            def tearDown(self):
-                super(DecoratedClass, self).tearDown()
-        return DecoratedClass
-    return class_modifier
 
 
 class PartitionResponse(object):
