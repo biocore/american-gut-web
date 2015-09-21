@@ -47,13 +47,13 @@ setup(name='American Gut participant UI',
                     'amgut.handlers': []},
       extras_require={
           'test': [
-              'mock==1.0.1',
+              'mock',
               'nose >= 0.10.1',
               'pep8',
+              'flake8'
           ]
       },
       install_requires=[
-          'bcrypt==1.1.0',
           'click==3.3',
           'future==0.13.1',
           'open-humans-tornado-oauth2==2.0.0',
