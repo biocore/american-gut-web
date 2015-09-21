@@ -11,6 +11,7 @@
 __version__ = "0.1.0-dev"
 
 from setuptools import setup
+from glob import glob
 
 
 classes = """
@@ -46,6 +47,7 @@ setup(name='American Gut participant UI',
                     'amgut.lib': [],
                     'amgut.lib.data_access': [],
                     'amgut.handlers': []},
+      scripts=glob('scripts/*'),
       extras_require={
           'test': [
               'mock',
