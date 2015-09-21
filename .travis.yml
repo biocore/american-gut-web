@@ -14,5 +14,5 @@ script:
   #- flake8 amgut setup.py scripts ; fi
 services:
   - redis-server
-after_success:
-  - coveralls ; fi
+#after_success:
+  #- coveralls ; fi
