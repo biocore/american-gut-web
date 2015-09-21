@@ -15,5 +15,7 @@ script:
   #- flake8 amgut setup.py scripts ; fi
 services:
   - redis-server
+addons:
+  postgresql: "9.3"
 #after_success:
   #- coveralls ; fi
