@@ -67,7 +67,7 @@ def create_database(force=False):
     cur.close()
     conn.close()
 
-def build_and_initialize(verbose=False):
+def build(verbose=False):
     conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
                    host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
                    database=AMGUT_CONFIG.database)
@@ -87,25 +87,33 @@ def build_and_initialize(verbose=False):
     cur.execute('SET SEARCH_PATH TO ag, barcodes, public')
     with open(INITIALIZE_FP) as f:
         cur.execute(f.read())
+    conn.commit()
+
+def initialize(verbose=False):
+    """Initialize the database with permissions and, optionally, a new user
+
+    Parameters
+    ----------
+    verbose : bool, optional
+        Show messages while working, default False
+    """
+    conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
+                   host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
+                   database=AMGUT_CONFIG.database)
+    cur = conn.cursor()
 
     if verbose:
         echo('Granting privileges')
 
-    # test for user
-    cur.execute("""SELECT EXISTS(SELECT 1
-                                 FROM pg_catalog.pg_user
-                                 WHERE usename = 'ag_wwwuser')""")
-    if not cur.fetchone()[0]:
-        cur.execute('CREATE USER "ag_wwwuser"')
-
-    cur.execute('GRANT USAGE ON schema public, ag TO "ag_wwwuser"')
-    cur.execute('GRANT CONNECT ON DATABASE %s TO "ag_wwwuser"' %
-                AMGUT_CONFIG.database)
+    cur.execute('GRANT USAGE ON schema public, ag, barcodes TO %s' % AMGUT_CONFIG.user)
+    cur.execute('GRANT CONNECT ON DATABASE %s TO %s' %
+                (AMGUT_CONFIG.database, AMGUT_CONFIG.user))
     cur.execute('GRANT INSERT, UPDATE, DELETE, SELECT ON ALL TABLES IN SCHEMA'
-                ' public, ag TO "ag_wwwuser";')
-    cur.execute('GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public, ag TO '
-                '"ag_wwwuser";')
+                ' public, ag, barcodes TO %s;' % AMGUT_CONFIG.user)
+    cur.execute('GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public, ag, barcodes '
+                'TO %s;' % AMGUT_CONFIG.user)
     conn.commit()
+
 
 
 def make_settings_table():
@@ -182,126 +190,33 @@ def patch_db(patches_dir=PATCHES_DIR, verbose=False):
     # Idempotent patches implemented in Python can be run here
 
 
-def drop_schema(verbose=False):
+def rebuild_test(verbose=False):
     conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
                    host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
                    database=AMGUT_CONFIG.database)
-
-    cur = conn.cursor()
-    cur.execute("DROP SCHEMA IF EXISTS ag CASCADE")
-    cur.execute("DROP SCHEMA IF EXISTS barcodes CASCADE")
-    conn.commit()
-    cur.close()
-    conn.close()
-
-
-def drop_test(force, verbose=False):
-    """Drops the test database, schema, and role."""
-
-    conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
-                   host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
-                   database=AMGUT_CONFIG.database)
-
-    cur = conn.cursor()
-
-    cur.execute('SET SEARCH_PATH TO ag, barcodes, public')
-
-    try:
-        cur.execute('SELECT test_environment FROM settings')
-        is_test_db = cur.fetchone()[0].lower()
-    except ProgrammingError:
-        if not force:
-            raise
-
-    cur.close()
-    conn.close()
-
-    if not force and is_test_db != 'true':
-        raise OperationalError("The settings table indicates this is not "
-                               "a test database; aborting.")
-
-    conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
-                   host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
-                   database=AMGUT_CONFIG.database)
-    cur = conn.cursor()
-
-    cur.execute('SET SEARCH_PATH TO ag, barcodes, public')
-
-    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-
-    if verbose:
-        echo("Dropping user ag_wwwuser")
-
-    try:
-        if verbose:
-            echo('Reassigning owned objects')
-        cur.execute('REASSIGN OWNED BY ag_wwwuser TO {}'
-                    .format(AMGUT_CONFIG.user))
-
-        # Database
-        if verbose:
-            echo('Revoking all privileges on {}'.format(AMGUT_CONFIG.database))
-        cur.execute('REVOKE ALL PRIVILEGES ON DATABASE {} '
-                    'FROM ag_wwwuser CASCADE'.format(AMGUT_CONFIG.database))
-
-        for schema in ['ag', 'public', 'barcodes']:
-            if verbose:
-                echo('Revoking all privileges in schema %s' % schema)
-            cur.execute('REVOKE ALL PRIVILEGES ON SCHEMA %s FROM ag_wwwuser '
-                        'CASCADE' % schema)
-
-            if verbose:
-                echo('Revoking all privileges on all tables in %s')
-            cur.execute('REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA %s '
-                        'FROM ag_wwwuser CASCADE' % schema)
-
-            if verbose:
-                echo('Revoking all privileges on all functions in %s')
-            cur.execute('REVOKE ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA %s '
-                        'FROM ag_wwwuser CASCADE' % schema)
-    except:
-        # Some of these might not actually exist, just pass in that case
-        pass
-    finally:
-        cur.close()
-        conn.close()
-
-    conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
-                   host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port)
-    cur = conn.cursor()
-
-    cur.execute('SET SEARCH_PATH TO ag, barcodes, public')
-
-    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-
-    if verbose:
-        echo('Dropping user ag_wwwuser...')
-    cur.execute('DROP USER IF EXISTS ag_wwwuser')
-
-    if verbose:
-        echo('Dropping schemas ag & barcodes...')
-    cur.execute('DROP SCHEMA IF EXISTS ag CASCADE')
-    cur.execute('DROP SCHEMA IF EXISTS barcodes CASCADE')
-
-    cur.close()
+    with conn.cursor() as cur:
+        test = cur.execute("SELECT test_environment FROM ag.settings")
+        test = cur.fetchone()[0]
+        if test != 'true':
+            print "ABORTING: Not working on test database"
+            return
     conn.close()
 
     if verbose:
-        echo('Dropping database {}'.format(AMGUT_CONFIG.database))
+        print "Dropping database %s" % AMGUT_CONFIG.database
 
-    command = ['dropdb', '--if-exists']
+    p = Popen(['dropdb', '--if-exists', AMGUT_CONFIG.database])
+    retcode = p.wait()
 
-    if AMGUT_CONFIG.host:
-        command.extend(['-h', AMGUT_CONFIG.host])
+    if retcode != 0:
+        raise RuntimeError("Could not delete database %s: retcode %d" %
+                           (AMGUT_CONFIG.database, retcode))
 
-    if AMGUT_CONFIG.port:
-        command.extend(['-p', str(AMGUT_CONFIG.port)])
-
-    if AMGUT_CONFIG.user:
-        command.extend(['-U', AMGUT_CONFIG.user])
-
-    command.append(AMGUT_CONFIG.database)
-
-    proc = Popen(command, stdin=PIPE, stdout=PIPE)
-
-    proc.communicate('{}\n'.format(AMGUT_CONFIG.password))
+    if verbose:
+        print "Rebuilding database"
+    create_database()
+    populate_test_db()
+    initialize(verbose)
+    if verbose:
+        print "Patching database"
+    patch_db(verbose=verbose)
