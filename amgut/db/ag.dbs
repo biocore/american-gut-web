@@ -588,6 +588,10 @@
 			<column name="survey_question_id" type="bigint" jt="-5" mandatory="y" >
 				<comment><![CDATA[The unique question ID]]></comment>
 			</column>
+			<column name="retired" type="bool" jt="-7" >
+				<defo>&#039;F&#039;</defo>
+				<comment><![CDATA[Whether the question is shown or not]]></comment>
+			</column>
 			<column name="question_shortname" type="varchar" length="100" jt="12" mandatory="y" >
 				<comment><![CDATA[A QIIME mapping file-compatible header that describes the question and can be used for metadata pulldown]]></comment>
 			</column>
@@ -22531,7 +22535,6 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="iso_country_lookup" color="ffffff" x="900" y="1620" />
 		<entity schema="ag" name="survey_question_response_type" color="ffcccc" x="690" y="1725" />
 		<entity schema="ag" name="promoted_survey_ids" color="a8c4ef" x="1425" y="915" />
-		<entity schema="ag" name="survey_question" color="a8c4ef" x="420" y="1530" />
 		<entity schema="ag" name="ag_login" color="f7e2c6" x="705" y="405" />
 		<entity schema="ag" name="zipcodes" color="c6c6f7" x="1095" y="45" />
 		<entity schema="ag" name="ag_consent" color="c6d9f7" x="1440" y="675" />
@@ -22553,6 +22556,7 @@ AS $function$xpath_exists$function$
 		<entity schema="barcodes" name="project" color="a8c4ef" x="345" y="885" />
 		<entity schema="barcodes" name="barcode" color="a8c4ef" x="105" y="870" />
 		<entity schema="ag" name="ag_kit_barcodes" color="f7e2c6" x="735" y="885" />
+		<entity schema="ag" name="survey_question" color="a8c4ef" x="420" y="1530" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by : 
    american_gut_consent</comment>

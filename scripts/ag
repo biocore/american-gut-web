@@ -20,7 +20,7 @@ from amgut.connections import ag_data, redis
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.lib.data_access.env_management import (
     create_database, build_and_initialize, make_settings_table, patch_db,
-    populate_test_db, drop_test)
+    populate_test_db, drop_test as drop_test_inner)
 
 
 @click.group()
@@ -61,16 +61,18 @@ def make(db, force):
     """Creates the specified database."""
     click.echo("Creating database")
     create_database(force)
-    build_and_initialize(verbose=True)
-    click.echo("Making settings table")
-    make_settings_table()
-    click.echo("Applying patches to database")
-    patch_db(verbose=True)
 
-    if db == 'test':
+    if db == 'production':
+        build_and_initialize(verbose=True)
+        click.echo("Making settings table")
+        make_settings_table()
+    elif db == 'test':
+        # Test database includes initialization and settings table already
         click.echo("Populating the test database")
         populate_test_db()
 
+    click.echo("Applying patches to database")
+    patch_db(verbose=True)
     click.echo("{} environment successfully created".format(db))
 
 
@@ -79,7 +81,7 @@ def make(db, force):
               help='force removal')
 def drop_test(force):
     """Drops the test database, schema, and role."""
-    drop_test(verbose=True)
+    drop_test_inner(force=force, verbose=True)
 
 
 @cli.command()

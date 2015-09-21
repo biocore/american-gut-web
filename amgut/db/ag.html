@@ -647,29 +647,6 @@ Keeps track of the survey&#095;ids that correspond to surveys that were ported f
 <a xlink:href='#survey_id'><text x='1443' y='952'>survey_id</text><title>survey_id varchar&#040;2147483647&#041; not null</title></a>
 <a xlink:href='#survey_id'><use id='fk' x='1548' y='941' xlink:href='#fk'/><title>References ag_login_surveys ( survey_id ) </title></a>
 
-<!-- ============= Table 'survey_question' ============= -->
-<rect class='table' x='420' y='1523' width='150' height='105' rx='7' ry='7' />
-<path d='M 420.50 1549.50 L 420.50 1530.50 Q 420.50 1523.50 427.50 1523.50 L 562.50 1523.50 Q 569.50 1523.50 569.50 1530.50 L 569.50 1549.50 L420.50 1549.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
-<a xlink:href='#survey_question'><text x='450' y='1537' class='tableTitle'>survey_question</text><title>Table ag.survey_question
-Stores the human survey questions</title></a>
-  <use id='nn' x='422' y='1557' xlink:href='#nn'/><a xlink:href='#survey_question_id'><use id='pk' x='422' y='1556' xlink:href='#pk'/><title>Primary Key  ( survey_question_id ) </title></a>
-<a xlink:href='#survey_question_id'><text x='438' y='1567'>survey_question_id</text><title>survey_question_id bigint not null
-The unique question ID</title></a>
-<a xlink:href='#survey_question_id'><use id='ref' x='558' y='1556' xlink:href='#ref'/><title>Referred by group_questions ( survey_question_id ) 
-Referred by survey_answers_other ( survey_question_id ) 
-Referred by survey_question_response ( survey_question_id ) 
-Referred by survey_question_response_type ( survey_question_id ) 
-Referred by survey_question_triggers ( triggered_question -> survey_question_id ) </title></a>
-  <use id='nn' x='422' y='1572' xlink:href='#nn'/><a xlink:href='#question_shortname'><use id='unq' x='422' y='1571' xlink:href='#unq'/><title>Unique Index  ( question_shortname ) </title></a>
-<a xlink:href='#question_shortname'><text x='438' y='1582'>question_shortname</text><title>question_shortname varchar&#040;100&#041; not null
-A QIIME mapping file&#045;compatible header that describes the question and can be used for metadata pulldown</title></a>
-  <a xlink:href='#american'><use id='unq' x='422' y='1586' xlink:href='#unq'/><title>Unique Index  ( american ) </title></a>
-<a xlink:href='#american'><text x='438' y='1597'>american</text><title>american varchar&#040;2147483647&#041;
-The american english version of the question</title></a>
-  <a xlink:href='#british'><use id='unq' x='422' y='1601' xlink:href='#unq'/><title>Unique Index  ( british ) </title></a>
-<a xlink:href='#british'><text x='438' y='1612'>british</text><title>british varchar&#040;2147483647&#041;
-The british english version of the question</title></a>
-
 <!-- ============= Table 'ag_login' ============= -->
 <rect class='table' x='705' y='398' width='120' height='225' rx='7' ry='7' />
 <path d='M 705.50 424.50 L 705.50 405.50 Q 705.50 398.50 712.50 398.50 L 817.50 398.50 Q 824.50 398.50 824.50 405.50 L 824.50 424.50 L705.50 424.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
@@ -1089,6 +1066,31 @@ Date barcode created on the system</title></a>
   <a xlink:href='#results_ready'><text x='753' y='1177'>results_ready</text><title>results_ready varchar&#040;1&#041;</title></a>
   <a xlink:href='#withdrawn'><text x='753' y='1192'>withdrawn</text><title>withdrawn varchar&#040;1&#041;</title></a>
   <a xlink:href='#refunded'><text x='753' y='1207'>refunded</text><title>refunded varchar&#040;1&#041;</title></a>
+
+<!-- ============= Table 'survey_question' ============= -->
+<rect class='table' x='420' y='1523' width='150' height='120' rx='7' ry='7' />
+<path d='M 420.50 1549.50 L 420.50 1530.50 Q 420.50 1523.50 427.50 1523.50 L 562.50 1523.50 Q 569.50 1523.50 569.50 1530.50 L 569.50 1549.50 L420.50 1549.50 ' style='fill:url(#tableHeaderGradient4); stroke:none;' />
+<a xlink:href='#survey_question'><text x='450' y='1537' class='tableTitle'>survey_question</text><title>Table ag.survey_question
+Stores the human survey questions</title></a>
+  <use id='nn' x='422' y='1557' xlink:href='#nn'/><a xlink:href='#survey_question_id'><use id='pk' x='422' y='1556' xlink:href='#pk'/><title>Primary Key  ( survey_question_id ) </title></a>
+<a xlink:href='#survey_question_id'><text x='438' y='1567'>survey_question_id</text><title>survey_question_id bigint not null
+The unique question ID</title></a>
+<a xlink:href='#survey_question_id'><use id='ref' x='558' y='1556' xlink:href='#ref'/><title>Referred by group_questions ( survey_question_id ) 
+Referred by survey_answers_other ( survey_question_id ) 
+Referred by survey_question_response ( survey_question_id ) 
+Referred by survey_question_response_type ( survey_question_id ) 
+Referred by survey_question_triggers ( triggered_question -> survey_question_id ) </title></a>
+  <a xlink:href='#retired'><text x='438' y='1582'>retired</text><title>retired bool default &#039;F&#039;
+Whether the question is shown or not</title></a>
+  <use id='nn' x='422' y='1587' xlink:href='#nn'/><a xlink:href='#question_shortname'><use id='unq' x='422' y='1586' xlink:href='#unq'/><title>Unique Index  ( question_shortname ) </title></a>
+<a xlink:href='#question_shortname'><text x='438' y='1597'>question_shortname</text><title>question_shortname varchar&#040;100&#041; not null
+A QIIME mapping file&#045;compatible header that describes the question and can be used for metadata pulldown</title></a>
+  <a xlink:href='#american'><use id='unq' x='422' y='1601' xlink:href='#unq'/><title>Unique Index  ( american ) </title></a>
+<a xlink:href='#american'><text x='438' y='1612'>american</text><title>american varchar&#040;2147483647&#041;
+The american english version of the question</title></a>
+  <a xlink:href='#british'><use id='unq' x='422' y='1616' xlink:href='#unq'/><title>Unique Index  ( british ) </title></a>
+<a xlink:href='#british'><text x='438' y='1627'>british</text><title>british varchar&#040;2147483647&#041;
+The british english version of the question</title></a>
 
 </g></svg>
 
@@ -1903,53 +1905,6 @@ Date barcode created on the system</title></a>
 	<tr>
 		<td>fk_promoted_survey_ids</td>
 		<td > ( survey&#095;id ) ref <a href='#ag&#095;login&#095;surveys'>ag&#095;login&#095;surveys</a> (survey&#095;id) </td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table id='dbs' >
-<thead>
-<tr><th colspan='3'><a name='survey_question'>survey_question</a></th></tr>
-<tr><td colspan='3'>Stores the human survey questions </td></tr>
-</thead>
-<tbody>
-	<tr>
-		<td><a name='survey_question_id'>survey&#095;question&#095;id</a></td>
-		<td width='40%'> bigint  NOT NULL  </td>
-		<td width='99%'> The unique question ID </td>
-	</tr>
-	<tr>
-		<td><a name='question_shortname'>question&#095;shortname</a></td>
-		<td width='40%'> varchar&#040; 100 &#041;  NOT NULL  </td>
-		<td width='99%'> A QIIME mapping file&#045;compatible header that describes the question and can be used for metadata pulldown </td>
-	</tr>
-	<tr>
-		<td><a name='american'>american</a></td>
-		<td width='40%'> varchar&#040; 2147483647 &#041;   </td>
-		<td width='99%'> The american english version of the question </td>
-	</tr>
-	<tr>
-		<td><a name='british'>british</a></td>
-		<td width='40%'> varchar&#040; 2147483647 &#041;   </td>
-		<td width='99%'> The british english version of the question </td>
-	</tr>
-<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
-	<tr>		<td>pk&#095;human&#095;survey&#095;question primary key</td>
-		<td> ON survey&#095;question&#095;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;survey&#095;question unique</td>
-		<td> ON american</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;survey&#095;question&#095;0 unique</td>
-		<td> ON british</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;survey&#095;question&#095;1 unique</td>
-		<td> ON question&#095;shortname</td>
 		<td>  </td>
 	</tr>
 </tbody>
@@ -3534,6 +3489,58 @@ Date barcode created on the system</title></a>
 	<tr>
 		<td>fk_ag_kit_barcodes_barcode</td>
 		<td > ( barcode ) ref <a href='#barcode'>barcode</a> (barcode) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table id='dbs' >
+<thead>
+<tr><th colspan='3'><a name='survey_question'>survey_question</a></th></tr>
+<tr><td colspan='3'>Stores the human survey questions </td></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='survey_question_id'>survey&#095;question&#095;id</a></td>
+		<td width='40%'> bigint  NOT NULL  </td>
+		<td width='99%'> The unique question ID </td>
+	</tr>
+	<tr>
+		<td><a name='retired'>retired</a></td>
+		<td width='40%'> bool   DEFO 'F' </td>
+		<td width='99%'> Whether the question is shown or not </td>
+	</tr>
+	<tr>
+		<td><a name='question_shortname'>question&#095;shortname</a></td>
+		<td width='40%'> varchar&#040; 100 &#041;  NOT NULL  </td>
+		<td width='99%'> A QIIME mapping file&#045;compatible header that describes the question and can be used for metadata pulldown </td>
+	</tr>
+	<tr>
+		<td><a name='american'>american</a></td>
+		<td width='40%'> varchar&#040; 2147483647 &#041;   </td>
+		<td width='99%'> The american english version of the question </td>
+	</tr>
+	<tr>
+		<td><a name='british'>british</a></td>
+		<td width='40%'> varchar&#040; 2147483647 &#041;   </td>
+		<td width='99%'> The british english version of the question </td>
+	</tr>
+<tr><td colspan='3' class='subpart'><b>Indexes</b></td></tr>
+	<tr>		<td>pk&#095;human&#095;survey&#095;question primary key</td>
+		<td> ON survey&#095;question&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;survey&#095;question unique</td>
+		<td> ON american</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;survey&#095;question&#095;0 unique</td>
+		<td> ON british</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;survey&#095;question&#095;1 unique</td>
+		<td> ON question&#095;shortname</td>
 		<td>  </td>
 	</tr>
 </tbody>
