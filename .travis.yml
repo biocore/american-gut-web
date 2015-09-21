@@ -1,0 +1,21 @@
+language: python
+python:
+  - "2.7"
+sudo: false
+services:
+  - redis-server
+addons:
+  postgresql: "9.3"
+before_install:
+  - redis-server --version
+install:
+  - pip install --upgrade pip
+  - pip install mock nose>=0.10.1 pep8 flake8 coveralls
+  - travis_retry pip install .
+script:
+  - export AG_CONFIG=`pwd`/ag_config.txt.example
+  - ag make test
+  - nosetests --with-doctest --with-coverage
+  #- flake8 amgut setup.py scripts ; fi
+after_success:
+  - coveralls

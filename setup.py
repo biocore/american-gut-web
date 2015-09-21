@@ -11,6 +11,7 @@
 __version__ = "0.1.0-dev"
 
 from setuptools import setup
+from glob import glob
 
 
 classes = """
@@ -41,19 +42,26 @@ setup(name='American Gut participant UI',
       url='http://www.microbio.me/AmericanGut',
       test_suite='nose.collector',
       packages=['amgut'],
-      package_data={'amgut': ['db/*', 'db/patches/*.sql'],
-                    'amgut.lib': [],
-                    'amgut.lib.data_access': [],
-                    'amgut.handlers': []},
+      package_data={'amgut': [
+          'static/css/*.css', 'static/img/*.*', 'static/js/*.js',
+          'static/vendor/css/*.css', 'static/vendor/css/*.png',
+          'amgut/static/vendor/css/ui-lightness/*.css',
+          'amgut/static/vendor/css/ui-lightness/images/*.png',
+          'static/vendor/data/*', 'static/vendor/js/*.js',
+          'static/vendor/licences/*', 'db/*.*', 'db/patches/*.sql',
+          'handlers/*', 'lib/*.*', 'lib/data_access/*', 'lib/locale_data/*',
+          'templates/*.html', 'test/*.py'
+      ]},
+      scripts=glob('scripts/*'),
       extras_require={
           'test': [
-              'mock==1.0.1',
+              'mock',
               'nose >= 0.10.1',
               'pep8',
+              'flake8'
           ]
       },
       install_requires=[
-          'bcrypt==1.1.0',
           'click==3.3',
           'future==0.13.1',
           'open-humans-tornado-oauth2==2.0.0',

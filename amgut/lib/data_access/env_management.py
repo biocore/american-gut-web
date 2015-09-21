@@ -50,9 +50,6 @@ def create_database(force=False):
 
     # Get the cursor
     cur = conn.cursor()
-
-    cur.execute('SET SEARCH_PATH TO ag, barcodes, public')
-
     db_exists = _check_db_exists(AMGUT_CONFIG.database, cur)
 
     # Check that the database does not already exist
@@ -75,6 +72,7 @@ def build(verbose=False):
 
     # create the schema and set a search path
     cur.execute('CREATE SCHEMA IF NOT EXISTS ag')
+    cur.execute('CREATE SCHEMA IF NOT EXISTS barcodes')
     cur.execute('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"')
 
     if verbose:
@@ -139,8 +137,6 @@ def make_settings_table():
 
 
 def populate_test_db():
-    conn = SQLConnectionHandler()
-
     with gzip.open(POPULATE_FP, 'rb') as f:
         test_db = f.read()
 
