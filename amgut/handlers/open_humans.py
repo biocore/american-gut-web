@@ -2,8 +2,6 @@ import logging
 import posixpath
 import urlparse
 
-from future.utils import viewitems
-
 try:
     from open_humans_tornado_oauth2 import OpenHumansMixin
 except ImportError:
@@ -114,7 +112,22 @@ def basejoin(base, url):
                                 joined_url.fragment))
 
 
-class OpenHumansHandler(BaseHandler, OpenHumansMixin):
+class OriginMixin(object):
+    """
+    A mixin for coercing an origin from a query parameter into a valid origin.
+    """
+
+    def coerce_origin(self):
+        origin = self.get_argument('origin', False)
+
+        # if there's not a valid origin specified default to external
+        if origin not in ['external', 'open-humans']:
+            origin = 'external'
+
+        return origin
+
+
+class OpenHumansHandler(BaseHandler, OpenHumansMixin, OriginMixin):
     """
     Handles rendering the page responsible for linking barcodes to Open Humans
     accounts.
@@ -124,6 +137,7 @@ class OpenHumansHandler(BaseHandler, OpenHumansMixin):
     _HOME_URL = basejoin(AMGUT_CONFIG.open_humans_base_url, '/')
     _RESEARCH_URL = basejoin(AMGUT_CONFIG.open_humans_base_url,
                              '/member/me/research-data/')
+    _RETURN_URL = basejoin(_HOME_URL, 'study/american-gut/return/')
 
     @web.authenticated
     @web.asynchronous
@@ -133,11 +147,23 @@ class OpenHumansHandler(BaseHandler, OpenHumansMixin):
         # If the user isn't authenticated render the page to allow them to
         # authenticate
         if not open_humans:
+            ag_login_id = ag_data.get_user_for_kit(self.current_user)
+            human_participants = ag_data.getHumanParticipants(ag_login_id)
+
+            survey_ids = {}
+
+            for participant_name in human_participants:
+                survey_id = ag_data.get_survey_id(ag_login_id,
+                                                  participant_name)
+
+                if survey_id:
+                    survey_ids[participant_name] = survey_id
+
             self.render('open-humans.html',
                         skid=self.current_user,
-                        linked_barcodes=None,
-                        unlinked_barcodes=None,
+                        survey_ids=survey_ids,
                         access_token=None,
+                        origin=self.coerce_origin(),
                         open_humans_home_url=self._HOME_URL,
                         open_humans_research_url=self._RESEARCH_URL,
                         open_humans_api_url=self._API_URL)
@@ -148,41 +174,59 @@ class OpenHumansHandler(BaseHandler, OpenHumansMixin):
 
         self.open_humans_request(
             '/american-gut/user-data/',
-            self._on_user_data,
+            self._on_user_data_cb,
             access_token=open_humans['access_token'])
 
-    def _on_user_data(self, user_data):
+    def _on_post_user_data_cb(self, data):
+        """
+        After the survey ID has been posted to Open Humans.
+        """
+        self.clear_cookie('link-survey-id')
+
+        self.redirect('{}?origin={}'.format(self._RETURN_URL,
+                                            self.coerce_origin()))
+
+    def _on_user_data_cb(self, user_data):
         open_humans = escape.json_decode(self.get_secure_cookie('open-humans'))
 
-        skid = self.current_user
+        try:
+            link_survey_id = escape.json_decode(
+                escape.url_unescape(self.get_cookie('link-survey-id')))
+        except AttributeError:
+            link_survey_id = None
 
-        # At this point we just deal with human participants
-        (human_participants, _, _, _) = ag_data.get_menu_items(skid)
+        ag_login_id = ag_data.get_user_for_kit(self.current_user)
+        human_participants = ag_data.getHumanParticipants(ag_login_id)
 
-        linked_barcodes = []
-        unlinked_barcodes = []
+        survey_ids = {}
 
-        # Get the linked and unlinked barcodes and their participant IDs
-        for participant, barcodes in viewitems(human_participants):
-            for barcode in barcodes:
-                barcode['participant'] = participant
+        if link_survey_id:
+            self.open_humans_request(
+                '/american-gut/user-data/',
+                self._on_post_user_data_cb,
+                method='PATCH',
+                body={'data': {'surveyIds': link_survey_id}},
+                access_token=open_humans['access_token'])
 
-                if barcode['barcode'] in user_data['barcodes']:
-                    linked_barcodes.append(barcode)
-                else:
-                    unlinked_barcodes.append(barcode)
+            return
+
+        for participant_name in human_participants:
+            survey_id = ag_data.get_survey_id(ag_login_id, participant_name)
+
+            if survey_id:
+                survey_ids[participant_name] = survey_id
 
         self.render('open-humans.html',
-                    skid=skid,
-                    linked_barcodes=linked_barcodes,
-                    unlinked_barcodes=unlinked_barcodes,
+                    skid=self.current_user,
+                    survey_ids=survey_ids,
                     access_token=open_humans['access_token'],
+                    origin=self.coerce_origin(),
                     open_humans_home_url=self._HOME_URL,
                     open_humans_research_url=self._RESEARCH_URL,
                     open_humans_api_url=self._API_URL)
 
 
-class OpenHumansLoginHandler(BaseHandler, OpenHumansMixin):
+class OpenHumansLoginHandler(BaseHandler, OpenHumansMixin, OriginMixin):
     """
     Handles the OAuth2 connection to Open Humans.
     """
@@ -200,6 +244,9 @@ class OpenHumansLoginHandler(BaseHandler, OpenHumansMixin):
     @web.authenticated
     @web.asynchronous
     def get(self):
+        """
+        Display the Open Humans connection page.
+        """
         redirect_uri = self._OAUTH_REDIRECT_URL
 
         # if we have a code, we have been authorized so we can log in
@@ -209,17 +256,20 @@ class OpenHumansLoginHandler(BaseHandler, OpenHumansMixin):
                 client_id=AMGUT_CONFIG.open_humans_client_id,
                 client_secret=AMGUT_CONFIG.open_humans_client_secret,
                 code=self.get_argument('code'),
-                callback=self._on_login)
-
-            return
-
+                callback=self._on_login_cb)
         # otherwise we need to request an authorization code
-        self.authorize_redirect(
-            redirect_uri=redirect_uri,
-            client_id=AMGUT_CONFIG.open_humans_client_id,
-            extra_params={'scope': 'read write american-gut'})
+        else:
+            extra_params = {
+                'scope': 'read write american-gut',
+                'origin': self.coerce_origin(),
+            }
 
-    def _on_login(self, user):
+            self.authorize_redirect(
+                redirect_uri=redirect_uri,
+                client_id=AMGUT_CONFIG.open_humans_client_id,
+                extra_params=extra_params)
+
+    def _on_login_cb(self, user):
         """
         Handle the user object from the login request.
         """
@@ -230,11 +280,5 @@ class OpenHumansLoginHandler(BaseHandler, OpenHumansMixin):
         else:
             self.clear_cookie('open-humans')
 
-        self.redirect('/authed/open-humans/')
-
-
-if __name__ == '__main__':
-    import doctest
-
-    doctest.testmod(verbose=True, optionflags=(doctest.NORMALIZE_WHITESPACE |
-                                               doctest.REPORT_NDIFF))
+        self.redirect('/authed/open-humans/?origin={}'.format(
+            self.coerce_origin()))
