@@ -1,9 +1,6 @@
 american-gut-web
 ================
-.. |Build Status| image:: https://travis-ci.org/biocore/american-gut-web.png?branch=master
-   :target: https://travis-ci.org/biocore/qiita
-.. |Coverage Status| image:: https://coveralls.io/repos/biocore/american-gut-web/badge.png?branch=master
-   :target: https://coveralls.io/r/biocore/qiita
+|Build Status| |Coverage Status|
 
 The website for the American Gut Project participant portal
 
@@ -47,3 +44,8 @@ Finally run the tests to populate the databases and launch the website
 ./scripts/ag make test
 python amgut/webserver.py
 ```
+
+.. |Build Status| image:: https://travis-ci.org/biocore/american-gut-web.png?branch=master
+   :target: https://travis-ci.org/biocore/american-gut-web
+.. |Coverage Status| image:: https://coveralls.io/repos/biocore/american-gut-web/badge.png?branch=master
+   :target: https://coveralls.io/r/biocore/american-gut-web
