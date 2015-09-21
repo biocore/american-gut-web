@@ -137,8 +137,6 @@ def make_settings_table():
 
 
 def populate_test_db():
-    conn = SQLConnectionHandler()
-
     with gzip.open(POPULATE_FP, 'rb') as f:
         test_db = f.read()
 
