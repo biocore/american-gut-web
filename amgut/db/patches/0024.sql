@@ -3,7 +3,10 @@
 
 DELETE FROM ag.survey_answers
 WHERE survey_question_id = 146
-AND survey_id IN (
-    SELECT survey_id FROM ag.ag_login_surveys
-    JOIN ag.ag_consent USING (ag_login_id, participant_name)
-    WHERE parent_1_name = 'ANIMAL_SURVEY');
+AND survey_id NOT IN (
+    SELECT DISTINCT SA.survey_id
+    FROM ag.surveys S
+    JOIN ag.group_questions USING (survey_group)
+    JOIN ag.survey_question USING (survey_question_id)
+    JOIN ag.survey_answers SA USING (survey_question_id)
+    WHERE S.survey_id = 1);
