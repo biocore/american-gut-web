@@ -260,6 +260,7 @@ class Survey(object):
     _survey_question_response_type_table = 'survey_question_response_type'
     _survey_answers_table = 'survey_answers'
     _survey_answers_other_table = 'survey_answers_other'
+    _questions_table = 'survey_question'
 
     def __init__(self, ID):
         self.id = ID
@@ -302,16 +303,21 @@ class Survey(object):
                     and sa.survey_question_id=sqr.survey_question_id
                 join {2} sqrt
                     on sa.survey_question_id=sqrt.survey_question_id
-            where sa.survey_id=%s""".format(
+                left join {3} sq
+                    on sa.survey_question_id = sq.survey_question_id
+            where sa.survey_id = %s and sq.retired = FALSE""".format(
             self._survey_answers_table,
             self._survey_question_response_table,
-            self._survey_question_response_type_table),
+            self._survey_question_response_type_table,
+            self._questions_table),
             [survey_id])
 
         answers_other = db_conn.execute_fetchall("""
             select survey_question_id, response
             from {0}
-            where survey_id=%s""".format(self._survey_answers_other_table),
+            left join {1} using (survey_question_id)
+            where survey_id = %s and retired = FALSE""".format(
+            self._survey_answers_other_table, self._questions_table),
             [survey_id])
 
         survey = defaultdict(list)
