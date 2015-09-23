@@ -34,7 +34,8 @@ class AddSample(BaseHandler):
         if not form.validate():
             self.render('add_sample.html', skid=self.current_user,
                         participant_name=participant_name,
-                        form=form, page_type=self.page_type)
+                        form=self.build_form(), page_type=self.page_type,
+                        message='Invalid form submission, please try again')
             return
 
         barcode = form.barcode.data
@@ -65,7 +66,7 @@ class AddSample(BaseHandler):
         form = self.build_form()
         self.render('add_sample.html', skid=self.current_user,
                     participant_name=participant_name,
-                    form=form, page_type=self.page_type)
+                    form=form, page_type=self.page_type, message='')
 
     def build_form(self):
         kit_id = self.current_user

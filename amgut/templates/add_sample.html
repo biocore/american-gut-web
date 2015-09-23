@@ -25,7 +25,7 @@
 </script>
 
 <h2>{% raw tl['NEW_SAMPLE_TITLE'] %} {{ participant_name }}</h2>
-
+{% if message %} <h3>{{message}}</h3> {% end %}
 <form id="add_sample" name="add_sample" method="post" action="{% raw media_locale['SITEBASE'] %}/authed/{{page_type}}/">
     <input type="hidden" name="participant_name" value="{{ participant_name }}"/>
     <table width="100%">
