@@ -158,19 +158,63 @@ class TestAGDataAccess(TestCase):
 
     def test_logParticipantSample(self):
         # regular sample
-        ag_login_id = 'dc3172b2-792c-4087-8a20-714297821c6a'
-        barcode = '000026528'
+        ag_login_id = 'd8592c74-9694-2135-e040-8a80115d6401'
+        barcode = '000005626'
+
         self.ag_data.logParticipantSample(
-            ag_login_id, barcode, 'stool', None, datetime.date(2015, 9, 27),
+            ag_login_id, barcode, 'Stool', None, datetime.date(2015, 9, 27),
             datetime.time(15, 54), 'REMOVED-0', '')
+        obs = self.ag_data.getAGBarcodeDetails('000005626')
+        exp = {
+            'status': None,
+            'ag_kit_id': 'db447092-6209-54d8-e040-8a80115d3637',
+            'ag_kit_barcode_id': 'db447092-620c-54d8-e040-8a80115d3637',
+            'barcode': '000005626',
+            'environment_sampled': None,
+            'site_sampled': 'Stool',
+            'name': 'REMOVED',
+            'sample_date': datetime.date(2015, 9, 27),
+            'sample_time': datetime.time(15, 54),
+            'notes': '', 'overloaded': None,
+            'withdrawn': None,
+            'email': 'REMOVED',
+            'other': None,
+            'moldy': None,
+            'participant_name': 'REMOVED-0',
+            'refunded': None,
+            'date_of_last_email': None,
+            'other_text': 'REMOVED'
+        }
+        self.assertEqual(obs, exp)
         self.ag_data.deleteSample(barcode, ag_login_id)
 
         # env sample
-        ag_login_id = 'dc3172b2-792c-4087-8a20-714297821c6a'
-        barcode = '000026528'
         self.ag_data.logParticipantSample(
             ag_login_id, barcode, None, 'animal_habitat',
-            datetime.date(2015, 9, 27), datetime.time(15, 54), 'REMOVED', '')
+            datetime.date(2015, 9, 26), datetime.time(15, 00), 'REMOVED', '')
+        obs = self.ag_data.getAGBarcodeDetails('000005626')
+        exp = {
+            'status': None,
+            'ag_kit_id': 'db447092-6209-54d8-e040-8a80115d3637',
+            'ag_kit_barcode_id': 'db447092-620c-54d8-e040-8a80115d3637',
+            'barcode': '000005626',
+            'environment_sampled': 'animal_habitat',
+            'site_sampled': None,
+            'name': 'REMOVED',
+            'sample_date': datetime.date(2015, 9, 26),
+            'sample_time': datetime.time(15, 00),
+            'notes': '', 'overloaded': None,
+            'withdrawn': None,
+            'email': 'REMOVED',
+            'other': None,
+            'moldy': None,
+            'participant_name': 'REMOVED-0',
+            'refunded': None,
+            'date_of_last_email': None,
+            'other_text': 'REMOVED'
+        }
+        self.assertEqual(obs, exp)
+
         self.ag_data.deleteSample(barcode, ag_login_id)
 
     def test_deleteSample(self):
