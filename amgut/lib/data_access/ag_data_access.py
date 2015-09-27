@@ -286,6 +286,7 @@ class AGDataAccess(object):
                                 ag_login_surveys agl
                                 USING (ag_login_id, participant_name)
                            WHERE agl.survey_id=%s""", [survey_id])
+            # Can refactor this with _get_col_names_from_cursor()
             colnames = [x[0] for x in cur.description]
             result = cur.fetchone()
             if result:
