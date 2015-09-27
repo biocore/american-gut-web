@@ -12,16 +12,10 @@ from __future__ import division
 Centralized database access for the American Gut web portal
 """
 
-import urllib
-import httplib
 import json
 import logging
 
-from time import sleep
-from random import choice
-
 import psycopg2
-
 from passlib.hash import bcrypt
 
 from amgut.lib.data_access.sql_connection import SQLConnectionHandler
@@ -330,8 +324,9 @@ class AGDataAccess(object):
         conn_handler = SQLConnectionHandler()
         if sample_site is not None:
             # Get survey id
-            sql = ("SELECT survey_id FROM ag_login_surveys WHERE ag_login_id = "
-                   "%s AND participant_name = %s")
+            sql = """SELECT survey_id
+                     FROM ag_login_surveys
+                     WHERE ag_login_id = %s AND participant_name = %s"""
 
             survey_id = conn_handler.execute_fetchone(
                 sql, (ag_login_id, participant_name))
@@ -657,13 +652,13 @@ class AGDataAccess(object):
         return cursor.fetchone()[0]
 
     def get_user_info(self, supplied_kit_id):
-        sql = """SELECT  cast(agl.ag_login_id as varchar(100)) as ag_login_id,
+        sql = """SELECT CAST(agl.ag_login_id AS VARCHAR(100)) AS ag_login_id,
                         agl.email, agl.name, agl.address, agl.city,
                         agl.state, agl.zip, agl.country
-                 from    ag_login agl
-                        inner join ag_kit agk
-                        on agl.ag_login_id = agk.ag_login_id
-                 where   agk.supplied_kit_id = %s"""
+                 FROM ag_login agl
+                    INNER JOIN ag_kit agk
+                        ON agl.ag_login_id = agk.ag_login_id
+                 WHERE agk.supplied_kit_id = %s"""
         cursor = self.get_cursor()
         cursor.execute(sql, [supplied_kit_id])
         row = cursor.fetchone()
@@ -678,11 +673,19 @@ class AGDataAccess(object):
 
     def get_person_info(self, survey_id):
         # get question responses
-        info = {'birth_month': 'Unspecified', 'birth_year': 'Unspecified', 'gender': 'Unspecified'}
-        sql = ("SELECT q.american, sa.response FROM ag.survey_answers_other "
-               " sa JOIN ag.ag_login_surveys ls ON sa.survey_id = ls.survey_id "
-               "JOIN ag.survey_question q ON q.survey_question_id = sa.survey_question_id "
-               "WHERE sa.survey_id = %s AND q.american IN ('Birth month:','Birth year:','Gender:')")
+        info = {'birth_month': 'Unspecified',
+                'birth_year': 'Unspecified',
+                'gender': 'Unspecified'}
+        sql = """SELECT q.american, sa.response
+                 FROM ag.survey_answers_other sa
+                    JOIN ag.ag_login_surveys ls
+                        ON sa.survey_id = ls.survey_id
+                    JOIN ag.survey_question q
+                        ON q.survey_question_id = sa.survey_question_id
+                 WHERE sa.survey_id = %s
+                    AND q.american IN ('Birth month:',
+                                       'Birth year:',
+                                       'Gender:')"""
         cursor = self.get_cursor()
         cursor.execute(sql, [survey_id])
         rows = cursor.fetchall()
@@ -697,9 +700,11 @@ class AGDataAccess(object):
                 info['gender'] = value
 
         # get name from consent form
-        sql = ("SELECT c.participant_name FROM ag.ag_consent c JOIN "
-               "ag.ag_login_surveys ls ON c.ag_login_id = ls.ag_login_id WHERE "
-               "ls.survey_id = %s")
+        sql = """SELECT c.participant_name
+                 FROM ag.ag_consent c
+                    JOIN ag.ag_login_surveys ls
+                        ON c.ag_login_id = ls.ag_login_id
+                 WHERE ls.survey_id = %s"""
         cursor.execute(sql, [survey_id])
         info["name"] = cursor.fetchone()[0]
 
@@ -732,11 +737,6 @@ class AGDataAccess(object):
         cursor.close()
         return results
 
-#################################################
-### GENERAL DATA ACCESS  #######################
-################################################
-# not sure where these should end up
-
     def get_survey_id(self, ag_login_id, participant_name):
         """Return the survey ID associated with a participant or None"""
         sql = """select survey_id
@@ -757,4 +757,3 @@ class AGDataAccess(object):
         conn_handler = SQLConnectionHandler()
         return [x[0] for x in conn_handler.execute_fetchall(
             'SELECT country FROM ag.iso_country_lookup ORDER BY country')]
-

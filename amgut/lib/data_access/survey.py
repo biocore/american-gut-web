@@ -38,44 +38,39 @@ class Question(object):
         self.group_name = group_name
         self.set_response = None
 
-        responses = db_conn.execute_fetchall('''
-            select sr.{0}
-            from {1} q join {2} qr
-                on q.survey_question_id = qr.survey_question_id
-            join {3} sr on qr.response = sr.{0}
-            where q.survey_question_id = %s
-            order by qr.display_index'''.format(
-                _LOCALE_COLUMN,
-                self._survey_question_table,
-                self._question_response_table,
-                self._response_table),
-            [self.id])
-
+        sql = """SELECT sr.{0}
+                 FROM {1} q
+                    JOIN {2} qr
+                        ON q.survey_question_id = qr.survey_question_id
+                    JOIN {3} sr
+                        ON qr.response = sr.{0}
+                 WHERE q.survey_question_id = %s
+                 ORDER BY qr.display_index
+              """.format(_LOCALE_COLUMN, self._survey_question_table,
+                         self._question_response_table, self._response_table)
+        responses = db_conn.execute_fetchall(sql, [self.id])
         self.responses = [row[0] for row in responses]
 
         if not responses:
             self.responses = None
 
-        self.response_type = db_conn.execute_fetchone('''
-            select survey_response_type from {0}
-            where survey_question_id = %s'''.format(
-                self._response_type_table),
-            [self.id])[0]
+        sql = """SELECT survey_response_type
+                 FROM {0}
+                 WHERE survey_question_id = %s
+              """.format(self._response_type_table)
+        self.response_type = db_conn.execute_fetchone(sql, [self.id])[0]
 
-        self.question = db_conn.execute_fetchone('''
-            select {0}
-            from {1}
-            where survey_question_id = %s'''.format(
-                _LOCALE_COLUMN,
-                self._survey_question_table),
-                [self.id])[0]
+        sql = """SELECT {0}
+                 FROM {1}
+                 WHERE survey_question_id = %s
+                 """.format(_LOCALE_COLUMN, self._survey_question_table)
+        self.question = db_conn.execute_fetchone(sql, [self.id])[0]
 
-        self.american_question = db_conn.execute_fetchone('''
-            select american
-            from {0}
-            where survey_question_id = %s'''.format(
-                self._survey_question_table),
-                [self.id])[0]
+        self.american_question = db_conn.execute_fetchone("""
+            SELECT american
+            FROM {0}
+            WHERE survey_question_id = %s
+            """.format(self._survey_question_table), [self.id])[0]
 
         self.triggers = self._triggers()
         self.qid = '_'.join(self.group_name.split() + [str(self.id)])
@@ -93,16 +88,16 @@ class Question(object):
         tuple
             (other_question_id, [triggering indices to that question])
         """
-        trigger_list = db_conn.execute_fetchall('''
-            select triggered_question, sqr.display_index
-            from {0} sst
-            join {1} sqr
-                on sst.survey_question_id=sqr.survey_question_id
-                and sqr.response=sst.triggering_response
-            where sst.survey_question_id = %s
-            order by triggered_question'''.format(
-                self._supplemental_survey_table,
-                self._question_response_table),
+        trigger_list = db_conn.execute_fetchall("""
+            SELECT triggered_question, sqr.display_index
+            FROM {0} sst
+            JOIN {1} sqr
+                ON sst.survey_question_id=sqr.survey_question_id
+                AND sqr.response=sst.triggering_response
+            WHERE sst.survey_question_id = %s
+            ORDER BY triggered_question
+            """.format(self._supplemental_survey_table,
+                       self._question_response_table),
             [self.id])
 
         results = defaultdict(list)
@@ -199,18 +194,17 @@ class Group(object):
     def __init__(self, ID):
         self.id = ID
         n = self.american_name
-        qs = [Question.factory(x[0], n) for x in db_conn.execute_fetchall('''
-            SELECT gq.survey_question_id
-            FROM {0} sg
-            JOIN {1} gq ON sg.group_order = gq.survey_group
-            LEFT JOIN {2} sq USING (survey_question_id)
-            WHERE sg.group_order = %s AND sq.retired = FALSE
-            ORDER BY gq.display_index
-            '''.format(
-                self._group_table,
-                self._group_questions_table,
-                self._questions_table),
-            [self.id])]
+
+        sql = """SELECT gq.survey_question_id
+                 FROM {0} sg
+                 JOIN {1} gq ON sg.group_order = gq.survey_group
+                 LEFT JOIN {2} sq USING (survey_question_id)
+                 WHERE sg.group_order = %s AND sq.retired = FALSE
+                 ORDER BY gq.display_index
+              """.format(self._group_table, self._group_questions_table,
+                         self._questions_table)
+        results = db_conn.execute_fetchall(sql, [self.id])
+        qs = [Question.factory(x[0], n) for x in results]
 
         self.id_to_eid = {q.id: q.interface_element_ids for q in qs}
 
@@ -226,24 +220,20 @@ class Group(object):
 
     @property
     def name(self):
-        """Gets the locale-specific name of the group
-        """
-        return db_conn.execute_fetchone('''
-            select {0}
-            from {1} where group_order = %s'''.format(
-                _LOCALE_COLUMN,
-                self._group_table),
-            [self.id])[0]
+        """Gets the locale-specific name of the group"""
+        sql = """SELECT {0}
+                 FROM {1}
+                 WHERE group_order = %s""".format(_LOCALE_COLUMN,
+                                                  self._group_table)
+        return db_conn.execute_fetchone(sql, [self.id])[0]
 
     @property
     def american_name(self):
-        """Gets the locale-specific name of the group
-        """
-        return db_conn.execute_fetchone('''
-            select american
-            from {0} where group_order = %s'''.format(
-                self._group_table),
-            [self.id])[0]
+        """Gets the locale-specific name of the group"""
+        sql = """SELECT american
+                 FROM {0}
+                 WHERE group_order = %s""".format(self._group_table)
+        return db_conn.execute_fetchone(sql, [self.id])[0]
 
 
 class Survey(object):
@@ -265,12 +255,12 @@ class Survey(object):
     def __init__(self, ID):
         self.id = ID
 
-        self.groups = [Group(x[0]) for x in db_conn.execute_fetchall('''
-            select survey_group
-            from {0} where survey_id = %s
-            order by survey_group'''.format(
-                self._surveys_table),
-            [self.id])]
+        sql = """SELECT survey_group
+                 FROM {0}
+                 WHERE survey_id = %s
+                 ORDER BY survey_group""".format(self._surveys_table)
+        results = db_conn.execute_fetchall(sql, [self.id])
+        self.groups = [Group(x[0]) for x in results]
 
         self.questions = {}
         self.question_types = {}
@@ -279,12 +269,11 @@ class Survey(object):
                 self.question_types[question.id] = question.response_type
                 self.questions[question.id] = question
 
-        self.unspecified = db_conn.execute_fetchone("""
-            select {0}
-            from {1}
-            where american='Unspecified'""".format(
-                _LOCALE_COLUMN,
-                self._survey_response_table))[0]
+        sql = """SELECT {0}
+                 FROM {1}
+                 WHERE american='Unspecified'
+              """.format(_LOCALE_COLUMN, self._survey_response_table)
+        self.unspecified = db_conn.execute_fetchone(sql)[0]
 
     def fetch_survey(self, survey_id):
         """Return {element_id: answer}
@@ -361,14 +350,12 @@ class Survey(object):
 
             if cur.fetchone()[0]:
                 # if the survey exists, remove all its current answers
-                cur.execute("""
-                    DELETE FROM survey_answers
-                    WHERE survey_id=%s""",
-                    [consent_details['survey_id']])
-                cur.execute("""
-                    DELETE FROM survey_answers_other
-                    WHERE survey_id=%s""",
-                    [consent_details['survey_id']])
+                cur.execute("""DELETE FROM survey_answers
+                               WHERE survey_id=%s""",
+                            [consent_details['survey_id']])
+                cur.execute("""DELETE FROM survey_answers_other
+                               WHERE survey_id=%s""",
+                            [consent_details['survey_id']])
             else:
                 # otherwise, we have a new survey so we need to attach this
                 # survey ID to the consent and the login surveys join table
@@ -408,7 +395,3 @@ class Survey(object):
                                                 survey_question_id, response)
                             VALUES (%s, %s, %s)""",
                             without_fk_inserts)
-
-    #def get_survey(self, survey_id):
-    #    """Get a survey given a survey id"""
-    #    new_survey
