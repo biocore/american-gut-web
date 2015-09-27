@@ -26,7 +26,7 @@ class ForgotPasswordHandler(BaseHandler):
         kitids = ag_data.getAGKitIDsByEmail(email)
         latlongs = ag_data.getMapMarkers()
         tl = text_locale['handlers']
-        #if the kit id matches the email generate and send an email
+        # if the kit id matches the email generate and send an email
         if kit_id in kitids:
             alphabet = letters + digits
             new_act_code = ''.join([choice(alphabet) for i in range(20)])
@@ -35,7 +35,7 @@ class ForgotPasswordHandler(BaseHandler):
             MESSAGE = (tl['RESET_PASS_BODY'] % (kit_id, quote(email), kit_id,
                                                 quote(new_act_code)))
 
-            #send the user an email and tell them to change their password
+            # send the user an email and tell them to change their password
             try:
                     send_email(MESSAGE, tl['CHANGE_PASS_SUBJECT'], email)
                     self.render('forgot_password.html', email='', kitid='',
