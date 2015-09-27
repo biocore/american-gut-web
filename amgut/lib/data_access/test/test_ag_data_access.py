@@ -2,6 +2,7 @@ from unittest import TestCase, main
 from amgut.lib.data_access.ag_data_access import AGDataAccess
 import datetime
 
+
 class TestAGDataAccess(TestCase):
     def setUp(self):
         self.ag_data = AGDataAccess()
@@ -62,7 +63,9 @@ class TestAGDataAccess(TestCase):
         raise NotImplementedError()
 
     def test_getParticipantSamples(self):
-        res = self.ag_data.getParticipantSamples("d8592c74-9694-2135-e040-8a80115d6401", "REMOVED")
+        i = "d8592c74-9694-2135-e040-8a80115d6401"
+        res = self.ag_data.getParticipantSamples(i,
+                                                 "REMOVED")
         exp = [{'status': 'Received',
                 'sample_time': datetime.time(7, 40),
                 'notes': 'REMOVED',
@@ -172,14 +175,17 @@ class TestAGDataAccess(TestCase):
         self.assertItemsEqual(res, exp)
 
     def test_getEnvironmentalSamples(self):
-        res = self.ag_data.getEnvironmentalSamples("d6b0f287-b9d9-40d4-82fd-a8fd3db6c476")
+        i = "d6b0f287-b9d9-40d4-82fd-a8fd3db6c476"
+        res = self.ag_data.getEnvironmentalSamples(i)
         exp = [{'status': None, 'sample_time': datetime.time(21, 45),
                 'notes': 'REMOVED', 'barcode': '000028433',
-                'sample_date': datetime.date(2015, 6, 7), 'site_sampled': None}]
+                'sample_date': datetime.date(2015, 6, 7),
+                'site_sampled': None}]
         self.assertItemsEqual(res, exp)
 
     def test_getAvailableBarcodes(self):
-        res = self.ag_data.getAvailableBarcodes("d8592c74-9694-2135-e040-8a80115d6401")
+        i = "d8592c74-9694-2135-e040-8a80115d6401"
+        res = self.ag_data.getAvailableBarcodes(i)
         exp = ['000005628', '000005627', '000005624',
                '000005625', '000005626', '000004217']
         self.assertItemsEqual(res, exp)
