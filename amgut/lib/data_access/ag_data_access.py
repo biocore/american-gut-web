@@ -269,7 +269,6 @@ class AGDataAccess(object):
             curr.execute(sql, [ag_login_id, participant_name])
 
     def getConsent(self, survey_id):
-        conn_handler = SQL
         conn_handler = SQLConnectionHandler()
         with conn_handler.get_postgres_cursor() as cur:
             cur.execute("""SELECT agc.participant_name,
