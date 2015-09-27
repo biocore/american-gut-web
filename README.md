@@ -45,7 +45,7 @@ Finally run the tests to populate the databases and launch the website
 python amgut/webserver.py
 ```
 
-.. |Build Status| image:: https://travis-ci.org/biocore/american-gut-web.png?branch=master
+.. |Build Status| image:: https://travis-ci.org/biocore/american-gut-web.svg?branch=master
    :target: https://travis-ci.org/biocore/american-gut-web
-.. |Coverage Status| image:: https://coveralls.io/repos/biocore/american-gut-web/badge.png?branch=master
+.. |Coverage Status| image:: https://coveralls.io/repos/biocore/american-gut-web/badge.png
    :target: https://coveralls.io/r/biocore/american-gut-web
