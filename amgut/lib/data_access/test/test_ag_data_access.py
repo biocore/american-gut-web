@@ -249,8 +249,8 @@ class TestAGDataAccess(TestCase):
         raise NotImplementedError()
 
     def test_getBarcodesByKit(self):
-        res = self.ag_data.getBarcodesByKit('tst_iqyYo')
-        exp = ['000027561']
+        res = self.ag_data.getBarcodesByKit('tst_qmhLX')
+        exp = ['000001322']
         self.assertItemsEqual(res, exp)
 
     def test_getBarcodesByKitNotPresent(self):
