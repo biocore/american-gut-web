@@ -136,22 +136,42 @@ class AGDataAccess(object):
         else:
             return False
 
-    def addAGLogin(self, email, name, address, city, state, zip_, country):
+    def check_login_exists(self, email):
+        """Checks if email for login already exists on system
+
+        Parameters
+        ----------
+        email : str
+            Email for user to check
+
+        Returns
+        -------
+        ag_login_id or None
+            If exists, returns ag_login_id, else returns None
+        """
         clean_email = email.strip().lower()
         sql = "select ag_login_id from ag_login WHERE LOWER(email) = %s"
         cur = self.get_cursor()
         cur.execute(sql, [clean_email])
-        ag_login_id = cur.fetchone()
+        value = cur.fetchone()
+        if value is not None:
+            value = value[0]
+        return value
+
+    def addAGLogin(self, email, name, address, city, state, zip_, country):
+        clean_email = email.strip().lower()
+        ag_login_id = self.check_login_exists(email)
         if not ag_login_id:
             # create the login
             sql = ("INSERT INTO ag_login (email, name, address, city, state, "
                    "zip, country) VALUES (%s, %s, %s, %s, %s, %s, %s) "
                    "RETURNING ag_login_id")
+            cur = self.get_cursor()
             cur.execute(sql, [clean_email, name, address, city,
                               state, zip_, country])
-            ag_login_id = cur.fetchone()
+            ag_login_id = cur.fetchone()[0]
             self.connection.commit()
-        return ag_login_id[0]
+        return ag_login_id
 
     def getAGBarcodeDetails(self, barcode):
         sql = """SELECT  email,
