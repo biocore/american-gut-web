@@ -1,4 +1,8 @@
 from unittest import TestCase, main
+from random import choice, randint
+from string import ascii_letters
+from uuid import UUID
+
 from amgut.lib.data_access.ag_data_access import AGDataAccess
 
 
@@ -28,7 +32,33 @@ class TestAGDataAccess(TestCase):
         raise NotImplementedError()
 
     def test_addAGLogin(self):
-        raise NotImplementedError()
+        # test new user
+        exists = 'EXISTS'
+        while exists is not None:
+            email = ''.join([choice(ascii_letters)
+                             for i in range(randint(5, 10))])
+            domain = ''.join([choice(ascii_letters)
+                             for i in range(randint(5, 10))])
+            new_email = '@'.join([email, domain]) + '.com'
+            exists = self.ag_data.check_login_exists(new_email)
+
+        # make sure the ag_login_id is a UUID4 string
+        ag_login_id = self.ag_data.addAGLogin(
+            new_email, 'TESTDUDE', '123 fake test street', 'testcity',
+            'teststate', '1L2 2G3', 'United Kingdom')
+        as_uuid = UUID(ag_login_id)
+        self.assertTrue(as_uuid.version, 4)
+
+        # test existing user
+        ag_login_id = self.ag_data.addAGLogin(
+            'TEST@EMAIL.com', 'TESTDUDE', '123 fake test street', 'testcity',
+            'teststate', '1L2 2G3', 'United Kingdom')
+
+        obs = self.ag_data.addAGLogin(
+            'test@EMAIL.com', 'TESTDUDE', '123 fake test street', 'testcity',
+            'teststate', '1L2 2G3', 'United Kingdom')
+        self.assertEqual(ag_login_id, obs)
+
 
     def test_getAGBarcodeDetails(self):
         raise NotImplementedError()
