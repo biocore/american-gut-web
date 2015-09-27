@@ -253,6 +253,10 @@ class TestAGDataAccess(TestCase):
         exp = ['000027561']
         self.assertItemsEqual(res, exp)
 
+    def test_getBarcodesByKitNotPresent(self):
+        res = self.ag_data.getBarcodesByKit('42')
+        self.assertEqual(res, [])
+
     def test_checkPrintResults(self):
         raise NotImplementedError()
 
