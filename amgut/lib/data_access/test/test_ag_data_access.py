@@ -2,6 +2,7 @@ from unittest import TestCase, main
 from random import choice, randint
 from string import ascii_letters
 from uuid import UUID
+import datetime
 
 from amgut.lib.data_access.ag_data_access import AGDataAccess
 
@@ -61,11 +62,56 @@ class TestAGDataAccess(TestCase):
 
 
     def test_getAGBarcodeDetails(self):
-        obs = self.ag_data.getAGBarcodeDetails('00002124')
-        print obs
+        # test non-existant barcode
+        obs = self.ag_data.getAGBarcodeDetails('99')
+        self.assertEqual(obs, {})
+
+        # test existing barcode but not in AG
+        obs = self.ag_data.getAGBarcodeDetails('000006232')
+        self.assertEqual(obs, {})
+
+        # test existing AG barcode
+        obs = self.ag_data.getAGBarcodeDetails('000001047')
+        exp = {
+            'barcode': '000001047',
+            'status': 'Received',
+            'ag_kit_id': 'd8592c74-7e35-2135-e040-8a80115d6401',
+            'name': 'REMOVED',
+            'participant_name': 'REMOVED',
+            'email': 'REMOVED',
+            'site_sampled': 'Stool',
+            'environment_sampled': None,
+            'sample_date': datetime.date(2013, 3, 28),
+            'sample_time': datetime.time(23, 25),
+            'notes': 'REMOVED',
+            'overloaded': None,
+            'withdrawn': None,
+            'other': None,
+            'moldy': None,
+            'refunded': None,
+            'ag_kit_barcode_id': 'd8592c74-7e36-2135-e040-8a80115d6401',
+            'date_of_last_email': None,
+            'other_text': 'REMOVED'
+        }
+        self.assertEqual(obs, exp)
+
 
     def test_getAGKitDetails(self):
-        raise NotImplementedError()
+        # test non-existant kit
+        obs = self.ag_data.getAGKitDetails('IDONTEXI5T')
+        self.assertEqual(obs, {})
+
+        # test existing AG kit
+        obs = self.ag_data.getAGKitDetails('tst_OQjBX')
+        exp = {
+            'ag_kit_id': 'd9f2572b-35eb-6b88-e040-8a80115d4a01',
+            'supplied_kit_id': 'tst_OQjBX',
+            'swabs_per_kit': 1,
+            'verification_email_sent': 'n',
+            'kit_verification_code': '36714',
+            'kit_password': '$2a$12$3yUJTUuTfCMkgVVev8xik.33wruO9SDAwuVDUZBq3c'
+                            'VVMuJbK9cai',
+            'kit_verified': 'y'}
 
     def test_registerHandoutKit(self):
         raise NotImplementedError()
