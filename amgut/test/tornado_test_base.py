@@ -5,7 +5,6 @@ except ImportError:  # py3
     from urllib.parse import urlencode
 
 from tornado.testing import AsyncHTTPTestCase
-from tornado.web import Application
 from amgut.webserver import Application
 from amgut.handlers.base_handlers import BaseHandler
 
