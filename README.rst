@@ -4,7 +4,8 @@ american-gut-web
 
 The website for the American Gut Project participant portal
 
-### Installation Guide for OSX
+Installation Guide for OSX
+--------------------------
 
 First install [Postgres.app](http://postgresapp.com/)
 Make sure that the path is configured properly so add the following to your `.profile` file
