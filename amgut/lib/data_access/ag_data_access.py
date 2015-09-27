@@ -216,6 +216,22 @@ class AGDataAccess(object):
         printresults = self.checkPrintResults(supplied_kit_id)
         if printresults is None:
             printresults = 'n'
+        # make sure login_id and skid exists
+        sql = """SELECT EXISTS(SELECT *
+                               FROM ag.ag_login
+                               WHERE ag_login_id = %s)"""
+        conn_handler = SQLConnectionHandler()
+        try:
+            exists = conn_handler.execute_fetchone(sql, [ag_login_id])[0]
+        except ValueError:
+            raise ValueError("ag_login_id is not a UUID: %s" % ag_login_id)
+        if not exists:
+            return False
+        sql = """SELECT EXISTS(SELECT *
+                               FROM ag.ag_handout_kits
+                               WHERE kit_id = %s)"""
+        if not conn_handler.execute_fetchone(sql, [supplied_kit_id])[0]:
+            return False
 
         sql = """
             DO $do$
@@ -241,7 +257,6 @@ class AGDataAccess(object):
             END $do$;
             """.format(ag_login_id, printresults)
 
-        conn_handler = SQLConnectionHandler()
         try:
             conn_handler.execute(sql, [supplied_kit_id] * 3)
         except psycopg2.IntegrityError:
@@ -249,8 +264,10 @@ class AGDataAccess(object):
             return False
         return True
 
-    def get_handout_kits(self):
-        pass
+    def get_all_handout_kits(self):
+        conn_handler = SQLConnectionHandler()
+        sql = 'SELECT kit_id FROM ag.ag_handout_kits'
+        return [x[0] for x in conn_handler.execute_fetchall(sql)]
 
     def deleteAGParticipantSurvey(self, ag_login_id, participant_name):
         # Remove user using old stype DB Schema
