@@ -60,7 +60,6 @@ class TestAGDataAccess(TestCase):
             'teststate', '1L2 2G3', 'United Kingdom')
         self.assertEqual(ag_login_id, obs)
 
-
     def test_getAGBarcodeDetails(self):
         # test non-existant barcode
         obs = self.ag_data.getAGBarcodeDetails('99')
@@ -95,7 +94,6 @@ class TestAGDataAccess(TestCase):
         }
         self.assertEqual(obs, exp)
 
-
     def test_getAGKitDetails(self):
         # test non-existant kit
         obs = self.ag_data.getAGKitDetails('IDONTEXI5T')
@@ -112,15 +110,33 @@ class TestAGDataAccess(TestCase):
             'kit_password': '$2a$12$3yUJTUuTfCMkgVVev8xik.33wruO9SDAwuVDUZBq3c'
                             'VVMuJbK9cai',
             'kit_verified': 'y'}
+        self.assertEqual(obs, exp)
 
     def test_registerHandoutKit(self):
         # run on bad data
-        obs = self.ag_data.registerHandoutKit('BAD', 'DATA')
+        with self.assertRaises(ValueError):
+            obs = self.ag_data.registerHandoutKit('BAD', 'DATA')
+
+        # run on non-existant login id
+        ag_login_id = '11111111-1111-1111-1111-714297821c6a'
+        kit = self.ag_data.get_all_handout_kits()[0]
+        obs = self.ag_data.registerHandoutKit(ag_login_id, kit)
+        self.assertFalse(obs)
+
+        # run on non-existant kit_id
+        ag_login_id = 'dc3172b2-792c-4087-8a20-714297821c6a'
+        kit = 'NoTR3AL'
+        obs = self.ag_data.registerHandoutKit(ag_login_id, kit)
         self.assertFalse(obs)
 
         # run on real data
-        obs = self.ag_data.registerHandoutKit('BAD', 'DATA')
-        self.assertFalse(obs)
+        ag_login_id = 'dc3172b2-792c-4087-8a20-714297821c6a'
+        kit = self.ag_data.get_all_handout_kits()[0]
+        obs = self.ag_data.registerHandoutKit(ag_login_id, kit)
+        self.assertTrue(obs)
+        # make sure kit removed from ag_handout_kits
+        kits = self.ag_data.get_all_handout_kits()
+        self.assertTrue(kit not in kits)
 
     def test_deleteAGParticipantSurvey(self):
         raise NotImplementedError()
