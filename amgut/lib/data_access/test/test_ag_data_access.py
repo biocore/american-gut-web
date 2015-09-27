@@ -44,6 +44,9 @@ class TestAGDataAccess(TestCase):
                'is_juvenile': False}
         self.assertEquals(res, exp)
 
+        res = self.ag_data.getConsent("42")
+        self.assertEquals(res, None)
+
     def test_logParticipantSample(self):
         raise NotImplementedError()
 
@@ -63,9 +66,22 @@ class TestAGDataAccess(TestCase):
         raise NotImplementedError()
 
     def test_getParticipantSamples(self):
+        i = '00000000-0000-0000-0000-000000000000'
+        res = self.ag_data.getParticipantSamples(i, "REMOVED")
+        self.assertEqual(res, [])
+
+        i = "d6b0f287-b9d9-40d4-82fd-a8fd3db6c476"
+        res = self.ag_data.getParticipantSamples(i, "REMOVED")
+        exp = [{'status': None,
+                'sample_time': datetime.time(11, 55),
+                'notes': 'REMOVED',
+                'barcode': '000028432',
+                'sample_date': datetime.date(2015, 6, 7),
+                'site_sampled': 'Stool'}]
+        self.assertEqual(res, exp)
+
         i = "d8592c74-9694-2135-e040-8a80115d6401"
-        res = self.ag_data.getParticipantSamples(i,
-                                                 "REMOVED")
+        res = self.ag_data.getParticipantSamples(i, "REMOVED")
         exp = [{'status': 'Received',
                 'sample_time': datetime.time(7, 40),
                 'notes': 'REMOVED',
@@ -79,7 +95,8 @@ class TestAGDataAccess(TestCase):
                 'sample_date': datetime.date(2014, 6, 1),
                 'site_sampled': 'Stool'},
                {'status': 'Received', 'sample_time': datetime.time(9, 20),
-                'notes': 'REMOVED', 'barcode': '000016706',
+                'notes': 'REMOVED',
+                'barcode': '000016706',
                 'sample_date': datetime.date(2014, 6, 8),
                 'site_sampled': 'Stool'},
                {'status': 'Received',
@@ -188,6 +205,11 @@ class TestAGDataAccess(TestCase):
         res = self.ag_data.getAvailableBarcodes(i)
         exp = ['000005628', '000005627', '000005624',
                '000005625', '000005626', '000004217']
+        self.assertItemsEqual(res, exp)
+
+        i = "d6b0f287-b9d9-40d4-82fd-a8fd3db6c476"
+        res = self.ag_data.getAvailableBarcodes(i)
+        exp = ['000028434']
         self.assertItemsEqual(res, exp)
 
     def test_verifyKit(self):
