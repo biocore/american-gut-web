@@ -326,6 +326,7 @@ class AGDataAccess(object):
                                 ag_login_surveys agl
                                 USING (ag_login_id, participant_name)
                            WHERE agl.survey_id=%s""", [survey_id])
+            # Can refactor this with _get_col_names_from_cursor()
             colnames = [x[0] for x in cur.description]
             result = cur.fetchone()
             if result:
@@ -631,12 +632,29 @@ class AGDataAccess(object):
         return [row[0] for row in results]
 
     def checkPrintResults(self, kit_id):
+        """Checks whether or not results are available for a given `kit_id`
+
+        Parameters
+        ----------
+        kit_id : str
+            The supplied kit identifier to check for results availability.
+
+        Returns
+        -------
+        bool
+            Whether or not the results are ready for the supplied kit_id.
+
+        Notes
+        -----
+        If a `kit_id` does not exist this function will return False, as no
+        results would be available for a non-existent `kit_id`.
+        """
         sql = "SELECT print_results FROM ag_handout_kits WHERE kit_id = %s"
         results = self._sql.execute_fetchone(sql, [kit_id])
         if results is None:
-            return None
+            return False
         else:
-            return results[0].strip()
+            return results[0]
 
     def get_user_for_kit(self, supplied_kit_id):
         sql = ("select AK.ag_login_id from ag_kit AK "

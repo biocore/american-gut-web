@@ -6,14 +6,19 @@
 
 The developer workflow for making changes to the database schema will be:
 
-1. Load the fully patched DBS file (e.g., ag.dbs)
-2. Make desired changes
-3. Save the DBS file under a different name (e.g., foo.dbs)
-4. Select "Compare Schemas with Other Project From File" from the "Synchronization" menu
-5. Compare foo.dbs with ag.dbs
-6. Click the button to prefer all of your new changes
-7. Save the patch file with the next number (e.g., 0001.sql)
-8. Edit the patch file and add general comments including a date, and (where necessary) specific comments
+1. Load the fully patched DBS file (e.g., `amgut/db/ag.dbs`).
+2. Make desired changes.
+3. Select `Compare Schemas with Other Project From File` from the `Schema` menu.
+4. Compare against `amgut/db/ag.dbs`.
+5. Click the button to prefer all of your new changes.
+6. This will prompt a window asking for the "Editor Name", write the filename
+   for the next patch (e.g. if the newest patch is 0011.sql, you should write
+   0012.sql).
+7. Edit the patch file and add general comments including a date, and (where
+   necessary) specific comments.
+8. Save the `.dbs` file.
+9. Regenerate the HTML schema (go to Project > Export as ... > Html 5 Vector
+   Image).
 
 One drawback is that developers will need to have [DBSchema](http://www.dbschema.com/) to develop for this project.
 
