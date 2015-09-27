@@ -100,10 +100,10 @@ class TestAGDataAccess(TestCase):
         raise NotImplementedError()
 
     def test_checkPrintResults(self):
-        obs = self.ag_data.checkPrintResults('tst_PmaJU')
+        obs = self.ag_data.checkPrintResults('tst_oasoR')
         self.assertFalse(obs)
 
-        obs = self.ag_data.checkPrintResults('tst_Tnwce')
+        obs = self.ag_data.checkPrintResults('tst_TMYwD')
         self.assertTrue(obs)
 
     def test_checkPrintResults_invalid_ids(self):
