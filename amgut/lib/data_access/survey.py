@@ -47,7 +47,7 @@ class Question(object):
                  WHERE q.survey_question_id = %s
                  ORDER BY qr.display_index
               """.format(_LOCALE_COLUMN, self._survey_question_table,
-                         self._question_response_table, self._response_table),
+                         self._question_response_table, self._response_table)
         responses = db_conn.execute_fetchall(sql, [self.id])
         self.responses = [row[0] for row in responses]
 
@@ -63,7 +63,7 @@ class Question(object):
         sql = """SELECT {0}
                  FROM {1}
                  WHERE survey_question_id = %s
-                 """.format(_LOCALE_COLUMN, self._survey_question_table),
+                 """.format(_LOCALE_COLUMN, self._survey_question_table)
         self.question = db_conn.execute_fetchone(sql, [self.id])[0]
 
         self.american_question = db_conn.execute_fetchone("""
