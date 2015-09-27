@@ -12,6 +12,11 @@ from amgut.lib.survey_supp import primary_human_survey
 from amgut.lib.mail import send_email
 
 
+phs_groups = primary_human_survey.groups
+surveys = [make_survey_class(group, survey_type='HumanSurvey')
+           for group in phs_groups]
+
+
 def build_consent_form(consent_info):
     tl = text_locale['new_participant.html']
     # build out the consent form
@@ -69,23 +74,20 @@ def build_consent_form(consent_info):
     return message
 
 
-surveys = [make_survey_class(group, survey_type='HumanSurvey')
-           for group in primary_human_survey.groups]
-
-
 class HumanSurveyHandler(BaseHandler):
     @authenticated
     def post(self):
         # see if we're coming from an edit
         human_survey_id = self.get_argument('survey_id', None)
         page_number = int(self.get_argument('page_number'))
+        sitebase = media_locale['SITEBASE']
 
         if human_survey_id is None:
             # we came from consent
             human_survey_id = self.get_secure_cookie('human_survey_id')
             if human_survey_id is None:
                 err_msg = url_escape("There was an unexpected error.")
-                self.redirect(media_locale['SITEBASE'] + "/authed/portal/?errmsg=%s" % err_msg)
+                self.redirect(sitebase + "/authed/portal/?errmsg=%s" % err_msg)
                 return
         else:
             # we came from participant_overview
@@ -105,7 +107,7 @@ class HumanSurveyHandler(BaseHandler):
 
             redis.hset(human_survey_id, page_number, dumps(data))
 
-        progress = int(100.0*(page_number+2)/(len(primary_human_survey.groups) + 1))
+        progress = int(100.0 * (page_number + 2) / (len(phs_groups) + 1))
 
         # if this is not the last page, render the next page
         if next_page_number < len(surveys):
@@ -116,7 +118,7 @@ class HumanSurveyHandler(BaseHandler):
                 existing_responses = loads(existing_responses)
                 the_form = surveys[next_page_number](data=existing_responses)
 
-            title = primary_human_survey.groups[next_page_number].name
+            title = phs_groups[next_page_number].name
 
             self.render('human_survey.html', the_form=the_form,
                         skid=self.current_user, TITLE=title,
@@ -142,8 +144,7 @@ class HumanSurveyHandler(BaseHandler):
                                       (human_survey_id,
                                        consent_info['participant_email']))
 
-            self.redirect(media_locale['SITEBASE'] +
-                          '/authed/human_survey_completed/')
+            self.redirect(sitebase + '/authed/human_survey_completed/')
 
     @authenticated
     def get(self, *args, **kwargs):

@@ -17,7 +17,6 @@ from amgut.connections import ag_data, redis
 from amgut.lib.vioscreen import encrypt_key
 
 
-
 class PartitionResponse(object):
     """Partition responses based on the response type
 
@@ -44,11 +43,11 @@ class PartitionResponse(object):
 def make_survey_class(group, survey_type):
     """Creates a form class for a group of questions
 
-    The top-level attributes of the generated class correspond to the question_ids from
-    amgut.lib.human_survey_supp structures
+    The top-level attributes of the generated class correspond to the
+    question_ids from amgut.lib.human_survey_supp structures
 
-    Select fields are generated for questions that require a single response, and sets
-    of checkboxes for questions that can have multiple responses
+    Select fields are generated for questions that require a single response,
+    and sets of checkboxes for questions that can have multiple responses
     """
     attrs = {}
     prompts = {}

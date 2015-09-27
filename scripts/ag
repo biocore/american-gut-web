@@ -9,15 +9,7 @@
 # -----------------------------------------------------------------------------
 import click
 
-from psycopg2 import connect, InternalError
-from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
-
-# pylint: disable=no-name-in-module
-from passlib.hash import bcrypt
-# pylint: enable=no-name-in-module
-
-from amgut.connections import ag_data, redis
-from amgut.lib.config_manager import AMGUT_CONFIG
+from amgut.connections import redis
 from amgut.lib.data_access.env_management import (
     create_database, build, initialize, make_settings_table, patch_db,
     populate_test_db, rebuild_test)
