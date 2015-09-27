@@ -4,7 +4,6 @@ from amgut.connections import ag_data
 from amgut import text_locale
 
 
-
 class KitIDHandler(BaseHandler):
     def get(self):
         self.render('retrieve_kitid.html', message='', output='form',

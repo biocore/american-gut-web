@@ -36,8 +36,9 @@ class TaxaSummaryHandler(BaseHandler):
                                 'taxa-summaries', barcode+'.txt')
 
         # read lines from taxa summary table, omit comment lines
-        lines = [x.replace(';', '\t').strip() for x in
-            open(taxa_summary_fp, 'U').readlines() if not x.startswith('#')]
+        with open(taxa_summary_fp, 'U') as fp:
+            lines = [x.replace(';', '\t').strip() for x in fp
+                     if not x.startswith('#')]
 
         # remove the greengenes prefixes. If hierarchy is delimitd by
         # semicolon- space, the GG prefix may be preceded by a space
@@ -59,7 +60,7 @@ class TaxaSummaryHandler(BaseHandler):
 
         # generate headers
         headers = ['Kingdom', 'Phylum', 'Class', 'Order', 'Family',
-            'Genus', 'Relative Abundance (%)']
+                   'Genus', 'Relative Abundance (%)']
 
         self.render('taxa_summary.html', headers=headers, data=lines,
                     barcode=barcode, file_path=taxa_summary_url, loginerror="",

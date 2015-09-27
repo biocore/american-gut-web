@@ -9,12 +9,13 @@ from amgut import media_locale
 
 
 class LogSample(Form):
+    required = validators.required
     participant_name = HiddenField(u'participant_name')
-    barcode = SelectField(validators=[validators.required("Required field")])
-    sample_site = SelectField(validators=[validators.required("Required field")])
-    sample_date = DateField(validators=[validators.required("Required field")],
+    barcode = SelectField(validators=[required("Required field")])
+    sample_site = SelectField(validators=[required("Required field")])
+    sample_date = DateField(validators=[required("Required field")],
                             format='%m/%d/%Y')
-    sample_time = DateTimeField(validators=[validators.required("Required field")],
+    sample_time = DateTimeField(validators=[required("Required field")],
                                 format='%I:%M %p')
     notes = TextField('notes')
 

@@ -36,6 +36,8 @@ class AnimalSurveyHandler(BaseHandler):
         ag_login_id = ag_data.get_user_for_kit(skid)
         ag_login_info = ag_data.get_login_info(ag_login_id)[0]
         animal_survey_id = self.get_argument('survey_id', None)
+        sitebase = media_locale['SITEBASE']
+
         if not animal_survey_id:
             animal_survey_id = binascii.hexlify(os.urandom(8))
 
@@ -47,7 +49,8 @@ class AnimalSurveyHandler(BaseHandler):
         if not animal_survey_id and \
                 ag_data.check_if_consent_exists(ag_login_id, participant_name):
             errmsg = url_escape(tl['PARTICIPANT_EXISTS'] % participant_name)
-            self.redirect(media_locale['SITEBASE'] + "/authed/portal/?errmsg=%s" % errmsg)
+            url = sitebase + "/authed/portal/?errmsg=%s" % errmsg
+            self.redirect(url)
             return
 
         consent = {
@@ -74,7 +77,9 @@ class AnimalSurveyHandler(BaseHandler):
         else:
             message = urlencode([('errmsg', tl['SUCCESSFULLY_ADDED'] %
                                  participant_name)])
-        self.redirect(media_locale['SITEBASE'] + '/authed/portal/?%s' % message)
+
+        url = sitebase + '/authed/portal/?%s' % message
+        self.redirect(url)
 
 
 class CheckParticipantName(WebSocketHandler, BaseHandler):

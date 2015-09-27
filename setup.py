@@ -8,11 +8,10 @@
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
 
-__version__ = "0.1.0-dev"
-
 from setuptools import setup
 from glob import glob
 
+__version__ = "0.1.0-dev"
 
 classes = """
     Development Status :: 4 - Beta
@@ -69,6 +68,8 @@ setup(name='American Gut participant UI',
           'passlib==1.6.2',
           'psycopg2',
           'pycrypto==2.6.1',
+          'bcrypt',
+          'py-bcrypt',
           'redis',
           'requests',
           'tornado==3.2.2',

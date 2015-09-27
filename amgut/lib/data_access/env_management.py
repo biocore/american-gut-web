@@ -1,18 +1,20 @@
-from os.path import abspath, basename, dirname, join, split, splitext
+from os.path import abspath, dirname, join, split
 from glob import glob
 from functools import partial
 from subprocess import Popen, PIPE
 import gzip
 
 from click import echo
-from psycopg2 import (connect, OperationalError, ProgrammingError)
+from psycopg2 import (connect, OperationalError)
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from natsort import natsorted
 
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.lib.data_access.sql_connection import SQLConnectionHandler
 
-get_db_file = partial(join, join(dirname(dirname(abspath(__file__))), '..', 'db'))
+
+get_db_file = partial(join, join(dirname(dirname(abspath(__file__))), '..',
+                                 'db'))
 LAYOUT_FP = get_db_file('ag_unpatched.sql')
 INITIALIZE_FP = get_db_file('initialize.sql')
 POPULATE_FP = get_db_file('ag_test_patch22.sql.gz')
@@ -64,6 +66,7 @@ def create_database(force=False):
     cur.close()
     conn.close()
 
+
 def build(verbose=False):
     conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
                    host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
@@ -87,6 +90,7 @@ def build(verbose=False):
         cur.execute(f.read())
     conn.commit()
 
+
 def initialize(verbose=False):
     """Initialize the database with permissions and, optionally, a new user
 
@@ -103,15 +107,15 @@ def initialize(verbose=False):
     if verbose:
         echo('Granting privileges')
 
-    cur.execute('GRANT USAGE ON schema public, ag, barcodes TO %s' % AMGUT_CONFIG.user)
+    cur.execute("""GRANT USAGE ON schema public, ag, barcodes
+                   TO %s""" % AMGUT_CONFIG.user)
     cur.execute('GRANT CONNECT ON DATABASE %s TO %s' %
                 (AMGUT_CONFIG.database, AMGUT_CONFIG.user))
     cur.execute('GRANT INSERT, UPDATE, DELETE, SELECT ON ALL TABLES IN SCHEMA'
                 ' public, ag, barcodes TO %s;' % AMGUT_CONFIG.user)
-    cur.execute('GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public, ag, barcodes '
-                'TO %s;' % AMGUT_CONFIG.user)
+    cur.execute('GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public, ag, barcodes'
+                ' TO %s;' % AMGUT_CONFIG.user)
     conn.commit()
-
 
 
 def make_settings_table():
