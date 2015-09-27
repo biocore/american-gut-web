@@ -66,11 +66,6 @@ class TestAGDataAccess(TestCase):
     def test_getAnimalParticipants(self):
         raise NotImplementedError()
 
-    def test_getParticipantSamplesNotPresent(self):
-        i = '00000000-0000-0000-0000-000000000000'
-        res = self.ag_data.getParticipantSamples(i, "REMOVED")
-        self.assertEqual(res, [])
-
     def test_getParticipantSamples(self):
         i = "d6b0f287-b9d9-40d4-82fd-a8fd3db6c476"
         res = self.ag_data.getParticipantSamples(i, "REMOVED")
@@ -193,9 +188,9 @@ class TestAGDataAccess(TestCase):
                 'site_sampled': 'Stool'}]
         self.assertItemsEqual(res, exp)
 
-    def test_getEnvironmentalSamplesNotPresent(self):
+    def test_getParticipantSamplesNotPresent(self):
         i = '00000000-0000-0000-0000-000000000000'
-        res = self.ag_data.getEnvironmentalSamples(i)
+        res = self.ag_data.getParticipantSamples(i, "REMOVED")
         self.assertEqual(res, [])
 
     def test_getEnvironmentalSamples(self):
@@ -207,9 +202,9 @@ class TestAGDataAccess(TestCase):
                 'site_sampled': None}]
         self.assertItemsEqual(res, exp)
 
-    def test_getAvailableBarcodesNotPresent(self):
+    def test_getEnvironmentalSamplesNotPresent(self):
         i = '00000000-0000-0000-0000-000000000000'
-        res = self.ag_data.getAvailableBarcodes(i)
+        res = self.ag_data.getEnvironmentalSamples(i)
         self.assertEqual(res, [])
 
     def test_getAvailableBarcodes(self):
@@ -223,6 +218,11 @@ class TestAGDataAccess(TestCase):
         res = self.ag_data.getAvailableBarcodes(i)
         exp = ['000028434']
         self.assertItemsEqual(res, exp)
+
+    def test_getAvailableBarcodesNotPresent(self):
+        i = '00000000-0000-0000-0000-000000000000'
+        res = self.ag_data.getAvailableBarcodes(i)
+        self.assertEqual(res, [])
 
     def test_verifyKit(self):
         raise NotImplementedError()
