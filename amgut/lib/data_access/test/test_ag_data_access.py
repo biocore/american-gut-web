@@ -60,7 +60,7 @@ class TestAGDataAccess(TestCase):
             'teststate', '1L2 2G3', 'United Kingdom')
         self.assertEqual(ag_login_id, obs)
 
-    def test_getAGBarcodeDetails(self):
+    def test_getAGBarcodeDetails_bad_barcode(self):
         # test non-existant barcode
         obs = self.ag_data.getAGBarcodeDetails('99')
         self.assertEqual(obs, {})
@@ -69,6 +69,7 @@ class TestAGDataAccess(TestCase):
         obs = self.ag_data.getAGBarcodeDetails('000006232')
         self.assertEqual(obs, {})
 
+    def test_getAGBarcodeDetails(self):
         # test existing AG barcode
         obs = self.ag_data.getAGBarcodeDetails('000001047')
         exp = {
@@ -100,23 +101,23 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(obs, {})
 
         # test existing AG kit
-        obs = self.ag_data.getAGKitDetails('tst_OQjBX')
-        exp = {
-            'ag_kit_id': 'd9f2572b-35eb-6b88-e040-8a80115d4a01',
-            'supplied_kit_id': 'tst_OQjBX',
-            'swabs_per_kit': 1,
-            'verification_email_sent': 'n',
-            'kit_verification_code': '36714',
-            'kit_password': '$2a$12$3yUJTUuTfCMkgVVev8xik.33wruO9SDAwuVDUZBq3c'
-                            'VVMuJbK9cai',
-            'kit_verified': 'y'}
+        obs = self.ag_data.getAGKitDetails('tst_ODmhG')
+        exp = {'ag_kit_id': 'd8592c74-84bb-2135-e040-8a80115d6401',
+               'supplied_kit_id': 'tst_ODmhG',
+               'swabs_per_kit': 1,
+               'verification_email_sent': 'n',
+               'kit_verification_code': 'f4UjhV4B',
+               'kit_password': '$2a$12$LiakUCHOpAMvEp9Wxehw5OIlD/TIIP0Bs3blw18'
+                               'ePcmKHWWAePrQ.',
+               'kit_verified': 'y'}
         self.assertEqual(obs, exp)
 
-    def test_registerHandoutKit(self):
+    def test_registerHandoutKit_bad_data(self):
         # run on bad data
         with self.assertRaises(ValueError):
-            obs = self.ag_data.registerHandoutKit('BAD', 'DATA')
+            self.ag_data.registerHandoutKit('BAD', 'DATA')
 
+    def test_registerHandoutKit_bad_idz(self):
         # run on non-existant login id
         ag_login_id = '11111111-1111-1111-1111-714297821c6a'
         kit = self.ag_data.get_all_handout_kits()[0]
@@ -129,14 +130,17 @@ class TestAGDataAccess(TestCase):
         obs = self.ag_data.registerHandoutKit(ag_login_id, kit)
         self.assertFalse(obs)
 
+    def test_registerHandoutKit(self):
         # run on real data
         ag_login_id = 'dc3172b2-792c-4087-8a20-714297821c6a'
         kit = self.ag_data.get_all_handout_kits()[0]
         obs = self.ag_data.registerHandoutKit(ag_login_id, kit)
         self.assertTrue(obs)
-        # make sure kit removed from ag_handout_kits
+        # make sure kit removed from ag_handout_kits and inserted in ag_kit
         kits = self.ag_data.get_all_handout_kits()
         self.assertTrue(kit not in kits)
+        obs = self.ag_data.getAGKitDetails(kit)
+        self.assertEqual(obs['supplied_kit_id'], kit)
 
     def test_deleteAGParticipantSurvey(self):
         raise NotImplementedError()
@@ -144,8 +148,30 @@ class TestAGDataAccess(TestCase):
     def test_getConsent(self):
         raise NotImplementedError()
 
+    def test_logParticipantSample_badinfo(self):
+        # bad ag_login_id
+        with self.assertRaises(RuntimeError):
+            self.ag_data.logParticipantSample(
+                '11111111-1111-1111-1111-714297821c6a', '000001047',
+                'stool', None, datetime.date(2015, 9, 27),
+                datetime.time(15, 54), 'BADNAME', '')
+
     def test_logParticipantSample(self):
-        raise NotImplementedError()
+        # regular sample
+        ag_login_id = 'dc3172b2-792c-4087-8a20-714297821c6a'
+        barcode = '000026528'
+        self.ag_data.logParticipantSample(
+            ag_login_id, barcode, 'stool', None, datetime.date(2015, 9, 27),
+            datetime.time(15, 54), 'REMOVED-0', '')
+        self.ag_data.deleteSample(barcode, ag_login_id)
+
+        # env sample
+        ag_login_id = 'dc3172b2-792c-4087-8a20-714297821c6a'
+        barcode = '000026528'
+        self.ag_data.logParticipantSample(
+            ag_login_id, barcode, None, 'animal_habitat',
+            datetime.date(2015, 9, 27), datetime.time(15, 54), 'REMOVED', '')
+        self.ag_data.deleteSample(barcode, ag_login_id)
 
     def test_deleteSample(self):
         raise NotImplementedError()
