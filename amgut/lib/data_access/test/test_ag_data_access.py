@@ -258,7 +258,18 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(res, [])
 
     def test_checkPrintResults(self):
-        raise NotImplementedError()
+        obs = self.ag_data.checkPrintResults('tst_oasoR')
+        self.assertFalse(obs)
+
+        obs = self.ag_data.checkPrintResults('tst_TMYwD')
+        self.assertTrue(obs)
+
+    def test_checkPrintResults_invalid_ids(self):
+        obs = self.ag_data.checkPrintResults('xxx00112333123---123222')
+        self.assertFalse(obs)
+
+        obs = self.ag_data.checkPrintResults(':Lfoo:Lbar:Lbaz:Ospam:Leggs')
+        self.assertFalse(obs)
 
     def test_get_user_for_kit(self):
         raise NotImplementedError()
