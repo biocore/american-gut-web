@@ -24,7 +24,7 @@ Now install all of the dependencies.  This will also install dependencies includ
 
    pip install -e .[test]
 
-And copy over the configuration file
+And copy over the configuration file::
 
    cp ag_config.txt.example amgut/ag_config.txt
 
