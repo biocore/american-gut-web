@@ -3,6 +3,12 @@ from amgut.lib.data_access.ag_data_access import AGDataAccess
 
 
 class TestAGDataAccess(TestCase):
+    def setUp(self):
+        ag_data = AGDataAccess()
+
+    def tearDown(self):
+        del ag_data
+
     def test___init__(self):
         raise NotImplementedError()
 
