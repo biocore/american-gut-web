@@ -51,7 +51,7 @@ class TestAGDataAccess(TestCase):
 
         # test existing user
         ag_login_id = self.ag_data.addAGLogin(
-            'TEST@EMAIL.com', 'TESTDUDE', '123 fake test street', 'testcity',
+            'TEST@EMAIL.com', 'TESTOTHER', '123 fake test street', 'testcity',
             'teststate', '1L2 2G3', 'United Kingdom')
 
         obs = self.ag_data.addAGLogin(
@@ -61,7 +61,8 @@ class TestAGDataAccess(TestCase):
 
 
     def test_getAGBarcodeDetails(self):
-        raise NotImplementedError()
+        obs = self.ag_data.getAGBarcodeDetails('00002124')
+        print obs
 
     def test_getAGKitDetails(self):
         raise NotImplementedError()
