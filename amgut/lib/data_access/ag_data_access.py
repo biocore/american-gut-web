@@ -255,6 +255,9 @@ class AGDataAccess(object):
             return False
         return True
 
+    def get_handout_kits(self):
+        pass
+
     def deleteAGParticipantSurvey(self, ag_login_id, participant_name):
         # Remove user using old stype DB Schema
         self.get_cursor().callproc('ag_delete_participant',

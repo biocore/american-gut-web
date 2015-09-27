@@ -114,7 +114,13 @@ class TestAGDataAccess(TestCase):
             'kit_verified': 'y'}
 
     def test_registerHandoutKit(self):
-        raise NotImplementedError()
+        # run on bad data
+        obs = self.ag_data.registerHandoutKit('BAD', 'DATA')
+        self.assertFalse(obs)
+
+        # run on real data
+        obs = self.ag_data.registerHandoutKit('BAD', 'DATA')
+        self.assertFalse(obs)
 
     def test_deleteAGParticipantSurvey(self):
         raise NotImplementedError()
