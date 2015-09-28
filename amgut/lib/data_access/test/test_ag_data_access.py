@@ -286,11 +286,15 @@ class TestAGDataAccess(TestCase):
             self.ag_data.get_user_for_kit('tst_esXXX')
 
     def test_get_menu_items(self):
-        obs = self.ag_data.get_user_for_kit('tst_pDWcB')
+        obs = self.ag_data.get_menu_items('tst_pDWcB')
         self.assertEqual(({}, {}, [], True), obs)
 
-        obs = self.ag_data.get_user_for_kit('tst_VpQsT')
+        obs = self.ag_data.get_menu_items('tst_VpQsT')
         self.assertEqual(({'REMOVED-0': []}, {}, [], True), obs)
+
+    def test_get_menu_items_errors(self):
+        with self.assertRaises(RuntimeError):
+            self.ag_data.get_menu_items('tst_esXXX')
 
     def test_check_if_consent_exists(self):
         raise NotImplementedError()
