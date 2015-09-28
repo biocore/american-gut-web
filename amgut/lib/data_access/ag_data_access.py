@@ -773,8 +773,8 @@ class AGDataAccess(object):
 
         Parameters
         ----------
-        ag_login_id : uuid
-            A valid login ID
+        ag_login_id : str
+            A valid login ID, that should be a test as a valid UUID
 
         Returns
         -------
@@ -798,8 +798,8 @@ class AGDataAccess(object):
 
         Parameters
         ----------
-        ag_login_id : uuid
-            A valid login ID
+        ag_login_id : str
+            A valid login ID, that should be a test as a valid UUID
         participant_name : str
             A participant name
 
