@@ -438,12 +438,14 @@ class TestAGDataAccess(TestCase):
         testcode = ''.join(choice(ascii_letters) for i in range(10))
         self.ag_data.ag_set_pass_change_code('REMOVED', 'tst_ULGcr', testcode)
 
-        # Acutally test the change
+        # Actually test the code change
         obs = self.ag_data.ag_verify_kit_password_change_code(
             'REMOVED', 'tst_ULGcr', 'SOMELONGTHINGTHATWILLFAIL')
         self.assertEqual(obs, False)
         obs = self.ag_data.ag_verify_kit_password_change_code(
             'REMOVED', 'tst_ULGcr', testcode)
+        # Using equal to make sure boolean True is returned, not something that
+        # equates to True
         self.assertEqual(obs, True)
 
         # Test giving nonsense email
@@ -459,10 +461,10 @@ class TestAGDataAccess(TestCase):
         # Generate new pass and make sure is different from current pass
         newpass = ''.join(choice(ascii_letters) for i in range(randint(8, 15)))
         auth = self.ag_data.authenticateWebAppUser('tst_ULGcr', newpass)
-        if auth is not False:
-            raise ValueError("Randomly generated password matches existing")
+        self.assertFalse(
+            auth, msg="Randomly generated password matches existing")
 
-        # Acutally test password change
+        # Actually test password change
         self.ag_data.ag_update_kit_password('tst_ULGcr', newpass)
         auth = self.ag_data.authenticateWebAppUser('tst_ULGcr', newpass)
         self.assertTrue(isinstance(auth, dict))
@@ -477,6 +479,8 @@ class TestAGDataAccess(TestCase):
         # Test actual functionality
         obs = self.ag_data.ag_verify_kit_password_change_code(
             'REMOVED', 'tst_omubN', 'FAIL')
+        # Using assertEqual to make sure boolean False is returned, not
+        # something that equates to False. Same for rest of assertEquals below
         self.assertEqual(obs, False)
         # Outside reset time, should fail
         obs = self.ag_data.ag_verify_kit_password_change_code(
