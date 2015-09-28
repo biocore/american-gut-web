@@ -283,11 +283,25 @@ class TestAGDataAccess(TestCase):
     def test_get_user_info(self):
         raise NotImplementedError()
 
-    def test_get_person_info(self):
-        raise NotImplementedError()
-
     def test_get_barcode_results(self):
-        raise NotImplementedError()
+        obs = self.ag_data.get_barcode_results('tst_yCzro')
+        exp = [{'barcode': '000016704', 'participant_name': 'REMOVED'},
+               {'barcode': '000016705', 'participant_name': 'REMOVED'},
+               {'barcode': '000016706', 'participant_name': 'REMOVED'},
+               {'barcode': '000016707', 'participant_name': 'REMOVED'},
+               {'barcode': '000016708', 'participant_name': 'REMOVED'},
+               {'barcode': '000016709', 'participant_name': 'REMOVED'},
+               {'barcode': '000016710', 'participant_name': 'REMOVED'},
+               {'barcode': '000016711', 'participant_name': 'REMOVED'},
+               {'barcode': '000016712', 'participant_name': 'REMOVED'},
+               {'barcode': '000016713', 'participant_name': 'REMOVED'},
+               {'barcode': '000004213', 'participant_name': 'REMOVED'},
+               {'barcode': '000004214', 'participant_name': 'REMOVED'},
+               {'barcode': '000004215', 'participant_name': 'REMOVED'},
+               {'barcode': '000004216', 'participant_name': 'REMOVED'},
+               {'barcode': '000004218', 'participant_name': 'REMOVED'},
+               {'barcode': '000004219', 'participant_name': 'REMOVED'}]
+        self.assertEqual(obs, exp)
 
     def test_get_login_info(self):
         raise NotImplementedError()
