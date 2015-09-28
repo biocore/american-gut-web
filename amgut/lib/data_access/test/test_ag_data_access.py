@@ -17,9 +17,16 @@ class TestAGDataAccess(TestCase):
         del self.ag_data
 
     def test_authenticateWebAppUser(self):
+        # Test right pass but non-existant kit ID
+        obs = self.ag_data.authenticateWebAppUser('randomkitID', 'test')
+        self.assertEqual(obs, False)
+
         kit_id = 'tst_xfphP'
+        # Test wrong password
         obs = self.ag_data.authenticateWebAppUser(kit_id, 'wrongPass')
         self.assertEqual(obs, False)
+
+        # Test corect password
         obs = self.ag_data.authenticateWebAppUser(kit_id, 'test')
         self.assertTrue(isinstance(obs, dict))
         self.assertEqual(obs['ag_login_id'],
