@@ -301,6 +301,7 @@ class TestAGDataAccess(TestCase):
             '00711b0a-67d6-0fed-e050-8a800c5d7570', 'REMOVED-42')
         self.assertTrue(obs)
 
+    def test_check_if_consent_exists_non_existent_user(self):
         obs = self.ag_data.check_if_consent_exists(
             '00711b0a-67d6-0fed-e050-8a800c5d7570', 'REMOVED-111')
         self.assertFalse(obs)
@@ -312,6 +313,10 @@ class TestAGDataAccess(TestCase):
                'country': 'REMOVED', 'email': 'REMOVED', 'name': 'REMOVED',
                'state': 'REMOVED', 'zip': 'REMOVED'}
         self.assertEqual(exp, obs)
+
+    def test_get_user_info_non_existent(self):
+        obs = self.ag_data.get_user_info('tst_XX1123')
+        self.assertEqual({}, obs)
 
     def test_get_person_info(self):
         raise NotImplementedError()
