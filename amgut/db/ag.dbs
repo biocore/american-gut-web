@@ -240,8 +240,8 @@
 			</column>
 			<column name="pass_reset_code" type="varchar" length="20" jt="12" />
 			<column name="pass_reset_time" type="timestamp" length="29" decimal="6" jt="93" />
-			<column name="print_results" type="varchar" length="1" jt="12" >
-				<defo>&#039;n&#039;::character varying</defo>
+			<column name="print_results" type="bool" length="1" jt="-7" mandatory="y" >
+				<defo>&#039;FALSE&#039;</defo>
 			</column>
 			<column name="open_humans_token" type="varchar" length="64" jt="12" >
 				<comment><![CDATA[The Open Humans access token corresponding to the Open Humans user that has authorized data sharing with this kit.]]></comment>
@@ -22526,7 +22526,6 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="survey_response_types" color="ffffff" x="990" y="1740" />
 		<entity schema="ag" name="surveys" color="a8c4ef" x="45" y="1530" />
 		<entity schema="ag" name="survey_group" color="a8c4ef" x="45" y="1365" />
-		<entity schema="ag" name="ag_kit" color="f7e2c6" x="1110" y="690" />
 		<entity schema="ag" name="survey_answers_other" color="a8c4ef" x="1305" y="1140" />
 		<entity schema="ag" name="survey_question_triggers" color="a8c4ef" x="645" y="1425" />
 		<entity schema="ag" name="survey_response" color="a8c4ef" x="690" y="1635" />
@@ -22556,6 +22555,7 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="ag_kit_barcodes" color="f7e2c6" x="735" y="885" />
 		<entity schema="ag" name="survey_question" color="a8c4ef" x="420" y="1530" />
 		<entity schema="ag" name="ag_handout_kits" color="a8c4ef" x="60" y="420" />
+		<entity schema="ag" name="ag_kit" color="f7e2c6" x="1110" y="690" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by :    american_gut_consent</comment>
 			<entity schema="ag" name="ag_survey_multiples" />
