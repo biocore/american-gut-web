@@ -5,7 +5,6 @@ from uuid import UUID
 import datetime
 
 from amgut.lib.data_access.ag_data_access import AGDataAccess
-import datetime
 
 
 class TestAGDataAccess(TestCase):
@@ -98,6 +97,14 @@ class TestAGDataAccess(TestCase):
                'kit_verified': 'y'}
         self.assertEqual(obs, exp)
 
+    def test_get_all_handout_kits(self):
+        obs = self.ag_data.get_all_handout_kits()
+        self.assertTrue(isinstance(obs, list))
+        self.assertTrue(len(obs) > 0)
+
+        for kit_id in obs:
+            self.assertRegexpMatches(kit_id, 'tst_[a-zA-Z]{5}')
+
     def test_registerHandoutKit_bad_data(self):
         # run on bad data
         with self.assertRaises(ValueError):
@@ -124,7 +131,7 @@ class TestAGDataAccess(TestCase):
         self.assertTrue(obs)
         # make sure kit removed from ag_handout_kits and inserted in ag_kit
         kits = self.ag_data.get_all_handout_kits()
-        self.assertTrue(kit not in kits)
+        self.assertNotIn(kit, kits)
         obs = self.ag_data.getAGKitDetails(kit)
         self.assertEqual(obs['supplied_kit_id'], kit)
 
@@ -169,7 +176,7 @@ class TestAGDataAccess(TestCase):
             datetime.time(15, 54), 'REMOVED-0', '')
         obs = self.ag_data.getAGBarcodeDetails('000005626')
         exp = {
-            'status': None,
+            'status': '',
             'ag_kit_id': 'db447092-6209-54d8-e040-8a80115d3637',
             'ag_kit_barcode_id': 'db447092-620c-54d8-e040-8a80115d3637',
             'barcode': '000005626',
@@ -197,7 +204,7 @@ class TestAGDataAccess(TestCase):
             datetime.date(2015, 9, 26), datetime.time(15, 00), 'REMOVED', '')
         obs = self.ag_data.getAGBarcodeDetails('000005626')
         exp = {
-            'status': None,
+            'status': '',
             'ag_kit_id': 'db447092-6209-54d8-e040-8a80115d3637',
             'ag_kit_barcode_id': 'db447092-620c-54d8-e040-8a80115d3637',
             'barcode': '000005626',
@@ -211,7 +218,7 @@ class TestAGDataAccess(TestCase):
             'email': 'REMOVED',
             'other': None,
             'moldy': None,
-            'participant_name': 'REMOVED-0',
+            'participant_name': 'REMOVED',
             'refunded': None,
             'date_of_last_email': None,
             'other_text': 'REMOVED'

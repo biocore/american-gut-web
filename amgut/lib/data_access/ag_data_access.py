@@ -153,6 +153,30 @@ class AGDataAccess(object):
         return value
 
     def addAGLogin(self, email, name, address, city, state, zip_, country):
+        """Adds a new login or returns the login_id if email already exists
+
+        Parameters
+        ----------
+        email : str
+            Email to register for user
+        name : str
+            Name to register for user
+        address : str
+            Street address to register for user
+        city : str
+            City to register for user
+        state : str
+            State to register for user
+        zip_ : str
+            Postal code to register for user
+        country : str
+            Country to register for user
+
+        Returns
+        -------
+        ag_login_id : str
+            UUID for new user, or existing user if email already in system
+        """
         clean_email = email.strip().lower()
         ag_login_id = self.check_login_exists(email)
         if not ag_login_id:
@@ -382,9 +406,9 @@ class AGDataAccess(object):
         """
         sql = """
         UPDATE ag_kit_barcodes
-        SET participant_name = null, site_sampled = null, sample_time = null,
-            sample_date = null, environment_sampled = null, notes = ''
-        WHERE barcode in (
+        SET participant_name = NULL, site_sampled = NULL, sample_time = NULL,
+            sample_date = NULL, environment_sampled = NULL, notes = ''
+        WHERE barcode IN (
                 SELECT  akb.barcode
                 FROM ag_kit_barcodes akb
                 INNER JOIN ag_kit ak USING (ag_kit_id)
