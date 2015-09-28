@@ -130,22 +130,66 @@ class AGDataAccess(object):
         else:
             return False
 
-    def addAGLogin(self, email, name, address, city, state, zip_, country):
+    def check_login_exists(self, email):
+        """Checks if email for login already exists on system
+
+        Parameters
+        ----------
+        email : str
+            Email for user to check
+
+        Returns
+        -------
+        ag_login_id or None
+            If exists, returns ag_login_id, else returns None
+        """
         clean_email = email.strip().lower()
         sql = "select ag_login_id from ag_login WHERE LOWER(email) = %s"
         cur = self.get_cursor()
         cur.execute(sql, [clean_email])
-        ag_login_id = cur.fetchone()
+        value = cur.fetchone()
+        if value is not None:
+            value = value[0]
+        return value
+
+    def addAGLogin(self, email, name, address, city, state, zip_, country):
+        """Adds a new login or returns the login_id if email already exists
+
+        Parameters
+        ----------
+        email : str
+            Email to register for user
+        name : str
+            Name to register for user
+        address : str
+            Street address to register for user
+        city : str
+            City to register for user
+        state : str
+            State to register for user
+        zip_ : str
+            Postal code to register for user
+        country : str
+            Country to register for user
+
+        Returns
+        -------
+        ag_login_id : str
+            UUID for new user, or existing user if email already in system
+        """
+        clean_email = email.strip().lower()
+        ag_login_id = self.check_login_exists(email)
         if not ag_login_id:
             # create the login
             sql = ("INSERT INTO ag_login (email, name, address, city, state, "
                    "zip, country) VALUES (%s, %s, %s, %s, %s, %s, %s) "
                    "RETURNING ag_login_id")
+            cur = self.get_cursor()
             cur.execute(sql, [clean_email, name, address, city,
                               state, zip_, country])
-            ag_login_id = cur.fetchone()
+            ag_login_id = cur.fetchone()[0]
             self.connection.commit()
-        return ag_login_id[0]
+        return ag_login_id
 
     def getAGBarcodeDetails(self, barcode):
         sql = """SELECT  email,
@@ -194,6 +238,24 @@ class AGDataAccess(object):
         must hash the password before passing, if desired.
         """
         printresults = self.checkPrintResults(supplied_kit_id)
+        if printresults is None:
+            printresults = 'n'
+        # make sure login_id and skid exists
+        sql = """SELECT EXISTS(SELECT *
+                               FROM ag.ag_login
+                               WHERE ag_login_id = %s)"""
+        conn_handler = SQLConnectionHandler()
+        try:
+            exists = conn_handler.execute_fetchone(sql, [ag_login_id])[0]
+        except ValueError:
+            raise ValueError("ag_login_id is not a UUID: %s" % ag_login_id)
+        if not exists:
+            return False
+        sql = """SELECT EXISTS(SELECT *
+                               FROM ag.ag_handout_kits
+                               WHERE kit_id = %s)"""
+        if not conn_handler.execute_fetchone(sql, [supplied_kit_id])[0]:
+            return False
 
         sql = """
             DO $do$
@@ -219,13 +281,17 @@ class AGDataAccess(object):
             END $do$;
             """.format(ag_login_id, printresults)
 
-        conn_handler = SQLConnectionHandler()
         try:
             conn_handler.execute(sql, [supplied_kit_id] * 3)
         except psycopg2.IntegrityError:
             logging.exception('Error on skid %s:' % ag_login_id)
             return False
         return True
+
+    def get_all_handout_kits(self):
+        conn_handler = SQLConnectionHandler()
+        sql = 'SELECT kit_id FROM ag.ag_handout_kits'
+        return [x[0] for x in conn_handler.execute_fetchall(sql)]
 
     def deleteAGParticipantSurvey(self, ag_login_id, participant_name):
         # Remove user using old stype DB Schema
@@ -338,9 +404,20 @@ class AGDataAccess(object):
         hard to hack the function when you would need to know someone else's
         login id (a GUID) to delete something maliciously
         """
-        self.get_cursor().callproc('ag_delete_sample',
-                                   [barcode, ag_login_id])
-        self.connection.commit()
+        sql = """
+        UPDATE ag_kit_barcodes
+        SET participant_name = NULL, site_sampled = NULL, sample_time = NULL,
+            sample_date = NULL, environment_sampled = NULL, notes = ''
+        WHERE barcode IN (
+                SELECT  akb.barcode
+                FROM ag_kit_barcodes akb
+                INNER JOIN ag_kit ak USING (ag_kit_id)
+                WHERE ak.ag_login_id = %s and akb.barcode = %s);
+
+        UPDATE barcode SET status = '' WHERE barcode = %s;
+        """
+        conn_handler = SQLConnectionHandler()
+        conn_handler.execute(sql, [ag_login_id, barcode, barcode])
 
     def getHumanParticipants(self, ag_login_id):
         conn_handler = SQLConnectionHandler()
