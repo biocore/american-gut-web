@@ -751,9 +751,9 @@ class AGDataAccess(object):
 
         Returns
         -------
-        dict
-            A dict of the barcodes to participant names associated with the
-            login ID where results are ready.
+        list of dict
+            A list of the dict of the barcode to participant name associated
+            with the login ID where results are ready.
         """
         ag_login_id = self.get_user_for_kit(supplied_kit_id)
         cursor = self.get_cursor()
