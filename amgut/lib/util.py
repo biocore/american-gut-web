@@ -127,9 +127,8 @@ def survey_vioscreen(survey_id):
     """Return a formatted text block and URL for the external survey"""
     tl = text_locale['human_survey_completed.html']
     embedded_text = tl['SURVEY_VIOSCREEN']
-    user_info = ag_data.get_person_info(survey_id)
     url = ("https://vioscreen.com/remotelogin.aspx?Key=%s&RegCode=KLUCB" %
-           url_escape(encrypt_key(survey_id, user_info)))
+           url_escape(encrypt_key(survey_id)))
     return embedded_text % url
 
 

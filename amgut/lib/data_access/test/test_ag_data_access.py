@@ -1,8 +1,10 @@
 from unittest import TestCase, main
+import datetime
 from random import choice, randint
 from string import ascii_letters
 from uuid import UUID
-import datetime
+
+from psycopg2 import DataError
 
 from amgut.lib.data_access.ag_data_access import AGDataAccess
 
@@ -504,17 +506,56 @@ class TestAGDataAccess(TestCase):
         obs = self.ag_data.get_user_info('tst_XX1123')
         self.assertEqual({}, obs)
 
-    def test_get_person_info(self):
-        raise NotImplementedError()
-
     def test_get_barcode_results(self):
-        raise NotImplementedError()
+        obs = self.ag_data.get_barcode_results('tst_yCzro')
+        exp = [{'barcode': '000016704', 'participant_name': 'REMOVED'},
+               {'barcode': '000016705', 'participant_name': 'REMOVED'},
+               {'barcode': '000016706', 'participant_name': 'REMOVED'},
+               {'barcode': '000016707', 'participant_name': 'REMOVED'},
+               {'barcode': '000016708', 'participant_name': 'REMOVED'},
+               {'barcode': '000016709', 'participant_name': 'REMOVED'},
+               {'barcode': '000016710', 'participant_name': 'REMOVED'},
+               {'barcode': '000016711', 'participant_name': 'REMOVED'},
+               {'barcode': '000016712', 'participant_name': 'REMOVED'},
+               {'barcode': '000016713', 'participant_name': 'REMOVED'},
+               {'barcode': '000004213', 'participant_name': 'REMOVED'},
+               {'barcode': '000004214', 'participant_name': 'REMOVED'},
+               {'barcode': '000004215', 'participant_name': 'REMOVED'},
+               {'barcode': '000004216', 'participant_name': 'REMOVED'},
+               {'barcode': '000004218', 'participant_name': 'REMOVED'},
+               {'barcode': '000004219', 'participant_name': 'REMOVED'}]
+        self.assertEqual(obs, exp)
+
+    def test_get_barcode_results_non_existant_id(self):
+        with self.assertRaises(RuntimeError):
+            self.ag_data.get_barcode_results("something that doesn't exist")
 
     def test_get_login_info(self):
-        raise NotImplementedError()
+        id_ = 'fecebeae-4244-2d78-e040-8a800c5d4f50'
+        exp = [{'ag_login_id': id_,
+                'email': 'REMOVED',
+                'name': 'REMOVED',
+                'address': 'REMOVED',
+                'city': 'REMOVED',
+                'state': 'REMOVED',
+                'zip': 'REMOVED',
+                'country': 'REMOVED'}]
+        obs = self.ag_data.get_login_info(id_)
+        self.assertEqual(obs, exp)
+
+    def test_get_login_info_non_existant_id(self):
+        with self.assertRaises(DataError):
+            self.ag_data.get_login_info("id does not exist")
 
     def test_get_survey_id(self):
-        raise NotImplementedError()
+        id_ = '8ca47059-000a-469f-aa64-ff1afbd6fcb1'
+        obs = self.ag_data.get_survey_id(id_, 'REMOVED-0')
+        self.assertEquals(obs, 'd08758a1510256f0')
+
+    def test_get_survey_id_non_existant_id(self):
+        id_ = 'does not exist'
+        with self.assertRaises(DataError):
+            self.ag_data.get_survey_id(id_, 'REMOVED')
 
     def test_get_countries(self):
         raise NotImplementedError()
