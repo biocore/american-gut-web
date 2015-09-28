@@ -17,6 +17,16 @@ class TestAGDataAccess(TestCase):
     def test_authenticateWebAppUser(self):
         raise NotImplementedError()
 
+    def test_check_login_exists(self):
+        email = 'Reallylongemailthatshouldntexist@someplacenotreal.com'
+        obs = self.ag_data.check_login_exists(email)
+        self.assertEqual(obs, None)
+
+        email = 'REMOVED'
+        obs = self.ag_data.check_login_exists(email)
+        as_uuid = UUID(obs)
+        self.assertTrue(as_uuid.version, 4)
+
     def test_addAGLogin(self):
         # test new user
         exists = 'EXISTS'
