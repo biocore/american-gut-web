@@ -272,10 +272,25 @@ class TestAGDataAccess(TestCase):
         self.assertFalse(obs)
 
     def test_get_user_for_kit(self):
-        raise NotImplementedError()
+        obs = self.ag_data.get_user_for_kit('tst_IueFX')
+        self.assertEqual('ded5101d-c8e3-f6b3-e040-8a80115d6f03', obs)
+
+        obs = self.ag_data.get_user_for_kit('tst_esABz')
+        self.assertEqual('d8592c74-8421-2135-e040-8a80115d6401', obs)
+
+    def test_get_user_for_kit_errors(self):
+        with self.assertRaises(RuntimeError):
+            self.ag_data.get_user_for_kit('the_fooster')
+
+        with self.assertRaises(RuntimeError):
+            self.ag_data.get_user_for_kit('tst_esXXX')
 
     def test_get_menu_items(self):
-        raise NotImplementedError()
+        obs = self.ag_data.get_user_for_kit('tst_pDWcB')
+        self.assertEqual(({}, {}, [], True), obs)
+
+        obs = self.ag_data.get_user_for_kit('tst_VpQsT')
+        self.assertEqual(({'REMOVED-0': []}, {}, [], True), obs)
 
     def test_check_if_consent_exists(self):
         raise NotImplementedError()
