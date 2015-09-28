@@ -17,7 +17,13 @@ class TestAGDataAccess(TestCase):
         del self.ag_data
 
     def test_authenticateWebAppUser(self):
-        raise NotImplementedError()
+        kit_id = 'tst_xfphP'
+        obs = self.ag_data.authenticateWebAppUser(kit_id, 'wrongPass')
+        self.assertEqual(obs, False)
+        obs = self.ag_data.authenticateWebAppUser(kit_id, 'test')
+        self.assertTrue(isinstance(obs, dict))
+        self.assertEqual(obs['ag_login_id'],
+                         'ded5101d-cafb-f6b3-e040-8a80115d6f03')
 
     def test_check_login_exists(self):
         email = 'Reallylongemailthatshouldntexist@someplacenotreal.com'
@@ -451,7 +457,7 @@ class TestAGDataAccess(TestCase):
 
     def test_ag_update_kit_password(self):
         # Generate new pass and make sure is different from current pass
-        newpass = ''.join(choice(ascii_letters) for i in range(10))
+        newpass = ''.join(choice(ascii_letters) for i in range(randint(8, 15)))
         auth = self.ag_data.authenticateWebAppUser('tst_ULGcr', newpass)
         if auth is not False:
             raise ValueError("Randomly generated password matches existing")
