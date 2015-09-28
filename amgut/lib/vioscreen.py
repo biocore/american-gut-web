@@ -15,28 +15,12 @@ def pkcs7_unpad_message(in_message, ):
     return in_message[:-ord(in_message[-1])]
 
 
-def encrypt_key(survey_id, user_info):
+def encrypt_key(survey_id):
     """Encode minimal required vioscreen information to AES key"""
     firstname = "NOT"
     lastname = "IDENTIFIED"
-
-    # clean up gender
-    if user_info["gender"] == "Male":
-        gender_id = 1
-    elif user_info["gender"] == "Female":
-        gender_id = 2
-    else:
-        # Default to female?
-        gender_id = 2
-
-    # clean up birthdate
-    if user_info['birth_month'] == "Unspecified":
-        user_info['birth_month'] = '01'
-    if user_info['birth_year'] == "Unspecified":
-        user_info['birth_year'] = '1800'
-    if len(user_info['birth_month']) == 1:
-        user_info['birth_month'] = '0' + user_info['birth_month']
-    dob = ''.join([user_info['birth_month'], "01", user_info['birth_year']])
+    gender_id = 2
+    dob = '01011800'
 
     regcode = AMGUT_CONFIG.vioscreen_regcode
     returnurl = "http://microbio.me%s%s" % (media_locale["SITEBASE"],

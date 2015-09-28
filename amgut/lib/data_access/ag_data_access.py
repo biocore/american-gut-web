@@ -664,47 +664,20 @@ class AGDataAccess(object):
 
         return user_data
 
-    def get_person_info(self, survey_id):
-        # get question responses
-        info = {'birth_month': 'Unspecified',
-                'birth_year': 'Unspecified',
-                'gender': 'Unspecified'}
-        sql = """SELECT q.american, sa.response
-                 FROM ag.survey_answers_other sa
-                    JOIN ag.ag_login_surveys ls
-                        ON sa.survey_id = ls.survey_id
-                    JOIN ag.survey_question q
-                        ON q.survey_question_id = sa.survey_question_id
-                 WHERE sa.survey_id = %s
-                    AND q.american IN ('Birth month:',
-                                       'Birth year:',
-                                       'Gender:')"""
-        cursor = self.get_cursor()
-        cursor.execute(sql, [survey_id])
-        rows = cursor.fetchall()
-
-        for res in rows:
-            value = json.loads(res[1])[0]
-            if res[0] == 'Birth month:':
-                info['birth_month'] = value
-            elif res[0] == 'Birth year:':
-                info['birth_year'] = value
-            elif res[0] == 'Gender:':
-                info['gender'] = value
-
-        # get name from consent form
-        sql = """SELECT c.participant_name
-                 FROM ag.ag_consent c
-                    JOIN ag.ag_login_surveys ls
-                        ON c.ag_login_id = ls.ag_login_id
-                 WHERE ls.survey_id = %s"""
-        cursor.execute(sql, [survey_id])
-        info["name"] = cursor.fetchone()[0]
-
-        return info
-
     def get_barcode_results(self, supplied_kit_id):
-        """Get the results associated with the login ID of the kit"""
+        """Get the results associated with the login ID of the kit
+
+        Parameters
+        ----------
+        supplied_kit_id : str
+            The user's supplied kit ID
+
+        Returns
+        -------
+        dict
+            A dict of the barcodes to participant names associated with the
+            login ID where results are ready.
+        """
         ag_login_id = self.get_user_for_kit(supplied_kit_id)
         cursor = self.get_cursor()
 
@@ -719,10 +692,23 @@ class AGDataAccess(object):
         return [dict(zip(col_names, row)) for row in results]
 
     def get_login_info(self, ag_login_id):
-        sql = """select  ag_login_id, email, name, address, city, state, zip,
+        """Get kit registration information
+
+        Parameters
+        ----------
+        ag_login_id : uuid
+            A valid login ID
+
+        Returns
+        -------
+        list of dict
+            A list of registration information associated with a common login
+            ID.
+        """
+        sql = """SELECT  ag_login_id, email, name, address, city, state, zip,
                          country
-                 from    ag_login
-                 where   ag_login_id = %s"""
+                 FROM    ag_login
+                 WHERE   ag_login_id = %s"""
         cursor = self.get_cursor()
         cursor.execute(sql, [ag_login_id])
         col_names = [x[0] for x in cursor.description]
@@ -731,10 +717,24 @@ class AGDataAccess(object):
         return results
 
     def get_survey_id(self, ag_login_id, participant_name):
-        """Return the survey ID associated with a participant or None"""
-        sql = """select survey_id
-                 from ag_login_surveys
-                 where ag_login_id=%s and participant_name=%s"""
+        """Return the survey ID associated with a participant or None
+
+        Parameters
+        ----------
+        ag_login_id : uuid
+            A valid login ID
+        participant_name : str
+            A participant name
+
+        Returns
+        -------
+        str or None
+            The survey ID, or None if a survey ID cannot be found.
+        """
+        sql = """SELECT survey_id
+                 FROM ag_login_surveys
+                 WHERE ag_login_id=%s
+                    AND participant_name=%s"""
         cursor = self.get_cursor()
         cursor.execute(sql, [ag_login_id, participant_name])
         id_ = cursor.fetchone()

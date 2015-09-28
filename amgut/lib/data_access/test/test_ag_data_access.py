@@ -1,6 +1,9 @@
 from unittest import TestCase, main
-from amgut.lib.data_access.ag_data_access import AGDataAccess
 import datetime
+
+from psycopg2 import DataError
+
+from amgut.lib.data_access.ag_data_access import AGDataAccess
 
 
 class TestAGDataAccess(TestCase):
@@ -303,11 +306,36 @@ class TestAGDataAccess(TestCase):
                {'barcode': '000004219', 'participant_name': 'REMOVED'}]
         self.assertEqual(obs, exp)
 
+    def test_get_barcode_results_non_existant_id(self):
+        with self.assertRaises(RuntimeError):
+            self.ag_data.get_barcode_results("something that doesn't exist")
+
     def test_get_login_info(self):
-        raise NotImplementedError()
+        id_ = 'fecebeae-4244-2d78-e040-8a800c5d4f50'
+        exp = [{'ag_login_id': id_,
+                'email': 'REMOVED',
+                'name': 'REMOVED',
+                'address': 'REMOVED',
+                'city': 'REMOVED',
+                'state': 'REMOVED',
+                'zip': 'REMOVED',
+                'country': 'REMOVED'}]
+        obs = self.ag_data.get_login_info(id_)
+        self.assertEqual(obs, exp)
+
+    def test_get_login_info_non_existant_id(self):
+        with self.assertRaises(DataError):
+            self.ag_data.get_login_info("id does not exist")
 
     def test_get_survey_id(self):
-        raise NotImplementedError()
+        id_ = '8ca47059-000a-469f-aa64-ff1afbd6fcb1'
+        obs = self.ag_data.get_survey_id(id_, 'REMOVED-0')
+        self.assertEquals(obs, 'd08758a1510256f0')
+
+    def test_get_survey_id_non_existant_id(self):
+        id_ = 'does not exist'
+        with self.assertRaises(DataError):
+            self.ag_data.get_survey_id(id_, 'REMOVED')
 
     def test_get_countries(self):
         raise NotImplementedError()
