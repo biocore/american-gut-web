@@ -12,7 +12,6 @@ from __future__ import division
 Centralized database access for the American Gut web portal
 """
 
-import json
 import logging
 
 import psycopg2

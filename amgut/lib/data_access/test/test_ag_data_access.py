@@ -467,7 +467,6 @@ class TestAGDataAccess(TestCase):
         # TODO: make this raise error and test
         self.ag_data.ag_update_kit_password('NOTINTHEDB', newpass)
 
-
     def test_ag_verify_kit_password_change_code(self):
         # Test actual functionality
         obs = self.ag_data.ag_verify_kit_password_change_code(
