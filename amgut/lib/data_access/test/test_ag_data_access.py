@@ -297,10 +297,21 @@ class TestAGDataAccess(TestCase):
             self.ag_data.get_menu_items('tst_esXXX')
 
     def test_check_if_consent_exists(self):
-        raise NotImplementedError()
+        obs = self.ag_data.check_if_consent_exists(
+            '00711b0a-67d6-0fed-e050-8a800c5d7570', 'REMOVED-42')
+        self.assertTrue(obs)
+
+        obs = self.ag_data.check_if_consent_exists(
+            '00711b0a-67d6-0fed-e050-8a800c5d7570', 'REMOVED-111')
+        self.assertFalse(obs)
 
     def test_get_user_info(self):
-        raise NotImplementedError()
+        obs = self.ag_data.get_user_info('tst_wAhSB')
+        exp = {'address': 'REMOVED', 'ag_login_id':
+               'd8592c74-84a5-2135-e040-8a80115d6401', 'city': 'REMOVED',
+               'country': 'REMOVED', 'email': 'REMOVED', 'name': 'REMOVED',
+               'state': 'REMOVED', 'zip': 'REMOVED'}
+        self.assertEqual(exp, obs)
 
     def test_get_person_info(self):
         raise NotImplementedError()
