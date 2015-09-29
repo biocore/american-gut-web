@@ -160,9 +160,6 @@ class TestAGDataAccess(TestCase):
         obs = self.ag_data.getAGKitDetails(kit)
         self.assertEqual(obs['supplied_kit_id'], kit)
 
-    def test_deleteAGParticipantSurvey(self):
-        raise NotImplementedError()
-
     def test_getConsent(self):
 
         res = self.ag_data.getConsent("8b2b45bb3390b585")
@@ -426,19 +423,51 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(res, [])
 
     def test_verifyKit(self):
-        raise NotImplementedError()
+        # Test verifying works
+        kit = self.ag_data._get_unverified_kits()[0]
+        self.ag_data.verifyKit(kit)
+        obs = self.ag_data.getAGKitDetails(kit)
+        self.assertEqual(obs['kit_verified'], 'y')
 
-    def test_getMapMarkers(self):
-        raise NotImplementedError()
+        # Test verifying a non-existant kit
+        # TODO: make raise an error
+        self.ag_data.getAGKitDetails('NOTAREALKITID')
+
+    def test__get_unverified_kits(self):
+        obs = self.ag_data._get_unverified_kits()
+        self.assertTrue(isinstance(obs, list))
+        self.assertTrue(len(obs) > 0)
+
+        for kit_id in obs:
+            self.assertRegexpMatches(kit_id, 'tst_[a-zA-Z]{5}')
+            obs = self.ag_data.getAGKitDetails(kit_id)
+            self.assertEqual(obs['kit_verified'], 'n')
 
     def test_handoutCheck(self):
-        raise NotImplementedError()
+        # Test proper password for handout
+        # All tests use assertEqual to make sure bool object returned
+        kit = self.ag_data.get_all_handout_kits()[0]
+        obs = self.ag_data.handoutCheck(kit, 'test')
+        self.assertEqual(obs, True)
+
+        # Test wrong password
+        obs = self.ag_data.handoutCheck(kit, 'badPass')
+        self.assertEqual(obs, False)
+
+        # Test non-handout kit
+        obs = self.ag_data.handoutCheck('tst_ODmhG', 'test')
+        self.assertEqual(obs, False)
+        obs = self.ag_data.handoutCheck('randomKitID', 'test')
+        self.assertEqual(obs, False)
 
     def test_check_access(self):
-        raise NotImplementedError()
+        # Has access
+        obs = self.ag_data.check_access('tst_BudVu', '000001047')
+        self.assertEqual(obs, True)
 
-    def test_getAGKitIDsByEmail(self):
-        raise NotImplementedError()
+        # No access
+        obs = self.ag_data.check_access('tst_BudVu', '000001111')
+        self.assertEqual(obs, False)
 
     def test_ag_set_pass_change_code(self):
         # Generate new random code and assign it
