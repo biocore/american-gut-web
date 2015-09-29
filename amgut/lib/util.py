@@ -13,7 +13,7 @@ from tornado.escape import url_escape
 from wtforms import Form
 
 from amgut import media_locale, text_locale
-from amgut.connections import ag_data, redis
+from amgut.connections import redis
 from amgut.lib.vioscreen import encrypt_key
 
 

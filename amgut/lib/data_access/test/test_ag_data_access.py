@@ -17,7 +17,20 @@ class TestAGDataAccess(TestCase):
         del self.ag_data
 
     def test_authenticateWebAppUser(self):
-        raise NotImplementedError()
+        # Test right pass but non-existant kit ID
+        obs = self.ag_data.authenticateWebAppUser('randomkitID', 'test')
+        self.assertEqual(obs, False)
+
+        kit_id = 'tst_xfphP'
+        # Test wrong password
+        obs = self.ag_data.authenticateWebAppUser(kit_id, 'wrongPass')
+        self.assertEqual(obs, False)
+
+        # Test corect password
+        obs = self.ag_data.authenticateWebAppUser(kit_id, 'test')
+        self.assertTrue(isinstance(obs, dict))
+        self.assertEqual(obs['ag_login_id'],
+                         'ded5101d-cafb-f6b3-e040-8a80115d6f03')
 
     def test_check_login_exists(self):
         email = 'Reallylongemailthatshouldntexist@someplacenotreal.com'
@@ -428,13 +441,75 @@ class TestAGDataAccess(TestCase):
         raise NotImplementedError()
 
     def test_ag_set_pass_change_code(self):
-        raise NotImplementedError()
+        # Generate new random code and assign it
+        testcode = ''.join(choice(ascii_letters) for i in range(10))
+        self.ag_data.ag_set_pass_change_code('REMOVED', 'tst_ULGcr', testcode)
+
+        # Actually test the code change
+        obs = self.ag_data.ag_verify_kit_password_change_code(
+            'REMOVED', 'tst_ULGcr', 'SOMELONGTHINGTHATWILLFAIL')
+        self.assertEqual(obs, False)
+        obs = self.ag_data.ag_verify_kit_password_change_code(
+            'REMOVED', 'tst_ULGcr', testcode)
+        # Using equal to make sure boolean True is returned, not something that
+        # equates to True
+        self.assertEqual(obs, True)
+
+        # Test giving nonsense email
+        # TODO: make this raise error and test
+        self.ag_data.ag_set_pass_change_code('Fake@notarealemail.com',
+                                             'tst_ULGcr', testcode)
+
+        # Test giving bad skid
+        # TODO: make this raise error and test
+        self.ag_data.ag_set_pass_change_code('REMOVED', 'NOTINTHEDB', testcode)
 
     def test_ag_update_kit_password(self):
-        raise NotImplementedError()
+        # Generate new pass and make sure is different from current pass
+        newpass = ''.join(choice(ascii_letters) for i in range(randint(8, 15)))
+        auth = self.ag_data.authenticateWebAppUser('tst_ULGcr', newpass)
+        self.assertFalse(
+            auth, msg="Randomly generated password matches existing")
+
+        # Actually test password change
+        self.ag_data.ag_update_kit_password('tst_ULGcr', newpass)
+        auth = self.ag_data.authenticateWebAppUser('tst_ULGcr', newpass)
+        self.assertTrue(isinstance(auth, dict))
+        self.assertEqual(auth['ag_login_id'],
+                         'd8592c74-8416-2135-e040-8a80115d6401')
+
+        # Test giving bad skid
+        # TODO: make this raise error and test
+        self.ag_data.ag_update_kit_password('NOTINTHEDB', newpass)
 
     def test_ag_verify_kit_password_change_code(self):
-        raise NotImplementedError()
+        # Test actual functionality
+        obs = self.ag_data.ag_verify_kit_password_change_code(
+            'REMOVED', 'tst_omubN', 'FAIL')
+        # Using assertEqual to make sure boolean False is returned, not
+        # something that equates to False. Same for rest of assertEquals below
+        self.assertEqual(obs, False)
+        # Outside reset time, should fail
+        obs = self.ag_data.ag_verify_kit_password_change_code(
+            'REMOVED', 'tst_omubN', 'Mw1eY4wWVXpE0cQlvQwS')
+        self.assertEqual(obs, False)
+
+        # Reset code and make sure it works
+        testcode = ''.join(choice(ascii_letters) for i in range(10))
+        self.ag_data.ag_set_pass_change_code('REMOVED', 'tst_ULGcr', testcode)
+        obs = self.ag_data.ag_verify_kit_password_change_code(
+            'REMOVED', 'tst_ULGcr', testcode)
+        self.assertEqual(obs, True)
+
+        # Test with incorrect kit id
+        obs = self.ag_data.ag_verify_kit_password_change_code(
+            'REMOVED', 'NOTAREALKITID', 'FAIL')
+        self.assertEqual(obs, False)
+
+        # Test with incorrect email
+        obs = self.ag_data.ag_verify_kit_password_change_code(
+            'notreal@fake.com', 'tst_ULGcr', testcode)
+        self.assertEqual(obs, False)
 
     def test_getBarcodesByKit(self):
         res = self.ag_data.getBarcodesByKit('tst_qmhLX')
