@@ -413,7 +413,7 @@ class AGDataAccess(object):
                 INNER JOIN ag_kit ak USING (ag_kit_id)
                 WHERE ak.ag_login_id = %s and akb.barcode = %s);
 
-        UPDATE barcode SET status = '' WHERE barcode = %s;
+        UPDATE barcode SET status = NULL WHERE barcode = %s;
         """
         conn_handler = SQLConnectionHandler()
         conn_handler.execute(sql, [ag_login_id, barcode, barcode])
