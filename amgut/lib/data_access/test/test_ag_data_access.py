@@ -423,7 +423,24 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(res, [])
 
     def test_verifyKit(self):
-        raise NotImplementedError()
+        # Test verifying works
+        kit = self.ag_data._get_unverified_kits()[0]
+        obs = self.ag_data.getAGKitDetails('tst_ODmhG')
+        self.assertEqual(obs['kit_verified'], 'y')
+
+        # Test verifying a non-existant kit
+        # TODO: make raise an error
+        self.ag_data.getAGKitDetails('NOTAREALKITID')
+
+    def tess__get_unverified_kits(self):
+        obs = self.ag_data._get_unverified_kits()
+        self.assertTrue(isinstance(obs, list))
+        self.assertTrue(len(obs) > 0)
+
+        for kit_id in obs:
+            self.assertRegexpMatches(kit_id, 'tst_[a-zA-Z]{5}')
+            obs = self.ag_data.getAGKitDetails(kit_id)
+            self.assertEqual(obs['kit_verified'], 'n')
 
     def test_handoutCheck(self):
         # Test proper password for handout

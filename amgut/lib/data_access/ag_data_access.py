@@ -504,6 +504,13 @@ class AGDataAccess(object):
                  WHERE supplied_kit_id=%s"""
         self._sql.execute(sql, [supplied_kit_id])
 
+    def _get_unverified_kits(self):
+        """Gets list of unverified kit IDs, Helper function for tests"""
+        sql = """SELECT supplied_kit_id
+                 FROM AG_KIT
+                 WHERE NOT kit_verified = 'y'"""
+        return [x[0] for x in self._sql.execute_fetchall(sql)]
+
     def getMapMarkers(self):
         cur_completed = self.get_cursor()
         cur_ver = self.get_cursor()
