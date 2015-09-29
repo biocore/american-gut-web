@@ -216,8 +216,8 @@ class TestAGDataAccess(TestCase):
                'date_of_last_email': None,
                'other_text': 'REMOVED'
                }
-        self.assertEqual(obs, exp)
         self.ag_data.deleteSample(barcode, ag_login_id)
+        self.assertEqual(obs, exp)
 
         # env sample
         self.ag_data.logParticipantSample(
@@ -243,9 +243,8 @@ class TestAGDataAccess(TestCase):
                'date_of_last_email': None,
                'other_text': 'REMOVED'
                }
-        self.assertEqual(obs, exp)
-
         self.ag_data.deleteSample(barcode, ag_login_id)
+        self.assertEqual(obs, exp)
 
     def test_deleteSample(self):
         raise NotImplementedError()
