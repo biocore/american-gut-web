@@ -223,7 +223,7 @@ class TestAGDataAccess(TestCase):
         self.ag_data.logParticipantSample(
             ag_login_id, barcode, None, 'animal_habitat',
             datetime.date(2015, 9, 26), datetime.time(15, 00), 'REMOVED', '')
-        obs = self.ag_data.getAGBarcodeDetails('000005626')
+        obs = self.ag_data.getAGBarcodeDetails(barcode)
         exp = {'status': None,
                'ag_kit_id': '5bfa9526-8dbb-492f-937c-bceb6b5a56fe',
                'ag_kit_barcode_id': '793dab39-d9bf-4a0f-8d67-f21796e3faae',
