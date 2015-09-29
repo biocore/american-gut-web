@@ -425,7 +425,8 @@ class TestAGDataAccess(TestCase):
     def test_verifyKit(self):
         # Test verifying works
         kit = self.ag_data._get_unverified_kits()[0]
-        obs = self.ag_data.getAGKitDetails('tst_ODmhG')
+        self.ag_data.verifyKit(kit)
+        obs = self.ag_data.getAGKitDetails(kit)
         self.assertEqual(obs['kit_verified'], 'y')
 
         # Test verifying a non-existant kit
