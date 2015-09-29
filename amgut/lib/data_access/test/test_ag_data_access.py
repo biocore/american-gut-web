@@ -256,16 +256,34 @@ class TestAGDataAccess(TestCase):
         raise NotImplementedError()
 
     def test_getHumanParticipants(self):
-        raise NotImplementedError()
+        i = "d8592c74-9694-2135-e040-8a80115d6401"
+        res = self.ag_data.getHumanParticipants(i)
+        self.assertSetEqual(set(res),
+                            set(['REMOVED-2', 'REMOVED-3',
+                                 'REMOVED-0', 'REMOVED-1']))
 
-    def test_is_old_survey(self):
-        raise NotImplementedError()
+    def test_getHumanParticipantsNotPresent(self):
+        i = '00000000-0000-0000-0000-000000000000'
+        res = self.ag_data.getHumanParticipants(i)
+        self.assertEqual(res, [])
 
     def test_updateVioscreenStatus(self):
         raise NotImplementedError()
 
     def test_getAnimalParticipants(self):
-        raise NotImplementedError()
+        i = "ed5ab96f-fe3b-ead5-e040-8a80115d1c4b"
+        res = self.ag_data.getAnimalParticipants(i)
+        exp = ['REMOVED-0', 'REMOVED-0', 'REMOVED-0', 'REMOVED-0',
+               'REMOVED-0', 'REMOVED-0', 'REMOVED-0', 'REMOVED-0',
+               'REMOVED-0', 'REMOVED-0', 'REMOVED-0', 'REMOVED-0',
+               'REMOVED-0', 'REMOVED-0']
+        self.assertItemsEqual(res, exp)
+
+    def test_getAnimalParticipantsNotPresent(self):
+        i = "00711b0a-67d6-0fed-e050-8a800c5d7570"
+        res = self.ag_data.getAnimalParticipants(i)
+        self.assertEqual(res, [])
+
 
     def test_getParticipantSamples(self):
         i = "d6b0f287-b9d9-40d4-82fd-a8fd3db6c476"
