@@ -433,7 +433,7 @@ class TestAGDataAccess(TestCase):
         # TODO: make raise an error
         self.ag_data.getAGKitDetails('NOTAREALKITID')
 
-    def tess__get_unverified_kits(self):
+    def test__get_unverified_kits(self):
         obs = self.ag_data._get_unverified_kits()
         self.assertTrue(isinstance(obs, list))
         self.assertTrue(len(obs) > 0)
@@ -446,11 +446,12 @@ class TestAGDataAccess(TestCase):
     def test_handoutCheck(self):
         # Test proper password for handout
         # All tests use assertEqual to make sure bool object returned
-        obs = self.ag_data.handoutCheck('tst_MILFf', 'test')
+        kit = self.ag_data.get_all_handout_kits()[0]
+        obs = self.ag_data.handoutCheck(kit, 'test')
         self.assertEqual(obs, True)
 
         # Test wrong password
-        obs = self.ag_data.handoutCheck('tst_MILFf', 'badPass')
+        obs = self.ag_data.handoutCheck(kit, 'badPass')
         self.assertEqual(obs, False)
 
         # Test non-handout kit
