@@ -261,8 +261,15 @@ class TestAGDataAccess(TestCase):
         res = self.ag_data.getHumanParticipants(i)
         self.assertEqual(res, [])
 
-    def test_updateVioscreenStatus(self):
-        raise NotImplementedError()
+    def test_vioscreen_Status(self):
+        survey_id = 'eba20dea4f54b997'
+        self.ag_data.updateVioscreenStatus(survey_id, 3)
+        obs = self.ag_data.get_vioscreen_status(survey_id)
+        self.assertEqual(obs, 3)
+
+        self.ag_data.updateVioscreenStatus(survey_id, None)
+        obs = self.ag_data.get_vioscreen_status(survey_id)
+        self.assertEqual(obs, None)
 
     def test_getAnimalParticipants(self):
         i = "ed5ab96f-fe3b-ead5-e040-8a80115d1c4b"
@@ -683,7 +690,7 @@ class TestAGDataAccess(TestCase):
 
         # Spot check a few countries
         self.assertIn('United States', obs)
-        self.assertIn('Great Brittain', obs)
+        self.assertIn('United Kingdom', obs)
 
 
 if __name__ == "__main__":
