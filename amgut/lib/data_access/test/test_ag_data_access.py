@@ -252,7 +252,8 @@ class TestAGDataAccess(TestCase):
     def test_getHumanParticipants(self):
         i = "d8592c74-9694-2135-e040-8a80115d6401"
         res = self.ag_data.getHumanParticipants(i)
-        exp = ['REMOVED-1']*105 + ['REMOVED-2']*104 + ['REMOVED-3']*104 + ['REMOVED-0']*104
+        exp = ['REMOVED-1']*105 + ['REMOVED-2']*104 + ['REMOVED-3']*104 + \
+              ['REMOVED-0']*104
         self.assertItemsEqual(res, exp)
 
     def test_getHumanParticipantsNotPresent(self):
@@ -675,7 +676,14 @@ class TestAGDataAccess(TestCase):
             self.ag_data.get_survey_id(id_, 'REMOVED')
 
     def test_get_countries(self):
-        raise NotImplementedError()
+        obs = self.ag_data.get_countries()
+        # Make sure is a list with proper length
+        self.assertTrue(isinstance(obs, list))
+        self.assertEqual(len(obs), 244)
+
+        # Spot check a few countries
+        self.assertIn('United States', obs)
+        self.assertIn('Great Brittain', obs)
 
 
 if __name__ == "__main__":
