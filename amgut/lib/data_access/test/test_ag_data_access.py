@@ -246,9 +246,6 @@ class TestAGDataAccess(TestCase):
         self.ag_data.deleteSample(barcode, ag_login_id)
         self.assertEqual(obs, exp)
 
-    def test_deleteSample(self):
-        raise NotImplementedError()
-
     def test_getHumanParticipants(self):
         i = "d8592c74-9694-2135-e040-8a80115d6401"
         res = self.ag_data.getHumanParticipants(i)
