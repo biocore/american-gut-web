@@ -447,6 +447,11 @@ class AGDataAccess(object):
         -------
         int
             Vioscreen status
+
+        Raises
+        ------
+        ValueError
+            survey_id passed is not in the database
         """
         conn_handler = SQLConnectionHandler()
         sql = ("""SELECT vioscreen_status
