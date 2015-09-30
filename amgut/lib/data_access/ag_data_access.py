@@ -429,18 +429,6 @@ class AGDataAccess(object):
         results = conn_handler.execute_fetchall(sql, [ag_login_id, 1])
         return [row[0] for row in results]
 
-    def is_old_survey(self, survey_id):
-        conn_handler = SQLConnectionHandler()
-        # check survey exists
-        survey_answers = conn_handler.execute_fetchone(
-            "SELECT exists(SELECT * FROM survey_answers WHERE survey_id = %s)",
-            [survey_id])[0]
-        survey_answers_other = conn_handler.execute_fetchone(
-            "SELECT exists(SELECT * FROM survey_answers_other WHERE "
-            "survey_id = %s)", [survey_id])[0]
-
-        return all((survey_answers is False, survey_answers_other is False))
-
     def updateVioscreenStatus(self, survey_id, status):
         conn_handler = SQLConnectionHandler()
         sql = ("UPDATE ag_login_surveys SET vioscreen_status = %s WHERE "
