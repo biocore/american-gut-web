@@ -435,6 +435,33 @@ class AGDataAccess(object):
                "survey_id = %s")
         conn_handler.execute(sql, (status, survey_id))
 
+    def get_vioscreen_status(self, survey_id):
+        """Retrieves the vioscreen status for a survey_id
+
+        Parameters
+        ----------
+        survey_id : str
+            The survey to get status for
+
+        Returns
+        -------
+        int
+            Vioscreen status
+
+        Raises
+        ------
+        ValueError
+            survey_id passed is not in the database
+        """
+        conn_handler = SQLConnectionHandler()
+        sql = ("""SELECT vioscreen_status
+                  FROM ag.ag_login_surveys
+                  WHERE survey_id = %s""")
+        status = conn_handler.execute_fetchone(sql, [survey_id])
+        if status is None:
+            raise ValueError("Survey ID %s not in database" % survey_id)
+        return status[0]
+
     def getAnimalParticipants(self, ag_login_id):
         sql = """SELECT participant_name from ag.ag_login_surveys
                  JOIN ag.survey_answers USING (survey_id)

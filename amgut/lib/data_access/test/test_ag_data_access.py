@@ -246,13 +246,11 @@ class TestAGDataAccess(TestCase):
         self.ag_data.deleteSample(barcode, ag_login_id)
         self.assertEqual(obs, exp)
 
-    def test_deleteSample(self):
-        raise NotImplementedError()
-
     def test_getHumanParticipants(self):
         i = "d8592c74-9694-2135-e040-8a80115d6401"
         res = self.ag_data.getHumanParticipants(i)
-        exp = ['REMOVED-1']*105 + ['REMOVED-2']*104 + ['REMOVED-3']*104 + ['REMOVED-0']*104
+        exp = ['REMOVED-1']*105 + ['REMOVED-2']*104 + ['REMOVED-3']*104 + \
+              ['REMOVED-0']*104
         self.assertItemsEqual(res, exp)
 
     def test_getHumanParticipantsNotPresent(self):
@@ -260,8 +258,19 @@ class TestAGDataAccess(TestCase):
         res = self.ag_data.getHumanParticipants(i)
         self.assertEqual(res, [])
 
-    def test_updateVioscreenStatus(self):
-        raise NotImplementedError()
+    def test_vioscreen_Status(self):
+        survey_id = 'eba20dea4f54b997'
+        self.ag_data.updateVioscreenStatus(survey_id, 3)
+        obs = self.ag_data.get_vioscreen_status(survey_id)
+        self.assertEqual(obs, 3)
+
+        self.ag_data.updateVioscreenStatus(survey_id, None)
+        obs = self.ag_data.get_vioscreen_status(survey_id)
+        self.assertEqual(obs, None)
+
+    def test_get_vioscreen_status_unknown_survey(self):
+        with self.assertRaises(ValueError):
+            self.ag_data.get_vioscreen_status('SomeRandomSurveyID')
 
     def test_getAnimalParticipants(self):
         i = "ed5ab96f-fe3b-ead5-e040-8a80115d1c4b"
@@ -675,7 +684,14 @@ class TestAGDataAccess(TestCase):
             self.ag_data.get_survey_id(id_, 'REMOVED')
 
     def test_get_countries(self):
-        raise NotImplementedError()
+        obs = self.ag_data.get_countries()
+        # Make sure is a list with proper length
+        self.assertTrue(isinstance(obs, list))
+        self.assertEqual(len(obs), 244)
+
+        # Spot check a few countries
+        self.assertIn('United States', obs)
+        self.assertIn('United Kingdom', obs)
 
 
 if __name__ == "__main__":
