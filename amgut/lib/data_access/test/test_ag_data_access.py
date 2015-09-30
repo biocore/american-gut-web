@@ -268,6 +268,10 @@ class TestAGDataAccess(TestCase):
         obs = self.ag_data.get_vioscreen_status(survey_id)
         self.assertEqual(obs, None)
 
+    def test_get_vioscreen_status_unknown_survey(self):
+        with self.assertRaises(ValueError):
+            self.ag_data.get_vioscreen_status('SomeRandomSurveyID')
+
     def test_getAnimalParticipants(self):
         i = "ed5ab96f-fe3b-ead5-e040-8a80115d1c4b"
         res = self.ag_data.getAnimalParticipants(i)

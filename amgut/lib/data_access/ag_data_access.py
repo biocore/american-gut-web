@@ -454,7 +454,7 @@ class AGDataAccess(object):
                   WHERE survey_id = %s""")
         status = conn_handler.execute_fetchone(sql, [survey_id])
         if status is None:
-            raise ValueError("Survey ID %s not in database: %s" % survey_id)
+            raise ValueError("Survey ID %s not in database" % survey_id)
         return status[0]
 
     def getAnimalParticipants(self, ag_login_id):
