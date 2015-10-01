@@ -15,7 +15,7 @@ from psycopg2 import (connect, ProgrammingError, Error as PostgresError,
 from psycopg2.extras import DictCursor
 from psycopg2.extensions import TRANSACTION_STATUS_IDLE
 
-from amgut.connections import ag_data
+from amgut.lib.config_manager import AMGUT_CONFIG
 
 
 def _checker(func):
@@ -60,11 +60,11 @@ class Transaction(object):
             return
 
         try:
-            self._connection = connect(user=ag_data.user,
-                                       password=ag_data.password,
-                                       database=ag_data.database,
-                                       host=ag_data.host,
-                                       port=ag_data.port)
+            self._connection = connect(user=AMGUT_CONFIG.user,
+                                       password=AMGUT_CONFIG.password,
+                                       database=AMGUT_CONFIG.database,
+                                       host=AMGUT_CONFIG.host,
+                                       port=AMGUT_CONFIG.port)
         except OperationalError as e:
             # catch three known common exceptions and raise runtime errors
             try:
@@ -75,12 +75,12 @@ class Transaction(object):
             if etype == 'database':
                 etext = ('This is likely because the database `%s` has not '
                          'been created or has been dropped.' %
-                         ag_data.database)
+                         AMGUT_CONFIG.database)
             elif etype == 'role':
                 etext = ('This is likely because the user string `%s` '
                          'supplied in your configuration file `%s` is '
                          'incorrect or not an authorized postgres user.' %
-                         (ag_data.user, ag_data.conf_fp))
+                         (AMGUT_CONFIG.user, AMGUT_CONFIG.conf_fp))
             elif etype == 'Connection':
                 etext = ('This is likely because postgres isn\'t '
                          'running. Check that postgres is correctly '
