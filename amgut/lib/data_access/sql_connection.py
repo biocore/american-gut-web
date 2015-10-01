@@ -65,19 +65,6 @@ class SQLConnectionHandler(object):
         'host': AMGUT_CONFIG.host,
         'port': AMGUT_CONFIG.port}
 
-    _admin_args = {
-        'user': AMGUT_CONFIG.admin_user,
-        'password': AMGUT_CONFIG.admin_password,
-        'database': AMGUT_CONFIG.database,
-        'host': AMGUT_CONFIG.host,
-        'port': AMGUT_CONFIG.port}
-
-    _admin_nodb_args = {
-        'user': AMGUT_CONFIG.admin_user,
-        'password': AMGUT_CONFIG.admin_password,
-        'host': AMGUT_CONFIG.host,
-        'port': AMGUT_CONFIG.port}
-
     _user_conn = None
     _admin_conn = None
     _admin_nodb_conn = None
@@ -149,14 +136,7 @@ class SQLConnectionHandler(object):
 
     @staticmethod
     def close():
-        if SQLConnectionHandler._user_conn is not None:
-            SQLConnectionHandler._user_conn.close()
-
-        if SQLConnectionHandler._admin_conn is not None:
-            SQLConnectionHandler._admin_conn.close()
-
-        if SQLConnectionHandler._admin_nodb_conn is not None:
-            SQLConnectionHandler._admin_nodb_conn.close()
+        SQLConnectionHandler._user_conn.close()
 
     @contextmanager
     def get_postgres_cursor(self):
