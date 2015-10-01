@@ -215,6 +215,7 @@ class Transaction(object):
         transaction
         """
         with self._get_cursor() as cur:
+            cur.execute('SET search_path TO ag, barcodes, public')
             for sql, sql_args in self._queries:
                 # Execute the current SQL command
                 try:
