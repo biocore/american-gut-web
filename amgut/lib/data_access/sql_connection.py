@@ -1,237 +1,457 @@
-from __future__ import division
-
 # -----------------------------------------------------------------------------
-# Copyright (c) 2014--, The American Gut Development Team.
+# Copyright (c) 2014--, The Qiita Development Team.
 #
 # Distributed under the terms of the BSD 3-clause License.
 #
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
-
+from __future__ import division
 from contextlib import contextmanager
-from psycopg2 import connect, Error as PostgresError
+from itertools import chain
+from functools import wraps
+
+from psycopg2 import (connect, ProgrammingError, Error as PostgresError,
+                      OperationalError)
 from psycopg2.extras import DictCursor
+from psycopg2.extensions import TRANSACTION_STATUS_IDLE
 
-from amgut.lib.config_manager import AMGUT_CONFIG
+from amgut.connections import ag_data
 
 
-class SQLConnectionHandler(object):
-    """Encapsulates the DB connection with the Postgres DB"""
-    def __init__(self, con=None):
-        if not con:
-            self._open_connection()
-        else:
-            self._connection = con
+def _checker(func):
+    """Decorator to check that methods are executed inside the context"""
+    @wraps(func)
+    def wrapper(self, *args, **kwargs):
+        if self._contexts_entered == 0:
+            raise RuntimeError(
+                "Operation not permitted. Transaction methods can only be "
+                "invoked within the context manager.")
+        return func(self, *args, **kwargs)
+    return wrapper
 
-        self.execute('SET search_path TO ag, barcodes, public')
 
-    def __del__(self):
-        self._connection.close()
+class Transaction(object):
+    """A context manager that encapsulates a DB transaction
+
+    A transaction is defined by a series of consecutive queries that need to
+    be applied to the database as a single block.
+
+    Raises
+    ------
+    RuntimeError
+        If the transaction methods are invoked outside a context.
+
+    Notes
+    -----
+    When the execution leaves the context manager, any remaining queries in
+    the transaction will be executed and committed.
+    """
+    def __init__(self):
+        self._queries = []
+        self._results = []
+        self._contexts_entered = 0
+        self._connection = None
+        self._post_commit_funcs = []
+        self._post_rollback_funcs = []
 
     def _open_connection(self):
+        # If the connection already exists and is not closed, don't do anything
+        if self._connection is not None and self._connection.closed == 0:
+            return
+
         try:
-            self._connection = connect(user=AMGUT_CONFIG.user,
-                                       password=AMGUT_CONFIG.password,
-                                       database=AMGUT_CONFIG.database,
-                                       host=AMGUT_CONFIG.host,
-                                       port=AMGUT_CONFIG.port)
-        except Exception as e:
-            # catch any error from the database and raise for site to catch
-            raise RuntimeError("Cannot connect to database!\n%s" % str(e))
+            self._connection = connect(user=ag_data.user,
+                                       password=ag_data.password,
+                                       database=ag_data.database,
+                                       host=ag_data.host,
+                                       port=ag_data.port)
+        except OperationalError as e:
+            # catch three known common exceptions and raise runtime errors
+            try:
+                etype = e.message.split(':')[1].split()[0]
+            except IndexError:
+                # we recieved a really unanticipated error without a colon
+                etype = ''
+            if etype == 'database':
+                etext = ('This is likely because the database `%s` has not '
+                         'been created or has been dropped.' %
+                         ag_data.database)
+            elif etype == 'role':
+                etext = ('This is likely because the user string `%s` '
+                         'supplied in your configuration file `%s` is '
+                         'incorrect or not an authorized postgres user.' %
+                         (ag_data.user, ag_data.conf_fp))
+            elif etype == 'Connection':
+                etext = ('This is likely because postgres isn\'t '
+                         'running. Check that postgres is correctly '
+                         'installed and is running.')
+            else:
+                # we recieved a really unanticipated error with a colon
+                etext = ''
+            ebase = ('An OperationalError with the following message occured'
+                     '\n\n\t%s\n%s For more information, review `INSTALL.md`'
+                     ' in the Qiita installation base directory.')
+            raise RuntimeError(ebase % (e.message, etext))
+
+    def close(self):
+        if self._connection is not None:
+            self._connection.close()
 
     @contextmanager
-    def get_postgres_cursor(self):
-        """ Returns a Postgres cursor, commits on close
+    def _get_cursor(self):
+        """Returns a postgres cursor
 
         Returns
         -------
-        pgcursor : psycopg2.cursor
+        psycopg2.cursor
+            The psycopg2 cursor
+
+        Raises
+        ------
+        RuntimeError
+            if the cursor cannot be created
         """
-        if self._connection.closed:
-            self._open_connection()
+        self._open_connection()
 
         try:
             with self._connection.cursor(cursor_factory=DictCursor) as cur:
                 yield cur
-        except:
-            self._connection.rollback()
-            raise
+        except PostgresError as e:
+            raise RuntimeError("Cannot get postgres cursor: %s" % e)
+
+    def __enter__(self):
+        self._open_connection()
+        self._contexts_entered += 1
+        return self
+
+    def _clean_up(self, exc_type):
+        if exc_type is not None:
+            # An exception occurred during the execution of the transaction
+            # Make sure that we leave the DB w/o any modification
+            self.rollback()
+        elif self._queries:
+            # There are still queries to be executed, execute them
+            # It is safe to use the execute method here, as internally is
+            # wrapped in a try/except and rollbacks in case of failure
+            self.execute()
+            self.commit()
+        elif self._connection.get_transaction_status() != \
+                TRANSACTION_STATUS_IDLE:
+            # There are no queries to be executed, however, the transaction
+            # is still not committed. Commit it so the changes are not lost
+            self.commit()
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        # We only need to perform some action if this is the last context
+        # that we are entering
+        if self._contexts_entered == 1:
+            # We need to wrap the entire function in a try/finally because
+            # at the end we need to decrement _contexts_entered
+            try:
+                self._clean_up(exc_type)
+            finally:
+                self._contexts_entered -= 1
         else:
-            self._connection.commit()
+            self._contexts_entered -= 1
 
-    def _check_sql_args(self, sql_args):
-        """ Checks that sql_args have the correct type
-
-        Inputs:
-            sql_args: SQL arguments
-
-        Raises a TypeError if sql_args does not have the correct type,
-            otherwise it just returns the execution to the caller
-        """
-        # Check that sql arguments have the correct type
-        if sql_args and type(sql_args) not in [tuple, list, dict]:
-            raise TypeError("sql_args should be tuple, list or dict. Found %s "
-                            % type(sql_args))
-
-    @contextmanager
-    def _sql_executor(self, sql, sql_args=None, many=False):
-        """Executes an SQL query
-
-        Parameters
-        ----------
-        sql: str
-            The SQL query
-        sql_args: tuple or list, optional
-            The arguments for the SQL query
-        many: bool, optional
-            If true, performs an execute many call
-
-        Returns
-        -------
-        pgcursor : psycopg2.cursor
-            The cursor in which the SQL query was executed
+    def _raise_execution_error(self, sql, sql_args, error):
+        """Rollbacks the current transaction and raises a useful error
+        The error message contains the name of the transaction, the failed
+        query, the arguments of the failed query and the error generated.
 
         Raises
         ------
         ValueError
-            If there is some error executing the SQL query
         """
-        # Check that sql arguments have the correct type
-        if many:
-            for args in sql_args:
-                self._check_sql_args(args)
-        else:
-            self._check_sql_args(sql_args)
+        self.rollback()
+        raise ValueError(
+            "Error running SQL query:\n"
+            "Query: %s\nArguments: %s\nError: %s\n"
+            % (sql, str(sql_args), str(error)))
 
-        # Execute the query
-        with self.get_postgres_cursor() as cur:
-            try:
-                if many:
-                    cur.executemany(sql, sql_args)
-                else:
-                    cur.execute(sql, sql_args)
-                yield cur
-                self._connection.commit()
-            except PostgresError as e:
-                self._connection.rollback()
-                try:
-                    err_sql = cur.mogrify(sql, sql_args)
-                except ValueError:
-                    err_sql = cur.mogrify(sql, sql_args[0])
-                raise ValueError(("\nError running SQL query: %s"
-                                  "\nError: %s" % (err_sql, e)))
-
-    def execute_fetchall(self, sql, sql_args=None):
-        """ Executes a fetchall SQL query
+    @_checker
+    def add(self, sql, sql_args=None, many=False):
+        """Add an sql query to the transaction
 
         Parameters
         ----------
-        sql: str
-            The SQL query
-        sql_args: tuple or list, optional
-            The arguments for the SQL query
+        sql : str
+            The sql query
+        sql_args : list, tuple or dict of objects, optional
+            The arguments to the sql query
+        many : bool, optional
+            Whether or not we should add the query multiple times to the
+            transaction
 
-        Returns
+        Raises
         ------
-        list of tuples
-            The results of the fetchall query
+        TypeError
+            If `sql_args` is provided and is not a list, tuple or dict
+        RuntimeError
+            If invoked outside a context
 
-        Note: from psycopg2 documentation, only variable values should be bound
-            via sql_args, it shouldn't be used to set table or field names. For
-            those elements, ordinary string formatting should be used before
-            running execute.
+        Notes
+        -----
+        If `many` is true, `sql_args` should be a list of lists, tuples or
+        dicts, in which each element of the list contains the parameters for
+        one SQL query of the many. Each element on the list is all the
+        parameters for a single one of the many queries added. The amount of
+        SQL queries added to the list is len(sql_args).
         """
-        with self._sql_executor(sql, sql_args) as pgcursor:
-            result = pgcursor.fetchall()
-        return result
+        if not many:
+            sql_args = [sql_args]
 
-    def execute_fetchone(self, sql, sql_args=None):
-        """ Executes a fetchone SQL query
+        for args in sql_args:
+            if args:
+                if not isinstance(args, (list, tuple, dict)):
+                    raise TypeError("sql_args should be a list, tuple or dict."
+                                    " Found %s" % type(args))
+            self._queries.append((sql, args))
 
-        Parameters
-        ----------
-        sql: str
-            The SQL query
-        sql_args: tuple or list, optional
-            The arguments for the SQL query
+    def _execute(self):
+        """Internal function that actually executes the transaction
+        The `execute` function exposed in the API wraps this one to make sure
+        that we catch any exception that happens in here and we rollback the
+        transaction
+        """
+        with self._get_cursor() as cur:
+            for sql, sql_args in self._queries:
+                # Execute the current SQL command
+                try:
+                    cur.execute(sql, sql_args)
+                except Exception as e:
+                    # We catch any exception as we want to make sure that we
+                    # rollback every time that something went wrong
+                    self._raise_execution_error(sql, sql_args, e)
+
+                try:
+                    res = cur.fetchall()
+                except ProgrammingError as e:
+                    # At this execution point, we don't know if the sql query
+                    # that we executed should retrieve values from the database
+                    # If the query was not supposed to retrieve any value
+                    # (e.g. an INSERT without a RETURNING clause), it will
+                    # raise a ProgrammingError. Otherwise it will just return
+                    # an empty list
+                    res = None
+                except PostgresError as e:
+                    # Some other error happened during the execution of the
+                    # query, so we need to rollback
+                    self._raise_execution_error(sql, sql_args, e)
+
+                # Store the results of the current query
+                self._results.append(res)
+
+        # wipe out the already executed queries
+        self._queries = []
+
+        return self._results
+
+    @_checker
+    def execute(self):
+        """Executes the transaction
 
         Returns
         -------
-        Tuple
-            The results of the fetchone query
+        list of DictCursor
+            The results of all the SQL queries in the transaction
+
+        Raises
+        ------
+        RuntimeError
+            If invoked outside a context
 
         Notes
         -----
-        from psycopg2 documentation, only variable values should be bound
-            via sql_args, it shouldn't be used to set table or field names. For
-            those elements, ordinary string formatting should be used before
-            running execute.
+        If any exception occurs during the execution transaction, a rollback
+        is executed and no changes are reflected in the database.
+        When calling execute, the transaction will never be committed, it will
+        be automatically committed when leaving the context
+
+        See Also
+        --------
+        execute_fetchlast
+        execute_fetchindex
+        execute_fetchflatten
         """
-        with self._sql_executor(sql, sql_args) as pgcursor:
-            result = pgcursor.fetchone()
-        return result
-
-    def execute(self, sql, sql_args=None):
-        """ Executes an SQL query with no results
-
-        Parameters
-        ----------
-        sql: str
-            The SQL query
-        sql_args: tuple or list, optional
-            The arguments for the SQL query
-
-        Notes
-        -----
-        from psycopg2 documentation, only variable values should be bound
-            via sql_args, it shouldn't be used to set table or field names. For
-            those elements, ordinary string formatting should be used before
-            running execute.
-        """
-        with self._sql_executor(sql, sql_args):
-            pass
-
-    def executemany(self, sql, sql_args_list):
-        """ Executes an executemany SQL query with no results
-
-        Parameters
-        ----------
-        sql: str
-            The SQL query
-        sql_args: list of tuples
-            The arguments for the SQL query
-
-        Note: from psycopg2 documentation, only variable values should be bound
-            via sql_args, it shouldn't be used to set table or field names. For
-            those elements, ordinary string formatting should be used before
-            running execute.
-        """
-        with self._sql_executor(sql, sql_args_list, True):
-            pass
-
-    def execute_proc_return_cursor(self, procname, proc_args):
-        """Executes a stored procedure and returns a cursor
-
-        Parameters
-        ----------
-        procname: str
-            the name of the stored procedure
-        proc_args: list
-            arguments sent to the stored procedure
-        """
-        proc_args.append('cur2')
-        if self._connection.closed:
-            self._open_connection()
-        cur = self._connection.cursor()
-
         try:
-            cur.callproc(procname, proc_args)
-        except Exception as e:
-            # catch any error from the database and raise for site to catch
+            return self._execute()
+        except Exception:
+            self.rollback()
+            raise
+
+    @_checker
+    def execute_fetchlast(self):
+        """Executes the transaction and returns the last result
+
+        This is a convenient function that is equivalent to
+        `self.execute()[-1][0][0]`
+
+        Returns
+        -------
+        object
+            The first value of the last SQL query executed
+
+        See Also
+        --------
+        execute
+        execute_fetchindex
+        execute_fetchflatten
+        """
+        return self.execute()[-1][0][0]
+
+    @_checker
+    def execute_fetchindex(self, idx=-1):
+        """Executes the transaction and returns the results of the `idx` query
+
+        This is a convenient function that is equivalent to
+        `self.execute()[idx]
+
+        Parameters
+        ----------
+        idx : int, optional
+            The index of the query to return the result. It defaults to -1, the
+            last query.
+
+        Returns
+        -------
+        DictCursor
+            The results of the `idx` query in the transaction
+
+        See Also
+        --------
+        execute
+        execute_fetchlast
+        execute_fetchflatten
+        """
+        return self.execute()[idx]
+
+    @_checker
+    def execute_fetchflatten(self, idx=-1):
+        """Executes the transaction and returns the flattened results of the
+        `idx` query
+
+        This is a convenient function that is equivalent to
+        `chain.from_iterable(self.execute()[idx])`
+
+        Parameters
+        ----------
+        idx : int, optional
+            The index of the query to return the result. It defaults to -1, the
+            last query.
+
+        Returns
+        -------
+        list of objects
+            The flattened results of the `idx` query
+
+        See Also
+        --------
+        execute
+        execute_fetchlast
+        execute_fetchindex
+        """
+        return list(chain.from_iterable(self.execute()[idx]))
+
+    def _funcs_executor(self, funcs, func_str):
+        error_msg = []
+        for f, args, kwargs in funcs:
+            try:
+                f(*args, **kwargs)
+            except Exception as e:
+                error_msg.append(str(e))
+        # The functions in these two lines are mutually exclusive. When one of
+        # them is executed, we can restore both of them.
+        self._post_commit_funcs = []
+        self._post_rollback_funcs = []
+        if error_msg:
+            raise RuntimeError(
+                "An error occurred during the post %s commands:\n%s"
+                % (func_str, "\n".join(error_msg)))
+
+    @_checker
+    def commit(self):
+        """Commits the transaction and reset the queries
+
+        Raises
+        ------
+        RuntimeError
+            If invoked outside a context
+        """
+        # Reset the queries, the results and the index
+        self._queries = []
+        self._results = []
+        try:
+            self._connection.commit()
+        except Exception:
+            self._connection.close()
+            raise
+        # Execute the post commit functions
+        self._funcs_executor(self._post_commit_funcs, "commit")
+
+    @_checker
+    def rollback(self):
+        """Rollbacks the transaction and reset the queries
+
+        Raises
+        ------
+        RuntimeError
+            If invoked outside a context
+        """
+        # Reset the queries, the results and the index
+        self._queries = []
+        self._results = []
+        try:
             self._connection.rollback()
-            raise RuntimeError("Failed to execute stored procedure !\n%s" %
-                               str(e))
-        else:
-            return self._connection.cursor('cur2')
-        finally:
-            cur.close()
+        except Exception:
+            self._connection.close()
+            raise
+        # Execute the post rollback functions
+        self._funcs_executor(self._post_rollback_funcs, "rollback")
+
+    @property
+    def index(self):
+        return len(self._queries) + len(self._results)
+
+    @_checker
+    def add_post_commit_func(self, func, *args, **kwargs):
+        """Adds a post commit function
+
+        The function added will be executed after the next commit in the
+        transaction, unless a rollback is executed. This is useful, for
+        example, to perform some filesystem clean up once the transaction is
+        committed.
+
+        Parameters
+        ----------
+        func : function
+            The function to add for the post commit functions
+        args : tuple
+            The arguments of the function
+        kwargs : dict
+            The keyword arguments of the function
+        """
+        self._post_commit_funcs.append((func, args, kwargs))
+
+    @_checker
+    def add_post_rollback_func(self, func, *args, **kwargs):
+        """Adds a post rollback function
+
+        The function added will be executed after the next rollback in the
+        transaction, unless a commit is executed. This is useful, for example,
+        to restore the filesystem in case a rollback occurs, avoiding leaving
+        the database and the filesystem in an out of sync state.
+
+        Parameters
+        ----------
+        func : function
+            The function to add for the post rollback functions
+        args : tuple
+            The arguments of the function
+        kwargs : dict
+            The keyword arguments of the function
+        """
+        self._post_rollback_funcs.append((func, args, kwargs))
+
+# Singleton pattern, create the transaction for the entire system
+TRN = Transaction()
