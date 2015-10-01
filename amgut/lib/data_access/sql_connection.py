@@ -133,6 +133,8 @@ class SQLConnectionHandler(object):
             raise RuntimeError(ebase % (e.message, etext))
         else:
             self._connection = getattr(SQLConnectionHandler, self._conn_attr)
+            with self.get_postgres_cursor() as cur:
+                cur.execute('SET search_path TO ag, barcodes, public')
 
     @staticmethod
     def close():
