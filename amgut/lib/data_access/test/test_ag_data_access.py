@@ -4,8 +4,6 @@ from random import choice, randint
 from string import ascii_letters
 from uuid import UUID
 
-from psycopg2 import DataError
-
 from amgut.lib.data_access.ag_data_access import AGDataAccess
 
 
@@ -72,12 +70,12 @@ class TestAGDataAccess(TestCase):
 
     def test_getAGBarcodeDetails_bad_barcode(self):
         # test non-existant barcode
-        obs = self.ag_data.getAGBarcodeDetails('99')
-        self.assertEqual(obs, {})
+        with self.assertRaises(ValueError):
+            self.ag_data.getAGBarcodeDetails('99')
 
         # test existing barcode but not in AG
-        obs = self.ag_data.getAGBarcodeDetails('000006232')
-        self.assertEqual(obs, {})
+        with self.assertRaises(ValueError):
+            self.ag_data.getAGBarcodeDetails('000006232')
 
     def test_getAGBarcodeDetails(self):
         # test existing AG barcode
@@ -107,8 +105,8 @@ class TestAGDataAccess(TestCase):
 
     def test_getAGKitDetails(self):
         # test non-existant kit
-        obs = self.ag_data.getAGKitDetails('IDONTEXI5T')
-        self.assertEqual(obs, {})
+        with self.assertRaises(ValueError):
+            self.ag_data.getAGKitDetails('IDONTEXI5T')
 
         # test existing AG kit
         obs = self.ag_data.getAGKitDetails('tst_ODmhG')
@@ -163,7 +161,7 @@ class TestAGDataAccess(TestCase):
     def test_getConsent(self):
 
         res = self.ag_data.getConsent("8b2b45bb3390b585")
-        exp = {'date_signed': 'None',
+        exp = {'date_signed': None,
                'assent_obtainer': None,
                'age_range': None,
                'parent_1_name': 'REMOVED',
@@ -177,12 +175,12 @@ class TestAGDataAccess(TestCase):
         self.assertEquals(res, exp)
 
     def test_getConsentNotPresent(self):
-        res = self.ag_data.getConsent("42")
-        self.assertEquals(res, None)
+        with self.assertRaises(ValueError):
+            self.ag_data.getConsent("42")
 
     def test_logParticipantSample_badinfo(self):
         # bad ag_login_id
-        with self.assertRaises(RuntimeError):
+        with self.assertRaises(ValueError):
             self.ag_data.logParticipantSample(
                 '11111111-1111-1111-1111-714297821c6a', '000001047',
                 'stool', None, datetime.date(2015, 9, 27),
@@ -258,7 +256,7 @@ class TestAGDataAccess(TestCase):
         res = self.ag_data.getHumanParticipants(i)
         self.assertEqual(res, [])
 
-    def test_vioscreen_Status(self):
+    def test_vioscreen_status(self):
         survey_id = 'eba20dea4f54b997'
         self.ag_data.updateVioscreenStatus(survey_id, 3)
         obs = self.ag_data.get_vioscreen_status(survey_id)
@@ -452,8 +450,8 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(obs['kit_verified'], 'y')
 
         # Test verifying a non-existant kit
-        # TODO: make raise an error
-        self.ag_data.getAGKitDetails('NOTAREALKITID')
+        with self.assertRaises(ValueError):
+            self.ag_data.getAGKitDetails('NOTAREALKITID')
 
     def test__get_unverified_kits(self):
         obs = self.ag_data._get_unverified_kits()
@@ -593,10 +591,10 @@ class TestAGDataAccess(TestCase):
         self.assertEqual('d8592c74-8421-2135-e040-8a80115d6401', obs)
 
     def test_get_user_for_kit_errors(self):
-        with self.assertRaises(RuntimeError):
+        with self.assertRaises(ValueError):
             self.ag_data.get_user_for_kit('the_fooster')
 
-        with self.assertRaises(RuntimeError):
+        with self.assertRaises(ValueError):
             self.ag_data.get_user_for_kit('tst_esXXX')
 
     def test_get_menu_items(self):
@@ -607,7 +605,7 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(({'REMOVED-0': []}, {}, [], True), obs)
 
     def test_get_menu_items_errors(self):
-        with self.assertRaises(RuntimeError):
+        with self.assertRaises(ValueError):
             self.ag_data.get_menu_items('tst_esXXX')
 
     def test_check_if_consent_exists(self):
@@ -629,8 +627,8 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(exp, obs)
 
     def test_get_user_info_non_existent(self):
-        obs = self.ag_data.get_user_info('tst_XX1123')
-        self.assertEqual({}, obs)
+        with self.assertRaises(ValueError):
+            self.ag_data.get_user_info('tst_XX1123')
 
     def test_get_barcode_results(self):
         obs = self.ag_data.get_barcode_results('tst_yCzro')
@@ -653,7 +651,7 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(obs, exp)
 
     def test_get_barcode_results_non_existant_id(self):
-        with self.assertRaises(RuntimeError):
+        with self.assertRaises(ValueError):
             self.ag_data.get_barcode_results("something that doesn't exist")
 
     def test_get_login_info(self):
@@ -670,8 +668,9 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(obs, exp)
 
     def test_get_login_info_non_existant_id(self):
-        with self.assertRaises(DataError):
-            self.ag_data.get_login_info("id does not exist")
+        id_ = '00000000-0000-0000-0000-000000000000'
+        with self.assertRaises(ValueError):
+            self.ag_data.get_login_info(id_)
 
     def test_get_survey_id(self):
         id_ = '8ca47059-000a-469f-aa64-ff1afbd6fcb1'
@@ -679,8 +678,8 @@ class TestAGDataAccess(TestCase):
         self.assertEquals(obs, 'd08758a1510256f0')
 
     def test_get_survey_id_non_existant_id(self):
-        id_ = 'does not exist'
-        with self.assertRaises(DataError):
+        id_ = '00000000-0000-0000-0000-000000000000'
+        with self.assertRaises(ValueError):
             self.ag_data.get_survey_id(id_, 'REMOVED')
 
     def test_get_countries(self):
