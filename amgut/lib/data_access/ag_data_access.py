@@ -13,6 +13,7 @@ Centralized database access for the American Gut web portal
 """
 
 import logging
+from uuid import UUID
 
 import psycopg2
 from passlib.hash import bcrypt
@@ -83,16 +84,16 @@ class AGDataAccess(object):
                 WHERE supplied_kit_id = %s"""
             TRN.add(sql, [username])
             row = TRN.execute_fetchindex()
-            if row:
-                results = dict(row[0])
-
-                if not bcrypt.verify(password, results['kit_password']):
-                    return False
-                results['ag_login_id'] = str(results['ag_login_id'])
-
-                return results
-            else:
+            if not row:
                 return False
+
+            results = dict(row[0])
+
+            if not bcrypt.verify(password, results['kit_password']):
+                return False
+            results['ag_login_id'] = str(results['ag_login_id'])
+
+            return results
 
     def check_login_exists(self, email):
         """Checks if email for login already exists on system
@@ -112,9 +113,9 @@ class AGDataAccess(object):
             sql = "SELECT ag_login_id FROM ag_login WHERE LOWER(email) = %s"
             TRN.add(sql, [clean_email])
             value = TRN.execute_fetchindex()
-            if not value:
-                return None
-            return value[0][0]
+            if value:
+                value = value[0][0]
+            return value
 
     def addAGLogin(self, email, name, address, city, state, zip_, country):
         """Adds a new login or returns the login_id if email already exists
@@ -156,6 +157,23 @@ class AGDataAccess(object):
             return ag_login_id
 
     def getAGBarcodeDetails(self, barcode):
+        """Returns information about the barcode from both AG and standard info
+
+        Parameters
+        ----------
+        barcode : str
+            Barcode to get information for
+
+        Returns
+        -------
+        dict
+            All barcode info, keyed to column name
+
+        Raises
+        ------
+        ValueError
+            Barcode not found in AG information tables
+        """
         sql = """SELECT  email,
                     cast(ag_kit_barcode_id as varchar(100)),
                     cast(ag_kit_id as varchar(100)),
@@ -192,26 +210,38 @@ class AGDataAccess(object):
             return dict(row[0])
 
     def registerHandoutKit(self, ag_login_id, supplied_kit_id):
-        """
+        """Registeres a handout kit to a user
+
+        Parameters
+        ----------
+        ag_login_id : str
+            UUID4 formatted string of login ID to associate with kit
+        supplied_kit_id : str
+            kit ID for the handout kit
+
         Returns
         -------
         bool
             True:  success
             False: insert failed due to IntegrityError
+
+        Raises
+        ------
+        ValueError
+            Non-UUID4 value sent as ag_login_id
         """
         with TRN:
+            uuid_check = UUID(ag_login_id)
+            if not uuid_check.variant == 4:
+                raise ValueError("Non-UUID4 value passed: %s" % ag_login_id)
+
             printresults = self.checkPrintResults(supplied_kit_id)
-            if printresults is False:
-                printresults = 'n'
             # make sure login_id and skid exists
             sql = """SELECT EXISTS(SELECT *
                                    FROM ag.ag_login
                                    WHERE ag_login_id = %s)"""
             TRN.add(sql, [ag_login_id])
-            try:
-                exists = TRN.execute_fetchlast()
-            except ValueError:
-                raise ValueError("ag_login_id is not a UUID: %s" % ag_login_id)
+            exists = TRN.execute_fetchlast()
             if not exists:
                 return False
             sql = """SELECT EXISTS(SELECT *
@@ -309,7 +339,6 @@ class AGDataAccess(object):
                            JOIN ag_login_surveys agl
                            USING (ag_login_id, participant_name)
                            WHERE agl.survey_id = %s""", [survey_id])
-            # Can refactor this with _get_col_names_from_cursor()
             result = TRN.execute_fetchindex()
             if not result:
                 raise ValueError("Survey ID does not exist in DB: %s" %
@@ -707,6 +736,11 @@ class AGDataAccess(object):
         list of dict
             A list of registration information associated with a common login
             ID.
+
+        Raises
+        ------
+        ValueError
+            Unknown ag_login_id passed
         """
         with TRN:
             sql = """SELECT ag_login_id, email, name, address, city, state,
@@ -734,6 +768,11 @@ class AGDataAccess(object):
         -------
         str or None
             The survey ID, or None if a survey ID cannot be found.
+
+        Raises
+        ------
+        ValueError
+            Unknown ag_login_id or participant_name passed
         """
         with TRN:
             sql = """SELECT survey_id
