@@ -15,7 +15,7 @@ install:
 script:
   - export AG_CONFIG=`pwd`/ag_config.txt.example
   - ag make test
-  - nosetests --with-doctest --with-coverage
+  - nosetests --with-doctest --with-coverage -v
   - flake8 amgut setup.py scripts
 after_success:
   - coveralls
