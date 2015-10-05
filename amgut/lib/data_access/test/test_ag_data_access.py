@@ -135,7 +135,7 @@ class TestAGDataAccess(TestCase):
 
     def test_registerHandoutKit_bad_idz(self):
         # run on non-existant login id
-        ag_login_id = '11111111-1111-1111-1111-714297821c6a'
+        ag_login_id = '877bb1b5-7352-48bf-a7b1-1248c689b819'
         kit = self.ag_data.get_all_handout_kits()[0]
         obs = self.ag_data.registerHandoutKit(ag_login_id, kit)
         self.assertFalse(obs)

@@ -115,7 +115,7 @@ class AGDataAccess(object):
             value = TRN.execute_fetchindex()
             if value:
                 value = value[0][0]
-            return value
+            return None if value == [] else value
 
     def addAGLogin(self, email, name, address, city, state, zip_, country):
         """Adds a new login or returns the login_id if email already exists
@@ -232,7 +232,7 @@ class AGDataAccess(object):
         """
         with TRN:
             uuid_check = UUID(ag_login_id)
-            if not uuid_check.variant == 4:
+            if not uuid_check.version == 4:
                 raise ValueError("Non-UUID4 value passed: %s" % ag_login_id)
 
             printresults = self.checkPrintResults(supplied_kit_id)
