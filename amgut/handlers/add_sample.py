@@ -62,8 +62,9 @@ class AddSample(BaseHandler):
 
     @authenticated
     def get(self):
-        participant_name = self.get_argument('participant_name',
-                                             'environmental')
+        participant_name = self.get_argument('participant_name', None)
+        if participant_name is None:
+            self.redirect('/authed/add_sample_overview/')
         form = self.build_form()
         self.render('add_sample.html', skid=self.current_user,
                     participant_name=participant_name,
