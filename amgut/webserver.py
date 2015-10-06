@@ -58,7 +58,7 @@ RES_PATH = join(DIRNAME, "results")
 DEBUG = True
 
 
-class QiimeWebApplication(Application):
+class AGWebApplication(Application):
     def __init__(self):
         handlers = [
             (r"/static/(.*)", BaseStaticFileHandler, {"path": STATIC_PATH}),
@@ -106,7 +106,7 @@ class QiimeWebApplication(Application):
             # Currently the only login form is on the homepage
             "login_url": media_locale['SITEBASE'] + '/',
         }
-        super(QiimeWebApplication, self).__init__(handlers, **settings)
+        super(AGWebApplication, self).__init__(handlers, **settings)
 
 
 def main():
@@ -118,7 +118,7 @@ def main():
     options.log_file_prefix = prefix
     options.logging = 'warning'
     parse_command_line()
-    http_server = HTTPServer(QiimeWebApplication())
+    http_server = HTTPServer(AGWebApplication())
     http_server.listen(options.port)
     print("Tornado started on port", options.port)
     IOLoop.instance().start()
