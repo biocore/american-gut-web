@@ -109,8 +109,8 @@ class TestAddSample(TestHandlerBase):
                              {'participant_name': 'REMOVED-0',
                               'barcode': '000005628',
                               'sample_site': 'Stool',
-                              'sample_date': '12/13/14',
-                              'sample_time': '11:12 pm',
+                              'sample_date': '12/13/2014',
+                              'sample_time': '11:12 PM',
                               'notes': 'TESTING TORNADO LOGGING HUMAN'})
         self.assertEqual(response.code, 200)
         self.assertTrue(
@@ -157,8 +157,8 @@ class TestAddSample(TestHandlerBase):
                              {'participant_name': 'environmental',
                               'barcode': '000005628',
                               'sample_site': 'Biofilm',
-                              'sample_date': '12/11/14',
-                              'sample_time': '10:12 pm',
+                              'sample_date': '12/11/2014',
+                              'sample_time': '10:12 PM',
                               'notes': 'TESTING TORNADO LOGGING GENERAL'})
         self.assertEqual(response.code, 200)
         self.assertTrue(
@@ -189,14 +189,68 @@ class TestAddSample(TestHandlerBase):
         self.assertDictEqual(obs, exp)
 
     def test_post_bad_data(self):
+        self.mock_login('tst_LbxUH')
         # Malformed date
+        # make sure barcode properly removed
+        self.assertIn('000005628', ag_data.getAvailableBarcodes(
+                      'd8592c74-9694-2135-e040-8a80115d6401'))
+        # Run test
+        response = self.post('/authed/add_sample_general/',
+                             {'participant_name': 'environmental',
+                              'barcode': '000005628',
+                              'sample_site': 'Biofilm',
+                              'sample_date': '98/98/1998',
+                              'sample_time': '10:12 PM',
+                              'notes': 'TESTING TORNADO LOGGING GENERAL'})
+        self.assertEqual(response.code, 200)
+        self.assertTrue(
+            response.effective_url.endswith('/authed/add_sample_general/'))
 
         # Malformed Time
+        # make sure barcode properly removed
+        self.assertIn('000005628', ag_data.getAvailableBarcodes(
+                      'd8592c74-9694-2135-e040-8a80115d6401'))
+        # Run test
+        response = self.post('/authed/add_sample_general/',
+                             {'participant_name': 'environmental',
+                              'barcode': '000005628',
+                              'sample_site': 'Biofilm',
+                              'sample_date': '12/12/2014',
+                              'sample_time': '10:98 PM',
+                              'notes': 'TESTING TORNADO LOGGING GENERAL'})
+        self.assertEqual(response.code, 200)
+        self.assertTrue(
+            response.effective_url.endswith('/authed/add_sample_general/'))
 
         # Missing data
+        # make sure barcode properly removed
+        self.assertIn('000005628', ag_data.getAvailableBarcodes(
+                      'd8592c74-9694-2135-e040-8a80115d6401'))
+        # Run test
+        response = self.post('/authed/add_sample_general/',
+                             {'participant_name': 'environmental',
+                              'barcode': '000005628',
+                              'sample_site': 'Biofilm',
+                              'sample_date': '12/12/2014',
+                              'sample_time': '',
+                              'notes': 'TESTING TORNADO LOGGING GENERAL'})
+        self.assertEqual(response.code, 200)
+        self.assertTrue(
+            response.effective_url.endswith('/authed/add_sample_general/'))
 
         # Non-owned barcode
-        raise NotImplementedError()
+        response = self.post('/authed/add_sample_general/',
+                             {'participant_name': 'environmental',
+                              'barcode': '000002122',
+                              'sample_site': 'Biofilm',
+                              'sample_date': '12/12/2014',
+                              'sample_time': '10:12 PM',
+                              'notes': 'TESTING TORNADO LOGGING GENERAL'})
+        self.assertEqual(response.code, 200)
+        self.assertTrue(
+            response.effective_url.endswith('/authed/add_sample_general/'))
+        self.assertIn('000002011', ag_data.getAvailableBarcodes(
+                      'd8592c74-8710-2135-e040-8a80115d6401'))
 
 if __name__ == '__main__':
     main()
