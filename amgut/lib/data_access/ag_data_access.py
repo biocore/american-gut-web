@@ -507,7 +507,8 @@ class AGDataAccess(object):
             return TRN.execute_fetchflatten()
 
     def getMapMarkers(self):
-        raise NotImplementedError('Removed for update')
+        # Removed for update
+        return []
 
     def handoutCheck(self, username, password):
         with TRN:
