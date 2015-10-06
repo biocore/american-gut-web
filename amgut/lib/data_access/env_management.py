@@ -10,7 +10,7 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from natsort import natsorted
 
 from amgut.lib.config_manager import AMGUT_CONFIG
-from amgut.lib.data_access.sql_connection import SQLConnectionHandler
+from amgut.lib.data_access.sql_connection import TRN
 
 
 get_db_file = partial(join, join(dirname(dirname(abspath(__file__))), '..',
@@ -119,25 +119,23 @@ def initialize(verbose=False):
 
 
 def make_settings_table():
-    conn = SQLConnectionHandler()
-    settings = AMGUT_CONFIG.get_settings()
+    with TRN:
+        settings = AMGUT_CONFIG.get_settings()
 
-    columns = [' '.join([setting[0], 'varchar']) for setting in settings]
-    column_names = [setting[0] for setting in settings]
+        columns = [' '.join([setting[0], 'varchar']) for setting in settings]
+        column_names = [setting[0] for setting in settings]
 
-    num_values = len(settings)
-    sql = "INSERT INTO settings ({}) VALUES ({})".format(
-        ', '.join(column_names), ', '.join(['%s'] * num_values))
-    args = [str(setting[1]) for setting in settings]
+        num_values = len(settings)
+        sql = "INSERT INTO settings ({}) VALUES ({})".format(
+            ', '.join(column_names), ', '.join(['%s'] * num_values))
+        args = [str(setting[1]) for setting in settings]
 
-    with conn.get_postgres_cursor() as cur:
         create_sql = ("CREATE TABLE ag.settings ({}, current_patch varchar "
                       "NOT NULL DEFAULT 'unpatched')")
 
         create_sql = create_sql.format(', '.join(columns))
-
-        cur.execute(create_sql)
-        cur.execute(sql, args)
+        TRN.add(create_sql)
+        TRN.add(sql, args)
 
 
 def populate_test_db():
@@ -155,39 +153,32 @@ def patch_db(patches_dir=PATCHES_DIR, verbose=False):
     Pulls the current patch from the settings table and applies all subsequent
     patches found in the patches directory.
     """
-    conn = SQLConnectionHandler()
+    with TRN:
+        TRN.add("SELECT current_patch FROM settings")
+        current_patch = TRN.execute_fetchlast()
+        current_patch_fp = join(patches_dir, current_patch)
 
-    current_patch = conn.execute_fetchone(
-        "SELECT current_patch FROM settings")[0]
-    current_patch_fp = join(patches_dir, current_patch)
+        sql_glob = join(patches_dir, '*.sql')
+        patch_files = natsorted(glob(sql_glob))
 
-    sql_glob = join(patches_dir, '*.sql')
-    patch_files = natsorted(glob(sql_glob))
+        if current_patch == 'unpatched':
+            next_patch_index = 0
+        elif current_patch_fp not in patch_files:
+            raise RuntimeError("Cannot find patch file %s" % current_patch)
+        else:
+            next_patch_index = patch_files.index(current_patch_fp) + 1
 
-    if current_patch == 'unpatched':
-        next_patch_index = 0
-    elif current_patch_fp not in patch_files:
-        raise RuntimeError("Cannot find patch file %s" % current_patch)
-    else:
-        next_patch_index = patch_files.index(current_patch_fp) + 1
+        patch_update_sql = "UPDATE settings SET current_patch = %s"
 
-    patch_update_sql = "UPDATE settings SET current_patch = %s"
-
-    for patch_fp in patch_files[next_patch_index:]:
-        patch_filename = split(patch_fp)[-1]
-        with conn.get_postgres_cursor() as cur:
-            cur.execute('SET SEARCH_PATH TO ag, barcodes, public')
+        for patch_fp in patch_files[next_patch_index:]:
+            patch_filename = split(patch_fp)[-1]
 
             with open(patch_fp, 'U') as patch_file:
                 if verbose:
                     echo('\tApplying patch %s...' % patch_filename)
 
-                cur.execute(patch_file.read())
-                cur.execute(patch_update_sql, [patch_filename])
-
-        conn._connection.commit()
-
-    # Idempotent patches implemented in Python can be run here
+                TRN.add(patch_file.read())
+                TRN.add(patch_update_sql, [patch_filename])
 
 
 def rebuild_test(verbose=False):
