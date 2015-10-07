@@ -92,6 +92,8 @@ class HumanSurveyHandler(BaseHandler):
         else:
             # we came from participant_overview
             consent = ag_data.getConsent(human_survey_id)
+            # make sure is string so can be serialized
+            consent['date_signed'] = str(consent['date_signed'])
             self.set_secure_cookie('human_survey_id', human_survey_id)
             data = primary_human_survey.fetch_survey(human_survey_id)
             redis.hset(human_survey_id, 'consent', dumps(consent))

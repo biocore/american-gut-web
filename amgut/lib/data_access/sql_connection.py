@@ -158,8 +158,11 @@ class SQLConnectionHandler(object):
         try:
             with self._connection.cursor(cursor_factory=DictCursor) as cur:
                 yield cur
-        except PostgresError as e:
-            raise RuntimeError("Cannot get postgres cursor! %s" % e)
+        except:
+            self._connection.rollback()
+            raise
+        else:
+            self._connection.commit()
 
     @property
     def autocommit(self):
