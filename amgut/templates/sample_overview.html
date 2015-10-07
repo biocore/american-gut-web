@@ -39,7 +39,7 @@
 {% if sequence_url %}
                 <td><a href="{{ sequence_url }}" target="blank">FASTQ</a>
 {% else %}
-                <td>{% raw tl['SAMPLE_NOT_PROCESSED'] %}</td>
+                <td>{% raw tl['DATA_NOT_AVAILABLE'] %}</td>
 {% end %}
             </tr>
 
@@ -47,7 +47,7 @@
 {% if biomv1_url %}
                 <td><a href="{{ biomv1_url }}" target="blank">BIOM-format v1.0</a>
 {% else %}
-                <td>{% raw tl['SAMPLE_NOT_PROCESSED'] %}</td>
+                <td>{% raw tl['DATA_NOT_AVAILABLE'] %}</td>
 {% end %}
             </tr>
 
@@ -55,7 +55,7 @@
 {% if classic_url %}
                 <td><a href="{{ classic_url }}" target="blank">Excel readable</a>
 {% else %}
-                <td>{% raw tl['SAMPLE_NOT_PROCESSED'] %}</td>
+                <td>{% raw tl['DATA_NOT_AVAILABLE'] %}</td>
 {% end %}
             </tr>
             <tr>
