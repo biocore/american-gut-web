@@ -68,9 +68,9 @@ class SampleOverviewHandler(BaseHandler):
             biomv1_url = api_base + 'otu/%s/json' % bc_with_suf
             classic_url = api_base + 'otu/%s/txt' % bc_with_suf
 
-        seq_req = requests.get(api_base + 'sequence/%s' % bc_with_suf)
-        if seq_req.status_code == 200:
-            sequence_url = json.loads(seq_req.content)[0]['fastq_url']
+            seq_req = requests.get(api_base + 'sequence/%s' % bc_with_suf)
+            if seq_req.status_code == 200:
+                sequence_url = json.loads(seq_req.content)[0]['fastq_url']
 
         sample_time = sample_data['sample_time']
         sample_date = sample_data['sample_date']
