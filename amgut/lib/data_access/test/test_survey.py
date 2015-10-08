@@ -1,8 +1,9 @@
 from unittest import TestCase, main
+from future.utils import viewitems
 from wtforms.form import BaseForm
 from amgut.lib.data_access.survey import (
-    QuestionSingle, QuestionMultiple, QuestionText, QuestionString)
-# Question, Group, Survey)
+    QuestionSingle, QuestionMultiple, QuestionText, QuestionString, Group)
+# Question, Survey)
 
 
 class TestQuestionSingle(TestCase):
@@ -140,13 +141,80 @@ class TestQuestionString(TestCase):
 
 class TestGroup(TestCase):
     def test_create(self):
-        raise NotImplementedError()
+        self.maxDiff = None
+        group = Group(1)
+        self.assertEqual(group.id, 1)
+        self.assertEqual(group.id_to_eid, {
+            14: ['General_Information_14_0'],
+            15: ['General_Information_15_0'],
+            16: ['General_Information_16_0'],
+            17: ['General_Information_17_0'],
+            18: ['General_Information_18_0'],
+            19: ['General_Information_19_0'],
+            20: ['General_Information_20_0'],
+            21: ['General_Information_21_0'],
+            22: ['General_Information_22_0'],
+            23: ['General_Information_23_0'],
+            101: ['General_Information_101_0'],
+            103: ['General_Information_103_0'],
+            105: ['General_Information_105_0'],
+            117: ['General_Information_117_0'],
+            119: ['General_Information_119_0'],
+            120: ['General_Information_120_0'],
+            122: ['General_Information_122_0']})
+        self.assertEqual(
+            {k: str(type(v)) for k, v in viewitems(group.question_lookup)}, {
+                14: "<class 'amgut.lib.data_access.survey.QuestionSingle'>",
+                15: "<class 'amgut.lib.data_access.survey.QuestionSingle'>",
+                16: "<class 'amgut.lib.data_access.survey.QuestionSingle'>",
+                17: "<class 'amgut.lib.data_access.survey.QuestionSingle'>",
+                18: "<class 'amgut.lib.data_access.survey.QuestionSingle'>",
+                19: "<class 'amgut.lib.data_access.survey.QuestionSingle'>",
+                20: "<class 'amgut.lib.data_access.survey.QuestionSingle'>",
+                21: "<class 'amgut.lib.data_access.survey.QuestionSingle'>",
+                22: "<class 'amgut.lib.data_access.survey.QuestionSingle'>",
+                23: "<class 'amgut.lib.data_access.survey.QuestionSingle'>",
+                101: "<class 'amgut.lib.data_access.survey.QuestionText'>",
+                103: "<class 'amgut.lib.data_access.survey.QuestionText'>",
+                105: "<class 'amgut.lib.data_access.survey.QuestionText'>",
+                117: "<class 'amgut.lib.data_access.survey.QuestionText'>",
+                119: "<class 'amgut.lib.data_access.survey.QuestionText'>",
+                120: "<class 'amgut.lib.data_access.survey.QuestionText'>",
+                122: "<class 'amgut.lib.data_access.survey.QuestionText'>"})
+        self.assertEqual([str(type(x)) for x in group.questions], [
+            "<class 'amgut.lib.data_access.survey.QuestionSingle'>",
+            "<class 'amgut.lib.data_access.survey.QuestionSingle'>",
+            "<class 'amgut.lib.data_access.survey.QuestionSingle'>",
+            "<class 'amgut.lib.data_access.survey.QuestionText'>",
+            "<class 'amgut.lib.data_access.survey.QuestionSingle'>",
+            "<class 'amgut.lib.data_access.survey.QuestionSingle'>",
+            "<class 'amgut.lib.data_access.survey.QuestionText'>",
+            "<class 'amgut.lib.data_access.survey.QuestionSingle'>",
+            "<class 'amgut.lib.data_access.survey.QuestionSingle'>",
+            "<class 'amgut.lib.data_access.survey.QuestionText'>",
+            "<class 'amgut.lib.data_access.survey.QuestionSingle'>",
+            "<class 'amgut.lib.data_access.survey.QuestionSingle'>",
+            "<class 'amgut.lib.data_access.survey.QuestionText'>",
+            "<class 'amgut.lib.data_access.survey.QuestionSingle'>",
+            "<class 'amgut.lib.data_access.survey.QuestionText'>",
+            "<class 'amgut.lib.data_access.survey.QuestionText'>",
+            "<class 'amgut.lib.data_access.survey.QuestionText'>"])
+        self.assertEqual(group.supplemental_eids, {
+            'General_Information_103_0',
+            'General_Information_120_0',
+            'General_Information_105_0',
+            'General_Information_119_0',
+            'General_Information_117_0',
+            'General_Information_101_0',
+            'General_Information_122_0'})
 
     def test_name(self):
-        raise NotImplementedError()
+        group = Group(1)
+        self.assertEqual(group.name, 'General Information')
 
     def test_american_name(self):
-        raise NotImplementedError()
+        group = Group(1)
+        self.assertEqual(group.american_name, 'General Information')
 
 
 class TestSurvey(TestCase):
