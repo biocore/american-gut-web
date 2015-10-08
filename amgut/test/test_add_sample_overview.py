@@ -21,7 +21,12 @@ class TestAddSampleOverview(TestHandlerBase):
 
         # Check for some main text
         self.assertIn('sample source', response.body)
-
+        self.assertIn('REMOVED-2', response.body)
+        self.assertIn('REMOVED-3', response.body)
+        self.assertIn('REMOVED-0', response.body)
+        self.assertIn('REMOVED-1', response.body)
+        self.assertIn('Environmental', response.body)
+        self.assertIn('Human Source', response.body)
 
 if __name__ == '__main__':
     main()
