@@ -279,7 +279,8 @@ _SAMPLE_OVERVIEW = {
     'SAMPLE_DATE': 'Sample Date',
     'SAMPLE_TIME': 'Sample Time',
     'SAMPLE_NOTES': 'Notes',
-    'REMOVE_BARCODE': 'Remove barcode %(barcode)s'
+    'REMOVE_BARCODE': 'Remove barcode %(barcode)s',
+    'DATA_NOT_AVAILABLE': 'These data are not available yet for download.'
 }
 
 _NEW_PARTICIPANT_OVERVIEW = {
