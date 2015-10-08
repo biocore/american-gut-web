@@ -2,8 +2,9 @@ from unittest import TestCase, main
 from future.utils import viewitems
 from wtforms.form import BaseForm
 from amgut.lib.data_access.survey import (
-    QuestionSingle, QuestionMultiple, QuestionText, QuestionString, Group)
-# Question, Survey)
+    QuestionSingle, QuestionMultiple, QuestionText, QuestionString, Group,
+    Survey)
+# Question
 
 
 class TestQuestionSingle(TestCase):
@@ -141,7 +142,6 @@ class TestQuestionString(TestCase):
 
 class TestGroup(TestCase):
     def test_create(self):
-        self.maxDiff = None
         group = Group(1)
         self.assertEqual(group.id, 1)
         self.assertEqual(group.id_to_eid, {
@@ -219,7 +219,54 @@ class TestGroup(TestCase):
 
 class TestSurvey(TestCase):
     def test_create(self):
-        raise NotImplementedError()
+        self.maxDiff = None
+        survey = Survey(1)
+        self.assertEqual(survey.id, 1)
+        exp = ["<class 'amgut.lib.data_access.survey.Group'>"] * 7
+        self.assertEqual([str(type(x)) for x in survey.groups], exp)
+        exp = [-1, 0, 1, 2, 3, 4, 5]
+        self.assertEqual([x.id for x in survey.groups], exp)
+        exp = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+               19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34,
+               35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+               51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66,
+               67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82,
+               83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98,
+               99, 101, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113,
+               114, 115, 116, 117, 118, 119, 120, 122, 124, 126]
+        self.assertEqual(survey.questions.keys(), exp)
+        exp = {1: 'SINGLE', 2: 'SINGLE', 3: 'SINGLE', 4: 'SINGLE', 5: 'SINGLE',
+               6: 'SINGLE', 7: 'SINGLE', 8: 'SINGLE', 9: 'MULTIPLE',
+               10: 'SINGLE', 11: 'SINGLE', 12: 'SINGLE', 13: 'SINGLE',
+               14: 'SINGLE', 15: 'SINGLE', 16: 'SINGLE', 17: 'SINGLE',
+               18: 'SINGLE', 19: 'SINGLE', 20: 'SINGLE', 21: 'SINGLE',
+               22: 'SINGLE', 23: 'SINGLE', 24: 'SINGLE', 25: 'SINGLE',
+               26: 'SINGLE', 27: 'SINGLE', 28: 'SINGLE', 29: 'SINGLE',
+               30: 'MULTIPLE', 31: 'SINGLE', 32: 'SINGLE', 33: 'SINGLE',
+               34: 'SINGLE', 35: 'SINGLE', 36: 'SINGLE', 37: 'SINGLE',
+               38: 'SINGLE', 39: 'SINGLE', 40: 'SINGLE', 41: 'SINGLE',
+               42: 'SINGLE', 43: 'SINGLE', 44: 'SINGLE', 45: 'SINGLE',
+               46: 'SINGLE', 47: 'SINGLE', 48: 'SINGLE', 49: 'SINGLE',
+               50: 'SINGLE', 51: 'SINGLE', 52: 'SINGLE', 53: 'SINGLE',
+               54: 'MULTIPLE', 55: 'SINGLE', 56: 'SINGLE', 57: 'SINGLE',
+               58: 'SINGLE', 59: 'SINGLE', 60: 'SINGLE', 61: 'SINGLE',
+               62: 'SINGLE', 63: 'SINGLE', 64: 'SINGLE', 65: 'SINGLE',
+               66: 'SINGLE', 67: 'SINGLE', 68: 'SINGLE', 69: 'SINGLE',
+               70: 'SINGLE', 71: 'SINGLE', 72: 'SINGLE', 73: 'SINGLE',
+               74: 'SINGLE', 75: 'SINGLE', 76: 'SINGLE', 77: 'SINGLE',
+               78: 'SINGLE', 79: 'SINGLE', 80: 'SINGLE', 81: 'SINGLE',
+               82: 'SINGLE', 83: 'SINGLE', 84: 'SINGLE', 85: 'SINGLE',
+               86: 'SINGLE', 87: 'SINGLE', 88: 'SINGLE', 89: 'SINGLE',
+               90: 'SINGLE', 91: 'SINGLE', 92: 'SINGLE', 93: 'SINGLE',
+               94: 'SINGLE', 95: 'SINGLE', 96: 'SINGLE', 97: 'SINGLE',
+               98: 'TEXT', 99: 'TEXT', 101: 'TEXT', 103: 'TEXT', 104: 'TEXT',
+               105: 'TEXT', 106: 'TEXT', 107: 'SINGLE', 108: 'STRING',
+               109: 'SINGLE', 110: 'SINGLE', 111: 'SINGLE', 112: 'SINGLE',
+               113: 'STRING', 114: 'SINGLE', 115: 'STRING', 116: 'TEXT',
+               117: 'TEXT', 118: 'TEXT', 119: 'TEXT', 120: 'TEXT', 122: 'TEXT',
+               124: 'TEXT', 126: 'TEXT'}
+        self.assertEqual(survey.question_types, exp)
+        self.assertEqual(survey.unspecified, 'Unspecified')
 
     def test_fetch_survey(self):
         raise NotImplementedError()
