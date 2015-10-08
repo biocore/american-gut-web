@@ -1,7 +1,5 @@
 from unittest import main
-import datetime
 from amgut.test.tornado_test_base import TestHandlerBase
-from amgut.connections import ag_data
 
 
 class TestAddSampleOverview(TestHandlerBase):
