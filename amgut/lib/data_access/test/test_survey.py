@@ -1,6 +1,10 @@
 from unittest import TestCase, main
+from string import ascii_letters
+from datetime import date
+from random import choice
 from future.utils import viewitems
 from wtforms.form import BaseForm
+from amgut.connections import ag_data
 from amgut.lib.data_access.survey import (
     QuestionSingle, QuestionMultiple, QuestionText, QuestionString, Group,
     Survey)
@@ -219,7 +223,6 @@ class TestGroup(TestCase):
 
 class TestSurvey(TestCase):
     def test_create(self):
-        self.maxDiff = None
         survey = Survey(1)
         self.assertEqual(survey.id, 1)
         exp = ["<class 'amgut.lib.data_access.survey.Group'>"] * 7
@@ -298,10 +301,151 @@ class TestSurvey(TestCase):
             survey.fetch_survey('BAD_ID_HERE')
 
     def test_store_survey(self):
-        raise NotImplementedError()
+        # Create new survey ID and make sure it is unused
+        survey = Survey(2)
+        c = ascii_letters + '1234567890'
+        survey_id = ''.join([choice(c) for i in range(16)])
+        name = ''.join([choice(ascii_letters) for i in range(20)])
+        with self.assertRaises(ValueError):
+            survey.fetch_survey(survey_id)
+        consent = {
+            'login_id': 'd8592c74-84b1-2135-e040-8a80115d6401',
+            'survey_id': survey_id,
+            'participant_name': name,
+            'age_range': 'ANIMAL_SURVEY',
+            'parent_1_name': 'ANIMAL_SURVEY',
+            'parent_2_name': 'ANIMAL_SURVEY',
+            'deceased_parent': False,
+            'participant_email': 'REMOVED',
+            'obtainer_name': 'ANIMAL_SURVEY',
+            'assent_obtainer': 'ANIMAL_SURVEY',
+            'is_juvenile': True}
+        with_fk = [(survey_id, 128, 'Other'),
+                   (survey_id, 129, 'Wild'),
+                   (survey_id, 131, 'Male'),
+                   (survey_id, 132, 'Suburban'),
+                   (survey_id, 133, 'Normal'),
+                   (survey_id, 134, 'Omnivore'),
+                   (survey_id, 135, 'Wild food'),
+                   (survey_id, 136, 'Both'),
+                   (survey_id, 137, 'Unspecified'),
+                   (survey_id, 138, 'Lives alone with humans'),
+                   (survey_id, 139, '8+'),
+                   (survey_id, 140, 'Unspecified'),
+                   (survey_id, 141, 'Never')]
+        without_fk = [(survey_id, 130, '["20"]'),
+                      (survey_id, 142, '["Giant ratty pet!"]'),
+                      (survey_id, 143, '["Capybara"]'),
+                      (survey_id, 144, '[""]'),
+                      (survey_id, 145, '["29 - Male"]'),
+                      (survey_id, 127, '["%s"]' % name)]
+
+        survey.store_survey(consent, with_fk, without_fk)
+
+        obs = survey.fetch_survey(survey_id)
+        exp = {'Pet_Information_127_0': name,
+               'Pet_Information_137_0': [0],
+               'Pet_Information_143_0': 'Capybara',
+               'Pet_Information_132_0': 2,
+               'Pet_Information_138_0': 1,
+               'Pet_Information_144_0': '',
+               'Pet_Information_129_0': 4,
+               'Pet_Information_142_0': 'Giant ratty pet!',
+               'Pet_Information_133_0': 3,
+               'Pet_Information_139_0': 5,
+               'Pet_Information_130_0': '20',
+               'Pet_Information_128_0': 9,
+               'Pet_Information_134_0': 2,
+               'Pet_Information_140_0': 0,
+               'Pet_Information_131_0': 1,
+               'Pet_Information_145_0': '29 - Male',
+               'Pet_Information_136_0': 3,
+               'Pet_Information_135_0': [3],
+               'Pet_Information_141_0': 4}
+        self.assertEqual(obs, exp)
+
+        obs = ag_data.getConsent(survey_id)
+        del obs['date_signed']
+        consent['ag_login_id'] = consent['login_id']
+        del consent['login_id']
+        del consent['obtainer_name']
+        consent['deceased_parent'] = 'false'
+        self.assertEqual(obs, consent)
 
     def test_store_survey_edit(self):
-        raise NotImplementedError()
+        # Create random string to test update happens
+        c = ascii_letters + '1234567890'
+        notes_test = ''.join([choice(c) for i in range(40)])
+
+        # Set up survey
+        survey_id = '817ff95701f4dd10'
+        survey = Survey(2)
+        consent = {
+            'login_id': 'eba20873-b7db-33cc-e040-8a80115d392c',
+            'survey_id': survey_id,
+            'participant_name': 'some name that should be ignored',
+            'age_range': 'ANIMAL_SURVEY',
+            'parent_1_name': 'ANIMAL_SURVEY',
+            'parent_2_name': 'ANIMAL_SURVEY',
+            'deceased_parent': False,
+            'participant_email': 'REMOVED',
+            'obtainer_name': 'ANIMAL_SURVEY',
+            'assent_obtainer': 'ANIMAL_SURVEY',
+            'is_juvenile': True}
+        with_fk = [(survey_id, 128, 'Other'),
+                   (survey_id, 129, 'Wild'),
+                   (survey_id, 131, 'Male'),
+                   (survey_id, 132, 'Suburban'),
+                   (survey_id, 133, 'Normal'),
+                   (survey_id, 134, 'Omnivore'),
+                   (survey_id, 135, 'Wild food'),
+                   (survey_id, 136, 'Both'),
+                   (survey_id, 137, 'Unspecified'),
+                   (survey_id, 138, 'Lives alone with humans'),
+                   (survey_id, 139, '8+'),
+                   (survey_id, 140, 'Unspecified'),
+                   (survey_id, 141, 'Never')]
+        without_fk = [(survey_id, 130, '["20"]'),
+                      (survey_id, 142, '["Giant ratty pet!"]'),
+                      (survey_id, 143, '["Capybara"]'),
+                      (survey_id, 144, '["%s"]' % notes_test),
+                      (survey_id, 145, '["29 - Male"]'),
+                      (survey_id, 127, '["Fluffy"]')]
+
+        survey.store_survey(consent, with_fk, without_fk)
+        obs = survey.fetch_survey(survey_id)
+        exp = {'Pet_Information_127_0': 'Fluffy',
+               'Pet_Information_137_0': [0],
+               'Pet_Information_143_0': 'Capybara',
+               'Pet_Information_132_0': 2,
+               'Pet_Information_138_0': 1,
+               'Pet_Information_144_0': notes_test,
+               'Pet_Information_129_0': 4,
+               'Pet_Information_142_0': 'Giant ratty pet!',
+               'Pet_Information_133_0': 3,
+               'Pet_Information_139_0': 5,
+               'Pet_Information_130_0': '20',
+               'Pet_Information_128_0': 9,
+               'Pet_Information_134_0': 2,
+               'Pet_Information_140_0': 0,
+               'Pet_Information_131_0': 1,
+               'Pet_Information_145_0': '29 - Male',
+               'Pet_Information_136_0': 3,
+               'Pet_Information_135_0': [3],
+               'Pet_Information_141_0': 4}
+        self.assertEqual(obs, exp)
+
+        obs = ag_data.getConsent(survey_id)
+        consent['ag_login_id'] = consent['login_id']
+        del consent['login_id']
+        del consent['obtainer_name']
+        consent['deceased_parent'] = 'false'
+        consent['date_signed'] = date(2015, 9, 27)
+        consent['parent_1_name'] = 'REMOVED'
+        consent['parent_2_name'] = 'REMOVED'
+        consent['participant_name'] = 'REMOVED-0'
+        consent['parent_1_name'] = 'REMOVED'
+        self.assertEqual(obs, consent)
 
 
 if __name__ == "__main__":
