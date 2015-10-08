@@ -1,7 +1,8 @@
 from unittest import TestCase, main
 from wtforms.form import BaseForm
-from amgut.lib.data_access.survey import QuestionSingle, QuestionMultiple
-# Question, QuestionText, QuestionString, Group, Survey)
+from amgut.lib.data_access.survey import (
+    QuestionSingle, QuestionMultiple, QuestionText, QuestionString)
+# Question, Group, Survey)
 
 
 class TestQuestionSingle(TestCase):
@@ -95,12 +96,46 @@ class TestQuestionMultiple(TestCase):
 
 class TestQuestionText(TestCase):
     def test_create(self):
-        raise NotImplementedError()
+        q_text = QuestionText(98, 'Pregnancy')
+        self.assertEqual(q_text.id, 98)
+        self.assertEqual(q_text.group_name, 'Pregnancy')
+        self.assertEqual(q_text.set_response, None)
+        self.assertEqual(q_text.response_type, 'TEXT')
+        self.assertEqual(q_text.question, 'Pregnancy due date:')
+        self.assertEqual(q_text.american_question, 'Pregnancy due date:')
+        self.assertEqual(q_text.triggers, tuple())
+        self.assertEqual(q_text.qid, 'Pregnancy_98')
+        self.assertEqual(q_text.interface_element_ids, ['Pregnancy_98_0'])
+
+        # Test rendering of form object
+        form = BaseForm({
+            q_text.interface_element_ids[0]: q_text.interface_elements[0]
+        })
+        eid = q_text.interface_element_ids[0]
+        self.assertEqual(str(type(form[eid])),
+                         "<class 'wtforms.fields.simple.TextAreaField'>")
 
 
 class TestQuestionString(TestCase):
     def test_create(self):
-        raise NotImplementedError()
+        q_string = QuestionString(127, 'PetName')
+        self.assertEqual(q_string.id, 127)
+        self.assertEqual(q_string.group_name, 'PetName')
+        self.assertEqual(q_string.set_response, None)
+        self.assertEqual(q_string.response_type, 'STRING')
+        self.assertEqual(q_string.question, 'Name')
+        self.assertEqual(q_string.american_question, 'Name')
+        self.assertEqual(q_string.triggers, tuple())
+        self.assertEqual(q_string.qid, 'PetName_127')
+        self.assertEqual(q_string.interface_element_ids, ['PetName_127_0'])
+
+        # Test rendering of form object
+        form = BaseForm({
+            q_string.interface_element_ids[0]: q_string.interface_elements[0]
+        })
+        eid = q_string.interface_element_ids[0]
+        self.assertEqual(str(type(form[eid])),
+                         "<class 'wtforms.fields.simple.TextField'>")
 
 
 class TestGroup(TestCase):
