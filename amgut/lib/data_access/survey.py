@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+# This Python file uses the following encoding: utf-8
 from __future__ import division
 
 # -----------------------------------------------------------------------------
@@ -312,6 +312,8 @@ class Survey(object):
         survey = defaultdict(list)
         for qid, idx, qtype in answers:
             eid = self.questions[qid].interface_element_ids[0]
+            if type(idx) in {str, unicode}:
+                idx = idx.encode('utf-8')
             if qtype == 'SINGLE':
                 survey[eid] = idx
             else:

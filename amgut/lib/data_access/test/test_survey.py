@@ -1,3 +1,4 @@
+# coding: utf-8
 from unittest import TestCase, main
 from string import ascii_letters
 from datetime import date
@@ -334,7 +335,7 @@ class TestSurvey(TestCase):
                    (survey_id, 140, 'Unspecified'),
                    (survey_id, 141, 'Never')]
         without_fk = [(survey_id, 130, '["20"]'),
-                      (survey_id, 142, '["Giant ratty pet!"]'),
+                      (survey_id, 142, unicode('["Mötley Crüe!"]', 'utf-8')),
                       (survey_id, 143, '["Capybara"]'),
                       (survey_id, 144, '[""]'),
                       (survey_id, 145, '["29 - Male"]'),
@@ -350,7 +351,7 @@ class TestSurvey(TestCase):
                'Pet_Information_138_0': 1,
                'Pet_Information_144_0': '',
                'Pet_Information_129_0': 4,
-               'Pet_Information_142_0': 'Giant ratty pet!',
+               'Pet_Information_142_0': u'M\xf6tley Cr\xfce!'.encode('utf-8'),
                'Pet_Information_133_0': 3,
                'Pet_Information_139_0': 5,
                'Pet_Information_130_0': '20',
