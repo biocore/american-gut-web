@@ -271,6 +271,11 @@ class TestSurvey(TestCase):
     def test_fetch_survey(self):
         raise NotImplementedError()
 
+    def test_fetch_survey_bad_id(self):
+        survey = Survey(1)
+        with self.assertRaises(ValueError):
+            survey.fetch_survey('BAD_ID_HERE')
+
     def test_store_survey(self):
         raise NotImplementedError()
 

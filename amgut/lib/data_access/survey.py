@@ -322,6 +322,9 @@ class Survey(object):
             data = str(data[2:-2])  # drop [""]
             survey[eid] = data
 
+        if len(survey) == 0:
+            raise ValueError("Survey answers do not exist in DB: %s" %
+                             survey_id)
         return survey
 
     def store_survey(self, consent_details, with_fk_inserts,
