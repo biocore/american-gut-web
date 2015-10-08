@@ -1,8 +1,7 @@
 from unittest import TestCase, main
 from wtforms.form import BaseForm
-from amgut.lib.data_access.survey import (
-    Question, QuestionSingle, QuestionMultiple, QuestionText, QuestionString,
-    Group, Survey)
+from amgut.lib.data_access.survey import QuestionSingle, QuestionMultiple
+# Question, QuestionText, QuestionString, Group, Survey)
 
 
 class TestQuestionSingle(TestCase):
@@ -39,39 +38,73 @@ class TestQuestionSingle(TestCase):
                 (7, 'Graduate or Professional degree')])
 
     def test_create_triggers(self):
-        q_single = QuestionSingle()
-        q_single.id
-        q_single.group_name
-        q_single.set_response
-        q_single.response_type
-        q_single.question
-        q_single.american_question
-        q_single.triggers
-        q_single.qid
-        q_single.interface_elements
-        q_single.interface_element_ids
+        q_single = QuestionSingle(20, 'dog')
+        self.assertEqual(q_single.id, 20)
+        self.assertEqual(q_single.group_name, 'dog')
+        self.assertEqual(q_single.set_response, None)
+        self.assertEqual(q_single.response_type, 'SINGLE')
+        self.assertEqual(q_single.question, 'Do you have a dog(s)?')
+        self.assertEqual(q_single.american_question, 'Do you have a dog(s)?')
+        self.assertEqual(q_single.triggers, {101: [1], 105: [1]})
+        self.assertEqual(q_single.qid, 'dog_20')
+        self.assertEqual(q_single.interface_element_ids, ['dog_20_0'])
 
-    def test_interface_elements(self):
-        raise NotImplementedError()
+        # Test form object
+        form = BaseForm({
+            q_single.interface_element_ids[0]: q_single.interface_elements[0]
+        })
+        eid = q_single.interface_element_ids[0]
+        self.assertEqual(str(type(form[eid])),
+                         "<class 'wtforms.fields.core.SelectField'>")
+        self.assertEqual(
+            form[eid].choices, [(0, 'Unspecified'), (1, 'Yes'), (2, 'No')])
 
 
 class TestQuestionMultiple(TestCase):
-    def test__interface_elements(self):
-        raise NotImplementedError()
+    def test_create(self):
+        q_multi = QuestionMultiple(30, 'Alcohol')
+        self.assertEqual(q_multi.id, 30)
+        self.assertEqual(q_multi.group_name, 'Alcohol')
+        self.assertEqual(q_multi.set_response, None)
+        self.assertEqual(q_multi.response_type, 'MULTIPLE')
+        self.assertEqual(q_multi.question,
+                         'What type(s) of alcohol do you typically consume '
+                         '(select all that apply)?')
+        self.assertEqual(q_multi.american_question,
+                         'What type(s) of alcohol do you typically consume '
+                         '(select all that apply)?')
+        self.assertEqual(q_multi.triggers, tuple())
+        self.assertEqual(q_multi.qid, 'Alcohol_30')
+        self.assertEqual(q_multi.interface_element_ids, ['Alcohol_30_0'])
+
+        # Test rendering of form object
+        form = BaseForm({
+            q_multi.interface_element_ids[0]: q_multi.interface_elements[0]
+        })
+        eid = q_multi.interface_element_ids[0]
+        self.assertEqual(str(type(form[eid])),
+                         "<class 'wtforms.fields.core.SelectMultipleField'>")
+        self.assertEqual(
+            form[eid].choices, [
+                (0, 'Beer/Cider'),
+                (1, 'Sour beers'),
+                (2, 'White wine'),
+                (3, 'Red wine'),
+                (4, 'Spirits/hard alcohol')])
 
 
 class TestQuestionText(TestCase):
-    def test__interface_elements(self):
+    def test_create(self):
         raise NotImplementedError()
 
 
 class TestQuestionString(TestCase):
-    def test__interface_elements(self):
+    def test_create(self):
         raise NotImplementedError()
 
 
 class TestGroup(TestCase):
-    def test___init__(self):
+    def test_create(self):
         raise NotImplementedError()
 
     def test_name(self):
@@ -82,7 +115,7 @@ class TestGroup(TestCase):
 
 
 class TestSurvey(TestCase):
-    def test___init__(self):
+    def test_create(self):
         raise NotImplementedError()
 
     def test_fetch_survey(self):
