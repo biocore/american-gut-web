@@ -327,7 +327,7 @@ class Survey(object):
 
             for qid, data in answers_other:
                 eid = self.questions[qid].interface_element_ids[0]
-                data = str(data[2:-2])  # drop [""]
+                data = data.strip(' []"')
                 survey[eid] = data
 
             if len(survey) == 0:
