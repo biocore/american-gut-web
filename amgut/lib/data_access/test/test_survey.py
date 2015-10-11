@@ -276,7 +276,7 @@ class TestSurvey(TestCase):
         survey = Survey(2)
         obs = survey.fetch_survey('cb367dcf9a9af7e9')
         self.assertEqual(obs, {
-            'Pet_Information_127_0': 'MOV',
+            'Pet_Information_127_0': 'REMOVED',
             'Pet_Information_128_0': 1,
             'Pet_Information_129_0': 2,
             'Pet_Information_130_0': '6',
@@ -291,9 +291,9 @@ class TestSurvey(TestCase):
             'Pet_Information_139_0': 3,
             'Pet_Information_140_0': 3,
             'Pet_Information_141_0': 4,
-            'Pet_Information_142_0': 'MOV',
-            'Pet_Information_143_0': 'MOV',
-            'Pet_Information_144_0': 'MOV',
+            'Pet_Information_142_0': 'REMOVED',
+            'Pet_Information_143_0': 'REMOVED',
+            'Pet_Information_144_0': 'REMOVED',
             'Pet_Information_145_0': 'Female: 50; Male: 59'})
 
     def test_fetch_survey_bad_id(self):
