@@ -832,16 +832,16 @@
 			<column name="barcode" type="varchar" jt="12" mandatory="y" />
 			<column name="nickname" type="varchar" length="100" jt="12" mandatory="y" />
 			<column name="protocol" type="bigint" jt="-5" mandatory="y" />
-			<column name="primer plate" type="integer" jt="4" mandatory="y" />
+			<column name="primer_plate" type="integer" jt="4" mandatory="y" />
 			<column name="primer_plate_lot" type="bigint" jt="-5" mandatory="y" />
 			<column name="amplicon" type="varchar" jt="12" mandatory="y" />
 			<column name="master_mix_lot" type="bigint" jt="-5" mandatory="y" />
 			<column name="water_lot" type="bigint" jt="-5" mandatory="y" />
 			<column name="pcr_robot" type="bigint" jt="-5" mandatory="y" />
-			<column name="300_8_tool" type="bigint" jt="-5" mandatory="y" >
+			<column name="tool_300_8" type="bigint" jt="-5" mandatory="y" >
 				<comment><![CDATA[300uL pipette head used]]></comment>
 			</column>
-			<column name="50_8_tool" type="bigint" jt="-5" mandatory="y" >
+			<column name="tool_50_8" type="bigint" jt="-5" mandatory="y" >
 				<comment><![CDATA[50uL pipette head used]]></comment>
 			</column>
 			<column name="person" type="bigint" jt="-5" mandatory="y" />
@@ -852,7 +852,7 @@
 				<column name="barcode" />
 				<column name="nickname" />
 			</index>
-			<index name="idx_pcr_plate" unique="NORMAL" >
+			<index name="idx_pcr_plate" unique="UNIQUE" >
 				<column name="barcode" />
 			</index>
 			<index name="idx_pcr_plate_0" unique="NORMAL" >
@@ -872,6 +872,9 @@
 			</index>
 			<index name="idx_pcr_plate_5" unique="NORMAL" >
 				<column name="person" />
+			</index>
+			<index name="pk_pcr_plate" unique="UNIQUE" >
+				<column name="nickname" />
 			</index>
 			<fk name="fk_pcr_plate" to_schema="barcodes" to_table="plate" >
 				<fk_column name="barcode" pk="barcode" />
@@ -893,6 +896,35 @@
 			</fk>
 			<fk name="fk_pcr_plate_5" to_schema="barcodes" to_table="person" >
 				<fk_column name="person" pk="person_id" />
+			</fk>
+		</table>
+		<table name="pcr_plate_run" >
+			<column name="run_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="barcode" type="varchar" jt="12" mandatory="y" />
+			<column name="nickname" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="center_project_name" type="varchar" length="100" jt="12" />
+			<index name="pk_pcr_plate_run" unique="PRIMARY_KEY" >
+				<column name="run_id" />
+				<column name="barcode" />
+				<column name="nickname" />
+			</index>
+			<index name="idx_pcr_plate_run" unique="NORMAL" >
+				<column name="run_id" />
+			</index>
+			<index name="idx_pcr_plate_run_0" unique="NORMAL" >
+				<column name="barcode" />
+			</index>
+			<index name="idx_pcr_plate_run_1" unique="NORMAL" >
+				<column name="nickname" />
+			</index>
+			<fk name="fk_pcr_plate_run" to_schema="barcodes" to_table="run_information" >
+				<fk_column name="run_id" pk="run_id" />
+			</fk>
+			<fk name="fk_pcr_plate_run_0" to_schema="barcodes" to_table="pcr_plate" >
+				<fk_column name="barcode" pk="barcode" />
+			</fk>
+			<fk name="fk_pcr_plate_run_1" to_schema="barcodes" to_table="pcr_plate" >
+				<fk_column name="nickname" pk="nickname" />
 			</fk>
 		</table>
 		<table name="person" >
@@ -982,6 +1014,9 @@
 			<column name="barcode" type="bigint" length="19" jt="-5" mandatory="y" />
 			<column name="well" type="varchar" length="3" jt="12" mandatory="y" />
 			<column name="sample" type="varchar" jt="12" mandatory="y" />
+			<column name="sample_size" type="float8" jt="6" mandatory="y" >
+				<comment><![CDATA[Sample size, in grams]]></comment>
+			</column>
 			<index name="idx_plate_barcode" unique="NORMAL" >
 				<column name="well" />
 			</index>
@@ -999,6 +1034,7 @@
 		<table name="project" >
 			<column name="project_id" type="bigint" length="19" jt="-5" mandatory="y" />
 			<column name="project" type="varchar" length="1000" jt="12" />
+			<column name="description" type="varchar" jt="12" mandatory="y" />
 			<index name="project_pkey" unique="PRIMARY_KEY" >
 				<column name="project_id" />
 			</index>
@@ -1023,6 +1059,13 @@
 			<column name="template_dna" type="integer" jt="4" mandatory="y" >
 				<comment><![CDATA[Template DNA added, in uL]]></comment>
 			</column>
+			<column name="platform" type="varchar" jt="12" mandatory="y" />
+			<column name="pcr_primers" type="varchar" jt="12" mandatory="y" />
+			<column name="instrument_model" type="varchar" jt="12" mandatory="y" />
+			<column name="linker" type="varchar" jt="12" mandatory="y" />
+			<column name="sequencing_method" type="varchar" jt="12" mandatory="y" />
+			<column name="target_gene" type="varchar" jt="12" mandatory="y" />
+			<column name="target_subfragment" type="varchar" jt="12" mandatory="y" />
 			<index name="pk_protocol" unique="PRIMARY_KEY" >
 				<column name="protocol_id" />
 			</index>
@@ -1036,6 +1079,21 @@
 			</column>
 			<index name="pk_robots" unique="PRIMARY_KEY" >
 				<column name="robot_id" />
+			</index>
+		</table>
+		<table name="run_information" >
+			<column name="run_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="nickname" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="run_prefix" type="varchar" jt="12" mandatory="y" />
+			<column name="created_on" type="timestamp" jt="93" mandatory="y" >
+				<defo>current_timestamp</defo>
+			</column>
+			<column name="run_date" type="date" jt="91" />
+			<column name="finalized" type="bool" jt="-7" mandatory="y" >
+				<defo>&#039;F&#039;</defo>
+			</column>
+			<index name="pk_run_information" unique="PRIMARY_KEY" >
+				<column name="run_id" />
 			</index>
 		</table>
 	</schema>
@@ -22691,23 +22749,23 @@ AS $function$xpath_exists$function$
 			<comment><![CDATA[test XML value against XPath expression]]></comment>
 		</function>
 	</schema>
-	<layout id="Layout2861625" name="public" joined_routing="y" show_relation_columns="y" >
+	<layout id="Layout2861625" name="Public" joined_routing="y" show_relation_columns="y" >
 		<entity schema="ag" name="ag_survey_answer" color="f7e2c6" x="675" y="690" />
 		<entity schema="ag" name="controlled_vocab_values" color="c6c6f7" x="885" y="45" />
 		<entity schema="ag" name="controlled_vocabs" color="c6c6f7" x="675" y="45" />
 		<entity schema="ag" name="ag_participant_exceptions" color="f7e2c6" x="1080" y="315" />
 		<entity schema="ag" name="ag_animal_survey" color="f7e2c6" x="885" y="285" />
 		<entity schema="ag" name="ag_survey_multiples" color="f7e2c6" x="900" y="750" />
-		<entity schema="ag" name="group_questions" color="ffcccc" x="300" y="1365" />
-		<entity schema="ag" name="survey_response_types" color="ffffff" x="990" y="1740" />
+		<entity schema="ag" name="group_questions" color="ffcccc" x="315" y="1380" />
+		<entity schema="ag" name="survey_response_types" color="ffffff" x="1005" y="1755" />
 		<entity schema="ag" name="surveys" color="a8c4ef" x="45" y="1530" />
-		<entity schema="ag" name="survey_group" color="a8c4ef" x="45" y="1365" />
+		<entity schema="ag" name="survey_group" color="a8c4ef" x="60" y="1380" />
 		<entity schema="ag" name="survey_answers_other" color="a8c4ef" x="1305" y="1140" />
-		<entity schema="ag" name="survey_question_triggers" color="a8c4ef" x="645" y="1425" />
-		<entity schema="ag" name="survey_response" color="a8c4ef" x="690" y="1635" />
-		<entity schema="ag" name="survey_question_response" color="ffcccc" x="690" y="1530" />
-		<entity schema="ag" name="iso_country_lookup" color="ffffff" x="900" y="1620" />
-		<entity schema="ag" name="survey_question_response_type" color="ffcccc" x="690" y="1725" />
+		<entity schema="ag" name="survey_question_triggers" color="a8c4ef" x="660" y="1440" />
+		<entity schema="ag" name="survey_response" color="a8c4ef" x="705" y="1650" />
+		<entity schema="ag" name="survey_question_response" color="ffcccc" x="705" y="1545" />
+		<entity schema="ag" name="iso_country_lookup" color="ffffff" x="915" y="1635" />
+		<entity schema="ag" name="survey_question_response_type" color="ffcccc" x="705" y="1740" />
 		<entity schema="ag" name="promoted_survey_ids" color="a8c4ef" x="1425" y="915" />
 		<entity schema="ag" name="ag_login" color="f7e2c6" x="705" y="405" />
 		<entity schema="ag" name="zipcodes" color="c6c6f7" x="1095" y="45" />
@@ -22719,24 +22777,26 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="survey_answers" color="a8c4ef" x="1410" y="1230" />
 		<entity schema="ag" name="ag_human_survey" color="c6d9f7" x="1665" y="420" />
 		<entity schema="ag" name="external_survey_answers" color="a8c4ef" x="1440" y="1350" />
-		<entity schema="barcodes" name="project_barcode" color="a8c4ef" x="285" y="915" />
+		<entity schema="barcodes" name="project_barcode" color="a8c4ef" x="285" y="795" />
 		<entity schema="ag" name="external_survey_sources" color="a8c4ef" x="1395" y="1500" />
 		<entity schema="ag" name="ag_handout_barcodes" color="a8c4ef" x="255" y="420" />
-		<entity schema="barcodes" name="barcode_exceptions" color="a8c4ef" x="75" y="735" />
-		<entity schema="barcodes" name="project" color="a8c4ef" x="300" y="825" />
+		<entity schema="barcodes" name="barcode_exceptions" color="a8c4ef" x="75" y="615" />
 		<entity schema="ag" name="ag_kit_barcodes" color="f7e2c6" x="735" y="885" />
-		<entity schema="ag" name="survey_question" color="a8c4ef" x="420" y="1530" />
+		<entity schema="ag" name="survey_question" color="a8c4ef" x="435" y="1545" />
 		<entity schema="ag" name="ag_handout_kits" color="a8c4ef" x="60" y="420" />
 		<entity schema="ag" name="ag_kit" color="f7e2c6" x="1110" y="690" />
-		<entity schema="barcodes" name="barcode" color="a8c4ef" x="60" y="810" />
-		<entity schema="barcodes" name="lot" color="b7c8e3" x="510" y="795" />
-		<entity schema="ag" name="settings" color="a8c4ef" x="60" y="585" />
-		<entity schema="barcodes" name="robots" color="b7c8e3" x="510" y="915" />
-		<entity schema="barcodes" name="plate_sample" color="a8c4ef" x="90" y="1005" />
-		<entity schema="barcodes" name="person" color="b7c8e3" x="90" y="1200" />
-		<entity schema="barcodes" name="protocol" color="b7c8e3" x="90" y="1095" />
-		<entity schema="barcodes" name="plate" color="a8c4ef" x="255" y="1005" />
-		<entity schema="barcodes" name="pcr_plate" color="b7c8e3" x="495" y="1020" />
+		<entity schema="barcodes" name="lot" color="b7c8e3" x="510" y="675" />
+		<entity schema="barcodes" name="robots" color="b7c8e3" x="510" y="795" />
+		<entity schema="barcodes" name="pcr_plate" color="b7c8e3" x="495" y="900" />
+		<entity schema="barcodes" name="plate" color="a8c4ef" x="255" y="885" />
+		<entity schema="ag" name="settings" color="a8c4ef" x="495" y="420" />
+		<entity schema="barcodes" name="project" color="a8c4ef" x="300" y="690" />
+		<entity schema="barcodes" name="pcr_plate_run" color="b7c8e3" x="480" y="1155" />
+		<entity schema="barcodes" name="person" color="b7c8e3" x="240" y="1125" />
+		<entity schema="barcodes" name="run_information" color="b7c8e3" x="360" y="1140" />
+		<entity schema="barcodes" name="barcode" color="a8c4ef" x="60" y="690" />
+		<entity schema="barcodes" name="protocol" color="b7c8e3" x="75" y="1020" />
+		<entity schema="barcodes" name="plate_sample" color="a8c4ef" x="90" y="885" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment><![CDATA[Used by :    american_gut_consent]]></comment>
 			<entity schema="ag" name="ag_survey_multiples" />
@@ -22795,6 +22855,7 @@ AS $function$xpath_exists$function$
 			<entity schema="barcodes" name="lot" />
 			<entity schema="barcodes" name="person" />
 			<entity schema="barcodes" name="protocol" />
+			<entity schema="barcodes" name="run_information" />
 		</group>
 	</layout>
 </project>
