@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<project name="PostgreSQL" id="Project2769587" database="PostgreSQL" >
-	<schema name="ag" catalogname="ag" schemaname="ag" defo="y" >
+<project name="PostgreSQL" id="Project2769587" html="n" template="Default" database="PostgreSQL" >
+	<schema name="ag" catalogname="ag" schemaname="ag" >
 		<table name="ag_animal_survey" >
 			<column name="ag_login_id" type="uuid" length="2147483647" jt="1111" mandatory="y" />
 			<column name="participant_name" type="varchar" length="200" jt="12" mandatory="y" />
@@ -427,11 +427,11 @@
 			</index>
 		</table>
 		<table name="external_survey_answers" >
-			<comment>This stores answers to third party surveys in JSON format, keyed to the original survey ID</comment>
+			<comment><![CDATA[This stores answers to third party surveys in JSON format, keyed to the original survey ID]]></comment>
 			<column name="survey_id" type="varchar" length="2147483647" jt="12" mandatory="y" />
 			<column name="external_survey_id" type="bigint" jt="-5" mandatory="y" />
 			<column name="pulldown_date" type="date" jt="91" mandatory="y" />
-			<column name="answers" type="json" length="2147483647" jt="1111" mandatory="y" />
+			<column name="answers" type="json" length="2147483647" jt="12" mandatory="y" />
 			<index name="pk_third_party_surveys" unique="PRIMARY_KEY" >
 				<column name="survey_id" />
 				<column name="external_survey_id" />
@@ -479,7 +479,7 @@
 			</fk>
 		</table>
 		<table name="iso_country_lookup" >
-			<comment>ISO standard codes for countries</comment>
+			<comment><![CDATA[ISO standard codes for countries]]></comment>
 			<column name="iso_code" type="varchar" length="2147483647" jt="12" mandatory="y" >
 				<comment><![CDATA[The ISO code for the country]]></comment>
 			</column>
@@ -495,7 +495,7 @@
 			</fk>
 		</table>
 		<table name="promoted_survey_ids" >
-			<comment>Keeps track of the survey_ids that correspond to surveys that were ported from first questionnaire to the second</comment>
+			<comment><![CDATA[Keeps track of the survey_ids that correspond to surveys that were ported from first questionnaire to the second]]></comment>
 			<column name="survey_id" type="varchar" length="2147483647" jt="12" mandatory="y" />
 			<index name="pk_promoted_survey_ids" unique="PRIMARY_KEY" >
 				<column name="survey_id" />
@@ -513,7 +513,7 @@
 			</column>
 		</table>
 		<table name="survey_answers" >
-			<comment>Stores answers to questions of type SINGLE and MULTIPLE</comment>
+			<comment><![CDATA[Stores answers to questions of type SINGLE and MULTIPLE]]></comment>
 			<column name="survey_id" type="varchar" length="2147483647" jt="12" mandatory="y" >
 				<comment><![CDATA[The unique identifier for the survey]]></comment>
 			</column>
@@ -544,7 +544,7 @@
 			</fk>
 		</table>
 		<table name="survey_answers_other" >
-			<comment>Survey answers for which there are no corresponding foreign keys</comment>
+			<comment><![CDATA[Survey answers for which there are no corresponding foreign keys]]></comment>
 			<column name="survey_id" type="varchar" length="2147483647" jt="12" mandatory="y" />
 			<column name="survey_question_id" type="bigint" jt="-5" mandatory="y" />
 			<column name="response" type="varchar" length="2147483647" jt="12" mandatory="y" />
@@ -584,7 +584,7 @@
 			</index>
 		</table>
 		<table name="survey_question" >
-			<comment>Stores the human survey questions</comment>
+			<comment><![CDATA[Stores the human survey questions]]></comment>
 			<column name="survey_question_id" type="bigint" jt="-5" mandatory="y" >
 				<comment><![CDATA[The unique question ID]]></comment>
 			</column>
@@ -615,7 +615,7 @@
 			</index>
 		</table>
 		<table name="survey_question_response" >
-			<comment>Maps questions to responses</comment>
+			<comment><![CDATA[Maps questions to responses]]></comment>
 			<column name="survey_question_id" type="bigint" jt="-5" mandatory="y" />
 			<column name="response" type="varchar" length="2147483647" jt="12" mandatory="y" />
 			<column name="display_index" type="serial" length="10" jt="4" mandatory="y" >
@@ -637,7 +637,7 @@
 			</fk>
 		</table>
 		<table name="survey_question_response_type" >
-			<comment>Stores the type of response for each question</comment>
+			<comment><![CDATA[Stores the type of response for each question]]></comment>
 			<column name="survey_question_id" type="bigint" jt="-5" />
 			<column name="survey_response_type" type="varchar" length="2147483647" jt="12" mandatory="y" />
 			<index name="idx_human_survey_response_type" unique="NORMAL" >
@@ -654,7 +654,7 @@
 			</fk>
 		</table>
 		<table name="survey_question_triggers" >
-			<comment>Which question/answer combos trigger other questions</comment>
+			<comment><![CDATA[Which question/answer combos trigger other questions]]></comment>
 			<column name="survey_question_id" type="bigint" jt="-5" >
 				<comment><![CDATA[The ID of the question that is triggered]]></comment>
 			</column>
@@ -690,7 +690,7 @@
 			</fk>
 		</table>
 		<table name="survey_response" >
-			<comment>Stores every possible predictable response on the human survey</comment>
+			<comment><![CDATA[Stores every possible predictable response on the human survey]]></comment>
 			<column name="american" type="varchar" length="2147483647" jt="12" mandatory="y" />
 			<column name="british" type="varchar" length="2147483647" jt="12" />
 			<index name="pk_human_survey_response" unique="PRIMARY_KEY" >
@@ -701,7 +701,7 @@
 			</index>
 		</table>
 		<table name="survey_response_types" >
-			<comment>Stores every possible type of response.  The response type will be processed in python to determine how the question is represented in the interface.</comment>
+			<comment><![CDATA[Stores every possible type of response.  The response type will be processed in python to determine how the question is represented in the interface.]]></comment>
 			<column name="survey_response_type" type="varchar" length="2147483647" jt="12" mandatory="y" />
 			<index name="pk_human_survey_response_types" unique="PRIMARY_KEY" >
 				<column name="survey_response_type" />
@@ -788,9 +788,9 @@
 		<function name="update_barcode_status" id="Function7910862" isSystem="false" />
 		<function name="uuid_generate_v4" id="Function7910862" isSystem="false" />
 	</schema>
-	<schema name="barcodes" catalogname="ag_test" schemaname="barcodes" defo="y" >
+	<schema name="barcodes" catalogname="ag_test" schemaname="barcodes" >
 		<table name="barcode" >
-			<column name="barcode" type="varchar" length="2147483647" jt="12" mandatory="y" />
+			<column name="barcode" type="varchar" jt="12" mandatory="y" />
 			<column name="assigned_on" type="timestamp" length="29" decimal="6" jt="93" >
 				<comment><![CDATA[date barcode assigned to a project]]></comment>
 			</column>
@@ -817,28 +817,183 @@
 				<fk_column name="barcode" pk="barcode" />
 			</fk>
 		</table>
-		<table name="plate" >
-			<column name="plate_id" type="bigint" length="19" jt="-5" mandatory="y" />
-			<column name="plate" type="varchar" length="50" jt="12" />
-			<column name="sequence_date" type="varchar" length="20" jt="12" />
-			<index name="plate_pkey" unique="PRIMARY_KEY" >
-				<column name="plate_id" />
+		<table name="lot" >
+			<column name="lot_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="lot_type" type="varchar" jt="12" mandatory="y" />
+			<column name="lot" type="varchar" jt="12" mandatory="y" />
+			<column name="date_added" type="date" jt="91" mandatory="y" >
+				<defo>current_date</defo>
+			</column>
+			<index name="pk_lots" unique="PRIMARY_KEY" >
+				<column name="lot_id" />
 			</index>
 		</table>
-		<table name="plate_barcode" >
-			<column name="plate_id" type="bigint" length="19" jt="-5" mandatory="y" />
-			<column name="barcode" type="varchar" length="2147483647" jt="12" mandatory="y" />
-			<index name="idx_plate_barcode" unique="NORMAL" >
+		<table name="pcr_plate" >
+			<column name="barcode" type="varchar" jt="12" mandatory="y" />
+			<column name="nickname" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="protocol" type="bigint" jt="-5" mandatory="y" />
+			<column name="primer plate" type="integer" jt="4" mandatory="y" />
+			<column name="primer_plate_lot" type="bigint" jt="-5" mandatory="y" />
+			<column name="amplicon" type="varchar" jt="12" mandatory="y" />
+			<column name="master_mix_lot" type="bigint" jt="-5" mandatory="y" />
+			<column name="water_lot" type="bigint" jt="-5" mandatory="y" />
+			<column name="pcr_robot" type="bigint" jt="-5" mandatory="y" />
+			<column name="300_8_tool" type="bigint" jt="-5" mandatory="y" >
+				<comment><![CDATA[300uL pipette head used]]></comment>
+			</column>
+			<column name="50_8_tool" type="bigint" jt="-5" mandatory="y" >
+				<comment><![CDATA[50uL pipette head used]]></comment>
+			</column>
+			<column name="person" type="bigint" jt="-5" mandatory="y" />
+			<column name="pcr_created" type="timestamp" jt="93" mandatory="y" >
+				<defo>current_timestamp</defo>
+			</column>
+			<index name="pkey_pcr_plate" unique="PRIMARY_KEY" >
+				<column name="barcode" />
+				<column name="nickname" />
+			</index>
+			<index name="idx_pcr_plate" unique="NORMAL" >
 				<column name="barcode" />
 			</index>
-			<index name="idx_plate_barcode_0" unique="NORMAL" >
-				<column name="plate_id" />
+			<index name="idx_pcr_plate_0" unique="NORMAL" >
+				<column name="pcr_robot" />
 			</index>
-			<fk name="fk_plate_barcode" to_schema="barcodes" to_table="barcode" >
+			<index name="idx_pcr_plate_1" unique="NORMAL" >
+				<column name="primer_plate_lot" />
+			</index>
+			<index name="idx_pcr_plate_2" unique="NORMAL" >
+				<column name="master_mix_lot" />
+			</index>
+			<index name="idx_pcr_plate_3" unique="NORMAL" >
+				<column name="water_lot" />
+			</index>
+			<index name="idx_pcr_plate_4" unique="NORMAL" >
+				<column name="protocol" />
+			</index>
+			<index name="idx_pcr_plate_5" unique="NORMAL" >
+				<column name="person" />
+			</index>
+			<fk name="fk_pcr_plate" to_schema="barcodes" to_table="plate" >
 				<fk_column name="barcode" pk="barcode" />
 			</fk>
+			<fk name="fk_pcr_plate_0" to_schema="barcodes" to_table="robots" >
+				<fk_column name="pcr_robot" pk="robot_id" />
+			</fk>
+			<fk name="fk_pcr_plate_1" to_schema="barcodes" to_table="lot" >
+				<fk_column name="primer_plate_lot" pk="lot_id" />
+			</fk>
+			<fk name="fk_pcr_plate_2" to_schema="barcodes" to_table="lot" >
+				<fk_column name="master_mix_lot" pk="lot_id" />
+			</fk>
+			<fk name="fk_pcr_plate_3" to_schema="barcodes" to_table="lot" >
+				<fk_column name="water_lot" pk="lot_id" />
+			</fk>
+			<fk name="fk_pcr_plate_4" to_schema="barcodes" to_table="protocol" >
+				<fk_column name="protocol" pk="protocol_id" />
+			</fk>
+			<fk name="fk_pcr_plate_5" to_schema="barcodes" to_table="person" >
+				<fk_column name="person" pk="person_id" />
+			</fk>
+		</table>
+		<table name="person" >
+			<column name="person_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="name" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="email" type="varchar" jt="12" mandatory="y" />
+			<column name="date_added" type="date" jt="91" mandatory="y" >
+				<defo>current_date</defo>
+			</column>
+			<index name="pk_person" unique="PRIMARY_KEY" >
+				<column name="person_id" />
+			</index>
+		</table>
+		<table name="plate" >
+			<column name="barcode" type="varchar" jt="12" mandatory="y" />
+			<column name="nickname" type="varchar" length="50" jt="12" mandatory="y" />
+			<column name="project_id" type="varchar" length="20" jt="12" mandatory="y" />
+			<column name="protocol" type="bigint" jt="-5" mandatory="y" />
+			<column name="ext_robot" type="bigint" jt="-5" mandatory="y" >
+				<comment><![CDATA[Extraction robot used for this plate]]></comment>
+			</column>
+			<column name="ext_robot_tool" type="varchar" jt="12" mandatory="y" >
+				<comment><![CDATA[Extraction robot pipette head used
+]]></comment>
+			</column>
+			<column name="kf_robot" type="bigint" jt="-5" mandatory="y" >
+				<comment><![CDATA[kingifsher robot used for extracton]]></comment>
+			</column>
+			<column name="ext_kit_lot" type="bigint" jt="-5" mandatory="y" >
+				<comment><![CDATA[Extraction kit lot number]]></comment>
+			</column>
+			<column name="person" type="bigint" jt="-5" mandatory="y" >
+				<comment><![CDATA[Person running the extraction]]></comment>
+			</column>
+			<column name="finalized" type="bool" jt="-7" mandatory="y" >
+				<defo>&#039;F&#039;</defo>
+				<comment><![CDATA[Whether the plate map is complete or still being filled.]]></comment>
+			</column>
+			<column name="creation_timestamp" type="timestamp" jt="93" mandatory="y" >
+				<defo>current_date</defo>
+			</column>
+			<column name="finalized_timestamp" type="timestamp" jt="93" />
+			<index name="plate_pkey" unique="PRIMARY_KEY" >
+				<column name="barcode" />
+			</index>
+			<index name="idx_plate" unique="NORMAL" >
+				<column name="project_id" />
+			</index>
+			<index name="idx_plate_0" unique="NORMAL" >
+				<column name="ext_robot" />
+			</index>
+			<index name="idx_plate_1" unique="NORMAL" >
+				<column name="kf_robot" />
+			</index>
+			<index name="idx_plate_2" unique="NORMAL" >
+				<column name="ext_kit_lot" />
+			</index>
+			<index name="idx_plate_3" unique="NORMAL" >
+				<column name="protocol" />
+			</index>
+			<index name="idx_plate_4" unique="NORMAL" >
+				<column name="person" />
+			</index>
+			<fk name="fk_plate" to_schema="barcodes" to_table="barcode" >
+				<fk_column name="barcode" pk="barcode" />
+			</fk>
+			<fk name="fk_plate_0" to_schema="barcodes" to_table="project" >
+				<fk_column name="project_id" pk="project_id" />
+			</fk>
+			<fk name="fk_plate_1" to_schema="barcodes" to_table="robots" >
+				<fk_column name="ext_robot" pk="robot_id" />
+			</fk>
+			<fk name="fk_plate_2" to_schema="barcodes" to_table="robots" >
+				<fk_column name="kf_robot" pk="robot_id" />
+			</fk>
+			<fk name="fk_plate_3" to_schema="barcodes" to_table="lot" >
+				<fk_column name="ext_kit_lot" pk="lot_id" />
+			</fk>
+			<fk name="fk_plate_4" to_schema="barcodes" to_table="protocol" >
+				<fk_column name="protocol" pk="protocol_id" />
+			</fk>
+			<fk name="fk_plate_5" to_schema="barcodes" to_table="person" >
+				<fk_column name="person" pk="person_id" />
+			</fk>
+		</table>
+		<table name="plate_sample" >
+			<column name="barcode" type="bigint" length="19" jt="-5" mandatory="y" />
+			<column name="well" type="varchar" length="3" jt="12" mandatory="y" />
+			<column name="sample" type="varchar" jt="12" mandatory="y" />
+			<index name="idx_plate_barcode" unique="NORMAL" >
+				<column name="well" />
+			</index>
+			<index name="idx_plate_barcode_0" unique="NORMAL" >
+				<column name="barcode" />
+			</index>
+			<index name="pkey_plate_barcode_1" unique="PRIMARY_KEY" >
+				<column name="barcode" />
+				<column name="well" />
+			</index>
 			<fk name="fk_plate_barcode_0" to_schema="barcodes" to_table="plate" >
-				<fk_column name="plate_id" pk="plate_id" />
+				<fk_column name="barcode" pk="barcode" />
 			</fk>
 		</table>
 		<table name="project" >
@@ -862,8 +1017,29 @@
 				<fk_column name="project_id" pk="project_id" />
 			</fk>
 		</table>
+		<table name="protocol" >
+			<column name="protocol_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="protocol_name" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="template_dna" type="integer" jt="4" mandatory="y" >
+				<comment><![CDATA[Template DNA added, in uL]]></comment>
+			</column>
+			<index name="pk_protocol" unique="PRIMARY_KEY" >
+				<column name="protocol_id" />
+			</index>
+		</table>
+		<table name="robots" >
+			<column name="robot_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="robot_type" type="varchar" jt="12" mandatory="y" />
+			<column name="robot_name" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="date_added" type="date" jt="91" mandatory="y" >
+				<defo>current_date</defo>
+			</column>
+			<index name="pk_robots" unique="PRIMARY_KEY" >
+				<column name="robot_id" />
+			</index>
+		</table>
 	</schema>
-	<schema name="information_schema" catalogname="ag" schemaname="information_schema" defo="y" >
+	<schema name="information_schema" catalogname="ag" schemaname="information_schema" >
 		<function name="_pg_char_max_length" id="Function2849398" isSystem="false" />
 		<function name="_pg_char_octet_length" id="Function2849398" isSystem="false" />
 		<function name="_pg_datetime_precision" id="Function2849398" isSystem="false" />
@@ -877,7 +1053,7 @@
 		<function name="_pg_truetypid" id="Function2849398" isSystem="false" />
 		<function name="_pg_truetypmod" id="Function2849398" isSystem="false" />
 	</schema>
-	<schema name="pg_catalog" catalogname="ag" schemaname="pg_catalog" defo="y" >
+	<schema name="pg_catalog" catalogname="ag" schemaname="pg_catalog" >
 		<function name="RI_FKey_cascade_del" id="Function2850037" isSystem="false" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog."RI_FKey_cascade_del"()
  RETURNS trigger
@@ -22543,21 +22719,26 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="survey_answers" color="a8c4ef" x="1410" y="1230" />
 		<entity schema="ag" name="ag_human_survey" color="c6d9f7" x="1665" y="420" />
 		<entity schema="ag" name="external_survey_answers" color="a8c4ef" x="1440" y="1350" />
-		<entity schema="barcodes" name="plate" color="a8c4ef" x="300" y="1065" />
-		<entity schema="barcodes" name="project_barcode" color="a8c4ef" x="330" y="975" />
-		<entity schema="barcodes" name="plate_barcode" color="a8c4ef" x="135" y="1065" />
-		<entity schema="ag" name="settings" color="a8c4ef" x="105" y="645" />
+		<entity schema="barcodes" name="project_barcode" color="a8c4ef" x="285" y="915" />
 		<entity schema="ag" name="external_survey_sources" color="a8c4ef" x="1395" y="1500" />
 		<entity schema="ag" name="ag_handout_barcodes" color="a8c4ef" x="255" y="420" />
-		<entity schema="barcodes" name="barcode_exceptions" color="a8c4ef" x="120" y="795" />
-		<entity schema="barcodes" name="project" color="a8c4ef" x="345" y="885" />
-		<entity schema="barcodes" name="barcode" color="a8c4ef" x="105" y="870" />
+		<entity schema="barcodes" name="barcode_exceptions" color="a8c4ef" x="75" y="735" />
+		<entity schema="barcodes" name="project" color="a8c4ef" x="300" y="825" />
 		<entity schema="ag" name="ag_kit_barcodes" color="f7e2c6" x="735" y="885" />
 		<entity schema="ag" name="survey_question" color="a8c4ef" x="420" y="1530" />
 		<entity schema="ag" name="ag_handout_kits" color="a8c4ef" x="60" y="420" />
 		<entity schema="ag" name="ag_kit" color="f7e2c6" x="1110" y="690" />
+		<entity schema="barcodes" name="barcode" color="a8c4ef" x="60" y="810" />
+		<entity schema="barcodes" name="lot" color="b7c8e3" x="510" y="795" />
+		<entity schema="ag" name="settings" color="a8c4ef" x="60" y="585" />
+		<entity schema="barcodes" name="robots" color="b7c8e3" x="510" y="915" />
+		<entity schema="barcodes" name="plate_sample" color="a8c4ef" x="90" y="1005" />
+		<entity schema="barcodes" name="person" color="b7c8e3" x="90" y="1200" />
+		<entity schema="barcodes" name="protocol" color="b7c8e3" x="90" y="1095" />
+		<entity schema="barcodes" name="plate" color="a8c4ef" x="255" y="1005" />
+		<entity schema="barcodes" name="pcr_plate" color="b7c8e3" x="495" y="1020" />
 		<group name="ag_survey_multiples" color="faf6f0" >
-			<comment>Used by :    american_gut_consent</comment>
+			<comment><![CDATA[Used by :    american_gut_consent]]></comment>
 			<entity schema="ag" name="ag_survey_multiples" />
 			<entity schema="ag" name="ag_survey_answer" />
 			<entity schema="ag" name="ag_kit" />
@@ -22567,7 +22748,7 @@ AS $function$xpath_exists$function$
 			<entity schema="ag" name="ag_kit_barcodes" />
 		</group>
 		<group name="disconnected tables" color="f2faf0" >
-			<comment>These tables are not connected to any other table in the database by foreign key or anything else...</comment>
+			<comment><![CDATA[These tables are not connected to any other table in the database by foreign key or anything else...]]></comment>
 			<entity schema="ag" name="ag_survey_multiples_backup" />
 			<entity schema="ag" name="ag_import_stats_tmp" />
 			<entity schema="ag" name="ag_map_markers" />
@@ -22582,7 +22763,7 @@ AS $function$xpath_exists$function$
 			<entity schema="ag" name="external_survey_sources" />
 		</group>
 		<group name="controlled_vocab_values" color="f0f0fa" >
-			<comment>Used by :    american_gut_consent</comment>
+			<comment><![CDATA[Used by :    american_gut_consent]]></comment>
 			<entity schema="ag" name="controlled_vocab_values" />
 			<entity schema="ag" name="controlled_vocabs" />
 			<entity schema="ag" name="zipcodes" />
@@ -22603,12 +22784,17 @@ AS $function$xpath_exists$function$
 			<entity schema="ag" name="ag_handout_kits" />
 		</group>
 		<group name="Schema_barcodes" color="c4e0f9" >
-			<entity schema="barcodes" name="plate_barcode" />
+			<entity schema="barcodes" name="plate_sample" />
 			<entity schema="barcodes" name="plate" />
 			<entity schema="barcodes" name="project_barcode" />
 			<entity schema="barcodes" name="project" />
 			<entity schema="barcodes" name="barcode" />
 			<entity schema="barcodes" name="barcode_exceptions" />
+			<entity schema="barcodes" name="pcr_plate" />
+			<entity schema="barcodes" name="robots" />
+			<entity schema="barcodes" name="lot" />
+			<entity schema="barcodes" name="person" />
+			<entity schema="barcodes" name="protocol" />
 		</group>
 	</layout>
 </project>
