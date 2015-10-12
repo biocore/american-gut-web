@@ -941,7 +941,7 @@
 		<table name="plate" >
 			<column name="barcode" type="varchar" jt="12" mandatory="y" />
 			<column name="nickname" type="varchar" length="50" jt="12" mandatory="y" />
-			<column name="project_id" type="varchar" length="20" jt="12" mandatory="y" />
+			<column name="project_id" type="bigint" length="20" jt="-5" mandatory="y" />
 			<column name="protocol" type="bigint" jt="-5" mandatory="y" />
 			<column name="ext_robot" type="bigint" jt="-5" mandatory="y" >
 				<comment><![CDATA[Extraction robot used for this plate]]></comment>
@@ -1011,7 +1011,7 @@
 			</fk>
 		</table>
 		<table name="plate_sample" >
-			<column name="barcode" type="bigint" length="19" jt="-5" mandatory="y" />
+			<column name="barcode" type="varchar" jt="12" mandatory="y" />
 			<column name="well" type="varchar" length="3" jt="12" mandatory="y" />
 			<column name="sample" type="varchar" jt="12" mandatory="y" />
 			<column name="sample_size" type="float8" jt="6" mandatory="y" >
@@ -22788,15 +22788,15 @@ AS $function$xpath_exists$function$
 		<entity schema="barcodes" name="lot" color="b7c8e3" x="510" y="675" />
 		<entity schema="barcodes" name="robots" color="b7c8e3" x="510" y="795" />
 		<entity schema="barcodes" name="pcr_plate" color="b7c8e3" x="495" y="900" />
-		<entity schema="barcodes" name="plate" color="a8c4ef" x="255" y="885" />
 		<entity schema="ag" name="settings" color="a8c4ef" x="495" y="420" />
-		<entity schema="barcodes" name="project" color="a8c4ef" x="300" y="690" />
 		<entity schema="barcodes" name="pcr_plate_run" color="b7c8e3" x="480" y="1155" />
 		<entity schema="barcodes" name="person" color="b7c8e3" x="240" y="1125" />
 		<entity schema="barcodes" name="run_information" color="b7c8e3" x="360" y="1140" />
 		<entity schema="barcodes" name="barcode" color="a8c4ef" x="60" y="690" />
 		<entity schema="barcodes" name="protocol" color="b7c8e3" x="75" y="1020" />
 		<entity schema="barcodes" name="plate_sample" color="a8c4ef" x="90" y="885" />
+		<entity schema="barcodes" name="plate" color="a8c4ef" x="255" y="885" />
+		<entity schema="barcodes" name="project" color="a8c4ef" x="300" y="690" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment><![CDATA[Used by :    american_gut_consent]]></comment>
 			<entity schema="ag" name="ag_survey_multiples" />
