@@ -830,6 +830,9 @@
 				<column name="ext_kit_lot" />
 				<column name="extraction_kit_id" />
 			</index>
+			<index name="idx_ext_kit_lot_0" unique="UNIQUE" >
+				<column name="ext_kit_lot" />
+			</index>
 			<fk name="fk_ext_kit_lot" to_schema="barcodes" to_table="extraction_kit" >
 				<fk_column name="extraction_kit_id" pk="extraction_kit_id" />
 			</fk>
@@ -856,10 +859,10 @@
 				<comment><![CDATA[Extraction robot pipette head used
 ]]></comment>
 			</column>
-			<column name="kf_robot" type="bigint" jt="-5" mandatory="y" >
+			<column name="kf_robot" type="varchar" jt="12" mandatory="y" >
 				<comment><![CDATA[kingifsher robot used for extracton]]></comment>
 			</column>
-			<column name="ext_kit_lot" type="bigint" jt="-5" mandatory="y" >
+			<column name="ext_kit_lot" type="varchar" jt="12" mandatory="y" >
 				<comment><![CDATA[Extraction kit lot number]]></comment>
 			</column>
 			<column name="person" type="bigint" jt="-5" mandatory="y" >
@@ -929,6 +932,9 @@
 			<index name="idx_master_mix_lot" unique="NORMAL" >
 				<column name="master_mix_id" />
 			</index>
+			<index name="idx_master_mix_lot_0" unique="UNIQUE" >
+				<column name="master_mix_lot" />
+			</index>
 			<fk name="fk_master_mix_lot" to_schema="barcodes" to_table="master_mix" >
 				<fk_column name="master_mix_id" pk="master_mix_id" />
 			</fk>
@@ -936,11 +942,11 @@
 		<table name="pcr_plate" >
 			<column name="barcode" type="varchar" jt="12" mandatory="y" />
 			<column name="nickname" type="varchar" length="100" jt="12" mandatory="y" />
-			<column name="primer_plate_lot" type="bigint" jt="-5" mandatory="y" />
+			<column name="primer_plate_lot" type="varchar" jt="12" mandatory="y" />
 			<column name="amplicon" type="varchar" jt="12" mandatory="y" />
-			<column name="master_mix_lot" type="bigint" jt="-5" mandatory="y" />
-			<column name="water_lot" type="bigint" jt="-5" mandatory="y" />
-			<column name="pcr_robot" type="bigint" jt="-5" mandatory="y" />
+			<column name="master_mix_lot" type="varchar" jt="12" mandatory="y" />
+			<column name="water_lot" type="varchar" jt="12" mandatory="y" />
+			<column name="pcr_robot" type="varchar" jt="12" mandatory="y" />
 			<column name="tool_300_8" type="bigint" jt="-5" mandatory="y" >
 				<comment><![CDATA[300uL pipette head used]]></comment>
 			</column>
@@ -979,7 +985,6 @@
 			<fk name="fk_pcr_plate" to_schema="barcodes" to_table="extraction_plate" >
 				<fk_column name="barcode" pk="barcode" />
 			</fk>
-			<fk name="fk_pcr_plate_4" to_schema="barcodes" to_table="protocol" />
 			<fk name="fk_pcr_plate_5" to_schema="barcodes" to_table="person" >
 				<fk_column name="person" pk="person_id" />
 			</fk>
@@ -1077,23 +1082,28 @@
 			<index name="idx_sequencing_plate" unique="NORMAL" >
 				<column name="protocol" />
 			</index>
-			<fk name="fk_sequencing_plate" to_schema="barcodes" to_table="protocol" />
+			<fk name="fk_primer_plate" to_schema="barcodes" to_table="protocol" >
+				<fk_column name="protocol" pk="protocol" />
+			</fk>
 		</table>
 		<table name="primer_plate_lot" >
-			<column name="primer_plate" type="varchar" jt="12" mandatory="y" />
+			<column name="primer_plate_id" type="bigint" jt="-5" mandatory="y" />
 			<column name="primer_plate_lot" type="varchar" jt="12" mandatory="y" />
 			<column name="date_added" type="date" jt="91" mandatory="y" >
 				<defo>current_date</defo>
 			</column>
 			<index name="idx_primer_plate_lot" unique="NORMAL" >
-				<column name="primer_plate" />
+				<column name="primer_plate_id" />
 			</index>
 			<index name="pk_primer_plate_lot" unique="PRIMARY_KEY" >
 				<column name="primer_plate_lot" />
-				<column name="primer_plate" />
+				<column name="primer_plate_id" />
+			</index>
+			<index name="idx_primer_plate_lot_0" unique="UNIQUE" >
+				<column name="primer_plate_lot" />
 			</index>
 			<fk name="fk_primer_plate_lot" to_schema="barcodes" to_table="primer_plate" >
-				<fk_column name="primer_plate" pk="primer_plate_id" />
+				<fk_column name="primer_plate_id" pk="primer_plate_id" />
 			</fk>
 		</table>
 		<table name="project" >
@@ -1202,6 +1212,9 @@
 			</index>
 			<index name="idx_water_lot" unique="NORMAL" >
 				<column name="water_id" />
+			</index>
+			<index name="idx_water_lot_0" unique="UNIQUE" >
+				<column name="water_lot" />
 			</index>
 			<fk name="fk_water_lot" to_schema="barcodes" to_table="water" >
 				<fk_column name="water_id" pk="water_id" />
@@ -22948,24 +22961,24 @@ AS $function$xpath_exists$function$
 	<layout id="Layout_345a537d" name="barcodes" joined_routing="y" show_column_type="y" show_relation_columns="y" >
 		<entity schema="barcodes" name="barcode" color="b7c8e3" x="165" y="60" />
 		<entity schema="barcodes" name="project_barcode" color="b7c8e3" x="585" y="45" />
-		<entity schema="barcodes" name="water_lot" color="b7c8e3" x="825" y="540" />
-		<entity schema="barcodes" name="master_mix_lot" color="b7c8e3" x="825" y="420" />
 		<entity schema="barcodes" name="water" color="b7c8e3" x="1035" y="540" />
 		<entity schema="barcodes" name="master_mix" color="b7c8e3" x="1050" y="420" />
-		<entity schema="barcodes" name="primer_plate_lot" color="b7c8e3" x="300" y="570" />
 		<entity schema="barcodes" name="project" color="b7c8e3" x="570" y="135" />
 		<entity schema="barcodes" name="pcr_plate_run" color="b7c8e3" x="525" y="675" />
-		<entity schema="barcodes" name="ext_kit_lot" color="b7c8e3" x="825" y="300" />
 		<entity schema="barcodes" name="extraction_kit" color="b7c8e3" x="1065" y="300" />
 		<entity schema="barcodes" name="plate_sample" color="b7c8e3" x="825" y="90" />
-		<entity schema="barcodes" name="extraction_plate" color="b7c8e3" x="555" y="240" />
-		<entity schema="barcodes" name="pcr_plate" color="b7c8e3" x="555" y="450" />
 		<entity schema="barcodes" name="person" color="b7c8e3" x="330" y="390" />
-		<entity schema="barcodes" name="primer_plate" color="b7c8e3" x="60" y="570" />
 		<entity schema="barcodes" name="sequencer" color="b7c8e3" x="45" y="735" />
 		<entity schema="barcodes" name="run_information" color="b7c8e3" x="285" y="690" />
 		<entity schema="barcodes" name="protocol" color="b7c8e3" x="60" y="420" />
 		<entity schema="barcodes" name="barcode_exceptions" color="b7c8e3" x="75" y="255" />
+		<entity schema="barcodes" name="primer_plate" color="b7c8e3" x="60" y="570" />
+		<entity schema="barcodes" name="water_lot" color="b7c8e3" x="825" y="540" />
+		<entity schema="barcodes" name="master_mix_lot" color="b7c8e3" x="825" y="420" />
+		<entity schema="barcodes" name="ext_kit_lot" color="b7c8e3" x="825" y="300" />
 		<entity schema="barcodes" name="robot" color="b7c8e3" x="285" y="270" />
+		<entity schema="barcodes" name="extraction_plate" color="b7c8e3" x="555" y="240" />
+		<entity schema="barcodes" name="primer_plate_lot" color="b7c8e3" x="300" y="570" />
+		<entity schema="barcodes" name="pcr_plate" color="b7c8e3" x="555" y="450" />
 	</layout>
 </project>
