@@ -1,0 +1,2068 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.1 plus MathML 2.0 plus SVG 1.1//EN' 'http://www.w3.org/2002/04/xhtml-math-svg/xhtml-math-svg.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml' >
+<head>
+<title>barcodes</title>
+<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+<meta http-equiv='X-UA-Compatible' content='IE=edge'/>
+<style type='text/css'>
+body {
+    font-family: 'trebuchet MS', 'Lucida sans', Dialog;
+    font-size: 12px;
+    color: #444;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.bordered {
+    border: solid #ccc 1px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 1px 1px #ccc;
+    -moz-box-shadow: 0 1px 1px #ccc;
+    box-shadow: 0 1px 1px #ccc;
+}
+
+.bordered tr:hover {
+    background: #fbf8e9;
+    -o-transition: all 0.1s ease-in-out;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -ms-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+}
+
+.bordered td, .bordered th {
+    border-left: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    padding: 4px;
+    text-align: left;
+}
+
+.bordered th {
+    background-color: #d7d7ea;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#f4f4fb), to(#d7d7ea));
+    background-image: -webkit-linear-gradient(top, #f4f4fb, #d7d7ea);
+    background-image:    -moz-linear-gradient(top, #f4f4fb, #d7d7ea);
+    background-image:     -ms-linear-gradient(top, #f4f4fb, #d7d7ea);
+    background-image:      -o-linear-gradient(top, #f4f4fb, #d7d7ea);
+    background-image:         linear-gradient(top, #f4f4fb, #d7d7ea);
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+    -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+    box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+    border-top: none;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+}
+
+.bordered td:first-child, .bordered th:first-child {
+    border-left: none;
+}
+
+.bordered th:first-child {
+    -moz-border-radius: 6px 0 0 0;
+    -webkit-border-radius: 6px 0 0 0;
+    border-radius: 6px 0 0 0;
+}
+
+.bordered th:last-child {
+    -moz-border-radius: 0 6px 0 0;
+    -webkit-border-radius: 0 6px 0 0;
+    border-radius: 0 6px 0 0;
+}
+
+.bordered th:only-child{
+    -moz-border-radius: 6px 6px 0 0;
+    -webkit-border-radius: 6px 6px 0 0;
+    border-radius: 6px 6px 0 0;
+}
+
+.bordered tr:last-child td:first-child {
+    -moz-border-radius: 0 0 0 6px;
+    -webkit-border-radius: 0 0 0 6px;
+    border-radius: 0 0 0 6px;
+}
+
+.bordered tr:last-child td:last-child {
+    -moz-border-radius: 0 0 6px 0;
+    -webkit-border-radius: 0 0 6px 0;
+    border-radius: 0 0 6px 0;
+}
+
+</style>
+</head>
+
+<body>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'   width='1305' height='995' viewbox='0 0 1305 995' >
+  <script type='text/ecmascript'>
+  <![CDATA[
+  function hghl(el) { for ( var i in el ){ document.getElementById(el[i]).setAttribute('class','highlight');  }  }
+  function uhghl(el) { for ( var i in el ){ document.getElementById(el[i]).setAttribute('class','scene'); }  } 
+  ]]>
+  </script> 
+
+<style type='text/css'>
+  text                { fill:#000000; font-family: Lucida Grande, 'Trebuchet MS', Dialog; font-size:12px; }
+  text:hover          { fill:#a00000; font-size:13px; }
+  text.highlight      { fill:#a00000; font-size:13px; }
+  text.colType        { fill:#b3b3b3; }
+  path                { stroke:#54402e; stroke-width:1.25; fill:none; }
+  path.scene          { stroke-width:10; opacity:0;}
+  path.highlight      { stroke-width:7; stroke:#e5d78a; opacity:0.6;}
+  rect.table          { fill:#ffffff; stroke:#101010; stroke-width:0.44; filter:url(#shadow); }
+  line.delim          { stroke:#222; stroke-width:0.3; }
+  rect.callout        { fill:url(#calloutGradient); stroke:#bebdbd; stroke-width:0.5; filter: url(#shadow);}
+  rect.grp            { stroke:#b1b1b1; stroke-width:1.7; }
+</style>
+<defs>
+  <pattern patternUnits='userSpaceOnUse' id='layoutBgA' width='10' height='20' x='0' y='0' viewBox='0 0 5 10'>  
+     <line x1='-2' y1='1' x2='7' y2='10' stroke='#f3f3f3' stroke-width='.5'/>  
+     <line x1='-2' y1='6' x2='7' y2='15' stroke='#f3f3f3' stroke-width='.5'/>  
+     <line x1='-2' y1='-4' x2='7' y2='5' stroke='#f3f3f3' stroke-width='.5'/>  
+  </pattern>  
+  <radialGradient id='layoutBgB' gradientUnits='userSpaceOnUse' cx='50%' cy='50%' r='75%' fx='46%' fy='22%'>
+     <stop offset='0%' stop-opacity='.2' stop-color='#f0f0f0' />  
+     <stop offset='100%' stop-color='#e7e7e7' />  
+  </radialGradient>
+  <linearGradient id='tableHeaderGradient0' x1='0%' y1='0%' x2='0%' y2='90%' >
+          <stop offset='-50%' stop-color='#b7c8e3'/> 
+          <stop offset='20%' stop-color='#fafafa'/> 
+          <stop offset='100%' stop-color='#b7c8e3'/> 
+   </linearGradient>
+  <linearGradient id='groupUnderTitleLine' x1='0%' y1='0%' x2='100%' y2='0%' >
+          <stop offset='0%' stop-color='#999999' stop-opacity='0.7'/> 
+          <stop offset='100%' stop-color='#999999' stop-opacity='0' /> 
+   </linearGradient>
+  <radialGradient id='calloutGradient' cx='25%' cy='20%' r='80%' fx='10%' fy='10%'>
+	   <stop offset='0%' stop-color='#ffffff' />
+    <stop offset='100%' stop-color='#f8f6d1' />
+  </radialGradient>
+  <filter id='shadow' width='120%' height='120%'> 
+      <feOffset result='offOut' in='SourceGraphic' dx='2' dy='2' /> 
+      <feColorMatrix result='matrixOut' in='offOut' type='matrix' 
+      values='0.1 0 0 0 0 0 0.1 0 0 0 0 0 0.1 0 0 0 0 0 0.5 0' /> 
+      <feGaussianBlur result='blurOut' in='matrixOut' stdDeviation='3' /> 
+      <feBlend in='SourceGraphic' in2='blurOut' mode='normal' /> 
+    </filter> 
+  <filter id='fkShadow' height='130%'> 
+    <feGaussianBlur in='SourceAlpha' stdDeviation='1.5'/> <!-- stdDeviation is how much to blur -->
+    <feOffset dx='1.2' dy='1.2' result='offsetblur'/> <!-- how much to offset -->
+    <feMerge>
+    <feMergeNode/> <!-- this contains the offset blurred image -->
+    <feMergeNode in='SourceGraphic'/> <!-- this contains the element that the filter is applied to -->
+    </feMerge>
+  </filter>
+  <radialGradient id='legendGradient' fx='5%' fy='5%' r='75%' spreadMethod='pad'>
+          <stop offset='0%' stop-color='#eaf6ee' stop-opacity='1'/> 
+          <stop offset='100%' stop-color='#cce3ca' stop-opacity='1' /> 
+   </radialGradient>
+  <symbol id='calloutArrowDown' overflow='visible' >
+      <path d='M 0,0 L 7,11 L 15,0 z' style='fill:#f8f6d1;stroke:none; filter: url(#shadow);' />
+      <path d='M 0,0 L 7,11 L 15,0' style='stroke:#bebdbd; stroke-width:0.5;' />
+  </symbol>
+  <symbol id='calloutArrowUp' overflow='visible' >
+      <path d='M 0,15 L 7,3 L 15,15 z' style='fill:#ffffff; stroke:none; filter: url(#shadow);' />
+      <path d='M 0,15 L 7,3 L 15,15' style='stroke:#bebdbd; stroke-width:0.5;' />
+  </symbol>
+  <symbol id='pk' overflow='visible' >
+    <g transform='scale(0.99)'>
+     <path style='fill:#fbea8e;stroke:#472106;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;'
+        d='M 9.3678877,3.5695485 C 9.1030218,3.2729386 9.0796382,2.7628519 9.3396185,2.4517097 9.5449651,2.1956495 9.9040386,2.0980533 10.199638,2.2169415 10.533525,2.3415459 10.775153,2.706942 10.750675,3.0842709 10.737029,3.3980003 10.541153,3.699122 10.258248,3.8066067 9.966649,3.9250429 9.6169668,3.8418805 9.4008073,3.6062324 9.3894892,3.5943518 9.3785264,3.582104 9.3678886,3.5695487 z M 11.226617,6.9916004 C 11.888137,6.3548946 12.293488,5.4172188 12.311087,4.442353 12.378144,2.7379364 11.248678,1.0541269 9.7322318,0.44767357 8.3887112,-0.1280313 6.7865012,0.26822889 5.8918395,1.4007929 5.080823,2.3839145 4.9336815,3.8452096 5.3635544,5.101615 L 4.3670905,5.315913 C 4.0664984,5.3682645 4.0967703,5.6316724 4.2574957,5.8208829 L 4.9124,6.5655244 4.1543436,7.2512357 3.2136002,7.2163506 3.1674775,8.5586827 2.0406832,8.5086512 1.5965306,8.9299953 1.5471661,10.179833 0.75616674,10.195223 0.2112857,10.758575 0.15354288,11.735988 0.07199052,12.765553 c 0.36440953,0.238225 0.79006967,0.195492 1.44938278,-0.02675 L 6.3033562,8.1282037 6.8217102,8.6765688 C 6.9985465,8.8799427 7.3003699,8.7497574 7.358381,8.5016252 L 7.4938877,7.5084164 c 0.8537488,0.3985387 1.8303125,0.4711541 2.6851793,0.1427713 0.393927,-0.1407258 0.746858,-0.3701772 1.04755,-0.6595873 z'/>
+     <path d='M 6.8014948,6.3102123 0.15369063,13.024481 0.21560535,12.141962 6.0062342,6.2683782 z'
+        style='fill:#ffe5a5;fill-opacity:1;stroke:#854e31;stroke-width:0.06912433;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:3.00300009'/>
+    </g>
+  </symbol>
+  <symbol id='unq' overflow='visible' >
+    <g transform='scale(0.99)'>
+      <rect style='fill:#e07554;stroke:#7e4d31;stroke-width:0.71934468;stroke-linecap:round;stroke-linejoin:round;'
+         width='2.29' height='8.43' x='7.48' y='-0.76' ry='1.14' transform='matrix(0.701,0.713,-0.727,0.685,0,0)' />
+      <path style='fill:white;stroke:#858585;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;'
+         d='m 26.04,8.64 a 4.13,4.13 0 1 1 -8.26,0 4.13,4.13 0 1 1 8.26,0 z'
+         transform='matrix(1.025,0,0,0.987,-14.690,-3.862)' />
+      <text x='5.5' y='7.7' style='font-size:8px;fill:#8a8a8a;'>1</text>
+    </g>
+  </symbol>
+  <symbol id='idx' overflow='visible' >
+    <g transform='scale(0.99)'>
+      <rect style='fill:#e07554;stroke:#7e4d31;stroke-width:0.71934468;stroke-linecap:round;stroke-linejoin:round;'
+         width='2.29' height='8.43' x='7.48' y='-0.76' ry='1.14' transform='matrix(0.701,0.713,-0.727,0.685,0,0)' />
+      <path style='fill:white;stroke:#858585;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;'
+         d='m 26.04,8.64 a 4.13,4.13 0 1 1 -8.26,0 4.13,4.13 0 1 1 8.26,0 z'
+         transform='matrix(1.025,0,0,0.987,-14.690,-3.862)' />
+    </g>
+  </symbol>
+  <symbol id='fk' overflow='visible' >
+    <g transform='scale(0.87)'>
+      <path style='fill:#b7d0f6;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+      d='M 12.48,0.33 7.07,0.89 9.067,2.974 0.329,11.731 1.073,12.597 9.811,3.841 11.77,5.78 z' />
+    </g>
+  </symbol>
+  <symbol id='ref' overflow='visible' >
+    <g transform='scale(0.87)'>
+      <path style='fill:#f3e1b7;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+          d='M 0.10,12.70 5.31,12.15 3.40,10.06 11.82,1.32 11.11,0.45 2.68,9.19 0.80,7.24 z'/>
+    </g>
+  </symbol>
+  <symbol id='flag' overflow='visible' >
+    <g transform='scale(0.92)'>
+      <path style='fill:#b7d0f6;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+          d='M 0.12,12.67 0.16,7.22 C 2.59,7.22 4.13,8.78 9.22,4.22 5.68,4.98 2.53,4.50 0.09,1.80 z'/>
+    </g>
+  </symbol>
+  <symbol id='nn' overflow='visible' >
+  <path style='stroke:#9b3e50;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;'
+          d='M 0,0 3,3 M 0,3 3,0 z'/>
+  </symbol>
+  <marker id='arrow01' viewBox='0 0 15.00 7.50' refX='7.50' refY='3.75' markerUnits='strokeWidth' markerWidth='15.00' markerHeight='7.50' orient='auto'>
+    <path d='M 15.000,3.750 L 7.500,2.500 L 7.500,7.500 L 15.000,3.750 z' style='fill:#5e554d;' />
+  </marker>
+  <marker id='arrow1' viewBox='0 0 15.00 7.50' refX='7.50' refY='3.75' markerUnits='strokeWidth' markerWidth='15.00' markerHeight='7.50' orient='auto'>
+    <path d='M 15.000,3.750 L 7.500,2.500 L 7.500,7.500 L 15.000,3.750 z' style='fill:#5e554d;' />
+  </marker>
+  <marker id='foot01' viewBox='0 0 15.00 7.50' refX='7.50' refY='3.75' markerUnits='strokeWidth' markerWidth='15.00' markerHeight='7.50' orient='auto'>
+    <path d='M 0.00,3.75 L 15.00,3.75 z' />
+    <circle cx='11.25' cy='3.75' r='2.50' style='fill:white;stroke:#5e554d;' />
+    <path d='M 3.75,0.00 L 3.75, 7.50 z' />
+  </marker>
+  <marker id='foot0p' viewBox='0 0 15.00 7.50' refX='7.50' refY='3.75' markerUnits='strokeWidth' markerWidth='15.00' markerHeight='7.50' orient='auto'>
+    <path d='M 0.00,3.75 L 15.00,3.75 z' />
+    <circle cx='11.25' cy='3.75' r='2.50' style='fill:white;stroke:#5e554d;' />
+    <path d='M 0.00,0.00 L 7.50,3.75 L 0.00,7.50' />
+  </marker>
+  <marker id='foot1' viewBox='0 0 15.00 7.50' refX='7.50' refY='3.75' markerUnits='strokeWidth' markerWidth='15.00' markerHeight='7.50' orient='auto'>
+    <path d='M 0.00,3.75 L 15.00,3.75 z' />
+    <path d='M 7.50,0.00 L 7.50, 7.50 z' />
+    <path d='M 3.75,0.00 L 3.75, 7.50 z' />
+  </marker>
+  <marker id='foot1p' viewBox='0 0 15.00 7.50' refX='7.50' refY='3.75' markerUnits='strokeWidth' markerWidth='15.00' markerHeight='7.50' orient='auto'>
+    <path d='M 0.00,3.75 L 15.00,3.75 z' />
+    <path d='M 7.50,0.00 L 7.50, 7.50 z' />
+    <path d='M 0.00,0.00 L 7.50,3.75 L 0.00,7.50' />
+  </marker>
+</defs>
+
+<!-- ============= Desktop ============= -->
+<rect x='1' y='1' width='1303' height='993' rx='7' ry='7' style='fill:url(#layoutBgA); stroke:#333333; stroke-width:0.5;' />
+<rect x='1' y='1' width='1303' height='993' rx='7' ry='7' style='fill:url(#layoutBgB)'/>
+
+<!-- ============= Legend ============= -->
+<g transform='translate(10,10)'>
+  <rect x='10' y='10' width='260' height='64' rx='6' ry='6' style='fill:url(#legendGradient);filter:url(#shadow);'/> 
+  <text x='20' y='30'><tspan>Project</tspan> PostgreSQL by <a xlink:href='http://www.dbschema.com' text-decoration='underline'>DbSchema</a></text> 
+  <text x='20' y='44'><tspan>Layout</tspan> barcodes</text> 
+  <text x='20' y='58' style='fill:#777'><tspan>Column comments as mouse-over tooltips.</tspan></text> 
+</g>
+
+<g transform='translate(0,110)'>
+<!-- ============= Fk 'project_barcode_fk_pb_to_barcode' ============= -->
+<path id='project_barcode_fk_pb_to_barcode'  onmouseover="hghl(['project_barcode_fk_pb_to_barcode','barcodes.project_barcode.barcode','barcodes.barcode.barcode'])" onmouseout="uhghl(['project_barcode_fk_pb_to_barcode','barcodes.project_barcode.barcode','barcodes.barcode.barcode'])" transform='translate(7,0)' class='scene' d='M 570 90 L 375,90' >
+	<title>Fk fk_pb_to_barcode
+project_barcode ref barcode ( barcode )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 570 90 L 375,90' ></path>
+<text x='528' y='85' transform='rotate(0 528,85)' title='Fk fk_pb_to_barcode
+project_barcode ref barcode ( barcode )' style='fill:#cfc391;'>barcode</text>
+<!-- ============= Fk 'project_barcode_fk_pb_to_project' ============= -->
+<path id='project_barcode_fk_pb_to_project'  onmouseover="hghl(['project_barcode_fk_pb_to_project','barcodes.project_barcode.project_id','barcodes.project.project_id'])" onmouseout="uhghl(['project_barcode_fk_pb_to_project','barcodes.project_barcode.project_id','barcodes.project.project_id'])" transform='translate(7,0)' class='scene' d='M 705 75 L 742,75 Q 750,75 750,82 L 750,157 Q 750,165 742,165 L 735,165' >
+	<title>Fk fk_pb_to_project
+project_barcode ref project ( project_id )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1)'     d='M 705 75 L 742,75 Q 750,75 750,82 L 750,157 Q 750,165 742,165 L 735,165' ></path>
+<text x='712' y='70' transform='rotate(0 712,70)' title='Fk fk_pb_to_project
+project_barcode ref project ( project_id )' style='fill:#cfc391;'>project_id</text>
+<!-- ============= Fk 'water_lot_fk_water_lot' ============= -->
+<path id='water_lot_fk_water_lot'  onmouseover="hghl(['water_lot_fk_water_lot','barcodes.water_lot.water_id','barcodes.water.water_id'])" onmouseout="uhghl(['water_lot_fk_water_lot','barcodes.water_lot.water_id','barcodes.water.water_id'])" transform='translate(7,0)' class='scene' d='M 960 570 L 1020,570' >
+	<title>Fk fk_water_lot
+water_lot ref water ( water_id )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 960 570 L 1020,570' ></path>
+<text x='967' y='565' transform='rotate(0 967,565)' title='Fk fk_water_lot
+water_lot ref water ( water_id )' style='fill:#cfc391;'>water_id</text>
+<!-- ============= Fk 'master_mix_lot_fk_master_mix_lot' ============= -->
+<path id='master_mix_lot_fk_master_mix_lot'  onmouseover="hghl(['master_mix_lot_fk_master_mix_lot','barcodes.master_mix_lot.master_mix_id','barcodes.master_mix.master_mix_id'])" onmouseout="uhghl(['master_mix_lot_fk_master_mix_lot','barcodes.master_mix_lot.master_mix_id','barcodes.master_mix.master_mix_id'])" transform='translate(7,0)' class='scene' d='M 990 450 L 1035,450' >
+	<title>Fk fk_master_mix_lot
+master_mix_lot ref master_mix ( master_mix_id )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 990 450 L 1035,450' ></path>
+<text x='997' y='445' transform='rotate(0 997,445)' title='Fk fk_master_mix_lot
+master_mix_lot ref master_mix ( master_mix_id )' style='fill:#cfc391;'>master_mix_id</text>
+<!-- ============= Fk 'primer_plate_lot_fk_primer_plate_lot' ============= -->
+<path id='primer_plate_lot_fk_primer_plate_lot'  onmouseover="hghl(['primer_plate_lot_fk_primer_plate_lot','barcodes.primer_plate_lot.primer_plate','barcodes.primer_plate.primer_plate_id'])" onmouseout="uhghl(['primer_plate_lot_fk_primer_plate_lot','barcodes.primer_plate_lot.primer_plate','barcodes.primer_plate.primer_plate_id'])" transform='translate(7,0)' class='scene' d='M 285 600 L 240,600' >
+	<title>Fk fk_primer_plate_lot
+primer_plate_lot ref primer_plate ( primer_plate -&gt; primer_plate_id )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 285 600 L 240,600' ></path>
+<text x='219' y='595' transform='rotate(0 219,595)' title='Fk fk_primer_plate_lot
+primer_plate_lot ref primer_plate ( primer_plate -&gt; primer_plate_id )' style='fill:#cfc391;'>primer_plate</text>
+<!-- ============= Fk 'pcr_plate_run_fk_pcr_plate_run' ============= -->
+<path id='pcr_plate_run_fk_pcr_plate_run'  onmouseover="hghl(['pcr_plate_run_fk_pcr_plate_run','barcodes.pcr_plate_run.run_id','barcodes.run_information.run_id'])" onmouseout="uhghl(['pcr_plate_run_fk_pcr_plate_run','barcodes.pcr_plate_run.run_id','barcodes.run_information.run_id'])" transform='translate(7,0)' class='scene' d='M 510 705 L 472,705 Q 465,705 465,712 L 465,712 Q 465,720 457,720 L 450,720' >
+	<title>Fk fk_pcr_plate_run
+pcr_plate_run ref run_information ( run_id )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 510 705 L 472,705 Q 465,705 465,712 L 465,712 Q 465,720 457,720 L 450,720' ></path>
+<text x='477' y='700' transform='rotate(0 477,700)' title='Fk fk_pcr_plate_run
+pcr_plate_run ref run_information ( run_id )' style='fill:#cfc391;'>run_id</text>
+<!-- ============= Fk 'pcr_plate_run_fk_pcr_plate_run_0' ============= -->
+<path id='pcr_plate_run_fk_pcr_plate_run_0'  onmouseover="hghl(['pcr_plate_run_fk_pcr_plate_run_0','barcodes.pcr_plate_run.barcode','barcodes.pcr_plate.barcode'])" onmouseout="uhghl(['pcr_plate_run_fk_pcr_plate_run_0','barcodes.pcr_plate_run.barcode','barcodes.pcr_plate.barcode'])" transform='translate(7,0)' class='scene' d='M 510 720 L 502,720 Q 495,720 495,712 L 495,487 Q 495,480 502,480 L 540,480' >
+	<title>Fk fk_pcr_plate_run_0
+pcr_plate_run ref pcr_plate ( barcode )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 510 720 L 502,720 Q 495,720 495,712 L 495,487 Q 495,480 502,480 L 540,480' ></path>
+<text x='468' y='715' transform='rotate(0 468,715)' title='Fk fk_pcr_plate_run_0
+pcr_plate_run ref pcr_plate ( barcode )' style='fill:#cfc391;'>barcode</text>
+<!-- ============= Fk 'pcr_plate_run_fk_pcr_plate_run_1' ============= -->
+<path id='pcr_plate_run_fk_pcr_plate_run_1'  onmouseover="hghl(['pcr_plate_run_fk_pcr_plate_run_1','barcodes.pcr_plate_run.nickname','barcodes.pcr_plate.nickname'])" onmouseout="uhghl(['pcr_plate_run_fk_pcr_plate_run_1','barcodes.pcr_plate_run.nickname','barcodes.pcr_plate.nickname'])" transform='translate(7,0)' class='scene' d='M 750 735 L 757,735 Q 765,735 765,727 L 765,502 Q 765,495 757,495 L 720,495' >
+	<title>Fk fk_pcr_plate_run_1
+pcr_plate_run ref pcr_plate ( nickname )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 750 735 L 757,735 Q 765,735 765,727 L 765,502 Q 765,495 757,495 L 720,495' ></path>
+<text x='757' y='730' transform='rotate(0 757,730)' title='Fk fk_pcr_plate_run_1
+pcr_plate_run ref pcr_plate ( nickname )' style='fill:#cfc391;'>nickname</text>
+<!-- ============= Fk 'ext_kit_lot_fk_ext_kit_lot' ============= -->
+<path id='ext_kit_lot_fk_ext_kit_lot'  onmouseover="hghl(['ext_kit_lot_fk_ext_kit_lot','barcodes.ext_kit_lot.extraction_kit_id','barcodes.extraction_kit.extraction_kit_id'])" onmouseout="uhghl(['ext_kit_lot_fk_ext_kit_lot','barcodes.ext_kit_lot.extraction_kit_id','barcodes.extraction_kit.extraction_kit_id'])" transform='translate(7,0)' class='scene' d='M 990 330 L 1050,330' >
+	<title>Fk fk_ext_kit_lot
+ext_kit_lot ref extraction_kit ( extraction_kit_id )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 990 330 L 1050,330' ></path>
+<text x='997' y='325' transform='rotate(0 997,325)' title='Fk fk_ext_kit_lot
+ext_kit_lot ref extraction_kit ( extraction_kit_id )' style='fill:#cfc391;'>extraction_kit_id</text>
+<!-- ============= Fk 'plate_sample_fk_plate_barcode_0' ============= -->
+<path id='plate_sample_fk_plate_barcode_0'  onmouseover="hghl(['plate_sample_fk_plate_barcode_0','barcodes.plate_sample.barcode','barcodes.extraction_plate.barcode'])" onmouseout="uhghl(['plate_sample_fk_plate_barcode_0','barcodes.plate_sample.barcode','barcodes.extraction_plate.barcode'])" transform='translate(7,0)' class='scene' d='M 810 120 L 742,120 Q 735,120 735,127 L 735,262 Q 735,270 727,270 L 720,270' >
+	<title>Fk fk_plate_barcode_0
+plate_sample ref extraction_plate ( barcode )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 810 120 L 742,120 Q 735,120 735,127 L 735,262 Q 735,270 727,270 L 720,270' ></path>
+<text x='768' y='115' transform='rotate(0 768,115)' title='Fk fk_plate_barcode_0
+plate_sample ref extraction_plate ( barcode )' style='fill:#cfc391;'>barcode</text>
+<!-- ============= Fk 'plate_sample_fk_plate_sample' ============= -->
+<path id='plate_sample_fk_plate_sample'  onmouseover="hghl(['plate_sample_fk_plate_sample','barcodes.plate_sample.project_id','barcodes.project.project_id'])" onmouseout="uhghl(['plate_sample_fk_plate_sample','barcodes.plate_sample.project_id','barcodes.project.project_id'])" transform='translate(7,0)' class='scene' d='M 810 165 L 720,165' >
+	<title>Fk fk_plate_sample
+plate_sample ref project ( project_id )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 810 165 L 720,165' ></path>
+<text x='758' y='160' transform='rotate(0 758,160)' title='Fk fk_plate_sample
+plate_sample ref project ( project_id )' style='fill:#cfc391;'>project_id</text>
+<!-- ============= Fk 'extraction_plate_fk_plate' ============= -->
+<path id='extraction_plate_fk_plate'  onmouseover="hghl(['extraction_plate_fk_plate','barcodes.extraction_plate.barcode','barcodes.barcode.barcode'])" onmouseout="uhghl(['extraction_plate_fk_plate','barcodes.extraction_plate.barcode','barcodes.barcode.barcode'])" transform='translate(7,0)' class='scene' d='M 540 270 L 532,270 Q 525,270 525,262 L 525,97 Q 525,90 517,90 L 510,90' >
+	<title>Fk fk_plate
+extraction_plate ref barcode ( barcode )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1)'     d='M 540 270 L 532,270 Q 525,270 525,262 L 525,97 Q 525,90 517,90 L 510,90' ></path>
+<text x='498' y='265' transform='rotate(0 498,265)' title='Fk fk_plate
+extraction_plate ref barcode ( barcode )' style='fill:#cfc391;'>barcode</text>
+<!-- ============= Fk 'extraction_plate_fk_plate_5' ============= -->
+<path id='extraction_plate_fk_plate_5'  onmouseover="hghl(['extraction_plate_fk_plate_5','barcodes.extraction_plate.person','barcodes.person.person_id'])" onmouseout="uhghl(['extraction_plate_fk_plate_5','barcodes.extraction_plate.person','barcodes.person.person_id'])" transform='translate(7,0)' class='scene' d='M 540 360 L 487,360 Q 480,360 480,367 L 480,412 Q 480,420 472,420 L 465,420' >
+	<title>Fk fk_plate_5
+extraction_plate ref person ( person -&gt; person_id )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 540 360 L 487,360 Q 480,360 480,367 L 480,412 Q 480,420 472,420 L 465,420' ></path>
+<text x='504' y='355' transform='rotate(0 504,355)' title='Fk fk_plate_5
+extraction_plate ref person ( person -&gt; person_id )' style='fill:#cfc391;'>person</text>
+<!-- ============= Fk 'extraction_plate_fk_plate_1' ============= -->
+<path id='extraction_plate_fk_plate_1'  onmouseover="hghl(['extraction_plate_fk_plate_1','barcodes.extraction_plate.ext_kit_lot','barcodes.ext_kit_lot.ext_kit_lot'])" onmouseout="uhghl(['extraction_plate_fk_plate_1','barcodes.extraction_plate.ext_kit_lot','barcodes.ext_kit_lot.ext_kit_lot'])" transform='translate(7,0)' class='scene' d='M 720 345 L 810,345' >
+	<title>Fk fk_plate_1
+extraction_plate ref ext_kit_lot ( ext_kit_lot )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 720 345 L 810,345' ></path>
+<text x='727' y='340' transform='rotate(0 727,340)' title='Fk fk_plate_1
+extraction_plate ref ext_kit_lot ( ext_kit_lot )' style='fill:#cfc391;'>ext_kit_lot</text>
+<!-- ============= Fk 'extraction_plate_fk_extraction_plate' ============= -->
+<path id='extraction_plate_fk_extraction_plate'  onmouseover="hghl(['extraction_plate_fk_extraction_plate','barcodes.extraction_plate.ext_robot','barcodes.robot.robot_name'])" onmouseout="uhghl(['extraction_plate_fk_extraction_plate','barcodes.extraction_plate.ext_robot','barcodes.robot.robot_name'])" transform='translate(7,0)' class='scene' d='M 540 300 L 465,300' >
+	<title>Fk fk_extraction_plate
+extraction_plate ref robot ( ext_robot -&gt; robot_name )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 540 300 L 465,300' ></path>
+<text x='489' y='295' transform='rotate(0 489,295)' title='Fk fk_extraction_plate
+extraction_plate ref robot ( ext_robot -&gt; robot_name )' style='fill:#cfc391;'>ext_robot</text>
+<!-- ============= Fk 'extraction_plate_fk_extraction_plate_0' ============= -->
+<path id='extraction_plate_fk_extraction_plate_0'  onmouseover="hghl(['extraction_plate_fk_extraction_plate_0','barcodes.extraction_plate.kf_robot','barcodes.robot.robot_name'])" onmouseout="uhghl(['extraction_plate_fk_extraction_plate_0','barcodes.extraction_plate.kf_robot','barcodes.robot.robot_name'])" transform='translate(7,0)' class='scene' d='M 540 330 L 532,330 Q 525,330 525,322 L 525,307 Q 525,300 517,300 L 510,300' >
+	<title>Fk fk_extraction_plate_0
+extraction_plate ref robot ( kf_robot -&gt; robot_name )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)'     d='M 540 330 L 532,330 Q 525,330 525,322 L 525,307 Q 525,300 517,300 L 510,300' ></path>
+<text x='496' y='325' transform='rotate(0 496,325)' title='Fk fk_extraction_plate_0
+extraction_plate ref robot ( kf_robot -&gt; robot_name )' style='fill:#cfc391;'>kf_robot</text>
+<!-- ============= Fk 'pcr_plate_fk_pcr_plate' ============= -->
+<path id='pcr_plate_fk_pcr_plate'  onmouseover="hghl(['pcr_plate_fk_pcr_plate','barcodes.pcr_plate.barcode','barcodes.extraction_plate.barcode'])" onmouseout="uhghl(['pcr_plate_fk_pcr_plate','barcodes.pcr_plate.barcode','barcodes.extraction_plate.barcode'])" transform='translate(7,0)' class='scene' d='M 720 480 L 727,480 Q 735,480 735,472 L 735,277 Q 735,270 727,270 L 720,270' >
+	<title>Fk fk_pcr_plate
+pcr_plate ref extraction_plate ( barcode )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1)'     d='M 720 480 L 727,480 Q 735,480 735,472 L 735,277 Q 735,270 727,270 L 720,270' ></path>
+<text x='727' y='475' transform='rotate(0 727,475)' title='Fk fk_pcr_plate
+pcr_plate ref extraction_plate ( barcode )' style='fill:#cfc391;'>barcode</text>
+<!-- ============= Fk 'pcr_plate_fk_pcr_plate_4' ============= -->
+<path id='pcr_plate_fk_pcr_plate_4'  onmouseover="hghl(['pcr_plate_fk_pcr_plate_4'])" onmouseout="uhghl(['pcr_plate_fk_pcr_plate_4'])" transform='translate(7,0)' class='scene' d='M 540 465 L 487,465 Q 480,465 480,472 L 480,502 Q 480,510 472,510 L 277,510 Q 270,510 270,502 L 270,442 Q 270,435 262,435 L 255,435' >
+	<title>Fk fk_pcr_plate_4
+pcr_plate ref protocol (  )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 540 465 L 487,465 Q 480,465 480,472 L 480,502 Q 480,510 472,510 L 277,510 Q 270,510 270,502 L 270,442 Q 270,435 262,435 L 255,435' ></path>
+<text x='542' y='460' transform='rotate(0 542,460)' title='Fk fk_pcr_plate_4
+pcr_plate ref protocol (  )' style='fill:#cfc391;'></text>
+<!-- ============= Fk 'pcr_plate_fk_pcr_plate_5' ============= -->
+<path id='pcr_plate_fk_pcr_plate_5'  onmouseover="hghl(['pcr_plate_fk_pcr_plate_5','barcodes.pcr_plate.person','barcodes.person.person_id'])" onmouseout="uhghl(['pcr_plate_fk_pcr_plate_5','barcodes.pcr_plate.person','barcodes.person.person_id'])" transform='translate(7,0)' class='scene' d='M 540 615 L 532,615 Q 525,615 525,607 L 525,367 Q 525,360 517,360 L 510,360' >
+	<title>Fk fk_pcr_plate_5
+pcr_plate ref person ( person -&gt; person_id )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)'     d='M 540 615 L 532,615 Q 525,615 525,607 L 525,367 Q 525,360 517,360 L 510,360' ></path>
+<text x='504' y='610' transform='rotate(0 504,610)' title='Fk fk_pcr_plate_5
+pcr_plate ref person ( person -&gt; person_id )' style='fill:#cfc391;'>person</text>
+<!-- ============= Fk 'pcr_plate_fk_pcr_plate_0' ============= -->
+<path id='pcr_plate_fk_pcr_plate_0'  onmouseover="hghl(['pcr_plate_fk_pcr_plate_0','barcodes.pcr_plate.primer_plate_lot','barcodes.primer_plate_lot.primer_plate_lot'])" onmouseout="uhghl(['pcr_plate_fk_pcr_plate_0','barcodes.pcr_plate.primer_plate_lot','barcodes.primer_plate_lot.primer_plate_lot'])" transform='translate(7,0)' class='scene' d='M 540 510 L 517,510 Q 510,510 510,517 L 510,607 Q 510,615 502,615 L 465,615' >
+	<title>Fk fk_pcr_plate_0
+pcr_plate ref primer_plate_lot ( primer_plate_lot )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 540 510 L 517,510 Q 510,510 510,517 L 510,607 Q 510,615 502,615 L 465,615' ></path>
+<text x='454' y='505' transform='rotate(0 454,505)' title='Fk fk_pcr_plate_0
+pcr_plate ref primer_plate_lot ( primer_plate_lot )' style='fill:#cfc391;'>primer_plate_lot</text>
+<!-- ============= Fk 'pcr_plate_fk_pcr_plate_1' ============= -->
+<path id='pcr_plate_fk_pcr_plate_1'  onmouseover="hghl(['pcr_plate_fk_pcr_plate_1','barcodes.pcr_plate.master_mix_lot','barcodes.master_mix_lot.master_mix_lot'])" onmouseout="uhghl(['pcr_plate_fk_pcr_plate_1','barcodes.pcr_plate.master_mix_lot','barcodes.master_mix_lot.master_mix_lot'])" transform='translate(7,0)' class='scene' d='M 720 540 L 787,540 Q 795,540 795,532 L 795,472 Q 795,465 802,465 L 810,465' >
+	<title>Fk fk_pcr_plate_1
+pcr_plate ref master_mix_lot ( master_mix_lot )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 720 540 L 787,540 Q 795,540 795,532 L 795,472 Q 795,465 802,465 L 810,465' ></path>
+<text x='727' y='535' transform='rotate(0 727,535)' title='Fk fk_pcr_plate_1
+pcr_plate ref master_mix_lot ( master_mix_lot )' style='fill:#cfc391;'>master_mix_lot</text>
+<!-- ============= Fk 'pcr_plate_fk_pcr_plate_2' ============= -->
+<path id='pcr_plate_fk_pcr_plate_2'  onmouseover="hghl(['pcr_plate_fk_pcr_plate_2','barcodes.pcr_plate.water_lot','barcodes.water_lot.water_lot'])" onmouseout="uhghl(['pcr_plate_fk_pcr_plate_2','barcodes.pcr_plate.water_lot','barcodes.water_lot.water_lot'])" transform='translate(7,0)' class='scene' d='M 720 555 L 787,555 Q 795,555 795,562 L 795,577 Q 795,585 802,585 L 810,585' >
+	<title>Fk fk_pcr_plate_2
+pcr_plate ref water_lot ( water_lot )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 720 555 L 787,555 Q 795,555 795,562 L 795,577 Q 795,585 802,585 L 810,585' ></path>
+<text x='727' y='550' transform='rotate(0 727,550)' title='Fk fk_pcr_plate_2
+pcr_plate ref water_lot ( water_lot )' style='fill:#cfc391;'>water_lot</text>
+<!-- ============= Fk 'pcr_plate_fk_pcr_plate_3' ============= -->
+<path id='pcr_plate_fk_pcr_plate_3'  onmouseover="hghl(['pcr_plate_fk_pcr_plate_3','barcodes.pcr_plate.pcr_robot','barcodes.robot.robot_name'])" onmouseout="uhghl(['pcr_plate_fk_pcr_plate_3','barcodes.pcr_plate.pcr_robot','barcodes.robot.robot_name'])" transform='translate(7,0)' class='scene' d='M 540 570 L 487,570 Q 480,570 480,562 L 480,532 Q 480,525 472,525 L 292,525 Q 285,525 285,517 L 285,382 Q 285,375 277,375 L 262,375 Q 255,375 255,367 L 255,307 Q 255,300 262,300 L 270,300' >
+	<title>Fk fk_pcr_plate_3
+pcr_plate ref robot ( pcr_robot -&gt; robot_name )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 540 570 L 487,570 Q 480,570 480,562 L 480,532 Q 480,525 472,525 L 292,525 Q 285,525 285,517 L 285,382 Q 285,375 277,375 L 262,375 Q 255,375 255,367 L 255,307 Q 255,300 262,300 L 270,300' ></path>
+<text x='488' y='565' transform='rotate(0 488,565)' title='Fk fk_pcr_plate_3
+pcr_plate ref robot ( pcr_robot -&gt; robot_name )' style='fill:#cfc391;'>pcr_robot</text>
+<!-- ============= Fk 'primer_plate_fk_sequencing_plate' ============= -->
+<path id='primer_plate_fk_sequencing_plate'  onmouseover="hghl(['primer_plate_fk_sequencing_plate'])" onmouseout="uhghl(['primer_plate_fk_sequencing_plate'])" transform='translate(7,0)' class='scene' d='M 45 585 L 37,585 Q 30,585 30,577 L 30,442 Q 30,435 37,435 L 45,435' >
+	<title>Fk fk_sequencing_plate
+primer_plate ref protocol (  )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 45 585 L 37,585 Q 30,585 30,577 L 30,442 Q 30,435 37,435 L 45,435' ></path>
+<text x='47' y='580' transform='rotate(0 47,580)' title='Fk fk_sequencing_plate
+primer_plate ref protocol (  )' style='fill:#cfc391;'></text>
+<!-- ============= Fk 'run_information_fk_run_information' ============= -->
+<path id='run_information_fk_run_information'  onmouseover="hghl(['run_information_fk_run_information','barcodes.run_information.sequencer_id','barcodes.sequencer.sequencer_id'])" onmouseout="uhghl(['run_information_fk_run_information','barcodes.run_information.sequencer_id','barcodes.sequencer.sequencer_id'])" transform='translate(7,0)' class='scene' d='M 270 765 L 240,765' >
+	<title>Fk fk_run_information
+run_information ref sequencer ( sequencer_id )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 270 765 L 240,765' ></path>
+<text x='200' y='760' transform='rotate(0 200,760)' title='Fk fk_run_information
+run_information ref sequencer ( sequencer_id )' style='fill:#cfc391;'>sequencer_id</text>
+<!-- ============= Fk 'barcode_exceptions_fk_barcode_exceptions' ============= -->
+<path id='barcode_exceptions_fk_barcode_exceptions'  onmouseover="hghl(['barcode_exceptions_fk_barcode_exceptions','barcodes.barcode_exceptions.barcode','barcodes.barcode.barcode'])" onmouseout="uhghl(['barcode_exceptions_fk_barcode_exceptions','barcodes.barcode_exceptions.barcode','barcodes.barcode.barcode'])" transform='translate(7,0)' class='scene' d='M 60 285 L 52,285 Q 45,285 45,277 L 45,97 Q 45,90 52,90 L 150,90' >
+	<title>Fk fk_barcode_exceptions
+barcode_exceptions ref barcode ( barcode )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1)' marker-end='url(#arrow1)'    d='M 60 285 L 52,285 Q 45,285 45,277 L 45,97 Q 45,90 52,90 L 150,90' ></path>
+<text x='18' y='280' transform='rotate(0 18,280)' title='Fk fk_barcode_exceptions
+barcode_exceptions ref barcode ( barcode )' style='fill:#cfc391;'>barcode</text>
+<!-- ============= Table 'barcode' ============= -->
+<rect class='table' x='165' y='53' width='210' height='180' rx='7' ry='7' />
+<line class='delim' x1='165.500000' y1='79.500000' x2='374.500000' y2='79.500000'/>
+<line class='delim' x1='180.500000' y1='79.500000' x2='180.500000' y2='232.500000'/>
+<line class='delim' x1='363.500000' y1='79.500000' x2='363.500000' y2='232.500000'/>
+<path d='M 165.50 79.50 L 165.50 60.50 Q 165.50 53.50 172.50 53.50 L 367.50 53.50 Q 374.50 53.50 374.50 60.50 L 374.50 79.50 L165.50 79.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#barcode'><text x='245' y='71'>barcode</text><title>Table barcodes.barcode</title></a>
+  <use id='nn' x='167' y='87' xlink:href='#nn'/><a xlink:href='#barcode.barcode'><use id='pk' x='167' y='86' xlink:href='#pk'/><title>Pk barcode_pkey ( barcode ) </title></a>
+<a xlink:href='#barcode.barcode'><text id='barcodes.barcode.barcode' x='183' y='97' onmouseover="hghl(['ag_handout_barcodes_fk_ag_handout_barcodes','ag_kit_barcodes_fk_ag_kit_barcodes_barcode','barcode_exceptions_fk_barcode_exceptions','extraction_plate_fk_plate','project_barcode_fk_pb_to_barcode'])" onmouseout="uhghl(['ag_handout_barcodes_fk_ag_handout_barcodes','ag_kit_barcodes_fk_ag_kit_barcodes_barcode','barcode_exceptions_fk_barcode_exceptions','extraction_plate_fk_plate','project_barcode_fk_pb_to_barcode'])">barcode</text><text x='360' y='97' text-anchor='end' class='colType'>varchar</text><title>barcode
+* varchar</title></a>
+<a xlink:href='#barcode.barcode'><use id='ref' x='363' y='86' xlink:href='#ref'/><title>Referred by ag_handout_barcodes ( barcode ) 
+Referred by ag_kit_barcodes ( barcode ) 
+Referred by barcode_exceptions ( barcode ) 
+Referred by extraction_plate ( barcode ) 
+Referred by project_barcode ( barcode ) </title></a>
+  <a xlink:href='#barcode.assigned_on'><text id='barcodes.barcode.assigned_on' x='183' y='112'>assigned_on</text><text x='360' y='112' text-anchor='end' class='colType'>timestamp</text><title>assigned_on
+timestamp
+date barcode assigned to a project</title></a>
+  <a xlink:href='#barcode.status'><text id='barcodes.barcode.status' x='183' y='127'>status</text><text x='360' y='127' text-anchor='end' class='colType'>varchar(100)</text><title>status
+varchar(100)</title></a>
+  <a xlink:href='#barcode.scan_date'><text id='barcodes.barcode.scan_date' x='183' y='142'>scan_date</text><text x='360' y='142' text-anchor='end' class='colType'>date</text><title>scan_date
+date</title></a>
+  <a xlink:href='#barcode.sample_postmark_date'><text id='barcodes.barcode.sample_postmark_date' x='183' y='157'>sample_postmark_date</text><text x='360' y='157' text-anchor='end' class='colType'>date</text><title>sample_postmark_date
+date</title></a>
+  <a xlink:href='#barcode.biomass_remaining'><text id='barcodes.barcode.biomass_remaining' x='183' y='172'>biomass_remaining</text><text x='360' y='172' text-anchor='end' class='colType'>varchar(1)</text><title>biomass_remaining
+varchar(1)</title></a>
+  <a xlink:href='#barcode.sequencing_status'><text id='barcodes.barcode.sequencing_status' x='183' y='187'>sequencing_status</text><text x='360' y='187' text-anchor='end' class='colType'>varchar(20)</text><title>sequencing_status
+varchar(20)</title></a>
+  <a xlink:href='#barcode.obsolete'><text id='barcodes.barcode.obsolete' x='183' y='202'>obsolete</text><text x='360' y='202' text-anchor='end' class='colType'>varchar(1)</text><title>obsolete
+varchar(1)</title></a>
+  <use id='nn' x='167' y='207' xlink:href='#nn'/><a xlink:href='#barcode.create_date_time'><text id='barcodes.barcode.create_date_time' x='183' y='217'>create_date_time</text><text x='360' y='217' text-anchor='end' class='colType'>timestamp</text><title>create_date_time
+* timestamp default current_timestamp
+Date barcode created on the system</title></a>
+
+<!-- ============= Table 'project_barcode' ============= -->
+<rect class='table' x='585' y='38' width='120' height='75' rx='7' ry='7' />
+<line class='delim' x1='585.500000' y1='64.500000' x2='704.500000' y2='64.500000'/>
+<line class='delim' x1='600.500000' y1='64.500000' x2='600.500000' y2='112.500000'/>
+<line class='delim' x1='693.500000' y1='64.500000' x2='693.500000' y2='112.500000'/>
+<path d='M 585.50 64.50 L 585.50 45.50 Q 585.50 38.50 592.50 38.50 L 697.50 38.50 Q 704.50 38.50 704.50 45.50 L 704.50 64.50 L585.50 64.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#project_barcode'><text x='598' y='56'>project_barcode</text><title>Table barcodes.project_barcode</title></a>
+  <use id='nn' x='587' y='72' xlink:href='#nn'/><a xlink:href='#project_barcode.project_id'><use id='pk' x='587' y='71' xlink:href='#pk'/><title>Pk project_barcode_pkey ( project_id, barcode ) Unq pk_project_barcode ( project_id ) </title></a>
+<a xlink:href='#project_barcode.project_id'><text id='barcodes.project_barcode.project_id' x='603' y='82' onmouseover="hghl(['project_barcode_fk_pb_to_project'])" onmouseout="uhghl(['project_barcode_fk_pb_to_project'])">project_id</text><text x='690' y='82' text-anchor='end' class='colType'>bigint</text><title>project_id
+* bigint</title></a>
+<a xlink:href='#project_barcode.project_id'><use id='fk' x='693' y='71' xlink:href='#fk'/><title>References project ( project_id ) </title></a>
+  <use id='nn' x='587' y='87' xlink:href='#nn'/><a xlink:href='#project_barcode.barcode'><use id='pk' x='587' y='86' xlink:href='#pk'/><title>Pk project_barcode_pkey ( project_id, barcode ) </title></a>
+<a xlink:href='#project_barcode.barcode'><text id='barcodes.project_barcode.barcode' x='603' y='97' onmouseover="hghl(['project_barcode_fk_pb_to_barcode'])" onmouseout="uhghl(['project_barcode_fk_pb_to_barcode'])">barcode</text><text x='690' y='97' text-anchor='end' class='colType'>char(9)</text><title>barcode
+* char(9)</title></a>
+<a xlink:href='#project_barcode.barcode'><use id='fk' x='693' y='86' xlink:href='#fk'/><title>References barcode ( barcode ) </title></a>
+
+<!-- ============= Table 'water_lot' ============= -->
+<rect class='table' x='825' y='533' width='135' height='90' rx='7' ry='7' />
+<line class='delim' x1='825.500000' y1='559.500000' x2='959.500000' y2='559.500000'/>
+<line class='delim' x1='840.500000' y1='559.500000' x2='840.500000' y2='622.500000'/>
+<line class='delim' x1='948.500000' y1='559.500000' x2='948.500000' y2='622.500000'/>
+<path d='M 825.50 559.50 L 825.50 540.50 Q 825.50 533.50 832.50 533.50 L 952.50 533.50 Q 959.50 533.50 959.50 540.50 L 959.50 559.50 L825.50 559.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#water_lot'><text x='865' y='551'>water_lot</text><title>Table barcodes.water_lot</title></a>
+  <use id='nn' x='827' y='567' xlink:href='#nn'/><a xlink:href='#water_lot.water_id'><use id='pk' x='827' y='566' xlink:href='#pk'/><title>Pk pk_water_lot ( water_lot, water_id ) idx_water_lot ( water_id ) </title></a>
+<a xlink:href='#water_lot.water_id'><text id='barcodes.water_lot.water_id' x='843' y='577' onmouseover="hghl(['water_lot_fk_water_lot'])" onmouseout="uhghl(['water_lot_fk_water_lot'])">water_id</text><text x='945' y='577' text-anchor='end' class='colType'>integer</text><title>water_id
+* integer</title></a>
+<a xlink:href='#water_lot.water_id'><use id='fk' x='948' y='566' xlink:href='#fk'/><title>References water ( water_id ) </title></a>
+  <use id='nn' x='827' y='582' xlink:href='#nn'/><a xlink:href='#water_lot.water_lot'><use id='pk' x='827' y='581' xlink:href='#pk'/><title>Pk pk_water_lot ( water_lot, water_id ) </title></a>
+<a xlink:href='#water_lot.water_lot'><text id='barcodes.water_lot.water_lot' x='843' y='592' onmouseover="hghl(['pcr_plate_fk_pcr_plate_2'])" onmouseout="uhghl(['pcr_plate_fk_pcr_plate_2'])">water_lot</text><text x='945' y='592' text-anchor='end' class='colType'>varchar</text><title>water_lot
+* varchar</title></a>
+<a xlink:href='#water_lot.water_lot'><use id='ref' x='948' y='581' xlink:href='#ref'/><title>Referred by pcr_plate ( water_lot ) </title></a>
+  <use id='nn' x='827' y='597' xlink:href='#nn'/><a xlink:href='#water_lot.date_added'><text id='barcodes.water_lot.date_added' x='843' y='607'>date_added</text><text x='945' y='607' text-anchor='end' class='colType'>date</text><title>date_added
+* date default current_date</title></a>
+
+<!-- ============= Table 'master_mix_lot' ============= -->
+<rect class='table' x='825' y='413' width='165' height='90' rx='7' ry='7' />
+<line class='delim' x1='825.500000' y1='439.500000' x2='989.500000' y2='439.500000'/>
+<line class='delim' x1='840.500000' y1='439.500000' x2='840.500000' y2='502.500000'/>
+<line class='delim' x1='978.500000' y1='439.500000' x2='978.500000' y2='502.500000'/>
+<path d='M 825.50 439.50 L 825.50 420.50 Q 825.50 413.50 832.50 413.50 L 982.50 413.50 Q 989.50 413.50 989.50 420.50 L 989.50 439.50 L825.50 439.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#master_mix_lot'><text x='863' y='431'>master_mix_lot</text><title>Table barcodes.master_mix_lot</title></a>
+  <use id='nn' x='827' y='447' xlink:href='#nn'/><a xlink:href='#master_mix_lot.master_mix_id'><use id='pk' x='827' y='446' xlink:href='#pk'/><title>Pk pk_master_mix_lot ( master_mix_lot, master_mix_id ) idx_master_mix_lot ( master_mix_id ) </title></a>
+<a xlink:href='#master_mix_lot.master_mix_id'><text id='barcodes.master_mix_lot.master_mix_id' x='843' y='457' onmouseover="hghl(['master_mix_lot_fk_master_mix_lot'])" onmouseout="uhghl(['master_mix_lot_fk_master_mix_lot'])">master_mix_id</text><text x='975' y='457' text-anchor='end' class='colType'>bigint</text><title>master_mix_id
+* bigint</title></a>
+<a xlink:href='#master_mix_lot.master_mix_id'><use id='fk' x='978' y='446' xlink:href='#fk'/><title>References master_mix ( master_mix_id ) </title></a>
+  <use id='nn' x='827' y='462' xlink:href='#nn'/><a xlink:href='#master_mix_lot.master_mix_lot'><use id='pk' x='827' y='461' xlink:href='#pk'/><title>Pk pk_master_mix_lot ( master_mix_lot, master_mix_id ) </title></a>
+<a xlink:href='#master_mix_lot.master_mix_lot'><text id='barcodes.master_mix_lot.master_mix_lot' x='843' y='472' onmouseover="hghl(['pcr_plate_fk_pcr_plate_1'])" onmouseout="uhghl(['pcr_plate_fk_pcr_plate_1'])">master_mix_lot</text><text x='975' y='472' text-anchor='end' class='colType'>varchar</text><title>master_mix_lot
+* varchar</title></a>
+<a xlink:href='#master_mix_lot.master_mix_lot'><use id='ref' x='978' y='461' xlink:href='#ref'/><title>Referred by pcr_plate ( master_mix_lot ) </title></a>
+  <use id='nn' x='827' y='477' xlink:href='#nn'/><a xlink:href='#master_mix_lot.date_added'><text id='barcodes.master_mix_lot.date_added' x='843' y='487'>date_added</text><text x='975' y='487' text-anchor='end' class='colType'>date</text><title>date_added
+* date default current_date</title></a>
+
+<!-- ============= Table 'water' ============= -->
+<rect class='table' x='1035' y='533' width='195' height='105' rx='7' ry='7' />
+<line class='delim' x1='1035.500000' y1='559.500000' x2='1229.500000' y2='559.500000'/>
+<line class='delim' x1='1050.500000' y1='559.500000' x2='1050.500000' y2='637.500000'/>
+<line class='delim' x1='1218.500000' y1='559.500000' x2='1218.500000' y2='637.500000'/>
+<path d='M 1035.50 559.50 L 1035.50 540.50 Q 1035.50 533.50 1042.50 533.50 L 1222.50 533.50 Q 1229.50 533.50 1229.50 540.50 L 1229.50 559.50 L1035.50 559.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#water'><text x='1115' y='551'>water</text><title>Table barcodes.water</title></a>
+  <use id='nn' x='1037' y='567' xlink:href='#nn'/><a xlink:href='#water.water_id'><use id='pk' x='1037' y='566' xlink:href='#pk'/><title>Unq pk_extraction_kit_1 ( water_id ) Pk pk_water ( water_id ) </title></a>
+<a xlink:href='#water.water_id'><text id='barcodes.water.water_id' x='1053' y='577' onmouseover="hghl(['water_lot_fk_water_lot'])" onmouseout="uhghl(['water_lot_fk_water_lot'])">water_id</text><text x='1215' y='577' text-anchor='end' class='colType'>bigserial</text><title>water_id
+* bigserial</title></a>
+<a xlink:href='#water.water_id'><use id='ref' x='1218' y='566' xlink:href='#ref'/><title>Referred by water_lot ( water_id ) </title></a>
+  <use id='nn' x='1037' y='582' xlink:href='#nn'/><a xlink:href='#water.company'><text id='barcodes.water.company' x='1053' y='592'>company</text><text x='1215' y='592' text-anchor='end' class='colType'>integer</text><title>company
+* integer</title></a>
+  <use id='nn' x='1037' y='597' xlink:href='#nn'/><a xlink:href='#water.product_name'><text id='barcodes.water.product_name' x='1053' y='607'>product_name</text><text x='1215' y='607' text-anchor='end' class='colType'>varchar(100)</text><title>product_name
+* varchar(100)</title></a>
+  <use id='nn' x='1037' y='612' xlink:href='#nn'/><a xlink:href='#water.product_number'><text id='barcodes.water.product_number' x='1053' y='622'>product_number</text><text x='1215' y='622' text-anchor='end' class='colType'>varchar</text><title>product_number
+* varchar</title></a>
+
+<!-- ============= Table 'master_mix' ============= -->
+<rect class='table' x='1050' y='413' width='195' height='105' rx='7' ry='7' />
+<line class='delim' x1='1050.500000' y1='439.500000' x2='1244.500000' y2='439.500000'/>
+<line class='delim' x1='1065.500000' y1='439.500000' x2='1065.500000' y2='517.500000'/>
+<line class='delim' x1='1233.500000' y1='439.500000' x2='1233.500000' y2='517.500000'/>
+<path d='M 1050.50 439.50 L 1050.50 420.50 Q 1050.50 413.50 1057.50 413.50 L 1237.50 413.50 Q 1244.50 413.50 1244.50 420.50 L 1244.50 439.50 L1050.50 439.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#master_mix'><text x='1113' y='431'>master_mix</text><title>Table barcodes.master_mix</title></a>
+  <use id='nn' x='1052' y='447' xlink:href='#nn'/><a xlink:href='#master_mix.master_mix_id'><use id='pk' x='1052' y='446' xlink:href='#pk'/><title>Unq pk_extraction_kit_0 ( master_mix_id ) Pk pk_master_mix ( master_mix_id ) </title></a>
+<a xlink:href='#master_mix.master_mix_id'><text id='barcodes.master_mix.master_mix_id' x='1068' y='457' onmouseover="hghl(['master_mix_lot_fk_master_mix_lot'])" onmouseout="uhghl(['master_mix_lot_fk_master_mix_lot'])">master_mix_id</text><text x='1230' y='457' text-anchor='end' class='colType'>bigserial</text><title>master_mix_id
+* bigserial</title></a>
+<a xlink:href='#master_mix.master_mix_id'><use id='ref' x='1233' y='446' xlink:href='#ref'/><title>Referred by master_mix_lot ( master_mix_id ) </title></a>
+  <use id='nn' x='1052' y='462' xlink:href='#nn'/><a xlink:href='#master_mix.company'><text id='barcodes.master_mix.company' x='1068' y='472'>company</text><text x='1230' y='472' text-anchor='end' class='colType'>integer</text><title>company
+* integer</title></a>
+  <use id='nn' x='1052' y='477' xlink:href='#nn'/><a xlink:href='#master_mix.product_name'><text id='barcodes.master_mix.product_name' x='1068' y='487'>product_name</text><text x='1230' y='487' text-anchor='end' class='colType'>varchar(100)</text><title>product_name
+* varchar(100)</title></a>
+  <use id='nn' x='1052' y='492' xlink:href='#nn'/><a xlink:href='#master_mix.product_number'><text id='barcodes.master_mix.product_number' x='1068' y='502'>product_number</text><text x='1230' y='502' text-anchor='end' class='colType'>varchar</text><title>product_number
+* varchar</title></a>
+
+<!-- ============= Table 'primer_plate_lot' ============= -->
+<rect class='table' x='300' y='563' width='165' height='90' rx='7' ry='7' />
+<line class='delim' x1='300.500000' y1='589.500000' x2='464.500000' y2='589.500000'/>
+<line class='delim' x1='315.500000' y1='589.500000' x2='315.500000' y2='652.500000'/>
+<line class='delim' x1='453.500000' y1='589.500000' x2='453.500000' y2='652.500000'/>
+<path d='M 300.50 589.50 L 300.50 570.50 Q 300.50 563.50 307.50 563.50 L 457.50 563.50 Q 464.50 563.50 464.50 570.50 L 464.50 589.50 L300.50 589.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#primer_plate_lot'><text x='335' y='581'>primer_plate_lot</text><title>Table barcodes.primer_plate_lot</title></a>
+  <use id='nn' x='302' y='597' xlink:href='#nn'/><a xlink:href='#primer_plate_lot.primer_plate'><use id='pk' x='302' y='596' xlink:href='#pk'/><title>idx_primer_plate_lot ( primer_plate ) Pk pk_primer_plate_lot ( primer_plate_lot, primer_plate ) </title></a>
+<a xlink:href='#primer_plate_lot.primer_plate'><text id='barcodes.primer_plate_lot.primer_plate' x='318' y='607' onmouseover="hghl(['primer_plate_lot_fk_primer_plate_lot'])" onmouseout="uhghl(['primer_plate_lot_fk_primer_plate_lot'])">primer_plate</text><text x='450' y='607' text-anchor='end' class='colType'>varchar</text><title>primer_plate
+* varchar</title></a>
+<a xlink:href='#primer_plate_lot.primer_plate'><use id='fk' x='453' y='596' xlink:href='#fk'/><title>References primer_plate ( primer_plate -&gt; primer_plate_id ) </title></a>
+  <use id='nn' x='302' y='612' xlink:href='#nn'/><a xlink:href='#primer_plate_lot.primer_plate_lot'><use id='pk' x='302' y='611' xlink:href='#pk'/><title>Pk pk_primer_plate_lot ( primer_plate_lot, primer_plate ) </title></a>
+<a xlink:href='#primer_plate_lot.primer_plate_lot'><text id='barcodes.primer_plate_lot.primer_plate_lot' x='318' y='622' onmouseover="hghl(['pcr_plate_fk_pcr_plate_0'])" onmouseout="uhghl(['pcr_plate_fk_pcr_plate_0'])">primer_plate_lot</text><text x='450' y='622' text-anchor='end' class='colType'>varchar</text><title>primer_plate_lot
+* varchar</title></a>
+<a xlink:href='#primer_plate_lot.primer_plate_lot'><use id='ref' x='453' y='611' xlink:href='#ref'/><title>Referred by pcr_plate ( primer_plate_lot ) </title></a>
+  <use id='nn' x='302' y='627' xlink:href='#nn'/><a xlink:href='#primer_plate_lot.date_added'><text id='barcodes.primer_plate_lot.date_added' x='318' y='637'>date_added</text><text x='450' y='637' text-anchor='end' class='colType'>date</text><title>date_added
+* date default current_date</title></a>
+
+<!-- ============= Table 'project' ============= -->
+<rect class='table' x='570' y='128' width='150' height='90' rx='7' ry='7' />
+<line class='delim' x1='570.500000' y1='154.500000' x2='719.500000' y2='154.500000'/>
+<line class='delim' x1='585.500000' y1='154.500000' x2='585.500000' y2='217.500000'/>
+<line class='delim' x1='708.500000' y1='154.500000' x2='708.500000' y2='217.500000'/>
+<path d='M 570.50 154.50 L 570.50 135.50 Q 570.50 128.50 577.50 128.50 L 712.50 128.50 Q 719.50 128.50 719.50 135.50 L 719.50 154.50 L570.50 154.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#project'><text x='623' y='146'>project</text><title>Table barcodes.project</title></a>
+  <use id='nn' x='572' y='162' xlink:href='#nn'/><a xlink:href='#project.project_id'><use id='pk' x='572' y='161' xlink:href='#pk'/><title>Pk project_pkey ( project_id ) </title></a>
+<a xlink:href='#project.project_id'><text id='barcodes.project.project_id' x='588' y='172' onmouseover="hghl(['plate_sample_fk_plate_sample','project_barcode_fk_pb_to_project'])" onmouseout="uhghl(['plate_sample_fk_plate_sample','project_barcode_fk_pb_to_project'])">project_id</text><text x='705' y='172' text-anchor='end' class='colType'>bigint</text><title>project_id
+* bigint</title></a>
+<a xlink:href='#project.project_id'><use id='ref' x='708' y='161' xlink:href='#ref'/><title>Referred by plate_sample ( project_id ) 
+Referred by project_barcode ( project_id ) </title></a>
+  <a xlink:href='#project.project'><text id='barcodes.project.project' x='588' y='187'>project</text><text x='705' y='187' text-anchor='end' class='colType'>varchar(1000)</text><title>project
+varchar(1000)</title></a>
+  <use id='nn' x='572' y='192' xlink:href='#nn'/><a xlink:href='#project.description'><text id='barcodes.project.description' x='588' y='202'>description</text><text x='705' y='202' text-anchor='end' class='colType'>varchar</text><title>description
+* varchar</title></a>
+
+<!-- ============= Table 'pcr_plate_run' ============= -->
+<rect class='table' x='525' y='668' width='225' height='105' rx='7' ry='7' />
+<line class='delim' x1='525.500000' y1='694.500000' x2='749.500000' y2='694.500000'/>
+<line class='delim' x1='540.500000' y1='694.500000' x2='540.500000' y2='772.500000'/>
+<line class='delim' x1='738.500000' y1='694.500000' x2='738.500000' y2='772.500000'/>
+<path d='M 525.50 694.50 L 525.50 675.50 Q 525.50 668.50 532.50 668.50 L 742.50 668.50 Q 749.50 668.50 749.50 675.50 L 749.50 694.50 L525.50 694.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#pcr_plate_run'><text x='597' y='686'>pcr_plate_run</text><title>Table barcodes.pcr_plate_run</title></a>
+  <use id='nn' x='527' y='702' xlink:href='#nn'/><a xlink:href='#pcr_plate_run.run_id'><use id='pk' x='527' y='701' xlink:href='#pk'/><title>idx_pcr_plate_run ( run_id ) Pk pk_pcr_plate_run ( run_id, barcode, nickname ) </title></a>
+<a xlink:href='#pcr_plate_run.run_id'><text id='barcodes.pcr_plate_run.run_id' x='543' y='712' onmouseover="hghl(['pcr_plate_run_fk_pcr_plate_run'])" onmouseout="uhghl(['pcr_plate_run_fk_pcr_plate_run'])">run_id</text><text x='735' y='712' text-anchor='end' class='colType'>bigint</text><title>run_id
+* bigint</title></a>
+<a xlink:href='#pcr_plate_run.run_id'><use id='fk' x='738' y='701' xlink:href='#fk'/><title>References run_information ( run_id ) </title></a>
+  <use id='nn' x='527' y='717' xlink:href='#nn'/><a xlink:href='#pcr_plate_run.barcode'><use id='pk' x='527' y='716' xlink:href='#pk'/><title>idx_pcr_plate_run_0 ( barcode ) Pk pk_pcr_plate_run ( run_id, barcode, nickname ) </title></a>
+<a xlink:href='#pcr_plate_run.barcode'><text id='barcodes.pcr_plate_run.barcode' x='543' y='727' onmouseover="hghl(['pcr_plate_run_fk_pcr_plate_run_0'])" onmouseout="uhghl(['pcr_plate_run_fk_pcr_plate_run_0'])">barcode</text><text x='735' y='727' text-anchor='end' class='colType'>varchar</text><title>barcode
+* varchar</title></a>
+<a xlink:href='#pcr_plate_run.barcode'><use id='fk' x='738' y='716' xlink:href='#fk'/><title>References pcr_plate ( barcode ) </title></a>
+  <use id='nn' x='527' y='732' xlink:href='#nn'/><a xlink:href='#pcr_plate_run.nickname'><use id='pk' x='527' y='731' xlink:href='#pk'/><title>idx_pcr_plate_run_1 ( nickname ) Pk pk_pcr_plate_run ( run_id, barcode, nickname ) </title></a>
+<a xlink:href='#pcr_plate_run.nickname'><text id='barcodes.pcr_plate_run.nickname' x='543' y='742' onmouseover="hghl(['pcr_plate_run_fk_pcr_plate_run_1'])" onmouseout="uhghl(['pcr_plate_run_fk_pcr_plate_run_1'])">nickname</text><text x='735' y='742' text-anchor='end' class='colType'>varchar(100)</text><title>nickname
+* varchar(100)</title></a>
+<a xlink:href='#pcr_plate_run.nickname'><use id='fk' x='738' y='731' xlink:href='#fk'/><title>References pcr_plate ( nickname ) </title></a>
+  <a xlink:href='#pcr_plate_run.center_project_name'><text id='barcodes.pcr_plate_run.center_project_name' x='543' y='757'>center_project_name</text><text x='735' y='757' text-anchor='end' class='colType'>varchar(100)</text><title>center_project_name
+varchar(100)</title></a>
+
+<!-- ============= Table 'ext_kit_lot' ============= -->
+<rect class='table' x='825' y='293' width='165' height='90' rx='7' ry='7' />
+<line class='delim' x1='825.500000' y1='319.500000' x2='989.500000' y2='319.500000'/>
+<line class='delim' x1='840.500000' y1='319.500000' x2='840.500000' y2='382.500000'/>
+<line class='delim' x1='978.500000' y1='319.500000' x2='978.500000' y2='382.500000'/>
+<path d='M 825.50 319.50 L 825.50 300.50 Q 825.50 293.50 832.50 293.50 L 982.50 293.50 Q 989.50 293.50 989.50 300.50 L 989.50 319.50 L825.50 319.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#ext_kit_lot'><text x='876' y='311'>ext_kit_lot</text><title>Table barcodes.ext_kit_lot</title></a>
+  <use id='nn' x='827' y='327' xlink:href='#nn'/><a xlink:href='#ext_kit_lot.extraction_kit_id'><use id='pk' x='827' y='326' xlink:href='#pk'/><title>idx_ext_kit_lot ( extraction_kit_id ) Pk pk_ext_kit_lot ( ext_kit_lot, extraction_kit_id ) </title></a>
+<a xlink:href='#ext_kit_lot.extraction_kit_id'><text id='barcodes.ext_kit_lot.extraction_kit_id' x='843' y='337' onmouseover="hghl(['ext_kit_lot_fk_ext_kit_lot'])" onmouseout="uhghl(['ext_kit_lot_fk_ext_kit_lot'])">extraction_kit_id</text><text x='975' y='337' text-anchor='end' class='colType'>bigint</text><title>extraction_kit_id
+* bigint</title></a>
+<a xlink:href='#ext_kit_lot.extraction_kit_id'><use id='fk' x='978' y='326' xlink:href='#fk'/><title>References extraction_kit ( extraction_kit_id ) </title></a>
+  <use id='nn' x='827' y='342' xlink:href='#nn'/><a xlink:href='#ext_kit_lot.ext_kit_lot'><use id='pk' x='827' y='341' xlink:href='#pk'/><title>Pk pk_ext_kit_lot ( ext_kit_lot, extraction_kit_id ) </title></a>
+<a xlink:href='#ext_kit_lot.ext_kit_lot'><text id='barcodes.ext_kit_lot.ext_kit_lot' x='843' y='352' onmouseover="hghl(['extraction_plate_fk_plate_1'])" onmouseout="uhghl(['extraction_plate_fk_plate_1'])">ext_kit_lot</text><text x='975' y='352' text-anchor='end' class='colType'>varchar</text><title>ext_kit_lot
+* varchar</title></a>
+<a xlink:href='#ext_kit_lot.ext_kit_lot'><use id='ref' x='978' y='341' xlink:href='#ref'/><title>Referred by extraction_plate ( ext_kit_lot ) </title></a>
+  <use id='nn' x='827' y='357' xlink:href='#nn'/><a xlink:href='#ext_kit_lot.date_added'><text id='barcodes.ext_kit_lot.date_added' x='843' y='367'>date_added</text><text x='975' y='367' text-anchor='end' class='colType'>date</text><title>date_added
+* date default current_date</title></a>
+
+<!-- ============= Table 'extraction_kit' ============= -->
+<rect class='table' x='1065' y='293' width='195' height='105' rx='7' ry='7' />
+<line class='delim' x1='1065.500000' y1='319.500000' x2='1259.500000' y2='319.500000'/>
+<line class='delim' x1='1080.500000' y1='319.500000' x2='1080.500000' y2='397.500000'/>
+<line class='delim' x1='1248.500000' y1='319.500000' x2='1248.500000' y2='397.500000'/>
+<path d='M 1065.50 319.50 L 1065.50 300.50 Q 1065.50 293.50 1072.50 293.50 L 1252.50 293.50 Q 1259.50 293.50 1259.50 300.50 L 1259.50 319.50 L1065.50 319.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#extraction_kit'><text x='1122' y='311'>extraction_kit</text><title>Table barcodes.extraction_kit</title></a>
+  <use id='nn' x='1067' y='327' xlink:href='#nn'/><a xlink:href='#extraction_kit.extraction_kit_id'><use id='pk' x='1067' y='326' xlink:href='#pk'/><title>Unq pk_extraction_kit ( extraction_kit_id ) Pk pk_extraction_kit_2 ( extraction_kit_id ) </title></a>
+<a xlink:href='#extraction_kit.extraction_kit_id'><text id='barcodes.extraction_kit.extraction_kit_id' x='1083' y='337' onmouseover="hghl(['ext_kit_lot_fk_ext_kit_lot'])" onmouseout="uhghl(['ext_kit_lot_fk_ext_kit_lot'])">extraction_kit_id</text><text x='1245' y='337' text-anchor='end' class='colType'>bigserial</text><title>extraction_kit_id
+* bigserial</title></a>
+<a xlink:href='#extraction_kit.extraction_kit_id'><use id='ref' x='1248' y='326' xlink:href='#ref'/><title>Referred by ext_kit_lot ( extraction_kit_id ) </title></a>
+  <use id='nn' x='1067' y='342' xlink:href='#nn'/><a xlink:href='#extraction_kit.company'><text id='barcodes.extraction_kit.company' x='1083' y='352'>company</text><text x='1245' y='352' text-anchor='end' class='colType'>integer</text><title>company
+* integer</title></a>
+  <use id='nn' x='1067' y='357' xlink:href='#nn'/><a xlink:href='#extraction_kit.product_name'><text id='barcodes.extraction_kit.product_name' x='1083' y='367'>product_name</text><text x='1245' y='367' text-anchor='end' class='colType'>varchar(100)</text><title>product_name
+* varchar(100)</title></a>
+  <use id='nn' x='1067' y='372' xlink:href='#nn'/><a xlink:href='#extraction_kit.product_number'><text id='barcodes.extraction_kit.product_number' x='1083' y='382'>product_number</text><text x='1245' y='382' text-anchor='end' class='colType'>varchar</text><title>product_number
+* varchar</title></a>
+
+<!-- ============= Table 'plate_sample' ============= -->
+<rect class='table' x='825' y='83' width='135' height='120' rx='7' ry='7' />
+<line class='delim' x1='825.500000' y1='109.500000' x2='959.500000' y2='109.500000'/>
+<line class='delim' x1='840.500000' y1='109.500000' x2='840.500000' y2='202.500000'/>
+<line class='delim' x1='948.500000' y1='109.500000' x2='948.500000' y2='202.500000'/>
+<path d='M 825.50 109.50 L 825.50 90.50 Q 825.50 83.50 832.50 83.50 L 952.50 83.50 Q 959.50 83.50 959.50 90.50 L 959.50 109.50 L825.50 109.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#plate_sample'><text x='854' y='101'>plate_sample</text><title>Table barcodes.plate_sample</title></a>
+  <use id='nn' x='827' y='117' xlink:href='#nn'/><a xlink:href='#plate_sample.barcode'><use id='pk' x='827' y='116' xlink:href='#pk'/><title>idx_plate_barcode_0 ( barcode ) Pk pkey_plate_barcode_1 ( barcode, well ) </title></a>
+<a xlink:href='#plate_sample.barcode'><text id='barcodes.plate_sample.barcode' x='843' y='127' onmouseover="hghl(['plate_sample_fk_plate_barcode_0'])" onmouseout="uhghl(['plate_sample_fk_plate_barcode_0'])">barcode</text><text x='945' y='127' text-anchor='end' class='colType'>varchar</text><title>barcode
+* varchar</title></a>
+<a xlink:href='#plate_sample.barcode'><use id='fk' x='948' y='116' xlink:href='#fk'/><title>References extraction_plate ( barcode ) </title></a>
+  <use id='nn' x='827' y='132' xlink:href='#nn'/><a xlink:href='#plate_sample.well'><use id='pk' x='827' y='131' xlink:href='#pk'/><title>idx_plate_barcode ( well ) Pk pkey_plate_barcode_1 ( barcode, well ) </title></a>
+<a xlink:href='#plate_sample.well'><text id='barcodes.plate_sample.well' x='843' y='142'>well</text><text x='945' y='142' text-anchor='end' class='colType'>varchar(3)</text><title>well
+* varchar(3)</title></a>
+  <use id='nn' x='827' y='147' xlink:href='#nn'/><a xlink:href='#plate_sample.sample'><text id='barcodes.plate_sample.sample' x='843' y='157'>sample</text><text x='945' y='157' text-anchor='end' class='colType'>varchar</text><title>sample
+* varchar</title></a>
+  <use id='nn' x='827' y='162' xlink:href='#nn'/><a xlink:href='#plate_sample.project_id'><use id='idx' x='827' y='161' xlink:href='#idx'/><title>idx_plate_sample ( project_id ) </title></a>
+<a xlink:href='#plate_sample.project_id'><text id='barcodes.plate_sample.project_id' x='843' y='172' onmouseover="hghl(['plate_sample_fk_plate_sample'])" onmouseout="uhghl(['plate_sample_fk_plate_sample'])">project_id</text><text x='945' y='172' text-anchor='end' class='colType'>bigint</text><title>project_id
+* bigint</title></a>
+<a xlink:href='#plate_sample.project_id'><use id='fk' x='948' y='161' xlink:href='#fk'/><title>References project ( project_id ) </title></a>
+  <use id='nn' x='827' y='177' xlink:href='#nn'/><a xlink:href='#plate_sample.sample_size'><text id='barcodes.plate_sample.sample_size' x='843' y='187'>sample_size</text><text x='945' y='187' text-anchor='end' class='colType'>float8</text><title>sample_size
+* float8
+Sample size, in grams</title></a>
+
+<!-- ============= Table 'extraction_plate' ============= -->
+<rect class='table' x='555' y='233' width='165' height='195' rx='7' ry='7' />
+<line class='delim' x1='555.500000' y1='259.500000' x2='719.500000' y2='259.500000'/>
+<line class='delim' x1='570.500000' y1='259.500000' x2='570.500000' y2='427.500000'/>
+<line class='delim' x1='708.500000' y1='259.500000' x2='708.500000' y2='427.500000'/>
+<path d='M 555.50 259.50 L 555.50 240.50 Q 555.50 233.50 562.50 233.50 L 712.50 233.50 Q 719.50 233.50 719.50 240.50 L 719.50 259.50 L555.50 259.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#extraction_plate'><text x='591' y='251'>extraction_plate</text><title>Table barcodes.extraction_plate</title></a>
+  <use id='nn' x='557' y='267' xlink:href='#nn'/><a xlink:href='#extraction_plate.barcode'><use id='pk' x='557' y='266' xlink:href='#pk'/><title>Pk plate_pkey ( barcode ) </title></a>
+<a xlink:href='#extraction_plate.barcode'><text id='barcodes.extraction_plate.barcode' x='573' y='277' onmouseover="hghl(['extraction_plate_fk_plate','pcr_plate_fk_pcr_plate','plate_sample_fk_plate_barcode_0'])" onmouseout="uhghl(['extraction_plate_fk_plate','pcr_plate_fk_pcr_plate','plate_sample_fk_plate_barcode_0'])">barcode</text><text x='705' y='277' text-anchor='end' class='colType'>varchar</text><title>barcode
+* varchar</title></a>
+<a xlink:href='#extraction_plate.barcode'><use id='fk' x='708' y='266' xlink:href='#fk'/><title>References barcode ( barcode ) 
+Referred by pcr_plate ( barcode ) 
+Referred by plate_sample ( barcode ) </title></a>
+  <use id='nn' x='557' y='282' xlink:href='#nn'/><a xlink:href='#extraction_plate.nickname'><text id='barcodes.extraction_plate.nickname' x='573' y='292'>nickname</text><text x='705' y='292' text-anchor='end' class='colType'>varchar(50)</text><title>nickname
+* varchar(50)</title></a>
+  <use id='nn' x='557' y='297' xlink:href='#nn'/><a xlink:href='#extraction_plate.ext_robot'><use id='idx' x='557' y='296' xlink:href='#idx'/><title>idx_plate_0 ( ext_robot ) </title></a>
+<a xlink:href='#extraction_plate.ext_robot'><text id='barcodes.extraction_plate.ext_robot' x='573' y='307' onmouseover="hghl(['extraction_plate_fk_extraction_plate'])" onmouseout="uhghl(['extraction_plate_fk_extraction_plate'])">ext_robot</text><text x='705' y='307' text-anchor='end' class='colType'>varchar</text><title>ext_robot
+* varchar
+Extraction robot used for this plate</title></a>
+<a xlink:href='#extraction_plate.ext_robot'><use id='fk' x='708' y='296' xlink:href='#fk'/><title>References robot ( ext_robot -&gt; robot_name ) </title></a>
+  <use id='nn' x='557' y='312' xlink:href='#nn'/><a xlink:href='#extraction_plate.ext_robot_tool'><text id='barcodes.extraction_plate.ext_robot_tool' x='573' y='322'>ext_robot_tool</text><text x='705' y='322' text-anchor='end' class='colType'>varchar</text><title>ext_robot_tool
+* varchar
+Extraction robot pipette head used
+</title></a>
+  <use id='nn' x='557' y='327' xlink:href='#nn'/><a xlink:href='#extraction_plate.kf_robot'><use id='idx' x='557' y='326' xlink:href='#idx'/><title>idx_plate_1 ( kf_robot ) </title></a>
+<a xlink:href='#extraction_plate.kf_robot'><text id='barcodes.extraction_plate.kf_robot' x='573' y='337' onmouseover="hghl(['extraction_plate_fk_extraction_plate_0'])" onmouseout="uhghl(['extraction_plate_fk_extraction_plate_0'])">kf_robot</text><text x='705' y='337' text-anchor='end' class='colType'>bigint</text><title>kf_robot
+* bigint
+kingifsher robot used for extracton</title></a>
+<a xlink:href='#extraction_plate.kf_robot'><use id='fk' x='708' y='326' xlink:href='#fk'/><title>References robot ( kf_robot -&gt; robot_name ) </title></a>
+  <use id='nn' x='557' y='342' xlink:href='#nn'/><a xlink:href='#extraction_plate.ext_kit_lot'><use id='idx' x='557' y='341' xlink:href='#idx'/><title>idx_plate_2 ( ext_kit_lot ) </title></a>
+<a xlink:href='#extraction_plate.ext_kit_lot'><text id='barcodes.extraction_plate.ext_kit_lot' x='573' y='352' onmouseover="hghl(['extraction_plate_fk_plate_1'])" onmouseout="uhghl(['extraction_plate_fk_plate_1'])">ext_kit_lot</text><text x='705' y='352' text-anchor='end' class='colType'>bigint</text><title>ext_kit_lot
+* bigint
+Extraction kit lot number</title></a>
+<a xlink:href='#extraction_plate.ext_kit_lot'><use id='fk' x='708' y='341' xlink:href='#fk'/><title>References ext_kit_lot ( ext_kit_lot ) </title></a>
+  <use id='nn' x='557' y='357' xlink:href='#nn'/><a xlink:href='#extraction_plate.person'><use id='idx' x='557' y='356' xlink:href='#idx'/><title>idx_plate_4 ( person ) </title></a>
+<a xlink:href='#extraction_plate.person'><text id='barcodes.extraction_plate.person' x='573' y='367' onmouseover="hghl(['extraction_plate_fk_plate_5'])" onmouseout="uhghl(['extraction_plate_fk_plate_5'])">person</text><text x='705' y='367' text-anchor='end' class='colType'>bigint</text><title>person
+* bigint
+Person running the extraction</title></a>
+<a xlink:href='#extraction_plate.person'><use id='fk' x='708' y='356' xlink:href='#fk'/><title>References person ( person -&gt; person_id ) </title></a>
+  <use id='nn' x='557' y='372' xlink:href='#nn'/><a xlink:href='#extraction_plate.finalized'><text id='barcodes.extraction_plate.finalized' x='573' y='382'>finalized</text><text x='705' y='382' text-anchor='end' class='colType'>bool</text><title>finalized
+* bool default 'F'
+Whether the plate map is complete or still being filled.</title></a>
+  <use id='nn' x='557' y='387' xlink:href='#nn'/><a xlink:href='#extraction_plate.ext_created'><text id='barcodes.extraction_plate.ext_created' x='573' y='397'>ext_created</text><text x='705' y='397' text-anchor='end' class='colType'>timestamp</text><title>ext_created
+* timestamp default current_date</title></a>
+  <a xlink:href='#extraction_plate.ext_finalized'><text id='barcodes.extraction_plate.ext_finalized' x='573' y='412'>ext_finalized</text><text x='705' y='412' text-anchor='end' class='colType'>timestamp</text><title>ext_finalized
+timestamp</title></a>
+
+<!-- ============= Table 'pcr_plate' ============= -->
+<rect class='table' x='555' y='443' width='165' height='210' rx='7' ry='7' />
+<line class='delim' x1='555.500000' y1='469.500000' x2='719.500000' y2='469.500000'/>
+<line class='delim' x1='570.500000' y1='469.500000' x2='570.500000' y2='652.500000'/>
+<line class='delim' x1='708.500000' y1='469.500000' x2='708.500000' y2='652.500000'/>
+<path d='M 555.50 469.50 L 555.50 450.50 Q 555.50 443.50 562.50 443.50 L 712.50 443.50 Q 719.50 443.50 719.50 450.50 L 719.50 469.50 L555.50 469.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#pcr_plate'><text x='609' y='461'>pcr_plate</text><title>Table barcodes.pcr_plate</title></a>
+  <use id='nn' x='557' y='477' xlink:href='#nn'/><a xlink:href='#pcr_plate.barcode'><use id='pk' x='557' y='476' xlink:href='#pk'/><title>Pk pkey_pcr_plate ( barcode, nickname ) Unq idx_pcr_plate ( barcode ) </title></a>
+<a xlink:href='#pcr_plate.barcode'><text id='barcodes.pcr_plate.barcode' x='573' y='487' onmouseover="hghl(['pcr_plate_fk_pcr_plate','pcr_plate_run_fk_pcr_plate_run_0'])" onmouseout="uhghl(['pcr_plate_fk_pcr_plate','pcr_plate_run_fk_pcr_plate_run_0'])">barcode</text><text x='705' y='487' text-anchor='end' class='colType'>varchar</text><title>barcode
+* varchar</title></a>
+<a xlink:href='#pcr_plate.barcode'><use id='fk' x='708' y='476' xlink:href='#fk'/><title>References extraction_plate ( barcode ) 
+Referred by pcr_plate_run ( barcode ) </title></a>
+  <use id='nn' x='557' y='492' xlink:href='#nn'/><a xlink:href='#pcr_plate.nickname'><use id='pk' x='557' y='491' xlink:href='#pk'/><title>Pk pkey_pcr_plate ( barcode, nickname ) Unq pk_pcr_plate ( nickname ) </title></a>
+<a xlink:href='#pcr_plate.nickname'><text id='barcodes.pcr_plate.nickname' x='573' y='502' onmouseover="hghl(['pcr_plate_run_fk_pcr_plate_run_1'])" onmouseout="uhghl(['pcr_plate_run_fk_pcr_plate_run_1'])">nickname</text><text x='705' y='502' text-anchor='end' class='colType'>varchar(100)</text><title>nickname
+* varchar(100)</title></a>
+<a xlink:href='#pcr_plate.nickname'><use id='ref' x='708' y='491' xlink:href='#ref'/><title>Referred by pcr_plate_run ( nickname ) </title></a>
+  <use id='nn' x='557' y='507' xlink:href='#nn'/><a xlink:href='#pcr_plate.primer_plate_lot'><use id='idx' x='557' y='506' xlink:href='#idx'/><title>idx_pcr_plate_1 ( primer_plate_lot ) </title></a>
+<a xlink:href='#pcr_plate.primer_plate_lot'><text id='barcodes.pcr_plate.primer_plate_lot' x='573' y='517' onmouseover="hghl(['pcr_plate_fk_pcr_plate_0'])" onmouseout="uhghl(['pcr_plate_fk_pcr_plate_0'])">primer_plate_lot</text><text x='705' y='517' text-anchor='end' class='colType'>bigint</text><title>primer_plate_lot
+* bigint</title></a>
+<a xlink:href='#pcr_plate.primer_plate_lot'><use id='fk' x='708' y='506' xlink:href='#fk'/><title>References primer_plate_lot ( primer_plate_lot ) </title></a>
+  <use id='nn' x='557' y='522' xlink:href='#nn'/><a xlink:href='#pcr_plate.amplicon'><text id='barcodes.pcr_plate.amplicon' x='573' y='532'>amplicon</text><text x='705' y='532' text-anchor='end' class='colType'>varchar</text><title>amplicon
+* varchar</title></a>
+  <use id='nn' x='557' y='537' xlink:href='#nn'/><a xlink:href='#pcr_plate.master_mix_lot'><use id='idx' x='557' y='536' xlink:href='#idx'/><title>idx_pcr_plate_2 ( master_mix_lot ) </title></a>
+<a xlink:href='#pcr_plate.master_mix_lot'><text id='barcodes.pcr_plate.master_mix_lot' x='573' y='547' onmouseover="hghl(['pcr_plate_fk_pcr_plate_1'])" onmouseout="uhghl(['pcr_plate_fk_pcr_plate_1'])">master_mix_lot</text><text x='705' y='547' text-anchor='end' class='colType'>bigint</text><title>master_mix_lot
+* bigint</title></a>
+<a xlink:href='#pcr_plate.master_mix_lot'><use id='fk' x='708' y='536' xlink:href='#fk'/><title>References master_mix_lot ( master_mix_lot ) </title></a>
+  <use id='nn' x='557' y='552' xlink:href='#nn'/><a xlink:href='#pcr_plate.water_lot'><use id='idx' x='557' y='551' xlink:href='#idx'/><title>idx_pcr_plate_3 ( water_lot ) </title></a>
+<a xlink:href='#pcr_plate.water_lot'><text id='barcodes.pcr_plate.water_lot' x='573' y='562' onmouseover="hghl(['pcr_plate_fk_pcr_plate_2'])" onmouseout="uhghl(['pcr_plate_fk_pcr_plate_2'])">water_lot</text><text x='705' y='562' text-anchor='end' class='colType'>bigint</text><title>water_lot
+* bigint</title></a>
+<a xlink:href='#pcr_plate.water_lot'><use id='fk' x='708' y='551' xlink:href='#fk'/><title>References water_lot ( water_lot ) </title></a>
+  <use id='nn' x='557' y='567' xlink:href='#nn'/><a xlink:href='#pcr_plate.pcr_robot'><use id='idx' x='557' y='566' xlink:href='#idx'/><title>idx_pcr_plate_0 ( pcr_robot ) </title></a>
+<a xlink:href='#pcr_plate.pcr_robot'><text id='barcodes.pcr_plate.pcr_robot' x='573' y='577' onmouseover="hghl(['pcr_plate_fk_pcr_plate_3'])" onmouseout="uhghl(['pcr_plate_fk_pcr_plate_3'])">pcr_robot</text><text x='705' y='577' text-anchor='end' class='colType'>bigint</text><title>pcr_robot
+* bigint</title></a>
+<a xlink:href='#pcr_plate.pcr_robot'><use id='fk' x='708' y='566' xlink:href='#fk'/><title>References robot ( pcr_robot -&gt; robot_name ) </title></a>
+  <use id='nn' x='557' y='582' xlink:href='#nn'/><a xlink:href='#pcr_plate.tool_300_8'><text id='barcodes.pcr_plate.tool_300_8' x='573' y='592'>tool_300_8</text><text x='705' y='592' text-anchor='end' class='colType'>bigint</text><title>tool_300_8
+* bigint
+300uL pipette head used</title></a>
+  <use id='nn' x='557' y='597' xlink:href='#nn'/><a xlink:href='#pcr_plate.tool_50_8'><text id='barcodes.pcr_plate.tool_50_8' x='573' y='607'>tool_50_8</text><text x='705' y='607' text-anchor='end' class='colType'>bigint</text><title>tool_50_8
+* bigint
+50uL pipette head used</title></a>
+  <use id='nn' x='557' y='612' xlink:href='#nn'/><a xlink:href='#pcr_plate.person'><use id='idx' x='557' y='611' xlink:href='#idx'/><title>idx_pcr_plate_5 ( person ) </title></a>
+<a xlink:href='#pcr_plate.person'><text id='barcodes.pcr_plate.person' x='573' y='622' onmouseover="hghl(['pcr_plate_fk_pcr_plate_5'])" onmouseout="uhghl(['pcr_plate_fk_pcr_plate_5'])">person</text><text x='705' y='622' text-anchor='end' class='colType'>bigint</text><title>person
+* bigint</title></a>
+<a xlink:href='#pcr_plate.person'><use id='fk' x='708' y='611' xlink:href='#fk'/><title>References person ( person -&gt; person_id ) </title></a>
+  <use id='nn' x='557' y='627' xlink:href='#nn'/><a xlink:href='#pcr_plate.pcr_created'><text id='barcodes.pcr_plate.pcr_created' x='573' y='637'>pcr_created</text><text x='705' y='637' text-anchor='end' class='colType'>timestamp</text><title>pcr_created
+* timestamp default current_timestamp</title></a>
+
+<!-- ============= Table 'person' ============= -->
+<rect class='table' x='330' y='383' width='135' height='105' rx='7' ry='7' />
+<line class='delim' x1='330.500000' y1='409.500000' x2='464.500000' y2='409.500000'/>
+<line class='delim' x1='345.500000' y1='409.500000' x2='345.500000' y2='487.500000'/>
+<line class='delim' x1='453.500000' y1='409.500000' x2='453.500000' y2='487.500000'/>
+<path d='M 330.50 409.50 L 330.50 390.50 Q 330.50 383.50 337.50 383.50 L 457.50 383.50 Q 464.50 383.50 464.50 390.50 L 464.50 409.50 L330.50 409.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#person'><text x='375' y='401'>person</text><title>Table barcodes.person</title></a>
+  <use id='nn' x='332' y='417' xlink:href='#nn'/><a xlink:href='#person.person_id'><use id='pk' x='332' y='416' xlink:href='#pk'/><title>Pk pk_person ( person_id ) </title></a>
+<a xlink:href='#person.person_id'><text id='barcodes.person.person_id' x='348' y='427' onmouseover="hghl(['extraction_plate_fk_plate_5','pcr_plate_fk_pcr_plate_5'])" onmouseout="uhghl(['extraction_plate_fk_plate_5','pcr_plate_fk_pcr_plate_5'])">person_id</text><text x='450' y='427' text-anchor='end' class='colType'>bigint</text><title>person_id
+* bigint</title></a>
+<a xlink:href='#person.person_id'><use id='ref' x='453' y='416' xlink:href='#ref'/><title>Referred by extraction_plate ( person -&gt; person_id ) 
+Referred by pcr_plate ( person -&gt; person_id ) </title></a>
+  <use id='nn' x='332' y='432' xlink:href='#nn'/><a xlink:href='#person.name'><text id='barcodes.person.name' x='348' y='442'>name</text><text x='450' y='442' text-anchor='end' class='colType'>varchar(100)</text><title>name
+* varchar(100)</title></a>
+  <use id='nn' x='332' y='447' xlink:href='#nn'/><a xlink:href='#person.email'><text id='barcodes.person.email' x='348' y='457'>email</text><text x='450' y='457' text-anchor='end' class='colType'>varchar</text><title>email
+* varchar</title></a>
+  <use id='nn' x='332' y='462' xlink:href='#nn'/><a xlink:href='#person.date_added'><text id='barcodes.person.date_added' x='348' y='472'>date_added</text><text x='450' y='472' text-anchor='end' class='colType'>date</text><title>date_added
+* date default current_date</title></a>
+
+<!-- ============= Table 'primer_plate' ============= -->
+<rect class='table' x='60' y='563' width='180' height='105' rx='7' ry='7' />
+<line class='delim' x1='60.500000' y1='589.500000' x2='239.500000' y2='589.500000'/>
+<line class='delim' x1='75.500000' y1='589.500000' x2='75.500000' y2='667.500000'/>
+<line class='delim' x1='228.500000' y1='589.500000' x2='228.500000' y2='667.500000'/>
+<path d='M 60.50 589.50 L 60.50 570.50 Q 60.50 563.50 67.50 563.50 L 232.50 563.50 Q 239.50 563.50 239.50 570.50 L 239.50 589.50 L60.50 589.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#primer_plate'><text x='113' y='581'>primer_plate</text><title>Table barcodes.primer_plate</title></a>
+  <use id='nn' x='62' y='597' xlink:href='#nn'/><a xlink:href='#primer_plate.primer_plate_id'><use id='pk' x='62' y='596' xlink:href='#pk'/><title>Pk pk_sequencing_plates ( primer_plate_id ) </title></a>
+<a xlink:href='#primer_plate.primer_plate_id'><text id='barcodes.primer_plate.primer_plate_id' x='78' y='607' onmouseover="hghl(['primer_plate_lot_fk_primer_plate_lot'])" onmouseout="uhghl(['primer_plate_lot_fk_primer_plate_lot'])">primer_plate_id</text><text x='225' y='607' text-anchor='end' class='colType'>bigserial</text><title>primer_plate_id
+* bigserial</title></a>
+<a xlink:href='#primer_plate.primer_plate_id'><use id='ref' x='228' y='596' xlink:href='#ref'/><title>Referred by primer_plate_lot ( primer_plate -&gt; primer_plate_id ) </title></a>
+  <use id='nn' x='62' y='612' xlink:href='#nn'/><a xlink:href='#primer_plate.nickname'><text id='barcodes.primer_plate.nickname' x='78' y='622'>nickname</text><text x='225' y='622' text-anchor='end' class='colType'>varchar(100)</text><title>nickname
+* varchar(100)</title></a>
+  <use id='nn' x='62' y='627' xlink:href='#nn'/><a xlink:href='#primer_plate.protocol'><use id='idx' x='62' y='626' xlink:href='#idx'/><title>idx_sequencing_plate ( protocol ) </title></a>
+<a xlink:href='#primer_plate.protocol'><text id='barcodes.primer_plate.protocol' x='78' y='637'>protocol</text><text x='225' y='637' text-anchor='end' class='colType'>varchar</text><title>protocol
+* varchar</title></a>
+  <use id='nn' x='62' y='642' xlink:href='#nn'/><a xlink:href='#primer_plate.sequencing_barcodes'><text id='barcodes.primer_plate.sequencing_barcodes' x='78' y='652'>sequencing_barcodes</text><text x='225' y='652' text-anchor='end' class='colType'>json</text><title>sequencing_barcodes
+* json
+dict of barcode keyed to well, e.g.{A1: ACTACTCCATAC</title></a>
+
+<!-- ============= Table 'sequencer' ============= -->
+<rect class='table' x='45' y='728' width='195' height='105' rx='7' ry='7' />
+<line class='delim' x1='45.500000' y1='754.500000' x2='239.500000' y2='754.500000'/>
+<line class='delim' x1='60.500000' y1='754.500000' x2='60.500000' y2='832.500000'/>
+<line class='delim' x1='228.500000' y1='754.500000' x2='228.500000' y2='832.500000'/>
+<path d='M 45.50 754.50 L 45.50 735.50 Q 45.50 728.50 52.50 728.50 L 232.50 728.50 Q 239.50 728.50 239.50 735.50 L 239.50 754.50 L45.50 754.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#sequencer'><text x='111' y='746'>sequencer</text><title>Table barcodes.sequencer
+Short name appened to protocol name</title></a>
+  <use id='nn' x='47' y='762' xlink:href='#nn'/><a xlink:href='#sequencer.sequencer_id'><use id='pk' x='47' y='761' xlink:href='#pk'/><title>Pk pk_sequencer ( sequencer_id ) </title></a>
+<a xlink:href='#sequencer.sequencer_id'><text id='barcodes.sequencer.sequencer_id' x='63' y='772' onmouseover="hghl(['run_information_fk_run_information'])" onmouseout="uhghl(['run_information_fk_run_information'])">sequencer_id</text><text x='225' y='772' text-anchor='end' class='colType'>bigserial</text><title>sequencer_id
+* bigserial</title></a>
+<a xlink:href='#sequencer.sequencer_id'><use id='ref' x='228' y='761' xlink:href='#ref'/><title>Referred by run_information ( sequencer_id ) </title></a>
+  <use id='nn' x='47' y='777' xlink:href='#nn'/><a xlink:href='#sequencer.platform'><text id='barcodes.sequencer.platform' x='63' y='787'>platform</text><text x='225' y='787' text-anchor='end' class='colType'>varchar</text><title>platform
+* varchar</title></a>
+  <use id='nn' x='47' y='792' xlink:href='#nn'/><a xlink:href='#sequencer.instrument_model'><text id='barcodes.sequencer.instrument_model' x='63' y='802'>instrument_model</text><text x='225' y='802' text-anchor='end' class='colType'>varchar</text><title>instrument_model
+* varchar</title></a>
+  <use id='nn' x='47' y='807' xlink:href='#nn'/><a xlink:href='#sequencer.sequencing_method'><text id='barcodes.sequencer.sequencing_method' x='63' y='817'>sequencing_method</text><text x='225' y='817' text-anchor='end' class='colType'>varchar</text><title>sequencing_method
+* varchar</title></a>
+
+<!-- ============= Table 'run_information' ============= -->
+<rect class='table' x='285' y='683' width='165' height='150' rx='7' ry='7' />
+<line class='delim' x1='285.500000' y1='709.500000' x2='449.500000' y2='709.500000'/>
+<line class='delim' x1='300.500000' y1='709.500000' x2='300.500000' y2='832.500000'/>
+<line class='delim' x1='438.500000' y1='709.500000' x2='438.500000' y2='832.500000'/>
+<path d='M 285.50 709.50 L 285.50 690.50 Q 285.50 683.50 292.50 683.50 L 442.50 683.50 Q 449.50 683.50 449.50 690.50 L 449.50 709.50 L285.50 709.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#run_information'><text x='320' y='701'>run_information</text><title>Table barcodes.run_information</title></a>
+  <use id='nn' x='287' y='717' xlink:href='#nn'/><a xlink:href='#run_information.run_id'><use id='pk' x='287' y='716' xlink:href='#pk'/><title>Pk pk_run_information ( run_id ) </title></a>
+<a xlink:href='#run_information.run_id'><text id='barcodes.run_information.run_id' x='303' y='727' onmouseover="hghl(['pcr_plate_run_fk_pcr_plate_run'])" onmouseout="uhghl(['pcr_plate_run_fk_pcr_plate_run'])">run_id</text><text x='435' y='727' text-anchor='end' class='colType'>bigserial</text><title>run_id
+* bigserial</title></a>
+<a xlink:href='#run_information.run_id'><use id='ref' x='438' y='716' xlink:href='#ref'/><title>Referred by pcr_plate_run ( run_id ) </title></a>
+  <use id='nn' x='287' y='732' xlink:href='#nn'/><a xlink:href='#run_information.nickname'><text id='barcodes.run_information.nickname' x='303' y='742'>nickname</text><text x='435' y='742' text-anchor='end' class='colType'>varchar(100)</text><title>nickname
+* varchar(100)</title></a>
+  <use id='nn' x='287' y='747' xlink:href='#nn'/><a xlink:href='#run_information.run_prefix'><text id='barcodes.run_information.run_prefix' x='303' y='757'>run_prefix</text><text x='435' y='757' text-anchor='end' class='colType'>varchar</text><title>run_prefix
+* varchar</title></a>
+  <use id='nn' x='287' y='762' xlink:href='#nn'/><a xlink:href='#run_information.sequencer_id'><use id='idx' x='287' y='761' xlink:href='#idx'/><title>idx_run_information ( sequencer_id ) </title></a>
+<a xlink:href='#run_information.sequencer_id'><text id='barcodes.run_information.sequencer_id' x='303' y='772' onmouseover="hghl(['run_information_fk_run_information'])" onmouseout="uhghl(['run_information_fk_run_information'])">sequencer_id</text><text x='435' y='772' text-anchor='end' class='colType'>bigint</text><title>sequencer_id
+* bigint</title></a>
+<a xlink:href='#run_information.sequencer_id'><use id='fk' x='438' y='761' xlink:href='#fk'/><title>References sequencer ( sequencer_id ) </title></a>
+  <use id='nn' x='287' y='777' xlink:href='#nn'/><a xlink:href='#run_information.created_on'><text id='barcodes.run_information.created_on' x='303' y='787'>created_on</text><text x='435' y='787' text-anchor='end' class='colType'>timestamp</text><title>created_on
+* timestamp default current_timestamp</title></a>
+  <a xlink:href='#run_information.run_date'><text id='barcodes.run_information.run_date' x='303' y='802'>run_date</text><text x='435' y='802' text-anchor='end' class='colType'>date</text><title>run_date
+date</title></a>
+  <use id='nn' x='287' y='807' xlink:href='#nn'/><a xlink:href='#run_information.finalized'><text id='barcodes.run_information.finalized' x='303' y='817'>finalized</text><text x='435' y='817' text-anchor='end' class='colType'>bool</text><title>finalized
+* bool default 'F'</title></a>
+
+<!-- ============= Table 'protocol' ============= -->
+<rect class='table' x='60' y='413' width='195' height='135' rx='7' ry='7' />
+<line class='delim' x1='60.500000' y1='439.500000' x2='254.500000' y2='439.500000'/>
+<line class='delim' x1='75.500000' y1='439.500000' x2='75.500000' y2='547.500000'/>
+<line class='delim' x1='243.500000' y1='439.500000' x2='243.500000' y2='547.500000'/>
+<path d='M 60.50 439.50 L 60.50 420.50 Q 60.50 413.50 67.50 413.50 L 247.50 413.50 Q 254.50 413.50 254.50 420.50 L 254.50 439.50 L60.50 439.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#protocol'><text x='131' y='431'>protocol</text><title>Table barcodes.protocol</title></a>
+  <use id='nn' x='62' y='447' xlink:href='#nn'/><a xlink:href='#protocol.protocol'><use id='pk' x='62' y='446' xlink:href='#pk'/><title>Pk pk_protocol ( protocol ) </title></a>
+<a xlink:href='#protocol.protocol'><text id='barcodes.protocol.protocol' x='78' y='457'>protocol</text><text x='240' y='457' text-anchor='end' class='colType'>varchar(100)</text><title>protocol
+* varchar(100)
+Name of the protocol</title></a>
+  <use id='nn' x='62' y='462' xlink:href='#nn'/><a xlink:href='#protocol.template_dna'><text id='barcodes.protocol.template_dna' x='78' y='472'>template_dna</text><text x='240' y='472' text-anchor='end' class='colType'>integer</text><title>template_dna
+* integer
+Template DNA added, in uL</title></a>
+  <use id='nn' x='62' y='477' xlink:href='#nn'/><a xlink:href='#protocol.target_gene'><text id='barcodes.protocol.target_gene' x='78' y='487'>target_gene</text><text x='240' y='487' text-anchor='end' class='colType'>varchar</text><title>target_gene
+* varchar</title></a>
+  <use id='nn' x='62' y='492' xlink:href='#nn'/><a xlink:href='#protocol.target_subfragment'><text id='barcodes.protocol.target_subfragment' x='78' y='502'>target_subfragment</text><text x='240' y='502' text-anchor='end' class='colType'>varchar</text><title>target_subfragment
+* varchar</title></a>
+  <use id='nn' x='62' y='507' xlink:href='#nn'/><a xlink:href='#protocol.linker'><text id='barcodes.protocol.linker' x='78' y='517'>linker</text><text x='240' y='517' text-anchor='end' class='colType'>varchar</text><title>linker
+* varchar</title></a>
+  <use id='nn' x='62' y='522' xlink:href='#nn'/><a xlink:href='#protocol.pcr_primers'><text id='barcodes.protocol.pcr_primers' x='78' y='532'>pcr_primers</text><text x='240' y='532' text-anchor='end' class='colType'>varchar</text><title>pcr_primers
+* varchar</title></a>
+
+<!-- ============= Table 'barcode_exceptions' ============= -->
+<rect class='table' x='75' y='248' width='150' height='60' rx='7' ry='7' />
+<line class='delim' x1='75.500000' y1='274.500000' x2='224.500000' y2='274.500000'/>
+<line class='delim' x1='90.500000' y1='274.500000' x2='90.500000' y2='307.500000'/>
+<line class='delim' x1='213.500000' y1='274.500000' x2='213.500000' y2='307.500000'/>
+<path d='M 75.50 274.50 L 75.50 255.50 Q 75.50 248.50 82.50 248.50 L 217.50 248.50 Q 224.50 248.50 224.50 255.50 L 224.50 274.50 L75.50 274.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#barcode_exceptions'><text x='92' y='266'>barcode_exceptions</text><title>Table barcodes.barcode_exceptions</title></a>
+  <use id='nn' x='77' y='282' xlink:href='#nn'/><a xlink:href='#barcode_exceptions.barcode'><use id='pk' x='77' y='281' xlink:href='#pk'/><title>Pk pk_barcode_exceptions ( barcode ) </title></a>
+<a xlink:href='#barcode_exceptions.barcode'><text id='barcodes.barcode_exceptions.barcode' x='93' y='292' onmouseover="hghl(['barcode_exceptions_fk_barcode_exceptions'])" onmouseout="uhghl(['barcode_exceptions_fk_barcode_exceptions'])">barcode</text><text x='210' y='292' text-anchor='end' class='colType'>varchar(100)</text><title>barcode
+* varchar(100)</title></a>
+<a xlink:href='#barcode_exceptions.barcode'><use id='fk' x='213' y='281' xlink:href='#fk'/><title>References barcode ( barcode ) </title></a>
+
+<!-- ============= Table 'robot' ============= -->
+<rect class='table' x='285' y='263' width='180' height='90' rx='7' ry='7' />
+<line class='delim' x1='285.500000' y1='289.500000' x2='464.500000' y2='289.500000'/>
+<line class='delim' x1='300.500000' y1='289.500000' x2='300.500000' y2='352.500000'/>
+<line class='delim' x1='453.500000' y1='289.500000' x2='453.500000' y2='352.500000'/>
+<path d='M 285.50 289.50 L 285.50 270.50 Q 285.50 263.50 292.50 263.50 L 457.50 263.50 Q 464.50 263.50 464.50 270.50 L 464.50 289.50 L285.50 289.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#robot'><text x='357' y='281'>robot</text><title>Table barcodes.robot</title></a>
+  <use id='nn' x='287' y='297' xlink:href='#nn'/><a xlink:href='#robot.robot_name'><use id='pk' x='287' y='296' xlink:href='#pk'/><title>Pk pk_robot ( robot_name ) </title></a>
+<a xlink:href='#robot.robot_name'><text id='barcodes.robot.robot_name' x='303' y='307' onmouseover="hghl(['extraction_plate_fk_extraction_plate','extraction_plate_fk_extraction_plate_0','pcr_plate_fk_pcr_plate_3'])" onmouseout="uhghl(['extraction_plate_fk_extraction_plate','extraction_plate_fk_extraction_plate_0','pcr_plate_fk_pcr_plate_3'])">robot_name</text><text x='450' y='307' text-anchor='end' class='colType'>varchar(100)</text><title>robot_name
+* varchar(100)</title></a>
+<a xlink:href='#robot.robot_name'><use id='ref' x='453' y='296' xlink:href='#ref'/><title>Referred by extraction_plate ( ext_robot -&gt; robot_name ) 
+Referred by extraction_plate ( kf_robot -&gt; robot_name ) 
+Referred by pcr_plate ( pcr_robot -&gt; robot_name ) </title></a>
+  <use id='nn' x='287' y='312' xlink:href='#nn'/><a xlink:href='#robot.robot_type'><text id='barcodes.robot.robot_type' x='303' y='322'>robot_type</text><text x='450' y='322' text-anchor='end' class='colType'>varchar</text><title>robot_type
+* varchar</title></a>
+  <use id='nn' x='287' y='327' xlink:href='#nn'/><a xlink:href='#robot.date_added'><text id='barcodes.robot.date_added' x='303' y='337'>date_added</text><text x='450' y='337' text-anchor='end' class='colType'>date</text><title>date_added
+* date default current_date</title></a>
+
+</g></svg>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='barcode'>Table barcode</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='barcode.barcode'>barcode</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='barcode.assigned_on'>assigned&#95;on</a></td>
+		<td> timestamp   </td>
+		<td> date barcode assigned to a project </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='barcode.status'>status</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='barcode.scan_date'>scan&#95;date</a></td>
+		<td> date   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='barcode.sample_postmark_date'>sample&#95;postmark&#95;date</a></td>
+		<td> date   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='barcode.biomass_remaining'>biomass&#95;remaining</a></td>
+		<td> varchar&#40; 1 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='barcode.sequencing_status'>sequencing&#95;status</a></td>
+		<td> varchar&#40; 20 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='barcode.obsolete'>obsolete</a></td>
+		<td> varchar&#40; 1 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='barcode.create_date_time'>create&#95;date&#95;time</a></td>
+		<td> timestamp   DEFO current_timestamp </td>
+		<td> Date barcode created on the system </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>Pk</td><td>barcode&#95;pkey</td>
+		<td> ON barcode</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='project_barcode'>Table project_barcode</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='project_barcode.project_id'>project&#95;id</a></td>
+		<td> bigint   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='project_barcode.barcode'>barcode</a></td>
+		<td> char&#40; 9 &#41;   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>Pk</td><td>project&#95;barcode&#95;pkey</td>
+		<td> ON project&#95;id&#44; barcode</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>U</td><td>pk&#95;project&#95;barcode</td>
+		<td> ON project&#95;id</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Foreign Keys</b></th></tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_pb_to_barcode</td>
+		<td > ( barcode ) ref <a href='#barcode'>barcode</a> (barcode) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_pb_to_project</td>
+		<td > ( project&#95;id ) ref <a href='#project'>project</a> (project&#95;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='water_lot'>Table water_lot</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='water_lot.water_id'>water&#95;id</a></td>
+		<td> integer   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='water_lot.water_lot'>water&#95;lot</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='water_lot.date_added'>date&#95;added</a></td>
+		<td> date   DEFO current_date </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>Pk</td><td>pk&#95;water&#95;lot</td>
+		<td> ON water&#95;lot&#44; water&#95;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;water&#95;lot</td>
+		<td> ON water&#95;id</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Foreign Keys</b></th></tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_water_lot</td>
+		<td > ( water&#95;id ) ref <a href='#water'>water</a> (water&#95;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='master_mix_lot'>Table master_mix_lot</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='master_mix_lot.master_mix_id'>master&#95;mix&#95;id</a></td>
+		<td> bigint   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='master_mix_lot.master_mix_lot'>master&#95;mix&#95;lot</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='master_mix_lot.date_added'>date&#95;added</a></td>
+		<td> date   DEFO current_date </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>Pk</td><td>pk&#95;master&#95;mix&#95;lot</td>
+		<td> ON master&#95;mix&#95;lot&#44; master&#95;mix&#95;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;master&#95;mix&#95;lot</td>
+		<td> ON master&#95;mix&#95;id</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Foreign Keys</b></th></tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_master_mix_lot</td>
+		<td > ( master&#95;mix&#95;id ) ref <a href='#master&#95;mix'>master&#95;mix</a> (master&#95;mix&#95;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='water'>Table water</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='water.water_id'>water&#95;id</a></td>
+		<td> bigserial   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='water.company'>company</a></td>
+		<td> integer   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='water.product_name'>product&#95;name</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='water.product_number'>product&#95;number</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>U</td><td>pk&#95;extraction&#95;kit&#95;1</td>
+		<td> ON water&#95;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>Pk</td><td>pk&#95;water</td>
+		<td> ON water&#95;id</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='master_mix'>Table master_mix</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='master_mix.master_mix_id'>master&#95;mix&#95;id</a></td>
+		<td> bigserial   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='master_mix.company'>company</a></td>
+		<td> integer   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='master_mix.product_name'>product&#95;name</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='master_mix.product_number'>product&#95;number</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>U</td><td>pk&#95;extraction&#95;kit&#95;0</td>
+		<td> ON master&#95;mix&#95;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>Pk</td><td>pk&#95;master&#95;mix</td>
+		<td> ON master&#95;mix&#95;id</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='primer_plate_lot'>Table primer_plate_lot</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='primer_plate_lot.primer_plate'>primer&#95;plate</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='primer_plate_lot.primer_plate_lot'>primer&#95;plate&#95;lot</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='primer_plate_lot.date_added'>date&#95;added</a></td>
+		<td> date   DEFO current_date </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;primer&#95;plate&#95;lot</td>
+		<td> ON primer&#95;plate</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>Pk</td><td>pk&#95;primer&#95;plate&#95;lot</td>
+		<td> ON primer&#95;plate&#95;lot&#44; primer&#95;plate</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Foreign Keys</b></th></tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_primer_plate_lot</td>
+		<td > ( primer&#95;plate ) ref <a href='#primer&#95;plate'>primer&#95;plate</a> (primer&#95;plate&#95;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='project'>Table project</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='project.project_id'>project&#95;id</a></td>
+		<td> bigint   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='project.project'>project</a></td>
+		<td> varchar&#40; 1000 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='project.description'>description</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>Pk</td><td>project&#95;pkey</td>
+		<td> ON project&#95;id</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='pcr_plate_run'>Table pcr_plate_run</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='pcr_plate_run.run_id'>run&#95;id</a></td>
+		<td> bigint   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='pcr_plate_run.barcode'>barcode</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='pcr_plate_run.nickname'>nickname</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='pcr_plate_run.center_project_name'>center&#95;project&#95;name</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;pcr&#95;plate&#95;run</td>
+		<td> ON run&#95;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;pcr&#95;plate&#95;run&#95;0</td>
+		<td> ON barcode</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;pcr&#95;plate&#95;run&#95;1</td>
+		<td> ON nickname</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>Pk</td><td>pk&#95;pcr&#95;plate&#95;run</td>
+		<td> ON run&#95;id&#44; barcode&#44; nickname</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Foreign Keys</b></th></tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_pcr_plate_run</td>
+		<td > ( run&#95;id ) ref <a href='#run&#95;information'>run&#95;information</a> (run&#95;id) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_pcr_plate_run_0</td>
+		<td > ( barcode ) ref <a href='#pcr&#95;plate'>pcr&#95;plate</a> (barcode) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_pcr_plate_run_1</td>
+		<td > ( nickname ) ref <a href='#pcr&#95;plate'>pcr&#95;plate</a> (nickname) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='ext_kit_lot'>Table ext_kit_lot</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='ext_kit_lot.extraction_kit_id'>extraction&#95;kit&#95;id</a></td>
+		<td> bigint   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='ext_kit_lot.ext_kit_lot'>ext&#95;kit&#95;lot</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='ext_kit_lot.date_added'>date&#95;added</a></td>
+		<td> date   DEFO current_date </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;ext&#95;kit&#95;lot</td>
+		<td> ON extraction&#95;kit&#95;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>Pk</td><td>pk&#95;ext&#95;kit&#95;lot</td>
+		<td> ON ext&#95;kit&#95;lot&#44; extraction&#95;kit&#95;id</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Foreign Keys</b></th></tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_ext_kit_lot</td>
+		<td > ( extraction&#95;kit&#95;id ) ref <a href='#extraction&#95;kit'>extraction&#95;kit</a> (extraction&#95;kit&#95;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='extraction_kit'>Table extraction_kit</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='extraction_kit.extraction_kit_id'>extraction&#95;kit&#95;id</a></td>
+		<td> bigserial   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='extraction_kit.company'>company</a></td>
+		<td> integer   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='extraction_kit.product_name'>product&#95;name</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='extraction_kit.product_number'>product&#95;number</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>U</td><td>pk&#95;extraction&#95;kit</td>
+		<td> ON extraction&#95;kit&#95;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>Pk</td><td>pk&#95;extraction&#95;kit&#95;2</td>
+		<td> ON extraction&#95;kit&#95;id</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='plate_sample'>Table plate_sample</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='plate_sample.barcode'>barcode</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='plate_sample.well'>well</a></td>
+		<td> varchar&#40; 3 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='plate_sample.sample'>sample</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='plate_sample.project_id'>project&#95;id</a></td>
+		<td> bigint   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='plate_sample.sample_size'>sample&#95;size</a></td>
+		<td> float8   </td>
+		<td> Sample size&#44; in grams </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;plate&#95;barcode</td>
+		<td> ON well</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;plate&#95;barcode&#95;0</td>
+		<td> ON barcode</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>Pk</td><td>pkey&#95;plate&#95;barcode&#95;1</td>
+		<td> ON barcode&#44; well</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;plate&#95;sample</td>
+		<td> ON project&#95;id</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Foreign Keys</b></th></tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_plate_barcode_0</td>
+		<td > ( barcode ) ref <a href='#extraction&#95;plate'>extraction&#95;plate</a> (barcode) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_plate_sample</td>
+		<td > ( project&#95;id ) ref <a href='#project'>project</a> (project&#95;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='extraction_plate'>Table extraction_plate</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='extraction_plate.barcode'>barcode</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='extraction_plate.nickname'>nickname</a></td>
+		<td> varchar&#40; 50 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='extraction_plate.ext_robot'>ext&#95;robot</a></td>
+		<td> varchar   </td>
+		<td> Extraction robot used for this plate </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='extraction_plate.ext_robot_tool'>ext&#95;robot&#95;tool</a></td>
+		<td> varchar   </td>
+		<td> Extraction robot pipette head used
+ </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='extraction_plate.kf_robot'>kf&#95;robot</a></td>
+		<td> bigint   </td>
+		<td> kingifsher robot used for extracton </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='extraction_plate.ext_kit_lot'>ext&#95;kit&#95;lot</a></td>
+		<td> bigint   </td>
+		<td> Extraction kit lot number </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='extraction_plate.person'>person</a></td>
+		<td> bigint   </td>
+		<td> Person running the extraction </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='extraction_plate.finalized'>finalized</a></td>
+		<td> bool   DEFO 'F' </td>
+		<td> Whether the plate map is complete or still being filled&#46; </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='extraction_plate.ext_created'>ext&#95;created</a></td>
+		<td> timestamp   DEFO current_date </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='extraction_plate.ext_finalized'>ext&#95;finalized</a></td>
+		<td> timestamp   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>Pk</td><td>plate&#95;pkey</td>
+		<td> ON barcode</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;plate&#95;0</td>
+		<td> ON ext&#95;robot</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;plate&#95;1</td>
+		<td> ON kf&#95;robot</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;plate&#95;2</td>
+		<td> ON ext&#95;kit&#95;lot</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;plate&#95;4</td>
+		<td> ON person</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Foreign Keys</b></th></tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_plate</td>
+		<td > ( barcode ) ref <a href='#barcode'>barcode</a> (barcode) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_plate_5</td>
+		<td > ( person ) ref <a href='#person'>person</a> (person&#95;id) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_plate_1</td>
+		<td > ( ext&#95;kit&#95;lot ) ref <a href='#ext&#95;kit&#95;lot'>ext&#95;kit&#95;lot</a> (ext&#95;kit&#95;lot) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_extraction_plate</td>
+		<td > ( ext&#95;robot ) ref <a href='#robot'>robot</a> (robot&#95;name) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_extraction_plate_0</td>
+		<td > ( kf&#95;robot ) ref <a href='#robot'>robot</a> (robot&#95;name) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='pcr_plate'>Table pcr_plate</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='pcr_plate.barcode'>barcode</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='pcr_plate.nickname'>nickname</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='pcr_plate.primer_plate_lot'>primer&#95;plate&#95;lot</a></td>
+		<td> bigint   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='pcr_plate.amplicon'>amplicon</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='pcr_plate.master_mix_lot'>master&#95;mix&#95;lot</a></td>
+		<td> bigint   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='pcr_plate.water_lot'>water&#95;lot</a></td>
+		<td> bigint   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='pcr_plate.pcr_robot'>pcr&#95;robot</a></td>
+		<td> bigint   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='pcr_plate.tool_300_8'>tool&#95;300&#95;8</a></td>
+		<td> bigint   </td>
+		<td> 300uL pipette head used </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='pcr_plate.tool_50_8'>tool&#95;50&#95;8</a></td>
+		<td> bigint   </td>
+		<td> 50uL pipette head used </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='pcr_plate.person'>person</a></td>
+		<td> bigint   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='pcr_plate.pcr_created'>pcr&#95;created</a></td>
+		<td> timestamp   DEFO current_timestamp </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>Pk</td><td>pkey&#95;pcr&#95;plate</td>
+		<td> ON barcode&#44; nickname</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>U</td><td>idx&#95;pcr&#95;plate</td>
+		<td> ON barcode</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;pcr&#95;plate&#95;0</td>
+		<td> ON pcr&#95;robot</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;pcr&#95;plate&#95;1</td>
+		<td> ON primer&#95;plate&#95;lot</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;pcr&#95;plate&#95;2</td>
+		<td> ON master&#95;mix&#95;lot</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;pcr&#95;plate&#95;3</td>
+		<td> ON water&#95;lot</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;pcr&#95;plate&#95;5</td>
+		<td> ON person</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>U</td><td>pk&#95;pcr&#95;plate</td>
+		<td> ON nickname</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Foreign Keys</b></th></tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_pcr_plate</td>
+		<td > ( barcode ) ref <a href='#extraction&#95;plate'>extraction&#95;plate</a> (barcode) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_pcr_plate_4</td>
+		<td > (  ) ref <a href='#protocol'>protocol</a> () </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_pcr_plate_5</td>
+		<td > ( person ) ref <a href='#person'>person</a> (person&#95;id) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_pcr_plate_0</td>
+		<td > ( primer&#95;plate&#95;lot ) ref <a href='#primer&#95;plate&#95;lot'>primer&#95;plate&#95;lot</a> (primer&#95;plate&#95;lot) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_pcr_plate_1</td>
+		<td > ( master&#95;mix&#95;lot ) ref <a href='#master&#95;mix&#95;lot'>master&#95;mix&#95;lot</a> (master&#95;mix&#95;lot) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_pcr_plate_2</td>
+		<td > ( water&#95;lot ) ref <a href='#water&#95;lot'>water&#95;lot</a> (water&#95;lot) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_pcr_plate_3</td>
+		<td > ( pcr&#95;robot ) ref <a href='#robot'>robot</a> (robot&#95;name) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='person'>Table person</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='person.person_id'>person&#95;id</a></td>
+		<td> bigint   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='person.name'>name</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='person.email'>email</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='person.date_added'>date&#95;added</a></td>
+		<td> date   DEFO current_date </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>Pk</td><td>pk&#95;person</td>
+		<td> ON person&#95;id</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='primer_plate'>Table primer_plate</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='primer_plate.primer_plate_id'>primer&#95;plate&#95;id</a></td>
+		<td> bigserial   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='primer_plate.nickname'>nickname</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='primer_plate.protocol'>protocol</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='primer_plate.sequencing_barcodes'>sequencing&#95;barcodes</a></td>
+		<td> json   </td>
+		<td> dict of barcode keyed to well&#44; e&#46;g&#46;&#123;A1&#58; ACTACTCCATAC </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>Pk</td><td>pk&#95;sequencing&#95;plates</td>
+		<td> ON primer&#95;plate&#95;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;sequencing&#95;plate</td>
+		<td> ON protocol</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Foreign Keys</b></th></tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_sequencing_plate</td>
+		<td > (  ) ref <a href='#protocol'>protocol</a> () </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='sequencer'>Table sequencer</a></th></tr>
+<tr><td colspan='3'>Short name appened to protocol name </td></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='sequencer.sequencer_id'>sequencer&#95;id</a></td>
+		<td> bigserial   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='sequencer.platform'>platform</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='sequencer.instrument_model'>instrument&#95;model</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='sequencer.sequencing_method'>sequencing&#95;method</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>Pk</td><td>pk&#95;sequencer</td>
+		<td> ON sequencer&#95;id</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='run_information'>Table run_information</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='run_information.run_id'>run&#95;id</a></td>
+		<td> bigserial   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='run_information.nickname'>nickname</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='run_information.run_prefix'>run&#95;prefix</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='run_information.sequencer_id'>sequencer&#95;id</a></td>
+		<td> bigint   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='run_information.created_on'>created&#95;on</a></td>
+		<td> timestamp   DEFO current_timestamp </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='run_information.run_date'>run&#95;date</a></td>
+		<td> date   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='run_information.finalized'>finalized</a></td>
+		<td> bool   DEFO 'F' </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>Pk</td><td>pk&#95;run&#95;information</td>
+		<td> ON run&#95;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;run&#95;information</td>
+		<td> ON sequencer&#95;id</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Foreign Keys</b></th></tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_run_information</td>
+		<td > ( sequencer&#95;id ) ref <a href='#sequencer'>sequencer</a> (sequencer&#95;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='protocol'>Table protocol</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='protocol.protocol'>protocol</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td> Name of the protocol </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='protocol.template_dna'>template&#95;dna</a></td>
+		<td> integer   </td>
+		<td> Template DNA added&#44; in uL </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='protocol.target_gene'>target&#95;gene</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='protocol.target_subfragment'>target&#95;subfragment</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='protocol.linker'>linker</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='protocol.pcr_primers'>pcr&#95;primers</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>Pk</td><td>pk&#95;protocol</td>
+		<td> ON protocol</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='barcode_exceptions'>Table barcode_exceptions</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='barcode_exceptions.barcode'>barcode</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>Pk</td><td>pk&#95;barcode&#95;exceptions</td>
+		<td> ON barcode</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Foreign Keys</b></th></tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_barcode_exceptions</td>
+		<td > ( barcode ) ref <a href='#barcode'>barcode</a> (barcode) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='robot'>Table robot</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='robot.robot_name'>robot&#95;name</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='robot.robot_type'>robot&#95;type</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='robot.date_added'>date&#95;added</a></td>
+		<td> date   DEFO current_date </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>Pk</td><td>pk&#95;robot</td>
+		<td> ON robot&#95;name</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+</body></html>
