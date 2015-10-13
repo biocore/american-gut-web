@@ -105,7 +105,7 @@ CREATE TABLE barcodes.extraction_plate (
 	ext_robot_tool       ext_robot_tools  NOT NULL,
 	kf_robot             varchar  NOT NULL,
 	ext_kit_lot          varchar  NOT NULL,
-	person               bigint  NOT NULL,
+	person_id            bigint  NOT NULL,
 	finalized            bool DEFAULT 'F' NOT NULL,
 	ext_created          timestamp DEFAULT current_date NOT NULL,
 	ext_finalized        timestamp  ,
@@ -114,15 +114,15 @@ CREATE TABLE barcodes.extraction_plate (
 CREATE INDEX idx_plate_0 ON barcodes.extraction_plate ( ext_robot );
 CREATE INDEX idx_plate_1 ON barcodes.extraction_plate ( kf_robot );
 CREATE INDEX idx_plate_2 ON barcodes.extraction_plate ( ext_kit_lot );
-CREATE INDEX idx_plate_4 ON barcodes.extraction_plate ( person );
+CREATE INDEX idx_plate_4 ON barcodes.extraction_plate ( person_id );
 COMMENT ON COLUMN barcodes.extraction_plate.ext_robot IS 'Extraction robot used for this plate';
 COMMENT ON COLUMN barcodes.extraction_plate.ext_robot_tool IS 'Extraction robot pipette head used';
 COMMENT ON COLUMN barcodes.extraction_plate.kf_robot IS 'kingfisher robot used for extracton';
 COMMENT ON COLUMN barcodes.extraction_plate.ext_kit_lot IS 'Extraction kit lot number';
-COMMENT ON COLUMN barcodes.extraction_plate.person IS 'Person running the extraction';
+COMMENT ON COLUMN barcodes.extraction_plate.person_id IS 'Person running the extraction';
 COMMENT ON COLUMN barcodes.extraction_plate.finalized IS 'Whether the plate map is complete or still being filled.';
 ALTER TABLE barcodes.extraction_plate ADD CONSTRAINT fk_plate FOREIGN KEY ( barcode ) REFERENCES barcodes.barcode( barcode );
-ALTER TABLE barcodes.extraction_plate ADD CONSTRAINT fk_plate_5 FOREIGN KEY ( person ) REFERENCES barcodes.person( person_id );
+ALTER TABLE barcodes.extraction_plate ADD CONSTRAINT fk_plate_5 FOREIGN KEY ( person_id ) REFERENCES barcodes.person( person_id );
 ALTER TABLE barcodes.extraction_plate ADD CONSTRAINT fk_plate_1 FOREIGN KEY ( ext_kit_lot ) REFERENCES barcodes.ext_kit_lot( ext_kit_lot );
 ALTER TABLE barcodes.extraction_plate ADD CONSTRAINT fk_extraction_plate FOREIGN KEY ( ext_robot ) REFERENCES barcodes.robot( robot_name );
 ALTER TABLE barcodes.extraction_plate ADD CONSTRAINT fk_extraction_plate_0 FOREIGN KEY ( kf_robot ) REFERENCES barcodes.robot( robot_name );
@@ -176,7 +176,7 @@ CREATE TABLE barcodes.pcr_plate (
 	pcr_robot            varchar  NOT NULL,
 	tool_300_8           tools_300  NOT NULL,
 	tool_50_8            tools_50  NOT NULL,
-	person               bigint  NOT NULL,
+	person_id            bigint  NOT NULL,
 	pcr_created          timestamp DEFAULT current_timestamp NOT NULL,
 	CONSTRAINT pkey_pcr_plate PRIMARY KEY ( barcode, nickname ),
 	CONSTRAINT idx_pcr_plate UNIQUE ( barcode ) ,
@@ -186,11 +186,11 @@ CREATE INDEX idx_pcr_plate_0 ON barcodes.pcr_plate ( pcr_robot );
 CREATE INDEX idx_pcr_plate_1 ON barcodes.pcr_plate ( primer_plate_lot );
 CREATE INDEX idx_pcr_plate_2 ON barcodes.pcr_plate ( master_mix_lot );
 CREATE INDEX idx_pcr_plate_3 ON barcodes.pcr_plate ( water_lot );
-CREATE INDEX idx_pcr_plate_5 ON barcodes.pcr_plate ( person );
+CREATE INDEX idx_pcr_plate_5 ON barcodes.pcr_plate ( person_id );
 COMMENT ON COLUMN barcodes.pcr_plate.tool_300_8 IS '300uL pipette head used';
 COMMENT ON COLUMN barcodes.pcr_plate.tool_50_8 IS '50uL pipette head used';
 ALTER TABLE barcodes.pcr_plate ADD CONSTRAINT fk_pcr_plate FOREIGN KEY ( barcode ) REFERENCES barcodes.extraction_plate( barcode );
-ALTER TABLE barcodes.pcr_plate ADD CONSTRAINT fk_pcr_plate_5 FOREIGN KEY ( person ) REFERENCES barcodes.person( person_id );
+ALTER TABLE barcodes.pcr_plate ADD CONSTRAINT fk_pcr_plate_5 FOREIGN KEY ( person_id ) REFERENCES barcodes.person( person_id );
 ALTER TABLE barcodes.pcr_plate ADD CONSTRAINT fk_pcr_plate_0 FOREIGN KEY ( primer_plate_lot ) REFERENCES barcodes.primer_plate_lot( primer_plate_lot );
 ALTER TABLE barcodes.pcr_plate ADD CONSTRAINT fk_pcr_plate_1 FOREIGN KEY ( master_mix_lot ) REFERENCES barcodes.master_mix_lot( master_mix_lot );
 ALTER TABLE barcodes.pcr_plate ADD CONSTRAINT fk_pcr_plate_2 FOREIGN KEY ( water_lot ) REFERENCES barcodes.water_lot( water_lot );

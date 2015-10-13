@@ -865,7 +865,7 @@
 			<column name="ext_kit_lot" type="varchar" jt="12" mandatory="y" >
 				<comment><![CDATA[Extraction kit lot number]]></comment>
 			</column>
-			<column name="person" type="bigint" jt="-5" mandatory="y" >
+			<column name="person_id" type="bigint" jt="-5" mandatory="y" >
 				<comment><![CDATA[Person running the extraction]]></comment>
 			</column>
 			<column name="finalized" type="bool" jt="-7" mandatory="y" >
@@ -889,13 +889,13 @@
 				<column name="ext_kit_lot" />
 			</index>
 			<index name="idx_plate_4" unique="NORMAL" >
-				<column name="person" />
+				<column name="person_id" />
 			</index>
 			<fk name="fk_plate" to_schema="barcodes" to_table="barcode" >
 				<fk_column name="barcode" pk="barcode" />
 			</fk>
 			<fk name="fk_plate_5" to_schema="barcodes" to_table="person" >
-				<fk_column name="person" pk="person_id" />
+				<fk_column name="person_id" pk="person_id" />
 			</fk>
 			<fk name="fk_plate_1" to_schema="barcodes" to_table="ext_kit_lot" >
 				<fk_column name="ext_kit_lot" pk="ext_kit_lot" />
@@ -953,7 +953,7 @@
 			<column name="tool_50_8" type="bigint" jt="-5" mandatory="y" >
 				<comment><![CDATA[50uL pipette head used]]></comment>
 			</column>
-			<column name="person" type="bigint" jt="-5" mandatory="y" />
+			<column name="person_id" type="bigint" jt="-5" mandatory="y" />
 			<column name="pcr_created" type="timestamp" jt="93" mandatory="y" >
 				<defo>current_timestamp</defo>
 			</column>
@@ -977,7 +977,7 @@
 				<column name="water_lot" />
 			</index>
 			<index name="idx_pcr_plate_5" unique="NORMAL" >
-				<column name="person" />
+				<column name="person_id" />
 			</index>
 			<index name="pk_pcr_plate" unique="UNIQUE" >
 				<column name="nickname" />
@@ -986,7 +986,7 @@
 				<fk_column name="barcode" pk="barcode" />
 			</fk>
 			<fk name="fk_pcr_plate_5" to_schema="barcodes" to_table="person" >
-				<fk_column name="person" pk="person_id" />
+				<fk_column name="person_id" pk="person_id" />
 			</fk>
 			<fk name="fk_pcr_plate_0" to_schema="barcodes" to_table="primer_plate_lot" >
 				<fk_column name="primer_plate_lot" pk="primer_plate_lot" />
@@ -22977,8 +22977,8 @@ AS $function$xpath_exists$function$
 		<entity schema="barcodes" name="master_mix_lot" color="b7c8e3" x="825" y="420" />
 		<entity schema="barcodes" name="ext_kit_lot" color="b7c8e3" x="825" y="300" />
 		<entity schema="barcodes" name="robot" color="b7c8e3" x="285" y="270" />
-		<entity schema="barcodes" name="extraction_plate" color="b7c8e3" x="555" y="240" />
 		<entity schema="barcodes" name="primer_plate_lot" color="b7c8e3" x="300" y="570" />
 		<entity schema="barcodes" name="pcr_plate" color="b7c8e3" x="555" y="450" />
+		<entity schema="barcodes" name="extraction_plate" color="b7c8e3" x="555" y="240" />
 	</layout>
 </project>
