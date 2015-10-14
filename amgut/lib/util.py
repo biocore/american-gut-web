@@ -5,6 +5,9 @@
 #
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
+import posixpath
+import urlparse
+
 from json import loads, dumps
 from collections import defaultdict
 
@@ -141,3 +144,105 @@ def survey_asd(survey_id):
 
 
 external_surveys = (survey_vioscreen,)  # survey_asd)
+
+
+def basejoin(base, url):
+    """
+    Add the specified relative URL to the supplied base URL.
+
+    >>> tests = [
+    ...     ('https://abc.xyz',    'd/e'),
+    ...     ('https://abc.xyz/',   'd/e'),
+    ...     ('https://abc.xyz',    '/d/e'),
+    ...     ('https://abc.xyz/',   '/d/e'),
+    ...
+    ...     ('https://abc.xyz',    '/d/e?a=b'),
+    ...     ('https://abc.xyz/',   '/d/e?a=b'),
+    ...
+    ...     ('https://abc.xyz',    'd/e/'),
+    ...     ('https://abc.xyz/',   'd/e/'),
+    ...     ('https://abc.xyz',    '/d/e/'),
+    ...     ('https://abc.xyz/',   '/d/e/'),
+    ...
+    ...     ('https://abc.xyz',    'd/e/?a=b'),
+    ...     ('https://abc.xyz/',   'd/e/?a=b'),
+    ...
+    ...     ('https://abc.xyz/f',  'd/e/'),
+    ...     ('https://abc.xyz/f/', 'd/e/'),
+    ...     ('https://abc.xyz/f',  '/d/e/'),
+    ...     ('https://abc.xyz/f/', '/d/e/'),
+    ...
+    ...     ('https://abc.xyz/f',  './e/'),
+    ...     ('https://abc.xyz/f/', './e/'),
+    ...
+    ...     ('https://abc.xyz/f',  '../e/'),
+    ...     ('https://abc.xyz/f/', '../e/'),
+    ...
+    ...     ('https://abc.xyz/f',  'd/../e/'),
+    ...     ('https://abc.xyz/f/', 'd/../e/'),
+    ...     ('https://abc.xyz/f',  '/d/../e/'),
+    ...     ('https://abc.xyz/f/', '/d/../e/'),
+    ... ]
+    >>> for result in [basejoin(a, b) for a, b in tests]:
+    ...     print result
+    https://abc.xyz/d/e
+    https://abc.xyz/d/e
+    https://abc.xyz/d/e
+    https://abc.xyz/d/e
+    https://abc.xyz/d/e?a=b
+    https://abc.xyz/d/e?a=b
+    https://abc.xyz/d/e/
+    https://abc.xyz/d/e/
+    https://abc.xyz/d/e/
+    https://abc.xyz/d/e/
+    https://abc.xyz/d/e/?a=b
+    https://abc.xyz/d/e/?a=b
+    https://abc.xyz/f/d/e/
+    https://abc.xyz/f/d/e/
+    https://abc.xyz/f/d/e/
+    https://abc.xyz/f/d/e/
+    https://abc.xyz/f/e/
+    https://abc.xyz/f/e/
+    https://abc.xyz/f/e/
+    https://abc.xyz/f/e/
+    https://abc.xyz/f/e/
+    https://abc.xyz/f/e/
+    https://abc.xyz/f/e/
+    https://abc.xyz/f/e/
+    """
+    # The base URL is authoritative: a URL like '../' should not remove
+    # portions of the base URL.
+    if not base.endswith('/'):
+        base += '/'
+
+    # Handle internal compactions, e.g. "./e/../d/" becomes "./d/"
+    normalized_url = posixpath.normpath(url)
+
+    # Ditto authoritativeness.
+    if normalized_url.startswith('..'):
+        normalized_url = normalized_url[2:]
+
+    # Ditto authoritativeness.
+    if normalized_url.startswith('/'):
+        normalized_url = '.' + normalized_url
+
+    # normpath removes an ending slash, add it back if necessary
+    if url.endswith('/') and not normalized_url.endswith('/'):
+        normalized_url += '/'
+
+    join = urlparse.urljoin(base, normalized_url)
+    joined_url = urlparse.urlparse(join)
+
+    return urlparse.urlunparse((joined_url.scheme,
+                                joined_url.netloc,
+                                joined_url.path,
+                                joined_url.params,
+                                joined_url.query,
+                                joined_url.fragment))
+
+
+if __name__ == '__main__':
+    import doctest
+
+    doctest.testmod(verbose=True, optionflags=(doctest.NORMALIZE_WHITESPACE |
+                                               doctest.REPORT_NDIFF))

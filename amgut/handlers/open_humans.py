@@ -1,6 +1,4 @@
 import logging
-import posixpath
-import urlparse
 
 try:
     from open_humans_tornado_oauth2 import OpenHumansMixin
@@ -15,101 +13,7 @@ from tornado import escape, web
 from amgut.connections import ag_data
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.lib.config_manager import AMGUT_CONFIG
-
-
-def basejoin(base, url):
-    """
-    Add the specified relative URL to the supplied base URL.
-
-    >>> tests = [
-    ...     ('https://abc.xyz',    'd/e'),
-    ...     ('https://abc.xyz/',   'd/e'),
-    ...     ('https://abc.xyz',    '/d/e'),
-    ...     ('https://abc.xyz/',   '/d/e'),
-    ...
-    ...     ('https://abc.xyz',    '/d/e?a=b'),
-    ...     ('https://abc.xyz/',   '/d/e?a=b'),
-    ...
-    ...     ('https://abc.xyz',    'd/e/'),
-    ...     ('https://abc.xyz/',   'd/e/'),
-    ...     ('https://abc.xyz',    '/d/e/'),
-    ...     ('https://abc.xyz/',   '/d/e/'),
-    ...
-    ...     ('https://abc.xyz',    'd/e/?a=b'),
-    ...     ('https://abc.xyz/',   'd/e/?a=b'),
-    ...
-    ...     ('https://abc.xyz/f',  'd/e/'),
-    ...     ('https://abc.xyz/f/', 'd/e/'),
-    ...     ('https://abc.xyz/f',  '/d/e/'),
-    ...     ('https://abc.xyz/f/', '/d/e/'),
-    ...
-    ...     ('https://abc.xyz/f',  './e/'),
-    ...     ('https://abc.xyz/f/', './e/'),
-    ...
-    ...     ('https://abc.xyz/f',  '../e/'),
-    ...     ('https://abc.xyz/f/', '../e/'),
-    ...
-    ...     ('https://abc.xyz/f',  'd/../e/'),
-    ...     ('https://abc.xyz/f/', 'd/../e/'),
-    ...     ('https://abc.xyz/f',  '/d/../e/'),
-    ...     ('https://abc.xyz/f/', '/d/../e/'),
-    ... ]
-    >>> for result in [basejoin(a, b) for a, b in tests]:
-    ...     print result
-    https://abc.xyz/d/e
-    https://abc.xyz/d/e
-    https://abc.xyz/d/e
-    https://abc.xyz/d/e
-    https://abc.xyz/d/e?a=b
-    https://abc.xyz/d/e?a=b
-    https://abc.xyz/d/e/
-    https://abc.xyz/d/e/
-    https://abc.xyz/d/e/
-    https://abc.xyz/d/e/
-    https://abc.xyz/d/e/?a=b
-    https://abc.xyz/d/e/?a=b
-    https://abc.xyz/f/d/e/
-    https://abc.xyz/f/d/e/
-    https://abc.xyz/f/d/e/
-    https://abc.xyz/f/d/e/
-    https://abc.xyz/f/e/
-    https://abc.xyz/f/e/
-    https://abc.xyz/f/e/
-    https://abc.xyz/f/e/
-    https://abc.xyz/f/e/
-    https://abc.xyz/f/e/
-    https://abc.xyz/f/e/
-    https://abc.xyz/f/e/
-    """
-    # The base URL is authoritative: a URL like '../' should not remove
-    # portions of the base URL.
-    if not base.endswith('/'):
-        base += '/'
-
-    # Handle internal compactions, e.g. "./e/../d/" becomes "./d/"
-    normalized_url = posixpath.normpath(url)
-
-    # Ditto authoritativeness.
-    if normalized_url.startswith('..'):
-        normalized_url = normalized_url[2:]
-
-    # Ditto authoritativeness.
-    if normalized_url.startswith('/'):
-        normalized_url = '.' + normalized_url
-
-    # normpath removes an ending slash, add it back if necessary
-    if url.endswith('/') and not normalized_url.endswith('/'):
-        normalized_url += '/'
-
-    join = urlparse.urljoin(base, normalized_url)
-    joined_url = urlparse.urlparse(join)
-
-    return urlparse.urlunparse((joined_url.scheme,
-                                joined_url.netloc,
-                                joined_url.path,
-                                joined_url.params,
-                                joined_url.query,
-                                joined_url.fragment))
+from amgut.lib.util import basejoin
 
 
 class OriginMixin(object):
