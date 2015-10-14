@@ -5,6 +5,9 @@ DROP TABLE barcodes.plate_barcode CASCADE;
 DROP TABLE barcodes.plate;
 
 ALTER TABLE barcodes.barcode ALTER COLUMN barcode TYPE varchar;
+ALTER TABLE barcodes.barcode ADD COLUMN priority bool NOT NULL DEFAULT 'F';
+COMMENT ON COLUMN barcodes.barcode.priority IS 'Whether barcode is in priority queue';
+ALTER TABLE barcodes.barcode ADD COLUMN priority_reason varchar;
 ALTER TABLE barcodes.project ADD description varchar  NOT NULL DEFAULT '';
 
 CREATE TYPE instrument_models AS ENUM ('Genome Analyzer', 'Genome Analyzer II', 'Genome Analyzer Ix', 'HiSeq 2500', 'HiSeq 2000', 'HiSeq 1500', 'HiSeq 1000', 'MiSeq', 'HiScanSQ', 'HiSeq X Ten', 'NextSeq 500', 'GS', 'GS 20', 'GS FLX', 'GS FLX+', 'GS FLX Titanium', 'GS Junior', 'unspecified');

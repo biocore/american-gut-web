@@ -804,6 +804,11 @@
 				<defo>current_timestamp</defo>
 				<comment><![CDATA[Date barcode created on the system]]></comment>
 			</column>
+			<column name="priority" type="bool" jt="-7" mandatory="y" >
+				<defo>&#039;F&#039;</defo>
+				<comment><![CDATA[Whether barcode is in priority queue]]></comment>
+			</column>
+			<column name="priority_reason" type="varchar" jt="12" />
 			<index name="barcode_pkey" unique="PRIMARY_KEY" >
 				<column name="barcode" />
 			</index>
@@ -22959,26 +22964,26 @@ AS $function$xpath_exists$function$
 		</group>
 	</layout>
 	<layout id="Layout_345a537d" name="barcodes" joined_routing="y" show_column_type="y" show_relation_columns="y" >
-		<entity schema="barcodes" name="barcode" color="b7c8e3" x="165" y="60" />
-		<entity schema="barcodes" name="project_barcode" color="b7c8e3" x="585" y="45" />
-		<entity schema="barcodes" name="water" color="b7c8e3" x="1035" y="540" />
-		<entity schema="barcodes" name="master_mix" color="b7c8e3" x="1050" y="420" />
-		<entity schema="barcodes" name="project" color="b7c8e3" x="570" y="135" />
-		<entity schema="barcodes" name="pcr_plate_run" color="b7c8e3" x="525" y="675" />
-		<entity schema="barcodes" name="extraction_kit" color="b7c8e3" x="1065" y="300" />
-		<entity schema="barcodes" name="plate_sample" color="b7c8e3" x="825" y="90" />
-		<entity schema="barcodes" name="person" color="b7c8e3" x="330" y="390" />
-		<entity schema="barcodes" name="sequencer" color="b7c8e3" x="45" y="735" />
-		<entity schema="barcodes" name="run_information" color="b7c8e3" x="285" y="690" />
-		<entity schema="barcodes" name="protocol" color="b7c8e3" x="60" y="420" />
-		<entity schema="barcodes" name="barcode_exceptions" color="b7c8e3" x="75" y="255" />
-		<entity schema="barcodes" name="primer_plate" color="b7c8e3" x="60" y="570" />
-		<entity schema="barcodes" name="water_lot" color="b7c8e3" x="825" y="540" />
-		<entity schema="barcodes" name="master_mix_lot" color="b7c8e3" x="825" y="420" />
-		<entity schema="barcodes" name="ext_kit_lot" color="b7c8e3" x="825" y="300" />
-		<entity schema="barcodes" name="robot" color="b7c8e3" x="285" y="270" />
-		<entity schema="barcodes" name="primer_plate_lot" color="b7c8e3" x="300" y="570" />
-		<entity schema="barcodes" name="pcr_plate" color="b7c8e3" x="555" y="450" />
-		<entity schema="barcodes" name="extraction_plate" color="b7c8e3" x="555" y="240" />
+		<entity schema="barcodes" name="project_barcode" color="b7c8e3" x="585" y="60" />
+		<entity schema="barcodes" name="water" color="b7c8e3" x="1035" y="555" />
+		<entity schema="barcodes" name="master_mix" color="b7c8e3" x="1050" y="435" />
+		<entity schema="barcodes" name="project" color="b7c8e3" x="570" y="150" />
+		<entity schema="barcodes" name="pcr_plate_run" color="b7c8e3" x="525" y="690" />
+		<entity schema="barcodes" name="extraction_kit" color="b7c8e3" x="1065" y="315" />
+		<entity schema="barcodes" name="plate_sample" color="b7c8e3" x="825" y="105" />
+		<entity schema="barcodes" name="person" color="b7c8e3" x="330" y="405" />
+		<entity schema="barcodes" name="sequencer" color="b7c8e3" x="45" y="750" />
+		<entity schema="barcodes" name="run_information" color="b7c8e3" x="285" y="705" />
+		<entity schema="barcodes" name="protocol" color="b7c8e3" x="60" y="435" />
+		<entity schema="barcodes" name="barcode_exceptions" color="b7c8e3" x="75" y="270" />
+		<entity schema="barcodes" name="primer_plate" color="b7c8e3" x="60" y="585" />
+		<entity schema="barcodes" name="water_lot" color="b7c8e3" x="825" y="555" />
+		<entity schema="barcodes" name="master_mix_lot" color="b7c8e3" x="825" y="435" />
+		<entity schema="barcodes" name="ext_kit_lot" color="b7c8e3" x="825" y="315" />
+		<entity schema="barcodes" name="robot" color="b7c8e3" x="285" y="285" />
+		<entity schema="barcodes" name="primer_plate_lot" color="b7c8e3" x="300" y="585" />
+		<entity schema="barcodes" name="pcr_plate" color="b7c8e3" x="555" y="465" />
+		<entity schema="barcodes" name="extraction_plate" color="b7c8e3" x="555" y="255" />
+		<entity schema="barcodes" name="barcode" color="b7c8e3" x="165" y="45" />
 	</layout>
 </project>
