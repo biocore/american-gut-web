@@ -1010,7 +1010,10 @@
 			<column name="run_id" type="bigint" jt="-5" mandatory="y" />
 			<column name="barcode" type="varchar" jt="12" mandatory="y" />
 			<column name="nickname" type="varchar" length="100" jt="12" mandatory="y" />
-			<column name="center_project_name" type="varchar" length="100" jt="12" />
+			<column name="run_prefix" type="varchar" jt="12" mandatory="y" >
+				<comment><![CDATA[Name for the lane on the run]]></comment>
+			</column>
+			<column name="center_project_name" type="varchar" length="100" jt="12" mandatory="y" />
 			<index name="idx_pcr_plate_run" unique="NORMAL" >
 				<column name="run_id" />
 			</index>
@@ -1163,8 +1166,7 @@
 		</table>
 		<table name="run_information" >
 			<column name="run_id" type="bigserial" jt="-5" mandatory="y" />
-			<column name="nickname" type="varchar" length="100" jt="12" mandatory="y" />
-			<column name="run_prefix" type="varchar" jt="12" mandatory="y" />
+			<column name="run_name" type="varchar" length="100" jt="12" mandatory="y" />
 			<column name="sequencer_id" type="bigint" jt="-5" mandatory="y" />
 			<column name="created_on" type="timestamp" jt="93" mandatory="y" >
 				<defo>current_timestamp</defo>
@@ -1178,6 +1180,9 @@
 			</index>
 			<index name="idx_run_information" unique="NORMAL" >
 				<column name="sequencer_id" />
+			</index>
+			<index name="idx_run_information_0" unique="UNIQUE" >
+				<column name="run_name" />
 			</index>
 			<fk name="fk_run_information" to_schema="barcodes" to_table="sequencer" >
 				<fk_column name="sequencer_id" pk="sequencer_id" />
@@ -22968,12 +22973,10 @@ AS $function$xpath_exists$function$
 		<entity schema="barcodes" name="water" color="b7c8e3" x="1035" y="555" />
 		<entity schema="barcodes" name="master_mix" color="b7c8e3" x="1050" y="435" />
 		<entity schema="barcodes" name="project" color="b7c8e3" x="570" y="150" />
-		<entity schema="barcodes" name="pcr_plate_run" color="b7c8e3" x="525" y="690" />
 		<entity schema="barcodes" name="extraction_kit" color="b7c8e3" x="1065" y="315" />
 		<entity schema="barcodes" name="plate_sample" color="b7c8e3" x="825" y="105" />
 		<entity schema="barcodes" name="person" color="b7c8e3" x="330" y="405" />
 		<entity schema="barcodes" name="sequencer" color="b7c8e3" x="45" y="750" />
-		<entity schema="barcodes" name="run_information" color="b7c8e3" x="285" y="705" />
 		<entity schema="barcodes" name="protocol" color="b7c8e3" x="60" y="435" />
 		<entity schema="barcodes" name="barcode_exceptions" color="b7c8e3" x="75" y="270" />
 		<entity schema="barcodes" name="primer_plate" color="b7c8e3" x="60" y="585" />
@@ -22985,5 +22988,7 @@ AS $function$xpath_exists$function$
 		<entity schema="barcodes" name="pcr_plate" color="b7c8e3" x="555" y="465" />
 		<entity schema="barcodes" name="extraction_plate" color="b7c8e3" x="555" y="255" />
 		<entity schema="barcodes" name="barcode" color="b7c8e3" x="165" y="45" />
+		<entity schema="barcodes" name="run_information" color="b7c8e3" x="285" y="705" />
+		<entity schema="barcodes" name="pcr_plate_run" color="b7c8e3" x="525" y="690" />
 	</layout>
 </project>

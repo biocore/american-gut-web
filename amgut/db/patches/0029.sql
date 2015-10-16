@@ -56,8 +56,7 @@ COMMENT ON COLUMN barcodes.protocol.template_dna IS 'Template DNA added, in uL';
 
 CREATE TABLE barcodes.run_information ( 
 	run_id               bigserial  NOT NULL,
-	nickname             varchar(100)  NOT NULL,
-	run_prefix           varchar  NOT NULL,
+	run_name             varchar(100)  NOT NULL UNIQUE,
 	sequencer_id         bigint  NOT NULL,
 	created_on           timestamp DEFAULT current_timestamp NOT NULL,
 	run_date             date  ,
@@ -203,9 +202,11 @@ CREATE TABLE barcodes.pcr_plate_run (
 	run_id               bigint  NOT NULL,
 	barcode              varchar  NOT NULL,
 	nickname             varchar(100)  NOT NULL,
+	run_prefix           varchar  NOT NULL,
 	center_project_name  varchar(100)  NOT NULL,
 	CONSTRAINT pk_pcr_plate_run PRIMARY KEY ( run_id, barcode, nickname )
  );
+COMMENT ON COLUMN barcodes.pcr_plate_run.run_prefix IS 'Name for the lane on the run';
 CREATE INDEX idx_pcr_plate_run ON barcodes.pcr_plate_run ( run_id );
 CREATE INDEX idx_pcr_plate_run_0 ON barcodes.pcr_plate_run ( barcode );
 CREATE INDEX idx_pcr_plate_run_1 ON barcodes.pcr_plate_run ( nickname );
