@@ -912,6 +912,29 @@
 				<fk_column name="kf_robot" pk="robot_name" />
 			</fk>
 		</table>
+		<table name="lane_information" >
+			<comment><![CDATA[Name for the lane on the run]]></comment>
+			<column name="run_id" type="integer" jt="4" mandatory="y" />
+			<column name="run_prefix" type="varchar" jt="12" mandatory="y" >
+				<comment><![CDATA[Name for the lane on the run]]></comment>
+			</column>
+			<column name="finalized" type="bool" jt="-7" mandatory="y" >
+				<defo>&#039;F&#039;</defo>
+			</column>
+			<index name="pk_lane_information" unique="UNIQUE" >
+				<column name="run_prefix" />
+			</index>
+			<index name="idx_lane_information" unique="NORMAL" >
+				<column name="run_id" />
+			</index>
+			<index name="idx_lane_information_0" unique="PRIMARY_KEY" >
+				<column name="run_id" />
+				<column name="run_prefix" />
+			</index>
+			<fk name="fk_lane_information" to_schema="barcodes" to_table="run_information" >
+				<fk_column name="run_id" pk="run_id" />
+			</fk>
+		</table>
 		<table name="master_mix" >
 			<column name="master_mix_id" type="bigserial" jt="-5" mandatory="y" />
 			<column name="company" type="integer" jt="4" mandatory="y" />
@@ -1006,36 +1029,32 @@
 				<fk_column name="pcr_robot" pk="robot_name" />
 			</fk>
 		</table>
-		<table name="pcr_plate_run" >
-			<column name="run_id" type="bigint" jt="-5" mandatory="y" />
+		<table name="pcr_plate_lane" >
+			<column name="run_prefix" type="varchar" jt="12" mandatory="y" />
 			<column name="barcode" type="varchar" jt="12" mandatory="y" />
 			<column name="nickname" type="varchar" length="100" jt="12" mandatory="y" />
-			<column name="run_prefix" type="varchar" jt="12" mandatory="y" >
-				<comment><![CDATA[Name for the lane on the run]]></comment>
-			</column>
-			<column name="center_project_name" type="varchar" length="100" jt="12" mandatory="y" />
-			<index name="idx_pcr_plate_run" unique="NORMAL" >
-				<column name="run_id" />
-			</index>
-			<index name="idx_pcr_plate_run_0" unique="NORMAL" >
+			<index name="idx_pcr_plate_lane_0" unique="NORMAL" >
 				<column name="barcode" />
 			</index>
-			<index name="idx_pcr_plate_run_1" unique="NORMAL" >
+			<index name="idx_pcr_plate_lane_1" unique="NORMAL" >
 				<column name="nickname" />
 			</index>
-			<index name="pk_pcr_plate_run" unique="PRIMARY_KEY" >
-				<column name="run_id" />
+			<index name="idx_pcr_plate_lane" unique="NORMAL" >
+				<column name="run_prefix" />
+			</index>
+			<index name="pk_pcr_plate_lane" unique="PRIMARY_KEY" >
+				<column name="run_prefix" />
 				<column name="barcode" />
 				<column name="nickname" />
 			</index>
-			<fk name="fk_pcr_plate_run" to_schema="barcodes" to_table="run_information" >
-				<fk_column name="run_id" pk="run_id" />
-			</fk>
 			<fk name="fk_pcr_plate_run_0" to_schema="barcodes" to_table="pcr_plate" >
 				<fk_column name="barcode" pk="barcode" />
 			</fk>
 			<fk name="fk_pcr_plate_run_1" to_schema="barcodes" to_table="pcr_plate" >
 				<fk_column name="nickname" pk="nickname" />
+			</fk>
+			<fk name="fk_pcr_plate_run_2" to_schema="barcodes" to_table="lane_information" >
+				<fk_column name="run_prefix" pk="run_prefix" />
 			</fk>
 		</table>
 		<table name="person" >
@@ -22969,26 +22988,27 @@ AS $function$xpath_exists$function$
 		</group>
 	</layout>
 	<layout id="Layout_345a537d" name="barcodes" joined_routing="y" show_column_type="y" show_relation_columns="y" >
-		<entity schema="barcodes" name="project_barcode" color="b7c8e3" x="585" y="60" />
-		<entity schema="barcodes" name="water" color="b7c8e3" x="1035" y="555" />
-		<entity schema="barcodes" name="master_mix" color="b7c8e3" x="1050" y="435" />
-		<entity schema="barcodes" name="project" color="b7c8e3" x="570" y="150" />
-		<entity schema="barcodes" name="extraction_kit" color="b7c8e3" x="1065" y="315" />
-		<entity schema="barcodes" name="plate_sample" color="b7c8e3" x="825" y="105" />
-		<entity schema="barcodes" name="person" color="b7c8e3" x="330" y="405" />
+		<entity schema="barcodes" name="project_barcode" color="b7c8e3" x="615" y="60" />
+		<entity schema="barcodes" name="water" color="b7c8e3" x="1065" y="555" />
+		<entity schema="barcodes" name="master_mix" color="b7c8e3" x="1080" y="435" />
+		<entity schema="barcodes" name="project" color="b7c8e3" x="600" y="150" />
+		<entity schema="barcodes" name="extraction_kit" color="b7c8e3" x="1095" y="315" />
+		<entity schema="barcodes" name="plate_sample" color="b7c8e3" x="855" y="105" />
+		<entity schema="barcodes" name="person" color="b7c8e3" x="360" y="405" />
 		<entity schema="barcodes" name="sequencer" color="b7c8e3" x="45" y="750" />
-		<entity schema="barcodes" name="protocol" color="b7c8e3" x="60" y="435" />
-		<entity schema="barcodes" name="barcode_exceptions" color="b7c8e3" x="75" y="270" />
-		<entity schema="barcodes" name="primer_plate" color="b7c8e3" x="60" y="585" />
-		<entity schema="barcodes" name="water_lot" color="b7c8e3" x="825" y="555" />
-		<entity schema="barcodes" name="master_mix_lot" color="b7c8e3" x="825" y="435" />
-		<entity schema="barcodes" name="ext_kit_lot" color="b7c8e3" x="825" y="315" />
-		<entity schema="barcodes" name="robot" color="b7c8e3" x="285" y="285" />
-		<entity schema="barcodes" name="primer_plate_lot" color="b7c8e3" x="300" y="585" />
-		<entity schema="barcodes" name="pcr_plate" color="b7c8e3" x="555" y="465" />
-		<entity schema="barcodes" name="extraction_plate" color="b7c8e3" x="555" y="255" />
-		<entity schema="barcodes" name="barcode" color="b7c8e3" x="165" y="45" />
+		<entity schema="barcodes" name="protocol" color="b7c8e3" x="90" y="435" />
+		<entity schema="barcodes" name="barcode_exceptions" color="b7c8e3" x="105" y="270" />
+		<entity schema="barcodes" name="primer_plate" color="b7c8e3" x="90" y="585" />
+		<entity schema="barcodes" name="water_lot" color="b7c8e3" x="855" y="555" />
+		<entity schema="barcodes" name="master_mix_lot" color="b7c8e3" x="855" y="435" />
+		<entity schema="barcodes" name="ext_kit_lot" color="b7c8e3" x="855" y="315" />
+		<entity schema="barcodes" name="robot" color="b7c8e3" x="315" y="285" />
+		<entity schema="barcodes" name="primer_plate_lot" color="b7c8e3" x="330" y="585" />
+		<entity schema="barcodes" name="pcr_plate" color="b7c8e3" x="585" y="465" />
+		<entity schema="barcodes" name="extraction_plate" color="b7c8e3" x="585" y="255" />
+		<entity schema="barcodes" name="barcode" color="b7c8e3" x="195" y="45" />
 		<entity schema="barcodes" name="run_information" color="b7c8e3" x="285" y="705" />
-		<entity schema="barcodes" name="pcr_plate_run" color="b7c8e3" x="525" y="690" />
+		<entity schema="barcodes" name="pcr_plate_lane" color="b7c8e3" x="720" y="720" />
+		<entity schema="barcodes" name="lane_information" color="b7c8e3" x="510" y="705" />
 	</layout>
 </project>

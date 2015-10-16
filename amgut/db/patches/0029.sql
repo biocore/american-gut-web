@@ -56,15 +56,28 @@ COMMENT ON COLUMN barcodes.protocol.template_dna IS 'Template DNA added, in uL';
 
 CREATE TABLE barcodes.run_information ( 
 	run_id               bigserial  NOT NULL,
-	run_name             varchar(100)  NOT NULL UNIQUE,
+	run_name             varchar(100)  NOT NULL,
 	sequencer_id         bigint  NOT NULL,
 	created_on           timestamp DEFAULT current_timestamp NOT NULL,
 	run_date             date  ,
 	finalized            bool DEFAULT 'F' NOT NULL,
-	CONSTRAINT pk_run_information PRIMARY KEY ( run_id )
+	CONSTRAINT pk_run_information PRIMARY KEY ( run_id ),
+	CONSTRAINT idx_run_information_0 UNIQUE ( run_name ) 
  );
 CREATE INDEX idx_run_information ON barcodes.run_information ( sequencer_id );
 ALTER TABLE barcodes.run_information ADD CONSTRAINT fk_run_information FOREIGN KEY ( sequencer_id ) REFERENCES barcodes.sequencer( sequencer_id );
+
+CREATE TABLE barcodes.lane_information ( 
+	run_id               integer  NOT NULL,
+	run_prefix           varchar  NOT NULL,
+	finalized            bool DEFAULT 'F' NOT NULL,
+	CONSTRAINT pk_lane_information UNIQUE ( run_prefix ) ,
+	CONSTRAINT idx_lane_information_0 PRIMARY KEY ( run_id, run_prefix )
+ );
+CREATE INDEX idx_lane_information ON barcodes.lane_information ( run_id );
+COMMENT ON TABLE barcodes.lane_information IS 'Name for the lane on the run';
+COMMENT ON COLUMN barcodes.lane_information.run_prefix IS 'Name for the lane on the run';
+ALTER TABLE barcodes.lane_information ADD CONSTRAINT fk_lane_information FOREIGN KEY ( run_id ) REFERENCES barcodes.run_information( run_id );
 
 CREATE TABLE barcodes.water ( 
 	water_id             bigserial  NOT NULL,
@@ -198,21 +211,18 @@ ALTER TABLE barcodes.pcr_plate ADD CONSTRAINT fk_pcr_plate_1 FOREIGN KEY ( maste
 ALTER TABLE barcodes.pcr_plate ADD CONSTRAINT fk_pcr_plate_2 FOREIGN KEY ( water_lot ) REFERENCES barcodes.water_lot( water_lot );
 ALTER TABLE barcodes.pcr_plate ADD CONSTRAINT fk_pcr_plate_3 FOREIGN KEY ( pcr_robot ) REFERENCES barcodes.robot( robot_name );
 
-CREATE TABLE barcodes.pcr_plate_run ( 
-	run_id               bigint  NOT NULL,
+CREATE TABLE barcodes.pcr_plate_lane ( 
+	run_prefix           varchar  NOT NULL,
 	barcode              varchar  NOT NULL,
 	nickname             varchar(100)  NOT NULL,
-	run_prefix           varchar  NOT NULL,
-	center_project_name  varchar(100)  NOT NULL,
-	CONSTRAINT pk_pcr_plate_run PRIMARY KEY ( run_id, barcode, nickname )
+	CONSTRAINT pk_pcr_plate_lane PRIMARY KEY ( barcode, nickname, run_prefix )
  );
-COMMENT ON COLUMN barcodes.pcr_plate_run.run_prefix IS 'Name for the lane on the run';
-CREATE INDEX idx_pcr_plate_run ON barcodes.pcr_plate_run ( run_id );
-CREATE INDEX idx_pcr_plate_run_0 ON barcodes.pcr_plate_run ( barcode );
-CREATE INDEX idx_pcr_plate_run_1 ON barcodes.pcr_plate_run ( nickname );
-ALTER TABLE barcodes.pcr_plate_run ADD CONSTRAINT fk_pcr_plate_run FOREIGN KEY ( run_id ) REFERENCES barcodes.run_information( run_id );
-ALTER TABLE barcodes.pcr_plate_run ADD CONSTRAINT fk_pcr_plate_run_0 FOREIGN KEY ( barcode ) REFERENCES barcodes.pcr_plate( barcode );
-ALTER TABLE barcodes.pcr_plate_run ADD CONSTRAINT fk_pcr_plate_run_1 FOREIGN KEY ( nickname ) REFERENCES barcodes.pcr_plate( nickname );
+CREATE INDEX idx_pcr_plate_lane_0 ON barcodes.pcr_plate_lane ( barcode );
+CREATE INDEX idx_pcr_plate_lane_1 ON barcodes.pcr_plate_lane ( nickname );
+CREATE INDEX idx_pcr_plate_lane ON barcodes.pcr_plate_lane ( run_prefix );
+ALTER TABLE barcodes.pcr_plate_lane ADD CONSTRAINT fk_pcr_plate_lane_0 FOREIGN KEY ( barcode ) REFERENCES barcodes.pcr_plate( barcode );
+ALTER TABLE barcodes.pcr_plate_lane ADD CONSTRAINT fk_pcr_plate_lane_1 FOREIGN KEY ( nickname ) REFERENCES barcodes.pcr_plate( nickname );
+ALTER TABLE barcodes.pcr_plate_lane ADD CONSTRAINT fk_pcr_plate_lane_2 FOREIGN KEY ( run_prefix ) REFERENCES barcodes.lane_information( run_prefix );
 
 CREATE TABLE barcodes.plate_sample ( 
 	barcode              varchar  NOT NULL,
