@@ -39,6 +39,7 @@ CREATE TABLE barcodes.sequencer (
 	platform             platforms  NOT NULL,
 	instrument_model     instrument_models  NOT NULL,
 	sequencing_method    varchar  NOT NULL,
+	lanes                integer  NOT NULL,
 	CONSTRAINT pk_sequencer PRIMARY KEY ( sequencer_id )
  );
 

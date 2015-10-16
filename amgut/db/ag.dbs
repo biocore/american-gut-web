@@ -1213,6 +1213,7 @@
 			<column name="platform" type="varchar" jt="12" mandatory="y" />
 			<column name="instrument_model" type="varchar" jt="12" mandatory="y" />
 			<column name="sequencing_method" type="varchar" jt="12" mandatory="y" />
+			<column name="lanes" type="integer" jt="4" mandatory="y" />
 			<index name="pk_sequencer" unique="PRIMARY_KEY" >
 				<column name="sequencer_id" />
 			</index>
@@ -22995,7 +22996,6 @@ AS $function$xpath_exists$function$
 		<entity schema="barcodes" name="extraction_kit" color="b7c8e3" x="1095" y="315" />
 		<entity schema="barcodes" name="plate_sample" color="b7c8e3" x="855" y="105" />
 		<entity schema="barcodes" name="person" color="b7c8e3" x="360" y="405" />
-		<entity schema="barcodes" name="sequencer" color="b7c8e3" x="45" y="750" />
 		<entity schema="barcodes" name="protocol" color="b7c8e3" x="90" y="435" />
 		<entity schema="barcodes" name="barcode_exceptions" color="b7c8e3" x="105" y="270" />
 		<entity schema="barcodes" name="primer_plate" color="b7c8e3" x="90" y="585" />
@@ -23010,5 +23010,6 @@ AS $function$xpath_exists$function$
 		<entity schema="barcodes" name="run_information" color="b7c8e3" x="285" y="705" />
 		<entity schema="barcodes" name="pcr_plate_lane" color="b7c8e3" x="720" y="720" />
 		<entity schema="barcodes" name="lane_information" color="b7c8e3" x="510" y="705" />
+		<entity schema="barcodes" name="sequencer" color="b7c8e3" x="45" y="750" />
 	</layout>
 </project>
