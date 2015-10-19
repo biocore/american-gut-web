@@ -10,14 +10,14 @@ COMMENT ON COLUMN barcodes.barcode.priority IS 'Whether barcode is in priority q
 ALTER TABLE barcodes.barcode ADD COLUMN priority_reason varchar;
 ALTER TABLE barcodes.project ADD description varchar  NOT NULL DEFAULT '';
 
-CREATE TYPE instrument_models AS ENUM ('Genome Analyzer', 'Genome Analyzer II', 'Genome Analyzer Ix', 'HiSeq 2500', 'HiSeq 2000', 'HiSeq 1500', 'HiSeq 1000', 'MiSeq', 'HiScanSQ', 'HiSeq X Ten', 'NextSeq 500', 'GS', 'GS 20', 'GS FLX', 'GS FLX+', 'GS FLX Titanium', 'GS Junior', 'unspecified');
-CREATE TYPE platforms AS ENUM ('Illumina', '454');
-CREATE TYPE target_subfragments AS ENUM ('V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'ITS1', 'ITS2');
+CREATE TYPE sequencer_instrument_model AS ENUM ('Genome Analyzer', 'Genome Analyzer II', 'Genome Analyzer Ix', 'HiSeq 2500', 'HiSeq 2000', 'HiSeq 1500', 'HiSeq 1000', 'MiSeq', 'HiScanSQ', 'HiSeq X Ten', 'NextSeq 500', 'GS', 'GS 20', 'GS FLX', 'GS FLX+', 'GS FLX Titanium', 'GS Junior', 'unspecified');
+CREATE TYPE sequencer_platform AS ENUM ('Illumina', '454');
+CREATE TYPE protocol_target_subfragment AS ENUM ('V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'ITS1', 'ITS2');
 
-CREATE TYPE robot_types AS ENUM ('kingfisher', 'eppendorf');
-CREATE TYPE ext_robot_tools AS ENUM ('4090642', '109383A', '110737B', '311169B', '110728B', '1083792', '311172B');
-CREATE TYPE tools_300 AS ENUM ('311318B', '311313B', '2084842', '109520A', '311466B', '3076189', '109375A');
-CREATE TYPE tools_50 AS ENUM ('311426B', '110705B', '109257A', '311441B', '110698B', '1083642', '4091722');
+CREATE TYPE robot_robot_type AS ENUM ('kingfisher', 'eppendorf');
+CREATE TYPE extraction_plate_ext_robot_tool AS ENUM ('4090642', '109383A', '110737B', '311169B', '110728B', '1083792', '311172B');
+CREATE TYPE pcr_plate_tool_300_8 AS ENUM ('311318B', '311313B', '2084842', '109520A', '311466B', '3076189', '109375A');
+CREATE TYPE pcr_plate_tool_50_8 AS ENUM ('311426B', '110705B', '109257A', '311441B', '110698B', '1083642', '4091722');
 
 CREATE TABLE barcodes.person ( 
 	person_id            bigint  NOT NULL,
@@ -29,15 +29,15 @@ CREATE TABLE barcodes.person (
 
 CREATE TABLE barcodes.robot ( 
 	robot_name           varchar(100)  NOT NULL,
-	robot_type           robot_types  NOT NULL,
+	robot_type           robot_robot_type  NOT NULL,
 	date_added           date DEFAULT current_date NOT NULL,
 	CONSTRAINT pk_robot PRIMARY KEY ( robot_name )
  );
 
 CREATE TABLE barcodes.sequencer ( 
 	sequencer_id         bigserial  NOT NULL,
-	platform             platforms  NOT NULL,
-	instrument_model     instrument_models  NOT NULL,
+	platform             sequencer_platform  NOT NULL,
+	instrument_model     sequencer_instrument_model  NOT NULL,
 	sequencing_method    varchar  NOT NULL,
 	lanes                integer  NOT NULL,
 	CONSTRAINT pk_sequencer PRIMARY KEY ( sequencer_id )
@@ -47,7 +47,7 @@ CREATE TABLE barcodes.protocol (
 	protocol             varchar(100)  NOT NULL,
 	template_dna         integer  NOT NULL,
 	target_gene          varchar  NOT NULL,
-	target_subfragment   target_subfragments  NOT NULL,
+	target_subfragment   protocol_target_subfragment  NOT NULL,
 	linker               varchar  NOT NULL,
 	pcr_primers          varchar  NOT NULL,
 	CONSTRAINT pk_protocol PRIMARY KEY ( protocol )
@@ -118,7 +118,7 @@ CREATE TABLE barcodes.extraction_plate (
 	barcode              varchar  NOT NULL,
 	nickname             varchar(50)  NOT NULL,
 	ext_robot            varchar  NOT NULL,
-	ext_robot_tool       ext_robot_tools  NOT NULL,
+	ext_robot_tool       extraction_plate_ext_robot_tool  NOT NULL,
 	kf_robot             varchar  NOT NULL,
 	ext_kit_lot          varchar  NOT NULL,
 	person_id            bigint  NOT NULL,
@@ -190,8 +190,8 @@ CREATE TABLE barcodes.pcr_plate (
 	master_mix_lot       varchar  NOT NULL,
 	water_lot            varchar  NOT NULL,
 	pcr_robot            varchar  NOT NULL,
-	tool_300_8           tools_300  NOT NULL,
-	tool_50_8            tools_50  NOT NULL,
+	tool_300_8           pcr_plate_tool_300_8  NOT NULL,
+	tool_50_8            pcr_plate_tool_50_8  NOT NULL,
 	person_id            bigint  NOT NULL,
 	pcr_created          timestamp DEFAULT current_timestamp NOT NULL,
 	CONSTRAINT pkey_pcr_plate PRIMARY KEY ( barcode, nickname ),
