@@ -231,9 +231,8 @@ class AGDataAccess(object):
             Non-UUID4 value sent as ag_login_id
         """
         with TRN:
-            uuid_check = UUID(ag_login_id)
-            if not uuid_check.version == 4:
-                raise ValueError("Non-UUID4 value passed: %s" % ag_login_id)
+            # make sure properly formatted UUID passed in
+            UUID(ag_login_id, version=4)
 
             printresults = self.checkPrintResults(supplied_kit_id)
             # make sure login_id and skid exists
