@@ -228,9 +228,9 @@ ALTER TABLE barcodes.pcr_plate_lane ADD CONSTRAINT fk_pcr_plate_lane_2 FOREIGN K
 CREATE TABLE barcodes.plate_sample ( 
 	barcode              varchar  NOT NULL,
 	well                 varchar(3)  NOT NULL,
-	sample               varchar  NOT NULL,
-	project_id           bigint  NOT NULL,
-	sample_size          float8  NOT NULL,
+	sample               varchar,
+	project_id           bigint,
+	sample_size          float8,
 	CONSTRAINT pkey_plate_barcode_1 PRIMARY KEY ( barcode, well )
  );
 CREATE INDEX idx_plate_barcode ON barcodes.plate_sample ( well );
