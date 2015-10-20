@@ -361,14 +361,6 @@ pcr_plate ref robot ( pcr_robot -&gt; robot_name )</title>
 <path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)'     d='M 570 585 L 562,585 Q 555,585 555,577 L 555,330' ></path>
 <text x='518' y='580' transform='rotate(0 518,580)' title='Fk fk_pcr_plate_3
 pcr_plate ref robot ( pcr_robot -&gt; robot_name )' style='fill:#cfc391;'>pcr_robot</text>
-<!-- ============= Fk 'run_information_fk_run_information' ============= -->
-<path id='run_information_fk_run_information'  onmouseover="hghl(['run_information_fk_run_information','barcodes.run_information.sequencer_id','barcodes.sequencer.sequencer_id'])" onmouseout="uhghl(['run_information_fk_run_information','barcodes.run_information.sequencer_id','barcodes.sequencer.sequencer_id'])" transform='translate(7,0)' class='scene' d='M 270 765 L 262,765 Q 255,765 255,772 L 255,772 Q 255,780 247,780 L 240,780' >
-	<title>Fk fk_run_information
-run_information ref sequencer ( sequencer_id )</title>
-</path>
-<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 270 765 L 262,765 Q 255,765 255,772 L 255,772 Q 255,780 247,780 L 240,780' ></path>
-<text x='200' y='760' transform='rotate(0 200,760)' title='Fk fk_run_information
-run_information ref sequencer ( sequencer_id )' style='fill:#cfc391;'>sequencer_id</text>
 <!-- ============= Fk 'pcr_plate_lane_fk_pcr_plate_run_0' ============= -->
 <path id='pcr_plate_lane_fk_pcr_plate_run_0'  onmouseover="hghl(['pcr_plate_lane_fk_pcr_plate_run_0','barcodes.pcr_plate_lane.barcode','barcodes.pcr_plate.barcode'])" onmouseout="uhghl(['pcr_plate_lane_fk_pcr_plate_run_0','barcodes.pcr_plate_lane.barcode','barcodes.pcr_plate.barcode'])" transform='translate(7,0)' class='scene' d='M 885 765 L 892,765 Q 900,765 900,757 L 900,667 Q 900,660 892,660 L 772,660 Q 765,660 765,652 L 765,502 Q 765,495 757,495 L 750,495' >
 	<title>Fk fk_pcr_plate_run_0
@@ -457,6 +449,14 @@ extraction_plate ref robot ( kf_robot -&gt; robot_name )</title>
 <path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)'     d='M 570 345 L 562,345 Q 555,345 555,337 L 555,322 Q 555,315 547,315 L 540,315' ></path>
 <text x='526' y='340' transform='rotate(0 526,340)' title='Fk fk_extraction_plate_0
 extraction_plate ref robot ( kf_robot -&gt; robot_name )' style='fill:#cfc391;'>kf_robot</text>
+<!-- ============= Fk 'run_information_fk_run_information' ============= -->
+<path id='run_information_fk_run_information'  onmouseover="hghl(['run_information_fk_run_information','barcodes.run_information.sequencer_id','barcodes.sequencer.sequencer_id'])" onmouseout="uhghl(['run_information_fk_run_information','barcodes.run_information.sequencer_id','barcodes.sequencer.sequencer_id'])" transform='translate(7,0)' class='scene' d='M 270 765 L 262,765 Q 255,765 255,772 L 255,772 Q 255,780 247,780 L 240,780' >
+	<title>Fk fk_run_information
+run_information ref sequencer ( sequencer_id )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)' marker-end='url(#arrow1)'    d='M 270 765 L 262,765 Q 255,765 255,772 L 255,772 Q 255,780 247,780 L 240,780' ></path>
+<text x='200' y='760' transform='rotate(0 200,760)' title='Fk fk_run_information
+run_information ref sequencer ( sequencer_id )' style='fill:#cfc391;'>sequencer_id</text>
 <!-- ============= Table 'project_barcode' ============= -->
 <rect class='table' x='615' y='53' width='120' height='75' rx='7' ry='7' />
 <line class='delim' x1='615.500000' y1='79.500000' x2='734.500000' y2='79.500000'/>
@@ -473,42 +473,6 @@ extraction_plate ref robot ( kf_robot -&gt; robot_name )' style='fill:#cfc391;'>
 * char(9)</title></a>
 <a xlink:href='#project_barcode.barcode'><use id='fk' x='723' y='101' xlink:href='#fk'/><title>References barcode ( barcode ) </title></a>
 
-<!-- ============= Table 'water' ============= -->
-<rect class='table' x='1065' y='548' width='195' height='105' rx='7' ry='7' />
-<line class='delim' x1='1065.500000' y1='574.500000' x2='1259.500000' y2='574.500000'/>
-<line class='delim' x1='1080.500000' y1='574.500000' x2='1080.500000' y2='652.500000'/>
-<line class='delim' x1='1248.500000' y1='574.500000' x2='1248.500000' y2='652.500000'/>
-<path d='M 1065.50 574.50 L 1065.50 555.50 Q 1065.50 548.50 1072.50 548.50 L 1252.50 548.50 Q 1259.50 548.50 1259.50 555.50 L 1259.50 574.50 L1065.50 574.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
-<a xlink:href='#water'><text x='1145' y='566'>water</text><title>Table barcodes.water</title></a>
-  <use id='nn' x='1067' y='582' xlink:href='#nn'/><a xlink:href='#water.water_id'><use id='pk' x='1067' y='581' xlink:href='#pk'/><title>Unq pk_extraction_kit_1 ( water_id ) Pk pk_water ( water_id ) </title></a>
-<a xlink:href='#water.water_id'><text id='barcodes.water.water_id' x='1083' y='592' onmouseover="hghl(['water_lot_fk_water_lot'])" onmouseout="uhghl(['water_lot_fk_water_lot'])">water_id</text><text x='1245' y='592' text-anchor='end' class='colType'>bigserial</text><title>water_id
-* bigserial</title></a>
-<a xlink:href='#water.water_id'><use id='ref' x='1248' y='581' xlink:href='#ref'/><title>Referred by water_lot ( water_id ) </title></a>
-  <use id='nn' x='1067' y='597' xlink:href='#nn'/><a xlink:href='#water.company'><text id='barcodes.water.company' x='1083' y='607'>company</text><text x='1245' y='607' text-anchor='end' class='colType'>integer</text><title>company
-* integer</title></a>
-  <use id='nn' x='1067' y='612' xlink:href='#nn'/><a xlink:href='#water.product_name'><text id='barcodes.water.product_name' x='1083' y='622'>product_name</text><text x='1245' y='622' text-anchor='end' class='colType'>varchar(100)</text><title>product_name
-* varchar(100)</title></a>
-  <use id='nn' x='1067' y='627' xlink:href='#nn'/><a xlink:href='#water.product_number'><text id='barcodes.water.product_number' x='1083' y='637'>product_number</text><text x='1245' y='637' text-anchor='end' class='colType'>varchar</text><title>product_number
-* varchar</title></a>
-
-<!-- ============= Table 'master_mix' ============= -->
-<rect class='table' x='1080' y='428' width='195' height='105' rx='7' ry='7' />
-<line class='delim' x1='1080.500000' y1='454.500000' x2='1274.500000' y2='454.500000'/>
-<line class='delim' x1='1095.500000' y1='454.500000' x2='1095.500000' y2='532.500000'/>
-<line class='delim' x1='1263.500000' y1='454.500000' x2='1263.500000' y2='532.500000'/>
-<path d='M 1080.50 454.50 L 1080.50 435.50 Q 1080.50 428.50 1087.50 428.50 L 1267.50 428.50 Q 1274.50 428.50 1274.50 435.50 L 1274.50 454.50 L1080.50 454.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
-<a xlink:href='#master_mix'><text x='1143' y='446'>master_mix</text><title>Table barcodes.master_mix</title></a>
-  <use id='nn' x='1082' y='462' xlink:href='#nn'/><a xlink:href='#master_mix.master_mix_id'><use id='pk' x='1082' y='461' xlink:href='#pk'/><title>Unq pk_extraction_kit_0 ( master_mix_id ) Pk pk_master_mix ( master_mix_id ) </title></a>
-<a xlink:href='#master_mix.master_mix_id'><text id='barcodes.master_mix.master_mix_id' x='1098' y='472' onmouseover="hghl(['master_mix_lot_fk_master_mix_lot'])" onmouseout="uhghl(['master_mix_lot_fk_master_mix_lot'])">master_mix_id</text><text x='1260' y='472' text-anchor='end' class='colType'>bigserial</text><title>master_mix_id
-* bigserial</title></a>
-<a xlink:href='#master_mix.master_mix_id'><use id='ref' x='1263' y='461' xlink:href='#ref'/><title>Referred by master_mix_lot ( master_mix_id ) </title></a>
-  <use id='nn' x='1082' y='477' xlink:href='#nn'/><a xlink:href='#master_mix.company'><text id='barcodes.master_mix.company' x='1098' y='487'>company</text><text x='1260' y='487' text-anchor='end' class='colType'>integer</text><title>company
-* integer</title></a>
-  <use id='nn' x='1082' y='492' xlink:href='#nn'/><a xlink:href='#master_mix.product_name'><text id='barcodes.master_mix.product_name' x='1098' y='502'>product_name</text><text x='1260' y='502' text-anchor='end' class='colType'>varchar(100)</text><title>product_name
-* varchar(100)</title></a>
-  <use id='nn' x='1082' y='507' xlink:href='#nn'/><a xlink:href='#master_mix.product_number'><text id='barcodes.master_mix.product_number' x='1098' y='517'>product_number</text><text x='1260' y='517' text-anchor='end' class='colType'>varchar</text><title>product_number
-* varchar</title></a>
-
 <!-- ============= Table 'project' ============= -->
 <rect class='table' x='600' y='143' width='150' height='90' rx='7' ry='7' />
 <line class='delim' x1='600.500000' y1='169.500000' x2='749.500000' y2='169.500000'/>
@@ -524,24 +488,6 @@ Referred by project_barcode ( project_id ) </title></a>
   <a xlink:href='#project.project'><text id='barcodes.project.project' x='618' y='202'>project</text><text x='735' y='202' text-anchor='end' class='colType'>varchar(1000)</text><title>project
 varchar(1000)</title></a>
   <use id='nn' x='602' y='207' xlink:href='#nn'/><a xlink:href='#project.description'><text id='barcodes.project.description' x='618' y='217'>description</text><text x='735' y='217' text-anchor='end' class='colType'>varchar</text><title>description
-* varchar</title></a>
-
-<!-- ============= Table 'extraction_kit' ============= -->
-<rect class='table' x='1095' y='308' width='195' height='105' rx='7' ry='7' />
-<line class='delim' x1='1095.500000' y1='334.500000' x2='1289.500000' y2='334.500000'/>
-<line class='delim' x1='1110.500000' y1='334.500000' x2='1110.500000' y2='412.500000'/>
-<line class='delim' x1='1278.500000' y1='334.500000' x2='1278.500000' y2='412.500000'/>
-<path d='M 1095.50 334.50 L 1095.50 315.50 Q 1095.50 308.50 1102.50 308.50 L 1282.50 308.50 Q 1289.50 308.50 1289.50 315.50 L 1289.50 334.50 L1095.50 334.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
-<a xlink:href='#extraction_kit'><text x='1152' y='326'>extraction_kit</text><title>Table barcodes.extraction_kit</title></a>
-  <use id='nn' x='1097' y='342' xlink:href='#nn'/><a xlink:href='#extraction_kit.extraction_kit_id'><use id='pk' x='1097' y='341' xlink:href='#pk'/><title>Unq pk_extraction_kit ( extraction_kit_id ) Pk pk_extraction_kit_2 ( extraction_kit_id ) </title></a>
-<a xlink:href='#extraction_kit.extraction_kit_id'><text id='barcodes.extraction_kit.extraction_kit_id' x='1113' y='352' onmouseover="hghl(['ext_kit_lot_fk_ext_kit_lot'])" onmouseout="uhghl(['ext_kit_lot_fk_ext_kit_lot'])">extraction_kit_id</text><text x='1275' y='352' text-anchor='end' class='colType'>bigserial</text><title>extraction_kit_id
-* bigserial</title></a>
-<a xlink:href='#extraction_kit.extraction_kit_id'><use id='ref' x='1278' y='341' xlink:href='#ref'/><title>Referred by ext_kit_lot ( extraction_kit_id ) </title></a>
-  <use id='nn' x='1097' y='357' xlink:href='#nn'/><a xlink:href='#extraction_kit.company'><text id='barcodes.extraction_kit.company' x='1113' y='367'>company</text><text x='1275' y='367' text-anchor='end' class='colType'>integer</text><title>company
-* integer</title></a>
-  <use id='nn' x='1097' y='372' xlink:href='#nn'/><a xlink:href='#extraction_kit.product_name'><text id='barcodes.extraction_kit.product_name' x='1113' y='382'>product_name</text><text x='1275' y='382' text-anchor='end' class='colType'>varchar(100)</text><title>product_name
-* varchar(100)</title></a>
-  <use id='nn' x='1097' y='387' xlink:href='#nn'/><a xlink:href='#extraction_kit.product_number'><text id='barcodes.extraction_kit.product_number' x='1113' y='397'>product_number</text><text x='1275' y='397' text-anchor='end' class='colType'>varchar</text><title>product_number
 * varchar</title></a>
 
 <!-- ============= Table 'person' ============= -->
@@ -772,31 +718,6 @@ Whether barcode is in priority queue</title></a>
   <a xlink:href='#barcode.priority_reason'><text id='barcodes.barcode.priority_reason' x='213' y='232'>priority_reason</text><text x='390' y='232' text-anchor='end' class='colType'>varchar</text><title>priority_reason
 varchar</title></a>
 
-<!-- ============= Table 'run_information' ============= -->
-<rect class='table' x='285' y='698' width='165' height='135' rx='7' ry='7' />
-<line class='delim' x1='285.500000' y1='724.500000' x2='449.500000' y2='724.500000'/>
-<line class='delim' x1='300.500000' y1='724.500000' x2='300.500000' y2='832.500000'/>
-<line class='delim' x1='438.500000' y1='724.500000' x2='438.500000' y2='832.500000'/>
-<path d='M 285.50 724.50 L 285.50 705.50 Q 285.50 698.50 292.50 698.50 L 442.50 698.50 Q 449.50 698.50 449.50 705.50 L 449.50 724.50 L285.50 724.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
-<a xlink:href='#run_information'><text x='320' y='716'>run_information</text><title>Table barcodes.run_information</title></a>
-  <use id='nn' x='287' y='732' xlink:href='#nn'/><a xlink:href='#run_information.run_id'><use id='pk' x='287' y='731' xlink:href='#pk'/><title>Pk pk_run_information ( run_id ) </title></a>
-<a xlink:href='#run_information.run_id'><text id='barcodes.run_information.run_id' x='303' y='742' onmouseover="hghl(['lane_information_fk_lane_information'])" onmouseout="uhghl(['lane_information_fk_lane_information'])">run_id</text><text x='435' y='742' text-anchor='end' class='colType'>bigserial</text><title>run_id
-* bigserial</title></a>
-<a xlink:href='#run_information.run_id'><use id='ref' x='438' y='731' xlink:href='#ref'/><title>Referred by lane_information ( run_id ) </title></a>
-  <use id='nn' x='287' y='747' xlink:href='#nn'/><a xlink:href='#run_information.run_name'><use id='unq' x='287' y='746' xlink:href='#unq'/><title>Unq idx_run_information_0 ( run_name ) </title></a>
-<a xlink:href='#run_information.run_name'><text id='barcodes.run_information.run_name' x='303' y='757'>run_name</text><text x='435' y='757' text-anchor='end' class='colType'>varchar(100)</text><title>run_name
-* varchar(100)</title></a>
-  <use id='nn' x='287' y='762' xlink:href='#nn'/><a xlink:href='#run_information.sequencer_id'><use id='idx' x='287' y='761' xlink:href='#idx'/><title>idx_run_information ( sequencer_id ) </title></a>
-<a xlink:href='#run_information.sequencer_id'><text id='barcodes.run_information.sequencer_id' x='303' y='772' onmouseover="hghl(['run_information_fk_run_information'])" onmouseout="uhghl(['run_information_fk_run_information'])">sequencer_id</text><text x='435' y='772' text-anchor='end' class='colType'>bigint</text><title>sequencer_id
-* bigint</title></a>
-<a xlink:href='#run_information.sequencer_id'><use id='fk' x='438' y='761' xlink:href='#fk'/><title>References sequencer ( sequencer_id ) </title></a>
-  <use id='nn' x='287' y='777' xlink:href='#nn'/><a xlink:href='#run_information.created_on'><text id='barcodes.run_information.created_on' x='303' y='787'>created_on</text><text x='435' y='787' text-anchor='end' class='colType'>timestamp</text><title>created_on
-* timestamp default current_timestamp</title></a>
-  <a xlink:href='#run_information.run_date'><text id='barcodes.run_information.run_date' x='303' y='802'>run_date</text><text x='435' y='802' text-anchor='end' class='colType'>date</text><title>run_date
-date</title></a>
-  <use id='nn' x='287' y='807' xlink:href='#nn'/><a xlink:href='#run_information.finalized'><text id='barcodes.run_information.finalized' x='303' y='817'>finalized</text><text x='435' y='817' text-anchor='end' class='colType'>bool</text><title>finalized
-* bool default 'F'</title></a>
-
 <!-- ============= Table 'pcr_plate_lane' ============= -->
 <rect class='table' x='720' y='713' width='165' height='90' rx='7' ry='7' />
 <line class='delim' x1='720.500000' y1='739.500000' x2='884.500000' y2='739.500000'/>
@@ -953,6 +874,87 @@ Whether the plate map is complete or still being filled.</title></a>
   <a xlink:href='#extraction_plate.ext_finalized'><text id='barcodes.extraction_plate.ext_finalized' x='603' y='427'>ext_finalized</text><text x='735' y='427' text-anchor='end' class='colType'>timestamp</text><title>ext_finalized
 timestamp</title></a>
 
+<!-- ============= Table 'extraction_kit' ============= -->
+<rect class='table' x='1095' y='308' width='195' height='105' rx='7' ry='7' />
+<line class='delim' x1='1095.500000' y1='334.500000' x2='1289.500000' y2='334.500000'/>
+<line class='delim' x1='1110.500000' y1='334.500000' x2='1110.500000' y2='412.500000'/>
+<line class='delim' x1='1278.500000' y1='334.500000' x2='1278.500000' y2='412.500000'/>
+<path d='M 1095.50 334.50 L 1095.50 315.50 Q 1095.50 308.50 1102.50 308.50 L 1282.50 308.50 Q 1289.50 308.50 1289.50 315.50 L 1289.50 334.50 L1095.50 334.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#extraction_kit'><text x='1152' y='326'>extraction_kit</text><title>Table barcodes.extraction_kit</title></a>
+  <use id='nn' x='1097' y='342' xlink:href='#nn'/><a xlink:href='#extraction_kit.extraction_kit_id'><use id='pk' x='1097' y='341' xlink:href='#pk'/><title>Unq pk_extraction_kit ( extraction_kit_id ) Pk pk_extraction_kit_2 ( extraction_kit_id ) </title></a>
+<a xlink:href='#extraction_kit.extraction_kit_id'><text id='barcodes.extraction_kit.extraction_kit_id' x='1113' y='352' onmouseover="hghl(['ext_kit_lot_fk_ext_kit_lot'])" onmouseout="uhghl(['ext_kit_lot_fk_ext_kit_lot'])">extraction_kit_id</text><text x='1275' y='352' text-anchor='end' class='colType'>bigserial</text><title>extraction_kit_id
+* bigserial</title></a>
+<a xlink:href='#extraction_kit.extraction_kit_id'><use id='ref' x='1278' y='341' xlink:href='#ref'/><title>Referred by ext_kit_lot ( extraction_kit_id ) </title></a>
+  <use id='nn' x='1097' y='357' xlink:href='#nn'/><a xlink:href='#extraction_kit.company'><text id='barcodes.extraction_kit.company' x='1113' y='367'>company</text><text x='1275' y='367' text-anchor='end' class='colType'>varchar</text><title>company
+* varchar</title></a>
+  <use id='nn' x='1097' y='372' xlink:href='#nn'/><a xlink:href='#extraction_kit.product_name'><text id='barcodes.extraction_kit.product_name' x='1113' y='382'>product_name</text><text x='1275' y='382' text-anchor='end' class='colType'>varchar(100)</text><title>product_name
+* varchar(100)</title></a>
+  <use id='nn' x='1097' y='387' xlink:href='#nn'/><a xlink:href='#extraction_kit.product_number'><text id='barcodes.extraction_kit.product_number' x='1113' y='397'>product_number</text><text x='1275' y='397' text-anchor='end' class='colType'>varchar</text><title>product_number
+* varchar</title></a>
+
+<!-- ============= Table 'master_mix' ============= -->
+<rect class='table' x='1080' y='428' width='195' height='105' rx='7' ry='7' />
+<line class='delim' x1='1080.500000' y1='454.500000' x2='1274.500000' y2='454.500000'/>
+<line class='delim' x1='1095.500000' y1='454.500000' x2='1095.500000' y2='532.500000'/>
+<line class='delim' x1='1263.500000' y1='454.500000' x2='1263.500000' y2='532.500000'/>
+<path d='M 1080.50 454.50 L 1080.50 435.50 Q 1080.50 428.50 1087.50 428.50 L 1267.50 428.50 Q 1274.50 428.50 1274.50 435.50 L 1274.50 454.50 L1080.50 454.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#master_mix'><text x='1143' y='446'>master_mix</text><title>Table barcodes.master_mix</title></a>
+  <use id='nn' x='1082' y='462' xlink:href='#nn'/><a xlink:href='#master_mix.master_mix_id'><use id='pk' x='1082' y='461' xlink:href='#pk'/><title>Unq pk_extraction_kit_0 ( master_mix_id ) Pk pk_master_mix ( master_mix_id ) </title></a>
+<a xlink:href='#master_mix.master_mix_id'><text id='barcodes.master_mix.master_mix_id' x='1098' y='472' onmouseover="hghl(['master_mix_lot_fk_master_mix_lot'])" onmouseout="uhghl(['master_mix_lot_fk_master_mix_lot'])">master_mix_id</text><text x='1260' y='472' text-anchor='end' class='colType'>bigserial</text><title>master_mix_id
+* bigserial</title></a>
+<a xlink:href='#master_mix.master_mix_id'><use id='ref' x='1263' y='461' xlink:href='#ref'/><title>Referred by master_mix_lot ( master_mix_id ) </title></a>
+  <use id='nn' x='1082' y='477' xlink:href='#nn'/><a xlink:href='#master_mix.company'><text id='barcodes.master_mix.company' x='1098' y='487'>company</text><text x='1260' y='487' text-anchor='end' class='colType'>varchar</text><title>company
+* varchar</title></a>
+  <use id='nn' x='1082' y='492' xlink:href='#nn'/><a xlink:href='#master_mix.product_name'><text id='barcodes.master_mix.product_name' x='1098' y='502'>product_name</text><text x='1260' y='502' text-anchor='end' class='colType'>varchar(100)</text><title>product_name
+* varchar(100)</title></a>
+  <use id='nn' x='1082' y='507' xlink:href='#nn'/><a xlink:href='#master_mix.product_number'><text id='barcodes.master_mix.product_number' x='1098' y='517'>product_number</text><text x='1260' y='517' text-anchor='end' class='colType'>varchar</text><title>product_number
+* varchar</title></a>
+
+<!-- ============= Table 'water' ============= -->
+<rect class='table' x='1065' y='548' width='195' height='105' rx='7' ry='7' />
+<line class='delim' x1='1065.500000' y1='574.500000' x2='1259.500000' y2='574.500000'/>
+<line class='delim' x1='1080.500000' y1='574.500000' x2='1080.500000' y2='652.500000'/>
+<line class='delim' x1='1248.500000' y1='574.500000' x2='1248.500000' y2='652.500000'/>
+<path d='M 1065.50 574.50 L 1065.50 555.50 Q 1065.50 548.50 1072.50 548.50 L 1252.50 548.50 Q 1259.50 548.50 1259.50 555.50 L 1259.50 574.50 L1065.50 574.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#water'><text x='1145' y='566'>water</text><title>Table barcodes.water</title></a>
+  <use id='nn' x='1067' y='582' xlink:href='#nn'/><a xlink:href='#water.water_id'><use id='pk' x='1067' y='581' xlink:href='#pk'/><title>Unq pk_extraction_kit_1 ( water_id ) Pk pk_water ( water_id ) </title></a>
+<a xlink:href='#water.water_id'><text id='barcodes.water.water_id' x='1083' y='592' onmouseover="hghl(['water_lot_fk_water_lot'])" onmouseout="uhghl(['water_lot_fk_water_lot'])">water_id</text><text x='1245' y='592' text-anchor='end' class='colType'>bigserial</text><title>water_id
+* bigserial</title></a>
+<a xlink:href='#water.water_id'><use id='ref' x='1248' y='581' xlink:href='#ref'/><title>Referred by water_lot ( water_id ) </title></a>
+  <use id='nn' x='1067' y='597' xlink:href='#nn'/><a xlink:href='#water.company'><text id='barcodes.water.company' x='1083' y='607'>company</text><text x='1245' y='607' text-anchor='end' class='colType'>varchar</text><title>company
+* varchar</title></a>
+  <use id='nn' x='1067' y='612' xlink:href='#nn'/><a xlink:href='#water.product_name'><text id='barcodes.water.product_name' x='1083' y='622'>product_name</text><text x='1245' y='622' text-anchor='end' class='colType'>varchar(100)</text><title>product_name
+* varchar(100)</title></a>
+  <use id='nn' x='1067' y='627' xlink:href='#nn'/><a xlink:href='#water.product_number'><text id='barcodes.water.product_number' x='1083' y='637'>product_number</text><text x='1245' y='637' text-anchor='end' class='colType'>varchar</text><title>product_number
+* varchar</title></a>
+
+<!-- ============= Table 'run_information' ============= -->
+<rect class='table' x='285' y='698' width='165' height='150' rx='7' ry='7' />
+<line class='delim' x1='285.500000' y1='724.500000' x2='449.500000' y2='724.500000'/>
+<line class='delim' x1='300.500000' y1='724.500000' x2='300.500000' y2='847.500000'/>
+<line class='delim' x1='438.500000' y1='724.500000' x2='438.500000' y2='847.500000'/>
+<path d='M 285.50 724.50 L 285.50 705.50 Q 285.50 698.50 292.50 698.50 L 442.50 698.50 Q 449.50 698.50 449.50 705.50 L 449.50 724.50 L285.50 724.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#run_information'><text x='320' y='716'>run_information</text><title>Table barcodes.run_information</title></a>
+  <use id='nn' x='287' y='732' xlink:href='#nn'/><a xlink:href='#run_information.run_id'><use id='pk' x='287' y='731' xlink:href='#pk'/><title>Pk pk_run_information ( run_id ) </title></a>
+<a xlink:href='#run_information.run_id'><text id='barcodes.run_information.run_id' x='303' y='742' onmouseover="hghl(['lane_information_fk_lane_information'])" onmouseout="uhghl(['lane_information_fk_lane_information'])">run_id</text><text x='435' y='742' text-anchor='end' class='colType'>bigserial</text><title>run_id
+* bigserial</title></a>
+<a xlink:href='#run_information.run_id'><use id='ref' x='438' y='731' xlink:href='#ref'/><title>Referred by lane_information ( run_id ) </title></a>
+  <use id='nn' x='287' y='747' xlink:href='#nn'/><a xlink:href='#run_information.run_name'><use id='unq' x='287' y='746' xlink:href='#unq'/><title>Unq idx_run_information_0 ( run_name ) </title></a>
+<a xlink:href='#run_information.run_name'><text id='barcodes.run_information.run_name' x='303' y='757'>run_name</text><text x='435' y='757' text-anchor='end' class='colType'>varchar(100)</text><title>run_name
+* varchar(100)</title></a>
+  <use id='nn' x='287' y='762' xlink:href='#nn'/><a xlink:href='#run_information.sequencer_id'><use id='idx' x='287' y='761' xlink:href='#idx'/><title>idx_run_information ( sequencer_id ) </title></a>
+<a xlink:href='#run_information.sequencer_id'><text id='barcodes.run_information.sequencer_id' x='303' y='772' onmouseover="hghl(['run_information_fk_run_information'])" onmouseout="uhghl(['run_information_fk_run_information'])">sequencer_id</text><text x='435' y='772' text-anchor='end' class='colType'>bigint</text><title>sequencer_id
+* bigint</title></a>
+<a xlink:href='#run_information.sequencer_id'><use id='fk' x='438' y='761' xlink:href='#fk'/><title>References sequencer ( sequencer_id ) </title></a>
+  <use id='nn' x='287' y='777' xlink:href='#nn'/><a xlink:href='#run_information.created_on'><text id='barcodes.run_information.created_on' x='303' y='787'>created_on</text><text x='435' y='787' text-anchor='end' class='colType'>timestamp</text><title>created_on
+* timestamp default current_timestamp</title></a>
+  <a xlink:href='#run_information.run_date'><text id='barcodes.run_information.run_date' x='303' y='802'>run_date</text><text x='435' y='802' text-anchor='end' class='colType'>date</text><title>run_date
+date</title></a>
+  <a xlink:href='#run_information.sequencer_serial'><text id='barcodes.run_information.sequencer_serial' x='303' y='817'>sequencer_serial</text><text x='435' y='817' text-anchor='end' class='colType'>varchar</text><title>sequencer_serial
+varchar</title></a>
+  <use id='nn' x='287' y='822' xlink:href='#nn'/><a xlink:href='#run_information.finalized'><text id='barcodes.run_information.finalized' x='303' y='832'>finalized</text><text x='435' y='832' text-anchor='end' class='colType'>bool</text><title>finalized
+* bool default 'F'</title></a>
+
 </g></svg>
 
 <br/><br/>
@@ -999,90 +1001,6 @@ timestamp</title></a>
 <br/><br/>
 <table class='bordered'>
 <thead>
-<tr><th colspan='4'><a name='water'>Table water</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td>*</td>
-		<td><a name='water.water_id'>water&#95;id</a></td>
-		<td> bigserial   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='water.company'>company</a></td>
-		<td> integer   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='water.product_name'>product&#95;name</a></td>
-		<td> varchar&#40; 100 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='water.product_number'>product&#95;number</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='4'><b>Indexes</b></th></tr>
-	<tr>		<td>U</td><td>pk&#95;extraction&#95;kit&#95;1</td>
-		<td> ON water&#95;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>Pk</td><td>pk&#95;water</td>
-		<td> ON water&#95;id</td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table class='bordered'>
-<thead>
-<tr><th colspan='4'><a name='master_mix'>Table master_mix</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td>*</td>
-		<td><a name='master_mix.master_mix_id'>master&#95;mix&#95;id</a></td>
-		<td> bigserial   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='master_mix.company'>company</a></td>
-		<td> integer   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='master_mix.product_name'>product&#95;name</a></td>
-		<td> varchar&#40; 100 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='master_mix.product_number'>product&#95;number</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='4'><b>Indexes</b></th></tr>
-	<tr>		<td>U</td><td>pk&#95;extraction&#95;kit&#95;0</td>
-		<td> ON master&#95;mix&#95;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>Pk</td><td>pk&#95;master&#95;mix</td>
-		<td> ON master&#95;mix&#95;id</td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table class='bordered'>
-<thead>
 <tr><th colspan='4'><a name='project'>Table project</a></th></tr>
 </thead>
 <tbody>
@@ -1107,48 +1025,6 @@ timestamp</title></a>
 <tr><th colspan='4'><b>Indexes</b></th></tr>
 	<tr>		<td>Pk</td><td>project&#95;pkey</td>
 		<td> ON project&#95;id</td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table class='bordered'>
-<thead>
-<tr><th colspan='4'><a name='extraction_kit'>Table extraction_kit</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td>*</td>
-		<td><a name='extraction_kit.extraction_kit_id'>extraction&#95;kit&#95;id</a></td>
-		<td> bigserial   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='extraction_kit.company'>company</a></td>
-		<td> integer   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='extraction_kit.product_name'>product&#95;name</a></td>
-		<td> varchar&#40; 100 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='extraction_kit.product_number'>product&#95;number</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='4'><b>Indexes</b></th></tr>
-	<tr>		<td>U</td><td>pk&#95;extraction&#95;kit</td>
-		<td> ON extraction&#95;kit&#95;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>Pk</td><td>pk&#95;extraction&#95;kit&#95;2</td>
-		<td> ON extraction&#95;kit&#95;id</td>
 		<td>  </td>
 	</tr>
 </tbody>
@@ -1704,70 +1580,6 @@ timestamp</title></a>
 <br/><br/>
 <table class='bordered'>
 <thead>
-<tr><th colspan='4'><a name='run_information'>Table run_information</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td>*</td>
-		<td><a name='run_information.run_id'>run&#95;id</a></td>
-		<td> bigserial   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='run_information.run_name'>run&#95;name</a></td>
-		<td> varchar&#40; 100 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='run_information.sequencer_id'>sequencer&#95;id</a></td>
-		<td> bigint   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='run_information.created_on'>created&#95;on</a></td>
-		<td> timestamp   DEFO current_timestamp </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='run_information.run_date'>run&#95;date</a></td>
-		<td> date   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='run_information.finalized'>finalized</a></td>
-		<td> bool   DEFO 'F' </td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='4'><b>Indexes</b></th></tr>
-	<tr>		<td>Pk</td><td>pk&#95;run&#95;information</td>
-		<td> ON run&#95;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>&nbsp;</td><td>idx&#95;run&#95;information</td>
-		<td> ON sequencer&#95;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>U</td><td>idx&#95;run&#95;information&#95;0</td>
-		<td> ON run&#95;name</td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='4'><b>Foreign Keys</b></th></tr>
-	<tr>
-		<td>&nbsp;</td><td>fk_run_information</td>
-		<td > ( sequencer&#95;id ) ref <a href='#sequencer'>sequencer</a> (sequencer&#95;id) </td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table class='bordered'>
-<thead>
 <tr><th colspan='4'><a name='pcr_plate_lane'>Table pcr_plate_lane</a></th></tr>
 </thead>
 <tbody>
@@ -2146,6 +1958,202 @@ timestamp</title></a>
 	<tr>
 		<td>&nbsp;</td><td>fk_extraction_plate_0</td>
 		<td > ( kf&#95;robot ) ref <a href='#robot'>robot</a> (robot&#95;name) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='extraction_kit'>Table extraction_kit</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='extraction_kit.extraction_kit_id'>extraction&#95;kit&#95;id</a></td>
+		<td> bigserial   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='extraction_kit.company'>company</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='extraction_kit.product_name'>product&#95;name</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='extraction_kit.product_number'>product&#95;number</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>U</td><td>pk&#95;extraction&#95;kit</td>
+		<td> ON extraction&#95;kit&#95;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>Pk</td><td>pk&#95;extraction&#95;kit&#95;2</td>
+		<td> ON extraction&#95;kit&#95;id</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='master_mix'>Table master_mix</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='master_mix.master_mix_id'>master&#95;mix&#95;id</a></td>
+		<td> bigserial   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='master_mix.company'>company</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='master_mix.product_name'>product&#95;name</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='master_mix.product_number'>product&#95;number</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>U</td><td>pk&#95;extraction&#95;kit&#95;0</td>
+		<td> ON master&#95;mix&#95;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>Pk</td><td>pk&#95;master&#95;mix</td>
+		<td> ON master&#95;mix&#95;id</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='water'>Table water</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='water.water_id'>water&#95;id</a></td>
+		<td> bigserial   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='water.company'>company</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='water.product_name'>product&#95;name</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='water.product_number'>product&#95;number</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>U</td><td>pk&#95;extraction&#95;kit&#95;1</td>
+		<td> ON water&#95;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>Pk</td><td>pk&#95;water</td>
+		<td> ON water&#95;id</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='run_information'>Table run_information</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='run_information.run_id'>run&#95;id</a></td>
+		<td> bigserial   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='run_information.run_name'>run&#95;name</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='run_information.sequencer_id'>sequencer&#95;id</a></td>
+		<td> bigint   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='run_information.created_on'>created&#95;on</a></td>
+		<td> timestamp   DEFO current_timestamp </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='run_information.run_date'>run&#95;date</a></td>
+		<td> date   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='run_information.sequencer_serial'>sequencer&#95;serial</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='run_information.finalized'>finalized</a></td>
+		<td> bool   DEFO 'F' </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>Pk</td><td>pk&#95;run&#95;information</td>
+		<td> ON run&#95;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;run&#95;information</td>
+		<td> ON sequencer&#95;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>U</td><td>idx&#95;run&#95;information&#95;0</td>
+		<td> ON run&#95;name</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Foreign Keys</b></th></tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_run_information</td>
+		<td > ( sequencer&#95;id ) ref <a href='#sequencer'>sequencer</a> (sequencer&#95;id) </td>
 		<td>  </td>
 	</tr>
 </tbody>

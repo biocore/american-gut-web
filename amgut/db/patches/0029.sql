@@ -10,7 +10,7 @@ COMMENT ON COLUMN barcodes.barcode.priority IS 'Whether barcode is in priority q
 ALTER TABLE barcodes.barcode ADD COLUMN priority_reason varchar;
 ALTER TABLE barcodes.project ADD description varchar  NOT NULL DEFAULT '';
 
-CREATE TYPE sequencer_instrument_model AS ENUM ('Genome Analyzer', 'Genome Analyzer II', 'Genome Analyzer Ix', 'HiSeq 2500', 'HiSeq 2000', 'HiSeq 1500', 'HiSeq 1000', 'MiSeq', 'HiScanSQ', 'HiSeq X Ten', 'NextSeq 500', 'GS', 'GS 20', 'GS FLX', 'GS FLX+', 'GS FLX Titanium', 'GS Junior', 'unspecified');
+CREATE TYPE sequencer_instrument_model AS ENUM ('Genome Analyzer', 'Genome Analyzer II', 'Genome Analyzer Ix', 'HiSeq 4000', 'HiSeq 2500', 'HiSeq 2000', 'HiSeq 1500', 'HiSeq 1000', 'MiSeq', 'HiScanSQ', 'HiSeq X Ten', 'NextSeq 500', 'GS', 'GS 20', 'GS FLX', 'GS FLX+', 'GS FLX Titanium', 'GS Junior', 'unspecified');
 CREATE TYPE sequencer_platform AS ENUM ('Illumina', '454');
 CREATE TYPE protocol_target_subfragment AS ENUM ('V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'ITS1', 'ITS2');
 
@@ -20,7 +20,7 @@ CREATE TYPE pcr_plate_tool_300_8 AS ENUM ('311318B', '311313B', '2084842', '1095
 CREATE TYPE pcr_plate_tool_50_8 AS ENUM ('311426B', '110705B', '109257A', '311441B', '110698B', '1083642', '4091722');
 
 CREATE TABLE barcodes.person ( 
-	person_id            bigint  NOT NULL,
+	person_id            bigserial  NOT NULL,
 	name                 varchar(100)  NOT NULL,
 	email                varchar  NOT NULL,
 	date_added           date DEFAULT current_date NOT NULL,
@@ -61,6 +61,7 @@ CREATE TABLE barcodes.run_information (
 	sequencer_id         bigint  NOT NULL,
 	created_on           timestamp DEFAULT current_timestamp NOT NULL,
 	run_date             date  ,
+	sequencer_serial     varchar  ,
 	finalized            bool DEFAULT 'F' NOT NULL,
 	CONSTRAINT pk_run_information PRIMARY KEY ( run_id ),
 	CONSTRAINT idx_run_information_0 UNIQUE ( run_name ) 
@@ -82,7 +83,7 @@ ALTER TABLE barcodes.lane_information ADD CONSTRAINT fk_lane_information FOREIGN
 
 CREATE TABLE barcodes.water ( 
 	water_id             bigserial  NOT NULL,
-	company              integer  NOT NULL,
+	company              varchar  NOT NULL,
 	product_name         varchar(100)  NOT NULL,
 	product_number       varchar  NOT NULL,
 	CONSTRAINT pk_extraction_kit_1 UNIQUE ( water_id ) ,
@@ -107,7 +108,7 @@ CREATE TABLE barcodes.ext_kit_lot (
 
 CREATE TABLE barcodes.extraction_kit ( 
 	extraction_kit_id    bigserial  NOT NULL,
-	company              integer  NOT NULL,
+	company              varchar  NOT NULL,
 	product_name         varchar(100)  NOT NULL,
 	product_number       varchar  NOT NULL,
 	CONSTRAINT pk_extraction_kit UNIQUE ( extraction_kit_id ) ,
@@ -145,7 +146,7 @@ ALTER TABLE barcodes.extraction_plate ADD CONSTRAINT fk_extraction_plate_0 FOREI
 
 CREATE TABLE barcodes.master_mix ( 
 	master_mix_id        bigserial  NOT NULL,
-	company              integer  NOT NULL,
+	company              varchar  NOT NULL,
 	product_name         varchar(100)  NOT NULL,
 	product_number       varchar  NOT NULL,
 	CONSTRAINT pk_extraction_kit_0 UNIQUE ( master_mix_id ) ,
@@ -239,3 +240,30 @@ CREATE INDEX idx_plate_sample ON barcodes.plate_sample ( project_id );
 COMMENT ON COLUMN barcodes.plate_sample.sample_size IS 'Sample size, in grams';
 ALTER TABLE barcodes.plate_sample ADD CONSTRAINT fk_plate_barcode_0 FOREIGN KEY ( barcode ) REFERENCES barcodes.extraction_plate( barcode );
 ALTER TABLE barcodes.plate_sample ADD CONSTRAINT fk_plate_sample FOREIGN KEY ( project_id ) REFERENCES barcodes.project( project_id );
+
+-- Populate the tables with initial values
+INSERT INTO barcodes.person (name, email, date_added) VALUES ('Test Person', 'test@person.com', '2015-10-20');
+INSERT INTO barcodes.robot (robot_name, robot_type, date_added) VALUES
+('KF_ONE', 'kingfisher', '2015-10-20'), ('KF_TWO', 'kingfisher', '2015-10-20'),
+('5075EM801617', 'eppendorf', '2015-10-20'), ('5075EN701993', 'eppendorf', '2015-10-20'),
+('5075EN001743', 'eppendorf', '2015-10-20'), ('5075EN202008', 'eppendorf', '2015-10-20'),
+('5075EN901963', 'eppendorf', '2015-10-20');
+
+INSERT INTO barcodes.sequencer (platform, instrument_model, sequencing_method, lanes) VALUES
+('Illumina', 'HiSeq 4000', 'Sequencing by synthesis', 8), ('Illumina', 'MiSeq', 'Sequencing by synthesis', 1), ('Illumina', 'HiSeq 2500', 'Sequencing by synthesis', 8);
+
+INSERT INTO barcodes.protocol (protocol, template_dna, target_gene, target_subfragment, linker, pcr_primers) VALUES
+('EMP V4 515fbc/806r standard', 1, '16S', 'V4', 'GT', 'FWD:GTGCCAGCMGCCGCGGTAA; REV:GGACTACHVGGGTWTCTAAT'), ('EMP V4 515fbc/806r primers low biomass', 3, '16S', 'V4', 'GT', 'FWD:GTGCCAGCMGCCGCGGTAA; REV:GGACTACHVGGGTWTCTAAT');
+
+INSERT INTO barcodes.water (company, product_name, product_number) VALUES ('Sigma', 'Double Processed Tissue Culture Water', 'W3500');
+INSERT INTO barcodes.water_lot (water_id, water_lot, date_added) VALUES (1, 'test_w','2015-10-20');
+
+INSERT INTO barcodes.master_mix (company, product_name, product_number) VALUES ('5 PRIME', 'HotMasterMix 2.5x', '2900183');
+INSERT INTO barcodes.master_mix_lot (master_mix_id, master_mix_lot, date_added) VALUES (1, 'test_mm','2015-10-20');
+
+INSERT INTO barcodes.water (company, product_name, product_number) VALUES ('MoBio', 'PowerMag', '27000-4-KF');
+INSERT INTO barcodes.water_lot (water_id, water_lot, date_added) VALUES (1, 'test_ex','2015-10-20');
+
+INSERT INTO barcodes.primer_plate (nickname, protocol, sequencing_barcodes) VALUES
+('3', 'EMP V4 515fbc/806r standard', '{"A1": "CCTCGCATGACC","A10": "GCGCGGCGTTGC","A11": "GTCGCTTGCACA","A12": "TCCGCCTAGTCG","A2": "GGCGTAACGGCA","A3": "GCGAGGAAGTCC","A4": "CAAATTCGGGAT","A5": "TTGTGTCTCCCT","A6": "CAATGTAGACAC","A7": "AACCACTAACCG","A8": "AACTTTCAGGAG","A9": "CCAGGACAGGAA","B1": "CGCGCAAGTATT","B10": "AGACTTCTCAGG","B11": "TCTTGCGGAGTC","B12": "CTATCTCCTGTC","B2": "AATACAGACCTG","B3": "GGACAAGTGCGA","B4": "TACGGTCTGGAT","B5": "TTCAGTTCGTTA","B6": "CCGCGTCTCAAC","B7": "CCGAGGTATAAT","B8": "AGATTCGCTCGA","B9": "TTGCCGCTCTGG","C1": "AAGGCGCTCCTT","C10": "AGTTCTCATTAA","C11": "GAGCCATCTGTA","C12": "GATATACCAGTG","C2": "GATCTAATCGAG","C3": "CTGATGTACACG","C4": "ACGTATTCGAAG","C5": "GACGTTAAGAAT","C6": "TGGTGGAGTTTC","C7": "TTAACAAGGCAA","C8": "AACCGCATAAGT","C9": "CCACAACGATCA","D1": "CGCAATGAGGGA","D10": "GTGTCGAGGGCA","D11": "TTCCACACGTGG","D12": "AGAATCCACCAC","D2": "CCGCAGCCGCAG","D3": "TGGAGCCTTGTC","D4": "TTACTTATCCGA","D5": "ATGGGACCTTCA","D6": "TCCGATAATCGG","D7": "AAGTCACACACA","D8": "GAAGTAGCGAGC","D9": "CACCATCTCCGG","E1": "ACGGCGTTATGT","E10": "AGTGTTTCGGAC","E11": "ATTTCCGCTAAT","E12": "CAAACCTATGGC","E2": "GAACCGTGCAGG","E3": "ACGTGCCTTAGA","E4": "AGTTGTAGTCCG","E5": "AGGGACTTCAAT","E6": "CGGCCAGAAGCA","E7": "TGGCAGCGAGCC","E8": "GTGAATGTTCGA","E9": "TATGTTGACGGC","F1": "CATTTGACGACG","F10": "AGTGCAGGAGCC","F11": "GTACTCGAACCA","F12": "ATAGGAATAACC","F2": "ACTAAGTACCCG","F3": "CACCCTTGCGAC","F4": "GATGCCTAATGA","F5": "GTACGTCACTGA","F6": "TCGCTACAGATG","F7": "CCGGCTTATGTG","F8": "ATAGTCCTTTAA","F9": "TCGAGCCGATCT","G1": "GCTGCGTATACC","G10": "GTTGCTGAGTCC","G11": "ACACCGCACAAT","G12": "CACAACCACAAC","G2": "CTCAGCGGGACG","G3": "ATGCCTCGTAAG","G4": "TTAGTTTGTCAC","G6": "ATTATGATTATG","G7": "CGAATACTGACA","G8": "TCTTATAACGCT","G9": "TAAGGTCGATAA","H1": "GAGAAGCTTATA","H10": "CGGAGAGACATG","H11": "CAGCCCTACCCA","H12": "TCGTTGGGACTA","H2": "GTTAACTTACTA","H3": "GTTGTTCTGGGA","H4": "AGGGTGACTTTA","H5": "GCCGCCAGGGTC","H6": "GCCACCGCCGGA","H7": "ACACACCCTGAC","H8": "TATAGGCTCCGC","H9": "ATAATTGCCGAG"}');
+INSERT INTO barcodes.primer_plate_lot (primer_plate_id, primer_plate_lot, date_added) VALUES (1, 'plate3-test', '2015-10-20');

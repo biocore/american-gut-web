@@ -844,7 +844,7 @@
 		</table>
 		<table name="extraction_kit" >
 			<column name="extraction_kit_id" type="bigserial" jt="-5" mandatory="y" />
-			<column name="company" type="integer" jt="4" mandatory="y" />
+			<column name="company" type="varchar" jt="12" mandatory="y" />
 			<column name="product_name" type="varchar" length="100" jt="12" mandatory="y" />
 			<column name="product_number" type="varchar" jt="12" mandatory="y" />
 			<index name="pk_extraction_kit" unique="UNIQUE" >
@@ -937,7 +937,7 @@
 		</table>
 		<table name="master_mix" >
 			<column name="master_mix_id" type="bigserial" jt="-5" mandatory="y" />
-			<column name="company" type="integer" jt="4" mandatory="y" />
+			<column name="company" type="varchar" jt="12" mandatory="y" />
 			<column name="product_name" type="varchar" length="100" jt="12" mandatory="y" />
 			<column name="product_number" type="varchar" jt="12" mandatory="y" />
 			<index name="pk_extraction_kit_0" unique="UNIQUE" >
@@ -1191,6 +1191,7 @@
 				<defo>current_timestamp</defo>
 			</column>
 			<column name="run_date" type="date" jt="91" />
+			<column name="sequencer_serial" type="varchar" jt="12" />
 			<column name="finalized" type="bool" jt="-7" mandatory="y" >
 				<defo>&#039;F&#039;</defo>
 			</column>
@@ -1220,7 +1221,7 @@
 		</table>
 		<table name="water" >
 			<column name="water_id" type="bigserial" jt="-5" mandatory="y" />
-			<column name="company" type="integer" jt="4" mandatory="y" />
+			<column name="company" type="varchar" jt="12" mandatory="y" />
 			<column name="product_name" type="varchar" length="100" jt="12" mandatory="y" />
 			<column name="product_number" type="varchar" jt="12" mandatory="y" />
 			<index name="pk_extraction_kit_1" unique="UNIQUE" >
@@ -22990,10 +22991,7 @@ AS $function$xpath_exists$function$
 	</layout>
 	<layout id="Layout_345a537d" name="barcodes" joined_routing="y" show_column_type="y" show_relation_columns="y" >
 		<entity schema="barcodes" name="project_barcode" color="b7c8e3" x="615" y="60" />
-		<entity schema="barcodes" name="water" color="b7c8e3" x="1065" y="555" />
-		<entity schema="barcodes" name="master_mix" color="b7c8e3" x="1080" y="435" />
 		<entity schema="barcodes" name="project" color="b7c8e3" x="600" y="150" />
-		<entity schema="barcodes" name="extraction_kit" color="b7c8e3" x="1095" y="315" />
 		<entity schema="barcodes" name="person" color="b7c8e3" x="360" y="405" />
 		<entity schema="barcodes" name="barcode_exceptions" color="b7c8e3" x="105" y="270" />
 		<entity schema="barcodes" name="primer_plate" color="b7c8e3" x="90" y="585" />
@@ -23004,12 +23002,15 @@ AS $function$xpath_exists$function$
 		<entity schema="barcodes" name="primer_plate_lot" color="b7c8e3" x="330" y="585" />
 		<entity schema="barcodes" name="pcr_plate" color="b7c8e3" x="585" y="465" />
 		<entity schema="barcodes" name="barcode" color="b7c8e3" x="195" y="45" />
-		<entity schema="barcodes" name="run_information" color="b7c8e3" x="285" y="705" />
 		<entity schema="barcodes" name="pcr_plate_lane" color="b7c8e3" x="720" y="720" />
 		<entity schema="barcodes" name="lane_information" color="b7c8e3" x="510" y="705" />
 		<entity schema="barcodes" name="sequencer" color="b7c8e3" x="45" y="750" />
 		<entity schema="barcodes" name="protocol" color="b7c8e3" x="90" y="435" />
 		<entity schema="barcodes" name="plate_sample" color="b7c8e3" x="855" y="105" />
 		<entity schema="barcodes" name="extraction_plate" color="b7c8e3" x="585" y="255" />
+		<entity schema="barcodes" name="extraction_kit" color="b7c8e3" x="1095" y="315" />
+		<entity schema="barcodes" name="master_mix" color="b7c8e3" x="1080" y="435" />
+		<entity schema="barcodes" name="water" color="b7c8e3" x="1065" y="555" />
+		<entity schema="barcodes" name="run_information" color="b7c8e3" x="285" y="705" />
 	</layout>
 </project>
