@@ -249,7 +249,10 @@ _PARTICIPANT_OVERVIEW = {
     'COMPLETED_CONSENT': 'Completed consent',
     'COMPLETED_SURVEY': 'Completed survey',
     'SAMPLES_ASSIGNED': 'Samples assigned',
-    'OVERVIEW_FOR_PARTICPANT': 'Overview for participant'
+    'OVERVIEW_FOR_PARTICPANT': 'Overview for participant',
+    'VIOSCREEN_CONTINUE': '<a href="%s">Continue your Food Frequency Questionnaire</a>',
+    'VIOSCREEN_COMPLETE': 'Food Frequency Questionnaire completed',
+    'VIOSCREEN_START': '<a href="%s">Start the Food Frequency Questionnaire</a>'
 }
 
 _ADD_SAMPLE_OVERVIEW = {
