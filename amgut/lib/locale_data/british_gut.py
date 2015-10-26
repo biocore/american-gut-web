@@ -501,7 +501,9 @@ _PARTICIPANT_OVERVIEW = {
     'COMPLETED_CONSENT': "Completed consent",
     'COMPLETED_SURVEY': "Completed survey",
     'OVERVIEW_FOR_PARTICPANT': "Overview for participant",
-    'SAMPLES_ASSIGNED': "Samples assigned        ",
+    'SAMPLES_ASSIGNED': "Samples assigned",
+    'VIOSCREEN_CONTINUE': 'Continue Vioscreen survey',
+    'VIOSCREEN_COMPLETE': 'Vioscreen survey completed'
 }
 
 # helper tuples for the survey questions
