@@ -21,12 +21,9 @@
     }
   </style>
 
-  <script>
-    var accessToken = '{{ access_token }}';
-
-    var OPEN_HUMANS_URL = '{% raw open_humans_api_url %}';
+  <script
+    src="{% raw media_locale['SITEBASE'] %}/static/vendor/js/js.cookie.js">
   </script>
-
   <script
     src="{% raw media_locale['SITEBASE'] %}/static/js/open_humans.js"></script>
 {% end %}
@@ -50,59 +47,36 @@
       href="{{ open_humans_research_url }}">go to your research data on Open
       Humans</a>.</p>
 
-    {% if access_token %}
-      <div class="separator"></div>
+    {% if not access_token %}
+      <p>Interested in exporting your data to an Open Humans account? Click the
+        button below to begin the process.</p>
 
-      {% if linked_barcodes or unlinked_barcodes %}
-        {% if linked_barcodes %}
-          <h3>Unlink your data</h3>
-
-          <p>You have the following barcodes linked with Open Humans:</p>
-
-          <ul>
-            {% for barcode in linked_barcodes %}
-              <li>
-                {{ barcode['participant'] }}: {{ barcode['barcode'] }},
-                {{ barcode['site_sampled'] }}
-                -
-                <a class="unlink-barcode" href="#"
-                  data-barcode="{{ barcode['barcode'] }}">unlink</a>
-              </li>
-            {% end %}
-          </ul>
-        {% end %}
-
-        {% if unlinked_barcodes %}
-          <h3>Link your data</h3>
-
-          <p>You have the following barcodes available to be linked with Open
-            Humans:</p>
-
-          <ul>
-            {% for barcode in unlinked_barcodes %}
-              <li>
-                {{ barcode['participant'] }}: {{ barcode['barcode'] }},
-                {{ barcode['site_sampled'] }}
-                -
-                <a class="link-barcode" href="#"
-                  data-barcode="{{ barcode['barcode'] }}">link</a>
-              </li>
-            {% end %}
-          </ul>
-        {% end %}
-      {% else %}
+      {% if not survey_ids %}
         <h3>You don't have American Gut data to link with Open Humans yet</h3>
 
         You've successfully linked your Open Humans account with your American
         Gut account but you don't currently have any kit barcodes to add to
         your Open Humans profile. Once you've sent your kit to us and we've
         processed it you'll see your available barcodes here.
-      {% end %}
-    {% else %}
-      <p>Interested in exporting your data to an Open Humans account? Click the
-        button below to begin the process.</p>
+      {% else %}
+        <p>You have access to the following participants that can be linked
+          to Open Humans:</p>
 
-      <a href="{% raw media_locale['SITEBASE'] %}/authed/connect/open-humans/"
+        <p>
+        {% for participant, survey_id in survey_ids.items() %}
+          <label>
+            <input type="checkbox" name="{{ participant }}" class="participant">
+
+            {{ participant }}
+          </label>
+
+          <br>
+        {% end %}
+        </p>
+      {% end %}
+
+      <a href="{% raw media_locale['SITEBASE'] %}/authed/connect/open-humans/?origin={{ origin }}"
+        id="connect-open-humans"
         title="Connect to Open Humans">
         <img
           src="{% raw media_locale['SITEBASE'] %}/static/img/open-humans-export-half.png">
