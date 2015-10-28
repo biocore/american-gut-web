@@ -8,11 +8,12 @@ ALTER TABLE ag.ag_kit ADD registered_on timestamp DEFAULT current_timestamp;
 CREATE TABLE ag.duplicate_consents ( 
 	ag_login_id          uuid  NOT NULL,
 	main_survey_id       varchar  NOT NULL,
-	duplicate_survey_id  varchar  NOT NULL
+	duplicate_survey_id  varchar  NOT NULL,
+	CONSTRAINT idx_duplicate_consents_1 UNIQUE ( duplicate_survey_id ) ,
+	CONSTRAINT ok_duplicate_consents PRIMARY KEY ( ag_login_id, main_survey_id, duplicate_survey_id )
  );
 CREATE INDEX idx_duplicate_consents ON ag.duplicate_consents ( ag_login_id );
 CREATE INDEX idx_duplicate_consents_0 ON ag.duplicate_consents ( main_survey_id );
-CREATE INDEX idx_duplicate_consents_1 ON ag.duplicate_consents ( duplicate_survey_id );
 
 --populate table from database state on 2015-10-26 22:38
 INSERT INTO ag.duplicate_consents (ag_login_id, main_survey_id, duplicate_survey_id) VALUES ('e02557fb-fcda-ec57-e040-8a80115d18eb', '25cc6dcc26b5d4b3', '5854e4c0a69035fa'), ('e02557fb-fcda-ec57-e040-8a80115d18eb', '25cc6dcc26b5d4b3', 'd25ac09a05b55b7f'), ('e02557fb-fcda-ec57-e040-8a80115d18eb', '25cc6dcc26b5d4b3', '8fe06e48a5f43759');

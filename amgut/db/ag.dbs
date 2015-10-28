@@ -442,7 +442,12 @@
 			<index name="idx_duplicate_consents_0" unique="NORMAL" >
 				<column name="main_survey_id" />
 			</index>
-			<index name="idx_duplicate_consents_1" unique="NORMAL" >
+			<index name="idx_duplicate_consents_1" unique="UNIQUE" >
+				<column name="duplicate_survey_id" />
+			</index>
+			<index name="ok_duplicate_consents" unique="PRIMARY_KEY" >
+				<column name="ag_login_id" />
+				<column name="main_survey_id" />
 				<column name="duplicate_survey_id" />
 			</index>
 		</table>
@@ -22574,9 +22579,9 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="ag_kit_barcodes" color="f7e2c6" x="720" y="885" />
 		<entity schema="ag" name="survey_question" color="a8c4ef" x="420" y="1530" />
 		<entity schema="ag" name="ag_handout_kits" color="a8c4ef" x="60" y="420" />
+		<entity schema="ag" name="ag_kit" color="f7e2c6" x="1095" y="690" />
 		<entity schema="ag" name="ag_login_surveys" color="ffcccc" x="1485" y="1020" />
 		<entity schema="ag" name="duplicate_consents" color="b7c8e3" x="1275" y="1020" />
-		<entity schema="ag" name="ag_kit" color="f7e2c6" x="1095" y="690" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment><![CDATA[Used by :    american_gut_consent]]></comment>
 			<entity schema="ag" name="ag_survey_multiples" />
@@ -22632,5 +22637,20 @@ AS $function$xpath_exists$function$
 			<entity schema="barcodes" name="barcode" />
 			<entity schema="barcodes" name="barcode_exceptions" />
 		</group>
+		<script name="duplicate_consents" id="SQL_236b3c5d" >
+			<string><![CDATA[CREATE TABLE ag.duplicate_consents ( 
+	ag_login_id          uuid  NOT NULL,
+	main_survey_id       varchar  NOT NULL,
+	duplicate_survey_id  varchar  NOT NULL,
+	CONSTRAINT idx_duplicate_consents_1 UNIQUE ( duplicate_survey_id ) ,
+	CONSTRAINT ok_duplicate_consents PRIMARY KEY ( ag_login_id, main_survey_id, duplicate_survey_id )
+ );
+
+CREATE INDEX idx_duplicate_consents ON ag.duplicate_consents ( ag_login_id );
+
+CREATE INDEX idx_duplicate_consents_0 ON ag.duplicate_consents ( main_survey_id );
+
+]]></string>
+		</script>
 	</layout>
 </project>
