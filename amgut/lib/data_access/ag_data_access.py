@@ -272,6 +272,7 @@ class AGDataAccess(object):
                             (ag_kit_id, barcode, sample_barcode_file)
                             VALUES (k_id, bc, bc || '.jpg');
                     END LOOP;
+                    DELETE FROM ag_handout_barcodes WHERE kit_id = %s;
                     DELETE FROM ag_handout_kits WHERE kit_id = %s;
                 END $do$;
                 """.format(ag_login_id, printresults)
