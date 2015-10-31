@@ -276,7 +276,7 @@ class AGDataAccess(object):
                     DELETE FROM ag_handout_kits WHERE kit_id = %s;
                 END $do$;
                 """.format(ag_login_id, printresults)
-            TRN.add(sql, [supplied_kit_id] * 3)
+            TRN.add(sql, [supplied_kit_id] * 4)
             try:
                 TRN.execute()
             except psycopg2.IntegrityError:
