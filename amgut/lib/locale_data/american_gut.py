@@ -249,7 +249,10 @@ _PARTICIPANT_OVERVIEW = {
     'COMPLETED_CONSENT': 'Completed consent',
     'COMPLETED_SURVEY': 'Completed survey',
     'SAMPLES_ASSIGNED': 'Samples assigned',
-    'OVERVIEW_FOR_PARTICPANT': 'Overview for participant'
+    'OVERVIEW_FOR_PARTICPANT': 'Overview for participant',
+    'VIOSCREEN_CONTINUE': '<a href="%s">Continue your Food Frequency Questionnaire</a>',
+    'VIOSCREEN_COMPLETE': 'Food Frequency Questionnaire completed',
+    'VIOSCREEN_START': '<a href="%s">Start the Food Frequency Questionnaire</a>'
 }
 
 _ADD_SAMPLE_OVERVIEW = {
@@ -279,7 +282,8 @@ _SAMPLE_OVERVIEW = {
     'SAMPLE_DATE': 'Sample Date',
     'SAMPLE_TIME': 'Sample Time',
     'SAMPLE_NOTES': 'Notes',
-    'REMOVE_BARCODE': 'Remove barcode %(barcode)s'
+    'REMOVE_BARCODE': 'Remove barcode %(barcode)s',
+    'DATA_NOT_AVAILABLE': 'These data are not available yet for download.'
 }
 
 _NEW_PARTICIPANT_OVERVIEW = {

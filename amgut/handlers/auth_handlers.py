@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from tornado.web import authenticated, HTTPError
+from tornado.web import authenticated
 from tornado.escape import json_encode, url_escape
 import logging
 

@@ -25,7 +25,7 @@
 </script>
 
 <h2>{% raw tl['NEW_SAMPLE_TITLE'] %} {{ participant_name }}</h2>
-
+{% if message %} <h3>{{message}}</h3> {% end %}
 <form id="add_sample" name="add_sample" method="post" action="{% raw media_locale['SITEBASE'] %}/authed/{{page_type}}/">
     <input type="hidden" name="participant_name" value="{{ participant_name }}"/>
     <table width="100%">
@@ -43,6 +43,9 @@
                     <p>{% raw tl['NEW_SAMPLE_DESCRIPTION_2'] %}</td>
                     <td>
     {% raw form.barcode(tabindex=1) %}
+    {% if form.barcode.errors %}
+        <ul class="errors">{% for error in form.barcode.errors %}<li>{{ error }}</li>{% end %}</ul>
+    {% end %}
                     </td>
                 </tr>
                 <tr>
@@ -51,6 +54,9 @@
                         <div id="sample_site_div" class="">
     {% raw form.sample_site(tabindex=2) %}
                         </div>
+    {% if form.sample_site.errors %}
+        <ul class="errors">{% for error in form.sample_site.errors %}<li>{{ error }}</li>{% end %}</ul>
+    {% end %}
                     </td>
                 </tr>
                 <tr>
@@ -75,6 +81,9 @@
                     <td>{% raw tl['NOTES'] %}</td>
                     <td>
     {% raw form.notes(tabindex=5, style="width:300px;") %}
+        {% if form.notes.errors %}
+        <ul class="errors">{% for error in form.notes.errors %}<li>{{ error }}</li>{% end %}</ul>
+    {% end %}
                     </td>
                 </tr>
             </table>

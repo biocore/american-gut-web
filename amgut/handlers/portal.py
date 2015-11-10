@@ -13,6 +13,11 @@ class PortalHandler(BaseHandler):
         kit_id = self.current_user
 
         user_info = ag_data.get_user_info(kit_id)
+
+        if not user_info:
+            self.redirect(media_locale['SITEBASE'] + '/auth/logout/')
+            return
+
         user_name = user_info['name']
 
         kit_details = ag_data.getAGKitDetails(kit_id)

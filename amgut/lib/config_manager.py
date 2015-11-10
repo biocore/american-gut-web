@@ -16,7 +16,7 @@ with standard_library.hooks():
     from configparser import (ConfigParser, NoOptionError,
                               Error as ConfigParser_Error)
 
-from amgut.lib.locale_data import available_locales
+from amgut.lib.locale_data import available_locales  # noqa
 
 
 class MissingConfigSection(ConfigParser_Error):

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<project name="PostgreSQL" id="Project2769587" database="PostgreSQL" >
-	<schema name="ag" catalogname="ag" schemaname="ag" defo="y" >
+<project name="PostgreSQL" id="Project2769587" html="n" template="Default" database="PostgreSQL" >
+	<schema name="ag" catalogname="ag" schemaname="ag" >
 		<table name="ag_animal_survey" >
 			<column name="ag_login_id" type="uuid" length="2147483647" jt="1111" mandatory="y" />
 			<column name="participant_name" type="varchar" length="200" jt="12" mandatory="y" />
@@ -79,8 +79,8 @@
 			<column name="password" type="varchar" length="60" jt="12" />
 			<column name="verification_code" type="varchar" length="5" jt="12" />
 			<column name="swabs_per_kit" type="bigint" length="19" jt="-5" />
-			<column name="print_results" type="varchar" length="1" jt="12" >
-				<defo>&#039;n&#039;::character varying</defo>
+			<column name="print_results" type="bool" length="1" jt="-7" mandatory="y" >
+				<defo>&#039;FALSE&#039;</defo>
 			</column>
 			<column name="created_on" type="timestamp" jt="93" mandatory="y" >
 				<defo>current_timestamp</defo>
@@ -240,11 +240,14 @@
 			</column>
 			<column name="pass_reset_code" type="varchar" length="20" jt="12" />
 			<column name="pass_reset_time" type="timestamp" length="29" decimal="6" jt="93" />
-			<column name="print_results" type="varchar" length="1" jt="12" >
-				<defo>&#039;n&#039;::character varying</defo>
+			<column name="print_results" type="bool" length="1" jt="-7" mandatory="y" >
+				<defo>&#039;FALSE&#039;</defo>
 			</column>
 			<column name="open_humans_token" type="varchar" length="64" jt="12" >
 				<comment><![CDATA[The Open Humans access token corresponding to the Open Humans user that has authorized data sharing with this kit.]]></comment>
+			</column>
+			<column name="registered_on" type="timestamp" jt="93" >
+				<defo>current_timestamp</defo>
 			</column>
 			<index name="ag_kit_pkey" unique="PRIMARY_KEY" >
 				<column name="ag_kit_id" />
@@ -338,6 +341,9 @@
 				<column name="ag_login_id" />
 				<column name="participant_name" />
 			</index>
+			<index name="pk_ag_login_surveys_0" unique="UNIQUE" >
+				<column name="ag_login_id" />
+			</index>
 			<fk name="fk_ag_login_surveys" to_schema="ag" to_table="ag_login" >
 				<fk_column name="ag_login_id" pk="ag_login_id" />
 			</fk>
@@ -426,12 +432,31 @@
 				<column name="controlled_vocab_id" />
 			</index>
 		</table>
+		<table name="duplicate_consents" >
+			<column name="ag_login_id" type="uuid" jt="1111" mandatory="y" />
+			<column name="main_survey_id" type="varchar" jt="12" mandatory="y" />
+			<column name="duplicate_survey_id" type="varchar" jt="12" mandatory="y" />
+			<index name="idx_duplicate_consents" unique="NORMAL" >
+				<column name="ag_login_id" />
+			</index>
+			<index name="idx_duplicate_consents_0" unique="NORMAL" >
+				<column name="main_survey_id" />
+			</index>
+			<index name="idx_duplicate_consents_1" unique="UNIQUE" >
+				<column name="duplicate_survey_id" />
+			</index>
+			<index name="ok_duplicate_consents" unique="PRIMARY_KEY" >
+				<column name="ag_login_id" />
+				<column name="main_survey_id" />
+				<column name="duplicate_survey_id" />
+			</index>
+		</table>
 		<table name="external_survey_answers" >
-			<comment>This stores answers to third party surveys in JSON format, keyed to the original survey ID</comment>
+			<comment><![CDATA[This stores answers to third party surveys in JSON format, keyed to the original survey ID]]></comment>
 			<column name="survey_id" type="varchar" length="2147483647" jt="12" mandatory="y" />
 			<column name="external_survey_id" type="bigint" jt="-5" mandatory="y" />
 			<column name="pulldown_date" type="date" jt="91" mandatory="y" />
-			<column name="answers" type="json" length="2147483647" jt="1111" mandatory="y" />
+			<column name="answers" type="json" length="2147483647" jt="12" mandatory="y" />
 			<index name="pk_third_party_surveys" unique="PRIMARY_KEY" >
 				<column name="survey_id" />
 				<column name="external_survey_id" />
@@ -479,7 +504,7 @@
 			</fk>
 		</table>
 		<table name="iso_country_lookup" >
-			<comment>ISO standard codes for countries</comment>
+			<comment><![CDATA[ISO standard codes for countries]]></comment>
 			<column name="iso_code" type="varchar" length="2147483647" jt="12" mandatory="y" >
 				<comment><![CDATA[The ISO code for the country]]></comment>
 			</column>
@@ -495,7 +520,7 @@
 			</fk>
 		</table>
 		<table name="promoted_survey_ids" >
-			<comment>Keeps track of the survey_ids that correspond to surveys that were ported from first questionnaire to the second</comment>
+			<comment><![CDATA[Keeps track of the survey_ids that correspond to surveys that were ported from first questionnaire to the second]]></comment>
 			<column name="survey_id" type="varchar" length="2147483647" jt="12" mandatory="y" />
 			<index name="pk_promoted_survey_ids" unique="PRIMARY_KEY" >
 				<column name="survey_id" />
@@ -513,7 +538,7 @@
 			</column>
 		</table>
 		<table name="survey_answers" >
-			<comment>Stores answers to questions of type SINGLE and MULTIPLE</comment>
+			<comment><![CDATA[Stores answers to questions of type SINGLE and MULTIPLE]]></comment>
 			<column name="survey_id" type="varchar" length="2147483647" jt="12" mandatory="y" >
 				<comment><![CDATA[The unique identifier for the survey]]></comment>
 			</column>
@@ -544,7 +569,7 @@
 			</fk>
 		</table>
 		<table name="survey_answers_other" >
-			<comment>Survey answers for which there are no corresponding foreign keys</comment>
+			<comment><![CDATA[Survey answers for which there are no corresponding foreign keys]]></comment>
 			<column name="survey_id" type="varchar" length="2147483647" jt="12" mandatory="y" />
 			<column name="survey_question_id" type="bigint" jt="-5" mandatory="y" />
 			<column name="response" type="varchar" length="2147483647" jt="12" mandatory="y" />
@@ -584,7 +609,7 @@
 			</index>
 		</table>
 		<table name="survey_question" >
-			<comment>Stores the human survey questions</comment>
+			<comment><![CDATA[Stores the human survey questions]]></comment>
 			<column name="survey_question_id" type="bigint" jt="-5" mandatory="y" >
 				<comment><![CDATA[The unique question ID]]></comment>
 			</column>
@@ -615,7 +640,7 @@
 			</index>
 		</table>
 		<table name="survey_question_response" >
-			<comment>Maps questions to responses</comment>
+			<comment><![CDATA[Maps questions to responses]]></comment>
 			<column name="survey_question_id" type="bigint" jt="-5" mandatory="y" />
 			<column name="response" type="varchar" length="2147483647" jt="12" mandatory="y" />
 			<column name="display_index" type="serial" length="10" jt="4" mandatory="y" >
@@ -637,7 +662,7 @@
 			</fk>
 		</table>
 		<table name="survey_question_response_type" >
-			<comment>Stores the type of response for each question</comment>
+			<comment><![CDATA[Stores the type of response for each question]]></comment>
 			<column name="survey_question_id" type="bigint" jt="-5" />
 			<column name="survey_response_type" type="varchar" length="2147483647" jt="12" mandatory="y" />
 			<index name="idx_human_survey_response_type" unique="NORMAL" >
@@ -654,7 +679,7 @@
 			</fk>
 		</table>
 		<table name="survey_question_triggers" >
-			<comment>Which question/answer combos trigger other questions</comment>
+			<comment><![CDATA[Which question/answer combos trigger other questions]]></comment>
 			<column name="survey_question_id" type="bigint" jt="-5" >
 				<comment><![CDATA[The ID of the question that is triggered]]></comment>
 			</column>
@@ -690,7 +715,7 @@
 			</fk>
 		</table>
 		<table name="survey_response" >
-			<comment>Stores every possible predictable response on the human survey</comment>
+			<comment><![CDATA[Stores every possible predictable response on the human survey]]></comment>
 			<column name="american" type="varchar" length="2147483647" jt="12" mandatory="y" />
 			<column name="british" type="varchar" length="2147483647" jt="12" />
 			<index name="pk_human_survey_response" unique="PRIMARY_KEY" >
@@ -701,7 +726,7 @@
 			</index>
 		</table>
 		<table name="survey_response_types" >
-			<comment>Stores every possible type of response.  The response type will be processed in python to determine how the question is represented in the interface.</comment>
+			<comment><![CDATA[Stores every possible type of response.  The response type will be processed in python to determine how the question is represented in the interface.]]></comment>
 			<column name="survey_response_type" type="varchar" length="2147483647" jt="12" mandatory="y" />
 			<index name="pk_human_survey_response_types" unique="PRIMARY_KEY" >
 				<column name="survey_response_type" />
@@ -788,7 +813,7 @@
 		<function name="update_barcode_status" id="Function7910862" isSystem="false" />
 		<function name="uuid_generate_v4" id="Function7910862" isSystem="false" />
 	</schema>
-	<schema name="barcodes" catalogname="ag_test" schemaname="barcodes" defo="y" >
+	<schema name="barcodes" catalogname="ag_test" schemaname="barcodes" >
 		<table name="barcode" >
 			<column name="barcode" type="varchar" length="2147483647" jt="12" mandatory="y" />
 			<column name="assigned_on" type="timestamp" length="29" decimal="6" jt="93" >
@@ -863,7 +888,7 @@
 			</fk>
 		</table>
 	</schema>
-	<schema name="information_schema" catalogname="ag" schemaname="information_schema" defo="y" >
+	<schema name="information_schema" catalogname="ag" schemaname="information_schema" >
 		<function name="_pg_char_max_length" id="Function2849398" isSystem="false" />
 		<function name="_pg_char_octet_length" id="Function2849398" isSystem="false" />
 		<function name="_pg_datetime_precision" id="Function2849398" isSystem="false" />
@@ -877,7 +902,7 @@
 		<function name="_pg_truetypid" id="Function2849398" isSystem="false" />
 		<function name="_pg_truetypmod" id="Function2849398" isSystem="false" />
 	</schema>
-	<schema name="pg_catalog" catalogname="ag" schemaname="pg_catalog" defo="y" >
+	<schema name="pg_catalog" catalogname="ag" schemaname="pg_catalog" >
 		<function name="RI_FKey_cascade_del" id="Function2850037" isSystem="false" >
 			<string><![CDATA[CREATE OR REPLACE FUNCTION pg_catalog."RI_FKey_cascade_del"()
  RETURNS trigger
@@ -22515,19 +22540,17 @@ AS $function$xpath_exists$function$
 			<comment><![CDATA[test XML value against XPath expression]]></comment>
 		</function>
 	</schema>
-	<connector name="PostgreSQL" database="PostgreSQL" driver_class="org.postgresql.Driver" driver_jar="postgresql-9.2-1003.jdbc3.jar" host="localhost" port="5432" instance="ag_test" user="jshorens" schema_mapping="" />
 	<layout id="Layout2861625" name="public" joined_routing="y" show_relation_columns="y" >
-		<entity schema="ag" name="ag_survey_answer" color="f7e2c6" x="675" y="690" />
+		<entity schema="ag" name="ag_survey_answer" color="f7e2c6" x="660" y="690" />
 		<entity schema="ag" name="controlled_vocab_values" color="c6c6f7" x="885" y="45" />
 		<entity schema="ag" name="controlled_vocabs" color="c6c6f7" x="675" y="45" />
-		<entity schema="ag" name="ag_participant_exceptions" color="f7e2c6" x="1080" y="315" />
-		<entity schema="ag" name="ag_animal_survey" color="f7e2c6" x="885" y="285" />
-		<entity schema="ag" name="ag_survey_multiples" color="f7e2c6" x="900" y="750" />
+		<entity schema="ag" name="ag_participant_exceptions" color="f7e2c6" x="1065" y="315" />
+		<entity schema="ag" name="ag_animal_survey" color="f7e2c6" x="870" y="285" />
+		<entity schema="ag" name="ag_survey_multiples" color="f7e2c6" x="885" y="750" />
 		<entity schema="ag" name="group_questions" color="ffcccc" x="300" y="1365" />
 		<entity schema="ag" name="survey_response_types" color="ffffff" x="990" y="1740" />
 		<entity schema="ag" name="surveys" color="a8c4ef" x="45" y="1530" />
 		<entity schema="ag" name="survey_group" color="a8c4ef" x="45" y="1365" />
-		<entity schema="ag" name="ag_kit" color="f7e2c6" x="1110" y="690" />
 		<entity schema="ag" name="survey_answers_other" color="a8c4ef" x="1305" y="1140" />
 		<entity schema="ag" name="survey_question_triggers" color="a8c4ef" x="645" y="1425" />
 		<entity schema="ag" name="survey_response" color="a8c4ef" x="690" y="1635" />
@@ -22535,13 +22558,12 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="iso_country_lookup" color="ffffff" x="900" y="1620" />
 		<entity schema="ag" name="survey_question_response_type" color="ffcccc" x="690" y="1725" />
 		<entity schema="ag" name="promoted_survey_ids" color="a8c4ef" x="1425" y="915" />
-		<entity schema="ag" name="ag_login" color="f7e2c6" x="705" y="405" />
+		<entity schema="ag" name="ag_login" color="f7e2c6" x="690" y="405" />
 		<entity schema="ag" name="zipcodes" color="c6c6f7" x="1095" y="45" />
 		<entity schema="ag" name="ag_consent" color="c6d9f7" x="1440" y="675" />
 		<entity schema="ag" name="ag_survey_multiples_backup" color="cef7c6" x="195" y="90" />
 		<entity schema="ag" name="ag_import_stats_tmp" color="cef7c6" x="420" y="90" />
 		<entity schema="ag" name="ag_map_markers" color="cef7c6" x="60" y="90" />
-		<entity schema="ag" name="ag_login_surveys" color="ffcccc" x="1425" y="1020" />
 		<entity schema="ag" name="survey_answers" color="a8c4ef" x="1410" y="1230" />
 		<entity schema="ag" name="ag_human_survey" color="c6d9f7" x="1665" y="420" />
 		<entity schema="ag" name="external_survey_answers" color="a8c4ef" x="1440" y="1350" />
@@ -22551,15 +22573,17 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="settings" color="a8c4ef" x="105" y="645" />
 		<entity schema="ag" name="external_survey_sources" color="a8c4ef" x="1395" y="1500" />
 		<entity schema="ag" name="ag_handout_barcodes" color="a8c4ef" x="255" y="420" />
-		<entity schema="ag" name="ag_handout_kits" color="a8c4ef" x="60" y="420" />
 		<entity schema="barcodes" name="barcode_exceptions" color="a8c4ef" x="120" y="795" />
 		<entity schema="barcodes" name="project" color="a8c4ef" x="345" y="885" />
 		<entity schema="barcodes" name="barcode" color="a8c4ef" x="105" y="870" />
-		<entity schema="ag" name="ag_kit_barcodes" color="f7e2c6" x="735" y="885" />
+		<entity schema="ag" name="ag_kit_barcodes" color="f7e2c6" x="720" y="885" />
 		<entity schema="ag" name="survey_question" color="a8c4ef" x="420" y="1530" />
+		<entity schema="ag" name="ag_handout_kits" color="a8c4ef" x="60" y="420" />
+		<entity schema="ag" name="ag_kit" color="f7e2c6" x="1095" y="690" />
+		<entity schema="ag" name="ag_login_surveys" color="ffcccc" x="1485" y="1020" />
+		<entity schema="ag" name="duplicate_consents" color="b7c8e3" x="1275" y="1020" />
 		<group name="ag_survey_multiples" color="faf6f0" >
-			<comment>Used by : 
-   american_gut_consent</comment>
+			<comment><![CDATA[Used by :    american_gut_consent]]></comment>
 			<entity schema="ag" name="ag_survey_multiples" />
 			<entity schema="ag" name="ag_survey_answer" />
 			<entity schema="ag" name="ag_kit" />
@@ -22569,7 +22593,7 @@ AS $function$xpath_exists$function$
 			<entity schema="ag" name="ag_kit_barcodes" />
 		</group>
 		<group name="disconnected tables" color="f2faf0" >
-			<comment>These tables are not connected to any other table in the database by foreign key or anything else...</comment>
+			<comment><![CDATA[These tables are not connected to any other table in the database by foreign key or anything else...]]></comment>
 			<entity schema="ag" name="ag_survey_multiples_backup" />
 			<entity schema="ag" name="ag_import_stats_tmp" />
 			<entity schema="ag" name="ag_map_markers" />
@@ -22582,10 +22606,10 @@ AS $function$xpath_exists$function$
 			<entity schema="ag" name="survey_answers_other" />
 			<entity schema="ag" name="external_survey_answers" />
 			<entity schema="ag" name="external_survey_sources" />
+			<entity schema="ag" name="duplicate_consents" />
 		</group>
 		<group name="controlled_vocab_values" color="f0f0fa" >
-			<comment>Used by : 
-   american_gut_consent</comment>
+			<comment><![CDATA[Used by :    american_gut_consent]]></comment>
 			<entity schema="ag" name="controlled_vocab_values" />
 			<entity schema="ag" name="controlled_vocabs" />
 			<entity schema="ag" name="zipcodes" />
@@ -22613,5 +22637,20 @@ AS $function$xpath_exists$function$
 			<entity schema="barcodes" name="barcode" />
 			<entity schema="barcodes" name="barcode_exceptions" />
 		</group>
+		<script name="duplicate_consents" id="SQL_236b3c5d" >
+			<string><![CDATA[CREATE TABLE ag.duplicate_consents ( 
+	ag_login_id          uuid  NOT NULL,
+	main_survey_id       varchar  NOT NULL,
+	duplicate_survey_id  varchar  NOT NULL,
+	CONSTRAINT idx_duplicate_consents_1 UNIQUE ( duplicate_survey_id ) ,
+	CONSTRAINT ok_duplicate_consents PRIMARY KEY ( ag_login_id, main_survey_id, duplicate_survey_id )
+ );
+
+CREATE INDEX idx_duplicate_consents ON ag.duplicate_consents ( ag_login_id );
+
+CREATE INDEX idx_duplicate_consents_0 ON ag.duplicate_consents ( main_survey_id );
+
+]]></string>
+		</script>
 	</layout>
 </project>

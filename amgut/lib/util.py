@@ -5,6 +5,9 @@
 #
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
+import posixpath
+import urlparse
+
 from json import loads, dumps
 from collections import defaultdict
 
@@ -13,58 +16,8 @@ from tornado.escape import url_escape
 from wtforms import Form
 
 from amgut import media_locale, text_locale
-from amgut.connections import ag_data, redis
-from amgut.lib.config_manager import AMGUT_CONFIG
+from amgut.connections import redis
 from amgut.lib.vioscreen import encrypt_key
-from amgut.lib.data_access.env_management import (
-    create_database, build_and_initialize, make_settings_table, patch_db,
-    populate_test_db, drop_schema)
-
-
-def reset_test_database(wrapped_fn):
-    """Decorator that drops the public schema, rebuilds and repopulates the
-    schema with test data, then executes wrapped_fn
-    """
-
-    def decorated_wrapped_fn(*args, **kwargs):
-        drop_schema()
-        build_and_initialize()
-        make_settings_table()
-        patch_db()
-        populate_test_db()
-
-        return wrapped_fn(*args, **kwargs)
-
-    return decorated_wrapped_fn
-
-
-def ag_test_checker():
-    """Decorator that allows the execution of all methods in a test class only
-    and only if the AG site is set up to work in a test environment
-
-    Raises
-    ------
-    RuntimeError
-        If the AG site is set up to work in a production environment
-    """
-    def class_modifier(cls):
-        # First, we check that we are not in a production environment
-        if not AMGUT_CONFIG.test_environment \
-                or AMGUT_CONFIG.database != "ag_test":
-            raise RuntimeError("Working in a production environment. Not "
-                               "executing the tests to keep the production "
-                               "database safe.")
-
-        # Now, we decorate the setup and teardown functions
-        class DecoratedClass(cls):
-            def setUp(self):
-                super(DecoratedClass, self).setUp()
-
-            @reset_test_database
-            def tearDown(self):
-                super(DecoratedClass, self).tearDown()
-        return DecoratedClass
-    return class_modifier
 
 
 class PartitionResponse(object):
@@ -93,11 +46,11 @@ class PartitionResponse(object):
 def make_survey_class(group, survey_type):
     """Creates a form class for a group of questions
 
-    The top-level attributes of the generated class correspond to the question_ids from
-    amgut.lib.human_survey_supp structures
+    The top-level attributes of the generated class correspond to the
+    question_ids from amgut.lib.human_survey_supp structures
 
-    Select fields are generated for questions that require a single response, and sets
-    of checkboxes for questions that can have multiple responses
+    Select fields are generated for questions that require a single response,
+    and sets of checkboxes for questions that can have multiple responses
     """
     attrs = {}
     prompts = {}
@@ -177,9 +130,8 @@ def survey_vioscreen(survey_id):
     """Return a formatted text block and URL for the external survey"""
     tl = text_locale['human_survey_completed.html']
     embedded_text = tl['SURVEY_VIOSCREEN']
-    user_info = ag_data.get_person_info(survey_id)
     url = ("https://vioscreen.com/remotelogin.aspx?Key=%s&RegCode=KLUCB" %
-           url_escape(encrypt_key(survey_id, user_info)))
+           url_escape(encrypt_key(survey_id)))
     return embedded_text % url
 
 
@@ -191,4 +143,106 @@ def survey_asd(survey_id):
     return embedded_text % url
 
 
-external_surveys = (survey_vioscreen, survey_asd)
+external_surveys = (survey_vioscreen,)  # survey_asd)
+
+
+def basejoin(base, url):
+    """
+    Add the specified relative URL to the supplied base URL.
+
+    >>> tests = [
+    ...     ('https://abc.xyz',    'd/e'),
+    ...     ('https://abc.xyz/',   'd/e'),
+    ...     ('https://abc.xyz',    '/d/e'),
+    ...     ('https://abc.xyz/',   '/d/e'),
+    ...
+    ...     ('https://abc.xyz',    '/d/e?a=b'),
+    ...     ('https://abc.xyz/',   '/d/e?a=b'),
+    ...
+    ...     ('https://abc.xyz',    'd/e/'),
+    ...     ('https://abc.xyz/',   'd/e/'),
+    ...     ('https://abc.xyz',    '/d/e/'),
+    ...     ('https://abc.xyz/',   '/d/e/'),
+    ...
+    ...     ('https://abc.xyz',    'd/e/?a=b'),
+    ...     ('https://abc.xyz/',   'd/e/?a=b'),
+    ...
+    ...     ('https://abc.xyz/f',  'd/e/'),
+    ...     ('https://abc.xyz/f/', 'd/e/'),
+    ...     ('https://abc.xyz/f',  '/d/e/'),
+    ...     ('https://abc.xyz/f/', '/d/e/'),
+    ...
+    ...     ('https://abc.xyz/f',  './e/'),
+    ...     ('https://abc.xyz/f/', './e/'),
+    ...
+    ...     ('https://abc.xyz/f',  '../e/'),
+    ...     ('https://abc.xyz/f/', '../e/'),
+    ...
+    ...     ('https://abc.xyz/f',  'd/../e/'),
+    ...     ('https://abc.xyz/f/', 'd/../e/'),
+    ...     ('https://abc.xyz/f',  '/d/../e/'),
+    ...     ('https://abc.xyz/f/', '/d/../e/'),
+    ... ]
+    >>> for result in [basejoin(a, b) for a, b in tests]:
+    ...     print result
+    https://abc.xyz/d/e
+    https://abc.xyz/d/e
+    https://abc.xyz/d/e
+    https://abc.xyz/d/e
+    https://abc.xyz/d/e?a=b
+    https://abc.xyz/d/e?a=b
+    https://abc.xyz/d/e/
+    https://abc.xyz/d/e/
+    https://abc.xyz/d/e/
+    https://abc.xyz/d/e/
+    https://abc.xyz/d/e/?a=b
+    https://abc.xyz/d/e/?a=b
+    https://abc.xyz/f/d/e/
+    https://abc.xyz/f/d/e/
+    https://abc.xyz/f/d/e/
+    https://abc.xyz/f/d/e/
+    https://abc.xyz/f/e/
+    https://abc.xyz/f/e/
+    https://abc.xyz/f/e/
+    https://abc.xyz/f/e/
+    https://abc.xyz/f/e/
+    https://abc.xyz/f/e/
+    https://abc.xyz/f/e/
+    https://abc.xyz/f/e/
+    """
+    # The base URL is authoritative: a URL like '../' should not remove
+    # portions of the base URL.
+    if not base.endswith('/'):
+        base += '/'
+
+    # Handle internal compactions, e.g. "./e/../d/" becomes "./d/"
+    normalized_url = posixpath.normpath(url)
+
+    # Ditto authoritativeness.
+    if normalized_url.startswith('..'):
+        normalized_url = normalized_url[2:]
+
+    # Ditto authoritativeness.
+    if normalized_url.startswith('/'):
+        normalized_url = '.' + normalized_url
+
+    # normpath removes an ending slash, add it back if necessary
+    if url.endswith('/') and not normalized_url.endswith('/'):
+        normalized_url += '/'
+
+    join = urlparse.urljoin(base, normalized_url)
+    joined_url = urlparse.urlparse(join)
+
+    return urlparse.urlunparse((joined_url.scheme,
+                                joined_url.netloc,
+                                joined_url.path,
+                                joined_url.params,
+                                joined_url.query,
+                                joined_url.fragment))
+
+
+if __name__ == '__main__':
+    import doctest
+
+    doctest.testmod(verbose=True, optionflags=(doctest.NORMALIZE_WHITESPACE |
+                                               doctest.REPORT_NDIFF))

@@ -11,7 +11,27 @@ from amgut import media_locale
 
 
 def _format_data_path(base, dir, barcode, ext):
-    return os.path.join(base, dir, '.'.join([barcode, ext]))
+    filepath = os.path.join(base, dir, '.'.join([barcode, ext]))
+    return filepath
+
+
+def _get_data_path(barcode):
+    fs_base = AMGUT_CONFIG.base_data_dir
+    web_base = "%s/results" % media_locale['SITEBASE']
+
+    fs_barcode_pdf = _format_data_path(fs_base, 'pdfs', barcode, 'pdf')
+    fs_barcode_txt = _format_data_path(fs_base, 'taxa-summaries', barcode,
+                                       'txt')
+    web_barcode_pdf = _format_data_path(web_base, 'pdfs', barcode, 'pdf')
+    web_barcode_txt = _format_data_path(web_base, 'taxa-summaries',
+                                        barcode, 'txt')
+
+    if not os.path.exists(fs_barcode_pdf):
+        web_barcode_pdf = None
+    if not os.path.exists(fs_barcode_txt):
+        web_barcode_txt = None
+
+    return web_barcode_pdf, web_barcode_txt
 
 
 class SampleOverviewHandler(BaseHandler):
@@ -34,37 +54,23 @@ class SampleOverviewHandler(BaseHandler):
             self.render("404.html", skid=self.current_user)
             return
 
-        fs_base = AMGUT_CONFIG.base_data_dir
-        web_base = "%s/results" % media_locale['SITEBASE']
+        web_barcode_pdf, web_barcode_txt = _get_data_path(barcode)
 
-        fs_barcode_pdf = _format_data_path(fs_base, 'pdfs', barcode, 'pdf')
-        fs_barcode_txt = _format_data_path(fs_base, 'taxa-summaries', barcode,
-                                        'txt')
-        web_barcode_pdf = _format_data_path(web_base, 'pdfs', barcode, 'pdf')
-        web_barcode_txt = _format_data_path(web_base, 'taxa-summaries',
-                                            barcode, 'txt')
+        sequence_url = None
+        biomv1_url = None
+        classic_url = None
+        sequence_url = None
 
-        if not os.path.exists(fs_barcode_pdf):
-            web_barcode_pdf = None
-        if not os.path.exists(fs_barcode_txt):
-            web_barcode_txt = None
-
-        req = requests.get('http://api.microbio.me/americangut/1/sample/%s' % barcode)
+        api_base = 'http://api.microbio.me/americangut/1/'
+        req = requests.get(api_base + 'sample/%s' % barcode)
         if req.status_code == 200 and req.content != "(null)":
             bc_with_suf = json.loads(req.content)[0]
-            biomv1_url = 'http://api.microbio.me/americangut/1/otu/%s/json' % bc_with_suf
-            classic_url = 'http://api.microbio.me/americangut/1/otu/%s/txt' % bc_with_suf
+            biomv1_url = api_base + 'otu/%s/json' % bc_with_suf
+            classic_url = api_base + 'otu/%s/txt' % bc_with_suf
 
-            seq_req = requests.get('http://api.microbio.me/americangut/1/sequence/%s' % bc_with_suf)
+            seq_req = requests.get(api_base + 'sequence/%s' % bc_with_suf)
             if seq_req.status_code == 200:
                 sequence_url = json.loads(seq_req.content)[0]['fastq_url']
-            else:
-                sequence_url = None
-        else:
-            sequence_url = None
-            biomv1_url = None
-            classic_url = None
-            sequence_url = None
 
         sample_time = sample_data['sample_time']
         sample_date = sample_data['sample_date']

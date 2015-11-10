@@ -4,7 +4,6 @@ from amgut.connections import ag_data
 from amgut import text_locale
 
 
-
 class KitIDHandler(BaseHandler):
     def get(self):
         kit_counts = ag_data.getMapMarkers()
@@ -23,13 +22,16 @@ class KitIDHandler(BaseHandler):
                 try:
                     send_email(MESSAGE, tl['KIT_IDS_SUBJECT'], email)
                     self.render('retrieve_kitid.html', message='',
-                                output='success', loginerror='', kit_counts=kit_counts)
+                                output='success', loginerror='',
+                                kit_counts=kit_counts)
                 except:
                     self.render('retrieve_kitid.html', message=MESSAGE,
-                                output='noemail', loginerror='', kit_counts=kit_counts)
+                                output='noemail', loginerror='',
+                                kit_counts=kit_counts)
             else:
                 self.render('retrieve_kitid.html', message='nokit',
-                            output='form', loginerror='', kit_counts=kit_counts)
+                            output='form', loginerror='',
+                            kit_counts=kit_counts)
 
         except:
             self.render('retrieve_kitid.html', message='', output='exception',

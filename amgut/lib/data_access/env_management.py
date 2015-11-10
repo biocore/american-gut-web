@@ -1,18 +1,20 @@
-from os.path import abspath, basename, dirname, join, split, splitext
+from os.path import abspath, dirname, join, split
 from glob import glob
 from functools import partial
 from subprocess import Popen, PIPE
 import gzip
 
 from click import echo
-from psycopg2 import (connect, OperationalError, ProgrammingError)
+from psycopg2 import (connect, OperationalError)
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from natsort import natsorted
 
 from amgut.lib.config_manager import AMGUT_CONFIG
-from amgut.lib.data_access.sql_connection import SQLConnectionHandler
+from amgut.lib.data_access.sql_connection import TRN
 
-get_db_file = partial(join, join(dirname(dirname(abspath(__file__))), '..', 'db'))
+
+get_db_file = partial(join, join(dirname(dirname(abspath(__file__))), '..',
+                                 'db'))
 LAYOUT_FP = get_db_file('ag_unpatched.sql')
 INITIALIZE_FP = get_db_file('initialize.sql')
 POPULATE_FP = get_db_file('ag_test_patch22.sql.gz')
@@ -50,9 +52,6 @@ def create_database(force=False):
 
     # Get the cursor
     cur = conn.cursor()
-
-    cur.execute('SET SEARCH_PATH TO ag, barcodes, public')
-
     db_exists = _check_db_exists(AMGUT_CONFIG.database, cur)
 
     # Check that the database does not already exist
@@ -67,7 +66,8 @@ def create_database(force=False):
     cur.close()
     conn.close()
 
-def build_and_initialize(verbose=False):
+
+def build(verbose=False):
     conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
                    host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
                    database=AMGUT_CONFIG.database)
@@ -75,6 +75,7 @@ def build_and_initialize(verbose=False):
 
     # create the schema and set a search path
     cur.execute('CREATE SCHEMA IF NOT EXISTS ag')
+    cur.execute('CREATE SCHEMA IF NOT EXISTS barcodes')
     cur.execute('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"')
 
     if verbose:
@@ -87,52 +88,57 @@ def build_and_initialize(verbose=False):
     cur.execute('SET SEARCH_PATH TO ag, barcodes, public')
     with open(INITIALIZE_FP) as f:
         cur.execute(f.read())
+    conn.commit()
+
+
+def initialize(verbose=False):
+    """Initialize the database with permissions and, optionally, a new user
+
+    Parameters
+    ----------
+    verbose : bool, optional
+        Show messages while working, default False
+    """
+    conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
+                   host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
+                   database=AMGUT_CONFIG.database)
+    cur = conn.cursor()
 
     if verbose:
         echo('Granting privileges')
 
-    # test for user
-    cur.execute("""SELECT EXISTS(SELECT 1
-                                 FROM pg_catalog.pg_user
-                                 WHERE usename = 'ag_wwwuser')""")
-    if not cur.fetchone()[0]:
-        cur.execute('CREATE USER "ag_wwwuser"')
-
-    cur.execute('GRANT USAGE ON schema public, ag TO "ag_wwwuser"')
-    cur.execute('GRANT CONNECT ON DATABASE %s TO "ag_wwwuser"' %
-                AMGUT_CONFIG.database)
+    cur.execute("""GRANT USAGE ON schema public, ag, barcodes
+                   TO %s""" % AMGUT_CONFIG.user)
+    cur.execute('GRANT CONNECT ON DATABASE %s TO %s' %
+                (AMGUT_CONFIG.database, AMGUT_CONFIG.user))
     cur.execute('GRANT INSERT, UPDATE, DELETE, SELECT ON ALL TABLES IN SCHEMA'
-                ' public, ag TO "ag_wwwuser";')
-    cur.execute('GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public, ag TO '
-                '"ag_wwwuser";')
+                ' public, ag, barcodes TO %s;' % AMGUT_CONFIG.user)
+    cur.execute('GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public, ag, barcodes'
+                ' TO %s;' % AMGUT_CONFIG.user)
     conn.commit()
 
 
 def make_settings_table():
-    conn = SQLConnectionHandler()
-    settings = AMGUT_CONFIG.get_settings()
+    with TRN:
+        settings = AMGUT_CONFIG.get_settings()
 
-    columns = [' '.join([setting[0], 'varchar']) for setting in settings]
-    column_names = [setting[0] for setting in settings]
+        columns = [' '.join([setting[0], 'varchar']) for setting in settings]
+        column_names = [setting[0] for setting in settings]
 
-    num_values = len(settings)
-    sql = "INSERT INTO settings ({}) VALUES ({})".format(
-        ', '.join(column_names), ', '.join(['%s'] * num_values))
-    args = [str(setting[1]) for setting in settings]
+        num_values = len(settings)
+        sql = "INSERT INTO settings ({}) VALUES ({})".format(
+            ', '.join(column_names), ', '.join(['%s'] * num_values))
+        args = [str(setting[1]) for setting in settings]
 
-    with conn.get_postgres_cursor() as cur:
         create_sql = ("CREATE TABLE ag.settings ({}, current_patch varchar "
                       "NOT NULL DEFAULT 'unpatched')")
 
         create_sql = create_sql.format(', '.join(columns))
-
-        cur.execute(create_sql)
-        cur.execute(sql, args)
+        TRN.add(create_sql)
+        TRN.add(sql, args)
 
 
 def populate_test_db():
-    conn = SQLConnectionHandler()
-
     with gzip.open(POPULATE_FP, 'rb') as f:
         test_db = f.read()
 
@@ -147,161 +153,61 @@ def patch_db(patches_dir=PATCHES_DIR, verbose=False):
     Pulls the current patch from the settings table and applies all subsequent
     patches found in the patches directory.
     """
-    conn = SQLConnectionHandler()
+    with TRN:
+        TRN.add("SELECT current_patch FROM settings")
+        current_patch = TRN.execute_fetchlast()
+        current_patch_fp = join(patches_dir, current_patch)
 
-    current_patch = conn.execute_fetchone(
-        "SELECT current_patch FROM settings")[0]
-    current_patch_fp = join(patches_dir, current_patch)
+        sql_glob = join(patches_dir, '*.sql')
+        patch_files = natsorted(glob(sql_glob))
 
-    sql_glob = join(patches_dir, '*.sql')
-    patch_files = natsorted(glob(sql_glob))
+        if current_patch == 'unpatched':
+            next_patch_index = 0
+        elif current_patch_fp not in patch_files:
+            raise RuntimeError("Cannot find patch file %s" % current_patch)
+        else:
+            next_patch_index = patch_files.index(current_patch_fp) + 1
 
-    if current_patch == 'unpatched':
-        next_patch_index = 0
-    elif current_patch_fp not in patch_files:
-        raise RuntimeError("Cannot find patch file %s" % current_patch)
-    else:
-        next_patch_index = patch_files.index(current_patch_fp) + 1
+        patch_update_sql = "UPDATE settings SET current_patch = %s"
 
-    patch_update_sql = "UPDATE settings SET current_patch = %s"
-
-    for patch_fp in patch_files[next_patch_index:]:
-        patch_filename = split(patch_fp)[-1]
-        with conn.get_postgres_cursor() as cur:
-            cur.execute('SET SEARCH_PATH TO ag, barcodes, public')
+        for patch_fp in patch_files[next_patch_index:]:
+            patch_filename = split(patch_fp)[-1]
 
             with open(patch_fp, 'U') as patch_file:
                 if verbose:
                     echo('\tApplying patch %s...' % patch_filename)
 
-                cur.execute(patch_file.read())
-                cur.execute(patch_update_sql, [patch_filename])
-
-        conn._connection.commit()
-
-    # Idempotent patches implemented in Python can be run here
+                TRN.add(patch_file.read())
+                TRN.add(patch_update_sql, [patch_filename])
 
 
-def drop_schema(verbose=False):
+def rebuild_test(verbose=False):
     conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
                    host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
                    database=AMGUT_CONFIG.database)
-
-    cur = conn.cursor()
-    cur.execute("DROP SCHEMA IF EXISTS ag CASCADE")
-    cur.execute("DROP SCHEMA IF EXISTS barcodes CASCADE")
-    conn.commit()
-    cur.close()
-    conn.close()
-
-
-def drop_test(force, verbose=False):
-    """Drops the test database, schema, and role."""
-
-    conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
-                   host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
-                   database=AMGUT_CONFIG.database)
-
-    cur = conn.cursor()
-
-    cur.execute('SET SEARCH_PATH TO ag, barcodes, public')
-
-    try:
-        cur.execute('SELECT test_environment FROM settings')
-        is_test_db = cur.fetchone()[0].lower()
-    except ProgrammingError:
-        if not force:
-            raise
-
-    cur.close()
-    conn.close()
-
-    if not force and is_test_db != 'true':
-        raise OperationalError("The settings table indicates this is not "
-                               "a test database; aborting.")
-
-    conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
-                   host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port,
-                   database=AMGUT_CONFIG.database)
-    cur = conn.cursor()
-
-    cur.execute('SET SEARCH_PATH TO ag, barcodes, public')
-
-    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-
-    if verbose:
-        echo("Dropping user ag_wwwuser")
-
-    try:
-        if verbose:
-            echo('Reassigning owned objects')
-        cur.execute('REASSIGN OWNED BY ag_wwwuser TO {}'
-                    .format(AMGUT_CONFIG.user))
-
-        # Database
-        if verbose:
-            echo('Revoking all privileges on {}'.format(AMGUT_CONFIG.database))
-        cur.execute('REVOKE ALL PRIVILEGES ON DATABASE {} '
-                    'FROM ag_wwwuser CASCADE'.format(AMGUT_CONFIG.database))
-
-        for schema in ['ag', 'public', 'barcodes']:
-            if verbose:
-                echo('Revoking all privileges in schema %s' % schema)
-            cur.execute('REVOKE ALL PRIVILEGES ON SCHEMA %s FROM ag_wwwuser '
-                        'CASCADE' % schema)
-
-            if verbose:
-                echo('Revoking all privileges on all tables in %s')
-            cur.execute('REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA %s '
-                        'FROM ag_wwwuser CASCADE' % schema)
-
-            if verbose:
-                echo('Revoking all privileges on all functions in %s')
-            cur.execute('REVOKE ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA %s '
-                        'FROM ag_wwwuser CASCADE' % schema)
-    except:
-        # Some of these might not actually exist, just pass in that case
-        pass
-    finally:
-        cur.close()
-        conn.close()
-
-    conn = connect(user=AMGUT_CONFIG.user, password=AMGUT_CONFIG.password,
-                   host=AMGUT_CONFIG.host, port=AMGUT_CONFIG.port)
-    cur = conn.cursor()
-
-    cur.execute('SET SEARCH_PATH TO ag, barcodes, public')
-
-    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-
-    if verbose:
-        echo('Dropping user ag_wwwuser...')
-    cur.execute('DROP USER IF EXISTS ag_wwwuser')
-
-    if verbose:
-        echo('Dropping schemas ag & barcodes...')
-    cur.execute('DROP SCHEMA IF EXISTS ag CASCADE')
-    cur.execute('DROP SCHEMA IF EXISTS barcodes CASCADE')
-
-    cur.close()
+    with conn.cursor() as cur:
+        test = cur.execute("SELECT test_environment FROM ag.settings")
+        test = cur.fetchone()[0]
+        if test != 'true':
+            print "ABORTING: Not working on test database"
+            return
     conn.close()
 
     if verbose:
-        echo('Dropping database {}'.format(AMGUT_CONFIG.database))
+        print "Dropping database %s" % AMGUT_CONFIG.database
 
-    command = ['dropdb', '--if-exists']
+    p = Popen(['dropdb', '--if-exists', AMGUT_CONFIG.database])
+    retcode = p.wait()
 
-    if AMGUT_CONFIG.host:
-        command.extend(['-h', AMGUT_CONFIG.host])
+    if retcode != 0:
+        raise RuntimeError("Could not delete database %s: retcode %d" %
+                           (AMGUT_CONFIG.database, retcode))
 
-    if AMGUT_CONFIG.port:
-        command.extend(['-p', str(AMGUT_CONFIG.port)])
-
-    if AMGUT_CONFIG.user:
-        command.extend(['-U', AMGUT_CONFIG.user])
-
-    command.append(AMGUT_CONFIG.database)
-
-    proc = Popen(command, stdin=PIPE, stdout=PIPE)
-
-    proc.communicate('{}\n'.format(AMGUT_CONFIG.password))
+    if verbose:
+        print "Rebuilding database"
+    create_database()
+    populate_test_db()
+    initialize(verbose)
+    if verbose:
+        print "Patching database"
+    patch_db(verbose=verbose)

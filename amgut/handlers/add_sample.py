@@ -1,3 +1,4 @@
+from datetime import datetime
 from wtforms import (Form, SelectField, DateField, DateTimeField, TextField,
                      HiddenField, validators)
 from tornado.web import authenticated
@@ -9,12 +10,13 @@ from amgut import media_locale
 
 
 class LogSample(Form):
+    required = validators.required
     participant_name = HiddenField(u'participant_name')
-    barcode = SelectField(validators=[validators.required("Required field")])
-    sample_site = SelectField(validators=[validators.required("Required field")])
-    sample_date = DateField(validators=[validators.required("Required field")],
+    barcode = SelectField(validators=[required("Required field")])
+    sample_site = SelectField(validators=[required("Required field")])
+    sample_date = DateField(validators=[required("Required field")],
                             format='%m/%d/%Y')
-    sample_time = DateTimeField(validators=[validators.required("Required field")],
+    sample_time = DateTimeField(validators=[required("Required field")],
                                 format='%I:%M %p')
     notes = TextField('notes')
 
@@ -29,12 +31,28 @@ class AddSample(BaseHandler):
         participant_name = self.get_argument('participant_name',
                                              'environmental')
         form = self.build_form()
-        args = {k: v[0] for k, v in viewitems(self.request.arguments)}
+        args = {a: v[0] for a, v in viewitems(self.request.arguments)}
         form.process(data=args)
+        # Validate input
+        invalid = False
         if not form.validate():
+            invalid = True
+        else:
+            try:
+                datetime.strptime(form.sample_date.data, '%m/%d/%Y').date()
+            except ValueError:
+                invalid = True
+                form.sample_date.errors = ['Invalid date format']
+            try:
+                datetime.strptime(form.sample_time.data, '%I:%M %p').time()
+            except ValueError:
+                invalid = True
+                form.sample_time.errors = ['Invalid time format']
+        if invalid:
             self.render('add_sample.html', skid=self.current_user,
                         participant_name=participant_name,
-                        form=form, page_type=self.page_type)
+                        form=self.build_form(), page_type=self.page_type,
+                        message='Invalid form submission, please try again')
             return
 
         barcode = form.barcode.data
@@ -60,12 +78,13 @@ class AddSample(BaseHandler):
 
     @authenticated
     def get(self):
-        participant_name = self.get_argument('participant_name',
-                                             'environmental')
+        participant_name = self.get_argument('participant_name', None)
+        if participant_name is None:
+            self.redirect('/authed/add_sample_overview/')
         form = self.build_form()
         self.render('add_sample.html', skid=self.current_user,
                     participant_name=participant_name,
-                    form=form, page_type=self.page_type)
+                    form=form, page_type=self.page_type, message='')
 
     def build_form(self):
         kit_id = self.current_user

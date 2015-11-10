@@ -61,7 +61,7 @@ BEGIN
 
         INSERT INTO ag.survey_answers (survey_id, survey_question_id, response) VALUES (survey, 146, ans);
     END LOOP;
-END $do$
+END $do$;
 
 -- Make the rest of the answers Unspecified
 INSERT INTO ag.survey_answers (survey_id, survey_question_id, response)
