@@ -506,7 +506,11 @@ class AGDataAccess(object):
             return TRN.execute_fetchflatten()
 
     def getMapMarkers(self):
-        return []
+        with TRN:
+            sql = """SELECT country, count(country)::integer
+            FROM ag.ag_login GROUP BY country"""
+            TRN.add(sql)
+            return dict(TRN.execute_fetchindex())
 
     def handoutCheck(self, username, password):
         with TRN:
