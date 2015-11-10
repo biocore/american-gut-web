@@ -1,4 +1,5 @@
-
+{% from amgut import text_locale %}
+{% set tl = text_locale['map.html'] %}
 <div id="map_wrapper" style="width:100%; height:100%; background:#9ecae1;">
   <div id="map_canvas" style="position:absolute; bottom:0px; right:0px; width:85%; height:85%; background:#9ecae1;"></div>
 </div>
@@ -12,7 +13,7 @@
 <script>
 //Adapted from http://techslides.com/demos/d3/worldmap-template.html
 var color_domain = [11, 101, 1001, 10001, 9999999999999];
-var legend_labels = ["1-10 kits", "11-100 kits", "101-1000 kits", "1001-10000 kits", ">10000 kits"];
+var legend_labels = ["{{tl['SEP1']}}", "{{tl['SEP2']}}", "{{tl['SEP3']}}", "{{tl['SEP4']}}", "{{tl['SEP5']}}"];
 var color = d3.scale.threshold()
   .domain(color_domain)
   .range(["#adfcad", "#ffcb40", "#ffba00", "#ff7d73", "#ff4e40", "#ff1300"]);
