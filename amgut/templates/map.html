@@ -13,7 +13,7 @@
 <script>
 //Adapted from http://techslides.com/demos/d3/worldmap-template.html
 var color_domain = [11, 101, 1001, 10001, 9999999999999];
-var legend_labels = ["{{tl['SEP1']}}", "{{tl['SEP2']}}", "{{tl['SEP3']}}", "{{tl['SEP4']}}", "{{tl['SEP5']}}"];
+var legend_labels = ["{% raw tl['SEP1'] %}", "{% raw tl['SEP2'] %}", "{% raw tl['SEP3'] %}", "{% raw tl['SEP4'] %}", "{% raw tl['SEP5'] %}"];
 var color = d3.scale.threshold()
   .domain(color_domain)
   .range(["#adfcad", "#ffcb40", "#ffba00", "#ff7d73", "#ff4e40", "#ff1300"]);
