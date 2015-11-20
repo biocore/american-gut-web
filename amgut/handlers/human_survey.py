@@ -21,10 +21,11 @@ def build_consent_form(consent_info):
     tl = text_locale['new_participant.html']
     # build out the consent form
     if consent_info['age_range'] == '0-6':
-        message = ("%s<br/>%s<p>%s: %s</p><p>%s: %s</p><p>%s: %s</p>"
+        message = ("%s<br/>%s<br/>%s<p>%s: %s</p><p>%s: %s</p><p>%s: %s</p>"
                    "<p>%s: %s</p><p>%s: %s</p><p>%s: %s</p>") %\
             (tl['CONSENT_YOUR_CHILD'],
              tl['PARTICIPANT_AGREEMENT'],
+             tl['EXHIBIT_A'],
              tl['PARTICIPANT_NAME'], consent_info['participant_name'],
              tl['PARTICIPANT_EMAIL'], consent_info['participant_email'],
              tl['PARTICIPANT_PARENT_1'], consent_info['parent_1_name'],
