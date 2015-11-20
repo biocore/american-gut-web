@@ -376,6 +376,31 @@ The following tests are available:</p>
 <li><b>Export Control.</b>  No ITAR or export controlled materials shall be delivered to UCSD pursuant to this agreement.   </li>
 <li><b>Entire Agreement.</b>  This Agreement, including Exhibit A made a part hereof, sets forth the entire agreement of the parties with respect to the subject matter herein and supersedes any prior agreements, oral and written, and all other communications between the parties with respect to such subject matter.</li>
 </ol><br/>''',
+    'EXHIBIT_A': '''<p style="text-align: center;font-weight: bold;">EXHIBIT A</p>
+<p style="text-align: center;font-weight: bold;">AMERICAN GUT PROJECT STATEMENT OF SERVICES</p>
+<ol>
+<li><b>SCOPE OF WORK:</b>
+<p>The Services will be performed as set forth below or in accordance with the attachment hereto and incorporated by reference herein.</p>
+<p>When you sign up for the study, you may claim a package of research analyses based on your contribution level.  You are mailed a kit with sampling instructions, and directions on how to sign into the website to complete the consent form and submit the questionnaire.  Any sample that is received in the laboratory without a completed consent form online is not sequenced.  You be able to view, download and print a high-resolution certificate suitable for framing of your results and access to more detailed taxa report of your results - which can be viewed online and downloaded into Excel.</p>
+<p>I have accepted this Scope of Work on behalf of UCSD and the responsibility for administering and monitoring the agreement.</p>
+</li>
+<li><b>DELIVERABLES:</b>
+<p>Approximately 8-10 weeks after we have received your sample you will be notified of your results electronically.</p>
+</li>
+<li><b>COST:</b>  Cost is variable based on the contribution level that was elected.
+</li>
+<li>PAYMENT</li>
+<ol><li><b>SCHEDULE:</b> 100% of cost due upon clicking "I Accept"</li>
+<li><b>REMITTANCE:</b>  Payment will be submitted through PayPal via the FundRazr website.</li>
+</ol>
+<li><b>TERM OF AGREEMENT:</b> This Agreement will be effective as of the date of remittance of payment to FundRazr.</li>
+<li><b>UCSD CONTRACT OFFICER CONTACT:</b><br/>
+Karim Hussein<br/>
+University of California, San Diego<br/>
+9500 Gilman Drive Mail Stop 0934<br/>
+La Jolla, California 92093-0934<br/>
+Telephone: (858) 822-5180<br/>
+Email: khussein@ucsd.edu''',
     'BILL_OF_RIGHTS': '''Experimental Subject's Bill of Rights''',
     'TEXT_I_HAVE_READ_1': 'I have read (or someone has read to me) this form. I am aware that I am being asked to be in a research study. I voluntarily agree to be in this study.',
     'TEXT_I_HAVE_READ_SIMPLIFIED': 'Yes, you will be in this research study.',
@@ -383,12 +408,17 @@ The following tests are available:</p>
     'TEXT_ASSENT_WITNESS': 'In my judgment, the participant is voluntarily and knowingly giving assent and possesses the legal capacity to give assent to participate in the study.',
     'OBTAINER_NAME': 'Name of person obtaining assent',
     'TEXT_I_HAVE_READ_PARENT': 'I have read (or someone has read to me) this form. I am aware that my child is being asked to be in a research study. I voluntarily agree for my child to be in this study.',
-    'PARTICIPANT_NAME': 'Name of participant',
-    'PARTICIPANT_EMAIL': 'Email of participant',
+    'PARTICIPANT_NAME': 'Participant name',
+    'PARTICIPANT_EMAIL': 'Participant email',
     'PARTICIPANT_PARENT_1': 'Parent/Guardian name',
     'PARTICIPANT_PARENT_2': 'Parent/Guardian name of second parent',
     'PARTICIPANT_DECEASED_PARENTS': 'One parent/guardian is deceased or unable to consent.',
-    'DATE_SIGNED': 'Date Signed'
+    'DATE_SIGNED': 'Date Signed',
+    'PARTICIPANT_ADDRESS': 'Participant Address',
+    'PARTICIPANT_CITY': 'Participant City',
+    'PARTICIPANT_STATE': 'Participant State',
+    'PARTICIPANT_ZIPCODE': 'Participant Zipcode',
+    'PARTICIPANT_COUNTRY': 'Participant Country'
 }
 
 _FAQ = {
