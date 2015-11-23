@@ -34,30 +34,6 @@
                 <td>{% raw tl['SAMPLE_NOT_PROCESSED'] %}</td>
 {% end %}
             </tr>
-
-                <td>{% raw tl['RAW_SEQUENCE_TITLE'] %}</td>
-{% if sequence_url %}
-                <td><a href="{{ sequence_url }}" target="blank">FASTQ</a>
-{% else %}
-                <td>{% raw tl['DATA_NOT_AVAILABLE'] %}</td>
-{% end %}
-            </tr>
-
-                <td>{% raw tl['BIOM_TABLE_TITLE'] %}</td>
-{% if biomv1_url %}
-                <td><a href="{{ biomv1_url }}" target="blank">BIOM-format v1.0</a>
-{% else %}
-                <td>{% raw tl['DATA_NOT_AVAILABLE'] %}</td>
-{% end %}
-            </tr>
-
-                <td>{% raw tl['EXCEL_TABLE_TITLE'] %}</td>
-{% if classic_url %}
-                <td><a href="{{ classic_url }}" target="blank">Excel readable</a>
-{% else %}
-                <td>{% raw tl['DATA_NOT_AVAILABLE'] %}</td>
-{% end %}
-            </tr>
             <tr>
                 <td style="width: 150px;">{% raw tl['SAMPLE_STATUS'] %}</td>
                 <td>{{ status }}</td>
@@ -96,6 +72,28 @@
                     </form>
                 </td>
             </tr>
+{% end %}
+        </table>
+    </div>
+    <div class=unidentified_data>
+        <table class="list" id="survey" style="background:{{ bgcolor }}">
+{% for key in sorted(per_sample_data) %}
+            <tr>
+                <td><a href="{% raw per_sample_data[key] %}" target="blank">{% raw tl[key] %}</td>
+           </tr>
+{% end %}
+      </table>
+    </div>
+
+    <div class=unidentified_results>
+        <table class="list" id="survey" style="background:{{ bgcolor }}">
+{% for key in sorted(unidentified_results) %}
+            <tr>
+                <td><img id="key" src="{% raw unidentified_results[key] %}" style="max-width:500px;height:auto"></td>
+           </tr>
+           <tr>
+                <td>{% raw tl[key] %}</td>
+           </tr>
 {% end %}
         </table>
     </div>
