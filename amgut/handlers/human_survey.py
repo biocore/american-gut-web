@@ -24,7 +24,7 @@ def build_consent_form(consent_info):
         message = ("%s<br/>%s<br/>%s<p>%s: %s</p><p>%s: %s</p><p>%s: %s</p>"
                    "<p>%s: %s</p><p>%s: %s</p><p>%s: %s</p>") %\
             (tl['CONSENT_YOUR_CHILD'],
-             tl['PARTICIPANT_AGREEMENT'],
+             tl['PARTICIPATION_AGREEMENT'],
              tl['EXHIBIT_A'],
              tl['PARTICIPANT_NAME'], consent_info['participant_name'],
              tl['PARTICIPANT_EMAIL'], consent_info['participant_email'],
@@ -39,7 +39,7 @@ def build_consent_form(consent_info):
                    "%s<p>%s: %s</p><p>%s: %s</p><p>%s: %s</p>"
                    "<p>%s: %s</p>") %\
             (tl['ASSENT_7_12'],
-             tl['PARTICIPANT_AGREEMENT'],
+             tl['PARTICIPATION_AGREEMENT'],
              tl['PARTICIPANT_NAME'], consent_info['participant_name'],
              tl['PARTICIPANT_EMAIL'], consent_info['participant_email'],
              tl['OBTAINER_NAME'], consent_info['assent_obtainer'],
@@ -55,7 +55,7 @@ def build_consent_form(consent_info):
                    "%s<p>%s: %s</p><p>%s: %s</p><p>%s: %s</p>"
                    "<p>%s: %s</p>") %\
             (tl['ASSENT_13_17'],
-             tl['PARTICIPANT_AGREEMENT'],
+             tl['PARTICIPATION_AGREEMENT'],
              tl['PARTICIPANT_NAME'], consent_info['participant_name'],
              tl['PARTICIPANT_EMAIL'], consent_info['participant_email'],
              tl['CONSENT_YOUR_CHILD'],
@@ -68,7 +68,7 @@ def build_consent_form(consent_info):
     elif consent_info['age_range'] == '18-plus':
         message = "%s<br/>%s<p>%s: %s</p><p>%s: %s</p><p>%s: %s</p>" %\
             (tl['CONSENT_18'],
-             tl['PARTICIPANT_AGREEMENT'],
+             tl['PARTICIPATION_AGREEMENT'],
              tl['PARTICIPANT_NAME'], consent_info['participant_name'],
              tl['PARTICIPANT_EMAIL'], consent_info['participant_email'],
              tl['DATE_SIGNED'], str(consent_info['date_signed']))
