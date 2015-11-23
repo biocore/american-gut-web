@@ -96,7 +96,7 @@ class OpenHumansHandler(BaseHandler, OpenHumansMixin, OriginMixin):
         try:
             link_survey_id = escape.json_decode(
                 escape.url_unescape(self.get_cookie('link-survey-id')))
-        except AttributeError:
+        except (AttributeError, ValueError):
             link_survey_id = None
 
         if link_survey_id:
