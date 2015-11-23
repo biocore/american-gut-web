@@ -622,6 +622,11 @@ _MAP = {
     'MAP_PARTICIPANT': ' Participant',
     'MAP_KIT': ' Kit Verified',
     'MAP_SAMPLE': ' Sample(s) Logged',
+    'SEP1': '1-10 kits',
+    'SEP2': '11-100 kits',
+    'SEP3': '101-1000 kits',
+    'SEP4': '1001-10000 kits',
+    'SEP5': '>10000 kits'
 }
 
 _FORGOT_PASSWORD = {'ENTER_ID_EMAIL': 'Enter your Kit ID and email',
