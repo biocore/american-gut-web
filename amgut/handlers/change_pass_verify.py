@@ -50,11 +50,15 @@ class ChangePassVerifyHandler(BaseHandler):
         MESSAGE = tl['CHANGE_PASS_BODY'] % supplied_kit_id
         try:
             send_email(MESSAGE, tl['CHANGE_PASS_SUBJECT'], email)
+            # result=4 is for showing message in if statement of
+            # change_pass_verify.html
             self.render('change_pass_verify.html', email='', kitid='',
                         passocde='', new_password='',
                         confirm_password='', result=4, message='',
                         kit_counts=kit_counts, loginerror='')
         except:
+            # result=5 is for showing message in if statement of
+            # change_pass_verify.html
             self.render('change_pass_verify.html', email='', kitid='',
                         passocde='', new_password='',
                         confirm_password='', result=5, message='',
