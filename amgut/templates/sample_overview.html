@@ -76,7 +76,7 @@
         </table>
     </div>
     <div class=unidentified_data>
-        <table class="list" id="survey" style="background:{{ bgcolor }}">
+        <table class="list" id="survey" style="background:#f5f5f5">
 {% for key in sorted(per_sample_data) %}
             <tr>
                 <td><a href="{% raw per_sample_data[key] %}" target="blank">{% raw tl[key] %}</td>
@@ -86,7 +86,7 @@
     </div>
 
     <div class=unidentified_results>
-        <table class="list" id="survey" style="background:{{ bgcolor }}">
+        <table class="list" id="survey" style="background:#f5f5f5">
 {% for key in sorted(unidentified_results) %}
             <tr>
                 <td><img id="key" src="{% raw unidentified_results[key] %}" style="max-width:500px;height:auto"></td>
