@@ -96,13 +96,8 @@ class OpenHumansHandler(BaseHandler, OpenHumansMixin, OriginMixin):
         try:
             link_survey_id = escape.json_decode(
                 escape.url_unescape(self.get_cookie('link-survey-id')))
-        except AttributeError:
+        except (AttributeError, ValueError):
             link_survey_id = None
-
-        ag_login_id = ag_data.get_user_for_kit(self.current_user)
-        human_participants = ag_data.getHumanParticipants(ag_login_id)
-
-        survey_ids = {}
 
         if link_survey_id:
             self.open_humans_request(
@@ -113,6 +108,11 @@ class OpenHumansHandler(BaseHandler, OpenHumansMixin, OriginMixin):
                 access_token=open_humans['access_token'])
 
             return
+
+        survey_ids = {}
+
+        ag_login_id = ag_data.get_user_for_kit(self.current_user)
+        human_participants = ag_data.getHumanParticipants(ag_login_id)
 
         for participant_name in human_participants:
             survey_id = ag_data.get_survey_id(ag_login_id, participant_name)
