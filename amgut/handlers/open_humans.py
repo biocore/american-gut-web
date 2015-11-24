@@ -1,3 +1,4 @@
+import base64
 import logging
 
 try:
@@ -95,8 +96,8 @@ class OpenHumansHandler(BaseHandler, OpenHumansMixin, OriginMixin):
 
         try:
             link_survey_id = escape.json_decode(
-                escape.url_unescape(self.get_cookie('link-survey-id')))
-        except (AttributeError, ValueError):
+                base64.b64decode(self.get_cookie('link-survey-id')))
+        except (AttributeError, ValueError, TypeError):
             link_survey_id = None
 
         if link_survey_id:
