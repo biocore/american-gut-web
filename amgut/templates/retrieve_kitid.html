@@ -32,6 +32,10 @@ function validateKitRequest() {
 
 {% end %}
 
+{% block map %}
+{% include map.html %}
+{% end %}
+
 {% block content %}
 {% from amgut import text_locale %}
 {% set tl = text_locale['retrieve_kitid.html'] %}
