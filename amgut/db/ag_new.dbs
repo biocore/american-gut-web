@@ -1029,6 +1029,7 @@
 			<comment><![CDATA[Pool of samples, equivalent to a single lane for sequencing]]></comment>
 			<column name="pool_id" type="bigserial" jt="-5" />
 			<column name="run_id" type="bigint" jt="-5" />
+			<column name="name" type="varchar" length="100" jt="12" mandatory="y" />
 			<column name="created_on" type="timestamp" jt="93" mandatory="y" >
 				<defo>current_timestamp</defo>
 			</column>
@@ -1049,6 +1050,9 @@
 			</index>
 			<index name="idx_pool_1" unique="NORMAL" >
 				<column name="finalized_by" />
+			</index>
+			<index name="idx_pool_2" unique="UNIQUE" >
+				<column name="name" />
 			</index>
 			<fk name="fk_pool" to_schema="barcodes" to_table="run" >
 				<fk_column name="run_id" pk="run_id" />
@@ -1299,6 +1303,7 @@
 		<table name="run" >
 			<comment><![CDATA[Full run, equivalent to a multi-lane sequencing run]]></comment>
 			<column name="run_id" type="bigserial" jt="-5" />
+			<column name="name" type="varchar" length="100" jt="12" mandatory="y" />
 			<column name="created_on" type="timestamp" jt="93" mandatory="y" >
 				<defo>current_timestamp</defo>
 			</column>
@@ -1313,6 +1318,9 @@
 			</index>
 			<index name="idx_run" unique="NORMAL" >
 				<column name="finalized_by" />
+			</index>
+			<index name="idx_run_0" unique="UNIQUE" >
+				<column name="name" />
 			</index>
 			<fk name="fk_run" to_schema="barcodes" to_table="people" >
 				<fk_column name="finalized_by" pk="person_id" />
@@ -23335,10 +23343,8 @@ CREATE INDEX idx_duplicate_consents_0 ON ag.duplicate_consents ( main_survey_id 
 		<entity schema="barcodes" name="steps_instruments" color="b7c8e3" x="645" y="750" />
 		<entity schema="barcodes" name="companies" color="b7c8e3" x="105" y="795" />
 		<entity schema="barcodes" name="peripheral_type" color="b7c8e3" x="120" y="1110" />
-		<entity schema="barcodes" name="pool" color="b7c8e3" x="1320" y="105" />
 		<entity schema="barcodes" name="steps_reagents" color="b7c8e3" x="645" y="660" />
 		<entity schema="barcodes" name="reagents" color="b7c8e3" x="375" y="480" />
-		<entity schema="barcodes" name="run" color="b7c8e3" x="1320" y="270" />
 		<entity schema="barcodes" name="steps_peripherals" color="b7c8e3" x="645" y="840" />
 		<entity schema="barcodes" name="peripherals" color="b7c8e3" x="390" y="1110" />
 		<entity schema="barcodes" name="plates" color="b7c8e3" x="870" y="165" />
@@ -23360,6 +23366,8 @@ CREATE INDEX idx_duplicate_consents_0 ON ag.duplicate_consents ( main_survey_id 
 		<entity schema="barcodes" name="protocol_settings" color="b7c8e3" x="1185" y="540" />
 		<entity schema="barcodes" name="protocols" color="b7c8e3" x="885" y="930" />
 		<entity schema="barcodes" name="primers" color="b7c8e3" x="210" y="1290" />
+		<entity schema="barcodes" name="run" color="b7c8e3" x="1320" y="270" />
+		<entity schema="barcodes" name="pool" color="b7c8e3" x="1320" y="105" />
 		<group name="Group_samples" color="c4e0f9" >
 			<entity schema="barcodes" name="plates_samples" />
 			<entity schema="barcodes" name="plates" />
