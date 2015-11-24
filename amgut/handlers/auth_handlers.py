@@ -22,10 +22,10 @@ class AuthBasehandler(BaseHandler):
 class AuthRegisterHandoutHandler(AuthBasehandler):
     """User Creation"""
     def get(self):
-        latlong_db = ag_data.getMapMarkers()
+        kit_counts = ag_data.getMapMarkers()
         countries = ag_data.get_countries()
         self.render("register_user.html",
-                    latlongs_db=latlong_db, loginerror='', countries=countries)
+                    kit_counts=kit_counts, loginerror='', countries=countries)
 
     def post(self):
         # Check handout
@@ -106,9 +106,9 @@ class AuthLoginHandler(AuthBasehandler):
             return
         else:
             msg = tl['INVALID_KITID']
-            latlongs_db = ag_data.getMapMarkers()
+            kit_counts = ag_data.getMapMarkers()
             self.render("index.html", user=None, loginerror=msg,
-                        latlongs_db=latlongs_db)
+                        kit_counts=kit_counts)
             return
 
 
