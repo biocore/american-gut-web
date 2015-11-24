@@ -12,6 +12,6 @@ $(function () {
       return $(this).attr('name');
     }).get();
 
-    Cookies.set('link-survey-id', participants);
+    Cookies.set('link-survey-id', btoa(JSON.stringify(participants)));
   });
 });
