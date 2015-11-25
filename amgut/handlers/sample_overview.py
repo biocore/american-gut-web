@@ -1,17 +1,19 @@
 import os
-import json
+from functools import partial
 
 from tornado.web import authenticated
-import requests
 
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.connections import ag_data
 from amgut.handlers.base_handlers import BaseHandler
-from amgut import media_locale
+from amgut import media_locale, text_locale
 
 
-def _format_data_path(base, dir, barcode, ext):
-    filepath = os.path.join(base, dir, '.'.join([barcode, ext]))
+def _format_data_path(base, dir, barcode, ext=None):
+    if ext is None:
+        filepath = os.path.join(base, dir, barcode)
+    else:
+        filepath = os.path.join(base, dir, '.'.join([barcode, ext]))
     return filepath
 
 
@@ -32,6 +34,29 @@ def _get_data_path(barcode):
         web_barcode_txt = None
 
     return web_barcode_pdf, web_barcode_txt
+
+
+def _get_per_sample_stuff(basepath, barcode):
+    fs_base = AMGUT_CONFIG.base_data_dir
+    fs_barcode = _format_data_path(fs_base, basepath, barcode)
+    web_base = "%s/static" % media_locale['SITEBASE']
+
+    if not os.path.exists(fs_barcode):
+        return {}
+
+    web_paths = {}
+    for f in os.listdir(fs_barcode):
+        basename, _ = os.path.splitext(f)
+        if basename in text_locale['sample_overview.html']:
+            web_path = _format_data_path(web_base, basepath, barcode)
+            full_path = os.path.join(web_path, f)
+            web_paths[basename] = full_path
+
+    return web_paths
+
+
+_get_per_sample_data = partial(_get_per_sample_stuff, 'per-sample-data')
+_get_per_sample_results = partial(_get_per_sample_stuff, 'per-sample-results')
 
 
 class SampleOverviewHandler(BaseHandler):
@@ -55,22 +80,8 @@ class SampleOverviewHandler(BaseHandler):
             return
 
         web_barcode_pdf, web_barcode_txt = _get_data_path(barcode)
-
-        sequence_url = None
-        biomv1_url = None
-        classic_url = None
-        sequence_url = None
-
-        api_base = 'http://api.microbio.me/americangut/1/'
-        req = requests.get(api_base + 'sample/%s' % barcode)
-        if req.status_code == 200 and req.content != "(null)":
-            bc_with_suf = json.loads(req.content)[0]
-            biomv1_url = api_base + 'otu/%s/json' % bc_with_suf
-            classic_url = api_base + 'otu/%s/txt' % bc_with_suf
-
-            seq_req = requests.get(api_base + 'sequence/%s' % bc_with_suf)
-            if seq_req.status_code == 200:
-                sequence_url = json.loads(seq_req.content)[0]['fastq_url']
+        unidentified_results = _get_per_sample_results(barcode)
+        per_sample_data = _get_per_sample_data(barcode)
 
         sample_time = sample_data['sample_time']
         sample_date = sample_data['sample_date']
@@ -97,8 +108,8 @@ class SampleOverviewHandler(BaseHandler):
                     bgcolor=bgcolor, status=status, barcode=barcode,
                     sample_origin=sample_origin, sample_date=sample_date,
                     sample_time=sample_time, notes=notes,
-                    sequence_url=sequence_url, biomv1_url=biomv1_url,
-                    classic_url=classic_url)
+                    unidentified_results=unidentified_results,
+                    per_sample_data=per_sample_data)
 
     @authenticated
     def get(self):
