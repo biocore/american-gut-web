@@ -1,9 +1,7 @@
 import os
-import json
 from functools import partial
 
 from tornado.web import authenticated
-import requests
 
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.connections import ag_data
