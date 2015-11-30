@@ -1,28 +1,149 @@
-{% from amgut import text_locale, media_locale %}
+{% from amgut import text_locale %}
 {% set tl = text_locale['map.html'] %}
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-<script type="text/javascript" src="{% raw media_locale['SITEBASE'] %}/static/js/map.js"></script>
-<script type="text/javascript">
-    var latlongs_db = {% raw latlongs_db %};
-    var LAT = {{media_locale['LATITUDE']}}
-    var LONG = {{media_locale['LONGITUDE']}}
-    var ZOOM = {{media_locale['ZOOM']}}
+<div id="map_wrapper" style="width:100%; height:100%; background:#9ecae1;">
+  <div id="map_canvas" style="position:absolute; bottom:0px; right:0px; width:85%; height:85%; background:#9ecae1;"></div>
+</div>
+<style>
+.legend {
+  color:white;
+}
+</style>
+<script src="{% raw media_locale['SITEBASE'] %}/static/vendor/js/d3.min.js"></script>
+<script src="{% raw media_locale['SITEBASE'] %}/static/vendor/js/topojson.v1.min.js"></script>
+<script>
+//Adapted from http://techslides.com/demos/d3/worldmap-template.html
+var color_domain = [11, 101, 1001, 10001, 9999999999999];
+var legend_labels = ["{% raw tl['SEP1'] %}", "{% raw tl['SEP2'] %}", "{% raw tl['SEP3'] %}", "{% raw tl['SEP4'] %}", "{% raw tl['SEP5'] %}"];
+var color = d3.scale.threshold()
+  .domain(color_domain)
+  .range(["#adfcad", "#ffcb40", "#ffba00", "#ff7d73", "#ff4e40", "#ff1300"]);
+
+d3.select(window).on("resize", throttle);
+
+var zoom = d3.behavior.zoom()
+    .scaleExtent([1, 9])
+    .on("zoom", move);
+
+var width = document.getElementById('map_canvas').offsetWidth;
+var height = document.getElementById('map_canvas').offsetHeight;
+var topo, projection, path, svg, g;
+var graticule = d3.geo.graticule();
+var tooltip = d3.select("#map_canvas").append("div").attr("class", "tooltip hidden");
+
+setup(width,height);
+
+function setup(width,height){
+  var projection = d3.geo.equirectangular()
+    .scale(240)
+    .translate([width / 2, height / 2])
+    .precision(.1);
+
+  path = d3.geo.path().projection(projection);
+
+  svg = d3.select("#map_canvas").append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .call(zoom)
+      .append("g");
+
+  g = svg.append("g");
+
+}
+
+d3.json("{% raw media_locale['SITEBASE'] %}/static/vendor/data/world-topo-min.json", function(error, world) {
+
+  var countries = topojson.feature(world, world.objects.countries).features;
+
+  topo = countries;
+  draw(topo);
+
+});
+
+function draw(topo) {
+
+  svg.append("path")
+     .datum(graticule)
+     .attr("class", "graticule")
+     .attr("d", path);
+
+
+  g.append("path")
+   .datum({type: "LineString", coordinates: [[-180, 0], [-90, 0], [0, 0], [90, 0], [180, 0]]})
+   .attr("class", "equator")
+   .attr("d", path);
+
+
+  var country = g.selectAll(".country").data(topo);
+  var kit_counts = {% raw kit_counts %};
+  country.enter().insert("path")
+      .attr("class", "country")
+      .attr("d", path)
+      .attr("id", function(d,i) { return d.id; })
+      .style("fill", function(d, i) { return color(kit_counts[d.properties.name]); });
+}
+
+function redraw() {
+  width = document.getElementById('map_canvas').offsetWidth;
+  height = document.getElementById('map_canvas').offsetHeight;
+  d3.select('svg').remove();
+  setup(width,height);
+  draw(topo);
+}
+
+function move() {
+
+  var t = d3.event.translate;
+  var s = d3.event.scale; 
+  zscale = s;
+  var h = height/4;
+
+
+  t[0] = Math.min(
+    (width/height)  * (s - 1), 
+    Math.max( width * (1 - s), t[0] )
+  );
+
+  t[1] = Math.min(
+    h * (s - 1) + h * s, 
+    Math.max(height  * (1 - s) - h * s, t[1])
+  );
+
+  zoom.translate(t);
+  g.attr("transform", "translate(" + t + ")scale(" + s + ")");
+
+  //adjust the country hover stroke width based on zoom level
+  d3.selectAll(".country").style("stroke-width", 1.5 / s);
+
+}
+
+var throttleTimer;
+function throttle() {
+  window.clearTimeout(throttleTimer);
+    throttleTimer = window.setTimeout(function() {
+      redraw();
+    }, 200);
+}
+
+var legend = svg.selectAll("g.legend")
+  .data(color_domain)
+  .enter().append("g")
+  .attr("class", "legend");
+
+  var ls_w = 20, ls_h = 20;
+
+  legend.append("rect")
+  .attr("x", 20)
+  .attr("y", function(d, i){ return height - (i*ls_h) - 2*ls_h;})
+  .attr("width", ls_w)
+  .attr("height", ls_h)
+  .style("fill", function(d, i) { return color(d-1); })
+  .style("opacity", 0.8);
+
+  legend.append("text")
+  .attr("x", 50)
+  .attr("y", function(d, i){ return height - (i*ls_h) - ls_h - 4;})
+  .style("fill", function(d, i) { return "#FFF"; })
+  .text(function(d, i){ return legend_labels[i]; });
+
+$(document).ready($(window).resize(function() { redraw(); }));
 </script>
-
-<div style="width:100%; height:100%; background-color:#000;">
-    <div id="map_canvas" style="width:100%; height:100%; opacity:0.8;"></div>
-</div>
-
-<div style="position:absolute; bottom: 30px; right:0px; opacity:0.9; width:260px;">
-    <div class="left menuheader" style="margin-top:10px;">
-        <p>{% raw tl['MAP_TITLE'] %}</p>
-    </div>
-
-    <div class="left keywrapper">
-        <ul class="key">
-            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|00B2FF"/>{% raw tl['MAP_PARTICIPANT'] %}</li>
-            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|ffff00"/>{% raw tl['MAP_KIT'] %}</li>
-            <li><img src="http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=wc-male|00ff00"/>{% raw tl['MAP_SAMPLE'] %}</li>
-        </ul>
-    </div>
-</div>

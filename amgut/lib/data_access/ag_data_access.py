@@ -272,10 +272,11 @@ class AGDataAccess(object):
                             (ag_kit_id, barcode, sample_barcode_file)
                             VALUES (k_id, bc, bc || '.jpg');
                     END LOOP;
+                    DELETE FROM ag_handout_barcodes WHERE kit_id = %s;
                     DELETE FROM ag_handout_kits WHERE kit_id = %s;
                 END $do$;
                 """.format(ag_login_id, printresults)
-            TRN.add(sql, [supplied_kit_id] * 3)
+            TRN.add(sql, [supplied_kit_id] * 4)
             try:
                 TRN.execute()
             except psycopg2.IntegrityError:
@@ -506,8 +507,11 @@ class AGDataAccess(object):
             return TRN.execute_fetchflatten()
 
     def getMapMarkers(self):
-        # Removed for update
-        return []
+        with TRN:
+            sql = """SELECT country, count(country)::integer
+            FROM ag.ag_login GROUP BY country"""
+            TRN.add(sql)
+            return dict(TRN.execute_fetchindex())
 
     def handoutCheck(self, username, password):
         with TRN:

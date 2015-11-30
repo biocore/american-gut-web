@@ -12,10 +12,10 @@ class ForgotPasswordHandler(BaseHandler):
     def get(self):
         email = self.get_argument('email', None)
         kitid = self.get_argument('kitid', None)
-        latlongs = ag_data.getMapMarkers()
+        kit_counts = ag_data.getMapMarkers()
         self.render('forgot_password.html', email=email, kitid=kitid,
                     result=None, messaage='',
-                    latlongs_db=latlongs, loginerror='')
+                    kit_counts=kit_counts, loginerror='')
 
     def post(self):
         email = self.get_argument('email', None)
@@ -24,7 +24,7 @@ class ForgotPasswordHandler(BaseHandler):
 
     def create_passcode_and_send_email(self, email, kit_id):
         kitids = ag_data.getAGKitIDsByEmail(email)
-        latlongs = ag_data.getMapMarkers()
+        kit_counts = ag_data.getMapMarkers()
         tl = text_locale['handlers']
         # if the kit id matches the email generate and send an email
         if kit_id in kitids:
@@ -40,13 +40,13 @@ class ForgotPasswordHandler(BaseHandler):
                     send_email(MESSAGE, tl['CHANGE_PASS_SUBJECT'], email)
                     self.render('forgot_password.html', email='', kitid='',
                                 result=1, message='',
-                                latlongs_db=latlongs, loginerror='')
+                                kit_counts=kit_counts, loginerror='')
             except:
                     self.render('forgot_password.html', email='', kitid='',
                                 result=2, message=MESSAGE,
-                                latlongs_db=latlongs, loginerror='')
+                                kit_counts=kit_counts, loginerror='')
 
         else:
             self.render('forgot_password.html', email='', kitid='',
                         result=3, message='',
-                        latlongs_db=latlongs, loginerror='')
+                        kit_counts=kit_counts, loginerror='')

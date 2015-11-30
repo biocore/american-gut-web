@@ -21,11 +21,11 @@ class ChangePassVerifyHandler(BaseHandler):
             result = 'valid'
         else:
             result = 'notvalid'
-        latlongs = ag_data.getMapMarkers()
+        kit_counts = ag_data.getMapMarkers()
         self.render('change_pass_verify.html', email=email, kitid=kitid,
                     passcode=passcode, new_password=new_password,
                     confirm_password=confirm_password,
-                    result=result, message=None, latlongs_db=latlongs,
+                    result=result, message=None, kit_counts=kit_counts,
                     loginerror='')
 
     def post(self):
@@ -45,17 +45,21 @@ class ChangePassVerifyHandler(BaseHandler):
     def reset_pass_and_email(self, new_password, confirm_password, email,
                              supplied_kit_id):
         ag_data.ag_update_kit_password(supplied_kit_id, new_password)
-        latlongs = ag_data.getMapMarkers()
+        kit_counts = ag_data.getMapMarkers()
         tl = text_locale['handlers']
         MESSAGE = tl['CHANGE_PASS_BODY'] % supplied_kit_id
         try:
             send_email(MESSAGE, tl['CHANGE_PASS_SUBJECT'], email)
+            # result=4 is for showing message in if statement of
+            # change_pass_verify.html
             self.render('change_pass_verify.html', email='', kitid='',
                         passocde='', new_password='',
                         confirm_password='', result=4, message='',
-                        latlongs_db=latlongs, loginerror='')
+                        kit_counts=kit_counts, loginerror='')
         except:
+            # result=5 is for showing message in if statement of
+            # change_pass_verify.html
             self.render('change_pass_verify.html', email='', kitid='',
                         passocde='', new_password='',
                         confirm_password='', result=5, message='',
-                        latlongs_db=latlongs, loginerror='')
+                        kit_counts=kit_counts, loginerror='')
