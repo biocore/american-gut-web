@@ -648,7 +648,7 @@ class TestAGDataAccess(TestCase):
                {'barcode': '000004216', 'participant_name': 'REMOVED'},
                {'barcode': '000004218', 'participant_name': 'REMOVED'},
                {'barcode': '000004219', 'participant_name': 'REMOVED'}]
-        self.assertEqual(obs, exp)
+        self.assertItemsEqual(obs, exp)
 
     def test_get_barcode_results_non_existant_id(self):
         with self.assertRaises(ValueError):
