@@ -388,7 +388,7 @@ ALTER TABLE barcodes.settings_peripherals ADD CONSTRAINT fk_settings_peripherals
 CREATE TABLE barcodes.settings_primers ( 
     step_settings_id     bigint  NOT NULL,
     primer_id            bigint  NOT NULL,
-    lot_number           bigint  NOT NULL
+    lot_number           varchar  NOT NULL
  ) ;
 CREATE INDEX idx_settings_primers ON barcodes.settings_primers ( step_settings_id ) ;
 CREATE INDEX idx_settings_primers_0 ON barcodes.settings_primers ( primer_id ) ;
