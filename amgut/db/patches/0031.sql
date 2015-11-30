@@ -316,7 +316,6 @@ CREATE TABLE barcodes.protocol_settings (
     finalized_by         bigint  ,
     CONSTRAINT pk_protocol_runs PRIMARY KEY ( protocol_settings_id )
  ) ;
-COMMENT ON CONSTRAINT ck_2 ON barcodes.protocol_settings IS 'Add plate OR sample for a row';
 CREATE INDEX idx_protocol_runs ON barcodes.protocol_settings ( created_by ) ;
 CREATE INDEX idx_protocol_runs_0 ON barcodes.protocol_settings ( finalized_by ) ;
 CREATE INDEX idx_protocol_runs_1 ON barcodes.protocol_settings ( plate_barcode ) ;
@@ -363,7 +362,6 @@ CREATE TABLE barcodes.pool_samples (
     pool_id              bigint  NOT NULL,
     protocol_run_id      bigint  NOT NULL
  ) ;
-COMMENT ON CONSTRAINT ck_0 ON barcodes.pool_samples IS 'Make sure we only have a sample ID or plate ID for a given column';
 CREATE INDEX idx_pool_samples ON barcodes.pool_samples ( pool_id ) ;
 CREATE INDEX idx_pool_samples_0 ON barcodes.pool_samples ( protocol_run_id ) ;
 ALTER TABLE barcodes.pool_samples ADD CONSTRAINT fk_pool_samples FOREIGN KEY ( pool_id ) REFERENCES barcodes.pool( pool_id )    ;
