@@ -721,7 +721,8 @@ class AGDataAccess(object):
             sql = """SELECT barcode, participant_name
                      FROM ag_kit_barcodes
                      INNER JOIN ag_kit USING (ag_kit_id)
-                     WHERE ag_login_id = %s AND results_ready = 'Y'"""
+                     WHERE ag_login_id = %s AND results_ready = 'Y'
+                     ORDER BY barcode"""
 
             TRN.add(sql, [ag_login_id])
             return [dict(row) for row in TRN.execute_fetchindex()]
