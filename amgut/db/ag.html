@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.1 plus MathML 2.0 plus SVG 1.1//EN' 'http://www.w3.org/2002/04/xhtml-math-svg/xhtml-math-svg.dtd'>
 <html xmlns='http://www.w3.org/1999/xhtml' >
 <head>
-<title>public</title>
+<title>ag</title>
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
 <meta http-equiv='X-UA-Compatible' content='IE=edge'/>
 <style type='text/css'>
@@ -287,13 +287,13 @@ table {
 <g transform='translate(10,10)'>
   <rect x='10' y='10' width='260' height='64' rx='6' ry='6' style='fill:url(#legendGradient);filter:url(#shadow);'/> 
   <text x='20' y='30'><tspan>Project</tspan> PostgreSQL by <a xlink:href='http://www.dbschema.com' text-decoration='underline'>DbSchema</a></text> 
-  <text x='20' y='44'><tspan>Layout</tspan> public</text> 
+  <text x='20' y='44'><tspan>Layout</tspan> ag</text> 
   <text x='20' y='58' style='fill:#777'><tspan>Column comments as mouse-over tooltips.</tspan></text> 
 </g>
 
 <g transform='translate(0,110)'>
 <!-- ============= Group 'ag_survey_multiples' ============= -->
-<rect class='grp' style='fill:#faf6f0;stroke:#d4c8b6' x='629' y='250' width='632' height='1010' />
+<rect class='grp' style='fill:#faf6f0;stroke:#d4c8b6' x='629' y='250' width='632' height='1070' />
 <text x='640' y='265'>ag_survey_multiples</text>
 <rect style='fill:url(#groupUnderTitleLine); stroke-width:2;' x='640' y='268' width='610' height='2' />
 
@@ -1545,10 +1545,10 @@ Keeps track of the survey_ids that correspond to surveys that were ported from f
 <a xlink:href='#promoted_survey_ids.survey_id'><use id='fk' x='1443' y='776' xlink:href='#fk'/><title>References ag_login_surveys ( survey_id ) </title></a>
 
 <!-- ============= Table 'ag_kit_barcodes' ============= -->
-<rect class='table' x='705' y='878' width='180' height='360' rx='7' ry='7' />
+<rect class='table' x='705' y='878' width='180' height='420' rx='7' ry='7' />
 <line class='delim' x1='705.500000' y1='904.500000' x2='884.500000' y2='904.500000'/>
-<line class='delim' x1='720.500000' y1='904.500000' x2='720.500000' y2='1237.500000'/>
-<line class='delim' x1='873.500000' y1='904.500000' x2='873.500000' y2='1237.500000'/>
+<line class='delim' x1='720.500000' y1='904.500000' x2='720.500000' y2='1297.500000'/>
+<line class='delim' x1='873.500000' y1='904.500000' x2='873.500000' y2='1297.500000'/>
 <path d='M 705.50 904.50 L 705.50 885.50 Q 705.50 878.50 712.50 878.50 L 877.50 878.50 Q 884.50 878.50 884.50 885.50 L 884.50 904.50 L705.50 904.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
 <a xlink:href='#ag_kit_barcodes'><text x='748' y='896'>ag_kit_barcodes</text><title>Table ag.ag_kit_barcodes</title></a>
   <use id='nn' x='707' y='912' xlink:href='#nn'/><a xlink:href='#ag_kit_barcodes.ag_kit_barcode_id'><use id='pk' x='707' y='911' xlink:href='#pk'/><title>Pk ag_kit_barcodes_pkey ( ag_kit_barcode_id ) </title></a>
@@ -1598,8 +1598,16 @@ varchar(1)</title></a>
 varchar(1)</title></a>
   <a xlink:href='#ag_kit_barcodes.refunded'><text id='ag.ag_kit_barcodes.refunded' x='723' y='1207'>refunded</text><title>refunded
 varchar(1)</title></a>
-  <a xlink:href='#ag_kit_barcodes.sample_postmark_date'><text id='ag.ag_kit_barcodes.sample_postmark_date' x='723' y='1222'>sample_postmark_date</text><title>sample_postmark_date
+  <a xlink:href='#ag_kit_barcodes.status'><text id='ag.ag_kit_barcodes.status' x='723' y='1222'>status</text><title>status
+varchar</title></a>
+  <a xlink:href='#ag_kit_barcodes.sample_postmark_date'><text id='ag.ag_kit_barcodes.sample_postmark_date' x='723' y='1237'>sample_postmark_date</text><title>sample_postmark_date
 date</title></a>
+  <a xlink:href='#ag_kit_barcodes.scan_date'><text id='ag.ag_kit_barcodes.scan_date' x='723' y='1252'>scan_date</text><title>scan_date
+date</title></a>
+  <use id='nn' x='707' y='1257' xlink:href='#nn'/><a xlink:href='#ag_kit_barcodes.biomass_remaining'><text id='ag.ag_kit_barcodes.biomass_remaining' x='723' y='1267'>biomass_remaining</text><title>biomass_remaining
+* bool default 'T'</title></a>
+  <a xlink:href='#ag_kit_barcodes.sequencing_status'><text id='ag.ag_kit_barcodes.sequencing_status' x='723' y='1282'>sequencing_status</text><title>sequencing_status
+varchar</title></a>
 
 </g></svg>
 
@@ -4156,8 +4164,32 @@ date</title></a>
 	</tr>
 	<tr>
 		<td>&nbsp;</td>
+		<td><a name='ag_kit_barcodes.status'>status</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
 		<td><a name='ag_kit_barcodes.sample_postmark_date'>sample&#95;postmark&#95;date</a></td>
 		<td> date   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_kit_barcodes.scan_date'>scan&#95;date</a></td>
+		<td> date   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='ag_kit_barcodes.biomass_remaining'>biomass&#95;remaining</a></td>
+		<td> bool   DEFO 'T' </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_kit_barcodes.sequencing_status'>sequencing&#95;status</a></td>
+		<td> varchar   </td>
 		<td>  </td>
 	</tr>
 <tr><th colspan='4'><b>Indexes</b></th></tr>

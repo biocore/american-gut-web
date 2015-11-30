@@ -285,7 +285,13 @@
 			<column name="results_ready" type="varchar" length="1" jt="12" />
 			<column name="withdrawn" type="varchar" length="1" jt="12" />
 			<column name="refunded" type="varchar" length="1" jt="12" />
+			<column name="status" type="varchar" jt="12" />
 			<column name="sample_postmark_date" type="date" jt="91" />
+			<column name="scan_date" type="date" jt="91" />
+			<column name="biomass_remaining" type="bool" jt="-7" mandatory="y" >
+				<defo>&#039;T&#039;</defo>
+			</column>
+			<column name="sequencing_status" type="varchar" jt="12" />
 			<index name="ag_kit_barcodes_pkey" unique="PRIMARY_KEY" >
 				<column name="ag_kit_barcode_id" />
 			</index>
@@ -923,10 +929,10 @@
 		</table>
 		<table name="peripheral_type" >
 			<column name="peripheral_type" type="varchar" jt="12" mandatory="y" />
-			<column name="description" type="varchar" jt="12" />
-			<column name="company" type="varchar" jt="12" />
-			<column name="model" type="varchar" jt="12" />
-			<column name="part_number" type="varchar" jt="12" />
+			<column name="description" type="varchar" jt="12" mandatory="y" />
+			<column name="company" type="varchar" jt="12" mandatory="y" />
+			<column name="model" type="varchar" jt="12" mandatory="y" />
+			<column name="part_number" type="varchar" jt="12" mandatory="y" />
 			<index name="pk_peripherals_type" unique="PRIMARY_KEY" >
 				<column name="peripheral_type" />
 			</index>
@@ -942,7 +948,7 @@
 			<column name="instrument_type" type="varchar" jt="12" mandatory="y" >
 				<comment><![CDATA[The instrument this attaches to]]></comment>
 			</column>
-			<column name="peripheral_type" type="bigint" jt="-5" mandatory="y" />
+			<column name="peripheral_type" type="varchar" jt="12" mandatory="y" />
 			<column name="created_on" type="timestamp" jt="93" mandatory="y" >
 				<defo>current_timestamp</defo>
 			</column>
@@ -967,7 +973,6 @@
 			<index name="pk_peripherals" unique="UNIQUE" >
 				<column name="peripheral_id" />
 			</index>
-			<fk name="fk_peripherals" to_schema="barcodes" to_table="instruments" />
 			<fk name="fk_peripherals_1" to_schema="barcodes" to_table="peripheral_type" >
 				<fk_column name="peripheral_type" pk="peripheral_type" />
 			</fk>
@@ -1006,7 +1011,7 @@
 			</fk>
 		</table>
 		<table name="plates_samples" >
-			<column name="plate_barcode" type="bigint" jt="-5" mandatory="y" />
+			<column name="plate_barcode" type="varchar" jt="12" mandatory="y" />
 			<column name="sample_id" type="bigint" jt="-5" mandatory="y" />
 			<index name="idx_plate_samples" unique="PRIMARY_KEY" >
 				<column name="plate_barcode" />
@@ -1027,7 +1032,7 @@
 		</table>
 		<table name="pool" >
 			<comment><![CDATA[Pool of samples, equivalent to a single lane for sequencing]]></comment>
-			<column name="pool_id" type="bigserial" jt="-5" />
+			<column name="pool_id" type="bigserial" jt="-5" mandatory="y" />
 			<column name="run_id" type="bigint" jt="-5" />
 			<column name="name" type="varchar" length="100" jt="12" mandatory="y" />
 			<column name="created_on" type="timestamp" jt="93" mandatory="y" >
@@ -1039,9 +1044,6 @@
 			</column>
 			<column name="finalized_on" type="timestamp" jt="93" />
 			<column name="finalized_by" type="bigint" jt="-5" mandatory="y" />
-			<index name="pk_pool" unique="UNIQUE" >
-				<column name="pool_id" />
-			</index>
 			<index name="idx_pool" unique="NORMAL" >
 				<column name="run_id" />
 			</index>
@@ -1053,6 +1055,9 @@
 			</index>
 			<index name="idx_pool_2" unique="UNIQUE" >
 				<column name="name" />
+			</index>
+			<index name="pk_pool" unique="PRIMARY_KEY" >
+				<column name="pool_id" />
 			</index>
 			<fk name="fk_pool" to_schema="barcodes" to_table="run" >
 				<fk_column name="run_id" pk="run_id" />
@@ -1073,11 +1078,6 @@
 			<index name="idx_pool_samples_0" unique="NORMAL" >
 				<column name="protocol_run_id" />
 			</index>
-			<constraint name="ck_0" >
-				<string>CASE sample_id WHEN sample_id IS NULL THEN plate_id IS NOT NULL ELSE sample_id IS NOT NULL</string>
-				<comment><![CDATA[Make sure we only have a sample ID or plate ID for a given column
-]]></comment>
-			</constraint>
 			<fk name="fk_pool_samples" to_schema="barcodes" to_table="pool" >
 				<fk_column name="pool_id" pk="pool_id" />
 			</fk>
@@ -1117,11 +1117,11 @@
 		<table name="project" >
 			<column name="project_id" type="bigserial" jt="-5" mandatory="y" />
 			<column name="project" type="varchar" length="1000" jt="12" mandatory="y" />
-			<column name="description" type="varchar" jt="12" mandatory="y" />
-			<column name="pi" type="bigint" jt="-5" mandatory="y" >
+			<column name="description" type="varchar" jt="12" />
+			<column name="pi" type="bigint" jt="-5" >
 				<comment><![CDATA[primary investigator on the study]]></comment>
 			</column>
-			<column name="contact_person" type="bigint" jt="-5" mandatory="y" />
+			<column name="contact_person" type="bigint" jt="-5" />
 			<column name="created_on" type="timestamp" jt="93" mandatory="y" >
 				<defo>current_timestamp</defo>
 			</column>
@@ -1135,9 +1135,6 @@
 			<index name="project_barcode_pkey" unique="PRIMARY_KEY" >
 				<column name="project_id" />
 				<column name="barcode" />
-			</index>
-			<index name="pk_project_barcode" unique="UNIQUE" >
-				<column name="project_id" />
 			</index>
 			<fk name="fk_pb_to_barcode" to_schema="barcodes" to_table="barcode" >
 				<fk_column name="barcode" pk="barcode" />
@@ -1172,10 +1169,6 @@
 			<index name="idx_protocol_runs_2" unique="NORMAL" >
 				<column name="sample_id" />
 			</index>
-			<constraint name="ck_2" >
-				<string>CASE sample_id WHEN sample_id IS NULL THEN plate_id IS NOT NULL ELSE sample_id IS NOT NULL</string>
-				<comment><![CDATA[Add plate OR sample for a row]]></comment>
-			</constraint>
 			<fk name="fk_protocol_runs" to_schema="barcodes" to_table="people" >
 				<fk_column name="created_by" pk="person_id" />
 			</fk>
@@ -1258,7 +1251,7 @@
 		</table>
 		<table name="reagent_type" >
 			<column name="reagent_type" type="varchar" jt="12" mandatory="y" />
-			<column name="description" type="varchar" jt="12" />
+			<column name="description" type="varchar" jt="12" mandatory="y" />
 			<index name="pk_reagent_type" unique="PRIMARY_KEY" >
 				<column name="reagent_type" />
 			</index>
@@ -1302,7 +1295,7 @@
 		</table>
 		<table name="run" >
 			<comment><![CDATA[Full run, equivalent to a multi-lane sequencing run]]></comment>
-			<column name="run_id" type="bigserial" jt="-5" />
+			<column name="run_id" type="bigserial" jt="-5" mandatory="y" />
 			<column name="name" type="varchar" length="100" jt="12" mandatory="y" />
 			<column name="created_on" type="timestamp" jt="93" mandatory="y" >
 				<defo>current_timestamp</defo>
@@ -1313,14 +1306,14 @@
 			</column>
 			<column name="finalized_on" type="timestamp" jt="93" />
 			<column name="finalized_by" type="bigint" jt="-5" />
-			<index name="pk_run" unique="UNIQUE" >
-				<column name="run_id" />
-			</index>
 			<index name="idx_run" unique="NORMAL" >
 				<column name="finalized_by" />
 			</index>
 			<index name="idx_run_0" unique="UNIQUE" >
 				<column name="name" />
+			</index>
+			<index name="pk_run" unique="PRIMARY_KEY" >
+				<column name="run_id" />
 			</index>
 			<fk name="fk_run" to_schema="barcodes" to_table="people" >
 				<fk_column name="finalized_by" pk="person_id" />
@@ -23335,39 +23328,39 @@ CREATE INDEX idx_duplicate_consents_0 ON ag.duplicate_consents ( main_survey_id 
 		<entity schema="barcodes" name="protocols_steps" color="b7c8e3" x="885" y="825" />
 		<entity schema="barcodes" name="people" color="b7c8e3" x="645" y="450" />
 		<entity schema="barcodes" name="samples" color="b7c8e3" x="360" y="180" />
-		<entity schema="barcodes" name="project" color="b7c8e3" x="105" y="285" />
 		<entity schema="barcodes" name="barcode_exceptions" color="b7c8e3" x="360" y="45" />
 		<entity schema="barcodes" name="barcode" color="b7c8e3" x="45" y="75" />
-		<entity schema="barcodes" name="project_barcode" color="b7c8e3" x="135" y="195" />
 		<entity schema="barcodes" name="users" color="b7c8e3" x="855" y="450" />
 		<entity schema="barcodes" name="steps_instruments" color="b7c8e3" x="645" y="750" />
 		<entity schema="barcodes" name="companies" color="b7c8e3" x="105" y="795" />
-		<entity schema="barcodes" name="peripheral_type" color="b7c8e3" x="120" y="1110" />
 		<entity schema="barcodes" name="steps_reagents" color="b7c8e3" x="645" y="660" />
 		<entity schema="barcodes" name="reagents" color="b7c8e3" x="375" y="480" />
 		<entity schema="barcodes" name="steps_peripherals" color="b7c8e3" x="645" y="840" />
-		<entity schema="barcodes" name="peripherals" color="b7c8e3" x="390" y="1110" />
-		<entity schema="barcodes" name="plates" color="b7c8e3" x="870" y="165" />
-		<entity schema="barcodes" name="plates_samples" color="b7c8e3" x="645" y="165" />
 		<entity schema="barcodes" name="steps" color="b7c8e3" x="885" y="690" />
-		<entity schema="barcodes" name="pool_samples" color="b7c8e3" x="1110" y="105" />
 		<entity schema="barcodes" name="step_settings" color="b7c8e3" x="1200" y="720" />
 		<entity schema="barcodes" name="settings_reagents" color="b7c8e3" x="1200" y="810" />
 		<entity schema="barcodes" name="settings_instruments" color="b7c8e3" x="1200" y="900" />
 		<entity schema="barcodes" name="settings_peripherals" color="b7c8e3" x="1200" y="975" />
 		<entity schema="barcodes" name="reagent_lots" color="b7c8e3" x="375" y="645" />
-		<entity schema="barcodes" name="primers_lots" color="b7c8e3" x="405" y="1290" />
 		<entity schema="barcodes" name="settings_primers" color="b7c8e3" x="1200" y="1065" />
 		<entity schema="barcodes" name="steps_primers" color="b7c8e3" x="645" y="930" />
-		<entity schema="barcodes" name="reagent_type" color="b7c8e3" x="165" y="495" />
 		<entity schema="barcodes" name="instrument_type" color="b7c8e3" x="120" y="930" />
 		<entity schema="barcodes" name="instruments" color="b7c8e3" x="390" y="930" />
 		<entity schema="barcodes" name="instruments_reagents" color="b7c8e3" x="315" y="810" />
-		<entity schema="barcodes" name="protocol_settings" color="b7c8e3" x="1185" y="540" />
-		<entity schema="barcodes" name="protocols" color="b7c8e3" x="885" y="930" />
 		<entity schema="barcodes" name="primers" color="b7c8e3" x="210" y="1290" />
-		<entity schema="barcodes" name="run" color="b7c8e3" x="1320" y="270" />
+		<entity schema="barcodes" name="peripheral_type" color="b7c8e3" x="120" y="1110" />
+		<entity schema="barcodes" name="reagent_type" color="b7c8e3" x="165" y="495" />
+		<entity schema="barcodes" name="plates" color="b7c8e3" x="870" y="165" />
+		<entity schema="barcodes" name="protocols" color="b7c8e3" x="885" y="930" />
+		<entity schema="barcodes" name="project" color="b7c8e3" x="105" y="285" />
+		<entity schema="barcodes" name="pool_samples" color="b7c8e3" x="1110" y="105" />
+		<entity schema="barcodes" name="primers_lots" color="b7c8e3" x="405" y="1290" />
 		<entity schema="barcodes" name="pool" color="b7c8e3" x="1320" y="105" />
+		<entity schema="barcodes" name="run" color="b7c8e3" x="1320" y="270" />
+		<entity schema="barcodes" name="project_barcode" color="b7c8e3" x="135" y="195" />
+		<entity schema="barcodes" name="peripherals" color="b7c8e3" x="390" y="1110" />
+		<entity schema="barcodes" name="plates_samples" color="b7c8e3" x="645" y="165" />
+		<entity schema="barcodes" name="protocol_settings" color="b7c8e3" x="1185" y="540" />
 		<group name="Group_samples" color="c4e0f9" >
 			<entity schema="barcodes" name="plates_samples" />
 			<entity schema="barcodes" name="plates" />
@@ -23414,5 +23407,41 @@ CREATE INDEX idx_duplicate_consents_0 ON ag.duplicate_consents ( main_survey_id 
 			<entity schema="barcodes" name="primers" />
 			<entity schema="barcodes" name="primers_lots" />
 		</group>
+		<script name="primers_lots" id="SQL_31c138e6" confirmed="y" >
+			<string><![CDATA[CREATE TABLE barcodes.primers_lots ( 
+	primer_id            bigint  NOT NULL,
+	lot_number           varchar  ,
+	created_on           timestamp DEFAULT current_timestamp NOT NULL,
+	person_id            bigint  NOT NULL,
+	CONSTRAINT idx_primers_lots_0 UNIQUE ( primer_id, lot_number ) 
+ );
+
+CREATE INDEX idx_primers_lots ON barcodes.primers_lots ( primer_id );
+
+ALTER TABLE barcodes.primers_lots ADD CONSTRAINT fk_primers_lots FOREIGN KEY ( primer_id ) REFERENCES barcodes.primers( primer_id );
+
+]]></string>
+		</script>
+		<script name="run" id="SQL_2e9c1eca" >
+			<string><![CDATA[CREATE TABLE barcodes.run ( 
+	run_id               bigserial  NOT NULL,
+	name                 varchar(100)  NOT NULL,
+	created_on           timestamp DEFAULT current_timestamp NOT NULL,
+	created_by           bigint  NOT NULL,
+	finalized            bool DEFAULT 'F' NOT NULL,
+	finalized_on         timestamp  ,
+	finalized_by         bigint  ,
+	CONSTRAINT idx_run_0 UNIQUE ( name ) ,
+	CONSTRAINT pk_run PRIMARY KEY ( run_id )
+ );
+
+CREATE INDEX idx_run ON barcodes.run ( finalized_by );
+
+COMMENT ON TABLE barcodes.run IS 'Full run, equivalent to a multi-lane sequencing run';
+
+ALTER TABLE barcodes.run ADD CONSTRAINT fk_run FOREIGN KEY ( finalized_by ) REFERENCES barcodes.people( person_id );
+
+]]></string>
+		</script>
 	</layout>
 </project>
