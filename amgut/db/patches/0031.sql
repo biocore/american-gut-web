@@ -92,7 +92,6 @@ ALTER TABLE barcodes.primers_lots ADD CONSTRAINT fk_primers_lots FOREIGN KEY ( p
 
 CREATE TABLE barcodes.protocols ( 
     protocol_id          bigserial  NOT NULL,
-    feeder_protocol_id   bigint  NOT NULL,
     name                 varchar(100)  ,
     description          varchar  NOT NULL,
     created_on           timestamp DEFAULT current_timestamp NOT NULL,
@@ -104,6 +103,15 @@ COMMENT ON COLUMN barcodes.protocols.feeder_protocol_id IS 'The protocol that ca
 ALTER TABLE barcodes.protocols ADD CONSTRAINT fk_protocols FOREIGN KEY ( person_id ) REFERENCES barcodes.people( person_id )    ;
 ALTER TABLE barcodes.protocols ADD CONSTRAINT fk_protocols_0 FOREIGN KEY ( feeder_protocol_id ) REFERENCES barcodes.protocols( protocol_id )    ;
 
+CREATE TABLE barcodes.protocol_tree ( 
+    parent_id            bigint  NOT NULL,
+    child_id             bigint  NOT NULL,
+    CONSTRAINT idx_protocol_tree PRIMARY KEY ( parent_id, child_id )
+ );
+CREATE INDEX idx_protocol_tree_0 ON barcodes.protocol_tree ( parent_id );
+CREATE INDEX idx_protocol_tree_1 ON barcodes.protocol_tree ( child_id );
+ALTER TABLE barcodes.protocol_tree ADD CONSTRAINT fk_protocol_tree FOREIGN KEY ( parent_id ) REFERENCES barcodes.protocols( protocol_id );
+ALTER TABLE barcodes.protocol_tree ADD CONSTRAINT fk_protocol_tree_0 FOREIGN KEY ( child_id ) REFERENCES barcodes.protocols( protocol_id );
 
 CREATE TABLE barcodes.reagent_type ( 
     reagent_type         varchar  NOT NULL,
