@@ -99,9 +99,7 @@ CREATE TABLE barcodes.protocols (
     CONSTRAINT pk_protocols PRIMARY KEY ( protocol_id )
  ) ;
 CREATE INDEX idx_protocols ON barcodes.protocols ( person_id ) ;
-COMMENT ON COLUMN barcodes.protocols.feeder_protocol_id IS 'The protocol that can be run before this one, for example extraction followed by PCR as two protocols, PCR has a feeder protocol ID for extraction.';
 ALTER TABLE barcodes.protocols ADD CONSTRAINT fk_protocols FOREIGN KEY ( person_id ) REFERENCES barcodes.people( person_id )    ;
-ALTER TABLE barcodes.protocols ADD CONSTRAINT fk_protocols_0 FOREIGN KEY ( feeder_protocol_id ) REFERENCES barcodes.protocols( protocol_id )    ;
 
 CREATE TABLE barcodes.protocol_tree ( 
     parent_id            bigint  NOT NULL,
