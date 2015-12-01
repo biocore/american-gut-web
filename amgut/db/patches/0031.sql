@@ -58,6 +58,7 @@ ALTER TABLE barcodes.peripheral_type ADD CONSTRAINT fk_peripheral_type FOREIGN K
 
 CREATE TABLE barcodes.plates ( 
     plate_barcode        varchar  NOT NULL,
+    plate_name           varchar(100)  NOT NULL,
     created_on           timestamp DEFAULT current_timestamp NOT NULL,
     finalized            bool DEFAULT 'F' NOT NULL,
     person_id            bigint  NOT NULL,
@@ -284,6 +285,7 @@ ALTER TABLE barcodes.peripherals ADD CONSTRAINT fk_peripherals_0 FOREIGN KEY ( i
 CREATE TABLE barcodes.plates_samples ( 
     plate_barcode        varchar  NOT NULL,
     sample_id            bigint  NOT NULL,
+    well                 varchar(3)  NOT NULL,
     CONSTRAINT idx_plate_samples PRIMARY KEY ( plate_barcode, sample_id )
  ) ;
 CREATE INDEX idx_plate_samples_0 ON barcodes.plates_samples ( sample_id ) ;
