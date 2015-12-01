@@ -393,7 +393,7 @@ class AGDataAccess(object):
                         INNER JOIN ag_kit ak USING (ag_kit_id)
                         WHERE ak.ag_login_id = %s and akb.barcode = %s)"""
             TRN.add(sql, [ag_login_id, barcode])
-            sql = "UPDATE barcode SET status = NULL WHERE barcode = %s"
+            sql = "UPDATE ag_kit_barcodes SET status = NULL WHERE barcode = %s"
             TRN.add(sql, [barcode])
 
     def getHumanParticipants(self, ag_login_id):
@@ -456,7 +456,6 @@ class AGDataAccess(object):
         sql = """SELECT  barcode, site_sampled, sample_date, sample_time,
                     notes, status
                  FROM ag_kit_barcodes akb
-                 INNER JOIN barcode USING (barcode)
                  INNER JOIN ag_kit ak USING (ag_kit_id)
                  WHERE (site_sampled IS NOT NULL AND site_sampled::text <> '')
                  AND ag_login_id = %s AND participant_name = %s"""
@@ -722,7 +721,8 @@ class AGDataAccess(object):
             sql = """SELECT barcode, participant_name
                      FROM ag_kit_barcodes
                      INNER JOIN ag_kit USING (ag_kit_id)
-                     WHERE ag_login_id = %s AND results_ready = 'Y'"""
+                     WHERE ag_login_id = %s AND results_ready = 'Y'
+                     ORDER BY barcode"""
 
             TRN.add(sql, [ag_login_id])
             return [dict(row) for row in TRN.execute_fetchindex()]

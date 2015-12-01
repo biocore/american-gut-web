@@ -61,6 +61,7 @@ ag_config.txt
 *.swp
 *.swo
 *~
+*.bak
 
 # Foreman
 .env
