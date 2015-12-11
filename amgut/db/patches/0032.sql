@@ -8,7 +8,7 @@ INSERT INTO survey_question (survey_question_id, question_shortname, american, b
 (148, 'country_residence', 'Country of residence:', 'Country of residence:'),
 (149, 'pets_other', 'Do you have any other pet(s)?', 'Do you have any other pet(s)?'),
 (150, 'pets_other_freetext', 'Please list pets', 'Please list pets'),
-(152, 'stool_quality', 'Describe the quality of your bowel movements. Use the chart below as a reference:<br/><img src="/static/img/bristol_stool.png">', 'Describe the quality of your bowel movements. Use the chart below as a reference:<br/><img src="/static/img/bristol_stool.png">'),
+(152, 'stool_quality', 'Describe the quality of your bowel movements. Use the chart below as a reference:<br/><img src="/static/img/bristol_stool.jpg">', 'Describe the quality of your bowel movements. Use the chart below as a reference:<br/><img src="/static/img/bristol_stool.jpg">'),
 (153, 'mental_illness', 'Have you ever been diagnosed mental health illness?', 'Have you ever been diagnosed mental health illness?'),
 (154, 'mental_illness_type', 'Please select which disorder(s) from the following list:', 'Please select which disorder(s) from the following list:'),
 (155, 'diabetes_type', 'which type of diabetes?', 'which type of diabetes?'),
@@ -29,14 +29,14 @@ UPDATE survey_question SET retired = false WHERE survey_question_id = 146;
 
 --Add rest of new questions to groups
 INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES
-(-1, 148, 9), (1, 149, 2.2), (1, 150, 2.4), (3, 152, 11.5), (3, 153, 18.2), (3, 154, 18.4),
+(-1, 148, 9), (1, 149, 5.2), (1, 150, 5.4), (3, 152, 11.5), (3, 153, 18.2), (3, 154, 18.4),
 (3, 155, 16.5), (0, 156, 4.5), (4, 157, 6.5);
 
 ----------------------------------------------------------
 -- survey_question_response_type
 ----------------------------------------------------------
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES
-(148, 'STRING'), (149, 'SINGLE'), (150, 'TEXT'), (152, 'SINGLE'), (153, 'SINGLE'),
+(148, 'SINGLE'), (149, 'SINGLE'), (150, 'TEXT'), (152, 'SINGLE'), (153, 'SINGLE'),
 (154, 'MULTIPLE'), (155, 'SINGLE'), (156, 'SINGLE'), (157, 'SINGLE');
 
 ----------------------------------------------------------
@@ -46,9 +46,9 @@ INSERT INTO survey_response (american, british) VALUES
 ('2+ times/day', '2+ times/day'),
 ('1-2 times/day', '1-2 times/day'),
 ('Once a day', 'Once a day'),
-('I tend to be constipated (have difficulty passing stool) – Type 1 and 2', 'I tend to be constipated (have difficulty passing stool) – Type 1 and 2'),
-('I tend to have diarrhea (watery stool) – Type 5, 6 and 7', 'I tend to have diarrhea (watery stool) – Type 5, 6 and 7'),
-('I tend to have normal formed stool – Type 3 and 4', 'I tend to have normal formed stool – Type 3 and 4'),
+('I tend to be constipated (have difficulty passing stool) - Type 1 and 2', 'I tend to be constipated (have difficulty passing stool) - Type 1 and 2'),
+('I tend to have diarrhea (watery stool) - Type 5, 6 and 7', 'I tend to have diarrhea (watery stool) - Type 5, 6 and 7'),
+('I tend to have normal formed stool - Type 3 and 4', 'I tend to have normal formed stool - Type 3 and 4'),
 ('Depression', 'Depression'),
 ('Bipolar disorder', 'Bipolar disorder'),
 ('PTSD (post-traumatic stress disorder)', 'PTSD (post-traumatic stress disorder)'),
@@ -316,9 +316,9 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
 (152, 'Unspecified', 0),
-(152, 'I tend to be constipated (have difficulty passing stool) – Type 1 and 2', 1),
-(152, 'I tend to have diarrhea (watery stool) – Type 5, 6 and 7', 2),
-(152, 'I tend to have normal formed stool – Type 3 and 4', 3);
+(152, 'I tend to be constipated (have difficulty passing stool) - Type 1 and 2', 1),
+(152, 'I tend to have diarrhea (watery stool) - Type 5, 6 and 7', 2),
+(152, 'I tend to have normal formed stool - Type 3 and 4', 3);
 
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
 (153, 'Unspecified', 0), (153, 'Yes', 1), (153, 'No', 2);
@@ -367,4 +367,3 @@ INSERT INTO survey_question_triggers (survey_question_id, triggered_question, tr
 (82, 155, 'Diagnosed by a medical professional (doctor, physician assistant)'),
 (82, 155, 'Diagnosed by an alternative medicine practitioner'),
 (82, 155, 'Self-diagnosed');
-
