@@ -23,7 +23,7 @@ UPDATE survey_question SET retired = true WHERE survey_question_id = 97;
 ----------------------------------------------------------
 -- make column float instaead of int so can put new questions in without changing all indices
 ALTER TABLE group_questions ALTER COLUMN display_index TYPE FLOAT(1);
--- Put plants question in proper place and unhide
+-- Put types of plants question in proper place and unhide
 UPDATE group_questions SET survey_group = 4, display_index = 16.5 WHERE survey_question_id = 146;
 UPDATE survey_question SET retired = false WHERE survey_question_id = 146;
 
@@ -190,7 +190,7 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Lebanon', 122);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Lesotho', 123);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Liberia', 124);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Libyan Arab Jamahiriya', 125);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Libya', 125);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Liechtenstein', 126);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Lithuania', 127);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Luxembourg', 128);
@@ -278,7 +278,7 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Sweden', 210);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Switzerland', 211);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Syrian Arab Republic', 212);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Taiwan, Province of China', 213);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Taiwan', 213);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Tajikistan', 214);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Tanzania, United Republic of', 215);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Thailand', 216);
@@ -302,7 +302,7 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Uzbekistan', 234);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Vanuatu', 235);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Venezuela', 236);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Viet Nam', 237);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Vietnam', 237);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Virgin Islands, British', 238);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Virgin Islands, U.S.', 239);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Wallis and Futuna', 240);
@@ -367,3 +367,6 @@ INSERT INTO survey_question_triggers (survey_question_id, triggered_question, tr
 (82, 155, 'Diagnosed by a medical professional (doctor, physician assistant)'),
 (82, 155, 'Diagnosed by an alternative medicine practitioner'),
 (82, 155, 'Self-diagnosed');
+
+-- Fix testing issue: Remove types of plants answer from animal survey.
+DELETE FROM survey_answers WHERE survey_id = 'cb367dcf9a9af7e9' AND survey_question_id = 146;
