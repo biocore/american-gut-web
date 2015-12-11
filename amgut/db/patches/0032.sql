@@ -59,7 +59,10 @@ INSERT INTO survey_response (american, british) VALUES
 ('Prediabetes', 'Prediabetes'),
 ('Type I diabetes', 'Type I diabetes'),
 ('Type II diabetes', 'Type II diabetes'),
-('Gestational diabetes', 'Gestational diabetes');
+('Gestational diabetes', 'Gestational diabetes'),
+('Libya', 'Libya'),
+('Vietnam', 'Vietnam'),
+('Taiwan', 'Taiwan');
 
 ----------------------------------------------------------
 -- survey_question_response
