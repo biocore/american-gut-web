@@ -18,6 +18,12 @@ INSERT INTO survey_question (survey_question_id, question_shortname, american, b
 --Retire question 97 (Old mental health question specific to depression, etc)
 UPDATE survey_question SET retired = true WHERE survey_question_id = 97;
 
+--Update wording on plants question
+UPDATE survey_question SET
+american = 'In an average week, how many different plant species do you eat?',
+british = 'In an average week, how many different plant species do you eat?'
+WHERE survey_question_id = 146;
+
 ----------------------------------------------------------
 -- group_questions
 ----------------------------------------------------------
