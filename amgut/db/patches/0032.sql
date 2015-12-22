@@ -41,16 +41,20 @@ WHERE survey_question_id = 146;
 --Reorder every question on the survey
 ALTER TABLE group_questions DROP CONSTRAINT idx_group_questions;
 
+INSERT INTO group_questions (survey_group, display_index, survey_question_id) VALUES (-1, 9, 148);
+
 UPDATE group_questions SET survey_group = 0, display_index = 0 WHERE survey_question_id = 1;
 UPDATE group_questions SET survey_group = 0, display_index = 1 WHERE survey_question_id = 2;
 UPDATE group_questions SET survey_group = 0, display_index = 2 WHERE survey_question_id = 3;
 UPDATE group_questions SET survey_group = 0, display_index = 3 WHERE survey_question_id = 4;
 UPDATE group_questions SET survey_group = 0, display_index = 4 WHERE survey_question_id = 5;
 UPDATE group_questions SET survey_group = 0, display_index = 5 WHERE survey_question_id = 6;
-UPDATE group_questions SET survey_group = 0, display_index = 6 WHERE survey_question_id = 10;
-UPDATE group_questions SET survey_group = 0, display_index = 7 WHERE survey_question_id = 11;
-UPDATE group_questions SET survey_group = 0, display_index = 8 WHERE survey_question_id = 12;
-UPDATE group_questions SET survey_group = 0, display_index = 9 WHERE survey_question_id = 13;
+UPDATE group_questions SET survey_group = 0, display_index = 6 WHERE survey_question_id = 104;
+UPDATE group_questions SET survey_group = 0, display_index = 7 WHERE survey_question_id = 10;
+UPDATE group_questions SET survey_group = 0, display_index = 8 WHERE survey_question_id = 11;
+UPDATE group_questions SET survey_group = 0, display_index = 9 WHERE survey_question_id = 12;
+UPDATE group_questions SET survey_group = 0, display_index = 10 WHERE survey_question_id = 118;
+UPDATE group_questions SET survey_group = 0, display_index = 11 WHERE survey_question_id = 13;
 
 UPDATE group_questions SET survey_group = 1, display_index = 0 WHERE survey_question_id = 14;
 UPDATE group_questions SET survey_group = 1, display_index = 1 WHERE survey_question_id = 103;
@@ -67,9 +71,10 @@ UPDATE group_questions SET survey_group = 1, display_index = 11 WHERE survey_que
 UPDATE group_questions SET survey_group = 1, display_index = 12 WHERE survey_question_id = 21;
 UPDATE group_questions SET survey_group = 1, display_index = 13 WHERE survey_question_id = 122;
 UPDATE group_questions SET survey_group = 1, display_index = 14 WHERE survey_question_id = 117;
-UPDATE group_questions SET survey_group = 1, display_index = 15 WHERE survey_question_id = 149;
-UPDATE group_questions SET survey_group = 1, display_index = 16 WHERE survey_question_id = 22;
-UPDATE group_questions SET survey_group = 1, display_index = 17 WHERE survey_question_id = 23;
+INSERT INTO group_questions (survey_group, display_index, survey_question_id) VALUES (1, 15, 149);
+INSERT INTO group_questions (survey_group, display_index, survey_question_id) VALUES (1, 16, 150);
+UPDATE group_questions SET survey_group = 1, display_index = 17 WHERE survey_question_id = 22;
+UPDATE group_questions SET survey_group = 1, display_index = 18 WHERE survey_question_id = 23;
 
 UPDATE group_questions SET survey_group = 2, display_index = 0 WHERE survey_question_id = 24;
 UPDATE group_questions SET survey_group = 2, display_index = 1 WHERE survey_question_id = 25;
@@ -113,29 +118,32 @@ UPDATE group_questions SET survey_group = 3, display_index = 22 WHERE survey_que
 UPDATE group_questions SET survey_group = 3, display_index = 23 WHERE survey_question_id = 80;
 UPDATE group_questions SET survey_group = 3, display_index = 24 WHERE survey_question_id = 89;
 UPDATE group_questions SET survey_group = 3, display_index = 25 WHERE survey_question_id = 95;
-UPDATE group_questions SET survey_group = 3, display_index = 26 WHERE survey_question_id = 153;
-UPDATE group_questions SET survey_group = 3, display_index = 27 WHERE survey_question_id = 82;
-UPDATE group_questions SET survey_group = 3, display_index = 28 WHERE survey_question_id = 90;
-UPDATE group_questions SET survey_group = 3, display_index = 29 WHERE survey_question_id = 79;
-UPDATE group_questions SET survey_group = 3, display_index = 30 WHERE survey_question_id = 83;
-UPDATE group_questions SET survey_group = 3, display_index = 31 WHERE survey_question_id = 92;
-UPDATE group_questions SET survey_group = 3, display_index = 32 WHERE survey_question_id = 60;
-UPDATE group_questions SET survey_group = 3, display_index = 33 WHERE survey_question_id = 86;
-UPDATE group_questions SET survey_group = 3, display_index = 34 WHERE survey_question_id = 94;
-UPDATE group_questions SET survey_group = 3, display_index = 35 WHERE survey_question_id = 78;
-UPDATE group_questions SET survey_group = 3, display_index = 36 WHERE survey_question_id = 88;
-UPDATE group_questions SET survey_group = 3, display_index = 37 WHERE survey_question_id = 96;
-UPDATE group_questions SET survey_group = 3, display_index = 38 WHERE survey_question_id = 158;
-UPDATE group_questions SET survey_group = 3, display_index = 39 WHERE survey_question_id = 160;
-UPDATE group_questions SET survey_group = 3, display_index = 40 WHERE survey_question_id = 81;
-UPDATE group_questions SET survey_group = 3, display_index = 41 WHERE survey_question_id = 106;
-UPDATE group_questions SET survey_group = 3, display_index = 42 WHERE survey_question_id = 53;
-UPDATE group_questions SET survey_group = 3, display_index = 43 WHERE survey_question_id = 54;
-UPDATE group_questions SET survey_group = 3, display_index = 44 WHERE survey_question_id = 54;
-UPDATE group_questions SET survey_group = 3, display_index = 45 WHERE survey_question_id = 7;
-UPDATE group_questions SET survey_group = 3, display_index = 46 WHERE survey_question_id = 8;
-UPDATE group_questions SET survey_group = 3, display_index = 47 WHERE survey_question_id = 9;
-UPDATE group_questions SET survey_group = 3, display_index = 48 WHERE survey_question_id = 156;
+INSERT INTO group_questions (survey_group, display_index, survey_question_id) VALUES (3, 26, 153);
+INSERT INTO group_questions (survey_group, display_index, survey_question_id) VALUES (3, 27, 154);
+UPDATE group_questions SET survey_group = 3, display_index = 28 WHERE survey_question_id = 82;
+INSERT INTO group_questions (survey_group, display_index, survey_question_id) VALUES (3, 29, 155);
+UPDATE group_questions SET survey_group = 3, display_index = 30 WHERE survey_question_id = 90;
+UPDATE group_questions SET survey_group = 3, display_index = 31 WHERE survey_question_id = 79;
+UPDATE group_questions SET survey_group = 3, display_index = 32 WHERE survey_question_id = 83;
+UPDATE group_questions SET survey_group = 3, display_index = 33 WHERE survey_question_id = 92;
+UPDATE group_questions SET survey_group = 3, display_index = 34 WHERE survey_question_id = 60;
+UPDATE group_questions SET survey_group = 3, display_index = 35 WHERE survey_question_id = 86;
+UPDATE group_questions SET survey_group = 3, display_index = 36 WHERE survey_question_id = 94;
+UPDATE group_questions SET survey_group = 3, display_index = 37 WHERE survey_question_id = 78;
+UPDATE group_questions SET survey_group = 3, display_index = 38 WHERE survey_question_id = 88;
+UPDATE group_questions SET survey_group = 3, display_index = 39 WHERE survey_question_id = 96;
+INSERT INTO group_questions (survey_group, display_index, survey_question_id) VALUES (3, 40, 158);
+INSERT INTO group_questions (survey_group, display_index, survey_question_id) VALUES (3, 41, 159);
+INSERT INTO group_questions (survey_group, display_index, survey_question_id) VALUES (3, 42, 160);
+UPDATE group_questions SET survey_group = 3, display_index = 43 WHERE survey_question_id = 81;
+UPDATE group_questions SET survey_group = 3, display_index = 44 WHERE survey_question_id = 106;
+UPDATE group_questions SET survey_group = 3, display_index = 45 WHERE survey_question_id = 53;
+UPDATE group_questions SET survey_group = 3, display_index = 46 WHERE survey_question_id = 54;
+UPDATE group_questions SET survey_group = 3, display_index = 47 WHERE survey_question_id = 54;
+UPDATE group_questions SET survey_group = 3, display_index = 48 WHERE survey_question_id = 7;
+UPDATE group_questions SET survey_group = 3, display_index = 49 WHERE survey_question_id = 8;
+UPDATE group_questions SET survey_group = 3, display_index = 50 WHERE survey_question_id = 9;
+INSERT INTO group_questions (survey_group, display_index, survey_question_id) VALUES (3, 51, 156);
 
 UPDATE group_questions SET survey_group = 4, display_index = 0 WHERE survey_question_id = 55;
 UPDATE group_questions SET survey_group = 4, display_index = 1 WHERE survey_question_id = 56;
@@ -159,7 +167,7 @@ UPDATE group_questions SET survey_group = 4, display_index = 18 WHERE survey_que
 UPDATE group_questions SET survey_group = 4, display_index = 19 WHERE survey_question_id = 73;
 UPDATE group_questions SET survey_group = 4, display_index = 20 WHERE survey_question_id = 74;
 UPDATE group_questions SET survey_group = 4, display_index = 21 WHERE survey_question_id = 75;
-UPDATE group_questions SET survey_group = 4, display_index = 22 WHERE survey_question_id = 157;
+INSERT INTO group_questions (survey_group, display_index, survey_question_id) VALUES (4, 22, 157);
 UPDATE group_questions SET survey_group = 4, display_index = 23 WHERE survey_question_id = 76;
 
 UPDATE group_questions SET survey_group = 5, display_index = 0 WHERE survey_question_id = 116;
