@@ -17,31 +17,82 @@ INSERT INTO survey_question (survey_question_id, question_shortname, american, b
 (159, 'cancer_treatment', 'If you have been diagnosed with cancer, how was it treated?', 'If you have been diagnosed with cancer, how was it treated?'),
 (160, 'acid_reflux', 'Have you ever been diagnosed with acid reflux or GERD (gastro-esophageal reflux disease)?', 'Have you ever been diagnosed with acid reflux or GERD (gastro-esophageal reflux disease)?');
 
-
 --Retire question 97 (Old mental health question specific to depression, etc) and 52 (willing to be contacted)
 UPDATE survey_question SET retired = true WHERE survey_question_id IN (97, 52);
 
---Reword current stool quality question
+--Update questions that need rewording
 UPDATE survey_question SET
 american = 'Describe the quality of your bowel movements. Use the chart below as a reference:<br/><img src="/static/img/bristol_stool.jpg">',
 british = 'Describe the quality of your bowel movements. Use the chart below as a reference:<br/><img src="/static/img/bristol_stool.jpg">'
 WHERE survey_question_id = 38;
+UPDATE survey_question SET
+american = 'Have you ever been diagnosed with Asthma, Cystic fibrosis, or COPD (chronic obstructive pulmonary disease?',
+british = 'Have you ever been diagnosed with Asthma, Cystic fibrosis, or COPD (chronic obstructive pulmonary disease?'
+WHERE survey_question_id = 93;
+UPDATE survey_question SET
+american = 'Have you been diagnosed with autoimmune disease such as Lupus (systemic lupus erythematosus), R.A. (rheumatoid arthritis), MS (multiple sclerosis), Hashimoto''s thyroiditis, or any other auto-immune disease?',
+british = 'Have you been diagnosed with autoimmune disease such as Lupus (systemic lupus erythematosus), R.A. (rheumatoid arthritis), MS (multiple sclerosis), Hashimoto''s thyroiditis, or any other auto-immune disease?'
+WHERE survey_question_id = 87;
+UPDATE survey_question SET
+american = 'Have you ever been diagnosed with coronary artery disease, heart disease, or suffered a heart attack and/or stroke?',
+british = 'Have you ever been diagnosed with coronary artery disease, heart disease, or suffered a heart attack and/or stroke?'
+WHERE survey_question_id = 89;
+UPDATE survey_question SET
+american = 'Have you ever been diagnosed with a skin condition?',
+british = 'Have you ever been diagnosed with a skin condition?'
+WHERE survey_question_id = 88;
+UPDATE survey_question SET
+american = 'In an average week, how often to you consume at least 2-3 servings of fruit in a day?  (1 serving = 1/2 cup fruit; 1 medium sized fruit; 4 oz. 100% fruit juice.)',
+british = 'In an average week, how often to you consume at least 2-3 servings of fruit in a day?  (1 serving = 1/2 cup fruit; 1 medium sized fruit; 4 oz. 100% fruit juice.)'
+WHERE survey_question_id = 61;
+UPDATE survey_question SET
+american = '8.	In an average week, how often do you consume at least 2-3 servings of vegetables, including potatoes in a day? (1 serving = 1/2 cup vegetables/potatoes; 1 cup leafy raw vegetables)',
+british = '8.	In an average week, how often do you consume at least 2-3 servings of vegetables, including potatoes in a day? (1 serving = 1/2 cup vegetables/potatoes; 1 cup leafy raw vegetables)'
+WHERE survey_question_id = 62;
+UPDATE survey_question SET
+american = 'How often do you consume one or more servings of fermented vegetables in or plant products a day in an average week? (1 serving = 1/2 cup sauerkraut, kimchi or fermented vegetable or 1 cup of kombucha)',
+british = 'How often do you consume one or more servings of fermented vegetables in or plant products a day in an average week? (1 serving = 1/2 cup sauerkraut, kimchi or fermented vegetable or 1 cup of kombucha)'
+WHERE survey_question_id = 63;
+UPDATE survey_question SET
+american = 'In an average week, how often do you consume at least 2 servings of milk or cheese a day?  (1 serving = 1 cup milk or yogurt; 1 1/2 - 2 ounces cheese)',
+british = 'In an average week, how often do you consume at least 2 servings of milk or cheese a day?  (1 serving = 1 cup milk or yogurt; 1 1/2 - 2 ounces cheese)'
+WHERE survey_question_id = 64;
+UPDATE survey_question SET
+american = 'How many days in an average week do you consume poultry (chicken, turkey, etc.) at least once a day?',
+british = 'How many days in an average week do you consume poultry (chicken, turkey, etc.) at least once a day?'
+WHERE survey_question_id = 69;
+UPDATE survey_question SET
+american = 'How many days in average week do you cook with olive oil (including salad dressing)?',
+british = 'How many days in average week do you cook with olive oil (including salad dressing)?'
+WHERE survey_question_id = 73;
+UPDATE survey_question SET
+american = 'Drink 16 ounces or more of a sugar sweetened beverage such as non-diet soda or fruit drink/punch (however, not including 100 % fruit juice) in a day? (1 can of soda = 12 ounces)',
+british = 'Drink 16 ounces or more of a sugar sweetened beverage such as non-diet soda or fruit drink/punch (however, not including 100 % fruit juice) in a day? (1 can of soda = 12 ounces)'
+WHERE survey_question_id = 75;
 
 --Bring back and update wording on plants question
 UPDATE survey_question SET
-american = 'In an average week, how many different plant species do you eat?',
-british = 'In an average week, how many different plant species do you eat?',
+american = 'In an average week, how many different plant species do you eat? e.g. If you consume a can of soup that contains carrots, potatoes, and onion, you can count this as 3 different plants; If you consume multi-grain bread, each different grain counts as a plant.',
+british = 'In an average week, how many different plant species do you eat? e.g. If you consume a can of soup that contains carrots, potatoes, and onion, you can count this as 3 different plants; If you consume multi-grain bread, each different grain counts as a plant.',
 retired = false
 WHERE survey_question_id = 146;
 
---retire unused questions
 ----------------------------------------------------------
 -- group_questions
 ----------------------------------------------------------
 --Reorder every question on the survey
 ALTER TABLE group_questions DROP CONSTRAINT idx_group_questions;
 
-INSERT INTO group_questions (survey_group, display_index, survey_question_id) VALUES (-1, 9, 148);
+UPDATE group_questions SET survey_group = -1, display_index = 0 WHERE survey_question_id = 107;
+UPDATE group_questions SET survey_group = -1, display_index = 1 WHERE survey_question_id = 108;
+UPDATE group_questions SET survey_group = -1, display_index = 2 WHERE survey_question_id = 109;
+UPDATE group_questions SET survey_group = -1, display_index = 3 WHERE survey_question_id = 110;
+INSERT INTO group_questions (survey_group, display_index, survey_question_id) VALUES (-1, 4, 148);
+UPDATE group_questions SET survey_group = -1, display_index = 5 WHERE survey_question_id = 111;
+UPDATE group_questions SET survey_group = -1, display_index = 6 WHERE survey_question_id = 112;
+UPDATE group_questions SET survey_group = -1, display_index = 7 WHERE survey_question_id = 113;
+UPDATE group_questions SET survey_group = -1, display_index = 8 WHERE survey_question_id = 114;
+UPDATE group_questions SET survey_group = -1, display_index = 9 WHERE survey_question_id = 115;
 
 UPDATE group_questions SET survey_group = 0, display_index = 0 WHERE survey_question_id = 1;
 UPDATE group_questions SET survey_group = 0, display_index = 1 WHERE survey_question_id = 2;
@@ -117,14 +168,13 @@ UPDATE group_questions SET survey_group = 3, display_index = 21 WHERE survey_que
 UPDATE group_questions SET survey_group = 3, display_index = 22 WHERE survey_question_id = 95;
 UPDATE group_questions SET survey_group = 3, display_index = 23 WHERE survey_question_id = 80;
 UPDATE group_questions SET survey_group = 3, display_index = 24 WHERE survey_question_id = 89;
-UPDATE group_questions SET survey_group = 3, display_index = 25 WHERE survey_question_id = 95;
 INSERT INTO group_questions (survey_group, display_index, survey_question_id) VALUES (3, 26, 153);
 INSERT INTO group_questions (survey_group, display_index, survey_question_id) VALUES (3, 27, 154);
 UPDATE group_questions SET survey_group = 3, display_index = 28 WHERE survey_question_id = 82;
 INSERT INTO group_questions (survey_group, display_index, survey_question_id) VALUES (3, 29, 155);
 UPDATE group_questions SET survey_group = 3, display_index = 30 WHERE survey_question_id = 90;
-UPDATE group_questions SET survey_group = 3, display_index = 31 WHERE survey_question_id = 79;
-UPDATE group_questions SET survey_group = 3, display_index = 32 WHERE survey_question_id = 83;
+UPDATE group_questions SET survey_group = 3, display_index = 31 WHERE survey_question_id = 83;
+UPDATE group_questions SET survey_group = 3, display_index = 32 WHERE survey_question_id = 79;
 UPDATE group_questions SET survey_group = 3, display_index = 33 WHERE survey_question_id = 92;
 UPDATE group_questions SET survey_group = 3, display_index = 34 WHERE survey_question_id = 60;
 UPDATE group_questions SET survey_group = 3, display_index = 35 WHERE survey_question_id = 86;
