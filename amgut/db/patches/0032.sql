@@ -8,42 +8,170 @@ INSERT INTO survey_question (survey_question_id, question_shortname, american, b
 (148, 'country_residence', 'Country of residence:', 'Country of residence:'),
 (149, 'pets_other', 'Do you have any other pet(s)?', 'Do you have any other pet(s)?'),
 (150, 'pets_other_freetext', 'Please list pets', 'Please list pets'),
-(152, 'stool_quality', 'Describe the quality of your bowel movements. Use the chart below as a reference:<br/><img src="/static/img/bristol_stool.jpg">', 'Describe the quality of your bowel movements. Use the chart below as a reference:<br/><img src="/static/img/bristol_stool.jpg">'),
 (153, 'mental_illness', 'Have you ever been diagnosed mental health illness?', 'Have you ever been diagnosed mental health illness?'),
 (154, 'mental_illness_type', 'Please select which disorder(s) from the following list:', 'Please select which disorder(s) from the following list:'),
 (155, 'diabetes_type', 'which type of diabetes?', 'which type of diabetes?'),
 (156, 'vivid_dreams', 'Do you have vivid and/or frightening dreams?', 'Do you have vivid and/or frightening dreams?'),
-(157, 'artificial_sweeteners', 'Consume diet beverages with artificial sweeteners?', 'Consume diet beverages with artificial sweeteners?');
+(157, 'artificial_sweeteners', 'Consume diet beverages with artificial sweeteners?', 'Consume diet beverages with artificial sweeteners?'),
+(158, 'cancer', 'Have you ever been diagnosed with cancer?', 'Have you ever been diagnosed with cancer?'),
+(159, 'cancer_treatment', 'If you have been diagnosed with cancer, how was it treated?', 'If you have been diagnosed with cancer, how was it treated?'),
+(160, 'acid_reflux', 'Have you ever been diagnosed with acid reflux or GERD (gastro-esophageal reflux disease)?', 'Have you ever been diagnosed with acid reflux or GERD (gastro-esophageal reflux disease)?');
 
---Retire question 97 (Old mental health question specific to depression, etc)
-UPDATE survey_question SET retired = true WHERE survey_question_id = 97;
 
---Update wording on plants question
+--Retire question 97 (Old mental health question specific to depression, etc) and 52 (willing to be contacted)
+UPDATE survey_question SET retired = true WHERE survey_question_id IN (97, 52);
+
+--Reword current stool quality question
+Update survey_question SET
+american = 'Describe the quality of your bowel movements. Use the chart below as a reference:<br/><img src="/static/img/bristol_stool.jpg">',
+british = 'Describe the quality of your bowel movements. Use the chart below as a reference:<br/><img src="/static/img/bristol_stool.jpg">'
+WHERE survey_question_id = 38;
+
+--Bring back and update wording on plants question
 UPDATE survey_question SET
 american = 'In an average week, how many different plant species do you eat?',
-british = 'In an average week, how many different plant species do you eat?'
+british = 'In an average week, how many different plant species do you eat?',
+retired = false
 WHERE survey_question_id = 146;
 
+--retire unused questions
 ----------------------------------------------------------
 -- group_questions
 ----------------------------------------------------------
--- make column float instaead of int so can put new questions in without changing all indices
-ALTER TABLE group_questions ALTER COLUMN display_index TYPE FLOAT(1);
--- Put types of plants question in proper place and unhide
-UPDATE group_questions SET survey_group = 4, display_index = 16.5 WHERE survey_question_id = 146;
-UPDATE survey_question SET retired = false WHERE survey_question_id = 146;
+--Reorder every question on the survey
+ALTER TABLE group_questions DROP CONSTRAINT idx_group_questions;
 
---Add rest of new questions to groups
-INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES
-(-1, 148, 9), (1, 149, 5.2), (1, 150, 5.4), (3, 152, 11.5), (3, 153, 18.2), (3, 154, 18.4),
-(3, 155, 16.5), (0, 156, 4.5), (4, 157, 6.5);
+UPDATE group_questions SET survey_group = 0, display_index = 0 WHERE survey_question_id = 1;
+UPDATE group_questions SET survey_group = 0, display_index = 1 WHERE survey_question_id = 2;
+UPDATE group_questions SET survey_group = 0, display_index = 2 WHERE survey_question_id = 3;
+UPDATE group_questions SET survey_group = 0, display_index = 3 WHERE survey_question_id = 4;
+UPDATE group_questions SET survey_group = 0, display_index = 4 WHERE survey_question_id = 5;
+UPDATE group_questions SET survey_group = 0, display_index = 5 WHERE survey_question_id = 6;
+UPDATE group_questions SET survey_group = 0, display_index = 6 WHERE survey_question_id = 10;
+UPDATE group_questions SET survey_group = 0, display_index = 7 WHERE survey_question_id = 11;
+UPDATE group_questions SET survey_group = 0, display_index = 8 WHERE survey_question_id = 12;
+UPDATE group_questions SET survey_group = 0, display_index = 9 WHERE survey_question_id = 13;
 
+UPDATE group_questions SET survey_group = 1, display_index = 0 WHERE survey_question_id = 14;
+UPDATE group_questions SET survey_group = 1, display_index = 1 WHERE survey_question_id = 103;
+UPDATE group_questions SET survey_group = 1, display_index = 2 WHERE survey_question_id = 15;
+UPDATE group_questions SET survey_group = 1, display_index = 3 WHERE survey_question_id = 16;
+UPDATE group_questions SET survey_group = 1, display_index = 4 WHERE survey_question_id = 119;
+UPDATE group_questions SET survey_group = 1, display_index = 5 WHERE survey_question_id = 17;
+UPDATE group_questions SET survey_group = 1, display_index = 6 WHERE survey_question_id = 18;
+UPDATE group_questions SET survey_group = 1, display_index = 7 WHERE survey_question_id = 19;
+UPDATE group_questions SET survey_group = 1, display_index = 8 WHERE survey_question_id = 120;
+UPDATE group_questions SET survey_group = 1, display_index = 9 WHERE survey_question_id = 20;
+UPDATE group_questions SET survey_group = 1, display_index = 10 WHERE survey_question_id = 105;
+UPDATE group_questions SET survey_group = 1, display_index = 11 WHERE survey_question_id = 101;
+UPDATE group_questions SET survey_group = 1, display_index = 12 WHERE survey_question_id = 21;
+UPDATE group_questions SET survey_group = 1, display_index = 13 WHERE survey_question_id = 122;
+UPDATE group_questions SET survey_group = 1, display_index = 14 WHERE survey_question_id = 117;
+UPDATE group_questions SET survey_group = 1, display_index = 15 WHERE survey_question_id = 149;
+UPDATE group_questions SET survey_group = 1, display_index = 16 WHERE survey_question_id = 22;
+UPDATE group_questions SET survey_group = 1, display_index = 17 WHERE survey_question_id = 23;
+
+UPDATE group_questions SET survey_group = 2, display_index = 0 WHERE survey_question_id = 24;
+UPDATE group_questions SET survey_group = 2, display_index = 1 WHERE survey_question_id = 25;
+UPDATE group_questions SET survey_group = 2, display_index = 2 WHERE survey_question_id = 26;
+UPDATE group_questions SET survey_group = 2, display_index = 3 WHERE survey_question_id = 27;
+UPDATE group_questions SET survey_group = 2, display_index = 4 WHERE survey_question_id = 28;
+UPDATE group_questions SET survey_group = 2, display_index = 5 WHERE survey_question_id = 29;
+UPDATE group_questions SET survey_group = 2, display_index = 6 WHERE survey_question_id = 30;
+UPDATE group_questions SET survey_group = 2, display_index = 7 WHERE survey_question_id = 31;
+UPDATE group_questions SET survey_group = 2, display_index = 8 WHERE survey_question_id = 32;
+UPDATE group_questions SET survey_group = 2, display_index = 9 WHERE survey_question_id = 33;
+UPDATE group_questions SET survey_group = 2, display_index = 10 WHERE survey_question_id = 34;
+UPDATE group_questions SET survey_group = 2, display_index = 11 WHERE survey_question_id = 35;
+UPDATE group_questions SET survey_group = 2, display_index = 12 WHERE survey_question_id = 36;
+
+UPDATE group_questions SET survey_group = 3, display_index = -2 WHERE survey_question_id = 52;
+UPDATE group_questions SET survey_group = 3, display_index = -1 WHERE survey_question_id = 97;
+UPDATE group_questions SET survey_group = 3, display_index = 0 WHERE survey_question_id = 37;
+UPDATE group_questions SET survey_group = 3, display_index = 1 WHERE survey_question_id = 38;
+UPDATE group_questions SET survey_group = 3, display_index = 2 WHERE survey_question_id = 39;
+UPDATE group_questions SET survey_group = 3, display_index = 3 WHERE survey_question_id = 40;
+UPDATE group_questions SET survey_group = 3, display_index = 4 WHERE survey_question_id = 41;
+UPDATE group_questions SET survey_group = 3, display_index = 5 WHERE survey_question_id = 42;
+UPDATE group_questions SET survey_group = 3, display_index = 6 WHERE survey_question_id = 98;
+UPDATE group_questions SET survey_group = 3, display_index = 7 WHERE survey_question_id = 43;
+UPDATE group_questions SET survey_group = 3, display_index = 8 WHERE survey_question_id = 44;
+UPDATE group_questions SET survey_group = 3, display_index = 9 WHERE survey_question_id = 45;
+UPDATE group_questions SET survey_group = 3, display_index = 10 WHERE survey_question_id = 46;
+UPDATE group_questions SET survey_group = 3, display_index = 11 WHERE survey_question_id = 47;
+UPDATE group_questions SET survey_group = 3, display_index = 12 WHERE survey_question_id = 48;
+UPDATE group_questions SET survey_group = 3, display_index = 13 WHERE survey_question_id = 49;
+UPDATE group_questions SET survey_group = 3, display_index = 14 WHERE survey_question_id = 99;
+UPDATE group_questions SET survey_group = 3, display_index = 15 WHERE survey_question_id = 50;
+UPDATE group_questions SET survey_group = 3, display_index = 16 WHERE survey_question_id = 51;
+UPDATE group_questions SET survey_group = 3, display_index = 17 WHERE survey_question_id = 85;
+UPDATE group_questions SET survey_group = 3, display_index = 18 WHERE survey_question_id = 84;
+UPDATE group_questions SET survey_group = 3, display_index = 19 WHERE survey_question_id = 93;
+UPDATE group_questions SET survey_group = 3, display_index = 20 WHERE survey_question_id = 77;
+UPDATE group_questions SET survey_group = 3, display_index = 21 WHERE survey_question_id = 87;
+UPDATE group_questions SET survey_group = 3, display_index = 22 WHERE survey_question_id = 95;
+UPDATE group_questions SET survey_group = 3, display_index = 23 WHERE survey_question_id = 80;
+UPDATE group_questions SET survey_group = 3, display_index = 24 WHERE survey_question_id = 89;
+UPDATE group_questions SET survey_group = 3, display_index = 25 WHERE survey_question_id = 95;
+UPDATE group_questions SET survey_group = 3, display_index = 26 WHERE survey_question_id = 153;
+UPDATE group_questions SET survey_group = 3, display_index = 27 WHERE survey_question_id = 82;
+UPDATE group_questions SET survey_group = 3, display_index = 28 WHERE survey_question_id = 90;
+UPDATE group_questions SET survey_group = 3, display_index = 29 WHERE survey_question_id = 79;
+UPDATE group_questions SET survey_group = 3, display_index = 30 WHERE survey_question_id = 83;
+UPDATE group_questions SET survey_group = 3, display_index = 31 WHERE survey_question_id = 92;
+UPDATE group_questions SET survey_group = 3, display_index = 32 WHERE survey_question_id = 60;
+UPDATE group_questions SET survey_group = 3, display_index = 33 WHERE survey_question_id = 86;
+UPDATE group_questions SET survey_group = 3, display_index = 34 WHERE survey_question_id = 94;
+UPDATE group_questions SET survey_group = 3, display_index = 35 WHERE survey_question_id = 78;
+UPDATE group_questions SET survey_group = 3, display_index = 36 WHERE survey_question_id = 88;
+UPDATE group_questions SET survey_group = 3, display_index = 37 WHERE survey_question_id = 96;
+UPDATE group_questions SET survey_group = 3, display_index = 38 WHERE survey_question_id = 158;
+UPDATE group_questions SET survey_group = 3, display_index = 39 WHERE survey_question_id = 160;
+UPDATE group_questions SET survey_group = 3, display_index = 40 WHERE survey_question_id = 81;
+UPDATE group_questions SET survey_group = 3, display_index = 41 WHERE survey_question_id = 106;
+UPDATE group_questions SET survey_group = 3, display_index = 42 WHERE survey_question_id = 53;
+UPDATE group_questions SET survey_group = 3, display_index = 43 WHERE survey_question_id = 54;
+UPDATE group_questions SET survey_group = 3, display_index = 44 WHERE survey_question_id = 54;
+UPDATE group_questions SET survey_group = 3, display_index = 45 WHERE survey_question_id = 7;
+UPDATE group_questions SET survey_group = 3, display_index = 46 WHERE survey_question_id = 8;
+UPDATE group_questions SET survey_group = 3, display_index = 47 WHERE survey_question_id = 9;
+UPDATE group_questions SET survey_group = 3, display_index = 48 WHERE survey_question_id = 156;
+
+UPDATE group_questions SET survey_group = 4, display_index = 0 WHERE survey_question_id = 55;
+UPDATE group_questions SET survey_group = 4, display_index = 1 WHERE survey_question_id = 56;
+UPDATE group_questions SET survey_group = 4, display_index = 2 WHERE survey_question_id = 57;
+UPDATE group_questions SET survey_group = 4, display_index = 3 WHERE survey_question_id = 58;
+UPDATE group_questions SET survey_group = 4, display_index = 4 WHERE survey_question_id = 59;
+UPDATE group_questions SET survey_group = 4, display_index = 5 WHERE survey_question_id = 91;
+UPDATE group_questions SET survey_group = 4, display_index = 6 WHERE survey_question_id = 61;
+UPDATE group_questions SET survey_group = 4, display_index = 7 WHERE survey_question_id = 62;
+UPDATE group_questions SET survey_group = 4, display_index = 8 WHERE survey_question_id = 146;
+UPDATE group_questions SET survey_group = 4, display_index = 9 WHERE survey_question_id = 63;
+UPDATE group_questions SET survey_group = 4, display_index = 10 WHERE survey_question_id = 64;
+UPDATE group_questions SET survey_group = 4, display_index = 11 WHERE survey_question_id = 65;
+UPDATE group_questions SET survey_group = 4, display_index = 12 WHERE survey_question_id = 66;
+UPDATE group_questions SET survey_group = 4, display_index = 13 WHERE survey_question_id = 67;
+UPDATE group_questions SET survey_group = 4, display_index = 14 WHERE survey_question_id = 68;
+UPDATE group_questions SET survey_group = 4, display_index = 15 WHERE survey_question_id = 69;
+UPDATE group_questions SET survey_group = 4, display_index = 16 WHERE survey_question_id = 70;
+UPDATE group_questions SET survey_group = 4, display_index = 17 WHERE survey_question_id = 71;
+UPDATE group_questions SET survey_group = 4, display_index = 18 WHERE survey_question_id = 72;
+UPDATE group_questions SET survey_group = 4, display_index = 19 WHERE survey_question_id = 73;
+UPDATE group_questions SET survey_group = 4, display_index = 20 WHERE survey_question_id = 74;
+UPDATE group_questions SET survey_group = 4, display_index = 21 WHERE survey_question_id = 75;
+UPDATE group_questions SET survey_group = 4, display_index = 22 WHERE survey_question_id = 157;
+UPDATE group_questions SET survey_group = 4, display_index = 23 WHERE survey_question_id = 76;
+
+UPDATE group_questions SET survey_group = 5, display_index = 0 WHERE survey_question_id = 116;
+
+ALTER TABLE group_questions ADD CONSTRAINT idx_group_questions UNIQUE ( survey_group, display_index );
 ----------------------------------------------------------
 -- survey_question_response_type
 ----------------------------------------------------------
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES
-(148, 'SINGLE'), (149, 'SINGLE'), (150, 'TEXT'), (152, 'SINGLE'), (153, 'SINGLE'),
-(154, 'MULTIPLE'), (155, 'SINGLE'), (156, 'SINGLE'), (157, 'SINGLE');
+(148, 'SINGLE'), (149, 'SINGLE'), (150, 'TEXT'), (153, 'SINGLE'),
+(154, 'MULTIPLE'), (155, 'SINGLE'), (156, 'SINGLE'), (157, 'SINGLE'), (158, 'SINGLE'),
+(159, 'SINGLE'), (160, 'SINGLE');
 
 ----------------------------------------------------------
 -- survey_response
@@ -68,11 +196,35 @@ INSERT INTO survey_response (american, british) VALUES
 ('Gestational diabetes', 'Gestational diabetes'),
 ('Libya', 'Libya'),
 ('Vietnam', 'Vietnam'),
-('Taiwan', 'Taiwan');
+('Taiwan', 'Taiwan'),
+('No treatment', 'No treatment'),
+('Surgery only', 'Surgery only'),
+('Chemotherapy', 'Chemotherapy'),
+('Radiation therapy', 'Radiation therapy');
 
 ----------------------------------------------------------
 -- survey_question_response
 ----------------------------------------------------------
+--Update responses from stool quality
+--Add new responses as valid for the question
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
+(38, 'I tend to be constipated (have difficulty passing stool) - Type 1 and 2', 21),
+(38, 'I tend to have diarrhea (watery stool) - Type 5, 6 and 7', 22),
+(38, 'I tend to have normal formed stool - Type 3 and 4', 23);
+
+--Update answers
+UPDATE survey_answers SET response = 'I tend to be constipated (have difficulty passing stool) - Type 1 and 2' WHERE survey_question_id = 38 AND response = 'I tend to be constipated (have difficulty passing stool)';
+UPDATE survey_answers SET response = 'I tend to have diarrhea (watery stool) - Type 5, 6 and 7' WHERE survey_question_id = 38 AND response = 'I tend to have diarrhea (watery stool)';
+UPDATE survey_answers SET response = 'I tend to have normal formed stool - Type 3 and 4' WHERE survey_question_id = 38 AND response = 'I tend to have normal formed stool';
+
+--Update allowed responses for new responses, without breaking FKs
+DELETE FROM survey_question_response WHERE survey_question_id = 38 AND response = 'I tend to be constipated (have difficulty passing stool)';
+DELETE FROM survey_question_response WHERE survey_question_id = 38 AND response = 'I tend to have diarrhea (watery stool)';
+DELETE FROM survey_question_response WHERE survey_question_id = 38 AND response = 'I tend to have normal formed stool';
+UPDATE survey_question_response SET display_index = 1 WHERE response = 'I tend to be constipated (have difficulty passing stool) - Type 1 and 2' AND survey_question_id = 38;
+UPDATE survey_question_response SET display_index = 2 WHERE response = 'I tend to have diarrhea (watery stool) - Type 5, 6 and 7' AND survey_question_id = 38;
+UPDATE survey_question_response SET display_index = 3 WHERE response = 'I tend to have normal formed stool - Type 3 and 4' AND survey_question_id = 38;
+
 -- country of residence
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Unspecified', 0);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (148, 'Afghanistan', 1);
@@ -324,12 +476,6 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 (149, 'Unspecified', 0), (149, 'Yes', 1), (149, 'No', 2);
 
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
-(152, 'Unspecified', 0),
-(152, 'I tend to be constipated (have difficulty passing stool) - Type 1 and 2', 1),
-(152, 'I tend to have diarrhea (watery stool) - Type 5, 6 and 7', 2),
-(152, 'I tend to have normal formed stool - Type 3 and 4', 3);
-
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
 (153, 'Unspecified', 0), (153, 'Yes', 1), (153, 'No', 2);
 
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
@@ -364,6 +510,26 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 (157, 'Regularly (3-5 times/week)', 4),
 (157, 'Daily', 5);
 
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
+(158, 'Unspecified', 0),
+(158, 'I do not have this condition', 1),
+(158, 'Diagnosed by a medical professional (doctor, physician assistant)', 2),
+(158, 'Diagnosed by an alternative medicine practitioner', 3),
+(158, 'Self-diagnosed', 4);
+
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
+(159, 'Unspecified', 0),
+(159, 'No treatment', 1),
+(159, 'Surgery only', 2),
+(159, 'Chemotherapy', 3),
+(159, 'Radiation therapy', 4);
+
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
+(160, 'Unspecified', 0),
+(160, 'I do not have this condition', 1),
+(160, 'Diagnosed by a medical professional (doctor, physician assistant)', 2),
+(160, 'Diagnosed by an alternative medicine practitioner', 3),
+(160, 'Self-diagnosed', 4);
 ---------------------------------------------------------
 -- survey_question_triggers
 ----------------------------------------------------------
@@ -376,6 +542,12 @@ INSERT INTO survey_question_triggers (survey_question_id, triggered_question, tr
 (82, 155, 'Diagnosed by a medical professional (doctor, physician assistant)'),
 (82, 155, 'Diagnosed by an alternative medicine practitioner'),
 (82, 155, 'Self-diagnosed');
+
+--Cancer treatment
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES
+(158, 159, 'Diagnosed by a medical professional (doctor, physician assistant)'),
+(158, 159, 'Diagnosed by an alternative medicine practitioner'),
+(158, 159, 'Self-diagnosed');
 
 -- Fix testing issue: Remove types of plants answer from animal survey.
 DELETE FROM survey_answers WHERE survey_id = 'cb367dcf9a9af7e9' AND survey_question_id = 146;
