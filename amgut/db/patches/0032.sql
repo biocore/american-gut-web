@@ -22,7 +22,7 @@ INSERT INTO survey_question (survey_question_id, question_shortname, american, b
 UPDATE survey_question SET retired = true WHERE survey_question_id IN (97, 52);
 
 --Reword current stool quality question
-Update survey_question SET
+UPDATE survey_question SET
 american = 'Describe the quality of your bowel movements. Use the chart below as a reference:<br/><img src="/static/img/bristol_stool.jpg">',
 british = 'Describe the quality of your bowel movements. Use the chart below as a reference:<br/><img src="/static/img/bristol_stool.jpg">'
 WHERE survey_question_id = 38;
