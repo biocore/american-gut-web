@@ -53,7 +53,7 @@ media_locale = {
     'NAV_ANIMAL_SAMPLES': 'Animal Samples',
     'NAV_ADD_ANIMAL': 'Add Animal Source',
     'NAV_ENV_SAMPLES': 'Environmental Samples',
-    'NAV_LOG_SAMPLE': 'Log Sample',
+    'NAV_LOG_SAMPLE': 'Associate Sample',
     'NAV_JOIN_PROJECT': 'Join The Project',
     'NAV_KIT_INSTRUCTIONS': 'Kit Instructions',
     'NAV_PARTICIPANT_LOGIN': 'Participant Log In',
@@ -114,7 +114,7 @@ _FAQ = {
     'FAQ_HEADER': "%(shorthand)s FAQ" % {"shorthand": AMGUT_CONFIG.project_shorthand},
     'LOG_IN_WHAT_NOW_ANS_1': 'You need to follow the add participant workflow. Click on the "Add Source & Survey" tab located at the top of the page.',
     'INFORMATION_IDENTIFY_ME': 'Can data describing my gut microbiome be used to identify me or a medical condition I have?',
-    'LOG_IN_WHAT_NOW_ANS_3': 'You can log a sample by clicking the "Log Sample" link in the menu. If you do not see the "Log Sample" link, then all of your barcodes have been assigned.',
+    'LOG_IN_WHAT_NOW_ANS_3': 'You can log a sample by clicking the "Associate Sample" link in the menu. If you do not see the "Associate Sample" link, then all of your barcodes have been assigned.',
     'PARTICIPATE_WITH_DIAGNOSIS': 'Can I participate in the project if I am diagnosed with ...?',
     'LOG_IN_WHAT_NOW_ANS_5': 'When adding a sample, please be sure to select the barcodes that matches the barcode on the sampling tube of the sample that you are logging',
     'TAKES_SIX_MONTHS': 'Does it really take up to three months to get my results?',
@@ -166,7 +166,7 @@ _FAQ = {
     'WHERE_SEND_SAMPLE': 'Where do I send my sample?',
     'LOG_IN_WHAT_NOW': "I'm logged in, what do I do now?",
     'LOG_IN_WHAT_NOW_ANS_2': '<p>During this workflow you (or whomever is being sampled) will:</p>'
-                                '<ol>   <li>Add a participant</li><li>Provide electronic consent</li><li>Answer survey questions (including the diet questions)</li><li>Upon completion, become eligible to log samples</li>          </ol><p>When participants are eligible,  you will then see their name under the corresponding menu on the left, in this example we have just added the participant "Test":</p>'
+                                '<ol>   <li>Add a participant</li><li>Provide electronic consent</li><li>Answer survey questions (including the diet questions)</li><li>Upon completion, become eligible to associate samples</li>          </ol><p>When participants are eligible,  you will then see their name under the corresponding menu on the left, in this example we have just added the participant "Test":</p>'
                                 '',
     'PROJECT_101': '%(shorthand)s 101' % {"shorthand": AMGUT_CONFIG.project_shorthand},
     'WHAT_FORMS_ANS': 'The instruction on the sampling instructions that requires you to "place your forms and the sample tube in preaddressed envelope" is leftover from a previous version of the sampling instructions. There are no forms for you to include inside the envelope with your sample. If you are shipping internationally, please visit the <a href="%(sitebase)s/international_shipping/">International Shipping Instructions</a></p>' % {'sitebase': media_locale['SITEBASE']},
