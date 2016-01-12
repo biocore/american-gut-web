@@ -70,6 +70,15 @@
 {% end %}
         </div>
         <div id="source_content" class="portal_unselected">
+            {% if unconsented %}
+            <h2 style="color:red">{% raw tl['UNCONSENTED_HEADER'] %}</h2>
+            {% raw tl['UNCONSENTED_EXPLANATION'] %}
+              <ul>
+              {% for barcode in unconsented%}
+                <li>{{barcode}}</li>
+              {% end %}
+              </ul>
+            {% end %}
             <h2>{% raw tl['SAMPLE_SOURCE_HEADER_1'] %}</h2>
             <p class="portal_blurb">{% raw tl['SAMPLE_SOURCE_TEXT_1'] % fmt %}</p>
             <p class="portal_blurb">{% raw tl['SAMPLE_SOURCE_TEXT_2']%}</p>
@@ -91,6 +100,15 @@
             </div>
         </div>
         <div id="sample_content" class="portal_unselected">
+            {% if unconsented %}
+            <h2 style="color:red">{% raw tl['UNCONSENTED_HEADER'] %}</h2>
+            {% raw tl['UNCONSENTED_EXPLANATION'] %}
+              <ul>
+              {% for barcode in unconsented%}
+                <li>{{barcode}}</li>
+              {% end %}
+              </ul>
+            {% end %}
             <h2>{% raw tl['SAMPLE_STEPS_HEADER_1'] %}</h2>
             <p class="portal_blurb">{% raw tl['SAMPLE_STEPS_TEXT_1'] %}</p>
             <ol class="sample_steps">{% raw tl['SAMPLE_STEPS_TEXT_2'] %}</ol>
@@ -112,12 +130,30 @@
             <br>
         </div>
         <div id="log_content" class="portal_unselected">
+            {% if unconsented %}
+            <h2 style="color:red">{% raw tl['UNCONSENTED_HEADER'] %}</h2>
+            {% raw tl['UNCONSENTED_EXPLANATION'] %}
+              <ul>
+              {% for barcode in unconsented%}
+                <li>{{barcode}}</li>
+              {% end %}
+              </ul>
+            {% end %}
             <h2>{% raw tl['LOG_SAMPLE_HEADER_1'] %}</h2>
             <p class="portal_blurb">{% raw tl['LOG_SAMPLE_TEXT_1'] %}</p>
             <div class="centered"><img src="{% raw media_locale['SITEBASE'] %}/static/img/labeled_tube.png"></div>
             <p class="portal_blurb">{% raw tl['LOG_SAMPLE_TEXT_2'] %}</p>
         </div>
         <div id="mail_content" class="portal_unselected">
+            {% if unconsented %}
+            <h2 style="color:red">{% raw tl['UNCONSENTED_HEADER'] %}</h2>
+            {% raw tl['UNCONSENTED_EXPLANATION'] %}
+              <ul>
+              {% for barcode in unconsented%}
+                <li>{{barcode}}</li>
+              {% end %}
+              </ul>
+            {% end %}
             <h2 style="width:500px;margin-right:0px;float:left;">{% raw tl['MAILING_HEADER_1'] %}</h2>
             <br><br><br>
             <p class="portal_blurb">{% raw tl['MAILING_TEXT_1'] %}</p>
@@ -145,6 +181,15 @@
             <div class="centered"><img src="{% raw media_locale['PORTAL_SHIPPING'] %}"/></div>
         </div>
         <div id="results_content" class="portal_unselected">
+            {% if unconsented %}
+            <h2 style="color:red">{% raw tl['UNCONSENTED_HEADER'] %}</h2>
+            {% raw tl['UNCONSENTED_EXPLANATION'] %}
+              <ul>
+              {% for barcode in unconsented%}
+                <li>{{barcode}}</li>
+              {% end %}
+              </ul>
+            {% end %}
             <h2>{% raw tl['RESULTS_HEADER_1'] %}</h2>
             <p class="portal_blurb">{% raw tl['RESULTS_TEXT_1'] %}</p>
             <p class="portal_blurb">{% raw tl['RESULTS_TEXT_2'] %}</p>
