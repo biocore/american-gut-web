@@ -293,7 +293,7 @@ _NEW_PARTICIPANT_OVERVIEW = {
     'ADD_NEW': 'Add a New Human Sample Source',
     'EXPLANATION': 'You have entered the add human source workflow. During this workflow you will add a human source that represents whoever is being sampled. You be asked for consent to join the project and then asked survey questions.',
     'ONCE_ADDED': 'Once you have added a human source, you will then see the name of that source in the left menu, and you will also have an option for adding a sample to that source. When you click that, you will be able to select the appropriate barcode and add sample metadata.',
-    'ELECTRONIC_SIGNATURE': 'In order to participate in this study, you will need to sign a research consent form. This must be done electronically. To consent to using an electronic signature, please click the button below. To obtain a hard copy of the signed agreement, please email the help desk (americangut@gmail.com). You may revoke this consent at any time by going to human samples -> person name -> remove person name. Revoking consent will also halt processing of your sample, if applicable. Once your sample is processed, we can not remove it from the deidentified information distributed, regardless of consent revocation.',
+    'ELECTRONIC_SIGNATURE': 'In order to participate in this study, you will need to sign a research consent form. This must be done electronically. To consent to using an electronic signature, please click the button below. To obtain a hard copy of the signed agreement, please email the help desk (americangut@gmail.com). You may revoke this consent at any time by going to human samples -> person name -> remove person name. Revoking consent will also halt processing of your sample, if applicable. Once your sample is processed, we cannot remove it from the deidentified information distributed, regardless of consent revocation.',
     'ELECTRONIC_SIG_CONSENT': 'I consent to using an electronic signature'
 }
 
@@ -809,7 +809,7 @@ _PORTAL = {
     'VERIFICATION_TEXT_3': 'If you cannot find your <strong>Verification Code</strong>, please make sure to check your spam folder. If you still cannot find the code, please <a href="%(sitebase)s/authed/help_request/">contact us</a>.' % {'sitebase': media_locale['SITEBASE']},
     'RESEND_VERIFICATION': 'Resend verification code',
     'VERIFICATION_HEADER_2': 'Verify your identity and kit barcode(s)',
-    'VERIFICATION_CODE_PROMPT': 'Please enter the verification code sent to your email address <a href="#" class="help" title="If you did not recieve a verification code in your email from American Gut, please check your spam folder. If you still can not find it, contact %(help_email)s">(?)</a>' % {"help_email": media_locale["HELP_EMAIL"]},
+    'VERIFICATION_CODE_PROMPT': 'Please enter the verification code sent to your email address <a href="#" class="help" title="If you did not recieve a verification code in your email from American Gut, please check your spam folder. If you still cannot find it, contact %(help_email)s">(?)</a>' % {"help_email": media_locale["HELP_EMAIL"]},
     'VERIFICATION_CODE_ERROR': 'The kit verification code you entered does not match our records. Please double-check the code you entered. If you continue to experience difficulties, please <a href=/authed/help_request/>contact us</a>.',
     'VERIFY_BARCODES': 'Please verify that the barcode(s) you received in the mail match the barcode(s) here',
     'VERIFY_BARCODES_POPUP': 'The barcode you need to verify is located on the outside of your sample tube.',
@@ -820,7 +820,7 @@ _PORTAL = {
     'SAMPLE_SOURCE_TYPE_ANIMAL': 'Animal',
     'SAMPLE_SOURCE_TYPE_ENVIRONMENTAL': 'Environmental',
     'UNCONSENTED_HEADER': 'Samples received but missing association with consent',
-    'UNCONSENTED_EXPLANATION': 'The following samples have been received but have not been associated with a consent document. Please complete a survey if you have not, then <a href="%(sitebase)s/authed/add_sample_overview/">associate the sample</a>. <span style="font-weight:bold;color:red">We can not process these samples until they are associated with a consent.</span>' % {'sitebase': media_locale['SITEBASE']},
+    'UNCONSENTED_EXPLANATION': 'The following samples have been received but have not been associated with a consent document. Please complete a survey if you have not, then <a href="%(sitebase)s/authed/add_sample_overview/">associate the sample</a>. <span style="font-weight:bold;color:red">We cannot process these samples until they are associated with a consent.</span>' % {'sitebase': media_locale['SITEBASE']},
     'SURVEY_HEADER_1': 'Survey',
     'SURVEY_TEXT_1': 'If you are taking a human or animal sample, we ask that you complete a survey.',
     'SURVEY_TEXT_2': 'The survey will take <strong>30-45 minutes</strong> for a human subject, or <strong>10 minutes</strong> for an animal subject. You <strong>cannot</strong> save in the middle of the survey, so please set aside enough time to complete the entire survey.',
