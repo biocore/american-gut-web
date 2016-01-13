@@ -77,6 +77,11 @@ class TestAGDataAccess(TestCase):
         with self.assertRaises(ValueError):
             self.ag_data.getAGBarcodeDetails('000006232')
 
+    def test_get_nonconsented_scanned_barcodes(self):
+        obs = self.ag_data.get_nonconsented_scanned_barcodes('tst_KWfyv')
+        exp = ['000027262']
+        self.assertEqual(obs, exp)
+
     def test_getAGBarcodeDetails(self):
         # test existing AG barcode
         obs = self.ag_data.getAGBarcodeDetails('000001047')

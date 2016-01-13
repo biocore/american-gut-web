@@ -621,6 +621,31 @@ class AGDataAccess(object):
             TRN.add(sql, [kitid])
             return TRN.execute_fetchflatten()
 
+    def get_nonconsented_scanned_barcodes(self, kit_id):
+        """Returns list of barcodes that have been scanned but not consented
+
+        Parameters
+        ----------
+        kit_id : str
+            The supplied kit identifier to check for barcodes.
+
+        Returns
+        -------
+        list of str
+            The barcodes, if any, that have been scanned but not consented
+        """
+        sql = """SELECT barcode
+                 FROM ag_kit_barcodes
+                 INNER JOIN ag_kit USING (ag_kit_id)
+                 RIGHT JOIN ag_login USING (ag_login_id)
+                 LEFT JOIN barcode USING (barcode)
+                 WHERE survey_id IS NULL AND scan_date IS NOT NULL
+                    AND ag_login_id = %s"""
+        with TRN:
+            user = self.get_user_for_kit(kit_id)
+            TRN.add(sql, [user])
+            return TRN.execute_fetchflatten()
+
     def checkPrintResults(self, kit_id):
         """Checks whether or not results are available for a given `kit_id`
 

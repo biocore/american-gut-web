@@ -53,7 +53,7 @@ media_locale = {
     'NAV_ANIMAL_SAMPLES': 'Animal Samples',
     'NAV_ADD_ANIMAL': 'Add Animal Source',
     'NAV_ENV_SAMPLES': 'Environmental Samples',
-    'NAV_LOG_SAMPLE': 'Log Sample',
+    'NAV_LOG_SAMPLE': 'Associate/Log Sample',
     'NAV_JOIN_PROJECT': 'Join The Project',
     'NAV_KIT_INSTRUCTIONS': 'Kit Instructions',
     'NAV_PARTICIPANT_LOGIN': 'Participant Log In',
@@ -114,7 +114,7 @@ _FAQ = {
     'FAQ_HEADER': "%(shorthand)s FAQ" % {"shorthand": AMGUT_CONFIG.project_shorthand},
     'LOG_IN_WHAT_NOW_ANS_1': 'You need to follow the add participant workflow. Click on the "Add Source & Survey" tab located at the top of the page.',
     'INFORMATION_IDENTIFY_ME': 'Can data describing my gut microbiome be used to identify me or a medical condition I have?',
-    'LOG_IN_WHAT_NOW_ANS_3': 'You can log a sample by clicking the "Log Sample" link in the menu. If you do not see the "Log Sample" link, then all of your barcodes have been assigned.',
+    'LOG_IN_WHAT_NOW_ANS_3': 'You can log a sample by clicking the "Associate Sample" link in the menu. If you do not see the "Associate Sample" link, then all of your barcodes have been assigned.',
     'PARTICIPATE_WITH_DIAGNOSIS': 'Can I participate in the project if I am diagnosed with ...?',
     'LOG_IN_WHAT_NOW_ANS_5': 'When adding a sample, please be sure to select the barcodes that matches the barcode on the sampling tube of the sample that you are logging',
     'TAKES_SIX_MONTHS': 'Does it really take up to three months to get my results?',
@@ -166,7 +166,7 @@ _FAQ = {
     'WHERE_SEND_SAMPLE': 'Where do I send my sample?',
     'LOG_IN_WHAT_NOW': "I'm logged in, what do I do now?",
     'LOG_IN_WHAT_NOW_ANS_2': '<p>During this workflow you (or whomever is being sampled) will:</p>'
-                                '<ol>   <li>Add a participant</li><li>Provide electronic consent</li><li>Answer survey questions (including the diet questions)</li><li>Upon completion, become eligible to log samples</li>          </ol><p>When participants are eligible,  you will then see their name under the corresponding menu on the left, in this example we have just added the participant "Test":</p>'
+                                '<ol>   <li>Add a participant</li><li>Provide electronic consent</li><li>Answer survey questions (including the diet questions)</li><li>Upon completion, become eligible to associate samples</li>          </ol><p>When participants are eligible,  you will then see their name under the corresponding menu on the left, in this example we have just added the participant "Test":</p>'
                                 '',
     'PROJECT_101': '%(shorthand)s 101' % {"shorthand": AMGUT_CONFIG.project_shorthand},
     'WHAT_FORMS_ANS': 'The instruction on the sampling instructions that requires you to "place your forms and the sample tube in preaddressed envelope" is leftover from a previous version of the sampling instructions. There are no forms for you to include inside the envelope with your sample. If you are shipping internationally, please visit the <a href="%(sitebase)s/international_shipping/">International Shipping Instructions</a></p>' % {'sitebase': media_locale['SITEBASE']},
@@ -293,7 +293,7 @@ _NEW_PARTICIPANT_OVERVIEW = {
     'ADD_NEW': 'Add a New Human Sample Source',
     'EXPLANATION': 'You have entered the add human source workflow. During this workflow you will add a human source that represents whoever is being sampled. You be asked for consent to join the project and then asked survey questions.',
     'ONCE_ADDED': 'Once you have added a human source, you will then see the name of that source in the left menu, and you will also have an option for adding a sample to that source. When you click that, you will be able to select the appropriate barcode and add sample metadata.',
-    'ELECTRONIC_SIGNATURE': 'In order to participate in this study, you will need to sign a research consent form. This must be done electronically. To consent to using an electronic signature, please click the button below. To obtain a hard copy of the signed agreement, please email the help desk (americangut@gmail.com). You may revoke this consent at any time by going to human samples -> person name -> remove person name. Revoking consent will also halt processing of your sample, if applicable. Once your sample is processed, we can not remove it from the deidentified information distributed, regardless of consent revocation.',
+    'ELECTRONIC_SIGNATURE': 'In order to participate in this study, you will need to sign a research consent form. This must be done electronically. To consent to using an electronic signature, please click the button below. To obtain a hard copy of the signed agreement, please email the help desk (americangut@gmail.com). You may revoke this consent at any time by going to human samples -> person name -> remove person name. Revoking consent will also halt processing of your sample, if applicable. Once your sample is processed, we cannot remove it from the deidentified information distributed, regardless of consent revocation.',
     'ELECTRONIC_SIG_CONSENT': 'I consent to using an electronic signature'
 }
 
@@ -809,7 +809,7 @@ _PORTAL = {
     'VERIFICATION_TEXT_3': 'If you cannot find your <strong>Verification Code</strong>, please make sure to check your spam folder. If you still cannot find the code, please <a href="%(sitebase)s/authed/help_request/">contact us</a>.' % {'sitebase': media_locale['SITEBASE']},
     'RESEND_VERIFICATION': 'Resend verification code',
     'VERIFICATION_HEADER_2': 'Verify your identity and kit barcode(s)',
-    'VERIFICATION_CODE_PROMPT': 'Please enter the verification code sent to your email address <a href="#" class="help" title="If you did not recieve a verification code in your email from American Gut, please check your spam folder. If you still can not find it, contact %(help_email)s">(?)</a>' % {"help_email": media_locale["HELP_EMAIL"]},
+    'VERIFICATION_CODE_PROMPT': 'Please enter the verification code sent to your email address <a href="#" class="help" title="If you did not recieve a verification code in your email from American Gut, please check your spam folder. If you still cannot find it, contact %(help_email)s">(?)</a>' % {"help_email": media_locale["HELP_EMAIL"]},
     'VERIFICATION_CODE_ERROR': 'The kit verification code you entered does not match our records. Please double-check the code you entered. If you continue to experience difficulties, please <a href=/authed/help_request/>contact us</a>.',
     'VERIFY_BARCODES': 'Please verify that the barcode(s) you received in the mail match the barcode(s) here',
     'VERIFY_BARCODES_POPUP': 'The barcode you need to verify is located on the outside of your sample tube.',
@@ -819,6 +819,8 @@ _PORTAL = {
     'SAMPLE_SOURCE_TYPE_HUMAN': 'Human',
     'SAMPLE_SOURCE_TYPE_ANIMAL': 'Animal',
     'SAMPLE_SOURCE_TYPE_ENVIRONMENTAL': 'Environmental',
+    'UNCONSENTED_HEADER': 'Samples received but missing association with consent',
+    'UNCONSENTED_EXPLANATION': 'The following samples have been received but have not been associated with a consent document. Please complete a survey if you have not, then <a href="%(sitebase)s/authed/add_sample_overview/">associate the sample</a>. <span style="font-weight:bold;color:red">We cannot process these samples until they are associated with a consent.</span>' % {'sitebase': media_locale['SITEBASE']},
     'SURVEY_HEADER_1': 'Survey',
     'SURVEY_TEXT_1': 'If you are taking a human or animal sample, we ask that you complete a survey.',
     'SURVEY_TEXT_2': 'The survey will take <strong>30-45 minutes</strong> for a human subject, or <strong>10 minutes</strong> for an animal subject. You <strong>cannot</strong> save in the middle of the survey, so please set aside enough time to complete the entire survey.',
@@ -1011,7 +1013,7 @@ _ANIMAL_SURVEY = {
 
 _HUMAN_SURVEY_COMPLETED = {
     'COMPLETED_HEADER': 'Congratulations!',
-    'COMPLETED_TEXT': 'You are now an enrolled participant in the %(PROJECT_TITLE)s!' % media_locale,
+    'COMPLETED_TEXT': 'You are now an enrolled participant in the %(PROJECT_TITLE)s! As a reminder, you still need to associate your sample(s) with the survey to complete the process. If your sample(s) are not associated with a survey, we will not be able to process them.' % media_locale,
     'AVAILABLE_SURVEYS': 'Below are a few additional surveys that you may be interested in completing. There is no requirement to take these surveys, and your decision does not affect your involvement in the project in any way.',
     'SURVEY_ASD': '<h3 style="text-align: center"><a href="%s">ASD-Cohort survey</a></h3><a href="http://www.anl.gov/contributors/jack-gilbert">Dr. Jack Gilbert</a> is exploring the relationship between gut dysbiosis and Autism Spectrum Disorders, and in conjunction with the American Gut Project, we started an ASD-Cohort study. This additional survey contains questions specific to that cohort, but it is open to any participant to take if they so choose.',
     'SURVEY_VIOSCREEN': '<h3 style="text-align: center"><a href="%s">Dietary Survey</a></h3>The American Gut Project and its sister projects are very interested in diet. If you\'d like to provide additional detail about your diet, please click the link above to take a detailed diet survey (known as an Food Frequency Questionnaire). This is a validated FFQ, and is the one used by the Mayo Clinic.'

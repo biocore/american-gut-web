@@ -30,12 +30,14 @@ class PortalHandler(BaseHandler):
 
         kit_ver_error = False
         verification_textbox = ''
+        unconsented = ag_data.get_nonconsented_scanned_barcodes(kit_id)
 
         self.render("portal.html", skid=kit_id, user_name=user_name,
                     errmsg=errmsg, kit_verified=kit_verified,
                     has_results=has_results, results=results,
                     barcodes=barcodes, kit_ver_error=kit_ver_error,
-                    verification_textbox=verification_textbox)
+                    verification_textbox=verification_textbox,
+                    unconsented=unconsented)
 
     @authenticated
     def post(self):
@@ -48,6 +50,7 @@ class PortalHandler(BaseHandler):
         user_name = user_info['name']
         results = ag_data.get_barcode_results(kit_id)
         has_results = len(results) != 0
+        unconsented = ag_data.get_nonconsented_scanned_barcodes(kit_id)
 
         kit_verified = True if kit_details['kit_verified'] == 'y' else False
 
@@ -84,4 +87,4 @@ class PortalHandler(BaseHandler):
                     has_results=has_results, results=results,
                     barcodes=barcodes,
                     verification_textbox=verification_textbox,
-                    kit_ver_error=kit_ver_error)
+                    kit_ver_error=kit_ver_error, unconsented=unconsented)

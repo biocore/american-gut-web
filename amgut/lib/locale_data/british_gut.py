@@ -68,7 +68,7 @@ media_locale = {
     'NAV_JOIN_PROJECT': "Join The Project",
     'NAV_KIT_INSTRUCTIONS': "Kit Instructions",
     'NAV_LOGOUT': "Log out",
-    'NAV_LOG_SAMPLE': "Log Sample",
+    'NAV_LOG_SAMPLE': "Associate/Log Sample",
     'NAV_MICROBIOME_101': "%(project_shorthand)s 101" % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
     'NAV_MICROBIOME_FAQ': "Human Microbiome FAQ",
     'NAV_PARTICIPANT_LOGIN': "Participant Log In",
@@ -476,8 +476,8 @@ _FAQ = {
     'INTRODUCTION_STORIES': "Some people have least favorite bacteria. Salmonella, for example, seems to have inspired some haters. But microbiologists also have favorite bacteria, as well they should. The stories of bacteria (and those who chase and study them) are among the most important of humanities stories and include the tales of many species without which we could not live, or whose presence or absence affects how we live. These species are as fascinating and, dare I say, lovely as pandas or koala bears, just harder to see and far more significant. I have begun to compile a book of the stories of some of the most common and interesting species you are likely to encounter- whether in your own gut, on your lettuce or the next time you sink your fingers into the soil. These stories will be available online here at <a href=\"http://invisiblelife.yourwildlife.org/\">Invisible Life</a> as they are compiled as a book, a book written by some of the very best science writers AND scientists out there. For starters, you might be interested to know that <a href=\"http://invisiblelife.yourwildlife.org/mycoplasma/\">the smallest species on Earth</a> is sometimes found inside humans and, once we look at your 16S, we will even know whether it lives in you. As more of these stories are written, they will appear here, eventually as an ebook, an ebook that you can reference when you find out what lives inside you to know whether your constant companion is a species we know everything about or, as is more typical, no one has ever studied. Like Charlie Chaplin once said&hellip; Wait, Charlie Chaplin was the one who didn't say anything wasn't he.",
     'LOG_IN_WHAT_NOW': "I'm logged in, what do I do now?",
     'LOG_IN_WHAT_NOW_ANS_1': 'You need to follow the add participant workflow. Click on the "Add Source & Survey" tab located at the top of the page.',
-    'LOG_IN_WHAT_NOW_ANS_2': '<p>During this workflow you (or whomever is being sampled) will:</p><ol>   <li>Add a participant</li><li>Provide electronic consent</li><li>Answer survey questions (including the diet questions)</li><li>Upon completion, become eligible to log samples</li>          </ol><p>When participants are eligible,  you will then see their name under the corresponding menu on the left, in this example we have just added the participant "Test":</p>',
-    'LOG_IN_WHAT_NOW_ANS_3': 'You can log a sample by clicking the "Log Sample" link in the menu. If you do not see the "Log Sample" link, then all of your barcodes have been assigned.',
+    'LOG_IN_WHAT_NOW_ANS_2': '<p>During this workflow you (or whomever is being sampled) will:</p><ol>   <li>Add a participant</li><li>Provide electronic consent</li><li>Answer survey questions (including the diet questions)</li><li>Upon completion, become eligible to associate samples</li>          </ol><p>When participants are eligible,  you will then see their name under the corresponding menu on the left, in this example we have just added the participant "Test":</p>',
+    'LOG_IN_WHAT_NOW_ANS_3': 'You can log a sample by clicking the "Associate Sample" link in the menu. If you do not see the "Associate Sample" link, then all of your barcodes have been assigned.',
     'LOG_IN_WHAT_NOW_ANS_4': "The generic add sample page looks like this:",
     'LOG_IN_WHAT_NOW_ANS_5': "When adding a sample, please be sure to select the barcodes that matches the barcode on the sampling tube of the sample that you are logging",
     'LOOK_BELOW': "If you're still experiencing issues, look for your problem in the FAQ below",
@@ -711,7 +711,7 @@ _NEW_PARTICIPANT_OVERVIEW = {
     'CONTINUE': "Continue",
     'EXPLANATION': "You have entered the add human source workflow. During this workflow you will add a human source that represents whoever is being sampled. You be asked for consent to join the project and then asked survey questions.",
     'ONCE_ADDED': "Once you have added a human source, you will then see the name of that source in the left menu, and you will also have an option for adding a sample to that source. When you click that, you will be able to select the appropriate barcode and add sample metadata.",
-    'ELECTRONIC_SIGNATURE': 'In order to participate in this study, you will need to sign a research consent form. This must be done electronically. To consent to using an electronic signature, please click the button below. To obtain a hard copy of the signed agreement, please email the help desk. You may revoke this consent at any time by going to human samples -> person name -> remove person name. Revoking consent will also halt processing of your sample, if applicable. Once your sample is processed, we can not remove it from the deidentified information distributed, regardless of consent revocation.',
+    'ELECTRONIC_SIGNATURE': 'In order to participate in this study, you will need to sign a research consent form. This must be done electronically. To consent to using an electronic signature, please click the button below. To obtain a hard copy of the signed agreement, please email the help desk. You may revoke this consent at any time by going to human samples -> person name -> remove person name. Revoking consent will also halt processing of your sample, if applicable. Once your sample is processed, we cannot remove it from the deidentified information distributed, regardless of consent revocation.',
     'ELECTRONIC_SIG_CONSENT': 'I consent to using an electronic signature'
 }
 
@@ -953,6 +953,8 @@ _PORTAL = {
     'SAMPLE_STEPS_TEXT_8': "For an <strong>other/environmental sample</strong>, firmly rub both sides of both cotton tips over the surface being sampled for 20 seconds.",
     'SAMPLE_STEPS_TEXT_9': "After you have finished taking your sample, return the swabs to the sample tube and push the red cap on firmly.",
     'SEQ_TAB': "Sequencing &amp;<br>Results",
+    'UNCONSENTED_HEADER': 'Samples received but missing association with consent',
+    'UNCONSENTED_EXPLANATION': 'The following samples have been received but have not been associated with a consent document. Please complete a survey if you have not, then <a href="%(sitebase)s/authed/add_sample_overview/">associate the sample</a>. <span style="font-weight:bold;color:red">We cannot process these samples until they are associated with a consent.</span>' % {'sitebase': media_locale['SITEBASE']},
     'SURVEY_HEADER_1': "Survey",
     'SURVEY_TEXT_1': "If you are taking a human or animal sample, we ask that you complete a survey.",
     'SURVEY_TEXT_2': "The survey will take <strong>30-45 minutes</strong> for a human subject, or <strong>10 minutes</strong> for an animal subject. You <strong>cannot</strong> save in the middle of the survey, so please set aside enough time to complete the entire survey.",
@@ -960,7 +962,7 @@ _PORTAL = {
     'SURVEY_TEXT_4': 'The diet questions do not require a food diary, but please be prepared to answer questions about your eating habits. A screenshot of the dietary questions is shown below.',
     'TAKE_SAMPLE_TAB': "Take a Sample",
     'VERIFICATION_CODE_ERROR': "The kit verification code you entered does not match our records. Please double-check the code you entered. If you continue to experience difficulties, please <a href=/authed/help_request/>contact us</a>.",
-    'VERIFICATION_CODE_PROMPT': 'Please enter the verification code sent to your email address <a href="#" class="help" title="If you did not recieve a verification code in your email from %(project_shorthand)s, please check your spam folder. If you still can not find it, contact %(help_email)s">(?)</a>' % {'project_shorthand': AMGUT_CONFIG.project_shorthand, 'help_email': media_locale['HELP_EMAIL']},
+    'VERIFICATION_CODE_PROMPT': 'Please enter the verification code sent to your email address <a href="#" class="help" title="If you did not recieve a verification code in your email from %(project_shorthand)s, please check your spam folder. If you still cannot find it, contact %(help_email)s">(?)</a>' % {'project_shorthand': AMGUT_CONFIG.project_shorthand, 'help_email': media_locale['HELP_EMAIL']},
     'VERIFICATION_HEADER_1': "Verification",
     'VERIFICATION_HEADER_2': "Verify your identity and kit barcode(s)",
     'VERIFICATION_TEXT_1': "We ask you to verify that you received the correct sample tubes and kit. Using a <strong>Verification Code</strong> helps us ensure that you receive the correct barcodes and Credentials Sheet.",
@@ -997,7 +999,7 @@ _SURVEY_MAIN = {
 
 _HUMAN_SURVEY_COMPLETED = {
     'COMPLETED_HEADER': 'Congratulations!',
-    'COMPLETED_TEXT': 'You are now an enrolled participant in the %(PROJECT_TITLE)s!' % media_locale,
+    'COMPLETED_TEXT': 'You are now an enrolled participant in the %(PROJECT_TITLE)s! As a reminder, you still need to associate your sample(s) with the survey to complete the process. If your sample(s) are not associated with a survey, we will not be able to process them.' % media_locale,
     'AVAILABLE_SURVEYS': 'Below are a few additional surveys that you may be interested in completing. There is no requirement to take these surveys, and your decision does not affect your involvement in the project in any way.',
     'SURVEY_ASD': '<h3 style="text-align: center"><a href="%s">ASD-Cohort survey</a></h3><a href="http://www.anl.gov/contributors/jack-gilbert">Dr. Jack Gilbert</a> is exploring the relationship between gut dysbiosis and Autism Spectrum Disorders, and in conjunction with the British Gut Project, we started an ASD-Cohort study. This additional survey contains questions specific to that cohort, but it is open to any participant to take if they so choose.',
     'SURVEY_VIOSCREEN': '<h3 style="text-align: center"><a href="%s">Dietary Survey</a></h3>The British Gut Project and its sister projects are very interested in diet. If you\'d like to provide additional detail about your diet, please click above to take a detailed diet survey (known as an Food Frequency Questionnaire). This is a validated FFQ, and is the one used by the Mayo Clinic.'
