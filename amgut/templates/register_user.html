@@ -18,6 +18,10 @@ $(document).ready(function() {
           required: true,
           email: true
         },
+        email2: {
+          required: true,
+          equalTo: "#email"
+        },
         address: "required",
         city: "required",
         state: "required",
@@ -35,6 +39,10 @@ $(document).ready(function() {
         email: {
           required: "{% raw tl['ENTER_EMAIL'] %}",
           email: "{% raw tl['REQUIRED_EMAIL'] %}"
+        },
+        email2: {
+          required: "{% raw tl['ENTER_EMAIL'] %}",
+          equalTo: "{% raw tl['MATCHING_EMAIL'] %}"
         },
         address: {
           required: "{% raw tl['ENTER_ADDRESS'] %}",
@@ -82,6 +90,7 @@ $(document).ready(function() {
             <tr><td>{% raw tl['KIT_ID'] %}</td><td><input type="text" name="kit_id" id="kit_id"></td></tr>
             <tr><td>{% raw tl['PASSWORD'] %}</td><td><input type="password" name="password" id="password"></td></tr>
             <tr><td>{% raw tl['EMAIL'] %}</td><td><input type="text" name="email" id="email"></td></tr>
+            <tr><td>{% raw tl['EMAIL2'] %}</td><td><input type="text" name="email2" id="email2"></td></tr>
             <tr><td>{% raw tl['NAME'] %}</td><td><input type="text" name="participantname" id="participantname"></td></tr>
             <tr><td>{% raw tl['ADDRESS'] %}</td><td><input type="text" name="address" id="address"></td></tr>
             <tr><td>{% raw tl['CITY'] %}</td><td><input type="text" name="city" id="city"></td></tr>
