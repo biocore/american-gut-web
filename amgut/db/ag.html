@@ -142,7 +142,7 @@ table {
           <stop offset='20%' stop-color='#fafafa'/> 
           <stop offset='100%' stop-color='#c6c6f7'/> 
    </linearGradient>
-  <linearGradient id='tableHeaderGradient5' x1='0%' y1='0%' x2='0%' y2='90%' >
+  <linearGradient id='tableHeaderGradient6' x1='0%' y1='0%' x2='0%' y2='90%' >
           <stop offset='-50%' stop-color='#c6d9f7'/> 
           <stop offset='20%' stop-color='#fafafa'/> 
           <stop offset='100%' stop-color='#c6d9f7'/> 
@@ -162,7 +162,7 @@ table {
           <stop offset='20%' stop-color='#fafafa'/> 
           <stop offset='100%' stop-color='#a8c4ef'/> 
    </linearGradient>
-  <linearGradient id='tableHeaderGradient6' x1='0%' y1='0%' x2='0%' y2='90%' >
+  <linearGradient id='tableHeaderGradient5' x1='0%' y1='0%' x2='0%' y2='90%' >
           <stop offset='-50%' stop-color='#cef7c6'/> 
           <stop offset='20%' stop-color='#fafafa'/> 
           <stop offset='100%' stop-color='#cef7c6'/> 
@@ -471,14 +471,6 @@ promoted_survey_ids ref ag_login_surveys ( survey_id )</title>
 <path class='defo' transform='translate(7,0)' marker-start='url(#foot1)'     d='M 1410 945 L 1402,945 Q 1395,945 1395,952 L 1395,975' ></path>
 <text x='1360' y='940' transform='rotate(0 1360,940)' title='Fk fk_promoted_survey_ids
 promoted_survey_ids ref ag_login_surveys ( survey_id )' style='fill:#cfc391;'>survey_id</text>
-<!-- ============= Fk 'ag_consent_fk_american_gut_consent' ============= -->
-<path id='ag_consent_fk_american_gut_consent'  onmouseover="hghl(['ag_consent_fk_american_gut_consent','ag.ag_consent.ag_login_id','ag.ag_login.ag_login_id'])" onmouseout="uhghl(['ag_consent_fk_american_gut_consent','ag.ag_consent.ag_login_id','ag.ag_login.ag_login_id'])" transform='translate(7,0)' class='scene' d='M 1425 705 L 1417,705 Q 1410,705 1410,697 L 1410,457 Q 1410,450 1402,450 L 1395,450' >
-	<title>Fk fk_american_gut_consent
-ag_consent ref ag_login ( ag_login_id )</title>
-</path>
-<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)'     d='M 1425 705 L 1417,705 Q 1410,705 1410,697 L 1410,457 Q 1410,450 1402,450 L 1395,450' ></path>
-<text x='1365' y='700' transform='rotate(0 1365,700)' title='Fk fk_american_gut_consent
-ag_consent ref ag_login ( ag_login_id )' style='fill:#cfc391;'>ag_login_id</text>
 <!-- ============= Fk 'survey_answers_fk_survey_answers' ============= -->
 <path id='survey_answers_fk_survey_answers'  onmouseover="hghl(['survey_answers_fk_survey_answers','ag.survey_answers.survey_question_id','ag.survey_answers.response','ag.survey_question_response.survey_question_id','ag.survey_question_response.response'])" onmouseout="uhghl(['survey_answers_fk_survey_answers','ag.survey_answers.survey_question_id','ag.survey_answers.response','ag.survey_question_response.survey_question_id','ag.survey_question_response.response'])" transform='translate(7,0)' class='scene' d='M 1395 1290 L 877,1290 Q 870,1290 870,1297 L 870,1567 Q 870,1575 862,1575 L 855,1575' >
 	<title>Fk fk_survey_answers
@@ -607,6 +599,14 @@ ag_kit ref ag_login ( ag_login_id )</title>
 <path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)'     d='M 1080 735 L 1042,735 Q 1035,735 1035,727 L 1035,652 Q 1035,645 1027,645 L 1020,645' ></path>
 <text x='1020' y='730' transform='rotate(0 1020,730)' title='Fk fk_ag_kit_to_login_id
 ag_kit ref ag_login ( ag_login_id )' style='fill:#cfc391;'>ag_login_id</text>
+<!-- ============= Fk 'ag_consent_fk_american_gut_consent' ============= -->
+<path id='ag_consent_fk_american_gut_consent'  onmouseover="hghl(['ag_consent_fk_american_gut_consent','ag.ag_consent.ag_login_id','ag.ag_login.ag_login_id'])" onmouseout="uhghl(['ag_consent_fk_american_gut_consent','ag.ag_consent.ag_login_id','ag.ag_login.ag_login_id'])" transform='translate(7,0)' class='scene' d='M 1425 705 L 1417,705 Q 1410,705 1410,697 L 1410,577 Q 1410,570 1402,570 L 1395,570' >
+	<title>Fk fk_american_gut_consent
+ag_consent ref ag_login ( ag_login_id )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)'     d='M 1425 705 L 1417,705 Q 1410,705 1410,697 L 1410,577 Q 1410,570 1402,570 L 1395,570' ></path>
+<text x='1365' y='700' transform='rotate(0 1365,700)' title='Fk fk_american_gut_consent
+ag_consent ref ag_login ( ag_login_id )' style='fill:#cfc391;'>ag_login_id</text>
 <!-- ============= Fk 'ag_login_surveys_fk_ag_login_surveys' ============= -->
 <path id='ag_login_surveys_fk_ag_login_surveys'  onmouseover="hghl(['ag_login_surveys_fk_ag_login_surveys','ag.ag_login_surveys.ag_login_id','ag.ag_login.ag_login_id'])" onmouseout="uhghl(['ag_login_surveys_fk_ag_login_surveys','ag.ag_login_surveys.ag_login_id','ag.ag_login.ag_login_id'])" transform='translate(7,0)' class='scene' d='M 1620 1050 L 1627,1050 Q 1635,1050 1635,1042 L 1635,457 Q 1635,450 1627,450 L 1620,450' >
 	<title>Fk fk_ag_login_surveys
@@ -615,6 +615,14 @@ ag_login_surveys ref ag_login ( ag_login_id )</title>
 <path class='defo' transform='translate(7,0)' marker-start='url(#foot1)'     d='M 1620 1050 L 1627,1050 Q 1635,1050 1635,1042 L 1635,457 Q 1635,450 1627,450 L 1620,450' ></path>
 <text x='1627' y='1045' transform='rotate(0 1627,1045)' title='Fk fk_ag_login_surveys
 ag_login_surveys ref ag_login ( ag_login_id )' style='fill:#cfc391;'>ag_login_id</text>
+<!-- ============= Fk 'consent_revoked_fk_consent_revoked' ============= -->
+<path id='consent_revoked_fk_consent_revoked'  onmouseover="hghl(['consent_revoked_fk_consent_revoked','ag.consent_revoked.ag_login_id','ag.ag_login.ag_login_id'])" onmouseout="uhghl(['consent_revoked_fk_consent_revoked','ag.consent_revoked.ag_login_id','ag.ag_login.ag_login_id'])" transform='translate(7,0)' class='scene' d='M 1425 570 L 1042,570 Q 1035,570 1035,577 L 1035,585' >
+	<title>Fk fk_consent_revoked
+consent_revoked ref ag_login ( ag_login_id )</title>
+</path>
+<path class='defo' transform='translate(7,0)' marker-start='url(#foot1p)'     d='M 1425 570 L 1042,570 Q 1035,570 1035,577 L 1035,585' ></path>
+<text x='1365' y='565' transform='rotate(0 1365,565)' title='Fk fk_consent_revoked
+consent_revoked ref ag_login ( ag_login_id )' style='fill:#cfc391;'>ag_login_id</text>
 <!-- ============= Table 'ag_survey_answer' ============= -->
 <rect class='table' x='660' y='683' width='150' height='120' rx='7' ry='7' />
 <line class='delim' x1='660.500000' y1='709.500000' x2='809.500000' y2='709.500000'/>
@@ -956,47 +964,6 @@ Keeps track of the survey_ids that correspond to surveys that were ported from f
 * varchar(2147483647)</title></a>
 <a xlink:href='#promoted_survey_ids.survey_id'><use id='fk' x='1548' y='941' xlink:href='#fk'/><title>References ag_login_surveys ( survey_id ) </title></a>
 
-<!-- ============= Table 'ag_login' ============= -->
-<rect class='table' x='690' y='398' width='120' height='225' rx='7' ry='7' />
-<line class='delim' x1='690.500000' y1='424.500000' x2='809.500000' y2='424.500000'/>
-<line class='delim' x1='705.500000' y1='424.500000' x2='705.500000' y2='622.500000'/>
-<line class='delim' x1='798.500000' y1='424.500000' x2='798.500000' y2='622.500000'/>
-<path d='M 690.50 424.50 L 690.50 405.50 Q 690.50 398.50 697.50 398.50 L 802.50 398.50 Q 809.50 398.50 809.50 405.50 L 809.50 424.50 L690.50 424.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
-<a xlink:href='#ag_login'><text x='724' y='416'>ag_login</text><title>Table ag.ag_login</title></a>
-  <use id='nn' x='692' y='432' xlink:href='#nn'/><a xlink:href='#ag_login.ag_login_id'><use id='pk' x='692' y='431' xlink:href='#pk'/><title>Pk ag_login_pkey ( ag_login_id ) </title></a>
-<a xlink:href='#ag_login.ag_login_id'><text id='ag.ag_login.ag_login_id' x='708' y='442' onmouseover="hghl(['ag_animal_survey_fk_ag_animal_surv_to_ag_login','ag_consent_fk_american_gut_consent','ag_human_survey_fk_ag_hum_surv_to_ag_login','ag_kit_fk_ag_kit_to_login_id','ag_login_surveys_fk_ag_login_surveys','ag_participant_exceptions_fk_ag_participant_exceptions','ag_survey_answer_fk_sur_an_to_ag_login','ag_survey_multiples_fk_ag_mul_to_ag_login'])" onmouseout="uhghl(['ag_animal_survey_fk_ag_animal_surv_to_ag_login','ag_consent_fk_american_gut_consent','ag_human_survey_fk_ag_hum_surv_to_ag_login','ag_kit_fk_ag_kit_to_login_id','ag_login_surveys_fk_ag_login_surveys','ag_participant_exceptions_fk_ag_participant_exceptions','ag_survey_answer_fk_sur_an_to_ag_login','ag_survey_multiples_fk_ag_mul_to_ag_login'])">ag_login_id</text><title>ag_login_id
-* uuid default ag.uuid_generate_v4()</title></a>
-<a xlink:href='#ag_login.ag_login_id'><use id='ref' x='798' y='431' xlink:href='#ref'/><title>Referred by ag_animal_survey ( ag_login_id ) 
-Referred by ag_consent ( ag_login_id ) 
-Referred by ag_human_survey ( ag_login_id ) 
-Referred by ag_kit ( ag_login_id ) 
-Referred by ag_login_surveys ( ag_login_id ) 
-Referred by ag_participant_exceptions ( ag_login_id ) 
-Referred by ag_survey_answer ( ag_login_id ) 
-Referred by ag_survey_multiples ( ag_login_id ) </title></a>
-  <a xlink:href='#ag_login.email'><text id='ag.ag_login.email' x='708' y='457'>email</text><title>email
-varchar(100)</title></a>
-  <a xlink:href='#ag_login.name'><text id='ag.ag_login.name' x='708' y='472'>name</text><title>name
-varchar(200)</title></a>
-  <a xlink:href='#ag_login.address'><text id='ag.ag_login.address' x='708' y='487'>address</text><title>address
-varchar(500)</title></a>
-  <a xlink:href='#ag_login.city'><text id='ag.ag_login.city' x='708' y='502'>city</text><title>city
-varchar(100)</title></a>
-  <a xlink:href='#ag_login.state'><text id='ag.ag_login.state' x='708' y='517'>state</text><title>state
-varchar(100)</title></a>
-  <a xlink:href='#ag_login.zip'><text id='ag.ag_login.zip' x='708' y='532'>zip</text><title>zip
-varchar(10)</title></a>
-  <a xlink:href='#ag_login.country'><text id='ag.ag_login.country' x='708' y='547'>country</text><title>country
-varchar(100)</title></a>
-  <a xlink:href='#ag_login.latitude'><text id='ag.ag_login.latitude' x='708' y='562'>latitude</text><title>latitude
-float8</title></a>
-  <a xlink:href='#ag_login.longitude'><text id='ag.ag_login.longitude' x='708' y='577'>longitude</text><title>longitude
-float8</title></a>
-  <a xlink:href='#ag_login.cannot_geocode'><text id='ag.ag_login.cannot_geocode' x='708' y='592'>cannot_geocode</text><title>cannot_geocode
-char(1)</title></a>
-  <a xlink:href='#ag_login.elevation'><text id='ag.ag_login.elevation' x='708' y='607'>elevation</text><title>elevation
-float8</title></a>
-
 <!-- ============= Table 'zipcodes' ============= -->
 <rect class='table' x='1095' y='38' width='120' height='165' rx='7' ry='7' />
 <line class='delim' x1='1095.500000' y1='64.500000' x2='1214.500000' y2='64.500000'/>
@@ -1022,49 +989,12 @@ float8</title></a>
   <a xlink:href='#zipcodes.cannot_geocode'><text id='ag.zipcodes.cannot_geocode' x='1113' y='187'>cannot_geocode</text><title>cannot_geocode
 bool</title></a>
 
-<!-- ============= Table 'ag_consent' ============= -->
-<rect class='table' x='1440' y='668' width='135' height='225' rx='7' ry='7' />
-<line class='delim' x1='1440.500000' y1='694.500000' x2='1574.500000' y2='694.500000'/>
-<line class='delim' x1='1455.500000' y1='694.500000' x2='1455.500000' y2='892.500000'/>
-<line class='delim' x1='1563.500000' y1='694.500000' x2='1563.500000' y2='892.500000'/>
-<path d='M 1440.50 694.50 L 1440.50 675.50 Q 1440.50 668.50 1447.50 668.50 L 1567.50 668.50 Q 1574.50 668.50 1574.50 675.50 L 1574.50 694.50 L1440.50 694.50 ' style='fill:url(#tableHeaderGradient5); stroke:none;' />
-<a xlink:href='#ag_consent'><text x='1473' y='686'>ag_consent</text><title>Table ag.ag_consent</title></a>
-  <use id='nn' x='1442' y='702' xlink:href='#nn'/><a xlink:href='#ag_consent.ag_login_id'><use id='pk' x='1442' y='701' xlink:href='#pk'/><title>Pk pk_american_gut_consent ( ag_login_id, participant_name ) idx_american_gut_consent ( ag_login_id ) </title></a>
-<a xlink:href='#ag_consent.ag_login_id'><text id='ag.ag_consent.ag_login_id' x='1458' y='712' onmouseover="hghl(['ag_consent_fk_american_gut_consent','ag_login_surveys_fk_ag_login_surveys0'])" onmouseout="uhghl(['ag_consent_fk_american_gut_consent','ag_login_surveys_fk_ag_login_surveys0'])">ag_login_id</text><title>ag_login_id
-* uuid</title></a>
-<a xlink:href='#ag_consent.ag_login_id'><use id='fk' x='1563' y='701' xlink:href='#fk'/><title>References ag_login ( ag_login_id ) 
-Referred by ag_login_surveys ( ag_login_id, participant_name ) </title></a>
-  <use id='nn' x='1442' y='717' xlink:href='#nn'/><a xlink:href='#ag_consent.participant_name'><use id='pk' x='1442' y='716' xlink:href='#pk'/><title>Pk pk_american_gut_consent ( ag_login_id, participant_name ) </title></a>
-<a xlink:href='#ag_consent.participant_name'><text id='ag.ag_consent.participant_name' x='1458' y='727' onmouseover="hghl(['ag_login_surveys_fk_ag_login_surveys0'])" onmouseout="uhghl(['ag_login_surveys_fk_ag_login_surveys0'])">participant_name</text><title>participant_name
-* varchar(200)</title></a>
-<a xlink:href='#ag_consent.participant_name'><use id='ref' x='1563' y='716' xlink:href='#ref'/><title>Referred by ag_login_surveys ( ag_login_id, participant_name ) </title></a>
-  <use id='nn' x='1442' y='732' xlink:href='#nn'/><a xlink:href='#ag_consent.participant_email'><text id='ag.ag_consent.participant_email' x='1458' y='742'>participant_email</text><title>participant_email
-* varchar(2147483647)</title></a>
-  <a xlink:href='#ag_consent.is_juvenile'><text id='ag.ag_consent.is_juvenile' x='1458' y='757'>is_juvenile</text><title>is_juvenile
-bool</title></a>
-  <a xlink:href='#ag_consent.parent_1_name'><text id='ag.ag_consent.parent_1_name' x='1458' y='772'>parent_1_name</text><title>parent_1_name
-varchar(200)</title></a>
-  <a xlink:href='#ag_consent.parent_2_name'><text id='ag.ag_consent.parent_2_name' x='1458' y='787'>parent_2_name</text><title>parent_2_name
-varchar(200)</title></a>
-  <a xlink:href='#ag_consent.parent_1_code'><text id='ag.ag_consent.parent_1_code' x='1458' y='802'>parent_1_code</text><title>parent_1_code
-varchar(200)</title></a>
-  <a xlink:href='#ag_consent.parent_2_code'><text id='ag.ag_consent.parent_2_code' x='1458' y='817'>parent_2_code</text><title>parent_2_code
-varchar(200)</title></a>
-  <a xlink:href='#ag_consent.deceased_parent'><text id='ag.ag_consent.deceased_parent' x='1458' y='832'>deceased_parent</text><title>deceased_parent
-varchar(10)</title></a>
-  <a xlink:href='#ag_consent.date_signed'><text id='ag.ag_consent.date_signed' x='1458' y='847'>date_signed</text><title>date_signed
-date</title></a>
-  <a xlink:href='#ag_consent.assent_obtainer'><text id='ag.ag_consent.assent_obtainer' x='1458' y='862'>assent_obtainer</text><title>assent_obtainer
-varchar(2147483647)</title></a>
-  <a xlink:href='#ag_consent.age_range'><text id='ag.ag_consent.age_range' x='1458' y='877'>age_range</text><title>age_range
-varchar(2147483647)</title></a>
-
 <!-- ============= Table 'ag_survey_multiples_backup' ============= -->
 <rect class='table' x='195' y='83' width='180' height='105' rx='7' ry='7' />
 <line class='delim' x1='195.500000' y1='109.500000' x2='374.500000' y2='109.500000'/>
 <line class='delim' x1='210.500000' y1='109.500000' x2='210.500000' y2='187.500000'/>
 <line class='delim' x1='363.500000' y1='109.500000' x2='363.500000' y2='187.500000'/>
-<path d='M 195.50 109.50 L 195.50 90.50 Q 195.50 83.50 202.50 83.50 L 367.50 83.50 Q 374.50 83.50 374.50 90.50 L 374.50 109.50 L195.50 109.50 ' style='fill:url(#tableHeaderGradient6); stroke:none;' />
+<path d='M 195.50 109.50 L 195.50 90.50 Q 195.50 83.50 202.50 83.50 L 367.50 83.50 Q 374.50 83.50 374.50 90.50 L 374.50 109.50 L195.50 109.50 ' style='fill:url(#tableHeaderGradient5); stroke:none;' />
 <a xlink:href='#ag_survey_multiples_backup'><text x='204' y='101'>ag_survey_multiples_backup</text><title>Table ag.ag_survey_multiples_backup</title></a>
   <use id='nn' x='197' y='117' xlink:href='#nn'/><a xlink:href='#ag_survey_multiples_backup.ag_login_id'><use id='idx' x='197' y='116' xlink:href='#idx'/><title>idx_ag_survey_multiples_backup ( ag_login_id ) </title></a>
 <a xlink:href='#ag_survey_multiples_backup.ag_login_id'><text id='ag.ag_survey_multiples_backup.ag_login_id' x='213' y='127'>ag_login_id</text><title>ag_login_id
@@ -1082,7 +1012,7 @@ varchar(1000)</title></a>
 <line class='delim' x1='420.500000' y1='109.500000' x2='584.500000' y2='109.500000'/>
 <line class='delim' x1='435.500000' y1='109.500000' x2='435.500000' y2='307.500000'/>
 <line class='delim' x1='573.500000' y1='109.500000' x2='573.500000' y2='307.500000'/>
-<path d='M 420.50 109.50 L 420.50 90.50 Q 420.50 83.50 427.50 83.50 L 577.50 83.50 Q 584.50 83.50 584.50 90.50 L 584.50 109.50 L420.50 109.50 ' style='fill:url(#tableHeaderGradient6); stroke:none;' />
+<path d='M 420.50 109.50 L 420.50 90.50 Q 420.50 83.50 427.50 83.50 L 577.50 83.50 Q 584.50 83.50 584.50 90.50 L 584.50 109.50 L420.50 109.50 ' style='fill:url(#tableHeaderGradient5); stroke:none;' />
 <a xlink:href='#ag_import_stats_tmp'><text x='442' y='101'>ag_import_stats_tmp</text><title>Table ag.ag_import_stats_tmp</title></a>
   <a xlink:href='#ag_import_stats_tmp.tmp_login_count'><text id='ag.ag_import_stats_tmp.tmp_login_count' x='438' y='127'>tmp_login_count</text><title>tmp_login_count
 bigint</title></a>
@@ -1114,7 +1044,7 @@ bigint</title></a>
 <line class='delim' x1='60.500000' y1='109.500000' x2='164.500000' y2='109.500000'/>
 <line class='delim' x1='75.500000' y1='109.500000' x2='75.500000' y2='202.500000'/>
 <line class='delim' x1='153.500000' y1='109.500000' x2='153.500000' y2='202.500000'/>
-<path d='M 60.50 109.50 L 60.50 90.50 Q 60.50 83.50 67.50 83.50 L 157.50 83.50 Q 164.50 83.50 164.50 90.50 L 164.50 109.50 L60.50 109.50 ' style='fill:url(#tableHeaderGradient6); stroke:none;' />
+<path d='M 60.50 109.50 L 60.50 90.50 Q 60.50 83.50 67.50 83.50 L 157.50 83.50 Q 164.50 83.50 164.50 90.50 L 164.50 109.50 L60.50 109.50 ' style='fill:url(#tableHeaderGradient5); stroke:none;' />
 <a xlink:href='#ag_map_markers'><text x='63' y='101'>ag_map_markers</text><title>Table ag.ag_map_markers</title></a>
   <a xlink:href='#ag_map_markers.zipcode'><text id='ag.ag_map_markers.zipcode' x='78' y='127'>zipcode</text><title>zipcode
 varchar(20)</title></a>
@@ -1156,7 +1086,7 @@ The answer the question being asked</title></a>
 <line class='delim' x1='1665.500000' y1='439.500000' x2='1844.500000' y2='439.500000'/>
 <line class='delim' x1='1680.500000' y1='439.500000' x2='1680.500000' y2='2122.500000'/>
 <line class='delim' x1='1833.500000' y1='439.500000' x2='1833.500000' y2='2122.500000'/>
-<path d='M 1665.50 439.50 L 1665.50 420.50 Q 1665.50 413.50 1672.50 413.50 L 1837.50 413.50 Q 1844.50 413.50 1844.50 420.50 L 1844.50 439.50 L1665.50 439.50 ' style='fill:url(#tableHeaderGradient5); stroke:none;' />
+<path d='M 1665.50 439.50 L 1665.50 420.50 Q 1665.50 413.50 1672.50 413.50 L 1837.50 413.50 Q 1844.50 413.50 1844.50 420.50 L 1844.50 439.50 L1665.50 439.50 ' style='fill:url(#tableHeaderGradient6); stroke:none;' />
 <a xlink:href='#ag_human_survey'><text x='1703' y='431'>ag_human_survey</text><title>Table ag.ag_human_survey</title></a>
   <use id='nn' x='1667' y='447' xlink:href='#nn'/><a xlink:href='#ag_human_survey.ag_login_id'><use id='pk' x='1667' y='446' xlink:href='#pk'/><title>Pk ag_human_survey_pkey ( ag_login_id, participant_name ) </title></a>
 <a xlink:href='#ag_human_survey.ag_login_id'><text id='ag.ag_human_survey.ag_login_id' x='1683' y='457' onmouseover="hghl(['ag_human_survey_fk_ag_hum_surv_to_ag_login'])" onmouseout="uhghl(['ag_human_survey_fk_ag_hum_surv_to_ag_login'])">ag_login_id</text><title>ag_login_id
@@ -1716,6 +1646,103 @@ The Open Humans access token corresponding to the Open Humans user that has auth
   <a xlink:href='#ag_kit.registered_on'><text id='ag.ag_kit.registered_on' x='1113' y='907'>registered_on</text><title>registered_on
 timestamp default current_timestamp</title></a>
 
+<!-- ============= Table 'duplicate_consents' ============= -->
+<rect class='table' x='1275' y='1013' width='150' height='90' rx='7' ry='7' />
+<line class='delim' x1='1275.500000' y1='1039.500000' x2='1424.500000' y2='1039.500000'/>
+<line class='delim' x1='1290.500000' y1='1039.500000' x2='1290.500000' y2='1102.500000'/>
+<line class='delim' x1='1413.500000' y1='1039.500000' x2='1413.500000' y2='1102.500000'/>
+<path d='M 1275.50 1039.50 L 1275.50 1020.50 Q 1275.50 1013.50 1282.50 1013.50 L 1417.50 1013.50 Q 1424.50 1013.50 1424.50 1020.50 L 1424.50 1039.50 L1275.50 1039.50 ' style='fill:url(#tableHeaderGradient7); stroke:none;' />
+<a xlink:href='#duplicate_consents'><text x='1295' y='1031'>duplicate_consents</text><title>Table ag.duplicate_consents</title></a>
+  <use id='nn' x='1277' y='1047' xlink:href='#nn'/><a xlink:href='#duplicate_consents.ag_login_id'><use id='pk' x='1277' y='1046' xlink:href='#pk'/><title>idx_duplicate_consents ( ag_login_id ) Pk ok_duplicate_consents ( ag_login_id, main_survey_id, duplicate_survey_id ) </title></a>
+<a xlink:href='#duplicate_consents.ag_login_id'><text id='ag.duplicate_consents.ag_login_id' x='1293' y='1057'>ag_login_id</text><title>ag_login_id
+* uuid</title></a>
+  <use id='nn' x='1277' y='1062' xlink:href='#nn'/><a xlink:href='#duplicate_consents.main_survey_id'><use id='pk' x='1277' y='1061' xlink:href='#pk'/><title>idx_duplicate_consents_0 ( main_survey_id ) Pk ok_duplicate_consents ( ag_login_id, main_survey_id, duplicate_survey_id ) </title></a>
+<a xlink:href='#duplicate_consents.main_survey_id'><text id='ag.duplicate_consents.main_survey_id' x='1293' y='1072'>main_survey_id</text><title>main_survey_id
+* varchar</title></a>
+  <use id='nn' x='1277' y='1077' xlink:href='#nn'/><a xlink:href='#duplicate_consents.duplicate_survey_id'><use id='pk' x='1277' y='1076' xlink:href='#pk'/><title>Unq idx_duplicate_consents_1 ( duplicate_survey_id ) Pk ok_duplicate_consents ( ag_login_id, main_survey_id, duplicate_survey_id ) </title></a>
+<a xlink:href='#duplicate_consents.duplicate_survey_id'><text id='ag.duplicate_consents.duplicate_survey_id' x='1293' y='1087'>duplicate_survey_id</text><title>duplicate_survey_id
+* varchar</title></a>
+
+<!-- ============= Table 'ag_login' ============= -->
+<rect class='table' x='690' y='398' width='120' height='225' rx='7' ry='7' />
+<line class='delim' x1='690.500000' y1='424.500000' x2='809.500000' y2='424.500000'/>
+<line class='delim' x1='705.500000' y1='424.500000' x2='705.500000' y2='622.500000'/>
+<line class='delim' x1='798.500000' y1='424.500000' x2='798.500000' y2='622.500000'/>
+<path d='M 690.50 424.50 L 690.50 405.50 Q 690.50 398.50 697.50 398.50 L 802.50 398.50 Q 809.50 398.50 809.50 405.50 L 809.50 424.50 L690.50 424.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
+<a xlink:href='#ag_login'><text x='724' y='416'>ag_login</text><title>Table ag.ag_login</title></a>
+  <use id='nn' x='692' y='432' xlink:href='#nn'/><a xlink:href='#ag_login.ag_login_id'><use id='pk' x='692' y='431' xlink:href='#pk'/><title>Pk ag_login_pkey ( ag_login_id ) </title></a>
+<a xlink:href='#ag_login.ag_login_id'><text id='ag.ag_login.ag_login_id' x='708' y='442' onmouseover="hghl(['ag_animal_survey_fk_ag_animal_surv_to_ag_login','ag_consent_fk_american_gut_consent','ag_human_survey_fk_ag_hum_surv_to_ag_login','ag_kit_fk_ag_kit_to_login_id','ag_login_surveys_fk_ag_login_surveys','ag_participant_exceptions_fk_ag_participant_exceptions','ag_survey_answer_fk_sur_an_to_ag_login','ag_survey_multiples_fk_ag_mul_to_ag_login','consent_revoked_fk_consent_revoked','consent_revoked_fk_consent_revoked'])" onmouseout="uhghl(['ag_animal_survey_fk_ag_animal_surv_to_ag_login','ag_consent_fk_american_gut_consent','ag_human_survey_fk_ag_hum_surv_to_ag_login','ag_kit_fk_ag_kit_to_login_id','ag_login_surveys_fk_ag_login_surveys','ag_participant_exceptions_fk_ag_participant_exceptions','ag_survey_answer_fk_sur_an_to_ag_login','ag_survey_multiples_fk_ag_mul_to_ag_login','consent_revoked_fk_consent_revoked','consent_revoked_fk_consent_revoked'])">ag_login_id</text><title>ag_login_id
+* uuid default ag.uuid_generate_v4()</title></a>
+<a xlink:href='#ag_login.ag_login_id'><use id='ref' x='798' y='431' xlink:href='#ref'/><title>Referred by ag_animal_survey ( ag_login_id ) 
+Referred by ag_consent ( ag_login_id ) 
+Referred by ag_human_survey ( ag_login_id ) 
+Referred by ag_kit ( ag_login_id ) 
+Referred by ag_login_surveys ( ag_login_id ) 
+Referred by ag_participant_exceptions ( ag_login_id ) 
+Referred by ag_survey_answer ( ag_login_id ) 
+Referred by ag_survey_multiples ( ag_login_id ) 
+Referred by consent_revoked ( ag_login_id ) 
+Referred by consent_revoked ( ag_login_id ) </title></a>
+  <a xlink:href='#ag_login.email'><text id='ag.ag_login.email' x='708' y='457'>email</text><title>email
+varchar(100)</title></a>
+  <a xlink:href='#ag_login.name'><text id='ag.ag_login.name' x='708' y='472'>name</text><title>name
+varchar(200)</title></a>
+  <a xlink:href='#ag_login.address'><text id='ag.ag_login.address' x='708' y='487'>address</text><title>address
+varchar(500)</title></a>
+  <a xlink:href='#ag_login.city'><text id='ag.ag_login.city' x='708' y='502'>city</text><title>city
+varchar(100)</title></a>
+  <a xlink:href='#ag_login.state'><text id='ag.ag_login.state' x='708' y='517'>state</text><title>state
+varchar(100)</title></a>
+  <a xlink:href='#ag_login.zip'><text id='ag.ag_login.zip' x='708' y='532'>zip</text><title>zip
+varchar(10)</title></a>
+  <a xlink:href='#ag_login.country'><text id='ag.ag_login.country' x='708' y='547'>country</text><title>country
+varchar(100)</title></a>
+  <a xlink:href='#ag_login.latitude'><text id='ag.ag_login.latitude' x='708' y='562'>latitude</text><title>latitude
+float8</title></a>
+  <a xlink:href='#ag_login.longitude'><text id='ag.ag_login.longitude' x='708' y='577'>longitude</text><title>longitude
+float8</title></a>
+  <a xlink:href='#ag_login.cannot_geocode'><text id='ag.ag_login.cannot_geocode' x='708' y='592'>cannot_geocode</text><title>cannot_geocode
+char(1)</title></a>
+  <a xlink:href='#ag_login.elevation'><text id='ag.ag_login.elevation' x='708' y='607'>elevation</text><title>elevation
+float8</title></a>
+
+<!-- ============= Table 'ag_consent' ============= -->
+<rect class='table' x='1440' y='668' width='135' height='225' rx='7' ry='7' />
+<line class='delim' x1='1440.500000' y1='694.500000' x2='1574.500000' y2='694.500000'/>
+<line class='delim' x1='1455.500000' y1='694.500000' x2='1455.500000' y2='892.500000'/>
+<line class='delim' x1='1563.500000' y1='694.500000' x2='1563.500000' y2='892.500000'/>
+<path d='M 1440.50 694.50 L 1440.50 675.50 Q 1440.50 668.50 1447.50 668.50 L 1567.50 668.50 Q 1574.50 668.50 1574.50 675.50 L 1574.50 694.50 L1440.50 694.50 ' style='fill:url(#tableHeaderGradient6); stroke:none;' />
+<a xlink:href='#ag_consent'><text x='1473' y='686'>ag_consent</text><title>Table ag.ag_consent</title></a>
+  <use id='nn' x='1442' y='702' xlink:href='#nn'/><a xlink:href='#ag_consent.ag_login_id'><use id='pk' x='1442' y='701' xlink:href='#pk'/><title>Pk pk_american_gut_consent ( ag_login_id, participant_name ) idx_american_gut_consent ( ag_login_id ) </title></a>
+<a xlink:href='#ag_consent.ag_login_id'><text id='ag.ag_consent.ag_login_id' x='1458' y='712' onmouseover="hghl(['ag_consent_fk_american_gut_consent','ag_login_surveys_fk_ag_login_surveys0'])" onmouseout="uhghl(['ag_consent_fk_american_gut_consent','ag_login_surveys_fk_ag_login_surveys0'])">ag_login_id</text><title>ag_login_id
+* uuid</title></a>
+<a xlink:href='#ag_consent.ag_login_id'><use id='fk' x='1563' y='701' xlink:href='#fk'/><title>References ag_login ( ag_login_id ) 
+Referred by ag_login_surveys ( ag_login_id, participant_name ) </title></a>
+  <use id='nn' x='1442' y='717' xlink:href='#nn'/><a xlink:href='#ag_consent.participant_name'><use id='pk' x='1442' y='716' xlink:href='#pk'/><title>Pk pk_american_gut_consent ( ag_login_id, participant_name ) </title></a>
+<a xlink:href='#ag_consent.participant_name'><text id='ag.ag_consent.participant_name' x='1458' y='727' onmouseover="hghl(['ag_login_surveys_fk_ag_login_surveys0'])" onmouseout="uhghl(['ag_login_surveys_fk_ag_login_surveys0'])">participant_name</text><title>participant_name
+* varchar(200)</title></a>
+<a xlink:href='#ag_consent.participant_name'><use id='ref' x='1563' y='716' xlink:href='#ref'/><title>Referred by ag_login_surveys ( ag_login_id, participant_name ) </title></a>
+  <use id='nn' x='1442' y='732' xlink:href='#nn'/><a xlink:href='#ag_consent.participant_email'><text id='ag.ag_consent.participant_email' x='1458' y='742'>participant_email</text><title>participant_email
+* varchar(2147483647)</title></a>
+  <a xlink:href='#ag_consent.is_juvenile'><text id='ag.ag_consent.is_juvenile' x='1458' y='757'>is_juvenile</text><title>is_juvenile
+bool</title></a>
+  <a xlink:href='#ag_consent.parent_1_name'><text id='ag.ag_consent.parent_1_name' x='1458' y='772'>parent_1_name</text><title>parent_1_name
+varchar(200)</title></a>
+  <a xlink:href='#ag_consent.parent_2_name'><text id='ag.ag_consent.parent_2_name' x='1458' y='787'>parent_2_name</text><title>parent_2_name
+varchar(200)</title></a>
+  <a xlink:href='#ag_consent.parent_1_code'><text id='ag.ag_consent.parent_1_code' x='1458' y='802'>parent_1_code</text><title>parent_1_code
+varchar(200)</title></a>
+  <a xlink:href='#ag_consent.parent_2_code'><text id='ag.ag_consent.parent_2_code' x='1458' y='817'>parent_2_code</text><title>parent_2_code
+varchar(200)</title></a>
+  <a xlink:href='#ag_consent.deceased_parent'><text id='ag.ag_consent.deceased_parent' x='1458' y='832'>deceased_parent</text><title>deceased_parent
+varchar(10)</title></a>
+  <a xlink:href='#ag_consent.date_signed'><text id='ag.ag_consent.date_signed' x='1458' y='847'>date_signed</text><title>date_signed
+date</title></a>
+  <a xlink:href='#ag_consent.assent_obtainer'><text id='ag.ag_consent.assent_obtainer' x='1458' y='862'>assent_obtainer</text><title>assent_obtainer
+varchar(2147483647)</title></a>
+  <a xlink:href='#ag_consent.age_range'><text id='ag.ag_consent.age_range' x='1458' y='877'>age_range</text><title>age_range
+varchar(2147483647)</title></a>
+
 <!-- ============= Table 'ag_login_surveys' ============= -->
 <rect class='table' x='1485' y='1013' width='135' height='105' rx='7' ry='7' />
 <line class='delim' x1='1485.500000' y1='1039.500000' x2='1619.500000' y2='1039.500000'/>
@@ -1743,22 +1770,24 @@ varchar(2147483647)</title></a>
   <a xlink:href='#ag_login_surveys.vioscreen_status'><text id='ag.ag_login_surveys.vioscreen_status' x='1503' y='1102'>vioscreen_status</text><title>vioscreen_status
 integer</title></a>
 
-<!-- ============= Table 'duplicate_consents' ============= -->
-<rect class='table' x='1275' y='1013' width='150' height='90' rx='7' ry='7' />
-<line class='delim' x1='1275.500000' y1='1039.500000' x2='1424.500000' y2='1039.500000'/>
-<line class='delim' x1='1290.500000' y1='1039.500000' x2='1290.500000' y2='1102.500000'/>
-<line class='delim' x1='1413.500000' y1='1039.500000' x2='1413.500000' y2='1102.500000'/>
-<path d='M 1275.50 1039.50 L 1275.50 1020.50 Q 1275.50 1013.50 1282.50 1013.50 L 1417.50 1013.50 Q 1424.50 1013.50 1424.50 1020.50 L 1424.50 1039.50 L1275.50 1039.50 ' style='fill:url(#tableHeaderGradient7); stroke:none;' />
-<a xlink:href='#duplicate_consents'><text x='1295' y='1031'>duplicate_consents</text><title>Table ag.duplicate_consents</title></a>
-  <use id='nn' x='1277' y='1047' xlink:href='#nn'/><a xlink:href='#duplicate_consents.ag_login_id'><use id='pk' x='1277' y='1046' xlink:href='#pk'/><title>idx_duplicate_consents ( ag_login_id ) Pk ok_duplicate_consents ( ag_login_id, main_survey_id, duplicate_survey_id ) </title></a>
-<a xlink:href='#duplicate_consents.ag_login_id'><text id='ag.duplicate_consents.ag_login_id' x='1293' y='1057'>ag_login_id</text><title>ag_login_id
+<!-- ============= Table 'consent_revoked' ============= -->
+<rect class='table' x='1440' y='533' width='135' height='105' rx='7' ry='7' />
+<line class='delim' x1='1440.500000' y1='559.500000' x2='1574.500000' y2='559.500000'/>
+<line class='delim' x1='1455.500000' y1='559.500000' x2='1455.500000' y2='637.500000'/>
+<line class='delim' x1='1563.500000' y1='559.500000' x2='1563.500000' y2='637.500000'/>
+<path d='M 1440.50 559.50 L 1440.50 540.50 Q 1440.50 533.50 1447.50 533.50 L 1567.50 533.50 Q 1574.50 533.50 1574.50 540.50 L 1574.50 559.50 L1440.50 559.50 ' style='fill:url(#tableHeaderGradient7); stroke:none;' />
+<a xlink:href='#consent_revoked'><text x='1458' y='551'>consent_revoked</text><title>Table ag.consent_revoked</title></a>
+  <use id='nn' x='1442' y='567' xlink:href='#nn'/><a xlink:href='#consent_revoked.ag_login_id'><use id='unq' x='1442' y='566' xlink:href='#unq'/><title>Unq idx_consent_revoked ( ag_login_id, participant_name ) idx_consent_revoked_0 ( ag_login_id ) </title></a>
+<a xlink:href='#consent_revoked.ag_login_id'><text id='ag.consent_revoked.ag_login_id' x='1458' y='577' onmouseover="hghl(['consent_revoked_fk_consent_revoked'])" onmouseout="uhghl(['consent_revoked_fk_consent_revoked'])">ag_login_id</text><title>ag_login_id
 * uuid</title></a>
-  <use id='nn' x='1277' y='1062' xlink:href='#nn'/><a xlink:href='#duplicate_consents.main_survey_id'><use id='pk' x='1277' y='1061' xlink:href='#pk'/><title>idx_duplicate_consents_0 ( main_survey_id ) Pk ok_duplicate_consents ( ag_login_id, main_survey_id, duplicate_survey_id ) </title></a>
-<a xlink:href='#duplicate_consents.main_survey_id'><text id='ag.duplicate_consents.main_survey_id' x='1293' y='1072'>main_survey_id</text><title>main_survey_id
+<a xlink:href='#consent_revoked.ag_login_id'><use id='fk' x='1563' y='566' xlink:href='#fk'/><title>References ag_login ( ag_login_id ) </title></a>
+  <use id='nn' x='1442' y='582' xlink:href='#nn'/><a xlink:href='#consent_revoked.participant_name'><use id='unq' x='1442' y='581' xlink:href='#unq'/><title>Unq idx_consent_revoked ( ag_login_id, participant_name ) </title></a>
+<a xlink:href='#consent_revoked.participant_name'><text id='ag.consent_revoked.participant_name' x='1458' y='592'>participant_name</text><title>participant_name
 * varchar</title></a>
-  <use id='nn' x='1277' y='1077' xlink:href='#nn'/><a xlink:href='#duplicate_consents.duplicate_survey_id'><use id='pk' x='1277' y='1076' xlink:href='#pk'/><title>Unq idx_duplicate_consents_1 ( duplicate_survey_id ) Pk ok_duplicate_consents ( ag_login_id, main_survey_id, duplicate_survey_id ) </title></a>
-<a xlink:href='#duplicate_consents.duplicate_survey_id'><text id='ag.duplicate_consents.duplicate_survey_id' x='1293' y='1087'>duplicate_survey_id</text><title>duplicate_survey_id
+  <use id='nn' x='1442' y='597' xlink:href='#nn'/><a xlink:href='#consent_revoked.participant_email'><text id='ag.consent_revoked.participant_email' x='1458' y='607'>participant_email</text><title>participant_email
 * varchar</title></a>
+  <use id='nn' x='1442' y='612' xlink:href='#nn'/><a xlink:href='#consent_revoked.date_revoked'><text id='ag.consent_revoked.date_revoked' x='1458' y='622'>date_revoked</text><title>date_revoked
+* date</title></a>
 
 </g></svg>
 
@@ -2556,92 +2585,6 @@ integer</title></a>
 <br/><br/>
 <table class='bordered'>
 <thead>
-<tr><th colspan='4'><a name='ag_login'>Table ag_login</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td>*</td>
-		<td><a name='ag_login.ag_login_id'>ag&#95;login&#95;id</a></td>
-		<td> uuid   DEFO ag.uuid_generate_v4() </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_login.email'>email</a></td>
-		<td> varchar&#40; 100 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_login.name'>name</a></td>
-		<td> varchar&#40; 200 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_login.address'>address</a></td>
-		<td> varchar&#40; 500 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_login.city'>city</a></td>
-		<td> varchar&#40; 100 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_login.state'>state</a></td>
-		<td> varchar&#40; 100 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_login.zip'>zip</a></td>
-		<td> varchar&#40; 10 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_login.country'>country</a></td>
-		<td> varchar&#40; 100 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_login.latitude'>latitude</a></td>
-		<td> float8   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_login.longitude'>longitude</a></td>
-		<td> float8   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_login.cannot_geocode'>cannot&#95;geocode</a></td>
-		<td> char&#40; 1 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_login.elevation'>elevation</a></td>
-		<td> float8   </td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='4'><b>Indexes</b></th></tr>
-	<tr>		<td>Pk</td><td>ag&#95;login&#95;pkey</td>
-		<td> ON ag&#95;login&#95;id</td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table class='bordered'>
-<thead>
 <tr><th colspan='4'><a name='zipcodes'>Table zipcodes</a></th></tr>
 </thead>
 <tbody>
@@ -2696,102 +2639,6 @@ integer</title></a>
 <tr><th colspan='4'><b>Indexes</b></th></tr>
 	<tr>		<td>Pk</td><td>zipcodes&#95;pkey</td>
 		<td> ON zipcode</td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table class='bordered'>
-<thead>
-<tr><th colspan='4'><a name='ag_consent'>Table ag_consent</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td>*</td>
-		<td><a name='ag_consent.ag_login_id'>ag&#95;login&#95;id</a></td>
-		<td> uuid   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='ag_consent.participant_name'>participant&#95;name</a></td>
-		<td> varchar&#40; 200 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='ag_consent.participant_email'>participant&#95;email</a></td>
-		<td> varchar&#40; 2147483647 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_consent.is_juvenile'>is&#95;juvenile</a></td>
-		<td> bool   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_consent.parent_1_name'>parent&#95;1&#95;name</a></td>
-		<td> varchar&#40; 200 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_consent.parent_2_name'>parent&#95;2&#95;name</a></td>
-		<td> varchar&#40; 200 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_consent.parent_1_code'>parent&#95;1&#95;code</a></td>
-		<td> varchar&#40; 200 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_consent.parent_2_code'>parent&#95;2&#95;code</a></td>
-		<td> varchar&#40; 200 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_consent.deceased_parent'>deceased&#95;parent</a></td>
-		<td> varchar&#40; 10 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_consent.date_signed'>date&#95;signed</a></td>
-		<td> date   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_consent.assent_obtainer'>assent&#95;obtainer</a></td>
-		<td> varchar&#40; 2147483647 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_consent.age_range'>age&#95;range</a></td>
-		<td> varchar&#40; 2147483647 &#41;   </td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='4'><b>Indexes</b></th></tr>
-	<tr>		<td>Pk</td><td>pk&#95;american&#95;gut&#95;consent</td>
-		<td> ON ag&#95;login&#95;id&#44; participant&#95;name</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>&nbsp;</td><td>idx&#95;american&#95;gut&#95;consent</td>
-		<td> ON ag&#95;login&#95;id</td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='4'><b>Foreign Keys</b></th></tr>
-	<tr>
-		<td>&nbsp;</td><td>fk_american_gut_consent</td>
-		<td > ( ag&#95;login&#95;id ) ref <a href='#ag&#95;login'>ag&#95;login</a> (ag&#95;login&#95;id) </td>
 		<td>  </td>
 	</tr>
 </tbody>
@@ -4477,6 +4324,232 @@ integer</title></a>
 <br/><br/>
 <table class='bordered'>
 <thead>
+<tr><th colspan='4'><a name='duplicate_consents'>Table duplicate_consents</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='duplicate_consents.ag_login_id'>ag&#95;login&#95;id</a></td>
+		<td> uuid   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='duplicate_consents.main_survey_id'>main&#95;survey&#95;id</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='duplicate_consents.duplicate_survey_id'>duplicate&#95;survey&#95;id</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;duplicate&#95;consents</td>
+		<td> ON ag&#95;login&#95;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;duplicate&#95;consents&#95;0</td>
+		<td> ON main&#95;survey&#95;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>U</td><td>idx&#95;duplicate&#95;consents&#95;1</td>
+		<td> ON duplicate&#95;survey&#95;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>Pk</td><td>ok&#95;duplicate&#95;consents</td>
+		<td> ON ag&#95;login&#95;id&#44; main&#95;survey&#95;id&#44; duplicate&#95;survey&#95;id</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='ag_login'>Table ag_login</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='ag_login.ag_login_id'>ag&#95;login&#95;id</a></td>
+		<td> uuid   DEFO ag.uuid_generate_v4() </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_login.email'>email</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_login.name'>name</a></td>
+		<td> varchar&#40; 200 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_login.address'>address</a></td>
+		<td> varchar&#40; 500 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_login.city'>city</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_login.state'>state</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_login.zip'>zip</a></td>
+		<td> varchar&#40; 10 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_login.country'>country</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_login.latitude'>latitude</a></td>
+		<td> float8   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_login.longitude'>longitude</a></td>
+		<td> float8   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_login.cannot_geocode'>cannot&#95;geocode</a></td>
+		<td> char&#40; 1 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_login.elevation'>elevation</a></td>
+		<td> float8   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>Pk</td><td>ag&#95;login&#95;pkey</td>
+		<td> ON ag&#95;login&#95;id</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='ag_consent'>Table ag_consent</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='ag_consent.ag_login_id'>ag&#95;login&#95;id</a></td>
+		<td> uuid   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='ag_consent.participant_name'>participant&#95;name</a></td>
+		<td> varchar&#40; 200 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='ag_consent.participant_email'>participant&#95;email</a></td>
+		<td> varchar&#40; 2147483647 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_consent.is_juvenile'>is&#95;juvenile</a></td>
+		<td> bool   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_consent.parent_1_name'>parent&#95;1&#95;name</a></td>
+		<td> varchar&#40; 200 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_consent.parent_2_name'>parent&#95;2&#95;name</a></td>
+		<td> varchar&#40; 200 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_consent.parent_1_code'>parent&#95;1&#95;code</a></td>
+		<td> varchar&#40; 200 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_consent.parent_2_code'>parent&#95;2&#95;code</a></td>
+		<td> varchar&#40; 200 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_consent.deceased_parent'>deceased&#95;parent</a></td>
+		<td> varchar&#40; 10 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_consent.date_signed'>date&#95;signed</a></td>
+		<td> date   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_consent.assent_obtainer'>assent&#95;obtainer</a></td>
+		<td> varchar&#40; 2147483647 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_consent.age_range'>age&#95;range</a></td>
+		<td> varchar&#40; 2147483647 &#41;   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>Pk</td><td>pk&#95;american&#95;gut&#95;consent</td>
+		<td> ON ag&#95;login&#95;id&#44; participant&#95;name</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;american&#95;gut&#95;consent</td>
+		<td> ON ag&#95;login&#95;id</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Foreign Keys</b></th></tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_american_gut_consent</td>
+		<td > ( ag&#95;login&#95;id ) ref <a href='#ag&#95;login'>ag&#95;login</a> (ag&#95;login&#95;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
 <tr><th colspan='4'><a name='ag_login_surveys'>Table ag_login_surveys</a></th></tr>
 </thead>
 <tbody>
@@ -4538,42 +4611,46 @@ integer</title></a>
 <br/><br/>
 <table class='bordered'>
 <thead>
-<tr><th colspan='4'><a name='duplicate_consents'>Table duplicate_consents</a></th></tr>
+<tr><th colspan='4'><a name='consent_revoked'>Table consent_revoked</a></th></tr>
 </thead>
 <tbody>
 	<tr>
 		<td>*</td>
-		<td><a name='duplicate_consents.ag_login_id'>ag&#95;login&#95;id</a></td>
+		<td><a name='consent_revoked.ag_login_id'>ag&#95;login&#95;id</a></td>
 		<td> uuid   </td>
 		<td>  </td>
 	</tr>
 	<tr>
 		<td>*</td>
-		<td><a name='duplicate_consents.main_survey_id'>main&#95;survey&#95;id</a></td>
+		<td><a name='consent_revoked.participant_name'>participant&#95;name</a></td>
 		<td> varchar   </td>
 		<td>  </td>
 	</tr>
 	<tr>
 		<td>*</td>
-		<td><a name='duplicate_consents.duplicate_survey_id'>duplicate&#95;survey&#95;id</a></td>
+		<td><a name='consent_revoked.participant_email'>participant&#95;email</a></td>
 		<td> varchar   </td>
 		<td>  </td>
 	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='consent_revoked.date_revoked'>date&#95;revoked</a></td>
+		<td> date   </td>
+		<td>  </td>
+	</tr>
 <tr><th colspan='4'><b>Indexes</b></th></tr>
-	<tr>		<td>&nbsp;</td><td>idx&#95;duplicate&#95;consents</td>
+	<tr>		<td>U</td><td>idx&#95;consent&#95;revoked</td>
+		<td> ON ag&#95;login&#95;id&#44; participant&#95;name</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>&nbsp;</td><td>idx&#95;consent&#95;revoked&#95;0</td>
 		<td> ON ag&#95;login&#95;id</td>
 		<td>  </td>
 	</tr>
-	<tr>		<td>&nbsp;</td><td>idx&#95;duplicate&#95;consents&#95;0</td>
-		<td> ON main&#95;survey&#95;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>U</td><td>idx&#95;duplicate&#95;consents&#95;1</td>
-		<td> ON duplicate&#95;survey&#95;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>Pk</td><td>ok&#95;duplicate&#95;consents</td>
-		<td> ON ag&#95;login&#95;id&#44; main&#95;survey&#95;id&#44; duplicate&#95;survey&#95;id</td>
+<tr><th colspan='4'><b>Foreign Keys</b></th></tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_consent_revoked</td>
+		<td > ( ag&#95;login&#95;id ) ref <a href='#ag&#95;login'>ag&#95;login</a> (ag&#95;login&#95;id) </td>
 		<td>  </td>
 	</tr>
 </tbody>
