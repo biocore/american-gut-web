@@ -1,7 +1,18 @@
 -- Feb 4, 2016
--- Add IBD diagnosis type as reitred question
--- Add table to track consent revoking
+-- Create consent revoked table
+CREATE TABLE ag.consent_revoked ( 
+    ag_login_id          uuid  NOT NULL,
+    participant_name     varchar  NOT NULL,
+    participant_email    varchar  NOT NULL,
+    date_revoked         date DEFAULT current_date NOT NULL,
+    CONSTRAINT idx_consent_revoked UNIQUE ( ag_login_id, participant_name ) 
+ );
 
+CREATE INDEX idx_consent_revoked_0 ON ag.consent_revoked ( ag_login_id );
+
+ALTER TABLE ag.consent_revoked ADD CONSTRAINT fk_consent_revoked FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id );
+
+-- Add IBD diagnosis type as reitred question
 INSERT INTO survey_question (survey_question_id, question_shortname, american, british, retired) VALUES
 (161, 'IBD_DIAGNOSIS', 'Which type of IBD?', 'Which type of IBD?', TRUE);
 
@@ -59,16 +70,3 @@ INSERT INTO ag.survey_answers (survey_id, survey_question_id, response)
         SELECT survey_id
         FROM ag.survey_answers
         WHERE survey_question_id = 161);
-
--- Create consent revoked table
-CREATE TABLE ag.consent_revoked ( 
-    ag_login_id          uuid  NOT NULL,
-    participant_name     varchar  NOT NULL,
-    participant_email    varchar  NOT NULL,
-    date_revoked         date DEFAULT current_date NOT NULL,
-    CONSTRAINT idx_consent_revoked UNIQUE ( ag_login_id, participant_name ) 
- );
-
-CREATE INDEX idx_consent_revoked_0 ON ag.consent_revoked ( ag_login_id );
-
-ALTER TABLE ag.consent_revoked ADD CONSTRAINT fk_consent_revoked FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id );
