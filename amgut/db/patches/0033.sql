@@ -65,7 +65,7 @@ CREATE TABLE ag.consent_revoked (
     ag_login_id          uuid  NOT NULL,
     participant_name     varchar  NOT NULL,
     participant_email    varchar  NOT NULL,
-    date_revoked         date  NOT NULL,
+    date_revoked         date DEFAULT current_date NOT NULL,
     CONSTRAINT idx_consent_revoked UNIQUE ( ag_login_id, participant_name ) 
  );
 

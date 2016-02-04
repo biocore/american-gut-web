@@ -416,7 +416,9 @@
 			<column name="ag_login_id" type="uuid" jt="1111" mandatory="y" />
 			<column name="participant_name" type="varchar" jt="12" mandatory="y" />
 			<column name="participant_email" type="varchar" jt="12" mandatory="y" />
-			<column name="date_revoked" type="date" jt="91" mandatory="y" />
+			<column name="date_revoked" type="date" jt="91" mandatory="y" >
+				<defo>current_date</defo>
+			</column>
 			<index name="idx_consent_revoked" unique="UNIQUE" >
 				<column name="ag_login_id" />
 				<column name="participant_name" />
