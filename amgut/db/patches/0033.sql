@@ -8,11 +8,11 @@ INSERT INTO survey_question (survey_question_id, question_shortname, american, b
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (146, 'SINGLE');
 
 INSERT INTO survey_response (american, british) VALUES ('Ulcerative colitis', 'Ulcerative colitis');
-INSERT INTO survey_response (american, british) VALUES ('Crohn\'s disease', 'Crohn\'s disease');
+INSERT INTO survey_response (american, british) VALUES ('Crohn''s disease', 'Crohn''s disease');
 
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (161, 'Unspecified', 0);
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (161, 'Ulcerative colitis', 1);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (161, 'Crohn\'s disease', 2);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (161, 'Crohn''s disease', 2);
 
 INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (-1, 161, 50);
 
@@ -42,7 +42,7 @@ BEGIN
         -- Assign uninterpretable answers to 'Unspecified'
         SELECT CASE(ibd)
            WHEN 'Ulcerative colitis' THEN 'Ulcerative colitis'
-           WHEN 'Crohn\'s disease' THEN 'Crohn\'s disease'
+           WHEN 'Crohn''s disease' THEN 'Crohn''s disease'
            ELSE 'Unspecified'
         END
         FROM ag.ag_human_survey WHERE participant_name = pid AND ag_login_id::varchar = login INTO ans;
