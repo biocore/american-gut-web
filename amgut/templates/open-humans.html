@@ -65,7 +65,8 @@
         <p>
         {% for participant, survey_id in survey_ids.items() %}
           <label>
-            <input type="checkbox" name="{{ participant }}" class="participant">
+            <input type="checkbox" name="{{ participant }}"
+              data-survey-id="{{ survey_id }}" class="participant">
 
             {{ participant }}
           </label>
