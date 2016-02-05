@@ -252,8 +252,7 @@ class TestAGDataAccess(TestCase):
     def test_getHumanParticipants(self):
         i = "d8592c74-9694-2135-e040-8a80115d6401"
         res = self.ag_data.getHumanParticipants(i)
-        exp = ['REMOVED-1']*105 + ['REMOVED-2']*104 + ['REMOVED-3']*104 + \
-              ['REMOVED-0']*104
+        exp = ['REMOVED-2', 'REMOVED-0', 'REMOVED-3', 'REMOVED-1']
         self.assertItemsEqual(res, exp)
 
     def test_getHumanParticipantsNotPresent(self):

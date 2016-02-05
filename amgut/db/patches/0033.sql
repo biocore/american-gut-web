@@ -12,7 +12,7 @@ CREATE INDEX idx_consent_revoked_0 ON ag.consent_revoked ( ag_login_id );
 
 ALTER TABLE ag.consent_revoked ADD CONSTRAINT fk_consent_revoked FOREIGN KEY ( ag_login_id ) REFERENCES ag.ag_login( ag_login_id );
 
--- Add IBD diagnosis type as reitred question
+-- Add IBD diagnosis type as retired question
 INSERT INTO survey_question (survey_question_id, question_shortname, american, british, retired) VALUES
 (161, 'IBD_DIAGNOSIS', 'Which type of IBD?', 'Which type of IBD?', TRUE);
 

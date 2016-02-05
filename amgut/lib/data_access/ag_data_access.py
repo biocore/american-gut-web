@@ -398,8 +398,8 @@ class AGDataAccess(object):
 
     def getHumanParticipants(self, ag_login_id):
         # get people from new survey setup
-        sql = """SELECT participant_name from ag.ag_login_surveys
-                 JOIN ag.survey_answers USING (survey_id)
+        sql = """SELECT DISTINCT participant_name from ag.ag_login_surveys
+                 LEFT JOIN ag.survey_answers USING (survey_id)
                  JOIN ag.group_questions gq USING (survey_question_id)
                  JOIN ag.surveys ags USING (survey_group)
                  WHERE ag_login_id = %s AND ags.survey_id = %s"""
