@@ -349,22 +349,18 @@ class AGDataAccess(object):
                              environment_sampled, sample_date, sample_time,
                              participant_name, notes):
         with TRN:
-            if sample_site is not None:
-                # Get survey id
-                sql = """SELECT survey_id
-                         FROM ag_login_surveys
-                         WHERE ag_login_id = %s AND participant_name = %s"""
+            # Get survey id
+            sql = """SELECT survey_id
+                     FROM ag_login_surveys
+                     WHERE ag_login_id = %s AND participant_name = %s"""
 
-                TRN.add(sql, (ag_login_id, participant_name))
-                survey_id = TRN.execute_fetchindex()
-                if not survey_id:
-                    raise ValueError("No survey ID for ag_login_id %s and "
-                                     "participant name %s" %
-                                     (ag_login_id, participant_name))
-                survey_id = survey_id[0][0]
-            else:
-                # otherwise, it is an environmental sample
-                survey_id = None
+            TRN.add(sql, (ag_login_id, participant_name))
+            survey_id = TRN.execute_fetchindex()
+            if not survey_id:
+                raise ValueError("No survey ID for ag_login_id %s and "
+                                 "participant name %s" %
+                                 (ag_login_id, participant_name))
+            survey_id = survey_id[0][0]
 
             # Add barcode info
             sql = """UPDATE ag_kit_barcodes

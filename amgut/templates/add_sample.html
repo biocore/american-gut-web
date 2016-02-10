@@ -28,6 +28,7 @@
 {% if message %} <h3>{{message}}</h3> {% end %}
 <form id="add_sample" name="add_sample" method="post" action="{% raw media_locale['SITEBASE'] %}/authed/{{page_type}}/">
     <input type="hidden" name="participant_name" value="{{ participant_name }}"/>
+    <input type="hidden" name="sample_type" value="{{ page_type }}"/>
     <table width="100%">
         <tr>
         <td width="20%"></td>
