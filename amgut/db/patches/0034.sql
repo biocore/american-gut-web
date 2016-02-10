@@ -50,7 +50,8 @@ CREATE INDEX idx_surveys_3 ON ag.ag_login_surveys ( redcap_instrument_id );
 ALTER TABLE ag.ag_login_surveys ADD CONSTRAINT fk_surveys FOREIGN KEY ( redcap_record_id ) REFERENCES ag.ag_consent( redcap_record_id );
 ALTER TABLE ag.ag_login_surveys ADD CONSTRAINT fk_surveys_0 FOREIGN KEY ( redcap_instrument_id ) REFERENCES ag.redcap_instruments( redcap_instrument_id );
 UPDATE ag.ag_login_surveys ls
-SET redcap_record_id = c.redcap_record_id
+SET redcap_record_id = c.redcap_record_id,
+    survey_timestamp = c.date_signed
 FROM ag.ag_consent AS c
 WHERE c.participant_name = ls.participant_name AND c.ag_login_id = ls.ag_login_id;
 ALTER TABLE ag.ag_login_surveys DROP COLUMN participant_name, DROP COLUMN ag_login_id;
