@@ -53,6 +53,7 @@ media_locale = {
     'NAV_ANIMAL_SAMPLES': 'Animal Samples',
     'NAV_ADD_ANIMAL': 'Add Animal Source',
     'NAV_ENV_SAMPLES': 'Environmental Samples',
+    'NAV_ADD_ENV': 'Add Environmental Source',
     'NAV_LOG_SAMPLE': 'Associate/Log Sample',
     'NAV_JOIN_PROJECT': 'Join The Project',
     'NAV_KIT_INSTRUCTIONS': 'Kit Instructions',

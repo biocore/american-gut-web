@@ -43,7 +43,7 @@ from amgut.handlers.change_pass_verify import ChangePassVerifyHandler
 from amgut.handlers.change_password import ChangePasswordHandler
 from amgut.handlers.nojs import NoJSHandler
 from amgut.handlers.download import DownloadHandler
-
+from amgut.handlers.env_survey import EnvSurveyHandler
 from amgut.handlers.open_humans import (OpenHumansHandler,
                                         OpenHumansLoginHandler)
 from amgut.lib.startup_tests import startup_tests
@@ -84,6 +84,7 @@ class AGWebApplication(Application):
             (r"/authed/add_sample_general/", AddGeneralSampleHandler),
             (r"/authed/change_password/", ChangePasswordHandler),
             (r"/authed/add_animal/", AnimalSurveyHandler),
+            (r"/authed/add_env/", EnvSurveyHandler),
             (r"/authed/open-humans/", OpenHumansHandler),
             (r"/authed/connect/open-humans/", OpenHumansLoginHandler),
             (r"/authed/download/(.*)", DownloadHandler),

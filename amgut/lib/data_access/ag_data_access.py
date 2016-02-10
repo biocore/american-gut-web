@@ -443,7 +443,7 @@ class AGDataAccess(object):
             return status[0][0]
 
     def getAnimalParticipants(self, ag_login_id):
-        sql = """SELECT participant_name from ag.ag_login_surveys
+        sql = """SELECT DISTINCT participant_name from ag.ag_login_surveys
                  JOIN ag.survey_answers USING (survey_id)
                  JOIN ag.group_questions gq USING (survey_question_id)
                  JOIN ag.surveys ags USING (survey_group)
@@ -464,6 +464,16 @@ class AGDataAccess(object):
             TRN.add(sql, [ag_login_id, participant_name])
             rows = TRN.execute_fetchindex()
             return [dict(row) for row in rows]
+
+    def getEnvSurveyNames(self, ag_login_id):
+        sql = """SELECT DISTINCT participant_name from ag.ag_login_surveys
+                 JOIN ag.survey_answers_other USING (survey_id)
+                 JOIN ag.group_questions gq USING (survey_question_id)
+                 JOIN ag.surveys ags USING (survey_group)
+                 WHERE ag_login_id = %s AND ags.survey_id = %s"""
+        with TRN:
+            TRN.add(sql, [ag_login_id, 3])
+            return TRN.execute_fetchflatten()
 
     def getEnvironmentalSamples(self, ag_login_id):
         sql = """SELECT  barcode, site_sampled, sample_date, sample_time,
@@ -697,7 +707,9 @@ class AGDataAccess(object):
                              for hs in self.getHumanParticipants(ag_login_id)}
             animal_samples = {a: self.getParticipantSamples(ag_login_id, a)
                               for a in self.getAnimalParticipants(ag_login_id)}
-            environmental_samples = self.getEnvironmentalSamples(ag_login_id)
+            environmental_samples = {
+                e: self.getEnvironmentalSamples(ag_login_id)
+                for e in self.getEnvSurveyNames(ag_login_id)}
 
             return (human_samples, animal_samples, environmental_samples,
                     kit_verified)

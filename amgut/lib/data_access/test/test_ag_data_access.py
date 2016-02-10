@@ -277,10 +277,7 @@ class TestAGDataAccess(TestCase):
     def test_getAnimalParticipants(self):
         i = "ed5ab96f-fe3b-ead5-e040-8a80115d1c4b"
         res = self.ag_data.getAnimalParticipants(i)
-        exp = ['REMOVED-0', 'REMOVED-0', 'REMOVED-0', 'REMOVED-0',
-               'REMOVED-0', 'REMOVED-0', 'REMOVED-0', 'REMOVED-0',
-               'REMOVED-0', 'REMOVED-0', 'REMOVED-0', 'REMOVED-0',
-               'REMOVED-0', 'REMOVED-0']
+        exp = ['REMOVED-0']
         self.assertItemsEqual(res, exp)
 
     def test_getAnimalParticipantsNotPresent(self):
@@ -414,6 +411,12 @@ class TestAGDataAccess(TestCase):
         i = '00000000-0000-0000-0000-000000000000'
         res = self.ag_data.getParticipantSamples(i, "REMOVED")
         self.assertEqual(res, [])
+
+    def test_getEnvSurveyNames(self):
+        i = "d6b0f287-b9d9-40d4-82fd-a8fd3db6c476"
+        res = self.ag_data.getEnvSurveyNames(i)
+        exp = []
+        self.assertEqual(res, exp)
 
     def test_getEnvironmentalSamples(self):
         i = "d6b0f287-b9d9-40d4-82fd-a8fd3db6c476"
@@ -603,10 +606,10 @@ class TestAGDataAccess(TestCase):
 
     def test_get_menu_items(self):
         obs = self.ag_data.get_menu_items('tst_pDWcB')
-        self.assertEqual(({}, {}, [], True), obs)
+        self.assertEqual(({}, {}, {}, True), obs)
 
         obs = self.ag_data.get_menu_items('tst_VpQsT')
-        self.assertEqual(({'REMOVED-0': []}, {}, [], True), obs)
+        self.assertEqual(({'REMOVED-0': []}, {}, {}, True), obs)
 
     def test_get_menu_items_errors(self):
         with self.assertRaises(ValueError):
