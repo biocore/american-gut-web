@@ -38,7 +38,7 @@ def get_survey_url(record, instrument='ag_human_en_us'):
         # Get the event ID for the survey, or 1 if first survey
         sql = """SELECT MAX(redcap_event_id) + 1
                  FROM ag.ag_login_surveys
-                 LEFT JOIN ag.consents USING (redcap_record_id)
+                 LEFT JOIN ag.ag_consent USING (redcap_record_id)
                  LEFT JOIN redcap_instruments
                     USING (redcap_instrument_id, lang)
                  WHERE redcap_record_id = %s AND redcap_instrument_id = %s;
@@ -99,7 +99,7 @@ def get_responses(records, instrument, event=None):
     data = {
         'token': AMGUT_CONFIG.redcap_token,
         'content': 'record',
-        'records': ','.join(records),
+        'records': ','.join(map(str, records)),
         'forms': instrument,
         'format': 'json',
         'type': 'flat',
