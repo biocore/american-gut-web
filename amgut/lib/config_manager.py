@@ -120,7 +120,7 @@ class ConfigurationManager(object):
             config.readfp(conf_file)
 
         _expected_sections = {'main', 'postgres', 'test', 'redis', 'email',
-                              'thirdparty'}
+                              'thirdparty', 'redcap'}
 
         missing = _expected_sections - set(config.sections())
         if missing:
@@ -179,10 +179,10 @@ class ConfigurationManager(object):
     def _get_redcap(self, config):
         """Get the configuration of the test section"""
         expected_options = {'url', 'token'}
-        _warn_on_extra(set(config.options('redis')) - expected_options -
-                       self.defaults, 'redis section option(s)')
+        _warn_on_extra(set(config.options('redcap')) - expected_options -
+                       self.defaults, 'redcap section option(s)')
 
-        get = partial(config.get, 'redis')
+        get = partial(config.get, 'redcap')
 
         self.redcap_url = get('URL')
         self.redcap_token = get('TOKEN')

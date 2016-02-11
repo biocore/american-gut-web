@@ -43,7 +43,8 @@ def get_survey_url(record, instrument='ag_human_en_us'):
                     USING (redcap_instrument_id, lang)
                  WHERE redcap_record_id = %s AND redcap_instrument_id = %s;
         """
-        event = TRN.execute_fetchlast(sql, [record, instrument])
+        TRN.add(sql, [record, instrument])
+        event = TRN.execute_fetchlast()
         if event is None:
             event = 1
         data = {
@@ -75,7 +76,8 @@ def log_complete(record, instrument, event):
                  (redcap_instrument_id, redcap_record_id,
                   redcap_event_id)
                  VALUES (%s, %s, %s)"""
-        TRN.execute(sql, [instrument, record, event])
+        TRN.add(sql, [instrument, record, event])
+        TRN.execute()
 
 
 def get_responses(records, instrument, event=None):
