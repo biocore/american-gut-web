@@ -13,6 +13,7 @@ def _make_request(data):
     client = HTTPClient()
     response = client.fetch(AMGUT_CONFIG.redcap_url, method='POST',
                             headers=None, body=body)
+    # Response not always JSON, so can't always use loads
     if '{"error"' in response.body:
         raise HTTPError(400, loads(response.body)['error'])
     return response.body
@@ -77,7 +78,7 @@ def log_complete(record, instrument, event):
         TRN.execute(sql, [instrument, record, event])
 
 
-def get_responses(records, instrument, event):
+def get_responses(records, instrument, event=None):
     """Get responses for the given records
 
     Parameters
@@ -86,8 +87,8 @@ def get_responses(records, instrument, event):
         records to pull information for
     instrument : str
         The instrument (survey) to get responses from
-    event : int
-        What event to get responses from
+    event : int, optional
+        What event to get responses from. Default all
 
     Returns: list of dict of objects
         List of all matching survey responses, where each is a dictionary of
@@ -98,7 +99,6 @@ def get_responses(records, instrument, event):
         'content': 'record',
         'records': ','.join(records),
         'forms': instrument,
-        'events': 'event_%d_arm_1' % event,
         'format': 'json',
         'type': 'flat',
         'rawOrLabel': 'label',
@@ -108,4 +108,6 @@ def get_responses(records, instrument, event):
         'exportDataAccessGroups': 'false',
         'returnFormat': 'json'
     }
+    if event is not None:
+        data['events'] = 'event_%d_arm_1' % event,
     return loads(_make_request(data))
