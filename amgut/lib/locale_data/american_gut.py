@@ -313,7 +313,7 @@ _NEW_PARTICIPANT = {
     'ADD_HUMAN_TITLE': 'Add a New Human Source',
     'SEL_AGE_RANGE': 'Select age range of participant:',
     'ADD_HUMAN_HELP_SUGGESTION': 'If you need help with the website, please use the contact mechanism in the menu to the left. Please do not email the people listed in this form for help, unless it has to do with an injury. ',
-    'AGE_0_6': '6 weeks - 6 years',
+    'AGE_0_6': '3 months - 6 years',
     'AGE_7_12': '7-12 years',
     'AGE_13_17': '13-17 years',
     'AGE_18': '18+ years',
