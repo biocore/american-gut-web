@@ -68,7 +68,7 @@ media_locale = {
     'NAV_JOIN_PROJECT': "Join The Project",
     'NAV_KIT_INSTRUCTIONS': "Kit Instructions",
     'NAV_LOGOUT': "Log out",
-    'NAV_LOG_SAMPLE': "Associate/Log Sample",
+    'NAV_LOG_SAMPLE': "Assign Sample",
     'NAV_MICROBIOME_101': "%(project_shorthand)s 101" % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
     'NAV_MICROBIOME_FAQ': "Human Microbiome FAQ",
     'NAV_PARTICIPANT_LOGIN': "Participant Log In",
