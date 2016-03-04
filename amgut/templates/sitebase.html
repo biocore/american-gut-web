@@ -138,21 +138,36 @@
 
                     <li class="has-sub"><a><span>{% raw media_locale['NAV_ENV_SAMPLES'] %}</span></a>
                         <ul>
-{% for sitebase_barcode in environmental_samples %}
-                            <li>
-                                <a href="{% raw media_locale['SITEBASE'] %}/authed/sample_overview/?barcode={{sitebase_barcode['barcode']}}"
-    {% if sitebase_barcode['status'] == 'Received' %}
-        style="color:#0B0;"
-    {% end %}
-                                >
-                                    <span>
-    {{sitebase_barcode['barcode']}}
-    {% if sitebase_barcode['status'] == 'Received' %}
-        {% raw media_locale['NAV_RECEIVED'] %}
-    {% end %}
-                                    </span>
+{% for ep, sitebase_barcodes in viewitems(environmental_samples) %}
+                            <li class="last">
+                                <a onclick="document.forms['participant_overview_{{ep}}'].submit(); return false;">
+                                    <form action="{% raw media_locale['SITEBASE'] %}/participants/{{ep}}" method="post" id="participant_overview_{{ep}}">
+                                        <input type="hidden" name="participant_type" value="environmental"/>
+                                        <span>{{ep}}</span>
+                                    </form>
                                 </a>
                             </li>
+                            <ul>
+    {% for sitebase_barcode in sitebase_barcodes %}
+                                <li>
+                                    <a href="{% raw media_locale['SITEBASE'] %}/authed/sample_overview/?barcode={{sitebase_barcode['barcode']}}"
+        {% if sitebase_barcode['status'] == 'Received' %}
+            style="color:#0B0;"
+        {% end %}
+                                    >
+                                        <span>
+            {{sitebase_barcode['barcode']}}
+            {% if sitebase_barcode['status'] == 'Received' %}
+                {% raw media_locale['NAV_RECEIVED'] %}
+            {% end %}
+                                        </span>
+                                    </a>
+                                </li>
+    {% end %}
+                            </ul>
+{%end%}
+{% if kit_verified %}
+                            <li><a href="{% raw media_locale['SITEBASE'] %}/authed/add_env/"><span><strong>{% raw media_locale['NAV_ADD_ENV'] %}</strong></span></a></li>
 {% end %}
                         </ul>
                     </li>

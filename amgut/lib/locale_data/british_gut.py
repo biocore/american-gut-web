@@ -54,6 +54,7 @@ media_locale = {
     'LOG_SAMPLE_OPTS': _SITEBASE + "/static/img/log_sample_options.png",
     'NAV_ADDENDUM': "How do I interpret my results?",
     'NAV_ADD_ANIMAL': "Add Animal Source",
+    'NAV_ADD_ENV': 'Add Environmental Source',
     'NAV_ADD_HUMAN': "Add Human Source",
     'NAV_ANIMAL_SAMPLES': "Animal Samples",
     'NAV_CHANGE_PASSWORD': "Change Password",

@@ -28,8 +28,8 @@ class AddSample(BaseHandler):
     @authenticated
     def post(self):
         # Required vars
-        participant_name = self.get_argument('participant_name',
-                                             'environmental')
+        participant_name = self.get_argument('participant_name')
+        sample_type = self.get_argument('sample_type')
         form = self.build_form()
         args = {a: v[0] for a, v in viewitems(self.request.arguments)}
         form.process(data=args)
@@ -61,7 +61,7 @@ class AddSample(BaseHandler):
         sample_time = form.sample_time.data
         notes = form.notes.data
 
-        if participant_name == 'environmental':
+        if sample_type == 'add_sample_general':
             # environmental sample
             env_sampled = sample_site
             sample_site = None
@@ -78,9 +78,7 @@ class AddSample(BaseHandler):
 
     @authenticated
     def get(self):
-        participant_name = self.get_argument('participant_name', None)
-        if participant_name is None:
-            self.redirect('/authed/add_sample_overview/')
+        participant_name = self.get_argument('participant_name')
         form = self.build_form()
         self.render('add_sample.html', skid=self.current_user,
                     participant_name=participant_name,
