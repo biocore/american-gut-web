@@ -8,9 +8,9 @@
 
 <style>
   div.emperor-space{
-    /*position: fixed;*/
+    position: fixed;
     height: 50%;
-    width: 100%;
+    width: 90%;
     margin: 0;
   }
 </style>
@@ -141,9 +141,6 @@
         sv.renderer.setClearColor(999);
         sv.renderer.setClearColor(0xFFFFFF);
 
-        ec.colorController.$header.hide();
-        ec._$tabsList.hide();
-
         //DOUBLE SIZE OF BARCODE POINTS
         barcodes = {% raw barcodes %};
         for(i=0;i<barcodes.length;i++) {
@@ -152,11 +149,15 @@
           sampleZero.scale.y = 2;
           sampleZero.scale.z = 2;
         }
+        ec.colorController.$header.hide();
+        ec._$tabsList.hide();
       });
   }); // END REQUIRE.JS block
 </script>
 {% end %}
 {% block content %}
-<div>THIS IS SOME TEXT</div>
-<div id='plots' class='emperor-space'></div>
+<div id="emperor-wrapper" style="width:100%">
+  THIS IS SOME TEXT
+  <div id='plots' class='emperor-space'></div>
+</div>
 {% end %}
