@@ -389,7 +389,8 @@ class AGDataAccess(object):
             sql = """UPDATE ag_kit_barcodes
                      SET participant_name = NULL, site_sampled = NULL,
                          sample_time = NULL, sample_date = NULL,
-                         environment_sampled = NULL, notes = ''
+                         environment_sampled = NULL, notes = NULL,
+                         survey_id = NULL
                     WHERE barcode IN (
                         SELECT  akb.barcode
                         FROM ag_kit_barcodes akb
