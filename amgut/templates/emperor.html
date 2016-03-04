@@ -130,13 +130,10 @@
         ec.render();
       }
 
-      $(function () {
-        init();
-        animate();
-      });
-
 
       $(document).ready(function(){
+        init();
+        animate();
         var sv = ec.sceneViews[0];
 
         //CHANGE BG TO WHITE AND AXES TO BLACK
@@ -144,15 +141,17 @@
         sv.renderer.setClearColor(999);
         sv.renderer.setClearColor(0xFFFFFF);
 
+        ec.colorController.$header.hide();
+        ec._$tabsList.hide();
+
         //DOUBLE SIZE OF BARCODE POINTS
+        barcodes = {% raw barcodes %};
         for(i=0;i<barcodes.length;i++) {
           var sample =sv.scene.getObjectByName(barcodes[i]);
           sampleZero.scale.x = 2;
           sampleZero.scale.y = 2;
           sampleZero.scale.z = 2;
         }
-        ec.colorController.$header.hide();
-        ec._$tabsList.hide();
       });
   }); // END REQUIRE.JS block
 </script>
