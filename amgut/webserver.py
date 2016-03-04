@@ -46,6 +46,7 @@ from amgut.handlers.download import DownloadHandler
 
 from amgut.handlers.open_humans import (OpenHumansHandler,
                                         OpenHumansLoginHandler)
+from amgut.handlers.interactive import EmperorHandler
 from amgut.lib.startup_tests import startup_tests
 
 define("port", default=8888, help="run on the given port", type=int)
@@ -87,6 +88,7 @@ class AGWebApplication(Application):
             (r"/authed/open-humans/", OpenHumansHandler),
             (r"/authed/connect/open-humans/", OpenHumansLoginHandler),
             (r"/authed/download/(.*)", DownloadHandler),
+            (r"/authed/emperor/", EmperorHandler),
             (r"/faq/", FAQHandler),
             (r"/participants/(.*)", ParticipantOverviewHandler),
             (r"/international_shipping/", InternationalHandler),

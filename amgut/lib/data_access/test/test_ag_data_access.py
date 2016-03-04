@@ -573,6 +573,12 @@ class TestAGDataAccess(TestCase):
         res = self.ag_data.getBarcodesByKit('42')
         self.assertEqual(res, [])
 
+    def test_get_barcodes_by_user(self):
+        res = self.ag_data.get_barcodes_by_user(
+            'd8592c74-7e7f-2135-e040-8a80115d6401')
+        exp = ['000001322']
+        self.assertItemsEqual(res, exp)
+
     def test_checkPrintResults(self):
         obs = self.ag_data.checkPrintResults('tst_oasoR')
         self.assertFalse(obs)

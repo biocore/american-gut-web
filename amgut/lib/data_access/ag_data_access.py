@@ -624,6 +624,34 @@ class AGDataAccess(object):
             TRN.add(sql, [kitid])
             return TRN.execute_fetchflatten()
 
+    def get_barcodes_by_user(self, ag_login_id, results=False):
+        """Get all logged barcodes for a user, over all kitids
+
+        Parameters
+        ----------
+        ag_login_id : UUID4
+          The login id
+        results : bool, optional
+          Whether to only return barcodes that have results attached.
+          Default False
+
+        Returns
+        -------
+        list of str
+          List of all barcodes that have been logged by the user
+        """
+        sql = """SELECT DISTINCT barcode
+                FROM ag_kit_barcodes
+                RIGHT JOIN ag_kit USING (ag_kit_id)
+                RIGHT JOIN ag_login USING (ag_login_id)
+                WHERE ag_login_id = %s
+             """
+        if results:
+            sql += " AND results_ready = 'Y'"
+        with TRN:
+            TRN.add(sql, [ag_login_id])
+            return TRN.execute_fetchflatten()
+
     def get_nonconsented_scanned_barcodes(self, kit_id):
         """Returns list of barcodes that have been scanned but not consented
 
