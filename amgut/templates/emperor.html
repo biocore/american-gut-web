@@ -8,6 +8,7 @@
 
 <style>
   div.emperor-space{
+    /*position: fixed;*/
     height: 50%;
     width: 100%;
     margin: 0;
@@ -16,8 +17,6 @@
 
 <script type="text/javascript" src="/static/emperor/support_files/vendor/js/require-2.1.22.min.js"></script>
 <script type="text/javascript">
-  ec = null;
-  
   requirejs.config({
     'baseUrl': '/static/emperor/support_files/',
 
@@ -112,15 +111,32 @@
         ec.render();
       }
 
+      var dm, ec;
 
-      $(document).ready(function(){
+      function init() {
+        // Initialize the DecompositionModel
+        dm = new DecompositionModel(name, ids, coords, pct_var,
+                                    md_headers, metadata);
+        // Initialize the EmperorController
+        ec = new EmperorController(dm, 'plots');
+      }
+
+      $(window).resize(function() {
+        ec.resize(window.innerWidth, window.innerHeight);
+      });
+
+      function animate() {
+        requestAnimationFrame(animate);
+        ec.render();
+      }
+
+      $(function () {
         init();
         animate();
-        ec.resize(window.innerWidth, window.innerHeight);
+      });
 
-        //ec.colorController.$header.hide();
-        //ec._$tabsList.hide();
 
+      $(document).ready(function(){
         var sv = ec.sceneViews[0];
 
         //CHANGE BG TO WHITE AND AXES TO BLACK
@@ -135,6 +151,8 @@
           sampleZero.scale.y = 2;
           sampleZero.scale.z = 2;
         }
+        ec.colorController.$header.hide();
+        ec._$tabsList.hide();
       });
   }); // END REQUIRE.JS block
 </script>
