@@ -103,26 +103,7 @@
       }
 
       $(window).resize(function() {
-        ec.resize(window.innerWidth, window.innerHeight);
-      });
-
-      function animate() {
-        requestAnimationFrame(animate);
-        ec.render();
-      }
-
-      var dm, ec;
-
-      function init() {
-        // Initialize the DecompositionModel
-        dm = new DecompositionModel(name, ids, coords, pct_var,
-                                    md_headers, metadata);
-        // Initialize the EmperorController
-        ec = new EmperorController(dm, 'plots');
-      }
-
-      $(window).resize(function() {
-        ec.resize(window.innerWidth, window.innerHeight);
+        ec.resize(window.innerWidth * 0.5, window.innerHeight * 0.7);
       });
 
       function animate() {
@@ -137,20 +118,22 @@
         var sv = ec.sceneViews[0];
 
         //CHANGE BG TO WHITE AND AXES TO BLACK
-        sv.drawAxesLabelsWithColor(000);
-        sv.renderer.setClearColor(999);
-        sv.renderer.setClearColor(0xFFFFFF);
+        sv.drawAxesLabelsWithColor('#000000');
+        sv.drawAxesWithColor('#000000');
+        sv.renderer.setClearColor('#FFFFFF');
+
+        //HIDE EDITING USING EMPEROR
+        //ec.colorController.$header.hide();
+        ec._$tabsList.hide();
 
         //DOUBLE SIZE OF BARCODE POINTS
-        barcodes = {% raw barcodes %};
-        for(i=0;i<barcodes.length;i++) {
-          var sample =sv.scene.getObjectByName(barcodes[i]);
-          sampleZero.scale.x = 2;
-          sampleZero.scale.y = 2;
-          sampleZero.scale.z = 2;
-        }
-        ec.colorController.$header.hide();
-        ec._$tabsList.hide();
+        //barcodes = {% raw barcodes %};
+        //for(i=0;i<barcodes.length;i++) {
+        //  var sample =sv.scene.getObjectByName(barcodes[i]);
+        //  sample.scale.x = 2;
+        //  sample.scale.y = 2;
+        //  sample.scale.z = 2;
+        //}
       });
   }); // END REQUIRE.JS block
 </script>
