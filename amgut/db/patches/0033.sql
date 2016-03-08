@@ -46,7 +46,7 @@ BEGIN
     LOOP
         SELECT survey_id FROM ag.ag_login_surveys WHERE participant_name = pid AND ag_login_id::varchar = login INTO survey;
         -- If unpromoted survey, don't convert answers
-        IF survey = NULL
+        IF survey IS NULL
         THEN
             CONTINUE;
         END IF;
