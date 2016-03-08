@@ -17,6 +17,13 @@
 
 <script type="text/javascript" src="/static/emperor/support_files/vendor/js/require-2.1.22.min.js"></script>
 <script type="text/javascript">
+  var ec;
+
+  function change_meta_cat(meta_cat) {
+    ec.colorController.$select.val(meta_cat);
+    ec.colorController.$select.trigger("change");
+  }
+
   requirejs.config({
     'baseUrl': '/static/emperor/support_files/',
 
@@ -92,7 +99,7 @@
       var md_headers = {% raw md_headers%};
       var metadata = {% raw  metadata %};
 
-      var dm, ec;
+      var dm;
 
       function init() {
         // Initialize the DecompositionModel
@@ -120,7 +127,8 @@
 
         //HIDE EDITING USING EMPEROR
         $(function(){
-          var barcodes = getParameterByName('barcodes');
+          //var barcodes = getParameterByName('barcodes').split(',');
+          var barcodes = {% raw barcodes %}
           ec.colorController.$header.hide();
           ec._$tabsList.hide();
 
@@ -131,7 +139,7 @@
 
           //TRIPLE SIZE OF BARCODE POINTS
         for(i=0;i<barcodes.length;i++) {
-          var sample =sv.scene.getObjectByName(barcodes[i]).split(",");
+          var sample =sv.scene.getObjectByName(barcodes[i]);
           sample.scale.x = 3;
           sample.scale.y = 3;
           sample.scale.z = 3;
@@ -148,7 +156,12 @@
 {% end %}
 {% block content %}
 <div id="emperor-wrapper" style="width:100%">
-  THIS IS SOME TEXT
+  <p>THIS IS SOME TEXT</p>
+  <select id="meta_cats" onchange="change_meta_cat(this.value)">
+    {% for cat in md_headers %}
+    <option value="{{cat}}">{{cat}}</option>
+    {% end %}
+  </select>
   <div id='plots' class='emperor-space'></div>
 </div>
 {% end %}

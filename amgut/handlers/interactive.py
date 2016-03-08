@@ -1,4 +1,6 @@
 from os.path import join
+from ast import literal_eval
+
 from tornado.web import authenticated
 
 from amgut.handlers.base_handlers import BaseHandler
@@ -18,5 +20,5 @@ class EmperorHandler(BaseHandler):
                     coords_ids=pcoa_data[0].strip(),
                     coords=pcoa_data[1].strip(),
                     pct_var=pcoa_data[2].strip(),
-                    md_headers=pcoa_data[3].strip(),
+                    md_headers=literal_eval(pcoa_data[3].strip()),
                     metadata=pcoa_data[4].strip())
