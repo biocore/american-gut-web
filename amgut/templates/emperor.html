@@ -117,8 +117,10 @@
         animate();
         var sv = ec.sceneViews[0];
 
+
         //HIDE EDITING USING EMPEROR
         $(function(){
+          var barcodes = getParameterByName('barcodes');
           ec.colorController.$header.hide();
           ec._$tabsList.hide();
 
@@ -127,14 +129,18 @@
           sv.drawAxesWithColor('#000000');
           sv.renderer.setClearColor('#FFFFFF');
 
-          //DOUBLE SIZE OF BARCODE POINTS
-        //barcodes = {% raw barcodes %};
-        //for(i=0;i<barcodes.length;i++) {
-        //  var sample =sv.scene.getObjectByName(barcodes[i]);
-        //  sample.scale.x = 2;
-        //  sample.scale.y = 2;
-        //  sample.scale.z = 2;
-        //}
+          //TRIPLE SIZE OF BARCODE POINTS
+        for(i=0;i<barcodes.length;i++) {
+          var sample =sv.scene.getObjectByName(barcodes[i]).split(",");
+          sample.scale.x = 3;
+          sample.scale.y = 3;
+          sample.scale.z = 3;
+        }
+
+        //RECOLOR TO HIGHLIGHT POINTS
+          s = sv.decViews.scatter;
+          s.setGroupColor(0x000000, s.decomp.plottable);
+          s.setGroupColor(0xFF0000, s.decomp.getPlottableByIDs(barcodes));
         });
       });
   }); // END REQUIRE.JS block

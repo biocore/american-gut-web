@@ -30,7 +30,7 @@ function DecompositionView(decomp) {
   this.lines = []; // Three.lines
 
   // these sizes should likely be changed but, they should be modified here
-  this._genericSphere = new THREE.SphereGeometry(0.1, 8, 8);
+  this._genericSphere = new THREE.SphereGeometry(0.005, 8, 8);
 
   // setup this.markers and this.lines
   this._initBaseView();
