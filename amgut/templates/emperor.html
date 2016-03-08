@@ -117,16 +117,17 @@
         animate();
         var sv = ec.sceneViews[0];
 
-        //CHANGE BG TO WHITE AND AXES TO BLACK
-        sv.drawAxesLabelsWithColor('#000000');
-        sv.drawAxesWithColor('#000000');
-        sv.renderer.setClearColor('#FFFFFF');
-
         //HIDE EDITING USING EMPEROR
-        //ec.colorController.$header.hide();
-        ec._$tabsList.hide();
+        $(function(){
+          ec.colorController.$header.hide();
+          ec._$tabsList.hide();
 
-        //DOUBLE SIZE OF BARCODE POINTS
+          //CHANGE BG TO WHITE AND AXES TO BLACK
+          sv.drawAxesLabelsWithColor('#000000');
+          sv.drawAxesWithColor('#000000');
+          sv.renderer.setClearColor('#FFFFFF');
+
+          //DOUBLE SIZE OF BARCODE POINTS
         //barcodes = {% raw barcodes %};
         //for(i=0;i<barcodes.length;i++) {
         //  var sample =sv.scene.getObjectByName(barcodes[i]);
@@ -134,6 +135,7 @@
         //  sample.scale.y = 2;
         //  sample.scale.z = 2;
         //}
+        });
       });
   }); // END REQUIRE.JS block
 </script>
