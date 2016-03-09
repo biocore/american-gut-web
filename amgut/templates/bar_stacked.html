@@ -11,18 +11,21 @@
     </style>
 {% end%}
 {% block content %}
-<select id="collapse">
-    <option value="phylum">Phylum</option>
-    <option value="class">Class</option>
-    <option value="order">Order</option>
-    <option value="family">Family</option>
-    <option value="genus">Genus</option>
-</select>
 <div id="taxa-graph-wrapper" style="width:100%; position: relative;">
-  <div style="width: 75%; float: left">
+  <div style="width: 80%; float: left">
       <canvas id="canvas"></canvas>
   </div>
-  <div id="legend"style="width: 24%; float:left"></div>
+  <div id="taxa-graph-controls" style="width: 19%; float:left; align-text: left; padding-top: 20px">
+  <h3>Interact with Data</h3>
+    Select taxa level: 
+    <select id="collapse">
+      <option value="phylum">Phylum</option>
+      <option value="class">Class</option>
+      <option value="order">Order</option>
+      <option value="family">Family</option>
+      <option value="genus">Genus</option>
+  </select>
+  </div>
 </div>
 <div id="taxa-graph-text" style="position:relative;clear: left;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec cursus finibus dolor in lacinia. In ultricies aliquam ipsum in convallis. Aenean pellentesque egestas malesuada. Nam finibus nisi ut imperdiet tincidunt. Praesent a nibh a nisi ultrices pretium. Nullam ornare auctor enim ullamcorper aliquet. Integer tempus fringilla erat, accumsan convallis diam aliquet aliquam. Integer a tristique nunc. Morbi lobortis nec est sed tincidunt.
 </div>
@@ -66,6 +69,8 @@
       for(var i=1;i<groups[g].length;i++) {
         otu.data = sum_arrays(otu.data, groups[g][i].data);
       }
+      if(g === '') { otu.label = 'Unknown'; }
+
       collapsed[g] = otu;
       summaries.push([g, getAvg(otu.data)]);
     }
@@ -97,19 +102,20 @@
       datasets: collapse('phylum', 10)
   };
   window.onload = function() {
-      Chart.defaults.global.legend.display = false;
       var ctx = document.getElementById("canvas").getContext("2d");
       window.myBar = new Chart(ctx, {
           type: 'bar',
           data: barChartData,
           options: {
+              legend: {
+                position: 'bottom'
+              },
               title:{
                   display:true,
                   text:"Taxonomic Relative Abundances"
               },
               tooltips: {
-                  mode: 'label'
-
+                  mode: 'label', // single if just want one OTU
               },
               responsive: true,
               scales: {
@@ -119,17 +125,18 @@
                   yAxes: [{
                       stacked: true,
                       display: true,
-                      labelstring: 'Percent abundance'
+                      scaleLabel: {
+                        display: true,
+                        labelString: 'Percent abundance'
+                      }
                   }]
               }
           }
       });
-      document.getElementById("legend").innerHTML = window.myBar.generateLegend();
 
       $("#collapse").on("change", function () {
         barChartData.datasets = collapse($("#collapse").val(), 10);
         window.myBar.update();
-        document.getElementById("legend").innerHTML = window.myBar.generateLegend();
       })
   };
 </script>
