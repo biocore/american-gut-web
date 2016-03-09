@@ -33,7 +33,7 @@ class TaxaHandler(BaseHandler):
         datasets = []
         otus = defaultdict(list)
         for barcode in barcodes:
-            with open(join(AMGUT_CONFIG.base_data_dir, 'taxa_tables',
+            with open(join(AMGUT_CONFIG.base_data_dir, 'taxa-summaries',
                       '%s.txt' % barcode)) as f:
                 seen_otus = set()
                 f.readline()
