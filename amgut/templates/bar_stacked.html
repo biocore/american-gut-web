@@ -55,6 +55,9 @@
             sum.push(ar1[i] + ar2[i]);
         }
     }
+    else {
+      throw "Arrays unequal length: " + ar1.length + "  " + ar2.length;
+    }
     return sum;
   }
 
@@ -66,6 +69,7 @@
     var summaries = [];
     for(var g in groups) {
       var otu = { label: g,  data:groups[g][0].data, backgroundColor: randomColorFactor() };
+      // Collapse the OTUs found in the group into a single 
       for(var i=1;i<groups[g].length;i++) {
         otu.data = sum_arrays(otu.data, groups[g][i].data);
       }

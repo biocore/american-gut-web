@@ -1,6 +1,5 @@
 from os.path import join
 from ast import literal_eval
-from collections import defaultdict
 
 from tornado.web import authenticated
 
@@ -31,19 +30,30 @@ class TaxaHandler(BaseHandler):
         user = ag_data.get_user_for_kit(self.current_user)
         barcodes = ag_data.get_barcodes_by_user(user, results=True)
         datasets = []
-        otus = defaultdict(list)
+        otus = {}
+        files = []
+        # Load in all possible OTUs that can be seen by loading files to memory
+        # Files are small (5kb) so this should be fine.
         for barcode in barcodes:
             with open(join(AMGUT_CONFIG.base_data_dir, 'taxa-summaries',
                       '%s.txt' % barcode)) as f:
-                seen_otus = set()
                 f.readline()
-                for line in f:
-                    otu, percent = line.strip().split('\t', 1)
-                    otus[otu].append(float(percent) * 100)
-                    seen_otus.add(otu)
-                # make the samples without the OTU all zero count
-                for otu in set(otus.keys()) - seen_otus:
-                    otus[otu].append(0.0)
+                files.append(f.readlines())
+            for line in files[-1]:
+                otus[line.split('\t')[0]] = []
+
+        # Read in counts
+        for barcode, file in zip(barcodes, files):
+            seen_otus = set()
+            for line in file:
+                otu, percent = line.strip().split('\t', 1)
+                otus[otu].append(float(percent) * 100)
+                seen_otus.add(otu)
+            # make the samples without the OTU all zero count
+            unseen = set(otus.keys()) - seen_otus
+            for otu in unseen:
+                otus[otu].append(0.0)
+
         for otu, value in otus.items():
             taxonomy = otu.split(';')
             datasets.append({
