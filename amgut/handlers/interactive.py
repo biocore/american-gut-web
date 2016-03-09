@@ -1,7 +1,6 @@
 from os.path import join
 from ast import literal_eval
 from collections import defaultdict
-from random import randint
 
 from tornado.web import authenticated
 
@@ -42,14 +41,17 @@ class TaxaHandler(BaseHandler):
                     otu, percent = line.strip().split('\t', 1)
                     otus[otu].append(float(percent) * 100)
                     seen_otus.add(otu)
+                # make the samples without the OTU all zero count
                 for otu in set(otus.keys()) - seen_otus:
                     otus[otu].append(0.0)
         for otu, value in otus.items():
+            taxonomy = otu.split(';')
             datasets.append({
-                'label': otu,
-                'backgroundColor': "rgba(%d,%d,%d,0.5)" % (randint(0, 255),
-                                                           randint(0, 255),
-                                                           randint(0, 255)),
+                'phylum': taxonomy[1].split("__")[1],
+                'class': taxonomy[2].split("__")[1],
+                'order': taxonomy[3].split("__")[1],
+                'family': taxonomy[4].split("__")[1],
+                'genus': taxonomy[5].split("__")[1],
                 'data': value
             })
         self.render('bar_stacked.html', barcodes=barcodes, datasets=datasets)

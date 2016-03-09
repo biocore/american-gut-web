@@ -15,48 +15,93 @@
 </head>
 
 <body>
-    <div style="width: 75%">
+    <select id="collapse">
+        <option value="phylum">Phylum</option>
+        <option value="class">Class</option>
+        <option value="order">Order</option>
+        <option value="family">Family</option>
+        <option value="genus">Genus</option>
+    </select>
+    <div style="width: 75%; float: left">
         <canvas id="canvas"></canvas>
     </div>
-    <button id="randomizeData">Randomize Data</button>
+    <div id="legend"style="width: 24%; float:left"></div>
     <script>
-        var randomScalingFactor = function() {
-            return (Math.random() > 0.5 ? 1.0 : -1.0) * Math.round(Math.random() * 100);
-        };
-        var randomColorFactor = function() {
-            return Math.round(Math.random() * 255);
-        };
+      var rawData = {% raw datasets %};
 
-        var barChartData = {
-            labels: {% raw barcodes %},
-            datasets: {% raw datasets %}
-        };
-        window.onload = function() {
-            Chart.defaults.global.legend.display = false;
-            var ctx = document.getElementById("canvas").getContext("2d");
-            window.myBar = new Chart(ctx, {
-                type: 'bar',
-                data: barChartData,
-                options: {
-                    title:{
-                        display:true,
-                        text:"Chart.js Bar Chart - Stacked"
-                    },
-                    tooltips: {
-                        mode: 'label'
-                    },
-                    responsive: true,
-                    scales: {
-                        xAxes: [{
-                            stacked: true,
-                        }],
-                        yAxes: [{
-                            stacked: true
-                        }]
-                    }
-                }
-            });
-        };
+      function group(list, prop) {
+        var grouped = {};
+        for(var i=0;i<list.length;i++) {
+          var key = list[i][prop];
+          grouped[key] = grouped[key] || [];
+          grouped[key].push(list[i]);
+        }
+        return grouped;
+      }
+
+      function sum_arrays(ar1, ar2) {
+        var sum = [];
+        if (ar1.length == ar2.length) {
+            for (var i=0; i<ar1.length;i++) {
+                sum.push(ar1[i] + ar2[i]);
+            }
+        }
+        return sum;
+      }
+
+      function randomColorFactor() { return "rgba(" + Math.round(Math.random() * 255) + "," + Math.round(Math.random() * 255)+ "," + Math.round(Math.random() * 255) + ",.7)"; };
+      function collapse(level) {
+        var groups = group(rawData, level);
+        var collapsed = [];
+        for(g in groups) {
+          var otu = { label: g,  data:groups[g][0].data, backgroundColor: randomColorFactor() };
+          for(var i=1;i<groups[g].length;i++) {
+            otu.data = sum_arrays(otu.data, groups[g][i].data);
+          }
+          console.log(otu);
+          collapsed.push(otu);
+        }
+        return collapsed;
+      }
+
+      var barChartData = {
+          labels: {% raw barcodes %},
+          datasets: collapse('phylum')
+      };
+      window.onload = function() {
+          Chart.defaults.global.legend.display = false;
+          var ctx = document.getElementById("canvas").getContext("2d");
+          window.myBar = new Chart(ctx, {
+              type: 'bar',
+              data: barChartData,
+              options: {
+                  title:{
+                      display:true,
+                      text:"Chart.js Bar Chart - Stacked"
+                  },
+                  tooltips: {
+                      mode: 'label'
+                  },
+                  responsive: true,
+                  scales: {
+                      xAxes: [{
+                          stacked: true,
+                      }],
+                      yAxes: [{
+                          stacked: true,
+                          labelstring: 'Percent abundance'
+                      }]
+                  }
+              }
+          });
+          document.getElementById("legend").innerHTML = window.myBar.generateLegend();
+
+          $("#collapse").on("change", function () {
+            barChartData.datasets = collapse($("#collapse").val());
+            window.myBar.update();
+            document.getElementById("legend").innerHTML = window.myBar.generateLegend();
+          })
+      };
     </script>
 </body>
 
