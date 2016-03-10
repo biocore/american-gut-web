@@ -69,10 +69,12 @@
     var summaries = [];
     for(var g in groups) {
       var otu = { label: g,  data:groups[g][0].data, backgroundColor: randomColorFactor() };
-      // Collapse the OTUs found in the group into a single 
+      // Collapse the OTUs found in the group into a single
       for(var i=1;i<groups[g].length;i++) {
         otu.data = sum_arrays(otu.data, groups[g][i].data);
       }
+      // Round to four decimals
+      for(var i=0;i<otu.data.length;i++) { otu.data[i] =  Number(otu.data[i].toFixed(4)); }
       if(g === '') { otu.label = 'Unknown'; }
 
       collapsed[g] = otu;
@@ -96,6 +98,7 @@
     for(var i=loop+1;i<sorted.length;i++){
       other.data = sum_arrays(other.data, collapsed[sorted[i][0]].data);
     }
+    for(var i=0;i<other.data.length;i++) { other.data[i] =  Number(other.data[i].toFixed(4)); }
     further_collapsed.push(other);
 
     return further_collapsed;
