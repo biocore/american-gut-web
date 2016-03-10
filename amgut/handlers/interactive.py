@@ -56,12 +56,22 @@ class TaxaHandler(BaseHandler):
 
         for otu, value in otus.items():
             taxonomy = otu.split(';')
+            highest = ''
+            for i in range(len(taxonomy) - 1, 0, -1):
+                if not taxonomy[i].endswith('__'):
+                    highest = ('Unclassified (%s)' %
+                               taxonomy[i].replace('__', '. '))
+                    break
             datasets.append({
                 'phylum': taxonomy[1].split("__")[1],
-                'class': taxonomy[2].split("__")[1],
-                'order': taxonomy[3].split("__")[1],
-                'family': taxonomy[4].split("__")[1],
-                'genus': taxonomy[5].split("__")[1],
+                'class': taxonomy[2].split("__")[1] if not
+                taxonomy[2].endswith('__') else highest,
+                'order': taxonomy[3].split("__")[1] if not
+                taxonomy[3].endswith('__') else highest,
+                'family': taxonomy[4].split("__")[1] if not
+                taxonomy[4].endswith('__') else highest,
+                'genus': taxonomy[5].split("__")[1] if not
+                taxonomy[5].endswith('__') else highest,
                 'data': value
             })
         self.render('bar_stacked.html', barcodes=barcodes, datasets=datasets)
