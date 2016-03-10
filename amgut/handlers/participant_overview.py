@@ -17,7 +17,8 @@ class ParticipantOverviewHandler(BaseHandler):
         ag_login_id = ag_data.get_user_for_kit(skid)
         barcodes = ag_data.getParticipantSamples(ag_login_id, participant_name)
         if barcodes:
-            ebi_submitted = all(ag_data.is_submitted_ebi(b) for b in barcodes)
+            ebi_submitted = any(ag_data.is_deposited_ebi(b['barcode'])
+                                for b in barcodes)
         else:
             ebi_submitted = False
 
