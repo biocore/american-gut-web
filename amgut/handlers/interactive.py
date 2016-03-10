@@ -59,10 +59,9 @@ class TaxaHandler(BaseHandler):
             # Find the highest classified level by looping backwards through
             # the list and breaking once we find the first classified level
             highest = ''
-            for i in range(len(taxonomy) - 1, 0, -1):
-                if not taxonomy[i].endswith('__'):
-                    highest = ('Unclassified (%s)' %
-                               taxonomy[i].replace('__', '. '))
+            for tax in reversed(taxonomy):
+                if not tax.endswith('__'):
+                    highest = 'Unclassified (%s)' % tax.replace('__', '. ')
                     break
             datasets.append({
                 'phylum': taxonomy[1].split("__")[1],
