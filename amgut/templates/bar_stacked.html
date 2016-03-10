@@ -2,6 +2,7 @@
 {% block head %}
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="/static/vendor/js/Chart.bundle.min.js"></script>
+    <script src="/static/vendor/js/chroma.min.js"></script>
     <style>
     canvas {
         -moz-user-select: none;
@@ -31,6 +32,13 @@
 </div>
 <script>
   var rawData = {% raw datasets %};
+  var phylum_colors = {
+    'Bacteroidetes': ['pink', 'darkred'],
+    'Firmicutes': ['#FFD27F', 'darkorange'],
+    'Actinobacteria': ['lightgreen', 'darkgreen'],
+    'Proteobacteria': ['lightblue', 'darkblue'],
+    'TM7': ['lightgrey', 'black']
+  };
 
   function group(list, prop) {
     var grouped = {};
@@ -61,14 +69,13 @@
     return sum;
   }
 
-  function randomColorFactor() { return "rgba(" + Math.round(Math.random() * 255) + "," + Math.round(Math.random() * 255)+ "," + Math.round(Math.random() * 255) + ",.7)"; };
   function collapse(level, max) {
     var max_otus = max || 8;
     var groups = group(rawData, level);
     var collapsed = {};
     var summaries = [];
     for(var g in groups) {
-      var otu = { label: g,  data:groups[g][0].data, backgroundColor: randomColorFactor() };
+      var otu = { label: g,  data: groups[g][0].data, phylum: groups[g][0].phylum};
       // Collapse the OTUs found in the group into a single
       for(var i=1;i<groups[g].length;i++) {
         otu.data = sum_arrays(otu.data, groups[g][i].data);
@@ -81,20 +88,39 @@
       summaries.push([g, getAvg(otu.data)]);
     }
 
-    //collapse further to max number of OTUs
-    var further_collapsed = []
+    //collapse further to max number of OTUs and color properly
+    var phyla_counts = {};
+    var further_collapsed = [];
     sorted = summaries.sort(function(a, b) { return b[1] - a[1]; });
     var loop = sorted.length;
     if(loop > max) { loop = max; }
     for(var i=0;i<loop;i++) {
       further_collapsed.push(collapsed[sorted[i][0]]);
+      phyla_counts[collapsed[sorted[i][0]].phylum] = phyla_counts[collapsed[sorted[i][0]].phylum] + 1 || 1;
     }
+    // Recolor based on phyla counts, so each phyla is a different color, and those within phyla a different shade
+    phyla_colors = {};
+    for(phyla in phyla_counts) {
+      if(phyla_counts[phyla] == 1) {
+        phyla_colors[phyla] = [chroma(phylum_colors[phyla][1]).hex()];
+      } else {
+        phyla_colors[phyla] = chroma.scale([phylum_colors[phyla][0], phylum_colors[phyla][1]]).colors(phyla_counts[phyla]);
+      }
+    }
+    console.log(phyla_colors);
+    for(var i=0;i<further_collapsed.length;i++) {
+      var ph = further_collapsed[i].phylum;
+      var color = chroma(phyla_colors[ph].pop()).css();
+      further_collapsed[i].backgroundColor = color;
+    }
+    console.log(further_collapsed);
+
     if(sorted.length <= max) {
       //the list of OTUs is equal to or smaller than max, so no need to collapse "Other" category
       return further_collapsed;
     }
 
-    var other = { label: 'Other',  data:collapsed[sorted[loop][0]].data, backgroundColor: randomColorFactor() };
+    var other = { label: 'Other',  data:collapsed[sorted[loop][0]].data, backgroundColor: 'rgba(180,180,180)' };
     for(var i=loop+1;i<sorted.length;i++){
       other.data = sum_arrays(other.data, collapsed[sorted[i][0]].data);
     }
@@ -128,6 +154,7 @@
               scales: {
                   xAxes: [{
                       stacked: true,
+                      showVerticalLines: false
                   }],
                   yAxes: [{
                       stacked: true,
