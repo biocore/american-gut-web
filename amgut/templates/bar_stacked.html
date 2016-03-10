@@ -75,7 +75,7 @@
       }
       // Round to four decimals
       for(var i=0;i<otu.data.length;i++) { otu.data[i] =  Number(otu.data[i].toFixed(4)); }
-      if(g === '') { otu.label = 'Unknown'; }
+      if(g === '') { otu.label = 'Unspecified'; }
 
       collapsed[g] = otu;
       summaries.push([g, getAvg(otu.data)]);
