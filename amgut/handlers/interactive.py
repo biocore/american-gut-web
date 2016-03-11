@@ -64,6 +64,7 @@ class TaxaHandler(BaseHandler):
                     highest = 'Unclassified (%s)' % tax.replace('__', '. ')
                     break
             datasets.append({
+                'full': taxonomy,
                 'phylum': taxonomy[1].split("__")[1],
                 'class': taxonomy[2].split("__")[1] if not
                 taxonomy[2].endswith('__') else highest,
@@ -75,4 +76,8 @@ class TaxaHandler(BaseHandler):
                 taxonomy[5].endswith('__') else highest,
                 'data': value
             })
-        self.render('bar_stacked.html', barcodes=barcodes, datasets=datasets)
+
+        meta_cats = ['age-baby', 'age-child', 'age-teen', 'age-20s', 'age-30s',
+                     'age-40s', 'age-50s', 'age-60s', 'age-70+']
+        self.render('bar_stacked.html', barcodes=barcodes, meta_cats=meta_cats,
+                    datasets=datasets)

@@ -18,14 +18,21 @@
   </div>
   <div id="taxa-graph-controls" style="width: 19%; float:left; align-text: left; padding-top: 20px">
   <h3>Interact with Data</h3>
-    Select taxa level: 
+    <p>Select taxa level: 
     <select id="collapse">
       <option value="phylum">Phylum</option>
       <option value="class">Class</option>
       <option value="order">Order</option>
       <option value="family">Family</option>
       <option value="genus">Genus</option>
-  </select>
+    </select></p>
+    <p>Add metadata:
+    <select id="meta_cat">
+      <option value=""></option>
+    {% for meta in meta_cats %}
+      <option value="{{meta}}">{{meta}}</option>
+    {% end %}
+    </select><button onclick="add_metadata_barchart()">Add</button></p>
   </div>
 </div>
 <div id="taxa-graph-text" style="position:relative;clear: left;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec cursus finibus dolor in lacinia. In ultricies aliquam ipsum in convallis. Aenean pellentesque egestas malesuada. Nam finibus nisi ut imperdiet tincidunt. Praesent a nibh a nisi ultrices pretium. Nullam ornare auctor enim ullamcorper aliquet. Integer tempus fringilla erat, accumsan convallis diam aliquet aliquam. Integer a tristique nunc. Morbi lobortis nec est sed tincidunt.
@@ -130,6 +137,40 @@
     return further_collapsed;
   }
 
+  function add_metadata_barchart() {
+    function find_otu(element, index, array) {
+      if(element.full == this) { return true; }
+      return false;
+    }
+
+    $.get('/interactive/metadata/', {category: $("#meta_cat").val()})
+      .done(function (data) {
+        for(var i=0;i<data.length;i++) {
+          var otu = data[i];
+          var existing = rawData.findIndex(find_otu, otu.full);
+          if(existing == -1) {
+            //add the OTU as zero for all existing labels, then add value from meta_cat
+            var val = otu.data;
+            otu.data = new Array(barChartData.labels.length).join('0').split('').map(parseFloat);
+            otu.data.push(val);
+            rawData.push(otu);
+          } else {
+            ///OTU already exists, so add to end of existing one
+            raw_data[existing].data.push(otu.data);
+          }
+        }
+        //Loop over raw data and add 0 to any OTUs that are in raw data but not in meta_cat
+        var full_len = barChartData.labels.length + 1;
+        for(var i=0;i<rawData.length;i++) {
+          if(rawData[i].data.length < full_len) { rawData[i].data.push(0.0); }
+        }
+        barChartData.labels.push(meta_cat);
+      })
+      .fail(function () {
+        alert ('FAIL!');
+      });
+  }
+
   var barChartData = {
       labels: {% raw barcodes %},
       datasets: collapse('phylum', 10)
@@ -173,7 +214,7 @@
         var activePoints = window.myBar.getElementAtEvent(evt);
         if (activePoints.length > 0 && $("#collapse").val() != "genus") {
           var taxa = activePoints[0]._model.datasetLabel;
-          var barcode = activePoints[0]._model.label;
+          var label = activePoints[0]._model.label;
           var prev_level = $("#collapse").val();
           $("#collapse > option:selected")
               .prop("selected", false)
