@@ -69,12 +69,14 @@
     return sum;
   }
 
-  function collapse(level, max) {
+  function collapse(level, max, prev_level, focus) {
     var max_otus = max || 8;
+    var focus_taxa = focus || null;
     var groups = group(rawData, level);
     var collapsed = {};
     var summaries = [];
     for(var g in groups) {
+      if(focus !== null && groups[g][0][prev_level] != focus_taxa) { continue; }
       var otu = { label: g,  data: groups[g][0].data, phylum: groups[g][0].phylum};
       // Collapse the OTUs found in the group into a single
       for(var i=1;i<groups[g].length;i++) {
@@ -107,13 +109,11 @@
         phyla_colors[phyla] = chroma.scale([phylum_colors[phyla][0], phylum_colors[phyla][1]]).colors(phyla_counts[phyla]);
       }
     }
-    console.log(phyla_colors);
     for(var i=0;i<further_collapsed.length;i++) {
       var ph = further_collapsed[i].phylum;
       var color = chroma(phyla_colors[ph].pop()).css();
       further_collapsed[i].backgroundColor = color;
     }
-    console.log(further_collapsed);
 
     if(sorted.length <= max) {
       //the list of OTUs is equal to or smaller than max, so no need to collapse "Other" category
@@ -139,6 +139,7 @@
       window.myBar = new Chart(ctx, {
           type: 'bar',
           data: barChartData,
+          barStrokeWidth:0,
           options: {
               legend: {
                 position: 'bottom'
@@ -166,6 +167,21 @@
                   }]
               }
           }
+      });
+
+      $("#canvas").on('click', function(evt){
+        var activePoints = window.myBar.getElementAtEvent(evt);
+        if (activePoints.length > 0 && $("#collapse").val() != "genus") {
+          var taxa = activePoints[0]._model.datasetLabel;
+          var barcode = activePoints[0]._model.label;
+          var prev_level = $("#collapse").val();
+          $("#collapse > option:selected")
+              .prop("selected", false)
+              .next()
+              .prop("selected", true);
+          barChartData.datasets = collapse($("#collapse").val(), 10, prev_level, taxa);
+          window.myBar.update();
+        }
       });
 
       $("#collapse").on("change", function () {
