@@ -102,6 +102,6 @@ class MetadataHandler(BaseHandler):
             # Read in counts
             for line in f:
                 otu, percent = line.strip().split('\t', 1)
-                otus[otu] = float(percent)
+                otus[otu] = float(percent) * 100
         self.write(dumps(_build_taxa(otus)))
         self.set_header("Content-Type", "application/json")

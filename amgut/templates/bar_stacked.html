@@ -170,13 +170,13 @@
           var existing = rawData.findIndex(find_otu, category);
           if(existing == -1) {
             //add the OTU as zero for all existing labels, then add value from meta_cat
-            var val = otu.data * 100;
+            var val = otu.data;
             otu.data = new Array(barChartData.labels.length+1).join('0').split('').map(parseFloat);
             otu.data.push(val);
             rawData.push(otu);
           } else {
             ///OTU already exists, so add to end of existing one
-            raw_data[existing].data.push(val*100);
+            raw_data[existing].data.push(val);
           }
         }
         //Loop over raw data and add 0 to any OTUs that are in raw data but not in meta_cat
