@@ -117,10 +117,16 @@
     phyla_colors = {};
     for(phyla in phyla_counts) {
       if(phyla_counts[phyla] == 1) {
+        //Get colors for known phyla or black
         var color = phylum_colors[phyla]  || ['', '#000000'];
         phyla_colors[phyla] = [chroma(color[1]).hex()];
       } else {
+        //Get colors for known phyla or white to black
+        if(phylum_colors[phyla]) {
         phyla_colors[phyla] = chroma.scale([phylum_colors[phyla][0], phylum_colors[phyla][1]]).colors(phyla_counts[phyla]);
+        } else {
+          phyla_colors[phyla] = chroma.scale(['#FFFFFF', '#000000']).colors(phyla_counts[phyla]);
+        }
       }
     }
     for(var i=0;i<further_collapsed.length;i++) {
