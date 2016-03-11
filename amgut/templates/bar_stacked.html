@@ -218,7 +218,6 @@
               scales: {
                   xAxes: [{
                       stacked: true,
-                      showVerticalLines: false
                   }],
                   yAxes: [{
                       stacked: true,
@@ -234,7 +233,7 @@
 
       $("#canvas").on('click', function(evt){
         var activePoints = window.myBar.getElementAtEvent(evt);
-        if (activePoints.length > 0 && $("#collapse").val() != "genus") {
+        if (activePoints.length > 0 && $("#collapse").val() != "genus" && activePoints[0]._model.datasetLabel != "Other") {
           var taxa = activePoints[0]._model.datasetLabel;
           var label = activePoints[0]._model.label;
           var prev_level = $("#collapse").val();
