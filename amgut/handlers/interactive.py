@@ -86,7 +86,7 @@ class TaxaHandler(BaseHandler):
 
         meta_cats = ['age-baby', 'age-child', 'age-teen', 'age-20s', 'age-30s',
                      'age-40s', 'age-50s', 'age-60s', 'age-70+']
-        self.render('bar_stacked.html', barcodes=barcodes, meta_cats=meta_cats,
+        self.render('taxa.html', barcodes=barcodes, meta_cats=meta_cats,
                     datasets=datasets)
 
 
@@ -102,6 +102,6 @@ class MetadataHandler(BaseHandler):
             # Read in counts
             for line in f:
                 otu, percent = line.strip().split('\t', 1)
-                otus[otu] = float(percent) * 100
+                otus[otu] = [float(percent) * 100]
         self.write(dumps(_build_taxa(otus)))
         self.set_header("Content-Type", "application/json")
