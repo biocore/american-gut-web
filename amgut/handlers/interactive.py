@@ -3,7 +3,8 @@ from ast import literal_eval
 from collections import defaultdict
 from json import dumps
 
-from tornado.web import authenticated
+from tornado.web import authenticated, HTTPError
+from PIL import Image
 
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.connections import ag_data
@@ -59,14 +60,13 @@ class TaxaHandler(BaseHandler):
         user = ag_data.get_user_for_kit(self.current_user)
         barcodes = ag_data.get_barcodes_by_user(user, results=True)
         titles = [dt.strftime('%b %d, %Y') for bc, dt in barcodes]
-        barcodes = [bc for bc, dt in barcodes]
         otus = {}
         files = []
         # Load in all possible OTUs that can be seen by loading files to memory
         # Files are small (5kb) so this should be fine.
         for barcode in barcodes:
             with open(join(AMGUT_CONFIG.base_data_dir, 'taxa-summaries',
-                      '%s.txt' % barcode)) as f:
+                      '%s.txt' % barcode[0])) as f:
                 f.readline()
                 files.append(f.readlines())
             for line in files[-1]:
@@ -95,8 +95,15 @@ class TaxaHandler(BaseHandler):
 class MetadataHandler(BaseHandler):
     @authenticated
     def get(self):
-        barcode = self.get_argument('barcode', None)
+        user = ag_data.get_user_for_kit(self.current_user)
+        barcode = self.get_argument('barcode', False)
         if barcode:
+            barcodes = [b[0] for b in
+                        ag_data.get_barcodes_by_user(user, results=True)]
+            # Make sure barcode passed is owned by the user
+            if barcode not in barcodes:
+                raise HTTPError(403, 'User %s does not have access to barcode '
+                                '%s' % (self.current_user, barcode))
             site = ag_data.getAGBarcodeDetails(barcode)['site_sampled'].lower()
         else:
             site = self.get_argument('site')
@@ -111,3 +118,17 @@ class MetadataHandler(BaseHandler):
                 otus[otu] = [float(percent) * 100]
         self.write(dumps(_build_taxa(otus)))
         self.set_header("Content-Type", "application/json")
+
+
+class AlphaDivGraphHandler(BaseHandler):
+    @authenticated
+    def get(self, barcode):
+        user = ag_data.get_user_for_kit(self.current_user)
+        barcodes = [b[0] for b in
+                    ag_data.get_barcodes_by_user(user)]
+        # Make sure barcode passed is owned by the user
+        if barcode not in barcodes:
+            raise HTTPError(403, 'User %s does not have access to barcode '
+                            '%s' % (self.current_user, barcode))
+        # site = ag_data.getAGBarcodeDetails(barcode)['site_sampled'].lower()
+        # cat = self.get_argument('category')
