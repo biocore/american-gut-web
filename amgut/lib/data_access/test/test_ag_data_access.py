@@ -576,7 +576,7 @@ class TestAGDataAccess(TestCase):
     def test_get_barcodes_by_user(self):
         res = self.ag_data.get_barcodes_by_user(
             'd8592c74-7e7f-2135-e040-8a80115d6401')
-        exp = ['000001322', datetime.datetime(2013, 3, 22, 14, 5)]
+        exp = [['000001322', datetime.datetime(2013, 3, 22, 14, 5)]]
         self.assertItemsEqual(res, exp)
 
     def test_checkPrintResults(self):

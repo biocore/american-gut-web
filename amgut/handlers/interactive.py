@@ -58,6 +58,8 @@ class TaxaHandler(BaseHandler):
     def get(self):
         user = ag_data.get_user_for_kit(self.current_user)
         barcodes = ag_data.get_barcodes_by_user(user, results=True)
+        titles = [dt.strftime('%b %d, %Y') for bc, dt in barcodes]
+        barcodes = [bc for bc, dt in barcodes]
         otus = {}
         files = []
         # Load in all possible OTUs that can be seen by loading files to memory
@@ -86,14 +88,18 @@ class TaxaHandler(BaseHandler):
 
         meta_cats = ['age-baby', 'age-child', 'age-teen', 'age-20s', 'age-30s',
                      'age-40s', 'age-50s', 'age-60s', 'age-70+']
-        self.render('taxa.html', barcodes=barcodes, meta_cats=meta_cats,
-                    datasets=datasets)
+        self.render('taxa.html', titles=titles, barcodes=barcodes,
+                    meta_cats=meta_cats, datasets=datasets)
 
 
 class MetadataHandler(BaseHandler):
     @authenticated
     def get(self):
-        site = self.get_argument('site')
+        barcode = self.get_argument('barcode', None)
+        if barcode:
+            site = ag_data.getAGBarcodeDetails(barcode)['site_sampled'].lower()
+        else:
+            site = self.get_argument('site')
         cat = self.get_argument('category')
         otus = defaultdict(list)
 

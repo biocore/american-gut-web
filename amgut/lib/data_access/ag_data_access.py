@@ -661,7 +661,7 @@ class AGDataAccess(object):
         sql += " ORDER BY sample_date ASC"
         with TRN:
             TRN.add(sql, sql_args)
-            return TRN.execute_fetchflatten()
+            return TRN.execute_fetchindex()
 
     def get_nonconsented_scanned_barcodes(self, kit_id):
         """Returns list of barcodes that have been scanned but not consented
