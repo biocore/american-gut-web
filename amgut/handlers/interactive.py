@@ -2,6 +2,7 @@ from os.path import join
 from ast import literal_eval
 from collections import defaultdict
 from json import dumps
+from StringIO import StringIO
 
 from tornado.web import authenticated, HTTPError
 from PIL import Image
@@ -120,7 +121,10 @@ class MetadataHandler(BaseHandler):
         self.set_header("Content-Type", "application/json")
 
 
-class AlphaDivGraphHandler(BaseHandler):
+class AlphaDivImgHandler(BaseHandler):
+    stool_base = Image.open(join(AMGUT_CONFIG.base_data_dir, 'alpha-div',
+                            'base-stool.png'))
+
     @authenticated
     def get(self, barcode):
         user = ag_data.get_user_for_kit(self.current_user)
@@ -130,5 +134,28 @@ class AlphaDivGraphHandler(BaseHandler):
         if barcode not in barcodes:
             raise HTTPError(403, 'User %s does not have access to barcode '
                             '%s' % (self.current_user, barcode))
-        # site = ag_data.getAGBarcodeDetails(barcode)['site_sampled'].lower()
-        # cat = self.get_argument('category')
+        site = ag_data.getAGBarcodeDetails(barcode)['site_sampled'].lower()
+        cat = self.get_argument('category')
+
+        if site == 'stool':
+            new_image = self.stool_base.copy()
+        elif site in {'right hand', 'left hand', 'forehead', 'torso',
+                      'left leg', 'right leg'}:
+            new_image = self.skin_base.copy()
+        elif site in {''}:
+            new_image = self.oral_base.copy()
+        else:
+            raise RuntimeError("Unclassified alpha diversity site: %s" % site)
+
+        # Build alpha div image by layering the category and sample lines
+        # onto the base alpha diversity distribution image
+        category = Image.open(join(AMGUT_CONFIG.base_data_dir, 'alpha-div',
+                              '%s.png' % cat))
+        sample = Image.open(join(AMGUT_CONFIG.base_data_dir, 'alpha-div',
+                            '%s.png' % barcode))
+        new_image.paste(category, (0, 0), category)
+        new_image.paste(sample, (0, 0), sample)
+        full_image = StringIO()
+        new_image.save(full_image, format="png")
+        self.write(full_image.getvalue())
+        self.set_header("Content-type",  "image/png")
