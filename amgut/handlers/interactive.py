@@ -2,8 +2,10 @@ from os.path import join
 from ast import literal_eval
 from collections import defaultdict
 from json import dumps
+from StringIO import StringIO
 
-from tornado.web import authenticated
+from tornado.web import authenticated, HTTPError
+from PIL import Image
 
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.connections import ag_data
@@ -58,13 +60,14 @@ class TaxaHandler(BaseHandler):
     def get(self):
         user = ag_data.get_user_for_kit(self.current_user)
         barcodes = ag_data.get_barcodes_by_user(user, results=True)
+        titles = [dt.strftime('%b %d, %Y') for bc, dt in barcodes]
         otus = {}
         files = []
         # Load in all possible OTUs that can be seen by loading files to memory
         # Files are small (5kb) so this should be fine.
         for barcode in barcodes:
             with open(join(AMGUT_CONFIG.base_data_dir, 'taxa-summaries',
-                      '%s.txt' % barcode)) as f:
+                      '%s.txt' % barcode[0])) as f:
                 f.readline()
                 files.append(f.readlines())
             for line in files[-1]:
@@ -86,14 +89,25 @@ class TaxaHandler(BaseHandler):
 
         meta_cats = ['age-baby', 'age-child', 'age-teen', 'age-20s', 'age-30s',
                      'age-40s', 'age-50s', 'age-60s', 'age-70+']
-        self.render('bar_stacked.html', barcodes=barcodes, meta_cats=meta_cats,
-                    datasets=datasets)
+        self.render('taxa.html', titles=titles, barcodes=barcodes,
+                    meta_cats=meta_cats, datasets=datasets)
 
 
 class MetadataHandler(BaseHandler):
     @authenticated
     def get(self):
-        site = self.get_argument('site')
+        user = ag_data.get_user_for_kit(self.current_user)
+        barcode = self.get_argument('barcode', False)
+        if barcode:
+            barcodes = [b[0] for b in
+                        ag_data.get_barcodes_by_user(user, results=True)]
+            # Make sure barcode passed is owned by the user
+            if barcode not in barcodes:
+                raise HTTPError(403, 'User %s does not have access to barcode '
+                                '%s' % (self.current_user, barcode))
+            site = ag_data.getAGBarcodeDetails(barcode)['site_sampled'].lower()
+        else:
+            site = self.get_argument('site')
         cat = self.get_argument('category')
         otus = defaultdict(list)
 
@@ -102,6 +116,46 @@ class MetadataHandler(BaseHandler):
             # Read in counts
             for line in f:
                 otu, percent = line.strip().split('\t', 1)
-                otus[otu] = float(percent) * 100
+                otus[otu] = [float(percent) * 100]
         self.write(dumps(_build_taxa(otus)))
         self.set_header("Content-Type", "application/json")
+
+
+class AlphaDivImgHandler(BaseHandler):
+    stool_base = Image.open(join(AMGUT_CONFIG.base_data_dir, 'alpha-div',
+                            'base-stool.png'))
+
+    @authenticated
+    def get(self, barcode):
+        user = ag_data.get_user_for_kit(self.current_user)
+        barcodes = [b[0] for b in
+                    ag_data.get_barcodes_by_user(user)]
+        # Make sure barcode passed is owned by the user
+        if barcode not in barcodes:
+            raise HTTPError(403, 'User %s does not have access to barcode '
+                            '%s' % (self.current_user, barcode))
+        site = ag_data.getAGBarcodeDetails(barcode)['site_sampled'].lower()
+        cat = self.get_argument('category')
+
+        if site == 'stool':
+            new_image = self.stool_base.copy()
+        elif site in {'right hand', 'left hand', 'forehead', 'torso',
+                      'left leg', 'right leg'}:
+            new_image = self.skin_base.copy()
+        elif site in {''}:
+            new_image = self.oral_base.copy()
+        else:
+            raise RuntimeError("Unclassified alpha diversity site: %s" % site)
+
+        # Build alpha div image by layering the category and sample lines
+        # onto the base alpha diversity distribution image
+        category = Image.open(join(AMGUT_CONFIG.base_data_dir, 'alpha-div',
+                              '%s.png' % cat))
+        sample = Image.open(join(AMGUT_CONFIG.base_data_dir, 'alpha-div',
+                            '%s.png' % barcode))
+        new_image.paste(category, (0, 0), category)
+        new_image.paste(sample, (0, 0), sample)
+        full_image = StringIO()
+        new_image.save(full_image, format="png")
+        self.write(full_image.getvalue())
+        self.set_header("Content-type",  "image/png")
