@@ -15,14 +15,14 @@
 <div id="taxa-summary-wrapper" style="width:100%; position: relative;">
 <div id="taxa-summary-controls">
   <h3>Relative taxonomy</h3>
-    Select taxa level: 
+    Select taxa level <a href="" onclick="return false;" title="THIS IS THE TAXA TOOLTIP">?</a>: 
     <select id="collapse">
       <option value="phylum">Phylum</option>
       <option value="class">Class</option>
       <option value="order">Order</option>
       <option value="family">Family</option>
       <option value="genus">Genus</option>
-    </select><br/>
+    </select> <button id="reset-summary">Reset Graph</button><br/>
     Add
     Site: <select id="meta_site">
       <option value=""></option>
@@ -52,7 +52,7 @@
   {% end %}
     </select><p>
     Compare with population averages<br/>
-    Select taxa level:
+    Select taxa level <a href="" onclick="return false;" title="THIS IS THE TAXA TOOLTIP">?</a>:
     <select id="collapse-fold">
       <option value="phylum">Phylum</option>
       <option value="class">Class</option>
@@ -204,6 +204,9 @@
 
     $.get('/interactive/metadata/', {category: category, barcode: barcode})
       .done(function (data) {
+        //Set alpha diversity image going first
+        $("#alpha-div-image").attr("src", "/interactive/alpha_div/" + barcode + "?category=" + category);
+
         var fold_changes = [];
         var data_pos = barChartFoldData.barcodes.findIndex(y => Object.is(barcode, y));
         var data_len = barChartFoldData.rawData[0].data.length;
@@ -238,8 +241,6 @@
         barChartFoldData.labels = [barChartFoldData.titles[data_pos]];
         barChartFoldData.datasets = graph_data;
         window.foldBar.update();
-
-        $("#alpha-div-image").attr("src", "/interactive/alpha_div/" + barcode + "?category=" + category);
       })
       .fail(function () {
         alert('FAIL!');
@@ -357,7 +358,7 @@
                       display: true,
                       scaleLabel: {
                         display: true,
-                        labelString: 'Log_2 Fold Change'
+                        labelString: 'Log2 Fold Change'
                       }
                   }]
               }
@@ -380,6 +381,11 @@
       });
 
       $("#collapse").on("change", function () {
+        barChartSummaryData.datasets = collapse(barChartSummaryData.rawData, $("#collapse").val(), 10);
+        window.summaryBar.update();
+      })
+
+      $("#reset-summary").on("click", function () {
         barChartSummaryData.datasets = collapse(barChartSummaryData.rawData, $("#collapse").val(), 10);
         window.summaryBar.update();
       })
