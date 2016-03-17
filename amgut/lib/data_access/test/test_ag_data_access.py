@@ -183,6 +183,19 @@ class TestAGDataAccess(TestCase):
         with self.assertRaises(ValueError):
             self.ag_data.getConsent("42")
 
+    def test_store_consent(self):
+        name = ''.join(choice(ascii_letters) for w in range(25))
+        consent = {'participant_name': name,
+                   'participant_email': 'test@foo.bar',
+                   'parent_1_name': 'parent 2',
+                   'parent_2_name': 'parent 2',
+                   'is_juvenile': True,
+                   'deceased_parent': False,
+                   'obtainer_name': None,
+                   'age_range': '7-14',
+                   'login_id': 'fecebeae-4244-2d78-e040-8a800c5d4f50'}
+        self.ag_data.store_consent(consent)
+
     def test_logParticipantSample_badinfo(self):
         # bad ag_login_id
         with self.assertRaises(ValueError):

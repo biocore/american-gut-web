@@ -24,7 +24,6 @@ from amgut.handlers.participant_overview import ParticipantOverviewHandler
 from amgut.handlers.international import InternationalHandler
 from amgut.handlers.animal_survey import (AnimalSurveyHandler,
                                           CheckParticipantName)
-from amgut.handlers.human_survey import HumanSurveyHandler
 from amgut.handlers.human_survey_completed import HumanSurveyCompletedHandler
 from amgut.handlers.vioscreen import VioscreenPassthroughHandler
 from amgut.handlers.add_sample import (AddHumanSampleHandler,
@@ -75,7 +74,6 @@ class AGWebApplication(Application):
             (r"/authed/sample_overview/", SampleOverviewHandler),
             (r"/authed/add_sample_overview/", AddSampleOverviewHandler),
             (r"/authed/survey_main/", SurveyMainHandler),
-            (r"/authed/human_survey/", HumanSurveyHandler),
             (r"/authed/human_survey_completed/", HumanSurveyCompletedHandler),
             (r"/authed/vspassthrough/", VioscreenPassthroughHandler),
             (r"/authed/portal/", PortalHandler),

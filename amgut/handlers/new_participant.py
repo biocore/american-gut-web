@@ -1,13 +1,10 @@
-import binascii
-import os
-from json import dumps
-
 from tornado.web import authenticated
 from tornado.escape import url_escape
 
 from amgut import media_locale, text_locale
 from amgut.handlers.base_handlers import BaseHandler
-from amgut.connections import ag_data, redis
+from amgut.connections import ag_data
+from amgut.lib.data_access.redcap import get_survey_url
 
 
 MESSAGE_TEMPLATE = """Contact: %s
@@ -41,6 +38,7 @@ class NewParticipantHandler(BaseHandler):
         parent_2_name = self.get_argument("parent_2_name", None)
         obtainer_name = self.get_argument("obtainer_name", None)
         deceased_parent = self.get_argument("deceased_parent", 'No')
+        language = self.get_argument('lang')
         sitebase = media_locale['SITEBASE']
 
         if not participant_name or not participant_email:
@@ -57,8 +55,6 @@ class NewParticipantHandler(BaseHandler):
             self.redirect(url)
             return
 
-        human_survey_id = binascii.hexlify(os.urandom(8))
-
         consent = {'participant_name': participant_name,
                    'participant_email': participant_email,
                    'parent_1_name': parent_1_name,
@@ -67,11 +63,9 @@ class NewParticipantHandler(BaseHandler):
                    'deceased_parent': deceased_parent,
                    'obtainer_name': obtainer_name,
                    'age_range': age_range,
-                   'login_id': ag_login_id,
-                   'survey_id': human_survey_id}
+                   'login_id': ag_login_id}
 
-        redis.hset(human_survey_id, 'consent', dumps(consent))
-        redis.expire(human_survey_id, 86400)
-
-        self.set_secure_cookie('human_survey_id', human_survey_id)
-        self.redirect(sitebase + "/authed/survey_main/")
+        # Save consent info and redirect to redcap
+        record_id = ag_data.store_consent(consent)
+        url = get_survey_url(record_id, instrument='ag_human_' + language)
+        self.redirect(url)

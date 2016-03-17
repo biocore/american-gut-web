@@ -345,6 +345,18 @@ class AGDataAccess(object):
                                  survey_id)
             return dict(result[0])
 
+    def store_consent(self, values):
+        sql = """INSERT INTO ag.ag_consent
+                     (participant_name, participant_email, parent_1_name,
+                     parent_2_name, is_juvenile, deceased_parent,
+                     assent_obtainer, age_range, ag_login_id)
+                     VALUES (%(participant_name)s, %(participant_email)s,
+                             %(parent_1_name)s, %(parent_2_name)s,
+                             %(is_juvenile)s, %(deceased_parent)s,
+                             %(obtainer_name)s, %(age_range)s, %(login_id)s)"""
+        with TRN:
+            TRN.add(sql, values)
+
     def logParticipantSample(self, ag_login_id, barcode, sample_site,
                              environment_sampled, sample_date, sample_time,
                              participant_name, notes):
