@@ -7,21 +7,6 @@ from amgut.connections import ag_data
 from amgut.lib.data_access.redcap import get_survey_url
 
 
-MESSAGE_TEMPLATE = """Contact: %s
-        --------------------------------------------------------------------------------
-        Message:
-        This participant is a child, the person filling out the survey for them
-        needs to provide proof of consent. Email them for proof.
-
-        Parent/Guardian 1: %s
-        Parent/Guardian 2: %s
-        Deceased: %s
-        Kit id: %s
-        Email: %s
-        --------------------------------------------------------------------------------
-"""
-
-
 class NewParticipantHandler(BaseHandler):
     """"""
     @authenticated
