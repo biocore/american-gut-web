@@ -337,7 +337,7 @@ class AGDataAccess(object):
                               agl.survey_id
                            FROM ag_consent agc
                            JOIN ag_login_surveys agl
-                           USING (ag_login_id, participant_name)
+                           USING (redcap_record_id)
                            WHERE agl.survey_id = %s""", [survey_id])
             result = TRN.execute_fetchindex()
             if not result:
@@ -353,6 +353,7 @@ class AGDataAccess(object):
                 # Get survey id
                 sql = """SELECT survey_id
                          FROM ag_login_surveys
+                         JOIN ag.ag_consent USING (redcap_record_id)
                          WHERE ag_login_id = %s AND participant_name = %s"""
 
                 TRN.add(sql, (ag_login_id, participant_name))
@@ -398,13 +399,12 @@ class AGDataAccess(object):
 
     def getHumanParticipants(self, ag_login_id):
         # get people from new survey setup
-        sql = """SELECT DISTINCT participant_name from ag.ag_login_surveys
-                 LEFT JOIN ag.survey_answers USING (survey_id)
-                 JOIN ag.group_questions gq USING (survey_question_id)
-                 JOIN ag.surveys ags USING (survey_group)
-                 WHERE ag_login_id = %s AND ags.survey_id = %s"""
+        sql = """SELECT DISTINCT participant_name from ag.ag_consent
+                 JOIN ag_login_surveys USING (redcap_record_id)
+                 JOIN redcap_instruments USING (redcap_instrument_id)
+                 WHERE ag_login_id = %s AND survey_type = 'Human'"""
         with TRN:
-            TRN.add(sql, [ag_login_id, 1])
+            TRN.add(sql, [ag_login_id])
             return TRN.execute_fetchflatten()
 
     def updateVioscreenStatus(self, survey_id, status):
@@ -443,13 +443,12 @@ class AGDataAccess(object):
             return status[0][0]
 
     def getAnimalParticipants(self, ag_login_id):
-        sql = """SELECT participant_name from ag.ag_login_surveys
-                 JOIN ag.survey_answers USING (survey_id)
-                 JOIN ag.group_questions gq USING (survey_question_id)
-                 JOIN ag.surveys ags USING (survey_group)
-                 WHERE ag_login_id = %s AND ags.survey_id = %s"""
+        sql = """SELECT DISTINCT participant_name from ag.ag_consent
+                 JOIN ag_login_surveys USING (redcap_record_id)
+                 JOIN redcap_instruments USING (redcap_instrument_id)
+                 WHERE ag_login_id = %s AND survey_type = 'Animal'"""
         with TRN:
-            TRN.add(sql, [ag_login_id, 2])
+            TRN.add(sql, [ag_login_id])
             return TRN.execute_fetchflatten()
 
     def getParticipantSamples(self, ag_login_id, participant_name):
@@ -806,6 +805,7 @@ class AGDataAccess(object):
         with TRN:
             sql = """SELECT survey_id
                      FROM ag_login_surveys
+                     JOIN ag_consent USING (redcap_record_id)
                      WHERE ag_login_id=%s AND participant_name=%s"""
             TRN.add(sql, [ag_login_id, participant_name])
             survey_id = TRN.execute_fetchindex()
