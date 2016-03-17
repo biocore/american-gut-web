@@ -22622,51 +22622,51 @@ AS $function$xpath_exists$function$
 		</function>
 	</schema>
 	<layout id="Layout2861625" name="public" joined_routing="y" show_relation_columns="y" >
-		<entity schema="ag" name="controlled_vocab_values" color="c6c6f7" x="885" y="45" />
-		<entity schema="ag" name="controlled_vocabs" color="c6c6f7" x="675" y="45" />
-		<entity schema="ag" name="group_questions" color="ffcccc" x="300" y="1275" />
-		<entity schema="ag" name="survey_response_types" color="ffffff" x="990" y="1650" />
-		<entity schema="ag" name="surveys" color="a8c4ef" x="45" y="1440" />
-		<entity schema="ag" name="survey_group" color="a8c4ef" x="45" y="1275" />
-		<entity schema="ag" name="survey_question_triggers" color="a8c4ef" x="645" y="1335" />
-		<entity schema="ag" name="survey_response" color="a8c4ef" x="690" y="1545" />
-		<entity schema="ag" name="survey_question_response" color="ffcccc" x="690" y="1440" />
-		<entity schema="ag" name="iso_country_lookup" color="ffffff" x="900" y="1530" />
-		<entity schema="ag" name="survey_question_response_type" color="ffcccc" x="690" y="1635" />
-		<entity schema="ag" name="zipcodes" color="c6c6f7" x="1095" y="45" />
-		<entity schema="ag" name="ag_survey_multiples_backup" color="cef7c6" x="195" y="45" />
-		<entity schema="ag" name="ag_import_stats_tmp" color="cef7c6" x="420" y="45" />
-		<entity schema="ag" name="ag_map_markers" color="cef7c6" x="60" y="45" />
-		<entity schema="barcodes" name="plate" color="a8c4ef" x="300" y="1020" />
-		<entity schema="barcodes" name="project_barcode" color="a8c4ef" x="330" y="930" />
-		<entity schema="barcodes" name="plate_barcode" color="a8c4ef" x="135" y="1020" />
-		<entity schema="ag" name="settings" color="a8c4ef" x="105" y="600" />
-		<entity schema="ag" name="ag_handout_barcodes" color="a8c4ef" x="270" y="375" />
-		<entity schema="barcodes" name="barcode_exceptions" color="a8c4ef" x="120" y="750" />
-		<entity schema="barcodes" name="project" color="a8c4ef" x="345" y="840" />
-		<entity schema="barcodes" name="barcode" color="a8c4ef" x="105" y="825" />
-		<entity schema="ag" name="survey_question" color="a8c4ef" x="420" y="1440" />
-		<entity schema="ag" name="ag_handout_kits" color="a8c4ef" x="75" y="375" />
-		<entity schema="ag" name="consent_revoked" color="b7c8e3" x="960" y="300" />
-		<entity schema="ag" name="duplicate_consents" color="b7c8e3" x="960" y="435" />
-		<entity schema="ag" name="survey_answers" color="a8c4ef" x="315" y="1605" />
-		<entity schema="ag" name="survey_answers_other" color="a8c4ef" x="120" y="1605" />
-		<entity schema="ag" name="promoted_survey_ids" color="a8c4ef" x="960" y="1410" />
-		<entity schema="ag" name="external_survey_answers" color="a8c4ef" x="1440" y="735" />
-		<entity schema="ag" name="external_survey_sources" color="a8c4ef" x="1410" y="855" />
-		<entity schema="ag" name="ag_kit_barcodes" color="f7e2c6" x="495" y="600" />
-		<entity schema="ag" name="ag_participant_exceptions" color="f7e2c6" x="705" y="615" />
-		<entity schema="ag" name="ag_kit" color="f7e2c6" x="510" y="330" />
-		<entity schema="ag" name="ag_login" color="f7e2c6" x="750" y="330" />
-		<entity schema="ag" name="ag_consent" color="c6d9f7" x="1125" y="300" />
-		<entity schema="ag" name="ag_login_surveys" color="ffcccc" x="1455" y="300" />
-		<entity schema="ag" name="languages" color="b7c8e3" x="1335" y="420" />
-		<entity schema="ag" name="redcap_instruments" color="b7c8e3" x="1455" y="450" />
-		<entity schema="ag" name="survey_types" color="b7c8e3" x="1455" y="600" />
-		<entity schema="ag" name="ag_human_survey" color="c6d9f7" x="1140" y="1275" />
-		<entity schema="ag" name="ag_animal_survey" color="f7e2c6" x="1380" y="1275" />
-		<entity schema="ag" name="ag_survey_answer" color="f7e2c6" x="1380" y="1635" />
-		<entity schema="ag" name="ag_survey_multiples" color="f7e2c6" x="1380" y="1770" />
+		<entity schema="ag" name="controlled_vocab_values" color="c6c6f7" x="255" y="1830" />
+		<entity schema="ag" name="group_questions" color="ffcccc" x="315" y="765" />
+		<entity schema="ag" name="survey_response_types" color="ffffff" x="1005" y="1140" />
+		<entity schema="ag" name="surveys" color="a8c4ef" x="60" y="930" />
+		<entity schema="ag" name="survey_group" color="a8c4ef" x="60" y="765" />
+		<entity schema="ag" name="survey_question_triggers" color="a8c4ef" x="660" y="825" />
+		<entity schema="ag" name="survey_response" color="a8c4ef" x="705" y="1035" />
+		<entity schema="ag" name="survey_question_response" color="ffcccc" x="705" y="930" />
+		<entity schema="ag" name="iso_country_lookup" color="ffffff" x="915" y="1020" />
+		<entity schema="ag" name="survey_question_response_type" color="ffcccc" x="705" y="1125" />
+		<entity schema="ag" name="ag_survey_multiples_backup" color="cef7c6" x="210" y="1260" />
+		<entity schema="barcodes" name="plate" color="a8c4ef" x="255" y="585" />
+		<entity schema="barcodes" name="project_barcode" color="a8c4ef" x="285" y="495" />
+		<entity schema="barcodes" name="plate_barcode" color="a8c4ef" x="90" y="585" />
+		<entity schema="ag" name="ag_handout_barcodes" color="a8c4ef" x="240" y="75" />
+		<entity schema="barcodes" name="barcode_exceptions" color="a8c4ef" x="75" y="315" />
+		<entity schema="barcodes" name="project" color="a8c4ef" x="300" y="405" />
+		<entity schema="barcodes" name="barcode" color="a8c4ef" x="60" y="390" />
+		<entity schema="ag" name="survey_question" color="a8c4ef" x="435" y="930" />
+		<entity schema="ag" name="ag_handout_kits" color="a8c4ef" x="45" y="75" />
+		<entity schema="ag" name="consent_revoked" color="b7c8e3" x="945" y="45" />
+		<entity schema="ag" name="duplicate_consents" color="b7c8e3" x="945" y="180" />
+		<entity schema="ag" name="survey_answers" color="a8c4ef" x="330" y="1095" />
+		<entity schema="ag" name="survey_answers_other" color="a8c4ef" x="135" y="1095" />
+		<entity schema="ag" name="promoted_survey_ids" color="a8c4ef" x="975" y="900" />
+		<entity schema="ag" name="external_survey_answers" color="a8c4ef" x="1425" y="480" />
+		<entity schema="ag" name="external_survey_sources" color="a8c4ef" x="1395" y="600" />
+		<entity schema="ag" name="ag_kit_barcodes" color="f7e2c6" x="480" y="345" />
+		<entity schema="ag" name="ag_participant_exceptions" color="f7e2c6" x="690" y="360" />
+		<entity schema="ag" name="ag_kit" color="f7e2c6" x="495" y="75" />
+		<entity schema="ag" name="ag_login" color="f7e2c6" x="735" y="75" />
+		<entity schema="ag" name="ag_consent" color="c6d9f7" x="1110" y="45" />
+		<entity schema="ag" name="ag_login_surveys" color="ffcccc" x="1440" y="45" />
+		<entity schema="ag" name="languages" color="b7c8e3" x="1320" y="165" />
+		<entity schema="ag" name="redcap_instruments" color="b7c8e3" x="1440" y="195" />
+		<entity schema="ag" name="survey_types" color="b7c8e3" x="1440" y="345" />
+		<entity schema="ag" name="ag_human_survey" color="c6d9f7" x="1155" y="765" />
+		<entity schema="ag" name="ag_animal_survey" color="f7e2c6" x="1395" y="765" />
+		<entity schema="ag" name="ag_survey_answer" color="f7e2c6" x="1395" y="1125" />
+		<entity schema="ag" name="ag_survey_multiples" color="f7e2c6" x="1395" y="1260" />
+		<entity schema="ag" name="ag_map_markers" color="cef7c6" x="75" y="1260" />
+		<entity schema="ag" name="ag_import_stats_tmp" color="cef7c6" x="435" y="1260" />
+		<entity schema="ag" name="controlled_vocabs" color="c6c6f7" x="45" y="1830" />
+		<entity schema="ag" name="zipcodes" color="c6c6f7" x="1155" y="420" />
+		<entity schema="ag" name="settings" color="a8c4ef" x="990" y="420" />
 		<group name="ag_kits_barcodes" color="faf6f0" >
 			<comment><![CDATA[Used by :    american_gut_consent]]></comment>
 			<entity schema="ag" name="ag_kit" />
@@ -22674,24 +22674,12 @@ AS $function$xpath_exists$function$
 			<entity schema="ag" name="ag_participant_exceptions" />
 			<entity schema="ag" name="ag_kit_barcodes" />
 		</group>
-		<group name="disconnected tables" color="f2faf0" >
-			<comment><![CDATA[These tables are not connected to any other table in the database by foreign key or anything else...]]></comment>
-			<entity schema="ag" name="ag_survey_multiples_backup" />
-			<entity schema="ag" name="ag_import_stats_tmp" />
-			<entity schema="ag" name="ag_map_markers" />
-		</group>
 		<group name="Group_consent" color="f0f4fa" >
 			<entity schema="ag" name="ag_consent" />
 			<entity schema="ag" name="duplicate_consents" />
 			<entity schema="ag" name="consent_revoked" />
 		</group>
-		<group name="controlled_vocab_values" color="f0f0fa" >
-			<comment><![CDATA[Used by :    american_gut_consent]]></comment>
-			<entity schema="ag" name="controlled_vocab_values" />
-			<entity schema="ag" name="controlled_vocabs" />
-			<entity schema="ag" name="zipcodes" />
-		</group>
-		<group name="old_survey_tables" color="c4e0f9" >
+		<group name="legacy_tables" color="c4e0f9" >
 			<entity schema="ag" name="survey_question_response_type" />
 			<entity schema="ag" name="survey_response" />
 			<entity schema="ag" name="survey_response_types" />
@@ -22709,6 +22697,9 @@ AS $function$xpath_exists$function$
 			<entity schema="ag" name="ag_animal_survey" />
 			<entity schema="ag" name="ag_survey_answer" />
 			<entity schema="ag" name="ag_survey_multiples" />
+			<entity schema="ag" name="ag_import_stats_tmp" />
+			<entity schema="ag" name="ag_map_markers" />
+			<entity schema="ag" name="ag_survey_multiples_backup" />
 		</group>
 		<group name="Group_handout_kits" color="c4e0f9" >
 			<entity schema="ag" name="ag_handout_barcodes" />
