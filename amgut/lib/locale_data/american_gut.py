@@ -23,6 +23,7 @@ media_locale = {
     'LATITUDE': 39.83,
     'LONGITUDE': -99.89,
     'ZOOM': 4,
+    'DEFAULT_LANGUAGE': 'en-US',
     'STEPS_VIDEO': "http://player.vimeo.com/video/63542787",
     'ADD_PARTICIPANT': 'http://player.vimeo.com/video/63931218',
     'ADD_PARTICIPANT_IMG_1': _SITEBASE + "/static/img/add_participant.png",

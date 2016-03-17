@@ -349,11 +349,12 @@ class AGDataAccess(object):
         sql = """INSERT INTO ag.ag_consent
                      (participant_name, participant_email, parent_1_name,
                      parent_2_name, is_juvenile, deceased_parent,
-                     assent_obtainer, age_range, ag_login_id)
+                     assent_obtainer, age_range, ag_login_id, lang)
                      VALUES (%(participant_name)s, %(participant_email)s,
                              %(parent_1_name)s, %(parent_2_name)s,
                              %(is_juvenile)s, %(deceased_parent)s,
-                             %(obtainer_name)s, %(age_range)s, %(login_id)s)"""
+                             %(obtainer_name)s, %(age_range)s, %(login_id)s,
+                             %(language)s)"""
         with TRN:
             TRN.add(sql, values)
 

@@ -193,7 +193,8 @@ class TestAGDataAccess(TestCase):
                    'deceased_parent': False,
                    'obtainer_name': None,
                    'age_range': '7-14',
-                   'login_id': 'fecebeae-4244-2d78-e040-8a800c5d4f50'}
+                   'login_id': 'fecebeae-4244-2d78-e040-8a800c5d4f50',
+                   'language': 'en-US'}
         self.ag_data.store_consent(consent)
 
     def test_logParticipantSample_badinfo(self):

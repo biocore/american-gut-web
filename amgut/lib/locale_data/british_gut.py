@@ -24,6 +24,7 @@ media_locale = {
     'LATITUDE': 54.5,
     'LONGITUDE': -3.5,
     'ZOOM': 6,
+    'DEFAULT_LANGUAGE': 'en-GB',
     'ADDENDUM_CERT_ABUNDANT_MICROBES': _SITEBASE + "/static/img/Michael_Pollan_mod-13.png",
     'ADDENDUM_CERT_BARCHART': _SITEBASE + "/static/img/Michael_Pollan_mod-11.png",
     'ADDENDUM_CERT_BARCHART_LEGEND': _SITEBASE + "/static/img/Michael_Pollan_mod-12.png",

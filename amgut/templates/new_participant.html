@@ -139,6 +139,7 @@
         <hr>
         <a href="http://oag.ca.gov/sites/all/files/agweb/pdfs/research/bill_of_rights.pdf">{% raw tl['BILL_OF_RIGHTS']%}</a><br/>
         <form method="post" id="0-6-form" name="consent_info" onsubmit="return validate06();" action="{% raw media_locale['SITEBASE'] %}/authed/new_participant/">
+           <input type="hidden" name="language" value="{{default_lang}}">
            <input type="hidden" name="age_range" value="0-6">
            <p><input value="Yes" type="checkbox" name="consent_parent" id="consent_parent" required data-rule-required="true"> {% raw tl['TEXT_I_HAVE_READ_PARENT'] %}</p>
     </div>
@@ -159,6 +160,7 @@
     <div class="" id="consent">
         <hr>
         <form method="post" id="7-12-form" name="consent_info" onsubmit="return validate712();" action="{% raw media_locale['SITEBASE'] %}/authed/new_participant/">
+        <input type="hidden" name="language" value="{{default_lang}}">
         <input type="hidden" name="age_range" value="7-12">
            <p><input value="Yes" type="checkbox" name="consent_child" id="consent_child" required data-rule-required="true"> {% raw tl['TEXT_I_HAVE_READ_SIMPLIFIED'] %}</p>
     </div>
@@ -200,6 +202,7 @@
     <div class="" id="consent">
         <hr>
         <form method="post" id="13-17-form" name="consent_info" onsubmit="return validate1317();" action="{% raw media_locale['SITEBASE'] %}/authed/new_participant/">
+           <input type="hidden" name="language" value="{{default_lang}}">
            <input type="hidden" name="age_range" value="13-17">
            <p><input value="Yes" type="checkbox" name="consent_child" id="consent_child" required data-rule-required="true"> {% raw tl['TEXT_I_HAVE_READ_1'] %}</p>
     </div>
@@ -237,6 +240,7 @@
         <hr>
         <a href="http://oag.ca.gov/sites/all/files/agweb/pdfs/research/bill_of_rights.pdf">{% raw tl['BILL_OF_RIGHTS']%}</a><br/>
         <form method="post" id="18-form" name="consent_info" onsubmit="return min_validation('18-form');" action="{% raw media_locale['SITEBASE'] %}/authed/new_participant/">
+        <input type="hidden" name="language" value="{{default_lang}}">
         <input type="hidden" name="age_range" value="18-plus">
            <p><input value="Yes" type="checkbox" name="consent" id="consent" required data-rule-required="true"> {% raw tl['TEXT_I_HAVE_READ_1'] %}</p>
     </div>

@@ -11,7 +11,8 @@ class NewParticipantHandler(BaseHandler):
     """"""
     @authenticated
     def get(self):
-        self.render("new_participant.html", skid=self.current_user, message='')
+        self.render("new_participant.html", skid=self.current_user, message='',
+                    default_lang=media_locale['DEFAULT_LANGUAGE'])
 
     @authenticated
     def post(self):
@@ -23,7 +24,7 @@ class NewParticipantHandler(BaseHandler):
         parent_2_name = self.get_argument("parent_2_name", None)
         obtainer_name = self.get_argument("obtainer_name", None)
         deceased_parent = self.get_argument("deceased_parent", 'No')
-        language = self.get_argument('lang')
+        language = self.get_argument('language')
         sitebase = media_locale['SITEBASE']
 
         if not participant_name or not participant_email:
@@ -48,7 +49,8 @@ class NewParticipantHandler(BaseHandler):
                    'deceased_parent': deceased_parent,
                    'obtainer_name': obtainer_name,
                    'age_range': age_range,
-                   'login_id': ag_login_id}
+                   'login_id': ag_login_id,
+                   'language': language}
 
         # Save consent info and redirect to redcap
         record_id = ag_data.store_consent(consent)
