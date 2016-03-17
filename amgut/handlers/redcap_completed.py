@@ -14,6 +14,6 @@ class RedcapCompletedHandler(BaseHandler):
         log_complete(record_id, instrument, event)
         if "human" in instrument:
             self.redirect(media_locale['SITEBASE'] +
-                          '/human_survey_completed/')
+                          '/authed/human_survey_completed/')
         else:
             self.redirect('/authed/portal/')
