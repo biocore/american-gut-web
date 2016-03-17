@@ -50,7 +50,7 @@ from amgut.handlers.interactive import (EmperorHandler, TaxaHandler,
                                         MetadataHandler, AlphaDivImgHandler)
 from amgut.lib.startup_tests import startup_tests
 
-define("port", default=8888, help="run on the given port", type=int)
+define("port", default=8889, help="run on the given port", type=int)
 
 
 DIRNAME = dirname(__file__)
