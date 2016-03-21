@@ -88,7 +88,9 @@ class TaxaHandler(BaseHandler):
         datasets = _build_taxa(otus)
 
         meta_cats = ['age-baby', 'age-child', 'age-teen', 'age-20s', 'age-30s',
-                     'age-40s', 'age-50s', 'age-60s', 'age-70+']
+                     'age-40s', 'age-50s', 'age-60s', 'age-70+', 'sex-male',
+                     'sex-female', 'bmi-Underweight', 'bmi-Normal',
+                     'bmi-Overweight', 'bmi-Obese']
         self.render('taxa.html', titles=titles, barcodes=barcodes,
                     meta_cats=meta_cats, datasets=datasets)
 
