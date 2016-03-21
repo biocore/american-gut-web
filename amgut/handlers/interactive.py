@@ -141,7 +141,7 @@ class AlphaDivImgHandler(BaseHandler):
         if cat:
             cat = Image.open(join(AMGUT_CONFIG.base_data_dir, 'alpha-div',
                              '%s-%s.png' % (site, cat)))
-            new_image = Image.alpha_composite(new_image, cat)
+            new_image = Image.alpha_composite(cat, new_image)
         full_image = StringIO()
         new_image.save(full_image, format="png")
         self.write(full_image.getvalue())
