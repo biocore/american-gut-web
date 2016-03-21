@@ -218,7 +218,7 @@
           var pos = find_otu(collapsed, otu.label);
           //sanity checks to make sure we aren't doing something dumb
           if(pos === -1 || otu.data === 0) { continue; }
-          var sample_data = barChartFoldData.rawData[pos].data;
+          var sample_data = collapsed[pos].data;
 
           //Compute the fold changes, making them negative when needed
           var val = sample_data[data_pos]/otu.data;
