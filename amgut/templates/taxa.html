@@ -41,6 +41,7 @@
 </div>
 <div id="taxa-summary-text" style="position:relative;clear: left;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec cursus finibus dolor in lacinia. In ultricies aliquam ipsum in convallis. Aenean pellentesque egestas malesuada. Nam finibus nisi ut imperdiet tincidunt. Praesent a nibh a nisi ultrices pretium. Nullam ornare auctor enim ullamcorper aliquet. Integer tempus fringilla erat, accumsan convallis diam aliquet aliquam. Integer a tristique nunc. Morbi lobortis nec est sed tincidunt.
 </div>
+<hr>
 <div id="taxa-fold-wrapper" style="width:100%; position: relative;">
   <h3>Explore a sample in detail</h3>
   <div id="taxa-fold-controls">
@@ -222,7 +223,7 @@
           //Compute the fold changes, making them negative when needed
           var val = sample_data[data_pos]/otu.data;
           if(val === 0) { continue; }
-          fold_changes.push([otu.label, Math.log2(val)]);
+          fold_changes.push([otu.label, Number(Math.log2(val).toFixed(2))]);
         }
         //Sort by the average and build the data information
         var sorted = fold_changes.sort(function(a, b) { return b[1] - a[1]; });
