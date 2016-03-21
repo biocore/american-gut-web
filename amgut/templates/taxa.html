@@ -27,6 +27,8 @@
     Site: <select id="meta_site">
       <option value=""></option>
       <option value="stool">Stool</option>
+      <option value="skin">Skin</option>
+      <option value="oral">Oral</option>
     </select> 
     Category:<select id="meta_cat">
       <option value=""></option>
@@ -49,7 +51,7 @@
     <select id="barcode-fold">
       <option value=""></option>
   {% for bc, t in barcodes %}
-      <option value="{{bc}}">{{t.strftime('%b %d, %Y')}}</option>
+      <option value="{{bc}}">{{bc}} - {{t.strftime('%b %d, %Y')}}</option>
   {% end %}
     </select><p>
     Compare with population averages<br/>
@@ -136,19 +138,20 @@
     for(var g in groups) {
       if(focus !== null && groups[g][0][prev_level] != focus_taxa) { continue; }
       var otu = { label: g,  data: groups[g][0].data, phylum: groups[g][0].phylum};
+      if(g === "") { otu.label = 'Unspecified'; }
       // Collapse the OTUs found in the group into a single
       for(var i=1;i<groups[g].length;i++) {
         otu.data = sum_arrays(otu.data, groups[g][i].data);
       }
       // Round to four decimals
       for(var i=0;i<otu.data.length;i++) { otu.data[i] =  Number(otu.data[i].toFixed(4)); }
-      if(g === '') { otu.label = 'Unspecified'; }
 
       collapsed[g] = otu;
       summaries.push([g, getAvg(otu.data)]);
     }
 
     //collapse further to max number of OTUs and color properly
+    //
     var phyla_counts = {};
     var further_collapsed = [];
     sorted = summaries.sort(function(a, b) { return b[1] - a[1]; });
@@ -159,11 +162,12 @@
       phyla_counts[collapsed[sorted[i][0]].phylum] = phyla_counts[collapsed[sorted[i][0]].phylum] + 1 || 1;
     }
     // Recolor based on phyla counts, so each phyla is a different color, and those within phyla a different shade
+    // of the same color
     phyla_colors = {};
     for(phyla in phyla_counts) {
       if(phyla_counts[phyla] == 1) {
         //Get colors for known phyla or black
-        var color = phylum_colors[phyla]  || ['', '#000000'];
+        var color = phylum_colors[phyla]  || ['#FFFFFF', '#000000'];
         phyla_colors[phyla] = [chroma(color[1]).hex()];
       } else {
         //Get colors for known phyla or white to black
@@ -181,7 +185,7 @@
     }
 
     if(sorted.length > max) {
-      // reate the OTHER category for the rest of the OTUs
+      // Create the OTHER category for the rest of the OTUs
       var other = { label: 'Other',  data:collapsed[sorted[loop][0]].data, backgroundColor: 'rgba(180,180,180)' };
       for(var i=loop+1;i<sorted.length;i++){
         other.data = sum_arrays(other.data, collapsed[sorted[i][0]].data);
@@ -264,23 +268,29 @@
       .done(function (data) {
         for(var i=0;i<data.length;i++) {
           var otu = data[i];
+          var val = otu.data[0];
           var existing = find_otu(barChartSummaryData.rawData, otu.full, 'full');
           if(existing == -1) {
             //add the OTU as zero for all existing labels, then add value from meta_cat
-            var val = otu.data[0];
             otu.data = new Array(barChartSummaryData.labels.length+1).join('0').split('').map(parseFloat);
             otu.data.push(val);
             barChartSummaryData.rawData.push(otu);
           } else {
             ///OTU already exists, so add to end of existing one
-            raw_data[existing].data.push(val);
+            barChartSummaryData.rawData[existing].data.push(val);
           }
         }
         //Loop over raw data and add 0 to any OTUs that are in raw data but not in meta_cat
         var full_len = barChartSummaryData.labels.length + 1;
+        var sum = 0;
         for(var i=0;i<barChartSummaryData.rawData.length;i++) {
           if(barChartSummaryData.rawData[i].data.length < full_len) { barChartSummaryData.rawData[i].data.push(0.0); }
+          if(isNaN(barChartSummaryData.rawData[i].data[full_len - 1])) {
+            console.log(barChartSummaryData.rawData[i].label + ' is NAN!');
+          }
+          sum += barChartSummaryData.rawData[i].data[full_len - 1];
         }
+        console.log(sum);
         barChartSummaryData.labels.push(title);
         barChartSummaryData.datasets = collapse(barChartSummaryData.rawData, $("#collapse").val(), 10);
         window.summaryBar.update();
@@ -291,7 +301,7 @@
   }
 
   var barChartSummaryData = {
-      labels: {% raw titles %},
+      labels: {% raw [b[0] + ' - ' + t for b, t in zip(barcodes, titles) ] %},
       datasets: [],
       rawData: {% raw datasets %}
   };

@@ -31,7 +31,7 @@ class EmperorHandler(BaseHandler):
 def _build_taxa(taxa_list):
     datasets = []
     for otu, value in taxa_list.items():
-        taxonomy = otu.split(';')
+        taxonomy = [x.strip() for x in otu.split(';')]
         # Find the highest classified level by looping backwards through
         # the list and breaking once we find the first classified level
         highest = ''
