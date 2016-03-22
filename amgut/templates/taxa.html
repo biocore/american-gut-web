@@ -63,12 +63,12 @@
       <option value="family">Family</option>
       <option value="genus">Genus</option>
     </select>
-    Category:<select id="meta_cat_fold">
+    Category:<select id="meta-cat-fold">
       <option value=""></option>
     {% for meta in meta_cats %}
       <option value="{{meta}}">{{meta}}</option>
     {% end %}
-    </select> <button onclick="fold_change($('#collapse-fold').val())">Compare</button>
+    </select>
   </div>
   <div style="width: 60%; float:left;">
       <canvas id="canvas-bar-fold"></canvas>
@@ -200,12 +200,20 @@
     return further_collapsed;
   }
 
-  function fold_change(collapsed_level) {
-    var level = collapsed_level || 'phylum';
-    var category = $("#meta_cat_fold").val();
+  function fold_change() {
+    var level = $("#collapse-fold").val();
+    var category = $("#meta-cat-fold").val();
     var barcode = $("#barcode-fold").val();
-    //Don't do anything if they submit on empty value
-    if(category === "" || barcode === "") { return; }
+    //Don't do anything if they submit on empty barcode value
+    if(barcode === "") { return; }
+    //If there's no category, just update alpha diversity graph to show new barcode
+    if(category === "") {
+      $("#alpha-div-image").attr("src", "/interactive/alpha_div/" + barcode);
+      barChartFoldData.labels = [];
+      barChartFoldData.datasets = [];
+      window.foldBar.update();
+      return;
+    }
 
     $.get('/interactive/metadata/', {category: category, barcode: barcode})
       .done(function (data) {
@@ -247,7 +255,6 @@
           label: "fold changes",
           data: fold_data
         }];
-        console.log(barChartFoldData.datasets);
         window.foldBar.update();
       })
       .fail(function () {
@@ -406,6 +413,10 @@
         barChartSummaryData.datasets = collapse(barChartSummaryData.rawData, $("#collapse").val(), 10);
         window.summaryBar.update();
       })
+
+      $("#collapse-fold").on("change", fold_change);
+      $("#barcode-fold").on("change", fold_change);
+      $("#meta-cat-fold").on("change", fold_change);
   };
 </script>
 {% end %}
