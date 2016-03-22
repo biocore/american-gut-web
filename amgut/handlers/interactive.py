@@ -97,7 +97,7 @@ class TaxaHandler(BaseHandler):
         meta_cats = ['age-baby', 'age-child', 'age-teen', 'age-20s', 'age-30s',
                      'age-40s', 'age-50s', 'age-60s', 'age-70+',
                      'bmi-Underweight', 'bmi-Normal', 'bmi-Overweight',
-                     'bmi-Obese''sex-male', 'sex-female', ]
+                     'bmi-Obese', 'sex-male', 'sex-female', ]
         self.render('taxa.html', titles=titles, barcodes=bc_info,
                     meta_cats=meta_cats, datasets=datasets)
 
@@ -119,9 +119,14 @@ class MetadataHandler(BaseHandler):
             site = self.get_argument('site')
         cat = self.get_argument('category')
         otus = defaultdict(list)
+        if not cat:
+            file = join(AMGUT_CONFIG.base_data_dir, 'taxa-summaries',
+                        'ag-%s.txt' % site)
+        else:
+            file = join(AMGUT_CONFIG.base_data_dir, 'taxa-summaries',
+                        'ag-%s-%s.txt' % (site, cat))
 
-        with open(join(AMGUT_CONFIG.base_data_dir, 'taxa-summaries',
-                  'ag-%s-%s.txt' % (site, cat)), 'rU') as f:
+        with open(file, 'rU') as f:
             # Read in counts
             for line in f:
                 otu, percent = line.strip().split('\t', 1)

@@ -74,7 +74,7 @@
       <option value="genus">Genus</option>
     </select>
     Category:<select id="meta-cat-fold">
-      <option value=""></option>
+      <option value="">All samples</option>
     {% for meta in meta_cats %}
       <option value="{{meta}}">{{meta}}</option>
     {% end %}
@@ -230,20 +230,16 @@
     var barcode = $("#barcode-fold").val();
     //Don't do anything if they submit on empty barcode value
     if(barcode === "") { return; }
-    //If there's no category, just update alpha diversity graph to show new barcode
+  
+    //Set alpha diversity image going first
     if(category === "") {
       $("#alpha-div-image").attr("src", "/interactive/alpha_div/" + barcode);
-      barChartFoldData.labels = [];
-      barChartFoldData.datasets = [];
-      window.foldBar.update();
-      return;
+    } else {
+        $("#alpha-div-image").attr("src", "/interactive/alpha_div/" + barcode + "?category=" + category);
     }
 
     $.get('/interactive/metadata/', {category: category, barcode: barcode})
       .done(function (data) {
-        //Set alpha diversity image going first
-        $("#alpha-div-image").attr("src", "/interactive/alpha_div/" + barcode + "?category=" + category);
-
         var fold_changes = [];
         var data_pos = barChartFoldData.barcodes.findIndex(function(y) { return barcode == y; });
         var data_len = barChartSummaryData.rawData[0].data.length;
@@ -301,7 +297,7 @@
         for(var i=0;i<data.length;i++) {
           var otu = data[i];
           var val = otu.data[0];
-          var existing = find_otu(barChartSummaryData.rawData, otu.full, 'full');
+          var existing = find_otu(barChartSummaryData.metaData, otu.full, 'full');
           if(existing == -1) {
             //add the OTU as zero for all existing labels, then add value from meta_cat
             otu.data = new Array(barChartSummaryData.labels.length+1).join('0').split('').map(parseFloat);
@@ -445,12 +441,13 @@
 
       $("#reset-summary").on("click", function () {
         $("#collapse").val('phylum');
-        barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, $("#collapse").val(), 10);
-        barChartSummaryData.labels = barChartSummaryData.rawLabels;
+        barChartSummaryData.datasets = collapse(barChartSummaryData.rawData, 'phylum', 10);
+        barChartSummaryData.labels = barChartSummaryData.rawLabels.slice(0);
         //re-add all remove links
         $.each($("td"), function( i, val ) { val.remove(); });
-        for(var i=0;i<barChartFoldData.labels.length;i++) {
+        for(var i=0;i<barChartSummaryData.labels.length;i++) {
           var rem = $('<td><a href="#" onclick="remove_sample(\'' + barChartFoldData.labels[i] + '\'); return false;">Remove</a></td>');
+          console.log(rem);
           $("#remove-row").append(rem);
         }
         window.summaryBar.update();
