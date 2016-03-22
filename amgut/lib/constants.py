@@ -1,0 +1,50 @@
+human_sites = ['Stool',
+               'Mouth',
+               'Right hand',
+               'Left hand',
+               'Forehead',
+               'Torso',
+               'Left leg',
+               'Right leg',
+               'Nares',
+               'Hair',
+               'Tears',
+               'Nasal mucus',
+               'Ear wax',
+               'Vaginal mucus']
+
+animal_sites = ['Stool',
+                'Mouth',
+                'Nares',
+                'Ears',
+                'Skin',
+                'Fur']
+
+general_sites = ['Animal Habitat',
+                 'Biofilm',
+                 'Dust',
+                 'Food',
+                 'Fermented Food',
+                 'Indoor Surface',
+                 'Outdoor Surface',
+                 'Plant habitat',
+                 'Soil',
+                 'Sole of shoe',
+                 'Water']
+
+collapse_human_sites = {
+    'Stool': 'stool',
+    'Mouth': 'oral',
+    'Right hand': 'skin',
+    'Left hand': 'skin',
+    'Forehead': 'skin',
+    'Torso': 'skin',
+    'Left leg': 'skin',
+    'Right leg': 'skin',
+    'Nares': '',
+    'Hair': '',
+    'Tears': '',
+    'Nasal mucus': '',
+    'Ear wax': '',
+    'Vaginal mucus': 'vaginal'
+    }

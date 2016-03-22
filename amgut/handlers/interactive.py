@@ -29,6 +29,12 @@ class EmperorHandler(BaseHandler):
 
 
 def _build_taxa(taxa_list):
+    def clean(taxa):
+            cleaned = taxa.split("__")[1]
+            if "[" in cleaned:
+                cleaned = "%s (Contested)" % cleaned.translate(None, '[]')
+            return cleaned
+
     datasets = []
     for otu, value in taxa_list.items():
         taxonomy = [x.strip() for x in otu.split(';')]
@@ -39,16 +45,17 @@ def _build_taxa(taxa_list):
             if not tax.endswith('__'):
                 highest = 'Unclassified (%s)' % tax.replace('__', '. ')
                 break
+
         datasets.append({
             'full': otu,
             'phylum': taxonomy[1].split("__")[1],
-            'class': taxonomy[2].split("__")[1] if not
+            'class': clean(taxonomy[2]) if not
             taxonomy[2].endswith('__') else highest,
-            'order': taxonomy[3].split("__")[1] if not
+            'order': clean(taxonomy[3]) if not
             taxonomy[3].endswith('__') else highest,
-            'family': taxonomy[4].split("__")[1] if not
+            'family': clean(taxonomy[4]) if not
             taxonomy[4].endswith('__') else highest,
-            'genus': taxonomy[5].split("__")[1] if not
+            'genus': clean(taxonomy[5]) if not
             taxonomy[5].endswith('__') else highest,
             'data': value
         })

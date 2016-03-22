@@ -32,40 +32,6 @@ KIT_VERCODE_NOZEROS = KIT_PASSWD_NOZEROS
 class AGDataAccess(object):
     """Data Access implementation for all the American Gut web portal
     """
-    # arbitrary, unique ID and value
-    human_sites = ['Stool',
-                   'Mouth',
-                   'Right hand',
-                   'Left hand',
-                   'Forehead',
-                   'Torso',
-                   'Left leg',
-                   'Right leg',
-                   'Nares',
-                   'Hair',
-                   'Tears',
-                   'Nasal mucus',
-                   'Ear wax',
-                   'Vaginal mucus']
-
-    animal_sites = ['Stool',
-                    'Mouth',
-                    'Nares',
-                    'Ears',
-                    'Skin',
-                    'Fur']
-
-    general_sites = ['Animal Habitat',
-                     'Biofilm',
-                     'Dust',
-                     'Food',
-                     'Fermented Food',
-                     'Indoor Surface',
-                     'Outdoor Surface',
-                     'Plant habitat',
-                     'Soil',
-                     'Sole of shoe',
-                     'Water']
 
     #####################################
     # Users

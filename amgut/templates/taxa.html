@@ -39,9 +39,9 @@
   </div>
   <div style="width: 100%;">
       <canvas id="canvas-bar-summary"></canvas>
-      <table style="width:94%; float:right;"><tr id="remove-row">
+      <table style="width:94%; float:right;" id="remove-table"><tr id="remove-row">
     {% for b, t in zip(barcodes, titles) %}
-      <td id="{% raw (b['barcode'] + ' - ' + t).replace(' ', '_') %}"><a href="#" onclick="remove_sample('{% raw b['barcode'] + ' - ' + t %}'); return false;">Remove (X)</a></td>
+      <td><a href="#" onclick="remove_sample('{% raw b['barcode'] + ' - ' + t %}'); return false;">Remove</a></td>
     {% end %}
       </tr></table>
   </div>
@@ -84,12 +84,16 @@
 </div>
 <script>
   var phylum_colors = {
-    'Bacteroidetes': ['pink', 'darkred'],
-    'Firmicutes': ['#FFD27F', '#BE5E00'],
-    'Actinobacteria': ['lightgreen', 'darkgreen'],
-    'Proteobacteria': ['lightblue', 'darkblue'],
-    'TM7': ['lightgrey', 'black']
+    'Firmicutes': ['pink', 'darkred'],
+    'Bacteroidetes': ['#FFD27F', '#BE5E00'],
+    'Proteobacteria': ['lightyellow', 'yellow'],
+    'Actinobacteria': ['#F3DBAB', '#735B2B'],
+    'Verrucomicrobia': ['#C5D991', '#465A12'],
+    'Tenericutes': ['lightgreen', 'darkgreen'],
+    'Cyanobacteria': ['lightcyan', 'darkcyan'],
+    'Fusobacteria': ['lightblue', 'darkblue']
   };
+  var phylum_order = ['Firmicutes', 'Bacteroidetes', 'Proteobacteria', 'Actinobacteria', 'Verrucomicrobia', 'Tenericutes', 'Cyanobacteria', 'Fusobacteria'];
 
   function group(list, prop) {
     var grouped = {};
@@ -156,30 +160,40 @@
     }
 
     //collapse further to max number of OTUs and color properly
-    //
-    var phyla_counts = {};
-    var further_collapsed = [];
+    // Making sure to keep phyla order
+    var phyla_dict = {};
     sorted = summaries.sort(function(a, b) { return b[1] - a[1]; });
     var loop = sorted.length;
     if(loop > max) { loop = max; }
     for(var i=0;i<loop;i++) {
-      further_collapsed.push(collapsed[sorted[i][0]]);
-      phyla_counts[collapsed[sorted[i][0]].phylum] = phyla_counts[collapsed[sorted[i][0]].phylum] + 1 || 1;
+      // Add to existing phylum list or create new if not exist
+      if(phyla_dict.hasOwnProperty(collapsed[sorted[i][0]].phylum)) {
+        phyla_dict[collapsed[sorted[i][0]].phylum].push(collapsed[sorted[i][0]]);
+      } else {
+        phyla_dict[collapsed[sorted[i][0]].phylum] = [collapsed[sorted[i][0]]];
+      }
+    }
+    further_collapsed = [];
+    for(var i=0;i<phylum_order.length;i++) {
+      p = phylum_order[i];
+      if(phyla_dict.hasOwnProperty(p)) {
+        further_collapsed = further_collapsed.concat(phyla_dict[p]);
+      }
     }
     // Recolor based on phyla counts, so each phyla is a different color, and those within phyla a different shade
     // of the same color
     phyla_colors = {};
-    for(phyla in phyla_counts) {
-      if(phyla_counts[phyla] == 1) {
+    for(phyla in phyla_dict) {
+      if(phyla_dict[phyla].length == 1) {
         //Get colors for known phyla or black
         var color = phylum_colors[phyla]  || ['#FFFFFF', '#000000'];
-        phyla_colors[phyla] = [chroma(color[1]).hex()];
+        phyla_colors[phyla] = [chroma.bezier(color).scale().colors(3)[1]];
       } else {
         //Get colors for known phyla or white to black
         if(phylum_colors[phyla]) {
-        phyla_colors[phyla] = chroma.scale([phylum_colors[phyla][0], phylum_colors[phyla][1]]).colors(phyla_counts[phyla]);
+        phyla_colors[phyla] = chroma.scale([phylum_colors[phyla][0], phylum_colors[phyla][1]]).colors(phyla_dict[phyla].length);
         } else {
-          phyla_colors[phyla] = chroma.scale(['#FFFFFF', '#000000']).colors(phyla_counts[phyla]);
+          phyla_colors[phyla] = chroma.scale(['#FFFFFF', '#000000']).colors(phyla_dict[phyla].length);
         }
       }
     }
@@ -304,7 +318,7 @@
         barChartSummaryData.labels.push(title);
         barChartSummaryData.datasets = collapse(barChartSummaryData.rawData, $("#collapse").val(), 10);
         window.summaryBar.update();
-        var rem = $('<td id="' + title.replace(" ", "_") + '"><a href="#" onclick="remove_sample(' + title + '); return false;">Remove (X)</a></td>');
+        var rem = $('<td><a href="#" onclick="remove_sample(\'' + title + '\'); return false;">Remove</a></td>');
         $("#remove-row").append(rem);
       })
       .fail(function () {
@@ -319,8 +333,7 @@
     }
     barChartSummaryData.labels.splice(data_pos, 1);
     window.summaryBar.update();
-    console.log(title.replace(" ", "_"));
-    $("#" + title.replace(" ", "_")).remove();
+    $("td").eq(data_pos).remove();
   }
 
   var barChartSummaryData = {
