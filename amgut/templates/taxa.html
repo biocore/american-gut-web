@@ -39,15 +39,20 @@
   </div>
   <div style="width: 100%;">
       <canvas id="canvas-bar-summary"></canvas>
+      <table style="width:94%; float:right;"><tr id="remove-row">
+    {% for pos in range(len(barcodes)) %}
+      <td><a href="#" onclick="remove_taxa({{pos}}); return false;">Remove (X)</a></td>
+    {% end %}
+      </tr></table>
   </div>
 </div>
-<div id="taxa-summary-text" style="position:relative;clear: left;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec cursus finibus dolor in lacinia. In ultricies aliquam ipsum in convallis. Aenean pellentesque egestas malesuada. Nam finibus nisi ut imperdiet tincidunt. Praesent a nibh a nisi ultrices pretium. Nullam ornare auctor enim ullamcorper aliquet. Integer tempus fringilla erat, accumsan convallis diam aliquet aliquam. Integer a tristique nunc. Morbi lobortis nec est sed tincidunt.
+<div id="taxa-summary-text" style="position:relative;clear: right; padding:5px">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec cursus finibus dolor in lacinia. In ultricies aliquam ipsum in convallis. Aenean pellentesque egestas malesuada. Nam finibus nisi ut imperdiet tincidunt. Praesent a nibh a nisi ultrices pretium. Nullam ornare auctor enim ullamcorper aliquet. Integer tempus fringilla erat, accumsan convallis diam aliquet aliquam. Integer a tristique nunc. Morbi lobortis nec est sed tincidunt.
 </div>
 <hr>
 <div id="taxa-fold-wrapper" style="width:100%; position: relative;">
   <h3>Explore a sample in detail</h3>
   <div id="taxa-fold-controls">
-    <p>Sample: 
+    <p>Sample:
     <select id="barcode-fold">
       <option value=""></option>
   {% for bc in barcodes %}
@@ -265,6 +270,7 @@
   function add_metadata_barchart() {
     var category = $("#meta_cat").val();
     var site = $("#meta_site").val();
+    var pos = barChartSummaryData.labels.length;
     //Don't do anything if they submit on empty value
     if(category.length == 0 || site.length == 0) { return; }
     var title = category + "  " + site;
@@ -292,15 +298,14 @@
         var sum = 0;
         for(var i=0;i<barChartSummaryData.rawData.length;i++) {
           if(barChartSummaryData.rawData[i].data.length < full_len) { barChartSummaryData.rawData[i].data.push(0.0); }
-          if(isNaN(barChartSummaryData.rawData[i].data[full_len - 1])) {
-            console.log(barChartSummaryData.rawData[i].label + ' is NAN!');
-          }
           sum += barChartSummaryData.rawData[i].data[full_len - 1];
         }
-        console.log(sum);
+
         barChartSummaryData.labels.push(title);
         barChartSummaryData.datasets = collapse(barChartSummaryData.rawData, $("#collapse").val(), 10);
         window.summaryBar.update();
+        var rem = $('<td><a href="#" onclick="remove_taxa(' + pos + '); return false;">Remove (X)</a></td>');
+        $("#remove-row").append(rem);
       })
       .fail(function () {
         alert ('FAIL!');
@@ -329,7 +334,7 @@
           barStrokeWidth:0,
           options: {
               legend: {
-                position: 'bottom'
+                position: 'top'
               },
               title:{
                   display:true,
