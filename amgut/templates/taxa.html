@@ -40,8 +40,8 @@
   <div style="width: 100%;">
       <canvas id="canvas-bar-summary"></canvas>
       <table style="width:94%; float:right;"><tr id="remove-row">
-    {% for pos in range(len(barcodes)) %}
-      <td><a href="#" onclick="remove_taxa({{pos}}); return false;">Remove (X)</a></td>
+    {% for b, t in zip(barcodes, titles) %}
+      <td id="{% raw (b['barcode'] + ' - ' + t).replace(' ', '_') %}"><a href="#" onclick="remove_sample('{% raw b['barcode'] + ' - ' + t %}'); return false;">Remove (X)</a></td>
     {% end %}
       </tr></table>
   </div>
@@ -226,7 +226,7 @@
         $("#alpha-div-image").attr("src", "/interactive/alpha_div/" + barcode + "?category=" + category);
 
         var fold_changes = [];
-        var data_pos = barChartFoldData.barcodes.findIndex(y => Object.is(barcode, y));
+        var data_pos = barChartFoldData.barcodes.findIndex(function(y) { return barcode == y; });
         var data_len = barChartFoldData.rawData[0].data.length;
         var collapsed = collapse(barChartFoldData.rawData, level, 10000);
         var data_collapsed = collapse(data, level, 10000);
@@ -304,12 +304,23 @@
         barChartSummaryData.labels.push(title);
         barChartSummaryData.datasets = collapse(barChartSummaryData.rawData, $("#collapse").val(), 10);
         window.summaryBar.update();
-        var rem = $('<td><a href="#" onclick="remove_taxa(' + pos + '); return false;">Remove (X)</a></td>');
+        var rem = $('<td id="' + title.replace(" ", "_") + '"><a href="#" onclick="remove_sample(' + title + '); return false;">Remove (X)</a></td>');
         $("#remove-row").append(rem);
       })
       .fail(function () {
         alert ('FAIL!');
       });
+  }
+
+  function remove_sample(title) {
+    var data_pos = barChartSummaryData.labels.findIndex(function(y) { return title == y; });
+    for(var i=0;i<barChartSummaryData.datasets.length;i++) {
+      barChartSummaryData.datasets[i].data.splice(data_pos, 1);
+    }
+    barChartSummaryData.labels.splice(data_pos, 1);
+    window.summaryBar.update();
+    console.log(title.replace(" ", "_"));
+    $("#" + title.replace(" ", "_")).remove();
   }
 
   var barChartSummaryData = {
