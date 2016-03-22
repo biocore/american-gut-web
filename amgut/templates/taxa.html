@@ -29,13 +29,13 @@
       <option value="genus">Genus</option>
     </select> <button id="reset-summary">Reset Graph</button><br/>
     Add
-    Site: <select id="meta_site">
+    Site: <select id="meta-site">
       <option value=""></option>
       <option value="stool">Stool</option>
       <option value="skin">Skin</option>
       <option value="oral">Oral</option>
     </select> 
-    Category:<select id="meta_cat">
+    Category:<select id="meta-cat">
       <option value=""></option>
     {% for meta in meta_cats %}
       <option value="{{meta}}">{{meta}}</option>
@@ -229,8 +229,14 @@
     var category = $("#meta-cat-fold").val();
     var barcode = $("#barcode-fold").val();
     //Don't do anything if they submit on empty barcode value
-    if(barcode === "") { return; }
-  
+    if(barcode === "") {
+      barChartFoldData.labels = [];
+      barChartFoldData.datasets = [];
+      window.foldBar.update();
+      $("#alpha-div-image").attr("src", "");
+      return;
+    }
+    //If there's no category, just update alpha diversity graph to show new barcode
     //Set alpha diversity image going first
     if(category === "") {
       $("#alpha-div-image").attr("src", "/interactive/alpha_div/" + barcode);
@@ -240,6 +246,9 @@
 
     $.get('/interactive/metadata/', {category: category, barcode: barcode})
       .done(function (data) {
+        //Set alpha diversity image going first
+        $("#alpha-div-image").attr("src", "/interactive/alpha_div/" + barcode + "?category=" + category);
+
         var fold_changes = [];
         var data_pos = barChartFoldData.barcodes.findIndex(function(y) { return barcode == y; });
         var data_len = barChartSummaryData.rawData[0].data.length;
@@ -283,8 +292,8 @@
   }
 
   function add_metadata_barchart() {
-    var category = $("#meta_cat").val();
-    var site = $("#meta_site").val();
+    var category = $("#meta-cat").val();
+    var site = $("#meta-site").val();
     var pos = barChartSummaryData.labels.length;
     //Don't do anything if they submit on empty value
     if(category.length == 0 || site.length == 0) { return; }
@@ -292,14 +301,14 @@
     //column already in graph, so don't add again
     if(barChartSummaryData.labels.indexOf(title) != -1) { return; }
 
-    $.get('/interactive/metadata/', {category: $("#meta_cat").val(), site: $("#meta_site").val()})
+    $.get('/interactive/metadata/', {category: $("#meta-cat").val(), site: $("#meta-site").val()})
       .done(function (data) {
         for(var i=0;i<data.length;i++) {
           var otu = data[i];
           var val = otu.data[0];
           var existing = find_otu(barChartSummaryData.metaData, otu.full, 'full');
           if(existing == -1) {
-            //add the OTU as zero for all existing labels, then add value from meta_cat
+            //add the OTU as zero for all existing labels, then add value from meta-cat
             otu.data = new Array(barChartSummaryData.labels.length+1).join('0').split('').map(parseFloat);
             otu.data.push(val);
             barChartSummaryData.metaData.push(otu);
@@ -308,7 +317,7 @@
             barChartSummaryData.metaData[existing].data.push(val);
           }
         }
-        //Loop over raw data and add 0 to any OTUs that are in raw data but not in meta_cat
+        //Loop over raw data and add 0 to any OTUs that are in raw data but not in meta-cat
         var full_len = barChartSummaryData.labels.length + 1;
         var sum = 0;
         for(var i=0;i<barChartSummaryData.metaData.length;i++) {
@@ -452,7 +461,15 @@
         }
         window.summaryBar.update();
       })
-
+      $("#meta-site").on("change", function (evt) {
+        if($("#meta-site").val() == "") {
+          $("#meta-cat").val("");
+          $("#meta-cat").prop("disabled", true);
+        } else {
+          $("#meta-cat").prop("disabled", false);;
+        }
+      });
+      $("#meta-cat").prop("disabled", true);
       $("#collapse-fold").on("change", fold_change);
       $("#barcode-fold").on("change", fold_change);
       $("#meta-cat-fold").on("change", fold_change);
