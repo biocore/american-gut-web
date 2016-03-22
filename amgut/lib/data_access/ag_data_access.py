@@ -640,14 +640,12 @@ class AGDataAccess(object):
 
         Returns
         -------
-        list of [str, datetime]
-          List of all barcodes that have been logged by the user and when they
-          were logged
+        list of dict of object
+          List of all barcodes that have been logged by the user, with all
+          information in the ag_kit_barcodes table
         """
-        sql = """SELECT DISTINCT barcode,
-               (sample_date::varchar || ' ' || sample_time::varchar)::timestamp
-               as sample_date
-                 FROM ag_kit_barcodes
+        sql = """SELECT DISTINCT AKB.*
+                 FROM ag_kit_barcodes AKB
                  RIGHT JOIN ag_kit USING (ag_kit_id)
                  RIGHT JOIN ag_login USING (ag_login_id)
                  WHERE ag_login_id = %s
@@ -661,7 +659,7 @@ class AGDataAccess(object):
         sql += " ORDER BY sample_date ASC"
         with TRN:
             TRN.add(sql, sql_args)
-            return TRN.execute_fetchindex()
+            return [dict(x) for x in TRN.execute_fetchindex()]
 
     def get_nonconsented_scanned_barcodes(self, kit_id):
         """Returns list of barcodes that have been scanned but not consented

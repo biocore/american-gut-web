@@ -59,22 +59,22 @@ class TaxaHandler(BaseHandler):
     @authenticated
     def get(self):
         user = ag_data.get_user_for_kit(self.current_user)
-        barcodes = ag_data.get_barcodes_by_user(user, results=True)
-        titles = [dt.strftime('%b %d, %Y') for bc, dt in barcodes]
+        bc_info = ag_data.get_barcodes_by_user(user, results=True)
+        titles = [bc['sample_date'].strftime('%b %d, %Y') for bc in bc_info]
         otus = {}
         files = []
         # Load in all possible OTUs that can be seen by loading files to memory
         # Files are small (5kb) so this should be fine.
-        for barcode in barcodes:
+        for barcode in bc_info:
             with open(join(AMGUT_CONFIG.base_data_dir, 'taxa-summaries',
-                      '%s.txt' % barcode[0])) as f:
+                      '%s.txt' % barcode['barcode'])) as f:
                 f.readline()
                 files.append(f.readlines())
             for line in files[-1]:
                 otus[line.split('\t')[0]] = []
 
         # Read in counts
-        for barcode, file in zip(barcodes, files):
+        for file in files:
             seen_otus = set()
             for line in file:
                 otu, percent = line.strip().split('\t', 1)
@@ -91,7 +91,7 @@ class TaxaHandler(BaseHandler):
                      'age-40s', 'age-50s', 'age-60s', 'age-70+',
                      'bmi-Underweight', 'bmi-Normal', 'bmi-Overweight',
                      'bmi-Obese''sex-male', 'sex-female', ]
-        self.render('taxa.html', titles=titles, barcodes=barcodes,
+        self.render('taxa.html', titles=titles, barcodes=bc_info,
                     meta_cats=meta_cats, datasets=datasets)
 
 
@@ -101,7 +101,7 @@ class MetadataHandler(BaseHandler):
         user = ag_data.get_user_for_kit(self.current_user)
         barcode = self.get_argument('barcode', False)
         if barcode:
-            barcodes = [b[0] for b in
+            barcodes = [b['barcode'] for b in
                         ag_data.get_barcodes_by_user(user, results=True)]
             # Make sure barcode passed is owned by the user
             if barcode not in barcodes:
@@ -127,7 +127,7 @@ class AlphaDivImgHandler(BaseHandler):
     @authenticated
     def get(self, barcode):
         user = ag_data.get_user_for_kit(self.current_user)
-        barcodes = [b[0] for b in
+        barcodes = [b['barcode'] for b in
                     ag_data.get_barcodes_by_user(user)]
         # Make sure barcode passed is owned by the user
         if barcode not in barcodes:

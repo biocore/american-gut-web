@@ -50,8 +50,8 @@
     <p>Sample: 
     <select id="barcode-fold">
       <option value=""></option>
-  {% for bc, t in barcodes %}
-      <option value="{{bc}}">{{bc}} - {{t.strftime('%b %d, %Y')}}</option>
+  {% for bc in barcodes %}
+      <option value="{{bc['barcode']}}">{{bc['barcode']}} - {{bc['sample_date'].strftime('%b %d, %Y')}}</option>
   {% end %}
     </select><p>
     Compare with population averages<br/>
@@ -308,14 +308,14 @@
   }
 
   var barChartSummaryData = {
-      labels: {% raw [b[0] + ' - ' + t for b, t in zip(barcodes, titles) ] %},
+      labels: {% raw [b['barcode'] + ' - ' + t for b, t in zip(barcodes, titles) ] %},
       datasets: [],
       rawData: {% raw datasets %}
   };
   var barChartFoldData = {
       labels: [],
       datasets: [],
-      barcodes: {% raw [b[0] for b in barcodes] %},
+      barcodes: {% raw [b['barcode'] for b in barcodes] %},
       titles: {% raw titles %},
       rawData: {% raw datasets %}
   };
