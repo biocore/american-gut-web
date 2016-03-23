@@ -43,9 +43,12 @@
 			<column name="date_signed" type="date" jt="91" />
 			<column name="assent_obtainer" type="varchar" length="2147483647" jt="12" />
 			<column name="age_range" type="varchar" length="2147483647" jt="12" />
-			<column name="redcap_record_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="redcap_record_id" type="bigserial" jt="-5" mandatory="y" />
 			<column name="lang" type="varchar" length="5" jt="12" mandatory="y" >
 				<defo>&#039;en-US&#039;</defo>
+			</column>
+			<column name="type" type="varchar" jt="12" mandatory="y" >
+				<comment><![CDATA[Type of consent (human, animal, environmental, etc.)]]></comment>
 			</column>
 			<index name="pk_american_gut_consent" unique="PRIMARY_KEY" >
 				<column name="ag_login_id" />
@@ -22653,7 +22656,6 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="ag_participant_exceptions" color="f7e2c6" x="690" y="360" />
 		<entity schema="ag" name="ag_kit" color="f7e2c6" x="495" y="75" />
 		<entity schema="ag" name="ag_login" color="f7e2c6" x="735" y="75" />
-		<entity schema="ag" name="ag_consent" color="c6d9f7" x="1110" y="45" />
 		<entity schema="ag" name="ag_login_surveys" color="ffcccc" x="1440" y="45" />
 		<entity schema="ag" name="languages" color="b7c8e3" x="1320" y="165" />
 		<entity schema="ag" name="redcap_instruments" color="b7c8e3" x="1440" y="195" />
@@ -22667,6 +22669,7 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="controlled_vocabs" color="c6c6f7" x="45" y="1830" />
 		<entity schema="ag" name="zipcodes" color="c6c6f7" x="1155" y="420" />
 		<entity schema="ag" name="settings" color="a8c4ef" x="990" y="420" />
+		<entity schema="ag" name="ag_consent" color="c6d9f7" x="1110" y="45" />
 		<group name="ag_kits_barcodes" color="faf6f0" >
 			<comment><![CDATA[Used by :    american_gut_consent]]></comment>
 			<entity schema="ag" name="ag_kit" />

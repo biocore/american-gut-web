@@ -10,6 +10,7 @@ INSERT INTO ag.languages (lang) VALUES ('en-US'), ('en-GB');
 ALTER TABLE ag.ag_consent ADD COLUMN redcap_record_id bigserial UNIQUE NOT NULL;
 ALTER TABLE ag.ag_consent ADD COLUMN lang varchar(5) NOT NULL DEFAULT 'en-US';
 ALTER TABLE ag.ag_consent ADD CONSTRAINT fk_language FOREIGN KEY ( lang ) REFERENCES ag.languages( lang );
+-- Create type column and set it to human or animal for current surveys
 ALTER TABLE ag.ag_consent ADD COLUMN type varchar NOT NULL DEFAULT 'human';
 UPDATE ag.ag_consent SET type='animal' WHERE parent_1_name = 'ANIMAL_SURVEY';
 ALTER TABLE ag.ag_consent ALTER COLUMN type DROP DEFAULT;
