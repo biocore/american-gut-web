@@ -721,6 +721,14 @@ class TestAGDataAccess(TestCase):
         self.assertIn('United States', obs)
         self.assertIn('United Kingdom', obs)
 
+    def test_is_deposited_ebi(self):
+        obs = self.ag_data.is_deposited_ebi('000027262')
+        self.assertFalse(obs)
+
+    def test_is_deposited_ebi_bad_barcode(self):
+        with self.assertRaises(ValueError):
+            self.ag_data.is_deposited_ebi('NOTABARCODE')
+
 
 if __name__ == "__main__":
     main()

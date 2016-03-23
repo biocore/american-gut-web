@@ -56,6 +56,7 @@
                     </ul>
                 </td>
             </tr>
+{% if not ebi_submitted %}
             <tr>
                 <td colspan="2">
                     <form action="{% raw media_locale['SITEBASE'] %}/participants/{{ url_escape(participant_name) }}" method="post" id="remove_participant_{{participant_name}}">
@@ -64,6 +65,7 @@
                     </form>
                 </td>
             </tr>
+{% end %}
         </table>
     </div>
 </div>
