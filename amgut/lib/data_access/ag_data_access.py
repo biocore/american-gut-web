@@ -19,6 +19,7 @@ import psycopg2
 from passlib.hash import bcrypt
 
 from amgut.lib.data_access.sql_connection import TRN
+from amgut import AMGUT_CONFIG
 from amgut.lib.data_access.redcap import create_record
 
 
@@ -156,6 +157,17 @@ class AGDataAccess(object):
                               country])
                 ag_login_id = TRN.execute_fetchlast()
             return ag_login_id
+
+    def log_portal(self, supplied_kit_id):
+        """Logs what portal the user just logged in with to the DB
+
+        supplied_kit_id : str
+            kit ID user logged in with
+        """
+        with TRN:
+            ag_login_id = self.get_user_for_kit(supplied_kit_id)
+            sql = "UPDATE ag.ag_login SET portal = %s WHERE ag_login_id = %s"
+            TRN.add(sql, [AMGUT_CONFIG.sitebase, ag_login_id])
 
     def getAGBarcodeDetails(self, barcode):
         """Returns information about the barcode from both AG and standard info

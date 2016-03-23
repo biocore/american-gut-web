@@ -113,7 +113,7 @@ def get_survey_url(record, instrument='ag-human-en-US'):
         return _make_request(data)
 
 
-def log_complete(record, instrument, event):
+def log_complete(record, instrument, survey_id):
     """Logs a redcap survey as completed in the database
 
     Parameters
@@ -122,15 +122,17 @@ def log_complete(record, instrument, event):
         record to log for
     instrument : str
         The instrument (survey) to log for
-    event : int
-        Event to log for
+    survey_id : str
+        Survey ID for this survey
     """
     with TRN:
         sql = """INSERT INTO ag.ag_login_surveys
-                 (redcap_instrument_id, redcap_record_id,
+                 (redcap_instrument_id, redcap_record_id, survey_id,
                   redcap_event_id)
-                 VALUES (%s, %s, %s)"""
-        TRN.add(sql, [instrument, record, event])
+                 (SELECT %s, %s, %s, max(redcap_event_id) + 1
+                  FROM ag.ag_login_surveys
+                  WHERE redcap_record_id = %s)"""
+        TRN.add(sql, [instrument, record, survey_id, record])
         TRN.execute()
 
 

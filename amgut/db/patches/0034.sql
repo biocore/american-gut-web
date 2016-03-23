@@ -1,4 +1,10 @@
 --Feb 10, 2016
+-- Add column to login to track portal usage
+ALTER TABLE ag.ag_login ADD portal varchar  NOT NULL DEFAULT 'AmericanGut';
+ALTER TABLE ag.ag_login ALTER COLUMN portal DROP DEFAULT;
+COMMENT ON COLUMN ag.ag_login.portal IS 'What portal this user logs in on';
+
+
 --Create and rearrange tables for redcap survey integration
 CREATE TABLE ag.languages ( 
     lang                 varchar(5)  NOT NULL,

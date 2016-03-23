@@ -60,4 +60,4 @@ class NewParticipantHandler(BaseHandler):
         record_id = ag_data.store_consent(consent)
         survey_id = binascii.hexlify(os.urandom(8))
         url = get_survey_url(record_id, instrument=instrument)
-        self.redirect(url + "?survey_id=" + survey_id)
+        self.redirect("%s&survey_id=%s" % (url, survey_id))

@@ -101,6 +101,7 @@ class AuthLoginHandler(AuthBasehandler):
         if login:
             # everything good so log in
             self.set_current_user(skid)
+            ag_data.log_portal(skid)
             default_redirect = media_locale['SITEBASE'] + '/authed/portal/'
             self.redirect(self.get_argument('next', default_redirect))
             return

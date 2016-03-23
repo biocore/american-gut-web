@@ -1275,47 +1275,6 @@ The Open Humans access token corresponding to the Open Humans user that has auth
   <a xlink:href='#ag_kit.registered_on'><text id='ag.ag_kit.registered_on' x='513' y='292'>registered_on</text><title>registered_on
 timestamp default current_timestamp</title></a>
 
-<!-- ============= Table 'ag_login' ============= -->
-<rect class='table' x='735' y='68' width='120' height='225' rx='7' ry='7' />
-<line class='delim' x1='735.500000' y1='94.500000' x2='854.500000' y2='94.500000'/>
-<line class='delim' x1='750.500000' y1='94.500000' x2='750.500000' y2='292.500000'/>
-<line class='delim' x1='843.500000' y1='94.500000' x2='843.500000' y2='292.500000'/>
-<path d='M 735.50 94.50 L 735.50 75.50 Q 735.50 68.50 742.50 68.50 L 847.50 68.50 Q 854.50 68.50 854.50 75.50 L 854.50 94.50 L735.50 94.50 ' style='fill:url(#tableHeaderGradient6); stroke:none;' />
-<a xlink:href='#ag_login'><text x='769' y='86'>ag_login</text><title>Table ag.ag_login</title></a>
-  <use id='nn' x='737' y='102' xlink:href='#nn'/><a xlink:href='#ag_login.ag_login_id'><use id='pk' x='737' y='101' xlink:href='#pk'/><title>Pk ag_login_pkey ( ag_login_id ) </title></a>
-<a xlink:href='#ag_login.ag_login_id'><text id='ag.ag_login.ag_login_id' x='753' y='112' onmouseover="hghl(['ag_animal_survey_fk_ag_animal_surv_to_ag_login','ag_consent_fk_american_gut_consent','ag_human_survey_fk_ag_hum_surv_to_ag_login','ag_kit_fk_ag_kit_to_login_id','ag_participant_exceptions_fk_ag_participant_exceptions','ag_survey_answer_fk_sur_an_to_ag_login','ag_survey_multiples_fk_ag_mul_to_ag_login','consent_revoked_fk_consent_revoked'])" onmouseout="uhghl(['ag_animal_survey_fk_ag_animal_surv_to_ag_login','ag_consent_fk_american_gut_consent','ag_human_survey_fk_ag_hum_surv_to_ag_login','ag_kit_fk_ag_kit_to_login_id','ag_participant_exceptions_fk_ag_participant_exceptions','ag_survey_answer_fk_sur_an_to_ag_login','ag_survey_multiples_fk_ag_mul_to_ag_login','consent_revoked_fk_consent_revoked'])">ag_login_id</text><title>ag_login_id
-* uuid default ag.uuid_generate_v4()</title></a>
-<a xlink:href='#ag_login.ag_login_id'><use id='ref' x='843' y='101' xlink:href='#ref'/><title>Referred by ag_animal_survey ( ag_login_id ) 
-Referred by ag_consent ( ag_login_id ) 
-Referred by ag_human_survey ( ag_login_id ) 
-Referred by ag_kit ( ag_login_id ) 
-Referred by ag_participant_exceptions ( ag_login_id ) 
-Referred by ag_survey_answer ( ag_login_id ) 
-Referred by ag_survey_multiples ( ag_login_id ) 
-Referred by consent_revoked ( ag_login_id ) </title></a>
-  <a xlink:href='#ag_login.email'><text id='ag.ag_login.email' x='753' y='127'>email</text><title>email
-varchar(100)</title></a>
-  <a xlink:href='#ag_login.name'><text id='ag.ag_login.name' x='753' y='142'>name</text><title>name
-varchar(200)</title></a>
-  <a xlink:href='#ag_login.address'><text id='ag.ag_login.address' x='753' y='157'>address</text><title>address
-varchar(500)</title></a>
-  <a xlink:href='#ag_login.city'><text id='ag.ag_login.city' x='753' y='172'>city</text><title>city
-varchar(100)</title></a>
-  <a xlink:href='#ag_login.state'><text id='ag.ag_login.state' x='753' y='187'>state</text><title>state
-varchar(100)</title></a>
-  <a xlink:href='#ag_login.zip'><text id='ag.ag_login.zip' x='753' y='202'>zip</text><title>zip
-varchar(10)</title></a>
-  <a xlink:href='#ag_login.country'><text id='ag.ag_login.country' x='753' y='217'>country</text><title>country
-varchar(100)</title></a>
-  <a xlink:href='#ag_login.latitude'><text id='ag.ag_login.latitude' x='753' y='232'>latitude</text><title>latitude
-float8</title></a>
-  <a xlink:href='#ag_login.longitude'><text id='ag.ag_login.longitude' x='753' y='247'>longitude</text><title>longitude
-float8</title></a>
-  <a xlink:href='#ag_login.cannot_geocode'><text id='ag.ag_login.cannot_geocode' x='753' y='262'>cannot_geocode</text><title>cannot_geocode
-char(1)</title></a>
-  <a xlink:href='#ag_login.elevation'><text id='ag.ag_login.elevation' x='753' y='277'>elevation</text><title>elevation
-float8</title></a>
-
 <!-- ============= Table 'ag_login_surveys' ============= -->
 <rect class='table' x='1440' y='38' width='150' height='135' rx='7' ry='7' />
 <line class='delim' x1='1440.500000' y1='64.500000' x2='1589.500000' y2='64.500000'/>
@@ -1879,6 +1838,50 @@ varchar(2147483647)</title></a>
   <use id='nn' x='1112' y='282' xlink:href='#nn'/><a xlink:href='#ag_consent.type'><text id='ag.ag_consent.type' x='1128' y='292'>type</text><title>type
 * varchar
 Type of consent (human, animal, environmental, etc.)</title></a>
+
+<!-- ============= Table 'ag_login' ============= -->
+<rect class='table' x='735' y='68' width='120' height='240' rx='7' ry='7' />
+<line class='delim' x1='735.500000' y1='94.500000' x2='854.500000' y2='94.500000'/>
+<line class='delim' x1='750.500000' y1='94.500000' x2='750.500000' y2='307.500000'/>
+<line class='delim' x1='843.500000' y1='94.500000' x2='843.500000' y2='307.500000'/>
+<path d='M 735.50 94.50 L 735.50 75.50 Q 735.50 68.50 742.50 68.50 L 847.50 68.50 Q 854.50 68.50 854.50 75.50 L 854.50 94.50 L735.50 94.50 ' style='fill:url(#tableHeaderGradient6); stroke:none;' />
+<a xlink:href='#ag_login'><text x='769' y='86'>ag_login</text><title>Table ag.ag_login</title></a>
+  <use id='nn' x='737' y='102' xlink:href='#nn'/><a xlink:href='#ag_login.ag_login_id'><use id='pk' x='737' y='101' xlink:href='#pk'/><title>Pk ag_login_pkey ( ag_login_id ) </title></a>
+<a xlink:href='#ag_login.ag_login_id'><text id='ag.ag_login.ag_login_id' x='753' y='112' onmouseover="hghl(['ag_animal_survey_fk_ag_animal_surv_to_ag_login','ag_consent_fk_american_gut_consent','ag_human_survey_fk_ag_hum_surv_to_ag_login','ag_kit_fk_ag_kit_to_login_id','ag_participant_exceptions_fk_ag_participant_exceptions','ag_survey_answer_fk_sur_an_to_ag_login','ag_survey_multiples_fk_ag_mul_to_ag_login','consent_revoked_fk_consent_revoked'])" onmouseout="uhghl(['ag_animal_survey_fk_ag_animal_surv_to_ag_login','ag_consent_fk_american_gut_consent','ag_human_survey_fk_ag_hum_surv_to_ag_login','ag_kit_fk_ag_kit_to_login_id','ag_participant_exceptions_fk_ag_participant_exceptions','ag_survey_answer_fk_sur_an_to_ag_login','ag_survey_multiples_fk_ag_mul_to_ag_login','consent_revoked_fk_consent_revoked'])">ag_login_id</text><title>ag_login_id
+* uuid default ag.uuid_generate_v4()</title></a>
+<a xlink:href='#ag_login.ag_login_id'><use id='ref' x='843' y='101' xlink:href='#ref'/><title>Referred by ag_animal_survey ( ag_login_id ) 
+Referred by ag_consent ( ag_login_id ) 
+Referred by ag_human_survey ( ag_login_id ) 
+Referred by ag_kit ( ag_login_id ) 
+Referred by ag_participant_exceptions ( ag_login_id ) 
+Referred by ag_survey_answer ( ag_login_id ) 
+Referred by ag_survey_multiples ( ag_login_id ) 
+Referred by consent_revoked ( ag_login_id ) </title></a>
+  <a xlink:href='#ag_login.email'><text id='ag.ag_login.email' x='753' y='127'>email</text><title>email
+varchar(100)</title></a>
+  <a xlink:href='#ag_login.name'><text id='ag.ag_login.name' x='753' y='142'>name</text><title>name
+varchar(200)</title></a>
+  <a xlink:href='#ag_login.address'><text id='ag.ag_login.address' x='753' y='157'>address</text><title>address
+varchar(500)</title></a>
+  <a xlink:href='#ag_login.city'><text id='ag.ag_login.city' x='753' y='172'>city</text><title>city
+varchar(100)</title></a>
+  <a xlink:href='#ag_login.state'><text id='ag.ag_login.state' x='753' y='187'>state</text><title>state
+varchar(100)</title></a>
+  <a xlink:href='#ag_login.zip'><text id='ag.ag_login.zip' x='753' y='202'>zip</text><title>zip
+varchar(10)</title></a>
+  <a xlink:href='#ag_login.country'><text id='ag.ag_login.country' x='753' y='217'>country</text><title>country
+varchar(100)</title></a>
+  <a xlink:href='#ag_login.latitude'><text id='ag.ag_login.latitude' x='753' y='232'>latitude</text><title>latitude
+float8</title></a>
+  <a xlink:href='#ag_login.longitude'><text id='ag.ag_login.longitude' x='753' y='247'>longitude</text><title>longitude
+float8</title></a>
+  <a xlink:href='#ag_login.cannot_geocode'><text id='ag.ag_login.cannot_geocode' x='753' y='262'>cannot_geocode</text><title>cannot_geocode
+char(1)</title></a>
+  <a xlink:href='#ag_login.elevation'><text id='ag.ag_login.elevation' x='753' y='277'>elevation</text><title>elevation
+float8</title></a>
+  <use id='nn' x='737' y='282' xlink:href='#nn'/><a xlink:href='#ag_login.portal'><text id='ag.ag_login.portal' x='753' y='292'>portal</text><title>portal
+* varchar
+What portal this user logs in on</title></a>
 
 </g></svg>
 
@@ -3338,92 +3341,6 @@ Type of consent (human, animal, environmental, etc.)</title></a>
 	<tr>
 		<td>&nbsp;</td><td>fk_ag_kit_to_login_id</td>
 		<td > ( ag&#95;login&#95;id ) ref <a href='#ag&#95;login'>ag&#95;login</a> (ag&#95;login&#95;id) </td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table class='bordered'>
-<thead>
-<tr><th colspan='4'><a name='ag_login'>Table ag_login</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td>*</td>
-		<td><a name='ag_login.ag_login_id'>ag&#95;login&#95;id</a></td>
-		<td> uuid   DEFO ag.uuid_generate_v4() </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_login.email'>email</a></td>
-		<td> varchar&#40; 100 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_login.name'>name</a></td>
-		<td> varchar&#40; 200 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_login.address'>address</a></td>
-		<td> varchar&#40; 500 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_login.city'>city</a></td>
-		<td> varchar&#40; 100 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_login.state'>state</a></td>
-		<td> varchar&#40; 100 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_login.zip'>zip</a></td>
-		<td> varchar&#40; 10 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_login.country'>country</a></td>
-		<td> varchar&#40; 100 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_login.latitude'>latitude</a></td>
-		<td> float8   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_login.longitude'>longitude</a></td>
-		<td> float8   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_login.cannot_geocode'>cannot&#95;geocode</a></td>
-		<td> char&#40; 1 &#41;   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='ag_login.elevation'>elevation</a></td>
-		<td> float8   </td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='4'><b>Indexes</b></th></tr>
-	<tr>		<td>Pk</td><td>ag&#95;login&#95;pkey</td>
-		<td> ON ag&#95;login&#95;id</td>
 		<td>  </td>
 	</tr>
 </tbody>
@@ -4894,6 +4811,98 @@ Type of consent (human, animal, environmental, etc.)</title></a>
 	<tr>
 		<td>&nbsp;</td><td>fk_ag_consent</td>
 		<td > ( lang ) ref <a href='#languages'>languages</a> (lang) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='ag_login'>Table ag_login</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='ag_login.ag_login_id'>ag&#95;login&#95;id</a></td>
+		<td> uuid   DEFO ag.uuid_generate_v4() </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_login.email'>email</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_login.name'>name</a></td>
+		<td> varchar&#40; 200 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_login.address'>address</a></td>
+		<td> varchar&#40; 500 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_login.city'>city</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_login.state'>state</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_login.zip'>zip</a></td>
+		<td> varchar&#40; 10 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_login.country'>country</a></td>
+		<td> varchar&#40; 100 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_login.latitude'>latitude</a></td>
+		<td> float8   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_login.longitude'>longitude</a></td>
+		<td> float8   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_login.cannot_geocode'>cannot&#95;geocode</a></td>
+		<td> char&#40; 1 &#41;   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='ag_login.elevation'>elevation</a></td>
+		<td> float8   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='ag_login.portal'>portal</a></td>
+		<td> varchar   </td>
+		<td> What portal this user logs in on </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>Pk</td><td>ag&#95;login&#95;pkey</td>
+		<td> ON ag&#95;login&#95;id</td>
 		<td>  </td>
 	</tr>
 </tbody>
