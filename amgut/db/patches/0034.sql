@@ -8,9 +8,11 @@ COMMENT ON COLUMN ag.languages.lang IS 'ISO 639-1 language code with sub-code';
 INSERT INTO ag.languages (lang) VALUES ('en-US'), ('en-GB');
 
 ALTER TABLE ag.ag_consent ADD COLUMN redcap_record_id bigserial UNIQUE NOT NULL;
-ALTER TABLE ag.ag_consent ALTER COLUMN redcap_record_id TYPE bigint;
 ALTER TABLE ag.ag_consent ADD COLUMN lang varchar(5) NOT NULL DEFAULT 'en-US';
 ALTER TABLE ag.ag_consent ADD CONSTRAINT fk_language FOREIGN KEY ( lang ) REFERENCES ag.languages( lang );
+ALTER TABLE ag.ag_consent ADD COLUMN type varchar NOT NULL DEFAULT 'human';
+UPDATE ag.ag_consent SET type='animal' WHERE parent_1_name = 'ANIMAL_SURVEY';
+ALTER TABLE ag.ag_consent ALTER COLUMN type DROP DEFAULT;
 
 CREATE TABLE ag.survey_types (
     survey_type          varchar  NOT NULL,
@@ -37,7 +39,7 @@ COMMENT ON COLUMN ag.redcap_instruments.secondary IS 'If this is a secondary sur
 ALTER TABLE ag.redcap_instruments ADD CONSTRAINT fk_redcap_instruments FOREIGN KEY ( lang ) REFERENCES ag.languages( lang );
 ALTER TABLE ag.redcap_instruments ADD CONSTRAINT fk_redcap_instruments_0 FOREIGN KEY ( survey_type ) REFERENCES ag.survey_types( survey_type );
 INSERT INTO ag.redcap_instruments (redcap_instrument_id,survey_type, survey_name, description, lang, secondary) VALUES
-  ('human_en_us', 'Human', 'American Gut Human Survey', 'General human survey for the American Gut Project', 'en-US', 'F');
+  ('ag-human-en-US', 'Human', 'American Gut Human Survey', 'General human survey for the American Gut Project', 'en-US', 'F');
 
 ALTER TABLE ag.ag_login_surveys
 ADD COLUMN  redcap_instrument_id varchar(500),

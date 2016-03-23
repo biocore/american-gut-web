@@ -19,7 +19,61 @@ def _make_request(data):
     return response.body
 
 
-def get_survey_url(record, instrument='ag_human_en_us'):
+def get_instrument(participant_type, language):
+    """Returns the instrument name for a given participant and parameters
+
+    participant_type : {human, animal, environmental}
+        What survey type to get
+    language : str
+        What language the person is consented in
+    """
+    return "ag-%s-%s" % (participant_type, language)
+
+
+def create_record(record_id, ag_login_id, participant_name):
+    """Creates a new record on redcap for the participant
+
+    Parameters
+    ----------
+    record_id : int
+        record ID to add
+    ag_login_id : UUID4
+        Login ID to associate the record with
+    participant_name : str
+        participant name to associate the record with
+    """
+    info = '''<?xml version="1.0" encoding="UTF-8" ?>
+    <records>
+       <item>
+          <record>%(record)d</record>
+          <field_name>ag_login_id</field_name>
+          <value>%(login)s</value>
+          <redcap_event_name>event_1_arm_1</redcap_event_name>
+       </item>
+       <item>
+          <record>%(record)d</record>
+          <field_name>participant_name</field_name>
+          <value>%(name)s</value>
+          <redcap_event_name>event_1_arm_1</redcap_event_name>
+       </item>
+    </records>''' % {'record': record_id, 'login': ag_login_id,
+                     'name': participant_name}
+    data = {
+        'token': AMGUT_CONFIG.redcap_token,
+        'content': 'record',
+        'format': 'json',
+        'type': 'eav',
+        'overwriteBehavior': 'normal',
+        'data': info,
+        'dateFormat': 'MDY',
+        'returnContent': 'count',
+        'returnFormat': 'json',
+        'record_id': record_id
+    }
+    return _make_request(data)
+
+
+def get_survey_url(record, instrument='ag-human-en-US'):
     """Genereates a new survey link for a given record
 
     Parameters
@@ -51,11 +105,12 @@ def get_survey_url(record, instrument='ag_human_en_us'):
             'token': AMGUT_CONFIG.redcap_token,
             'content': 'surveyLink',
             'format': 'json',
-            'instrument': 'ag_human',
+            'instrument': instrument.lower().replace('-', ''),
             'event': 'event_%d_arm_1' % event,
             'record': record,
             'returnFormat': 'json'
         }
+        print data
         return _make_request(data)
 
 

@@ -19,6 +19,7 @@ import psycopg2
 from passlib.hash import bcrypt
 
 from amgut.lib.data_access.sql_connection import TRN
+from amgut.lib.data_access.redcap import create_record
 
 
 # character sets for kit id, passwords and verification codes
@@ -349,14 +350,23 @@ class AGDataAccess(object):
         sql = """INSERT INTO ag.ag_consent
                      (participant_name, participant_email, parent_1_name,
                      parent_2_name, is_juvenile, deceased_parent,
-                     assent_obtainer, age_range, ag_login_id, lang)
+                     assent_obtainer, age_range, ag_login_id, lang, type)
                      VALUES (%(participant_name)s, %(participant_email)s,
                              %(parent_1_name)s, %(parent_2_name)s,
                              %(is_juvenile)s, %(deceased_parent)s,
                              %(obtainer_name)s, %(age_range)s, %(login_id)s,
-                             %(language)s)"""
+                             %(language)s, %(type)s)
+                     RETURNING redcap_record_id"""
         with TRN:
+            if self.check_if_consent_exists(values['login_id'],
+                                            values['participant_name']):
+                raise ValueError("Participant already exists for user name!")
+
             TRN.add(sql, values)
+            record_id = TRN.execute_fetchlast()
+            create_record(record_id, values['login_id'],
+                          values['participant_name'])
+            return record_id
 
     def logParticipantSample(self, ag_login_id, barcode, sample_site,
                              environment_sampled, sample_date, sample_time,

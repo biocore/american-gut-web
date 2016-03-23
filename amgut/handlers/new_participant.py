@@ -1,5 +1,7 @@
 from tornado.web import authenticated
 from tornado.escape import url_escape
+import os
+import binascii
 
 from amgut import media_locale, text_locale
 from amgut.handlers.base_handlers import BaseHandler
@@ -50,9 +52,12 @@ class NewParticipantHandler(BaseHandler):
                    'obtainer_name': obtainer_name,
                    'age_range': age_range,
                    'login_id': ag_login_id,
-                   'language': language}
+                   'language': language,
+                   'type': 'human'}
 
         # Save consent info and redirect to redcap
+        instrument = 'ag-human-' + language
         record_id = ag_data.store_consent(consent)
-        url = get_survey_url(record_id, instrument='ag_human_' + language)
-        self.redirect(url)
+        survey_id = binascii.hexlify(os.urandom(8))
+        url = get_survey_url(record_id, instrument=instrument)
+        self.redirect(url + "?survey_id=" + survey_id)
