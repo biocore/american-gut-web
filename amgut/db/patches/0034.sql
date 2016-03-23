@@ -12,7 +12,7 @@ ALTER TABLE ag.ag_consent ADD COLUMN lang varchar(5) NOT NULL DEFAULT 'en-US';
 ALTER TABLE ag.ag_consent ADD CONSTRAINT fk_language FOREIGN KEY ( lang ) REFERENCES ag.languages( lang );
 -- Create type column and set it to human or animal for current surveys
 ALTER TABLE ag.ag_consent ADD COLUMN type varchar NOT NULL DEFAULT 'human';
-UPDATE ag.ag_consent SET type='animal' WHERE parent_1_name = 'ANIMAL_SURVEY';
+UPDATE ag.ag_consent SET type='animal' WHERE age_range = 'ANIMAL_SURVEY';
 ALTER TABLE ag.ag_consent ALTER COLUMN type DROP DEFAULT;
 
 CREATE TABLE ag.survey_types (
@@ -40,14 +40,16 @@ COMMENT ON COLUMN ag.redcap_instruments.secondary IS 'If this is a secondary sur
 ALTER TABLE ag.redcap_instruments ADD CONSTRAINT fk_redcap_instruments FOREIGN KEY ( lang ) REFERENCES ag.languages( lang );
 ALTER TABLE ag.redcap_instruments ADD CONSTRAINT fk_redcap_instruments_0 FOREIGN KEY ( survey_type ) REFERENCES ag.survey_types( survey_type );
 INSERT INTO ag.redcap_instruments (redcap_instrument_id,survey_type, survey_name, description, lang, secondary) VALUES
-  ('ag-human-en-US', 'Human', 'American Gut Human Survey', 'General human survey for the American Gut Project', 'en-US', 'F');
+  ('ag-human-en-US', 'Human', 'American Gut Human Survey', 'General human survey for the American Gut Project', 'en-US', 'F'),
+  ('ag-animal-en-US', 'Animal', 'American Gut Animal Survey', 'General animal survey for the American Gut Project', 'en-US', 'F');
 
 ALTER TABLE ag.ag_login_surveys
-ADD COLUMN  redcap_instrument_id varchar(500),
+ADD COLUMN  redcap_instrument_id varchar(500) NOT NULL DEFAULT 'ag-human-en-US',
 ADD COLUMN redcap_record_id bigint,
-ADD COLUMN redcap_event_id integer NOT NULL DEFAULT 0,
+ADD COLUMN redcap_event_id integer NOT NULL DEFAULT 1,
 ADD COLUMN survey_timestamp timestamp DEFAULT NOW(),
 ADD CONSTRAINT idx_surveys_1 UNIQUE ( redcap_record_id, redcap_event_id, redcap_instrument_id );
+ALTER TABLE ag.ag_login_surveys ALTER COLUMN redcap_instrument_id DROP DEFAULT;
 CREATE INDEX idx_surveys_2 ON ag.ag_login_surveys ( redcap_record_id );
 CREATE INDEX idx_surveys_3 ON ag.ag_login_surveys ( redcap_instrument_id );
 ALTER TABLE ag.ag_login_surveys ADD CONSTRAINT fk_surveys FOREIGN KEY ( redcap_record_id ) REFERENCES ag.ag_consent( redcap_record_id );
@@ -57,6 +59,7 @@ SET redcap_record_id = c.redcap_record_id,
     survey_timestamp = c.date_signed
 FROM ag.ag_consent AS c
 WHERE c.participant_name = ls.participant_name AND c.ag_login_id = ls.ag_login_id;
+UPDATE ag.ag_login_surveys ls SET redcap_instrument_id = 'ag-animal-en-US' FROM ag.ag_consent as c WHERE ls.redcap_record_id = c.redcap_record_id AND c.type = 'animal';
 ALTER TABLE ag.ag_login_surveys DROP COLUMN participant_name, DROP COLUMN ag_login_id;
 ALTER TABLE ag.ag_login_surveys ALTER COLUMN redcap_event_id DROP DEFAULT;
 ALTER TABLE ag.ag_login_surveys ALTER COLUMN redcap_record_id SET NOT NULL;

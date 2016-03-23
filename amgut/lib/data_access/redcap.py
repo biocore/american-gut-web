@@ -110,7 +110,6 @@ def get_survey_url(record, instrument='ag-human-en-US'):
             'record': record,
             'returnFormat': 'json'
         }
-        print data
         return _make_request(data)
 
 
