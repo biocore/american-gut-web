@@ -6,7 +6,7 @@ import binascii
 from amgut import media_locale, text_locale
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.connections import ag_data
-from amgut.lib.data_access.redcap import get_survey_url
+from amgut.lib.data_access.redcap import get_survey_url, create_record
 
 
 class NewParticipantHandler(BaseHandler):
@@ -58,6 +58,8 @@ class NewParticipantHandler(BaseHandler):
         # Save consent info and redirect to redcap
         instrument = 'ag-human-' + language
         record_id = ag_data.store_consent(consent)
+        create_record(record_id, consent['login_id'],
+                      consent['participant_name'])
         survey_id = binascii.hexlify(os.urandom(8))
         url = get_survey_url(record_id, instrument=instrument)
         self.redirect("%s&survey_id=%s" % (url, survey_id))

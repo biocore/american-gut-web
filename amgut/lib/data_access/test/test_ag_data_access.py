@@ -5,14 +5,17 @@ from string import ascii_letters
 from uuid import UUID
 
 from amgut.lib.data_access.ag_data_access import AGDataAccess
+from amgut import AMGUT_CONFIG
 
 
 class TestAGDataAccess(TestCase):
     def setUp(self):
         self.ag_data = AGDataAccess()
+        self.sitebase = AMGUT_CONFIG.sitebase
 
     def tearDown(self):
         del self.ag_data
+        AMGUT_CONFIG.sitebase = self.sitebase
 
     def test_authenticateWebAppUser(self):
         # Test right pass but non-existant kit ID
@@ -67,6 +70,16 @@ class TestAGDataAccess(TestCase):
             'test@EMAIL.com', 'TESTDUDE', '123 fake test street', 'testcity',
             'teststate', '1L2 2G3', 'United Kingdom')
         self.assertEqual(ag_login_id, obs)
+
+    def test_log_portal(self):
+        portal = ''.join([choice(ascii_letters)
+                          for i in range(randint(5, 10))])
+        AMGUT_CONFIG.sitebase = portal
+        self.ag_data.log_portal('tst_KWfyv')
+        self.assertEqual(self.ag_data.get_portal('tst_KWfyv'), portal)
+
+    def test_get_portal(self):
+        self.assertEqual(self.ag_data.get_portal('tst_ODmhG'), 'AmericanGut')
 
     def test_getAGBarcodeDetails_bad_barcode(self):
         # test non-existant barcode
@@ -194,7 +207,8 @@ class TestAGDataAccess(TestCase):
                    'obtainer_name': None,
                    'age_range': '7-14',
                    'login_id': 'fecebeae-4244-2d78-e040-8a800c5d4f50',
-                   'language': 'en-US'}
+                   'language': 'en-US',
+                   'type': 'human'}
         self.ag_data.store_consent(consent)
 
     def test_logParticipantSample_badinfo(self):
@@ -291,10 +305,7 @@ class TestAGDataAccess(TestCase):
     def test_getAnimalParticipants(self):
         i = "ed5ab96f-fe3b-ead5-e040-8a80115d1c4b"
         res = self.ag_data.getAnimalParticipants(i)
-        exp = ['REMOVED-0', 'REMOVED-0', 'REMOVED-0', 'REMOVED-0',
-               'REMOVED-0', 'REMOVED-0', 'REMOVED-0', 'REMOVED-0',
-               'REMOVED-0', 'REMOVED-0', 'REMOVED-0', 'REMOVED-0',
-               'REMOVED-0', 'REMOVED-0']
+        exp = ['REMOVED-0']
         self.assertItemsEqual(res, exp)
 
     def test_getAnimalParticipantsNotPresent(self):

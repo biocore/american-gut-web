@@ -20,7 +20,6 @@ from passlib.hash import bcrypt
 
 from amgut.lib.data_access.sql_connection import TRN
 from amgut import AMGUT_CONFIG
-from amgut.lib.data_access.redcap import create_record
 
 
 # character sets for kit id, passwords and verification codes
@@ -150,11 +149,12 @@ class AGDataAccess(object):
             if not ag_login_id:
                 # create the login
                 sql = """INSERT INTO ag_login
-                         (email, name, address, city, state, zip, country)
-                         VALUES (%s, %s, %s, %s, %s, %s, %s)
+                         (email, name, address, city, state, zip, country,
+                          portal)
+                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
                          RETURNING ag_login_id"""
                 TRN.add(sql, [clean_email, name, address, city, state, zip_,
-                              country])
+                              country, AMGUT_CONFIG.sitebase])
                 ag_login_id = TRN.execute_fetchlast()
             return ag_login_id
 
@@ -168,6 +168,18 @@ class AGDataAccess(object):
             ag_login_id = self.get_user_for_kit(supplied_kit_id)
             sql = "UPDATE ag.ag_login SET portal = %s WHERE ag_login_id = %s"
             TRN.add(sql, [AMGUT_CONFIG.sitebase, ag_login_id])
+
+    def get_portal(self, supplied_kit_id):
+        """Returns the portal used by the user
+
+        supplied_kit_id : str
+            kit ID user logged in with
+        """
+        with TRN:
+            ag_login_id = self.get_user_for_kit(supplied_kit_id)
+            sql = "SELECT portal FROM ag.ag_login WHERE ag_login_id = %s"
+            TRN.add(sql, [ag_login_id])
+            return TRN.execute_fetchlast()
 
     def getAGBarcodeDetails(self, barcode):
         """Returns information about the barcode from both AG and standard info
@@ -376,8 +388,6 @@ class AGDataAccess(object):
 
             TRN.add(sql, values)
             record_id = TRN.execute_fetchlast()
-            create_record(record_id, values['login_id'],
-                          values['participant_name'])
             return record_id
 
     def logParticipantSample(self, ag_login_id, barcode, sample_site,
@@ -434,7 +444,7 @@ class AGDataAccess(object):
 
     def getHumanParticipants(self, ag_login_id):
         # get people from new survey setup
-        sql = """SELECT DISTINCT participant_name from ag.ag_consent
+        sql = """SELECT participant_name from ag.ag_consent
                  WHERE ag_login_id = %s AND type = 'human'"""
         with TRN:
             TRN.add(sql, [ag_login_id])
