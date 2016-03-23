@@ -423,9 +423,7 @@ class AGDataAccess(object):
     def getHumanParticipants(self, ag_login_id):
         # get people from new survey setup
         sql = """SELECT DISTINCT participant_name from ag.ag_consent
-                 JOIN ag_login_surveys USING (redcap_record_id)
-                 JOIN redcap_instruments USING (redcap_instrument_id)
-                 WHERE ag_login_id = %s AND survey_type = 'Human'"""
+                 WHERE ag_login_id = %s AND type = 'human'"""
         with TRN:
             TRN.add(sql, [ag_login_id])
             return TRN.execute_fetchflatten()
@@ -467,9 +465,7 @@ class AGDataAccess(object):
 
     def getAnimalParticipants(self, ag_login_id):
         sql = """SELECT DISTINCT participant_name from ag.ag_consent
-                 JOIN ag_login_surveys USING (redcap_record_id)
-                 JOIN redcap_instruments USING (redcap_instrument_id)
-                 WHERE ag_login_id = %s AND survey_type = 'Animal'"""
+                 WHERE ag_login_id = %s AND type = 'animal'"""
         with TRN:
             TRN.add(sql, [ag_login_id])
             return TRN.execute_fetchflatten()
