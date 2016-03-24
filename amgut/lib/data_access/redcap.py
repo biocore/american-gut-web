@@ -9,18 +9,6 @@ from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.lib.data_access.sql_connection import TRN
 
 
-@gen.coroutine
-def _make_request(data):
-    body = urlencode(data)
-    client = AsyncHTTPClient()
-    response = yield client.fetch(AMGUT_CONFIG.redcap_url, method='POST',
-                                  headers=None, body=body)
-    # Response not always JSON, so can't always use loads
-    if '{"error"' in response.body:
-        raise HTTPError(400, loads(response.body)['error'])
-    raise gen.Return(response.body)
-
-
 def get_instrument(participant_type, language):
     """Returns the instrument name for a given participant and parameters
 
@@ -73,7 +61,14 @@ def create_record(record_id, ag_login_id, participant_name):
         'returnFormat': 'json',
         'record_id': record_id
     }
-    yield _make_request(data)
+    body = urlencode(data)
+    client = AsyncHTTPClient()
+    response = yield client.fetch(AMGUT_CONFIG.redcap_url, method='POST',
+                                  headers=None, body=body)
+    # Response not always JSON, so can't always use loads
+    if '{"error"' in response.body:
+        raise HTTPError(400, loads(response.body)['error'])
+    raise gen.Return(response.body)
 
 
 @gen.coroutine
@@ -114,7 +109,14 @@ def get_survey_url(record, instrument='ag-human-en-US'):
             'record': record,
             'returnFormat': 'json'
         }
-        yield _make_request(data)
+        body = urlencode(data)
+        client = AsyncHTTPClient()
+        response = yield client.fetch(AMGUT_CONFIG.redcap_url, method='POST',
+                                      headers=None, body=body)
+        # Response not always JSON, so can't always use loads
+        if '{"error"' in response.body:
+            raise HTTPError(400, loads(response.body)['error'])
+        raise gen.Return(response.body)
 
 
 def log_complete(record, instrument, survey_id):
@@ -181,4 +183,11 @@ def get_responses(records, instrument, event=None):
     }
     if event is not None:
         data['events'] = 'event_%d_arm_1' % event,
-    yield loads(_make_request(data))
+    body = urlencode(data)
+    client = AsyncHTTPClient()
+    response = yield client.fetch(AMGUT_CONFIG.redcap_url, method='POST',
+                                  headers=None, body=body)
+    # Response not always JSON, so can't always use loads
+    if '{"error"' in response.body:
+        raise HTTPError(400, loads(response.body)['error'])
+    raise gen.Return(loads(response.body))

@@ -8,6 +8,7 @@ from amgut import media_locale, text_locale
 from amgut.handlers.util import as_transaction
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.connections import ag_data
+from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.lib.data_access.redcap import get_survey_url, create_record
 
 
@@ -66,5 +67,6 @@ class NewParticipantHandler(BaseHandler):
                             consent['participant_name'])
         survey_id = binascii.hexlify(os.urandom(8))
         url = yield get_survey_url(record_id, instrument=instrument)
-        print "%s&survey_id=%s" % (url, survey_id)
-        self.redirect("%s&survey_id=%s" % (url, survey_id))
+        url = "%s&survey_id=%s&portal=%s" % (url, survey_id,
+                                             AMGUT_CONFIG.sitebase)
+        self.redirect(url)
