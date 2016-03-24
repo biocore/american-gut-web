@@ -16,16 +16,49 @@ class EmperorHandler(BaseHandler):
     @authenticated
     def get(self):
         user = ag_data.get_user_for_kit(self.current_user)
-        barcodes = ag_data.get_barcodes_by_user(user, results=True)
+        bc_info = ag_data.get_barcodes_by_user(user, results=True)
+        titles = [bc['sample_date'].strftime('%b %d, %Y') for bc in bc_info]
+        otus = {}
+        files = []
+        # Load in all possible OTUs that can be seen by loading files to memory
+        # Files are small (5kb) so this should be fine.
+        for barcode in bc_info:
+            with open(join(AMGUT_CONFIG.base_data_dir, 'taxa-summaries',
+                      '%s.txt' % barcode['barcode'])) as f:
+                f.readline()
+                files.append(f.readlines())
+            for line in files[-1]:
+                otus[line.split('\t')[0]] = []
+
+        # Read in counts
+        for file in files:
+            seen_otus = set()
+            for line in file:
+                otu, percent = line.strip().split('\t', 1)
+                otus[otu].append(float(percent) * 100)
+                seen_otus.add(otu)
+            # make the samples without the OTU all zero count
+            unseen = set(otus.keys()) - seen_otus
+            for otu in unseen:
+                otus[otu].append(0.0)
+
+        datasets = _build_taxa(otus)
+
+        meta_cats = ['age-baby', 'age-child', 'age-teen', 'age-20s', 'age-30s',
+                     'age-40s', 'age-50s', 'age-60s', 'age-70+',
+                     'bmi-Underweight', 'bmi-Normal', 'bmi-Overweight',
+                     'bmi-Obese', 'sex-male', 'sex-female', ]
+
         with open(join(AMGUT_CONFIG.base_data_dir, 'emperor',
                   'emperor.txt')) as f:
             pcoa_data = f.readlines()
-        self.render("emperor.html", barcodes=barcodes,
+        self.render("emperor.html", barcodes=bc_info,
                     coords_ids=pcoa_data[0].strip(),
                     coords=pcoa_data[1].strip(),
                     pct_var=pcoa_data[2].strip(),
                     md_headers=literal_eval(pcoa_data[3].strip()),
-                    metadata=pcoa_data[4].strip())
+                    metadata=pcoa_data[4].strip(),
+                    titles=titles, meta_cats=meta_cats, datasets=datasets)
 
 
 def _build_taxa(taxa_list):
