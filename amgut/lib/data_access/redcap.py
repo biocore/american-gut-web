@@ -64,7 +64,7 @@ def create_record(record_id, ag_login_id, participant_name):
     data = {
         'token': AMGUT_CONFIG.redcap_token,
         'content': 'record',
-        'format': 'json',
+        'format': 'xml',
         'type': 'eav',
         'overwriteBehavior': 'normal',
         'data': info,
@@ -102,15 +102,15 @@ def get_survey_url(record, instrument='ag-human-en-US'):
                  WHERE redcap_record_id = %s AND redcap_instrument_id = %s;
         """
         TRN.add(sql, [record, instrument])
-        event = TRN.execute_fetchlast()
-        if event is None:
-            event = 1
+        event_id = TRN.execute_fetchlast()
+        if event_id is None:
+            event_id = 1
         data = {
             'token': AMGUT_CONFIG.redcap_token,
             'content': 'surveyLink',
             'format': 'json',
             'instrument': instrument.lower().replace('-', ''),
-            'event': 'event_%d_arm_1' % event,
+            'event': 'event_%d_arm_1' % event_id,
             'record': record,
             'returnFormat': 'json'
         }
@@ -130,13 +130,21 @@ def log_complete(record, instrument, survey_id):
         Survey ID for this survey
     """
     with TRN:
+        event_sql = """SELECT max(redcap_event_id) + 1
+                       FROM ag.ag_login_surveys
+                       WHERE redcap_record_id = %s"""
         sql = """INSERT INTO ag.ag_login_surveys
                  (redcap_instrument_id, redcap_record_id, survey_id,
                   redcap_event_id)
-                 (SELECT %s, %s, %s, max(redcap_event_id) + 1
+                 (SELECT %s, %s, %s, %s
                   FROM ag.ag_login_surveys
                   WHERE redcap_record_id = %s)"""
-        TRN.add(sql, [instrument, record, survey_id, record])
+        TRN.add(event_sql, [record])
+        event_id = TRN.execute_fetchlast()
+        if event_id is None:
+            # First survey so nothing logged for user, default to first event
+            event_id = 1
+        TRN.add(sql, [instrument, record, survey_id, event_id, record])
         TRN.execute()
 
 

@@ -66,4 +66,5 @@ class NewParticipantHandler(BaseHandler):
                             consent['participant_name'])
         survey_id = binascii.hexlify(os.urandom(8))
         url = yield get_survey_url(record_id, instrument=instrument)
+        print "%s&survey_id=%s" % (url, survey_id)
         self.redirect("%s&survey_id=%s" % (url, survey_id))

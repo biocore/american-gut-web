@@ -116,7 +116,7 @@ def main():
     prefix = ("%s_%d_%s.log" % (media_locale['LOCALE'], options.port,
                                 str(datetime.now()))).replace(' ', '_')
     options.log_file_prefix = prefix
-    options.logging = 'warning'
+    options.logging = 'debug'
     parse_command_line()
     http_server = HTTPServer(AGWebApplication())
     http_server.listen(options.port)
