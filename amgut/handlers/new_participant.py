@@ -1,9 +1,11 @@
 from tornado.web import authenticated
 from tornado.escape import url_escape
+import tornado.gen as gen
 import os
 import binascii
 
 from amgut import media_locale, text_locale
+from amgut.handlers.util import as_transaction
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.connections import ag_data
 from amgut.lib.data_access.redcap import get_survey_url, create_record
@@ -17,6 +19,8 @@ class NewParticipantHandler(BaseHandler):
                     default_lang=media_locale['DEFAULT_LANGUAGE'])
 
     @authenticated
+    @as_transaction
+    @gen.coroutine
     def post(self):
         tl = text_locale['handlers']
         participant_name = self.get_argument("participant_name").strip()
@@ -58,8 +62,8 @@ class NewParticipantHandler(BaseHandler):
         # Save consent info and redirect to redcap
         instrument = 'ag-human-' + language
         record_id = ag_data.store_consent(consent)
-        create_record(record_id, consent['login_id'],
-                      consent['participant_name'])
+        yield create_record(record_id, consent['login_id'],
+                            consent['participant_name'])
         survey_id = binascii.hexlify(os.urandom(8))
-        url = get_survey_url(record_id, instrument=instrument)
+        url = yield get_survey_url(record_id, instrument=instrument)
         self.redirect("%s&survey_id=%s" % (url, survey_id))

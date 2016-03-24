@@ -2,21 +2,23 @@ from urllib import urlencode
 from json import loads
 
 from tornado.web import HTTPError
-from tornado.httpclient import HTTPClient
+import tornado.gen as gen
+from tornado.httpclient import AsyncHTTPClient
 
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.lib.data_access.sql_connection import TRN
 
 
+@gen.coroutine
 def _make_request(data):
     body = urlencode(data)
-    client = HTTPClient()
-    response = client.fetch(AMGUT_CONFIG.redcap_url, method='POST',
-                            headers=None, body=body)
+    client = AsyncHTTPClient()
+    response = yield client.fetch(AMGUT_CONFIG.redcap_url, method='POST',
+                                  headers=None, body=body)
     # Response not always JSON, so can't always use loads
     if '{"error"' in response.body:
         raise HTTPError(400, loads(response.body)['error'])
-    return response.body
+    raise gen.Return(response.body)
 
 
 def get_instrument(participant_type, language):
@@ -30,6 +32,7 @@ def get_instrument(participant_type, language):
     return "ag-%s-%s" % (participant_type, language)
 
 
+@gen.coroutine
 def create_record(record_id, ag_login_id, participant_name):
     """Creates a new record on redcap for the participant
 
@@ -70,9 +73,10 @@ def create_record(record_id, ag_login_id, participant_name):
         'returnFormat': 'json',
         'record_id': record_id
     }
-    return _make_request(data)
+    yield _make_request(data)
 
 
+@gen.coroutine
 def get_survey_url(record, instrument='ag-human-en-US'):
     """Genereates a new survey link for a given record
 
@@ -110,7 +114,7 @@ def get_survey_url(record, instrument='ag-human-en-US'):
             'record': record,
             'returnFormat': 'json'
         }
-        return _make_request(data)
+        yield _make_request(data)
 
 
 def log_complete(record, instrument, survey_id):
@@ -136,6 +140,7 @@ def log_complete(record, instrument, survey_id):
         TRN.execute()
 
 
+@gen.coroutine
 def get_responses(records, instrument, event=None):
     """Get responses for the given records
 
@@ -168,4 +173,4 @@ def get_responses(records, instrument, event=None):
     }
     if event is not None:
         data['events'] = 'event_%d_arm_1' % event,
-    return loads(_make_request(data))
+    yield loads(_make_request(data))
