@@ -40,7 +40,7 @@
     {% for meta in meta_cats %}
       <option value="{{meta}}">{{meta}}</option>
     {% end %}
-    </select><button onclick="add_metadata_barchart()">Add</button>
+    </select><button onclick="add_metadata_barchart()" id="add-sumary-cat">Add</button>
   </div>
   <div style="width: 100%;">
       <canvas id="canvas-bar-summary"></canvas>
@@ -59,7 +59,6 @@
   <div id="taxa-fold-controls">
     <p>Sample:
     <select id="barcode-fold">
-      <option value=""></option>
   {% for bc in barcodes %}
       <option value="{{bc['barcode']}}">{{bc['barcode']}} - {{bc['sample_date'].strftime('%b %d, %Y')}}</option>
   {% end %}
@@ -469,7 +468,16 @@
           $("#meta-cat").prop("disabled", false);;
         }
       });
+      $("#meta-cat").on("change", function (evt) {
+        if($("#meta-cat").val() == "") {
+          $("#add-sumary-cat").prop("disabled", true);
+        } else {
+          $("#add-sumary-cat").prop("disabled", false);;
+        }
+      });
       $("#meta-cat").prop("disabled", true);
+      $("#add-sumary-cat").prop("disabled", true);
+      fold_change();
       $("#collapse-fold").on("change", fold_change);
       $("#barcode-fold").on("change", fold_change);
       $("#meta-cat-fold").on("change", fold_change);
