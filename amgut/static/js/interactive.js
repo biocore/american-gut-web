@@ -68,7 +68,7 @@ function collapse(dataset, level, max, prev_level, focus, sites) {
       otu.data = sum_arrays(otu.data, groups[g][i].data);
     }
     // Round to four decimals
-    for(var i=0;i<otu.data.length;i++) { otu.data[i] =  Number(otu.data[i].toFixed(4)); }
+    for(var i=0;i<otu.data.length;i++) { otu.data[i] = Math.floor(otu.data[i] * 10000) / 10000; }
 
     collapsed[g] = otu;
     summaries.push([g, getAvg(otu.data)]);
@@ -124,7 +124,7 @@ function collapse(dataset, level, max, prev_level, focus, sites) {
     for(var i=loop+1;i<sorted.length;i++){
       other.data = sum_arrays(other.data, collapsed[sorted[i][0]].data);
     }
-    for(var i=0;i<other.data.length;i++) { other.data[i] =  Number(other.data[i].toFixed(4)); }
+    for(var i=0;i<other.data.length;i++) { other.data[i] = Math.floor(other.data[i] * 10000) / 10000; }
     further_collapsed.push(other);
   }
   if(filter_to !== null) {
@@ -174,7 +174,7 @@ function fold_change() {
         //Compute the fold changes, making them negative when needed
         var val = sample_data[data_pos]/otu.data;
         if(val === 0) { continue; }
-        fold_changes.push([otu.label, Number(Math.log2(val).toFixed(2))]);
+        fold_changes.push([otu.label, Math.floor(Math.log2(val) * 100) / 100]);
       }
       //Sort by the average and build the data information
       var sorted = fold_changes.sort(function(a, b) { return b[1] - a[1]; });
@@ -229,10 +229,8 @@ function add_metadata_barchart() {
       }
       //Loop over raw data and add 0 to any OTUs that are in raw data but not in meta-cat
       var full_len = barChartSummaryData.labels.length + 1;
-      var sum = 0;
       for(var i=0;i<barChartSummaryData.metaData.length;i++) {
         if(barChartSummaryData.metaData[i].data.length < full_len) { barChartSummaryData.metaData[i].data.push(0.0); }
-        sum += barChartSummaryData.metaData[i].data[full_len - 1];
       }
 
       barChartSummaryData.labels.push(title);

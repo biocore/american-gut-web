@@ -12,7 +12,7 @@ from amgut.connections import ag_data
 from amgut.lib.config_manager import AMGUT_CONFIG
 
 
-class EmperorHandler(BaseHandler):
+class SingleSampleHandler(BaseHandler):
     @authenticated
     def get(self):
         user = ag_data.get_user_for_kit(self.current_user)

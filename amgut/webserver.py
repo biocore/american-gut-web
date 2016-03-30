@@ -46,7 +46,7 @@ from amgut.handlers.download import DownloadHandler
 
 from amgut.handlers.open_humans import (OpenHumansHandler,
                                         OpenHumansLoginHandler)
-from amgut.handlers.interactive import (EmperorHandler, TaxaHandler,
+from amgut.handlers.interactive import (SingleSampleHandler, TaxaHandler,
                                         MetadataHandler, AlphaDivImgHandler)
 from amgut.lib.startup_tests import startup_tests
 
@@ -89,8 +89,8 @@ class AGWebApplication(Application):
             (r"/authed/open-humans/", OpenHumansHandler),
             (r"/authed/connect/open-humans/", OpenHumansLoginHandler),
             (r"/authed/download/(.*)", DownloadHandler),
-            (r"/authed/emperor/", EmperorHandler),
-            (r"/authed/taxa/", TaxaHandler),
+            (r"/authed/single/", SingleSampleHandler),
+            (r"/authed/multiple/", TaxaHandler),
             (r"/interactive/metadata/", MetadataHandler),
             (r"/interactive/alpha_div/(.*)", AlphaDivImgHandler),
             (r"/faq/", FAQHandler),

@@ -155,7 +155,12 @@
                             </li>
 {% end %}
                         </ul>
-                        <li><a href="/authed/taxa/">Explore your Samples!</a></li>
+                        <li class="has-sub"><a>Explore your Samples!</a>
+                        <ul>
+                            <li><a href="/authed/multiple/">Explore all samples</a></li>
+                            <li class="last"><a href="/authed/single/">Explore a sample in detail</a></li>
+                        </ul>
+                        </li>
                     </li>
 {% if avail_barcodes %}
                     <li class="last"><a href="{% raw media_locale['SITEBASE'] %}/authed/add_sample_overview/"><strong>{% raw media_locale['NAV_LOG_SAMPLE'] %}</strong></a></li>
