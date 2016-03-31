@@ -10,6 +10,32 @@ var phylum_colors = {
 };
 var phylum_order = ['Firmicutes', 'Bacteroidetes', 'Proteobacteria', 'Actinobacteria', 'Verrucomicrobia', 'Tenericutes', 'Cyanobacteria', 'Fusobacteria'];
 
+$(document).ready(function() {
+  //Patching for Internet Explorer
+  if (!Array.prototype.findIndex) {
+    Array.prototype.findIndex = function(predicate) {
+      if (this === null) {
+        throw new TypeError('Array.prototype.findIndex called on null or undefined');
+      }
+      if (typeof predicate !== 'function') {
+        throw new TypeError('predicate must be a function');
+      }
+      var list = Object(this);
+      var length = list.length >>> 0;
+      var thisArg = arguments[1];
+      var value;
+
+      for (var i = 0; i < length; i++) {
+        value = list[i];
+        if (predicate.call(thisArg, value, i, list)) {
+          return i;
+        }
+      }
+      return -1;
+    };
+  }
+});
+
 function group(list, prop) {
   var grouped = {};
   for(var i=0;i<list.length;i++) {
@@ -88,7 +114,7 @@ function collapse(dataset, level, max, prev_level, focus, sites) {
       phyla_dict[collapsed[sorted[i][0]].phylum] = [collapsed[sorted[i][0]]];
     }
   }
-  further_collapsed = [];
+  var further_collapsed = new Array();
   for(var i=0;i<phylum_order.length;i++) {
     p = phylum_order[i];
     if(phyla_dict.hasOwnProperty(p)) {
