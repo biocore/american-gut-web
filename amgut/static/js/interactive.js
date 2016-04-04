@@ -114,7 +114,7 @@ function collapse(dataset, level, max, prev_level, focus, sites) {
       phyla_dict[collapsed[sorted[i][0]].phylum] = [collapsed[sorted[i][0]]];
     }
   }
-  var further_collapsed = new Array();
+  var further_collapsed = [];
   for(var i=0;i<phylum_order.length;i++) {
     p = phylum_order[i];
     if(phyla_dict.hasOwnProperty(p)) {
@@ -132,7 +132,7 @@ function collapse(dataset, level, max, prev_level, focus, sites) {
     } else {
       //Get colors for known phyla or white to black
       if(phylum_colors[phyla]) {
-      phyla_colors[phyla] = chroma.scale([phylum_colors[phyla][0], phylum_colors[phyla][1]]).colors(phyla_dict[phyla].length);
+        phyla_colors[phyla] = chroma.scale([phylum_colors[phyla][0], phylum_colors[phyla][1]]).colors(phyla_dict[phyla].length);
       } else {
         phyla_colors[phyla] = chroma.scale(['#FFFFFF', '#000000']).colors(phyla_dict[phyla].length);
       }
@@ -143,7 +143,6 @@ function collapse(dataset, level, max, prev_level, focus, sites) {
     var color = chroma(phyla_colors[ph].pop()).css();
     further_collapsed[i].backgroundColor = color;
   }
-
   if(sorted.length > max) {
     // Create the OTHER category for the rest of the OTUs
     var other = { label: 'Other',  data:collapsed[sorted[loop][0]].data, backgroundColor: 'rgba(180,180,180)' };
@@ -272,9 +271,15 @@ function add_metadata_barchart() {
 
 function remove_sample(title) {
   var data_pos = barChartSummaryData.labels.findIndex(function(y) { return title == y; });
+  var to_remove = [];
   for(var i=0;i<barChartSummaryData.datasets.length;i++) {
     barChartSummaryData.datasets[i].data.splice(data_pos, 1);
+    if(barChartSummaryData.datasets[i].data.every(function (y) { return y === 0.0; })) { to_remove.push(i); }
   }
+
+  //Remove OTU with all zeros (no longer has data)
+  for(var i=to_remove.length-1;i>=0;i--) { barChartSummaryData.datasets.splice(to_remove[i], 1); }
+
   barChartSummaryData.labels.splice(data_pos, 1);
   window.summaryBar.update();
   $("td").eq(data_pos).remove();

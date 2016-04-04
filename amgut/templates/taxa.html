@@ -5,23 +5,18 @@
     <script src="/static/vendor/js/chroma.min.js"></script>
     <script src="/static/js/interactive.js"></script>
     <script type="text/javascript">
+      {% set bc_labels = [b['barcode'] + ' - ' + t for b, t in zip(barcodes, titles) ] %}
       var barChartSummaryData = {
-        labels: {% raw [b['barcode'] + ' - ' + t for b, t in zip(barcodes, titles) ] %},
-        rawLabels: {% raw [b['barcode'] + ' - ' + t for b, t in zip(barcodes, titles) ] %},
+        labels: {% raw  bc_labels %},
+        rawLabels: {% raw bc_labels %},
         datasets: [],
         rawData: {% raw datasets %},
         metaData: {% raw datasets %}
       };
-      var barChartFoldData = {
-        labels: [],
-        datasets: [],
-        barcodes: {% raw [b['barcode'] for b in barcodes] %},
-        titles: {% raw titles %}
-      };
 
-      window.onload = function() {
+    window.onload = function() {
     var ctx = document.getElementById("canvas-bar-summary").getContext("2d");
-    barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, 'phylum', 10)
+    barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, 'phylum', 10);
     window.summaryBar = new Chart(ctx, {
         type: 'bar',
         data: barChartSummaryData,
@@ -54,17 +49,15 @@
             }
         }
     });
-   
+
     $("#canvas-bar-summary").on('click', function(evt){
       var activePoints = window.summaryBar.getElementAtEvent(evt);
       if (activePoints.length > 0 && $("#collapse").val() != "genus") {
         var taxa = activePoints[0]._model.datasetLabel;
+        if(taxa == "Other") { return; }
         var label = activePoints[0]._model.label;
         var prev_level = $("#collapse").val();
-        $("#collapse > option:selected")
-            .prop("selected", false)
-            .next()
-            .prop("selected", true);
+        $("#collapse > option:selected").prop("selected", false).next().prop("selected", true);
         barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, $("#collapse").val(), 10, prev_level, taxa);
         window.summaryBar.update();
       }
@@ -78,15 +71,15 @@
     $("#reset-summary").on("click", function () {
       $("#collapse").val('phylum');
       barChartSummaryData.datasets = collapse(barChartSummaryData.rawData, 'phylum', 10);
-      barChartSummaryData.labels = barChartSummaryData.rawLabels.slice(0);
+      barChartSummaryData.labels = barChartSummaryData.rawLabels;
       //re-add all remove links
       $.each($("td"), function( i, val ) { val.remove(); });
       for(var i=0;i<barChartSummaryData.labels.length;i++) {
-        var rem = $('<td><a href="#" onclick="remove_sample(\'' + barChartFoldData.labels[i] + '\'); return false;">Remove</a></td>');
+        var rem = $('<td><a href="#" onclick="remove_sample(\'' + barChartSummaryData.labels[i] + '\'); return false;">Remove</a></td>');
         $("#remove-row").append(rem);
       }
       window.summaryBar.update();
-    })
+    });
     $("#meta-site").on("change", function (evt) {
       if($("#meta-site").val() == "") {
         $("#meta-cat").val("");
