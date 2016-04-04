@@ -132,7 +132,7 @@ function collapse(dataset, level, max, prev_level, focus, sites) {
     } else {
       //Get colors for known phyla or white to black
       if(phylum_colors[phyla]) {
-        phyla_colors[phyla] = chroma.scale([phylum_colors[phyla][0], phylum_colors[phyla][1]]).colors(phyla_dict[phyla].length);
+        phyla_colors[phyla] = chroma.scale(phylum_colors[phyla]).colors(phyla_dict[phyla].length);
       } else {
         phyla_colors[phyla] = chroma.scale(['#FFFFFF', '#000000']).colors(phyla_dict[phyla].length);
       }
@@ -153,7 +153,7 @@ function collapse(dataset, level, max, prev_level, focus, sites) {
     further_collapsed.push(other);
   }
   if(filter_to !== null) {
-    further_collapsed = filter_sites(further_collapsed, filter_to)
+    further_collapsed = filter_sites(further_collapsed, filter_to);
   }
 
   return further_collapsed;
@@ -186,7 +186,6 @@ function fold_change() {
 
       var fold_changes = [];
       var data_pos = barChartFoldData.barcodes.findIndex(function(y) { return barcode == y; });
-      var data_len = barChartSummaryData.rawData[0].data.length;
       var collapsed = collapse(barChartSummaryData.rawData, level, 10000);
       var data_collapsed = collapse(data, level, 10000);
       for(var i=0;i<data_collapsed.length;i++) {
@@ -252,11 +251,14 @@ function add_metadata_barchart() {
           barChartSummaryData.metaData[existing].data.push(val);
         }
       }
+
       //Loop over raw data and add 0 to any OTUs that are in raw data but not in meta-cat
       var full_len = barChartSummaryData.labels.length + 1;
       for(var i=0;i<barChartSummaryData.metaData.length;i++) {
         if(barChartSummaryData.metaData[i].data.length < full_len) { barChartSummaryData.metaData[i].data.push(0.0); }
       }
+
+      for(var i=0;i<barChartSummaryData.metaData.length;i++) { console.log(barChartSummaryData.metaData[i].data.length);}
 
       barChartSummaryData.labels.push(title);
       barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, $("#collapse").val(), 10);
@@ -272,15 +274,17 @@ function add_metadata_barchart() {
 function remove_sample(title) {
   var data_pos = barChartSummaryData.labels.findIndex(function(y) { return title == y; });
   var to_remove = [];
-  for(var i=0;i<barChartSummaryData.datasets.length;i++) {
-    barChartSummaryData.datasets[i].data.splice(data_pos, 1);
-    if(barChartSummaryData.datasets[i].data.every(function (y) { return y === 0.0; })) { to_remove.push(i); }
+  for(var i=0;i<barChartSummaryData.metaData.length;i++) {
+    barChartSummaryData.metaData[i].data.splice(data_pos, 1);
+    if(barChartSummaryData.metaData[i].data.every(function (y) { return y === 0.0; })) { to_remove.push(i); }
   }
 
-  //Remove OTU with all zeros (no longer has data)
-  for(var i=to_remove.length-1;i>=0;i--) { barChartSummaryData.datasets.splice(to_remove[i], 1); }
+  //Remove OTU with all zero data(no longer relevant)
+  for(var i=to_remove.length-1;i>=0;i--) { barChartSummaryData.metaData.splice(to_remove[i], 1); }
 
+  barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, $("#collapse").val(), 10);
   barChartSummaryData.labels.splice(data_pos, 1);
+  alert(barChartSummaryData.labels);
   window.summaryBar.update();
   $("td").eq(data_pos).remove();
 }

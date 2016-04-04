@@ -11,11 +11,12 @@
         rawLabels: {% raw bc_labels %},
         datasets: [],
         rawData: {% raw datasets %},
-        metaData: {% raw datasets %}
+        metaData: []
       };
 
     window.onload = function() {
     var ctx = document.getElementById("canvas-bar-summary").getContext("2d");
+    barChartSummaryData.metaData = JSON.parse(JSON.stringify(barChartSummaryData.rawData));
     barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, 'phylum', 10);
     window.summaryBar = new Chart(ctx, {
         type: 'bar',
@@ -70,6 +71,7 @@
 
     $("#reset-summary").on("click", function () {
       $("#collapse").val('phylum');
+      barChartSummaryData.metaData = barChartSummaryData.rawData;
       barChartSummaryData.datasets = collapse(barChartSummaryData.rawData, 'phylum', 10);
       barChartSummaryData.labels = barChartSummaryData.rawLabels;
       //re-add all remove links
