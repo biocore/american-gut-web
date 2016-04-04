@@ -258,8 +258,6 @@ function add_metadata_barchart() {
         if(barChartSummaryData.metaData[i].data.length < full_len) { barChartSummaryData.metaData[i].data.push(0.0); }
       }
 
-      for(var i=0;i<barChartSummaryData.metaData.length;i++) { console.log(barChartSummaryData.metaData[i].data.length);}
-
       barChartSummaryData.labels.push(title);
       barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, $("#collapse").val(), 10);
       window.summaryBar.update();
@@ -284,7 +282,6 @@ function remove_sample(title) {
 
   barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, $("#collapse").val(), 10);
   barChartSummaryData.labels.splice(data_pos, 1);
-  alert(barChartSummaryData.labels);
   window.summaryBar.update();
   $("td").eq(data_pos).remove();
 }
