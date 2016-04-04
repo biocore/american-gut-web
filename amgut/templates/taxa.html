@@ -15,8 +15,9 @@
 
     window.onload = function() {
     var ctx = document.getElementById("canvas-bar-summary").getContext("2d");
-    barChartSummaryData.metaData = barChartSummaryData.rawData;
-    barChartSummaryData.rawLabels = barChartSummaryData.labels;
+    // Exploit JSON to make extremely fast deep copy of objects
+    barChartSummaryData.metaData = JSON.parse(JSON.stringify(barChartSummaryData.rawData));
+    barChartSummaryData.rawLabels = JSON.parse(JSON.stringify(barChartSummaryData.labels));
     barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, 'phylum', 10);
     window.summaryBar = new Chart(ctx, {
         type: 'bar',
@@ -71,9 +72,9 @@
 
     $("#reset-summary").on("click", function () {
       $("#collapse").val('phylum');
-      barChartSummaryData.metaData = barChartSummaryData.rawData;
+      barChartSummaryData.labels = JSON.parse(JSON.stringify(barChartSummaryData.rawLabels));
+      barChartSummaryData.metaData = JSON.parse(JSON.stringify(barChartSummaryData.rawData));
       barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, 'phylum', 10);
-      barChartSummaryData.labels = barChartSummaryData.rawLabels;
       //re-add all remove links
       $.each($("td"), function( i, val ) { val.remove(); });
       for(var i=0;i<barChartSummaryData.labels.length;i++) {
