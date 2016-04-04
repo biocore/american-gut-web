@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 from os.path import dirname, join
-from datetime import datetime
 
 from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
@@ -118,9 +117,9 @@ class AGWebApplication(Application):
 def main():
     startup_tests()
     # replace spaces for underscores to autocomplete easily in a shell
-    # format looks like american_gut_8888_2014-10-06_15:30:20.256035.log
-    prefix = ("%s_%d_%s.log" % (media_locale['LOCALE'], options.port,
-                                str(datetime.now()))).replace(' ', '_')
+    # format looks like american_gut_8888.log
+    prefix = ("/var/log/%s_%d.log" % (media_locale['LOCALE'], options.port,
+                                      )).replace(' ', '_')
     options.log_file_prefix = prefix
     options.logging = 'warning'
     parse_command_line()
