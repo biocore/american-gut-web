@@ -43,9 +43,12 @@
 			<column name="date_signed" type="date" jt="91" />
 			<column name="assent_obtainer" type="varchar" length="2147483647" jt="12" />
 			<column name="age_range" type="varchar" length="2147483647" jt="12" />
-			<column name="redcap_record_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="redcap_record_id" type="bigserial" jt="-5" mandatory="y" />
 			<column name="lang" type="varchar" length="5" jt="12" mandatory="y" >
 				<defo>&#039;en-US&#039;</defo>
+			</column>
+			<column name="type" type="varchar" jt="12" mandatory="y" >
+				<comment><![CDATA[Type of consent (human, animal, environmental, etc.)]]></comment>
 			</column>
 			<index name="pk_american_gut_consent" unique="PRIMARY_KEY" >
 				<column name="ag_login_id" />
@@ -298,6 +301,10 @@
 			<column name="results_ready" type="varchar" length="1" jt="12" />
 			<column name="withdrawn" type="varchar" length="1" jt="12" />
 			<column name="refunded" type="varchar" length="1" jt="12" />
+			<column name="deposited" type="bool" jt="-7" mandatory="y" >
+				<defo>&#039;F&#039;</defo>
+				<comment><![CDATA[Deposited to EBI]]></comment>
+			</column>
 			<index name="ag_kit_barcodes_pkey" unique="PRIMARY_KEY" >
 				<column name="ag_kit_barcode_id" />
 			</index>
@@ -335,6 +342,9 @@
 			<column name="longitude" type="float8" jt="6" />
 			<column name="cannot_geocode" type="char" length="1" jt="1" />
 			<column name="elevation" type="float8" jt="6" />
+			<column name="portal" type="varchar" jt="12" mandatory="y" >
+				<comment><![CDATA[What portal this user logs in on]]></comment>
+			</column>
 			<index name="ag_login_pkey" unique="PRIMARY_KEY" >
 				<column name="ag_login_id" />
 			</index>
@@ -22649,11 +22659,8 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="promoted_survey_ids" color="a8c4ef" x="975" y="900" />
 		<entity schema="ag" name="external_survey_answers" color="a8c4ef" x="1425" y="480" />
 		<entity schema="ag" name="external_survey_sources" color="a8c4ef" x="1395" y="600" />
-		<entity schema="ag" name="ag_kit_barcodes" color="f7e2c6" x="480" y="345" />
 		<entity schema="ag" name="ag_participant_exceptions" color="f7e2c6" x="690" y="360" />
 		<entity schema="ag" name="ag_kit" color="f7e2c6" x="495" y="75" />
-		<entity schema="ag" name="ag_login" color="f7e2c6" x="735" y="75" />
-		<entity schema="ag" name="ag_consent" color="c6d9f7" x="1110" y="45" />
 		<entity schema="ag" name="ag_login_surveys" color="ffcccc" x="1440" y="45" />
 		<entity schema="ag" name="languages" color="b7c8e3" x="1320" y="165" />
 		<entity schema="ag" name="redcap_instruments" color="b7c8e3" x="1440" y="195" />
@@ -22667,6 +22674,9 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="controlled_vocabs" color="c6c6f7" x="45" y="1830" />
 		<entity schema="ag" name="zipcodes" color="c6c6f7" x="1155" y="420" />
 		<entity schema="ag" name="settings" color="a8c4ef" x="990" y="420" />
+		<entity schema="ag" name="ag_consent" color="c6d9f7" x="1110" y="45" />
+		<entity schema="ag" name="ag_login" color="f7e2c6" x="735" y="75" />
+		<entity schema="ag" name="ag_kit_barcodes" color="f7e2c6" x="480" y="345" />
 		<group name="ag_kits_barcodes" color="faf6f0" >
 			<comment><![CDATA[Used by :    american_gut_consent]]></comment>
 			<entity schema="ag" name="ag_kit" />
