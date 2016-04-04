@@ -118,8 +118,8 @@ def main():
     startup_tests()
     # replace spaces for underscores to autocomplete easily in a shell
     # format looks like american_gut_8888.log
-    prefix = ("/var/log/%s_%d.log" % (media_locale['LOCALE'], options.port,
-                                      )).replace(' ', '_')
+    prefix = ("%s_%d.log" % (media_locale['LOCALE'], options.port,
+                             )).replace(' ', '_')
     options.log_file_prefix = prefix
     options.logging = 'warning'
     parse_command_line()

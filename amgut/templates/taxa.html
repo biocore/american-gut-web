@@ -5,10 +5,9 @@
     <script src="/static/vendor/js/chroma.min.js"></script>
     <script src="/static/js/interactive.js"></script>
     <script type="text/javascript">
-      {% set bc_labels = [b['barcode'] + ' - ' + t for b, t in zip(barcodes, titles) ] %}
       var barChartSummaryData = {
-        labels: {% raw  bc_labels %},
-        rawLabels: {% raw bc_labels %},
+        labels: {% raw [b['barcode'] + ' - ' + t for b, t in zip(barcodes, titles)] %},
+        rawLabels: null,
         datasets: null,
         rawData: {% raw datasets %},
         metaData: null
@@ -17,6 +16,7 @@
     window.onload = function() {
     var ctx = document.getElementById("canvas-bar-summary").getContext("2d");
     barChartSummaryData.metaData = barChartSummaryData.rawData;
+    barChartSummaryData.rawLabels = barChartSummaryData.labels;
     barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, 'phylum', 10);
     window.summaryBar = new Chart(ctx, {
         type: 'bar',
