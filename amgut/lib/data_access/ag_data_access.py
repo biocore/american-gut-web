@@ -38,6 +38,9 @@ class AGDataAccess(object):
                    'Right hand',
                    'Left hand',
                    'Forehead',
+                   'Torso',
+                   'Left leg',
+                   'Right leg',
                    'Nares',
                    'Hair',
                    'Tears',
@@ -387,7 +390,8 @@ class AGDataAccess(object):
             sql = """UPDATE ag_kit_barcodes
                      SET participant_name = NULL, site_sampled = NULL,
                          sample_time = NULL, sample_date = NULL,
-                         environment_sampled = NULL, notes = ''
+                         environment_sampled = NULL, notes = NULL,
+                         survey_id = NULL
                     WHERE barcode IN (
                         SELECT  akb.barcode
                         FROM ag_kit_barcodes akb
@@ -823,3 +827,33 @@ class AGDataAccess(object):
             sql = 'SELECT country FROM ag.iso_country_lookup ORDER BY country'
             TRN.add(sql)
             return TRN.execute_fetchflatten()
+
+    def is_deposited_ebi(self, barcode):
+        """Check if barcode is deposited to EBI
+
+        Parameters
+        ----------
+        barcode : str
+            Barcode to check
+
+        Returns
+        -------
+        bool
+            If the barcode has been deposited (True) or has not (False)
+
+        Raises
+        ------
+        ValueError
+            Barcode is not a registered AG barcodes
+        """
+        with TRN:
+            sql = """SELECT EXISTS(
+                     SELECT 1 FROM ag.ag_kit_barcodes WHERE barcode = %s)"""
+            TRN.add(sql, [barcode])
+            if not TRN.execute_fetchlast():
+                raise ValueError('Barcode %s not a registered AG barcode' %
+                                 barcode)
+
+            sql = "SELECT deposited FROM ag.ag_kit_barcodes WHERE barcode = %s"
+            TRN.add(sql, [barcode])
+            return TRN.execute_fetchlast()

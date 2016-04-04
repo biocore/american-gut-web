@@ -15,10 +15,16 @@ class ParticipantOverviewHandler(BaseHandler):
         participant_name = participant_name.strip('/')  # for nginx
         skid = self.current_user
         ag_login_id = ag_data.get_user_for_kit(skid)
+        barcodes = ag_data.getParticipantSamples(ag_login_id, participant_name)
+        if barcodes:
+            ebi_submitted = any(ag_data.is_deposited_ebi(b['barcode'])
+                                for b in barcodes)
+        else:
+            ebi_submitted = False
 
         # Check if we have to remove the participant
         participant_to_remove = self.get_argument("remove", None)
-        if participant_to_remove:
+        if participant_to_remove and not ebi_submitted:
             barcodes = ag_data.getParticipantSamples(
                 ag_login_id, participant_to_remove)
             # Remove all the samples attached to the participant
@@ -58,7 +64,7 @@ class ParticipantOverviewHandler(BaseHandler):
         self.render('participant_overview.html', skid=skid,
                     participant_name=participant_name, survey_id=survey_id,
                     participant_type=participant_type, samples=samples,
-                    vioscreen_text=vioscreen_text)
+                    vioscreen_text=vioscreen_text, ebi_submitted=ebi_submitted)
 
     @authenticated
     def get(self, *args, **kwargs):
