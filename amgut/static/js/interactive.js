@@ -115,6 +115,8 @@ function collapse(dataset, level, max, prev_level, focus, sites) {
     }
   }
   var further_collapsed = [];
+  var nonstandard_phyla = [];
+  // make sure things stay in order
   for(var i=0;i<phylum_order.length;i++) {
     p = phylum_order[i];
     if(phyla_dict.hasOwnProperty(p)) {
@@ -125,17 +127,14 @@ function collapse(dataset, level, max, prev_level, focus, sites) {
   // of the same color
   phyla_colors = {};
   for(phyla in phyla_dict) {
+    //Check if non-standard phyla and add if needed
+    if(phylum_order.indexOf(phyla) === -1) { further_collapsed = further_collapsed.concat(phyla_dict[phyla]); }
+    //Get colors for known phyla or black
+    var color = phylum_colors[phyla]  || ['#FFFFFF', '#000000'];
     if(phyla_dict[phyla].length == 1) {
-      //Get colors for known phyla or black
-      var color = phylum_colors[phyla]  || ['#FFFFFF', '#000000'];
       phyla_colors[phyla] = [chroma.bezier(color).scale().colors(3)[1]];
     } else {
-      //Get colors for known phyla or white to black
-      if(phylum_colors[phyla]) {
-        phyla_colors[phyla] = chroma.scale(phylum_colors[phyla]).colors(phyla_dict[phyla].length);
-      } else {
-        phyla_colors[phyla] = chroma.scale(['#FFFFFF', '#000000']).colors(phyla_dict[phyla].length);
-      }
+      phyla_colors[phyla] = chroma.scale(color).colors(phyla_dict[phyla].length);
     }
   }
   for(var i=0;i<further_collapsed.length;i++) {
