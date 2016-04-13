@@ -1,4 +1,8 @@
 $(document).ready(function() {
+  //Patching in Mth.log2
+  Math.log2 = Math.log2 || function(x) {
+                return Math.log(x) / Math.LN2;
+            };
   //Patching in findIndex for Internet Explorer
   if (!Array.prototype.findIndex) {
     Array.prototype.findIndex = function(predicate) {
