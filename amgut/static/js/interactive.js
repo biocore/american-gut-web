@@ -11,7 +11,7 @@ var phylum_colors = {
 var phylum_order = ['Firmicutes', 'Bacteroidetes', 'Proteobacteria', 'Actinobacteria', 'Verrucomicrobia', 'Tenericutes', 'Cyanobacteria', 'Fusobacteria'];
 
 $(document).ready(function() {
-  //Patching for Internet Explorer
+  //Patching in findIndex for Internet Explorer
   if (!Array.prototype.findIndex) {
     Array.prototype.findIndex = function(predicate) {
       if (this === null) {

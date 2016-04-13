@@ -1,0 +1,109 @@
+<!--
+/**
+ *
+ * @author Yoshiki Vazquez Baeza
+ * @copyright Copyright 2013, The American Gut Project
+ * @credits Yoshiki Vazquez Baeza
+ * @license BSD
+ * @version 0.1.0-dev
+ * @maintainer Yoshiki Vazquez Baeza
+ * @email yoshiki89@gmail.com
+ * @status Development
+ *
+ */
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+      Note that all of the resources listed in this file assume the standard
+      base structure of American Gut. It is likely that this will not work properly
+      if it's not executed as suggested.
+  -->
+  <title>American Gut test suite</title>
+  <link rel="stylesheet" href="qunit/qunit-min.css" type="text/css" media="screen">
+
+  <link rel="icon" href="../../static/img/favicon.ico">
+
+  <!-- Testing framework requirements -->
+  <script src="qunit/qunit-min.js"></script>
+  <script src="../../static/vendor/js/require-2.1.22.min.js"></script>
+
+</head>
+<body>
+  <div id="qunit"></div>
+  <div id="qunit-fixture">
+    <div id="map-test">
+      <div id="id1"></div>
+      <div id="id2"></div>
+    </div>
+  </div>
+  <br>
+  <h1 class="qunit-header">American Gut Test Suite</h1>
+  <p>
+    This test suite exercises all the functions that are used as part of
+    American Gut's front end. The functions that have direct interaction with the
+    instantiation of the user interface are not tested.
+  </p>
+  <script>
+    QUnit.config.autostart = false;
+
+    // Without this setTimeout, the specs don't always get execute in webKit
+    // browsers, this was taken from http://stackoverflow.com/q/13615679/379593
+    setTimeout(function () {
+      requirejs.config({
+        'baseUrl': '../../static/',
+
+        // the left side is the module name, and the right side is the path
+        // relative to the baseUrl attribute, do NOT include the .js extension
+        'paths': {
+          /* jQuery */
+          'jquery': './vendor/js/jquery-1.11.1.min',
+          'jqueryui': './vendor/js/jquery-ui.min',
+
+
+          /* jQuery plugins */
+          'chosen': './vendor/js/chosen.jquery.min',
+          'spectrum': './vendor/js/spectrum.min',
+
+          /* other libraries */
+          'underscore': './vendor/js/underscore-min',
+          'chroma': './vendor/js/chroma.min',
+          'chartBundle': './vendor/js/Chart.bundle.min',
+          'chart': './vendor/js/Chart.min.js',
+
+          /* American Gut files */
+          'interactive': './js/interactive',
+
+          /* Tests */
+          'test_interactive': '../test/javascript_tests/test_interactive',
+        },
+        /*
+           Libraries that are not AMD compatible need shim to declare their
+           dependencies.
+         */
+        'shim': {
+          'jquery_drag': {
+            'deps': ['jquery', 'jqueryui']
+          },
+          'chosen': {
+            'deps': ['jquery'],
+            'exports': 'jQuery.fn.chosen'
+          }
+        }
+      });
+
+      //load tests using require
+      require(
+          ['jquery', 'test_interactive'],
+            function ($, test_interactive) {
+              // now trigger the tests
+              $( document ).ready(function() {
+                QUnit.start();
+              });
+      });
+    }, 10);
+  </script>
+</body>
+</html>
