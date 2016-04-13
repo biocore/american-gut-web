@@ -1,15 +1,3 @@
-var phylum_colors = {
-  'Firmicutes': ['pink', 'darkred'],
-  'Bacteroidetes': ['#FFD27F', '#BE5E00'],
-  'Proteobacteria': ['lightyellow', 'yellow'],
-  'Actinobacteria': ['#F3DBAB', '#735B2B'],
-  'Verrucomicrobia': ['#C5D991', '#465A12'],
-  'Tenericutes': ['lightgreen', 'darkgreen'],
-  'Cyanobacteria': ['lightcyan', 'darkcyan'],
-  'Fusobacteria': ['lightblue', 'darkblue']
-};
-var phylum_order = ['Firmicutes', 'Bacteroidetes', 'Proteobacteria', 'Actinobacteria', 'Verrucomicrobia', 'Tenericutes', 'Cyanobacteria', 'Fusobacteria'];
-
 $(document).ready(function() {
   //Patching in findIndex for Internet Explorer
   if (!Array.prototype.findIndex) {
@@ -52,7 +40,7 @@ function getAvg(list) {
   }) / list.length;
 }
 
-function sum_arrays(ar1, ar2) {
+function sumArrays(ar1, ar2) {
   var sum = [];
   if (ar1.length == ar2.length) {
       for (var i=0; i<ar1.length;i++) {
@@ -65,7 +53,7 @@ function sum_arrays(ar1, ar2) {
   return sum;
 }
 
-function find_otu(list, otu, level) {
+function findOtu(list, otu, level) {
   var lvl = level || 'label';
   function inner(element, index, array) {
     if(element[lvl] == this) { return true; }
@@ -74,11 +62,23 @@ function find_otu(list, otu, level) {
   return list.findIndex(inner, otu);
 }
 
-function filter_sites(list, sites) {
+function filterSites(list, sites) {
 
 }
 
 function collapse(dataset, level, max, prev_level, focus, sites) {
+  var phylum_colors = {
+    'Firmicutes': ['pink', 'darkred'],
+    'Bacteroidetes': ['#FFD27F', '#BE5E00'],
+    'Proteobacteria': ['lightyellow', 'yellow'],
+    'Actinobacteria': ['#F3DBAB', '#735B2B'],
+    'Verrucomicrobia': ['#C5D991', '#465A12'],
+    'Tenericutes': ['lightgreen', 'darkgreen'],
+    'Cyanobacteria': ['lightcyan', 'darkcyan'],
+    'Fusobacteria': ['lightblue', 'darkblue']
+  };
+  var phylum_order = ['Firmicutes', 'Bacteroidetes', 'Proteobacteria', 'Actinobacteria', 'Verrucomicrobia', 'Tenericutes', 'Cyanobacteria', 'Fusobacteria'];
+
   var max_otus = max || 8;
   var focus_taxa = focus || null;
   var filter_to = sites || null;
@@ -91,7 +91,7 @@ function collapse(dataset, level, max, prev_level, focus, sites) {
     if(g === "") { otu.label = 'Unspecified'; }
     // Collapse the OTUs found in the group into a single
     for(var i=1;i<groups[g].length;i++) {
-      otu.data = sum_arrays(otu.data, groups[g][i].data);
+      otu.data = sumArrays(otu.data, groups[g][i].data);
     }
     // Round to four decimals
     for(var i=0;i<otu.data.length;i++) { otu.data[i] = Math.floor(otu.data[i] * 10000) / 10000; }
@@ -146,30 +146,50 @@ function collapse(dataset, level, max, prev_level, focus, sites) {
     // Create the OTHER category for the rest of the OTUs
     var other = { label: 'Other',  data:collapsed[sorted[loop][0]].data, backgroundColor: 'rgba(180,180,180)' };
     for(var i=loop+1;i<sorted.length;i++){
-      other.data = sum_arrays(other.data, collapsed[sorted[i][0]].data);
+      other.data = sumArrays(other.data, collapsed[sorted[i][0]].data);
     }
     for(var i=0;i<other.data.length;i++) { other.data[i] = Math.floor(other.data[i] * 10000) / 10000; }
     further_collapsed.push(other);
   }
   if(filter_to !== null) {
-    further_collapsed = filter_sites(further_collapsed, filter_to);
+    further_collapsed = filterSites(further_collapsed, filter_to);
   }
 
   return further_collapsed;
+}
+
+function calcFoldChange(newData, rawData, level, dataPos) {
+  var foldChanges = [];
+  var collapsed = collapse(rawData, level, 10000);
+  var dataCollapsed = collapse(newData, level, 10000);
+  for(var i=0;i<dataCollapsed.length;i++) {
+    var otu = dataCollapsed[i];
+    var pos = findOtu(collapsed, otu.label);
+    //sanity checks to make sure we aren't doing something dumb
+    if(pos === -1 || otu.data === 0) { continue; }
+    var sample_data = collapsed[pos].data;
+
+    //Compute the fold changes, making them negative when needed
+    var val = sample_data[dataPos]/otu.data;
+    if(val === 0) { continue; }
+    foldChanges.push([otu.label, Math.floor(Math.log2(val) * 100) / 100]);
+  }
+  //Sort by the average and build the data information
+  var sorted = foldChanges.sort(function(a, b) { return b[1] - a[1]; });
+  foldData = [];
+  labels = [];
+  for(var i=0;i<sorted.length;i++) {
+    //TODO: Some way to filter significance
+    foldData.push(sorted[i][1]);
+    labels.push(sorted[i][0]);
+  }
+  return [labels, foldData];
 }
 
 function fold_change() {
   var level = $("#collapse-fold").val();
   var category = $("#meta-cat-fold").val();
   var barcode = $("#barcode-fold").val();
-  //Don't do anything if they submit on empty barcode value
-  if(barcode === "") {
-    barChartFoldData.labels = [];
-    barChartFoldData.datasets = [];
-    window.foldBar.update();
-    $("#alpha-div-image").attr("src", "");
-    return;
-  }
   //If there's no category, just update alpha diversity graph to show new barcode
   //Set alpha diversity image going first
   if(category === "") {
@@ -180,34 +200,11 @@ function fold_change() {
 
   $.get('/interactive/metadata/', {category: category, barcode: barcode})
     .done(function (data) {
-      //Set alpha diversity image going first
-      $("#alpha-div-image").attr("src", "/interactive/alpha_div/" + barcode + "?category=" + category);
-
-      var fold_changes = [];
-      var data_pos = barChartFoldData.barcodes.findIndex(function(y) { return barcode == y; });
-      var collapsed = collapse(barChartSummaryData.rawData, level, 10000);
-      var data_collapsed = collapse(data, level, 10000);
-      for(var i=0;i<data_collapsed.length;i++) {
-        var otu = data_collapsed[i];
-        var pos = find_otu(collapsed, otu.label);
-        //sanity checks to make sure we aren't doing something dumb
-        if(pos === -1 || otu.data === 0) { continue; }
-        var sample_data = collapsed[pos].data;
-
-        //Compute the fold changes, making them negative when needed
-        var val = sample_data[data_pos]/otu.data;
-        if(val === 0) { continue; }
-        fold_changes.push([otu.label, Math.floor(Math.log2(val) * 100) / 100]);
-      }
-      //Sort by the average and build the data information
-      var sorted = fold_changes.sort(function(a, b) { return b[1] - a[1]; });
-      fold_data = [];
-      labels = [];
-      for(var i=0;i<sorted.length;i++) {
-        //TODO: Some way to filter significance
-        fold_data.push(sorted[i][1]);
-        labels.push(sorted[i][0]);
-      }
+      var dataPos = barChartFoldData.barcodes.findIndex(function(y) { return barcode == y; });
+      var rawData = barChartSummaryData.rawData;
+      foldChanges = calcFoldChange(data, rawData, level, dataPos);
+      var labels = foldChanges[0];
+      var foldData = foldChanges[1];
       barChartFoldData.labels = labels;
       barChartFoldData.datasets = [{
         backgroundColor: "rgba(151,187,205,0.7)",
@@ -215,13 +212,39 @@ function fold_change() {
         highlightBackground: "rgba(220,220,220,1)",
         highlightStroke: "rgba(220,220,220,1)",
         label: "fold changes",
-        data: fold_data
+        data: foldData
       }];
       window.foldBar.update();
     })
     .fail(function () {
       alert('FAIL!');
     });
+}
+
+function addMetadata(target, newCol, collapseTo) {
+  newLen = target[0].data.length + 1;
+  for(var i=0;i<newCol.length;i++) {
+    var otu = newCol[i];
+    var val = otu.data[0];
+    var existing = findOtu(target, otu.full, 'full');
+    if(existing == -1) {
+      //add the OTU as zero for all existing labels, then add value from meta-cat
+      otu.data = new Array(newLen).join('0').split('').map(parseFloat);
+      otu.data.push(val);
+      target.push(otu);
+    } else {
+      ///OTU already exists, so add to end of existing one
+      target[existing].data.push(val);
+    }
+  }
+
+  //Loop over raw data and add 0 to any OTUs that are in raw data but not in meta-cat
+  var full_len = newLen;
+  for(var i=0;i<target.length;i++) {
+    if(target[i].data.length < full_len) { target[i].data.push(0.0); }
+  }
+
+  return collapse(target, collapseTo, 10);
 }
 
 function add_metadata_barchart() {
@@ -236,29 +259,8 @@ function add_metadata_barchart() {
 
   $.get('/interactive/metadata/', {category: $("#meta-cat").val(), site: $("#meta-site").val()})
     .done(function (data) {
-      for(var i=0;i<data.length;i++) {
-        var otu = data[i];
-        var val = otu.data[0];
-        var existing = find_otu(barChartSummaryData.metaData, otu.full, 'full');
-        if(existing == -1) {
-          //add the OTU as zero for all existing labels, then add value from meta-cat
-          otu.data = new Array(barChartSummaryData.labels.length+1).join('0').split('').map(parseFloat);
-          otu.data.push(val);
-          barChartSummaryData.metaData.push(otu);
-        } else {
-          ///OTU already exists, so add to end of existing one
-          barChartSummaryData.metaData[existing].data.push(val);
-        }
-      }
-
-      //Loop over raw data and add 0 to any OTUs that are in raw data but not in meta-cat
-      var full_len = barChartSummaryData.labels.length + 1;
-      for(var i=0;i<barChartSummaryData.metaData.length;i++) {
-        if(barChartSummaryData.metaData[i].data.length < full_len) { barChartSummaryData.metaData[i].data.push(0.0); }
-      }
-
+      barChartSummaryData.datasets = addMetadata(barChartSummaryData.metaData, data, $("#collapse").val());
       barChartSummaryData.labels.push(title);
-      barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, $("#collapse").val(), 10);
       window.summaryBar.update();
       var rem = $('<td><a href="#" onclick="remove_sample(\'' + title + '\'); return false;">Remove</a></td>');
       $("#remove-row").append(rem);

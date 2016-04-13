@@ -101,7 +101,6 @@ class TaxaHandler(BaseHandler):
         user = ag_data.get_user_for_kit(self.current_user)
         bc_info = ag_data.get_barcodes_by_user(user, results=True)
         titles = [bc['sample_date'].strftime('%b %d, %Y') for bc in bc_info]
-        print bc_info
         otus = {}
         files = []
         # Load in all possible OTUs that can be seen by loading files to memory
@@ -175,7 +174,6 @@ class AlphaDivImgHandler(BaseHandler):
         user = ag_data.get_user_for_kit(self.current_user)
         barcodes = [b['barcode'] for b in
                     ag_data.get_barcodes_by_user(user)]
-        print barcodes
         # Make sure barcode passed is owned by the user
         if barcode not in barcodes:
             raise HTTPError(403, 'User %s does not have access to barcode '

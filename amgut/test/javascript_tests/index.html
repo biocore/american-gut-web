@@ -3,11 +3,11 @@
  *
  * @author Yoshiki Vazquez Baeza
  * @copyright Copyright 2013, The American Gut Project
- * @credits Yoshiki Vazquez Baeza
+ * @credits Yoshiki Vazquez Baeza, Joshua Shorenstein
  * @license BSD
  * @version 0.1.0-dev
- * @maintainer Yoshiki Vazquez Baeza
- * @email yoshiki89@gmail.com
+ * @maintainer Joshua Shorenstein
+ * @email jshorenstein@ucsd.edu
  * @status Development
  *
  */
@@ -28,7 +28,15 @@
 
   <!-- Testing framework requirements -->
   <script src="qunit/qunit-min.js"></script>
-  <script src="../../static/vendor/js/require-2.1.22.min.js"></script>
+  <script src="../../static/vendor/js/jquery-1.11.1.min.js"></script>
+  <script src="../../static/vendor/js/Chart.bundle.min.js"></script>
+  <script src="../../static/vendor/js/chroma.min.js"></script>
+
+  <!--Files to test -->
+  <script src="../../static/js/interactive.js"></script>
+
+  <!--Test files -->
+  <script src="./test_interactive.js"></script>
 
 </head>
 <body>
@@ -48,62 +56,10 @@
   </p>
   <script>
     QUnit.config.autostart = false;
-
-    // Without this setTimeout, the specs don't always get execute in webKit
-    // browsers, this was taken from http://stackoverflow.com/q/13615679/379593
-    setTimeout(function () {
-      requirejs.config({
-        'baseUrl': '../../static/',
-
-        // the left side is the module name, and the right side is the path
-        // relative to the baseUrl attribute, do NOT include the .js extension
-        'paths': {
-          /* jQuery */
-          'jquery': './vendor/js/jquery-1.11.1.min',
-          'jqueryui': './vendor/js/jquery-ui.min',
-
-
-          /* jQuery plugins */
-          'chosen': './vendor/js/chosen.jquery.min',
-          'spectrum': './vendor/js/spectrum.min',
-
-          /* other libraries */
-          'underscore': './vendor/js/underscore-min',
-          'chroma': './vendor/js/chroma.min',
-          'chartBundle': './vendor/js/Chart.bundle.min',
-          'chart': './vendor/js/Chart.min.js',
-
-          /* American Gut files */
-          'interactive': './js/interactive',
-
-          /* Tests */
-          'test_interactive': '../test/javascript_tests/test_interactive',
-        },
-        /*
-           Libraries that are not AMD compatible need shim to declare their
-           dependencies.
-         */
-        'shim': {
-          'jquery_drag': {
-            'deps': ['jquery', 'jqueryui']
-          },
-          'chosen': {
-            'deps': ['jquery'],
-            'exports': 'jQuery.fn.chosen'
-          }
-        }
-      });
-
-      //load tests using require
-      require(
-          ['jquery', 'test_interactive'],
-            function ($, test_interactive) {
-              // now trigger the tests
-              $( document ).ready(function() {
-                QUnit.start();
-              });
-      });
-    }, 10);
+    // now trigger the tests
+    $( document ).ready(function() {
+      QUnit.start();
+    });
   </script>
 </body>
 </html>
