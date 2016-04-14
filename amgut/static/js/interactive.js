@@ -93,7 +93,6 @@ function collapse(dataset, level, max, prev_level, focus, sites) {
   var groups = group(dataset, level);
   var collapsed = {};
   var summaries = [];
-  console.log(groups);
   for (var g in groups) {
     if (focus !== null && groups[g][0][prev_level] != focus_taxa) { continue; }
     var otu = {label: g, data: groups[g][0].data, phylum: groups[g][0].phylum};
@@ -103,7 +102,7 @@ function collapse(dataset, level, max, prev_level, focus, sites) {
       otu.data = sumArrays(otu.data, groups[g][i].data);
     }
     // Round to four decimals
-    for (var i = 0; i < otu.data.length;i++) {
+    for (var i = 0; i < otu.data.length; i++) {
       otu.data[i] = Math.floor(otu.data[i] * 10000) / 10000;
     }
 
