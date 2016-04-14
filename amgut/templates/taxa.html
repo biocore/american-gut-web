@@ -55,7 +55,9 @@
       var activePoints = window.summaryBar.getElementAtEvent(evt);
       if (activePoints.length > 0 && $("#collapse").val() != "genus") {
         var taxa = activePoints[0]._model.datasetLabel;
-        if(taxa == "Other") { return; }
+        if(taxa == "Other") {
+          return;
+        }
         var label = activePoints[0]._model.label;
         var prev_level = $("#collapse").val();
         $("#collapse > option:selected").prop("selected", false).next().prop("selected", true);
