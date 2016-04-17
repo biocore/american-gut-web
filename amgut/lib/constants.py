@@ -48,3 +48,17 @@ collapse_human_sites = {
     'Ear wax': '',
     'Vaginal mucus': 'vaginal'
     }
+
+# What categories of summary data aravailable for each collapsed body site
+available_summaries = {
+    'stool': ['age-baby', 'age-child', 'age-teen', 'age-20s', 'age-30s',
+              'age-40s', 'age-50s', 'age-60s', 'age-70+',
+              'bmi-Underweight', 'bmi-Normal', 'bmi-Overweight', 'bmi-Obese',
+              'sex-male', 'sex-female'],
+    'skin': ['age-baby', 'age-child', 'age-teen', 'age-20s', 'age-30s',
+             'age-40s', 'age-50s', 'age-60s', 'age-70+',
+             'sex-male', 'sex-female'],
+    'oral': ['age-child', 'age-teen', 'age-20s', 'age-30s',
+             'age-40s', 'age-50s', 'age-60s', 'age-70+',
+             'sex-male', 'sex-female']
+    }

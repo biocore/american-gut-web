@@ -8,6 +8,7 @@ from PIL import Image
 
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.connections import ag_data
+from amgut.lib.constants import available_summaries
 from amgut.lib.config_manager import AMGUT_CONFIG
 
 
@@ -74,11 +75,6 @@ class SingleSampleHandler(BaseHandler):
         titles = [bc['sample_date'].strftime('%b %d, %Y') for bc in bc_info]
         datasets = _read_taxonomy(bc_info)
 
-        meta_cats = ['age-baby', 'age-child', 'age-teen', 'age-20s', 'age-30s',
-                     'age-40s', 'age-50s', 'age-60s', 'age-70+',
-                     'bmi-Underweight', 'bmi-Normal', 'bmi-Overweight',
-                     'bmi-Obese', 'sex-male', 'sex-female', ]
-
         with open(join(AMGUT_CONFIG.base_data_dir, 'emperor',
                   'emperor.txt')) as f:
             pcoa_data = f.readlines()
@@ -88,7 +84,8 @@ class SingleSampleHandler(BaseHandler):
                     pct_var=pcoa_data[2].strip(),
                     md_headers=literal_eval(pcoa_data[3].strip()),
                     metadata=pcoa_data[4].strip(),
-                    titles=titles, meta_cats=meta_cats, datasets=datasets)
+                    titles=titles, available_summaries=available_summaries,
+                    datasets=datasets)
 
 
 class MultiSampleHandler(BaseHandler):
@@ -99,12 +96,8 @@ class MultiSampleHandler(BaseHandler):
         titles = [bc['sample_date'].strftime('%b %d, %Y') for bc in bc_info]
         datasets = _read_taxonomy(bc_info)
 
-        meta_cats = ['age-baby', 'age-child', 'age-teen', 'age-20s', 'age-30s',
-                     'age-40s', 'age-50s', 'age-60s', 'age-70+',
-                     'bmi-Underweight', 'bmi-Normal', 'bmi-Overweight',
-                     'bmi-Obese', 'sex-male', 'sex-female', ]
         self.render('taxa.html', titles=titles, barcodes=bc_info,
-                    meta_cats=meta_cats, datasets=datasets)
+                    available_summaries=available_summaries, datasets=datasets)
 
 
 class MetadataHandler(BaseHandler):

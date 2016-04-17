@@ -17,6 +17,7 @@
         barcodes: {% raw [b['barcode'] for b in barcodes] %},
         titles: {% raw titles %}
       };
+      var available_summaries = {% raw available_summaries %};
 
     window.onload = function() {
     var ctx = document.getElementById("canvas-bar-summary").getContext("2d");
@@ -91,9 +92,16 @@
         }
     });
     fold_change();
+    //fill categories based on site
+    buildCats($('#barcode-fold option:selected').data('site'), $('#meta-cat-fold'), false);
+
     $("#collapse-fold").on("change", fold_change);
 
-    $("#barcode-fold").on("change", fold_change);
+    $("#barcode-fold").on("change", function () {
+      buildCats($('#barcode-fold option:selected').data('site'), $('#meta-cat-fold'), false);
+      fold_change();
+
+    });
 
     $("#meta-cat-fold").on("change", fold_change);
 
@@ -131,12 +139,9 @@
       window.summaryBar.update();
     });
     $("#meta-site").on("change", function (evt) {
-      if($("#meta-site").val() == "") {
-        $("#meta-cat").val("");
-        $("#meta-cat").prop("disabled", true);
-      } else {
-        $("#meta-cat").prop("disabled", false);;
-      }
+      var site = $("#meta-site").val();
+      var catDropdown = $("#meta-cat");
+      buildCats(site, catDropdown);
     });
     $("#meta-cat").on("change", function (evt) {
       if($("#meta-cat").val() == "") {
@@ -178,9 +183,6 @@
     </select> 
     Category:<select id="meta-cat">
       <option value=""></option>
-    {% for meta in meta_cats %}
-      <option value="{{meta}}">{{meta}}</option>
-    {% end %}
     </select><button onclick="add_metadata_barchart()" id="add-sumary-cat">Add</button>
   </div>
   <div style="width: 100%;">
@@ -202,7 +204,7 @@
       Sample:
       <select id="barcode-fold">
     {% for bc in barcodes %}
-        <option value="{{bc['barcode']}}">{{bc['barcode']}} - {{bc['sample_date'].strftime('%b %d, %Y')}}</option>
+        <option value="{{bc['barcode']}}" data-site="{{ bc['site_sampled'].lower() if bc['site_sampled'] is not None else bc['environment_sampled'].lower() }}">{{bc['barcode']}} - {{bc['sample_date'].strftime('%b %d, %Y')}}</option>
     {% end %}
       </select>
     </td><td>
@@ -217,9 +219,6 @@
     </select>
     Category:<select id="meta-cat-fold">
       <option value="">All samples</option>
-    {% for meta in meta_cats %}
-      <option value="{{meta}}">{{meta}}</option>
-    {% end %}
     </select>
     </td></tr>
   </table>

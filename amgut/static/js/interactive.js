@@ -72,6 +72,23 @@ function filterSites(list, sites) {
 
 }
 
+function buildCats(site, catDropdown, disable) {
+  disable = disable || false
+  catDropdown.html("");
+  if (site == "" || site === undefined) {
+    if (disable) {
+      catDropdown.prop("disabled", true);
+    }
+  } else {
+    catDropdown.append(new Option("", ""));
+    for (pos in available_summaries[site.toLowerCase()]) {
+      var cat = available_summaries[site.toLowerCase()][pos];
+      catDropdown.append(new Option(cat, cat));
+    }
+    catDropdown.prop("disabled", false);
+  }
+}
+
 function collapse(dataset, level, max, prev_level, focus, sites) {
   var phylum_colors = {
     'Firmicutes': ['pink', 'darkred'],
