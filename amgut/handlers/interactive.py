@@ -8,7 +8,7 @@ from PIL import Image
 
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.connections import ag_data
-from amgut.lib.constants import available_summaries
+from amgut.lib.constants import available_summaries, collapse_human_sites
 from amgut.lib.config_manager import AMGUT_CONFIG
 
 
@@ -97,7 +97,8 @@ class MultiSampleHandler(BaseHandler):
         datasets = _read_taxonomy(bc_info)
 
         self.render('taxa.html', titles=titles, barcodes=bc_info,
-                    available_summaries=available_summaries, datasets=datasets)
+                    available_summaries=available_summaries,
+                    collapse=collapse_human_sites, datasets=datasets)
 
 
 class MetadataHandler(BaseHandler):
