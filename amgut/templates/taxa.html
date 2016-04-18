@@ -204,7 +204,10 @@
       Sample:
       <select id="barcode-fold">
     {% for bc in barcodes %}
-        <option value="{{bc['barcode']}}" data-site="{{ collapse[bc['site_sampled']].lower() if bc['site_sampled'] is not None else bc['environment_sampled'].lower() }}">{{bc['barcode']}} - {{bc['sample_date'].strftime('%b %d, %Y')}}</option>
+      {% if collapse[bc['site_sampled']] == '' %}
+        {% continue %}
+      {% end %}
+        <option value="{{bc['barcode']}}" data-site="{{collapse[bc['site_sampled']].lower()}}">{{bc['barcode']}} - {{bc['sample_date'].strftime('%b %d, %Y')}}</option>
     {% end %}
       </select>
     </td><td>

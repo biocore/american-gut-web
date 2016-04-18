@@ -73,19 +73,24 @@ function filterSites(list, sites) {
 }
 
 function buildCats(site, catDropdown, disable) {
-  disable = disable || false
-  catDropdown.html("");
-  if (site == "" || site === undefined) {
+  disable = disable || false;
+  catDropdown.html('');
+  if (site == '' || site === undefined) {
     if (disable) {
-      catDropdown.prop("disabled", true);
+      catDropdown.prop('disabled', true);
     }
   } else {
-    catDropdown.append(new Option("", ""));
-    for (pos in available_summaries[site.toLowerCase()]) {
-      var cat = available_summaries[site.toLowerCase()][pos];
+    site = site.toLowerCase();
+    if (!available_summaries.hasOwnProperty(site)) {
+      // Unknown site so can't build list of available metadata
+      return;
+    }
+    catDropdown.append(new Option('', ''));
+    for (pos in available_summaries[site]) {
+      var cat = available_summaries[site][pos];
       catDropdown.append(new Option(cat, cat));
     }
-    catDropdown.prop("disabled", false);
+    catDropdown.prop('disabled', false);
   }
 }
 

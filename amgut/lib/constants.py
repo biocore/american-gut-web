@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 human_sites = ['Stool',
                'Mouth',
                'Right hand',
@@ -32,7 +34,7 @@ general_sites = ['Animal Habitat',
                  'Sole of shoe',
                  'Water']
 
-collapse_human_sites = {
+collapse_human_sites = defaultdict(lambda: '', {
     'Stool': 'stool',
     'Mouth': 'oral',
     'Right hand': 'skin',
@@ -46,8 +48,8 @@ collapse_human_sites = {
     'Tears': '',
     'Nasal mucus': '',
     'Ear wax': '',
-    'Vaginal mucus': 'vaginal'
-    }
+    'Vaginal mucus': ''
+    })
 
 # What categories of summary data aravailable for each collapsed body site
 available_summaries = {
