@@ -57,7 +57,7 @@ function sumArrays(ar1, ar2) {
   return sum;
 }
 
-function findOtu(list, otu, level) {
+function findOTU(list, otu, level) {
   var lvl = level || 'label';
   function inner(element, index, array) {
     if (element[lvl] == this) {
@@ -75,7 +75,7 @@ function filterSites(list, sites) {
 function buildCats(site, catDropdown, disable) {
   disable = disable || false;
   catDropdown.html('');
-  if (site == '' || site === undefined) {
+  if (site === '' || site === undefined) {
     if (disable) {
       catDropdown.prop('disabled', true);
     }
@@ -110,23 +110,27 @@ function collapse(dataset, level, max, prev_level, focus, sites) {
     'Fusobacteria'];
 
   var max_otus = max || 8;
-  var focus_taxa = focus || null;
+  var focus = focus || null;
   var filter_to = sites || null;
+  var prev_level = prev_level || null;
   var groups = group(dataset, level);
   var collapsed = {};
   var summaries = [];
   for (var g in groups) {
-    if (focus !== null && groups[g][0][prev_level] != focus_taxa) { continue; }
+    console.log(focus);
+    if (focus !== null && groups[g][0][prev_level] !== focus) {
+      continue;
+    }
     var otu = {label: g, data: groups[g][0].data, phylum: groups[g][0].phylum};
     if (g === '') { otu.label = 'Unspecified'; }
     // Collapse the OTUs found in the group into a single
     for (var i = 1; i < groups[g].length; i++) {
       otu.data = sumArrays(otu.data, groups[g][i].data);
     }
-    // Round to four decimals
-    for (var i = 0; i < otu.data.length; i++) {
-      otu.data[i] = Math.floor(otu.data[i] * 10000) / 10000;
-    }
+    // Round data values to four decimals
+    otu.data = otu.data.map(function(c, i, a) {
+      return +c.toFixed(4);
+    });
 
     collapsed[g] = otu;
     summaries.push([g, getAvg(otu.data)]);
@@ -204,7 +208,7 @@ function calcFoldChange(newData, rawData, level, dataPos) {
   var dataCollapsed = collapse(newData, level, 10000);
   for (var i = 0; i < dataCollapsed.length; i++) {
     var otu = dataCollapsed[i];
-    var pos = findOtu(collapsed, otu.label);
+    var pos = findOTU(collapsed, otu.label);
     //sanity checks to make sure we aren't doing something dumb
     if (pos === -1 || otu.data === 0) {
       continue;
@@ -274,14 +278,14 @@ function addMetadata(target, newCol, collapseTo) {
   for (var i = 0; i < newCol.length; i++) {
     var otu = newCol[i];
     var val = otu.data[0];
-    var existing = findOtu(target, otu.full, 'full');
+    var existing = findOTU(target, otu.full, 'full');
     if (existing == -1) {
       //add the OTU as zero for existing labels, then add value from meta-cat
       otu.data = new Array(newLen).join('0').split('').map(parseFloat);
       otu.data.push(val);
       target.push(otu);
     } else {
-      ///OTU already exists, so add to end of existing one
+      // OTU already exists, so add to end of existing one
       target[existing].data.push(val);
     }
   }
@@ -289,7 +293,9 @@ function addMetadata(target, newCol, collapseTo) {
   //Loop over raw data and add 0 to any OTUs in raw data but not in meta-cat
   var full_len = newLen;
   for (var i = 0; i < target.length; i++) {
-    if (target[i].data.length < full_len) { target[i].data.push(0.0); }
+    if (target[i].data.length < full_len) {
+      target[i].data.push(0.0);
+    }
   }
 
   return collapse(target, collapseTo, 10);
@@ -300,7 +306,7 @@ function add_metadata_barchart() {
   var site = $('#meta-site').val();
   var pos = barChartSummaryData.labels.length;
   //Don't do anything if they submit on empty value
-  if (category.length == 0 || site.length == 0) {
+  if (category.length === 0 || site.length === 0) {
     return;
   }
   var title = category + '  ' + site;
@@ -316,7 +322,7 @@ function add_metadata_barchart() {
                                                  data, $('#collapse').val());
       barChartSummaryData.labels.push(title);
       window.summaryBar.update();
-      var rem = $("<td><a href='#' onclick='remove_sample(\'" + title +
+      var rem = $("<td><a onclick='remove_sample(\'" + title +
                    "\'); return false;'>Remove</a></td>");
       $('#remove-row').append(rem);
     })
@@ -332,8 +338,13 @@ function remove_sample(title) {
   var to_remove = [];
   for (var i = 0; i < barChartSummaryData.metaData.length; i++) {
     barChartSummaryData.metaData[i].data.splice(data_pos, 1);
-    if (barChartSummaryData.metaData[i].data.every(function(y) {
-      return y === 0.0; })) { to_remove.push(i);
+    // Check if every value in the remaining array is zero,
+    // and if so set to be removed.
+    var allZero = barChartSummaryData.metaData[i].data.every(function(y) {
+      return y === 0.0;
+    });
+    if (allZero) {
+      to_remove.push(i);
     }
   }
 
@@ -347,4 +358,5 @@ function remove_sample(title) {
   barChartSummaryData.labels.splice(data_pos, 1);
   window.summaryBar.update();
   $('td').eq(data_pos).remove();
+  return false;
 }

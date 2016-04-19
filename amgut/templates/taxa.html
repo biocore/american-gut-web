@@ -1,166 +1,166 @@
 {%extends sitebase.html%}
 {% block head %}
-    <script src="/static/vendor/js/Chart.bundle.min.js"></script>
-    <script src="/static/vendor/js/chroma.min.js"></script>
-    <script src="/static/js/interactive.js"></script>
-    <script type="text/javascript">
-      var barChartSummaryData = {
-        labels: {% raw [b['barcode'] + ' - ' + t for b, t in zip(barcodes, titles)] %},
-        rawLabels: null,
-        datasets: null,
-        rawData: {% raw datasets %},
-        metaData: null
-      };
-      var barChartFoldData = {
-        labels: [],
-        datasets: [],
-        barcodes: {% raw [b['barcode'] for b in barcodes] %},
-        titles: {% raw titles %}
-      };
-      var available_summaries = {% raw available_summaries %};
+  <script src="/static/vendor/js/Chart.bundle.min.js"></script>
+  <script src="/static/vendor/js/chroma.min.js"></script>
+  <script src="/static/js/interactive.js"></script>
+  <script type="text/javascript">
+  var barChartSummaryData = {
+    labels: {% raw [b['barcode'] + ' - ' + t for b, t in zip(barcodes, titles)] %},
+    rawLabels: null,
+    datasets: null,
+    rawData: {% raw datasets %},
+    metaData: null
+  };
+  var barChartFoldData = {
+    labels: [],
+    datasets: [],
+    barcodes: {% raw [b['barcode'] for b in barcodes] %},
+    titles: {% raw titles %}
+  };
+  var available_summaries = {% raw available_summaries %};
 
-    window.onload = function() {
-    var ctx = document.getElementById("canvas-bar-summary").getContext("2d");
-    var ctf = document.getElementById("canvas-bar-fold").getContext("2d");
-    // Exploit JSON to make extremely fast deep copy of objects
-    barChartSummaryData.metaData = JSON.parse(JSON.stringify(barChartSummaryData.rawData));
-    barChartSummaryData.rawLabels = JSON.parse(JSON.stringify(barChartSummaryData.labels));
-    barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, 'phylum', 10);
-    window.summaryBar = new Chart(ctx, {
-        type: 'bar',
-        data: barChartSummaryData,
-        barStrokeWidth:0,
-        options: {
-            legend: {
-              position: 'top'
-            },
-            title:{
-                display:true,
-                text:"Taxonomic Relative Abundances"
-            },
-            tooltips: {
-                mode: 'label', // single if just want one OTU
-            },
-            responsive: true,
-            scales: {
-                xAxes: [{
-                    stacked: true,
-                    showVerticalLines: false
-                }],
-                yAxes: [{
-                    stacked: true,
-                    display: true,
-                    scaleLabel: {
-                      display: true,
-                      labelString: 'Percent abundance'
-                    },
-                }]
-            }
-        }
-    });
-
-    window.foldBar = new Chart(ctf, {
-        type: 'bar',
-        data: barChartFoldData,
-        barStrokeWidth:0,
-        options: {
-            legend: {
-              display: false
-            },
-            title:{
-                display:true,
-                text:"Taxonomic Fold Changes"
-            },
-            tooltips: {
-                mode: 'single',
-            },
-            responsive: true,
-            scales: {
-                xAxes: [{
-                  ticks: {
-                    autoSkip: false
-                  }
-                }],
-                yAxes: [{
-                    display: true,
-                    scaleLabel: {
-                      display: true,
-                      labelString: 'Log2 Fold Change'
-                    }
-                }]
-            }
-        }
-    });
-    fold_change();
-    //fill categories based on site
-    buildCats($('#barcode-fold option:selected').data('site'), $('#meta-cat-fold'), false);
-
-    $("#collapse-fold").on("change", fold_change);
-
-    $("#barcode-fold").on("change", function () {
-      buildCats($('#barcode-fold option:selected').data('site'), $('#meta-cat-fold'), false);
-      fold_change();
-
-    });
-
-    $("#meta-cat-fold").on("change", fold_change);
-
-    $("#canvas-bar-summary").on('click', function(evt){
-      var activePoints = window.summaryBar.getElementAtEvent(evt);
-      if (activePoints.length > 0 && $("#collapse").val() != "genus") {
-        var taxa = activePoints[0]._model.datasetLabel;
-        if(taxa == "Other") {
-          return;
-        }
-        var label = activePoints[0]._model.label;
-        var prev_level = $("#collapse").val();
-        $("#collapse > option:selected").prop("selected", false).next().prop("selected", true);
-        barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, $("#collapse").val(), 10, prev_level, taxa);
-        window.summaryBar.update();
-      }
-    });
-
-    $("#collapse").on("change", function () {
-      barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, $("#collapse").val(), 10);
-      window.summaryBar.update();
-    })
-
-    $("#reset-summary").on("click", function () {
-      $("#collapse").val('phylum');
-      barChartSummaryData.labels = JSON.parse(JSON.stringify(barChartSummaryData.rawLabels));
-      barChartSummaryData.metaData = JSON.parse(JSON.stringify(barChartSummaryData.rawData));
-      barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, 'phylum', 10);
-      //re-add all remove links
-      $.each($("td"), function( i, val ) { val.remove(); });
-      for(var i=0;i<barChartSummaryData.labels.length;i++) {
-        var rem = $('<td><a href="#" onclick="remove_sample(\'' + barChartSummaryData.labels[i] + '\'); return false;">Remove</a></td>');
-        $("#remove-row").append(rem);
-      }
-      window.summaryBar.update();
-    });
-    $("#meta-site").on("change", function (evt) {
-      var site = $("#meta-site").val();
-      var catDropdown = $("#meta-cat");
-      buildCats(site, catDropdown);
-    });
-    $("#meta-cat").on("change", function (evt) {
-      if($("#meta-cat").val() == "") {
-        $("#add-sumary-cat").prop("disabled", true);
-      } else {
-        $("#add-sumary-cat").prop("disabled", false);;
-      }
-    });
-    $("#meta-cat").prop("disabled", true);
-    $("#add-sumary-cat").prop("disabled", true);
-};
-    </script>
-    <style>
-    canvas {
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        -ms-user-select: none;
+window.onload = function() {
+var ctx = document.getElementById("canvas-bar-summary").getContext("2d");
+var ctf = document.getElementById("canvas-bar-fold").getContext("2d");
+// Exploit JSON to make extremely fast deep copy of objects
+barChartSummaryData.metaData = JSON.parse(JSON.stringify(barChartSummaryData.rawData));
+barChartSummaryData.rawLabels = JSON.parse(JSON.stringify(barChartSummaryData.labels));
+barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, 'phylum', 10);
+window.summaryBar = new Chart(ctx, {
+  type: 'bar',
+  data: barChartSummaryData,
+  barStrokeWidth:0,
+  options: {
+    legend: {
+      position: 'top'
+    },
+    title:{
+      display:true,
+      text:"Taxonomic Relative Abundances"
+    },
+    tooltips: {
+      mode: 'label', // single if just want one OTU
+    },
+    responsive: true,
+    scales: {
+      xAxes: [{
+        stacked: true,
+        showVerticalLines: false
+      }],
+      yAxes: [{
+        stacked: true,
+        display: true,
+        scaleLabel: {
+          display: true,
+          labelString: 'Percent abundance'
+        },
+      }]
     }
-    </style>
+    }
+});
+
+window.foldBar = new Chart(ctf, {
+  type: 'bar',
+  data: barChartFoldData,
+  barStrokeWidth:0,
+  options: {
+    legend: {
+      display: false
+    },
+    title:{
+      display:true,
+      text:"Taxonomic Fold Changes"
+    },
+    tooltips: {
+      mode: 'single',
+    },
+    responsive: true,
+    scales: {
+      xAxes: [{
+        ticks: {
+          autoSkip: false
+        }
+      }],
+      yAxes: [{
+        display: true,
+        scaleLabel: {
+          display: true,
+          labelString: 'Log2 Fold Change'
+        }
+      }]
+      }
+    }
+  });
+  fold_change();
+  //fill categories based on site
+  buildCats($('#barcode-fold option:selected').data('site'), $('#meta-cat-fold'), false);
+
+  $("#collapse-fold").on("change", fold_change);
+
+  $("#barcode-fold").on("change", function () {
+    buildCats($('#barcode-fold option:selected').data('site'), $('#meta-cat-fold'), false);
+    fold_change();
+
+  });
+
+  $("#meta-cat-fold").on("change", fold_change);
+
+  $("#canvas-bar-summary").on('click', function(evt){
+    var activePoints = window.summaryBar.getElementAtEvent(evt);
+    if (activePoints.length > 0 && $("#collapse").val() != "genus") {
+      var taxa = activePoints[0]._model.datasetLabel;
+      if(taxa == "Other") {
+        return;
+      }
+      var label = activePoints[0]._model.label;
+      var prev_level = $("#collapse").val();
+      $("#collapse > option:selected").prop("selected", false).next().prop("selected", true);
+      barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, $("#collapse").val(), 10, prev_level, taxa);
+      window.summaryBar.update();
+    }
+  });
+
+  $("#collapse").on("change", function () {
+    barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, $("#collapse").val(), 10);
+    window.summaryBar.update();
+  })
+
+  $("#reset-summary").on("click", function () {
+    $("#collapse").val('phylum');
+    barChartSummaryData.labels = JSON.parse(JSON.stringify(barChartSummaryData.rawLabels));
+    barChartSummaryData.metaData = JSON.parse(JSON.stringify(barChartSummaryData.rawData));
+    barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, 'phylum', 10);
+    //re-add all remove links
+    $.each($("td"), function( i, val ) { val.remove(); });
+    for(var i=0;i<barChartSummaryData.labels.length;i++) {
+      var rem = $('<td><a href="#" onclick="remove_sample(\'' + barChartSummaryData.labels[i] + '\'); return false;">Remove</a></td>');
+      $("#remove-row").append(rem);
+    }
+    window.summaryBar.update();
+  });
+  $("#meta-site").on("change", function (evt) {
+    var site = $("#meta-site").val();
+    var catDropdown = $("#meta-cat");
+    buildCats(site, catDropdown);
+  });
+  $("#meta-cat").on("change", function (evt) {
+    if($("#meta-cat").val() == "") {
+      $("#add-sumary-cat").prop("disabled", true);
+    } else {
+      $("#add-sumary-cat").prop("disabled", false);;
+    }
+  });
+  $("#meta-cat").prop("disabled", true);
+  $("#add-sumary-cat").prop("disabled", true);
+};
+  </script>
+  <style>
+  canvas {
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+  }
+  </style>
 {% end%}
 {% block content %}
 <div id="taxa-summary-wrapper" style="width:100%; position: relative;">
