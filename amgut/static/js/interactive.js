@@ -192,7 +192,6 @@ function collapse(dataset, level, max, prev_level, focus, sites) {
   var collapsed = {};
   var summaries = [];
   for (var g in groups) {
-    console.log(focus);
     if (focus !== null && groups[g][0][prev_level] !== focus) {
       continue;
     }

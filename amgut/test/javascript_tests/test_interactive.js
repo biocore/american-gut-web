@@ -388,7 +388,8 @@ $(document).ready(function() {
     var select = $('<select>');
 
     // test building for skin
-    var exp = ["","age-baby","age-child","age-teen","age-20s","age-30s","age-40s","age-50s","age-60s","age-70+","sex-male","sex-female"];
+    var exp = ["","age-baby","age-child","age-teen","age-20s","age-30s",
+               "age-40s","age-50s","age-60s","age-70+","sex-male","sex-female"];
     buildCats('skin', select);
     var values = [];
     select.find('option').each(function() {
