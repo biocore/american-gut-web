@@ -169,7 +169,7 @@ function buildCats(site, catDropdown, disable) {
 * {label:'', data: [], phylum:'', level:''}
 *
 **/
-function collapse(dataset, level, max, prev_level, focus) {
+function collapse(dataset, level, max, prev_level, focus, sites) {
   var phylum_colors = {
     'Firmicutes': ['pink', 'darkred'],
     'Bacteroidetes': ['#FFD27F', '#BE5E00'],

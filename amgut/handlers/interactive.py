@@ -116,7 +116,7 @@ class MetadataHandler(BaseHandler):
             site = ag_data.getAGBarcodeDetails(barcode)['site_sampled'].lower()
         else:
             site = self.get_argument('site')
-        cat = self.get_argument('category')
+        cat = self.get_argument('category').replace(' ', '_')
         if cat == '':
             file = join(AMGUT_CONFIG.base_data_dir, 'taxa-summaries',
                         'ag-%s.txt' % site)
