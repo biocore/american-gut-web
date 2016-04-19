@@ -1,9 +1,10 @@
 $(document).ready(function() {
   //Patching in Math.log2
   Math.log2 = Math.log2 || function(x) {
-                return Math.log(x) / Math.LN2;
-            };
+    return Math.log(x) / Math.LN2;
+  };
   //Patching in findIndex for Internet Explorer
+  // From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex
   if (!Array.prototype.findIndex) {
     Array.prototype.findIndex = function(predicate) {
       if (this === null) {
@@ -28,6 +29,18 @@ $(document).ready(function() {
   }
 });
 
+/**
+*
+* Create a grouping object, with an array of all OTUs that group to a value
+* in the given property
+*
+* @param {list} list of OTU objects, where each has taxonomic information
+* about the OTU and compositional data
+* @param {prop} property in the OTU object to group by.
+*
+* @return object with array of OTUs that match each parameter in the given property.
+*
+**/
 function group(list, prop) {
   var grouped = {};
   for (var i = 0; i < list.length; i++) {
@@ -38,12 +51,34 @@ function group(list, prop) {
   return grouped;
 }
 
+
+/**
+*
+* simple averaging function to average over a list
+*
+* @param {list} list of numbers to average
+*
+* @return float average of the numbers
+*
+**/
 function getAvg(list) {
   return list.reduce(function(x, y) {
     return x + y;
   }) / list.length;
 }
 
+/**
+*
+* Sums two arrays by position
+*
+* @param {a1} First array
+* @param {ar2} second array
+*
+* @return summed array
+*
+* @error arrays are unequal length
+*
+**/
 function sumArrays(ar1, ar2) {
   var sum = [];
   if (ar1.length == ar2.length) {
@@ -57,6 +92,19 @@ function sumArrays(ar1, ar2) {
   return sum;
 }
 
+/**
+*
+* Calculates the index of a matching OTU in a list of OTUs
+*
+* @param {list} list of OTU objects, where each has taxonomic information
+* about the OTU and compositional data
+* @param {otu} otu name to match
+* @param {level} optional: The OTU level to match the given otu string at.
+* Defaults to label, aka what is currently set to show in graphs.
+*
+* @return object with array of OTUs that match each parameter in the given property.
+*
+**/
 function findOTU(list, otu, level) {
   var lvl = level || 'label';
   function inner(element, index, array) {
@@ -72,6 +120,16 @@ function filterSites(list, sites) {
 
 }
 
+/**
+*
+* Fills the available summary data dropdown
+*
+* @param {site} site to get information for, or blank to empty the dropdown
+* @param {catDropdown} Jquery select object to fill with options
+* @param {disable} optional: Whether to disable an empty dropdown. Default false
+*
+*
+**/
 function buildCats(site, catDropdown, disable) {
   disable = disable || false;
   catDropdown.html('');
@@ -94,7 +152,24 @@ function buildCats(site, catDropdown, disable) {
   }
 }
 
-function collapse(dataset, level, max, prev_level, focus, sites) {
+/**
+*
+* Collapses OTU information to a given taxonomic level and number of OTUs
+*
+* @param {dataset} list of OTU objects, where each has taxonomic information
+* about the OTU and compositional data
+* @param {level} phylogenetic level to collapse to
+* @param {max} optional: Number of OTUs to collapse to. Default 10. The rest
+* will be added to the `OTHER` category.
+* @param {prev_level} Optional: Previous phylogenetic level.
+* @param {focus} Optional: What OTU to focus on in prev_level. Used to filter
+* collapse to only collapse using a specific OTU.
+*
+* @return list of objects, collapsed to the given taxonomic level. Each contains
+* {label:'', data: [], phylum:'', level:''}
+*
+**/
+function collapse(dataset, level, max, prev_level, focus) {
   var phylum_colors = {
     'Firmicutes': ['pink', 'darkred'],
     'Bacteroidetes': ['#FFD27F', '#BE5E00'],
@@ -202,6 +277,22 @@ function collapse(dataset, level, max, prev_level, focus, sites) {
   return further_collapsed;
 }
 
+/**
+*
+* Calculates the log2 fold change between a given OTU list and the existing one
+*
+* @param {newData} list of OTU objects, where each has taxonomic information
+* about the OTU and compositional data. Data array must be length 1.
+* @param {rawData} list of OTU objects, where each has taxonomic information
+* about the OTU and compositional data
+* @param {level} The OTU level to collapse and match the given data at.
+* @param {dataPos} In rawData, the position in the data array to compare to
+* when calculating the fold change.
+*
+* @return array containg array of labels for the graph, and another array of the
+* corresponding fold changes
+*
+**/
 function calcFoldChange(newData, rawData, level, dataPos) {
   var foldChanges = [];
   var collapsed = collapse(rawData, level, 10000);
@@ -236,6 +327,11 @@ function calcFoldChange(newData, rawData, level, dataPos) {
   return [labels, foldData];
 }
 
+/**
+*
+* Wraps calc_fold_change to get and show the fold change information on page
+*
+**/
 function fold_change() {
   var level = $('#collapse-fold').val();
   var category = $('#meta-cat-fold').val();
@@ -273,6 +369,19 @@ function fold_change() {
     });
 }
 
+/**
+*
+* Helper function for adding metadata to existing interactive bar chart
+*
+* @param {target} list of OTU objects, where each has taxonomic information
+* about the OTU and compositional data. Data array must be length 1.
+* @param {newCol} list of OTU objects, where each has taxonomic information
+* about the OTU and compositional data. Data array must be length 1.
+* @param {collapseTo} The OTU level to collapse and match the given data at.
+*
+* @returns collapsed list of OTU objects with data from newCol integrated
+*
+**/
 function addMetadata(target, newCol, collapseTo) {
   newLen = target[0].data.length + 1;
   for (var i = 0; i < newCol.length; i++) {
@@ -301,6 +410,11 @@ function addMetadata(target, newCol, collapseTo) {
   return collapse(target, collapseTo, 10);
 }
 
+/**
+*
+* Gets new column data and displays it in the stacked bar chart.
+*
+**/
 function add_metadata_barchart() {
   var category = $('#meta-cat').val();
   var site = $('#meta-site').val();
@@ -331,6 +445,13 @@ function add_metadata_barchart() {
     });
 }
 
+/**
+*
+* Removes a column from the stacked bar chart
+*
+* @param {title} label of the column to remove.
+*
+**/
 function remove_sample(title) {
   var data_pos = barChartSummaryData.labels.findIndex(function(y) {
     return title == y;
@@ -339,7 +460,7 @@ function remove_sample(title) {
   for (var i = 0; i < barChartSummaryData.metaData.length; i++) {
     barChartSummaryData.metaData[i].data.splice(data_pos, 1);
     // Check if every value in the remaining array is zero,
-    // and if so set to be removed.
+    // and if so set the OTU to be removed.
     var allZero = barChartSummaryData.metaData[i].data.every(function(y) {
       return y === 0.0;
     });
@@ -347,7 +468,6 @@ function remove_sample(title) {
       to_remove.push(i);
     }
   }
-
   //Remove OTU with all zero data(no longer relevant)
   for (var i = to_remove.length - 1; i >= 0; i--) {
     barChartSummaryData.metaData.splice(to_remove[i], 1);

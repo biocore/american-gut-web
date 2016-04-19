@@ -6,6 +6,18 @@ $(document).ready(function() {
     setup: function(){
       rawData = [{'full': 'k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;f__Lachnospiraceae;g__', 'family': 'Lachnospiraceae', 'order': 'Clostridiales', 'phylum': 'Firmicutes', 'genus': 'Unclassified (f. Lachnospiraceae)', 'data': [9.084], 'class': 'Clostridia'}, {'full': 'k__Bacteria;p__Proteobacteria;c__Gammaproteobacteria;o__Enterobacteriales;f__Enterobacteriaceae;g__', 'family': 'Enterobacteriaceae', 'order': 'Enterobacteriales', 'phylum': 'Proteobacteria', 'genus': 'Unclassified (f. Enterobacteriaceae)', 'data': [0.0073999999999999995], 'class': 'Gammaproteobacteria'}, {'full': 'k__Bacteria;p__Firmicutes;c__Erysipelotrichi;o__Erysipelotrichales;f__Erysipelotrichaceae;g__Bulleidia', 'family': 'Erysipelotrichaceae', 'order': 'Erysipelotrichales', 'phylum': 'Firmicutes', 'genus': 'Bulleidia', 'data': [0.0073999999999999995], 'class': 'Erysipelotrichi'}, {'full': 'k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Corynebacteriaceae;g__Corynebacterium', 'family': 'Corynebacteriaceae', 'order': 'Actinomycetales', 'phylum': 'Actinobacteria', 'genus': 'Corynebacterium', 'data': [0.0271], 'class': 'Actinobacteria'}, {'full': 'k__Bacteria;p__Proteobacteria;c__Gammaproteobacteria;o__Pasteurellales;f__Pasteurellaceae;g__Haemophilus', 'family': 'Pasteurellaceae', 'order': 'Pasteurellales', 'phylum': 'Proteobacteria', 'genus': 'Haemophilus', 'data': [0.0222], 'class': 'Gammaproteobacteria'}, {'full': 'k__Bacteria;p__Actinobacteria;c__Coriobacteriia;o__Coriobacteriales;f__Coriobacteriaceae;g__Eggerthella', 'family': 'Coriobacteriaceae', 'order': 'Coriobacteriales', 'phylum': 'Actinobacteria', 'genus': 'Eggerthella', 'data': [0.0173], 'class': 'Coriobacteriia'}, {'full': 'k__Bacteria;p__Proteobacteria;c__Gammaproteobacteria;o__Enterobacteriales;f__Enterobacteriaceae;g__Proteus', 'family': 'Enterobacteriaceae', 'order': 'Enterobacteriales', 'phylum': 'Proteobacteria', 'genus': 'Proteus', 'data': [0.0444], 'class': 'Gammaproteobacteria'}, {'full': 'k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Porphyromonadaceae;g__Parabacteroides', 'family': 'Porphyromonadaceae', 'order': 'Bacteroidales', 'phylum': 'Bacteroidetes', 'genus': 'Parabacteroides', 'data': [0.009899999999999999], 'class': 'Bacteroidia'}, {'full': 'k__Bacteria;p__Proteobacteria;c__Gammaproteobacteria;o__Thiohalorhabdales;f__;g__', 'family': 'Unclassified (o. Thiohalorhabdales)', 'order': 'Thiohalorhabdales', 'phylum': 'Proteobacteria', 'genus': 'Unclassified (o. Thiohalorhabdales)', 'data': [0.0073999999999999995], 'class': 'Gammaproteobacteria'}, {'full': 'k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;f__Clostridiaceae;g__Clostridium', 'family': 'Clostridiaceae', 'order': 'Clostridiales', 'phylum': 'Firmicutes', 'genus': 'Clostridium', 'data': [0.0395], 'class': 'Clostridia'}, {'full': 'k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Bacteroidaceae;g__Bacteroides', 'family': 'Bacteroidaceae', 'order': 'Bacteroidales', 'phylum': 'Bacteroidetes', 'genus': 'Bacteroides', 'data': [56.4695], 'class': 'Bacteroidia'}, {'full': 'k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Prevotellaceae;g__Prevotella', 'family': 'Prevotellaceae', 'order': 'Bacteroidales', 'phylum': 'Bacteroidetes', 'genus': 'Prevotella', 'data': [0.39709999999999995], 'class': 'Bacteroidia'}, {'full': 'k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__[Paraprevotellaceae];g__Paraprevotella', 'family': 'Paraprevotellaceae (Contested)', 'order': 'Bacteroidales', 'phylum': 'Bacteroidetes', 'genus': 'Paraprevotella', 'data': [0.0025], 'class': 'Bacteroidia'}];
       colData = [{'full': 'k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;f__Lachnospiraceae;g__', 'family': 'Lachnospiraceae', 'order': 'Clostridiales', 'phylum': 'Firmicutes', 'genus': 'Unclassified (f. Lachnospiraceae)', 'data': [.09084], 'class': 'Clostridia'}, {'full': 'k__Bacteria;p__Proteobacteria;c__Gammaproteobacteria;o__Enterobacteriales;f__Enterobacteriaceae;g__', 'family': 'Enterobacteriaceae', 'order': 'Enterobacteriales', 'phylum': 'Proteobacteria', 'genus': 'Unclassified (f. Enterobacteriaceae)', 'data': [0.0995], 'class': 'Gammaproteobacteria'}, {'full': 'k__Bacteria;p__Firmicutes;c__Erysipelotrichi;o__Erysipelotrichales;f__Erysipelotrichaceae;g__Bulleidia', 'family': 'Erysipelotrichaceae', 'order': 'Erysipelotrichales', 'phylum': 'Firmicutes', 'genus': 'Bulleidia', 'data': [0.073999999999999995], 'class': 'Erysipelotrichi'}, {'full': 'k__Bacteria;p__Actinobacteria;c__Actinobacteria;o__Actinomycetales;f__Corynebacteriaceae;g__Corynebacterium', 'family': 'Corynebacteriaceae', 'order': 'Actinomycetales', 'phylum': 'Actinobacteria', 'genus': 'Corynebacterium', 'data': [0.0217], 'class': 'Actinobacteria'}, {'full': 'k__Bacteria;p__Proteobacteria;c__Gammaproteobacteria;o__Pasteurellales;f__Pasteurellaceae;g__Haemophilus', 'family': 'Pasteurellaceae', 'order': 'Pasteurellales', 'phylum': 'Proteobacteria', 'genus': 'Haemophilus', 'data': [0.1111], 'class': 'Gammaproteobacteria'}, {'full': 'k__Bacteria;p__Actinobacteria;c__Coriobacteriia;o__Coriobacteriales;f__Coriobacteriaceae;g__Eggerthella', 'family': 'Coriobacteriaceae', 'order': 'Coriobacteriales', 'phylum': 'Actinobacteria', 'genus': 'Eggerthella', 'data': [0.0242], 'class': 'Coriobacteriia'}, {'full': 'k__Bacteria;p__Proteobacteria;c__Gammaproteobacteria;o__Enterobacteriales;f__Enterobacteriaceae;g__Proteus', 'family': 'Enterobacteriaceae', 'order': 'Enterobacteriales', 'phylum': 'Proteobacteria', 'genus': 'Proteus', 'data': [0.2444], 'class': 'Gammaproteobacteria'}, {'full': 'k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Porphyromonadaceae;g__Parabacteroides', 'family': 'Porphyromonadaceae', 'order': 'Bacteroidales', 'phylum': 'Bacteroidetes', 'genus': 'Parabacteroides', 'data': [0.2900999999999], 'class': 'Bacteroidia'}, {'full': 'k__Bacteria;p__Proteobacteria;c__Gammaproteobacteria;o__Thiohalorhabdales;f__;g__', 'family': 'Unclassified (o. Thiohalorhabdales)', 'order': 'Thiohalorhabdales', 'phylum': 'Proteobacteria', 'genus': 'Unclassified (o. Thiohalorhabdales)', 'data': [0.00199999999999995], 'class': 'Gammaproteobacteria'}, {'full': 'k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;f__Clostridiaceae;g__Clostridium', 'family': 'Clostridiaceae', 'order': 'Clostridiales', 'phylum': 'Firmicutes', 'genus': 'Clostridium', 'data': [0.0395], 'class': 'Clostridia'}, {'full': 'k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Bacteroidaceae;g__Bacteroides', 'family': 'Bacteroidaceae', 'order': 'Bacteroidales', 'phylum': 'Bacteroidetes', 'genus': 'Bacteroides', 'data': [55.4695], 'class': 'Bacteroidia'}, {'full': 'k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Prevotellaceae;g__newthing', 'family': 'Prevotellaceae', 'order': 'Bacteroidales', 'phylum': 'Bacteroidetes', 'genus': 'newthing', 'data': [0.14709999999999995], 'class': 'Bacteroidia'}];
+      available_summaries = {
+      'stool': ['age-baby', 'age-child', 'age-teen', 'age-20s', 'age-30s',
+                'age-40s', 'age-50s', 'age-60s', 'age-70+',
+                'bmi-Underweight', 'bmi-Normal', 'bmi-Overweight', 'bmi-Obese',
+                'sex-male', 'sex-female'],
+      'skin': ['age-baby', 'age-child', 'age-teen', 'age-20s', 'age-30s',
+               'age-40s', 'age-50s', 'age-60s', 'age-70+',
+               'sex-male', 'sex-female'],
+      'oral': ['age-child', 'age-teen', 'age-20s', 'age-30s',
+               'age-40s', 'age-50s', 'age-60s', 'age-70+',
+               'sex-male', 'sex-female']
+      }
     },
 
     teardown: function(){
@@ -361,15 +373,48 @@ $(document).ready(function() {
         );
   });
 
-  test("Test findOtu", function() {
-    var obs = findOtu(rawData, "k__Bacteria;p__Proteobacteria;c__Gammaproteobacteria;o__Thiohalorhabdales;f__;g__", "full");
+  test("Test findOTU", function() {
+    var obs = findOTU(rawData, "k__Bacteria;p__Proteobacteria;c__Gammaproteobacteria;o__Thiohalorhabdales;f__;g__", "full");
     equal(obs, 8);
 
-    obs = findOtu(rawData, "Thiohalorhabdales", "order");
+    obs = findOTU(rawData, "Thiohalorhabdales", "order");
     equal(obs, 8);
 
-    obs = findOtu(rawData, "jvrieopwbrwjojvewbhwirobuihw0", "full");
+    obs = findOTU(rawData, "jvrieopwbrwjojvewbhwirobuihw0", "full");
     equal(obs, -1);
+  });
+
+  test("Test buildCats", function() {
+    var select = $('<select>');
+
+    // test building for skin
+    var exp = ["","age-baby","age-child","age-teen","age-20s","age-30s","age-40s","age-50s","age-60s","age-70+","sex-male","sex-female"];
+    buildCats('skin', select);
+    var values = [];
+    select.find('option').each(function() {
+        values.push($(this).attr('value'));
+    });
+    deepEqual(values, exp);
+
+    //test no disabling
+    var exp = [];
+    buildCats('', select);
+    var values = [];
+    select.find('option').each(function() {
+        values.push($(this).attr('value'));
+    });
+    deepEqual(values, exp);
+    deepEqual(select.prop('disabled'), false)
+
+    //test disabling
+    var exp = [];
+    buildCats('', select, true);
+    var values = [];
+    select.find('option').each(function() {
+        values.push($(this).attr('value'));
+    });
+    deepEqual(values, exp);
+    deepEqual(select.prop('disabled'), true)
   });
 
   test("Test collapse", function() {
@@ -401,7 +446,7 @@ $(document).ready(function() {
   {
     "backgroundColor": "rgb(178,152,104)",
     "data": [
-      0.0443
+      0.0444
     ],
     "label": "Actinobacteria",
     "phylum": "Actinobacteria"
@@ -444,7 +489,7 @@ $(document).ready(function() {
   {
     "backgroundColor": "rgb(211,132,42)",
     "data": [
-      0.397
+      0.3971
     ],
     "label": "Prevotella",
     "phylum": "Bacteroidetes"
@@ -452,7 +497,7 @@ $(document).ready(function() {
   {
     "backgroundColor": "rgb(233,171,84)",
     "data": [
-      0.0098
+      0.0099
     ],
     "label": "Parabacteroides",
     "phylum": "Bacteroidetes"
@@ -526,7 +571,7 @@ $(document).ready(function() {
 
     obs = calcFoldChange(colData, rawData, 'genus', 0);
     exp = [ ["Unclassified (f. Lachnospiraceae)","Unclassified (o. Thiohalorhabdales)","Corynebacterium","Bacteroides","Clostridium","Eggerthella","Haemophilus","Proteus","Bulleidia","Unclassified (f. Enterobacteriaceae)","Parabacteroides"],
-            [6.64,1.96,0.32,0.02,0,-0.49,-2.33,-2.47,-3.33,-3.75,-4.89]];
+            [6.64,1.88,0.32,0.02,0,-0.49,-2.33,-2.47,-3.33,-3.75,-4.88]];
     deepEqual(obs[0], exp[0]);
     deepEqual(obs[1], exp[1]);
   });
@@ -573,7 +618,7 @@ $(document).ready(function() {
   {
     "backgroundColor": "rgb(211,132,42)",
     "data": [
-      0.397,
+      0.3971,
       0
     ],
     "label": "Prevotella",
@@ -582,8 +627,8 @@ $(document).ready(function() {
   {
     "backgroundColor": "rgb(233,171,84)",
     "data": [
-      0.0098,
-      0.29
+      0.0099,
+      0.2901
     ],
     "label": "Parabacteroides",
     "phylum": "Bacteroidetes"
@@ -592,7 +637,7 @@ $(document).ready(function() {
     "backgroundColor": "rgb(255,210,127)",
     "data": [
       0,
-      0.147
+      0.1471
     ],
     "label": "newthing",
     "phylum": "Bacteroidetes"
@@ -628,11 +673,10 @@ $(document).ready(function() {
     "backgroundColor": "rgba(180,180,180)",
     "data": [
       0.0543,
-      0.0477
+      0.0479
     ],
     "label": "Other"
   }];
     deepEqual(obs, exp);
   });
-
 });
