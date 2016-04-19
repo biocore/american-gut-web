@@ -201,10 +201,6 @@ function collapse(dataset, level, max, prev_level, focus, sites) {
     for (var i = 1; i < groups[g].length; i++) {
       otu.data = sumArrays(otu.data, groups[g][i].data);
     }
-    // Round data values to four decimals
-    otu.data = otu.data.map(function(c, i, a) {
-      return +c.toFixed(4);
-    });
 
     collapsed[g] = otu;
     summaries.push([g, getAvg(otu.data)]);
@@ -272,6 +268,14 @@ function collapse(dataset, level, max, prev_level, focus, sites) {
   }
   if (filter_to !== null) {
     further_collapsed = filterSites(further_collapsed, filter_to);
+  }
+
+  // Round data values to four decimals
+  for (pos in further_collapsed) {
+    otu = further_collapsed[pos];
+    otu.data = otu.data.map(function(c, i, a) {
+      return +c.toFixed(4);
+    });
   }
   return further_collapsed;
 }

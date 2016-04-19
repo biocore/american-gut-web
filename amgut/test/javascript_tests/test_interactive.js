@@ -673,8 +673,8 @@ $(document).ready(function() {
   {
     "backgroundColor": "rgba(180,180,180)",
     "data": [
-      0.0543,
-      0.0479
+      0.0542,
+      0.0478
     ],
     "label": "Other"
   }];
