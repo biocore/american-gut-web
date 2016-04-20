@@ -432,8 +432,7 @@ function add_metadata_barchart() {
     return;
   }
 
-  var data = {category: $('#meta-cat').val(), site: $('#meta-site').val()};
-  $.get('/interactive/metadata/', data)
+  $.get('/interactive/metadata/', {category: category, site: site})
     .done(function(data) {
       barChartSummaryData.datasets = addMetadata(barChartSummaryData.metaData,
                                                  data, $('#collapse').val());

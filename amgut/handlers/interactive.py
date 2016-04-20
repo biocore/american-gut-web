@@ -53,6 +53,7 @@ def _read_taxonomy(barcodes):
             otus[line.split('\t')[0]] = []
 
     # Read in counts
+    full_otus = set(otus.keys())
     for file in files:
         seen_otus = set()
         for line in file:
@@ -60,7 +61,7 @@ def _read_taxonomy(barcodes):
             otus[otu].append(float(percent) * 100)
             seen_otus.add(otu)
         # make the samples without the OTU all zero count
-        unseen = set(otus.keys()) - seen_otus
+        unseen = full_otus - seen_otus
         for otu in unseen:
             otus[otu].append(0.0)
 
@@ -119,7 +120,7 @@ class MetadataHandler(BaseHandler):
         cat = self.get_argument('category').replace(' ', '_')
         if cat == '':
             file = join(AMGUT_CONFIG.base_data_dir, 'taxa-summaries',
-                        'ag-%s.txt' % site)
+                        'ag-%s-average.txt' % site)
         else:
             file = join(AMGUT_CONFIG.base_data_dir, 'taxa-summaries',
                         'ag-%s-%s.txt' % (site, cat))
