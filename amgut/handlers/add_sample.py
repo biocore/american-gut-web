@@ -5,6 +5,7 @@ from tornado.web import authenticated
 from future.utils import viewitems
 
 from amgut.connections import ag_data
+from amgut.lib.constants import human_sites, animal_sites, general_sites
 from amgut.handlers.base_handlers import BaseHandler
 from amgut import media_locale
 
@@ -103,15 +104,15 @@ class AddSample(BaseHandler):
 
 
 class AddHumanSampleHandler(AddSample):
-    _sample_sites = ag_data.human_sites
+    _sample_sites = human_sites
     page_type = 'add_sample_human'
 
 
 class AddAnimalSampleHandler(AddSample):
-    _sample_sites = ag_data.animal_sites
+    _sample_sites = animal_sites
     page_type = 'add_sample_animal'
 
 
 class AddGeneralSampleHandler(AddSample):
-    _sample_sites = ag_data.general_sites
+    _sample_sites = general_sites
     page_type = 'add_sample_general'

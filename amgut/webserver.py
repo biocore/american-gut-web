@@ -45,9 +45,11 @@ from amgut.handlers.download import DownloadHandler
 
 from amgut.handlers.open_humans import (OpenHumansHandler,
                                         OpenHumansLoginHandler)
+from amgut.handlers.interactive import (
+    MultiSampleHandler, MetadataHandler, AlphaDivImgHandler)
 from amgut.lib.startup_tests import startup_tests
 
-define("port", default=8888, help="run on the given port", type=int)
+define("port", default=8889, help="run on the given port", type=int)
 
 
 DIRNAME = dirname(__file__)
@@ -86,6 +88,10 @@ class AGWebApplication(Application):
             (r"/authed/open-humans/", OpenHumansHandler),
             (r"/authed/connect/open-humans/", OpenHumansLoginHandler),
             (r"/authed/download/(.*)", DownloadHandler),
+            # (r"/authed/single/", SingleSampleHandler),
+            (r"/authed/multiple/", MultiSampleHandler),
+            (r"/interactive/metadata/", MetadataHandler),
+            (r"/interactive/alpha_div/(.*)", AlphaDivImgHandler),
             (r"/faq/", FAQHandler),
             (r"/participants/(.*)", ParticipantOverviewHandler),
             (r"/international_shipping/", InternationalHandler),
@@ -112,7 +118,7 @@ def main():
     startup_tests()
     # replace spaces for underscores to autocomplete easily in a shell
     # format looks like american_gut_8888.log
-    prefix = ("/var/log/%s_%d.log" % (media_locale['LOCALE'], options.port,
+    prefix = ("%s_%d.log" % (media_locale['LOCALE'], options.port,
                                       )).replace(' ', '_')
     options.log_file_prefix = prefix
     options.logging = 'warning'

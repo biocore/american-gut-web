@@ -1,0 +1,65 @@
+<!--
+/**
+ *
+ * @author Yoshiki Vazquez Baeza
+ * @copyright Copyright 2013, The American Gut Project
+ * @credits Yoshiki Vazquez Baeza, Joshua Shorenstein
+ * @license BSD
+ * @version 0.1.0-dev
+ * @maintainer Joshua Shorenstein
+ * @email jshorenstein@ucsd.edu
+ * @status Development
+ *
+ */
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+      Note that all of the resources listed in this file assume the standard
+      base structure of American Gut. It is likely that this will not work properly
+      if it's not executed as suggested.
+  -->
+  <title>American Gut test suite</title>
+  <link rel="stylesheet" href="qunit/qunit-min.css" type="text/css" media="screen">
+
+  <link rel="icon" href="../../static/img/favicon.ico">
+
+  <!-- Testing framework requirements -->
+  <script src="qunit/qunit-min.js"></script>
+  <script src="../../static/vendor/js/jquery-1.11.1.min.js"></script>
+  <script src="../../static/vendor/js/Chart.bundle.min.js"></script>
+  <script src="../../static/vendor/js/chroma.min.js"></script>
+
+  <!--Files to test -->
+  <script src="../../static/js/interactive.js"></script>
+
+  <!--Test files -->
+  <script src="./test_interactive.js"></script>
+
+</head>
+<body>
+  <div id="qunit"></div>
+  <div id="qunit-fixture">
+    <div id="map-test">
+      <div id="id1"></div>
+      <div id="id2"></div>
+    </div>
+  </div>
+  <br>
+  <h1 class="qunit-header">American Gut Test Suite</h1>
+  <p>
+    This test suite exercises all the functions that are used as part of
+    American Gut's front end. The functions that have direct interaction with the
+    instantiation of the user interface are not tested.
+  </p>
+  <script>
+    QUnit.config.autostart = false;
+    // now trigger the tests
+    $( document ).ready(function() {
+      QUnit.start();
+    });
+  </script>
+</body>
+</html>

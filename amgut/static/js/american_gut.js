@@ -1,3 +1,18 @@
+  // Gets value of a parameter directly from the URL.
+  // Taken from http://stackoverflow.com/a/2880929
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    // User regexp to get the value of the parameter named "name"
+    // straight from the URL. Since they are passed as ?name=value&...
+    // format, taking advantage of the ?, =, and & signs.
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+
 //functions for the portal toggle system
 function selectTab(id) {
     document.querySelectorAll('.selected')[0].className = 'unselected';
