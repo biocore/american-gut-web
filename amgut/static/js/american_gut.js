@@ -3,7 +3,7 @@
   function getParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");
-    // User gegex to get the value of the parameter named "name"
+    // User regexp to get the value of the parameter named "name"
     // straight from the URL. Since they are passed as ?name=value&...
     // format, taking advantage of the ?, =, and & signs.
     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),

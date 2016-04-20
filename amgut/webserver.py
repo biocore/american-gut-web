@@ -49,7 +49,7 @@ from amgut.handlers.interactive import (
     MultiSampleHandler, MetadataHandler, AlphaDivImgHandler)
 from amgut.lib.startup_tests import startup_tests
 
-define("port", default=8888, help="run on the given port", type=int)
+define("port", default=8889, help="run on the given port", type=int)
 
 
 DIRNAME = dirname(__file__)
@@ -118,7 +118,7 @@ def main():
     startup_tests()
     # replace spaces for underscores to autocomplete easily in a shell
     # format looks like american_gut_8888.log
-    prefix = ("/var/log/%s_%d.log" % (media_locale['LOCALE'], options.port,
+    prefix = ("%s_%d.log" % (media_locale['LOCALE'], options.port,
                                       )).replace(' ', '_')
     options.log_file_prefix = prefix
     options.logging = 'warning'

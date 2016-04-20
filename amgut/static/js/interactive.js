@@ -54,7 +54,7 @@ function group(list, prop) {
 
 /**
 *
-* simple averaging function to average over a list
+* Function to calculate the average of a list
 *
 * @param {list} list of numbers to average
 *
