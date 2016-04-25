@@ -20,6 +20,7 @@
     titles: {% raw titles %}
   };
   var available_summaries = {% raw available_summaries %};
+  var translate_summaries = {% raw text_locale['interactive_categories'] %};
 
 window.onload = function() {
 var ctx = document.getElementById("canvas-bar-summary").getContext("2d");
@@ -149,7 +150,7 @@ window.foldBar = new Chart(ctf, {
     if($("#meta-cat").val() == "") {
       $("#add-sumary-cat").prop("disabled", true);
     } else {
-      $("#add-sumary-cat").prop("disabled", false);;
+      $("#add-sumary-cat").prop("disabled", false);
     }
   });
   $("#meta-cat").prop("disabled", true);

@@ -146,7 +146,7 @@ function buildCats(site, catDropdown, disable) {
     catDropdown.append(new Option('', ''));
     for (pos in available_summaries[site]) {
       var cat = available_summaries[site][pos];
-      catDropdown.append(new Option(cat, cat));
+      catDropdown.append(new Option(translate_summaries[cat], cat));
     }
     catDropdown.prop('disabled', false);
   }

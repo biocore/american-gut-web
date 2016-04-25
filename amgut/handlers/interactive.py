@@ -114,7 +114,7 @@ class MetadataHandler(BaseHandler):
             if barcode not in barcodes:
                 raise HTTPError(403, 'User %s does not have access to barcode '
                                 '%s' % (self.current_user, barcode))
-            site = ag_data.getAGBarcodeDetails(barcode)['site_sampled'].lower()
+            site = ag_data.getAGBarcodeDetails(barcode)['site_sampled'].upper()
         else:
             site = self.get_argument('site')
         cat = self.get_argument('category').replace(' ', '_')

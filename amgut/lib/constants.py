@@ -53,19 +53,19 @@ collapse_human_sites = defaultdict(lambda: '', {
 
 # What categories of summary data are available for each collapsed body site
 available_summaries = {
-    'Stool': ['age-baby', 'age-child', 'age-teen', 'age-20s', 'age-30s',
+    'stool': ['age-baby', 'age-child', 'age-teen', 'age-20s', 'age-30s',
               'age-40s', 'age-50s', 'age-60s', 'age-70+',
               'bmi-Underweight', 'bmi-Normal', 'bmi-Overweight', 'bmi-Obese',
               'sex-male', 'sex-female', 'diet-Omnivore',
               'diet-Omnivore but do not eat red meat',
               'diet-Vegetarian but eat seafood', 'diet-Vegetarian',
               'diet-Vegan'],
-    'Skin': ['age-baby', 'age-child', 'age-teen', 'age-20s', 'age-30s',
+    'skin': ['age-baby', 'age-child', 'age-teen', 'age-20s', 'age-30s',
              'age-40s', 'age-50s', 'age-60s', 'age-70+',
              'sex-male', 'sex-female', 'cosmetics-Daily',
              'cosmetics-Regularly', 'cosmetics-Occasionally',
              'cosmetics-Rarely', 'cosmetics-Never'],
-    'Oral': ['age-child', 'age-teen', 'age-20s', 'age-30s',
+    'oral': ['age-child', 'age-teen', 'age-20s', 'age-30s',
              'age-40s', 'age-50s', 'age-60s', 'age-70+',
              'sex-male', 'sex-female', 'diet-Omnivore',
              'diet-Omnivore but do not eat red meat',
