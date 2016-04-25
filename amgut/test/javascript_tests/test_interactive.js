@@ -17,10 +17,31 @@ $(document).ready(function() {
       'oral': ['age-child', 'age-teen', 'age-20s', 'age-30s',
                'age-40s', 'age-50s', 'age-60s', 'age-70+',
                'sex-male', 'sex-female']
-      }
+      };
+      translate_summaries = {
+        'age-baby': 'age-baby', 'age-child': 'age-child',
+        'age-teen': 'age-teen', 'age-20s': 'age-20s', 'age-30s': 'age-30s',
+        'age-40s': 'age-40s', 'age-50s': 'age-50s', 'age-60s': 'age-60s',
+        'age-70+': 'age-70+', 'bmi-Underweight': 'bmi-Underweight',
+        'bmi-Normal': 'bmi-Normal', 'bmi-Overweight': 'bmi-Overweight',
+        'bmi-Obese': 'bmi-Obese', 'sex-male': 'sex-male',
+        'sex-female': 'sex-female', 'diet-Omnivore': 'diet-Omnivore',
+        'diet-Omnivore but do not eat red meat':
+            'diet-Omnivore but do not eat red meat',
+        'diet-Vegetarian but eat seafood': 'diet-Vegetarian but eat seafood',
+        'diet-Vegetarian': 'diet-Vegetarian', 'diet-Vegan': 'diet-Vegan',
+        'cosmetics-Daily': 'cosmetics-Daily',
+        'cosmetics-Regularly': 'cosmetics-Regularly',
+        'cosmetics-Occasionally': 'cosmetics-Occasionally',
+        'cosmetics-Rarely': 'cosmetics-Rarely',
+        'cosmetics-Never': 'cosmetics-Never',
+        'flossing-Regularly': 'flossing-Regularly',
+        'flossing-Occasionally': 'flossing-Occasionally',
+        'flossing-Rarely': 'flossing-Rarely', 'flossing-Never': 'flossing-Never'
+      };
     },
 
-    teardown: function(){
+    teardown: function() {
     }
 
   });
