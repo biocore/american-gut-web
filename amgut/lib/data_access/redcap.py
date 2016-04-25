@@ -52,7 +52,7 @@ def _make_request(data):
     # however, are always JSON and are the only thing that have the error key.
     try:
         error = loads(response.body)['error']
-    except (KeyError, TypeError):
+    except (KeyError, ValueError):
         # Return JSON doesn't have error key, so valid, or return is a regualar
         # non-JSON string, so valid
         pass
