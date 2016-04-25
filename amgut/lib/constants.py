@@ -51,21 +51,21 @@ collapse_human_sites = defaultdict(lambda: '', {
     'Vaginal mucus': ''
     })
 
-# What categories of summary data aravailable for each collapsed body site
+# What categories of summary data are available for each collapsed body site
 available_summaries = {
-    'stool': ['age-baby', 'age-child', 'age-teen', 'age-20s', 'age-30s',
+    'Stool': ['age-baby', 'age-child', 'age-teen', 'age-20s', 'age-30s',
               'age-40s', 'age-50s', 'age-60s', 'age-70+',
               'bmi-Underweight', 'bmi-Normal', 'bmi-Overweight', 'bmi-Obese',
               'sex-male', 'sex-female', 'diet-Omnivore',
               'diet-Omnivore but do not eat red meat',
               'diet-Vegetarian but eat seafood', 'diet-Vegetarian',
               'diet-Vegan'],
-    'skin': ['age-baby', 'age-child', 'age-teen', 'age-20s', 'age-30s',
+    'Skin': ['age-baby', 'age-child', 'age-teen', 'age-20s', 'age-30s',
              'age-40s', 'age-50s', 'age-60s', 'age-70+',
              'sex-male', 'sex-female', 'cosmetics-Daily',
              'cosmetics-Regularly', 'cosmetics-Occasionally',
              'cosmetics-Rarely', 'cosmetics-Never'],
-    'oral': ['age-child', 'age-teen', 'age-20s', 'age-30s',
+    'Oral': ['age-child', 'age-teen', 'age-20s', 'age-30s',
              'age-40s', 'age-50s', 'age-60s', 'age-70+',
              'sex-male', 'sex-female', 'diet-Omnivore',
              'diet-Omnivore but do not eat red meat',
