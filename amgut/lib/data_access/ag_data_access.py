@@ -19,6 +19,7 @@ import psycopg2
 from passlib.hash import bcrypt
 
 from amgut.lib.data_access.sql_connection import TRN
+from amgut import AMGUT_CONFIG
 
 
 # character sets for kit id, passwords and verification codes
@@ -151,11 +152,12 @@ class AGDataAccess(object):
             if not ag_login_id:
                 # create the login
                 sql = """INSERT INTO ag_login
-                         (email, name, address, city, state, zip, country)
-                         VALUES (%s, %s, %s, %s, %s, %s, %s)
+                         (email, name, address, city, state, zip, country,
+                         portal)
+                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
                          RETURNING ag_login_id"""
                 TRN.add(sql, [clean_email, name, address, city, state, zip_,
-                              country])
+                              country, AMGUT_CONFIG.sitebase])
                 ag_login_id = TRN.execute_fetchlast()
             return ag_login_id
 
@@ -187,6 +189,7 @@ class AGDataAccess(object):
                   FROM ag_kit_barcodes
                   INNER JOIN ag_kit USING (ag_kit_id)
                   INNER JOIN ag_login USING (ag_login_id)
+                  INNER JOIN ag_consent USING (ag_login_id)
                   INNER JOIN barcode USING (barcode)
                   WHERE barcode = %s"""
 
@@ -340,7 +343,7 @@ class AGDataAccess(object):
                               agl.survey_id
                            FROM ag_consent agc
                            JOIN ag_login_surveys agl
-                           USING (ag_login_id, participant_name)
+                           USING (redcap_record_id)
                            WHERE agl.survey_id = %s""", [survey_id])
             result = TRN.execute_fetchindex()
             if not result:
@@ -356,6 +359,7 @@ class AGDataAccess(object):
                 # Get survey id
                 sql = """SELECT survey_id
                          FROM ag_login_surveys
+                         JOIN ag.ag_consent USING (redcap_record_id)
                          WHERE ag_login_id = %s AND participant_name = %s"""
 
                 TRN.add(sql, (ag_login_id, participant_name))
@@ -372,12 +376,11 @@ class AGDataAccess(object):
             # Add barcode info
             sql = """UPDATE ag_kit_barcodes
                      SET site_sampled = %s, environment_sampled = %s,
-                         sample_date = %s, sample_time = %s,
-                         participant_name = %s, notes = %s, survey_id = %s
+                         sample_date = %s, sample_time = %s, notes = %s,
+                         survey_id = %s
                      WHERE barcode = %s"""
             TRN.add(sql, [sample_site, environment_sampled, sample_date,
-                          sample_time, participant_name, notes, survey_id,
-                          barcode])
+                          sample_time, notes, survey_id, barcode])
 
     def deleteSample(self, barcode, ag_login_id):
         """
@@ -387,7 +390,7 @@ class AGDataAccess(object):
         """
         with TRN:
             sql = """UPDATE ag_kit_barcodes
-                     SET participant_name = NULL, site_sampled = NULL,
+                     SET site_sampled = NULL,
                          sample_time = NULL, sample_date = NULL,
                          environment_sampled = NULL, notes = NULL,
                          survey_id = NULL
@@ -402,13 +405,12 @@ class AGDataAccess(object):
 
     def getHumanParticipants(self, ag_login_id):
         # get people from new survey setup
-        sql = """SELECT DISTINCT participant_name from ag.ag_login_surveys
-                 LEFT JOIN ag.survey_answers USING (survey_id)
-                 JOIN ag.group_questions gq USING (survey_question_id)
-                 JOIN ag.surveys ags USING (survey_group)
-                 WHERE ag_login_id = %s AND ags.survey_id = %s"""
+        sql = """SELECT DISTINCT participant_name from ag.ag_consent
+                 JOIN ag_login_surveys USING (redcap_record_id)
+                 JOIN redcap_instruments USING (redcap_instrument_id)
+                 WHERE ag_login_id = %s AND survey_type = 'Human'"""
         with TRN:
-            TRN.add(sql, [ag_login_id, 1])
+            TRN.add(sql, [ag_login_id])
             return TRN.execute_fetchflatten()
 
     def updateVioscreenStatus(self, survey_id, status):
@@ -447,23 +449,24 @@ class AGDataAccess(object):
             return status[0][0]
 
     def getAnimalParticipants(self, ag_login_id):
-        sql = """SELECT participant_name from ag.ag_login_surveys
-                 JOIN ag.survey_answers USING (survey_id)
-                 JOIN ag.group_questions gq USING (survey_question_id)
-                 JOIN ag.surveys ags USING (survey_group)
-                 WHERE ag_login_id = %s AND ags.survey_id = %s"""
+        sql = """SELECT DISTINCT participant_name from ag.ag_consent
+                 JOIN ag_login_surveys USING (redcap_record_id)
+                 JOIN redcap_instruments USING (redcap_instrument_id)
+                 WHERE ag_login_id = %s AND survey_type = 'Animal'"""
         with TRN:
-            TRN.add(sql, [ag_login_id, 2])
+            TRN.add(sql, [ag_login_id])
             return TRN.execute_fetchflatten()
 
     def getParticipantSamples(self, ag_login_id, participant_name):
         sql = """SELECT  barcode, site_sampled, sample_date, sample_time,
                     notes, status
                  FROM ag_kit_barcodes akb
+                 INNER JOIN ag_login_surveys ak USING (survey_id)
+                 INNER JOIN ag_consent USING (redcap_record_id)
                  INNER JOIN barcode USING (barcode)
-                 INNER JOIN ag_kit ak USING (ag_kit_id)
-                 WHERE (site_sampled IS NOT NULL AND site_sampled::text <> '')
-                 AND ag_login_id = %s AND participant_name = %s"""
+                 WHERE (site_sampled IS NOT NULL AND site_sampled <> '')
+                 AND ag_login_id = %s AND participant_name = %s
+                 ORDER BY barcode"""
         with TRN:
             TRN.add(sql, [ag_login_id, participant_name])
             rows = TRN.execute_fetchindex()
@@ -748,10 +751,12 @@ class AGDataAccess(object):
         """
         with TRN:
             ag_login_id = self.get_user_for_kit(supplied_kit_id)
-            sql = """SELECT barcode, participant_name
+            sql = """SELECT DISTINCT barcode, participant_name
                      FROM ag_kit_barcodes
-                     INNER JOIN ag_kit USING (ag_kit_id)
-                     WHERE ag_login_id = %s AND results_ready = 'Y'"""
+                     LEFT JOIN ag_login_surveys USING (survey_id)
+                     LEFT JOIN ag_consent USING (redcap_record_id)
+                     WHERE ag_login_id = %s AND results_ready = 'Y'
+                     ORDER BY barcode"""
 
             TRN.add(sql, [ag_login_id])
             return [dict(row) for row in TRN.execute_fetchindex()]
@@ -810,6 +815,7 @@ class AGDataAccess(object):
         with TRN:
             sql = """SELECT survey_id
                      FROM ag_login_surveys
+                     JOIN ag_consent USING (redcap_record_id)
                      WHERE ag_login_id=%s AND participant_name=%s"""
             TRN.add(sql, [ag_login_id, participant_name])
             survey_id = TRN.execute_fetchindex()

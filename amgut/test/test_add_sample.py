@@ -99,6 +99,7 @@ class TestAddSample(TestHandlerBase):
         self.assertEqual(response.code, 403)
 
     def test_post_human(self):
+        self.maxDiff = None
         self.mock_login('tst_LbxUH')
         # make sure barcode properly removed
         self.assertIn('000005628', ag_data.getAvailableBarcodes(
@@ -106,7 +107,7 @@ class TestAddSample(TestHandlerBase):
 
         # Run test
         response = self.post('/authed/add_sample_human/',
-                             {'participant_name': 'REMOVED-0',
+                             {'participant_name': 'REMOVED-2',
                               'barcode': '000005628',
                               'sample_site': 'Stool',
                               'sample_date': '12/13/2014',
@@ -133,7 +134,7 @@ class TestAddSample(TestHandlerBase):
             'email': 'REMOVED',
             'other': None,
             'moldy': None,
-            'participant_name': 'REMOVED-0',
+            'participant_name': 'REMOVED-2',
             'refunded': None,
             'date_of_last_email': None,
             'other_text': 'REMOVED'
@@ -147,6 +148,7 @@ class TestAddSample(TestHandlerBase):
                       'd8592c74-8710-2135-e040-8a80115d6401'))
 
     def test_post_general(self):
+        self.maxDiff = None
         self.mock_login('tst_LbxUH')
         # make sure barcode properly removed
         self.assertIn('000005628', ag_data.getAvailableBarcodes(
@@ -181,7 +183,7 @@ class TestAddSample(TestHandlerBase):
             'email': 'REMOVED',
             'other': None,
             'moldy': None,
-            'participant_name': 'environmental',
+            'participant_name': 'REMOVED-2',
             'refunded': None,
             'date_of_last_email': None,
             'other_text': 'REMOVED'
