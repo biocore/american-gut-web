@@ -9,6 +9,9 @@ TEST_ENVIRONMENT = TRUE
 # Path to the base directory where the data files are going to be stored
 BASE_DATA_DIR = /tmp
 
+# Path to the logging directory
+BASE_LOG_DIR = 
+
 # URL base (e.g., foo.bar.com/<SITEBASE>)
 SITEBASE = 
 
