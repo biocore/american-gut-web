@@ -8,14 +8,56 @@ from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.lib.data_access.sql_connection import TRN
 
 
+# Explanation of redcap and interactions with it:
+# Redcap has three layers of IDs: record_id, survey_id, and event_id.
+
+# record_id is the id given to a single person in the redcap system, analagous
+# to the host_subject_id.
+
+# survey_id is the name of the survey the person will be taking.
+
+# event_id is the id of the single time a person has taken the survey. It
+# counts up from 1 for each person in each survey. These must be manually
+# created for each survey before the survey is used, so we don't want to waste
+# any if a person starts a survey and does not finish and log it.
+
+# Examples - all examples use a tuple of (record_id, survey_id, event_id) and
+# are ordered sequentially. Making redcap calls in this order produces a valid
+# survey database state.
+
+# (1, 'ag-human-en-US', 1) = User 1 just took the US english human survey for
+# the first time.
+# (1, 'ag-human-en-US', 2) = User 1 just took the US english human survey for
+# the second time.
+# (2, 'ag-human-en-US', 1) = User 2 just took the US english human survey for
+# the first time.
+# (1, 'ag-animal-en-US', 1) = User 1 just took the US english pet survey for
+# the first time.
+# (1, 'ag-human-fr-CA', 1) = User 1 just took the Canadian french human survey
+# for the first time.
+# (1, 'ag-human-fr-CA', 2) = User 1 just took the Canadian french human survey
+# for the second time.
+# (3, 'ag-human-fr-CA', 1) = User 3 just took the Canadian french human survey
+# for the first time.
+
+# From these examples, you can see that the event ID is tied to the survey and
+# record ID, with event_id starting at 1 for each record for each survey.
+
 def _make_request(data):
     body = urlencode(data)
     client = HTTPClient()
     response = client.fetch(AMGUT_CONFIG.redcap_url, method='POST',
                             headers=None, body=body)
-    # Response not always JSON, so can't always use loads
-    if '{"error"' in response.body:
-        raise HTTPError(400, loads(response.body)['error'])
+    # Response not always JSON, so can't always use loads. Error messages,
+    # however, are always JSON and are the only thing that have the error key.
+    try:
+        error = loads(response.body)['error']
+    except (KeyError, TypeError):
+        # Return JSON doesn't have error key, so valid, or return is a regualar
+        # non-JSON string, so valid
+        pass
+    else:
+        raise HTTPError(400, error)
     return response.body
 
 
@@ -92,7 +134,9 @@ def get_responses(records, instrument, event=None):
     event : int, optional
         What event to get responses from. Default all
 
-    Returns: list of dict of objects
+    Returns
+    -------
+    list of dict of objects
         List of all matching survey responses, where each is a dictionary of
         {header: resp, ...}
     """
