@@ -48,6 +48,8 @@ class ConfigurationManager(object):
         Whether we are in a test environment or not
     base_data_dir : str
         Path to the base directorys where all data file are stored
+    base_log_dir : str
+        Path to the base directory where the log file will be written
     cookie_secret : str
         The secret used to secure user session cookies
     locale : str
@@ -163,6 +165,7 @@ class ConfigurationManager(object):
         self.project_shorthand = get('SHORTHAND')
         self.test_environment = getboolean('TEST_ENVIRONMENT')
         self.base_data_dir = get('BASE_DATA_DIR')
+        self.base_log_dir = get('BASE_LOG_DIR')
         self.base_url = get('BASE_URL')
         self.cookie_secret = get('COOKIE_SECRET')
         self.locale = get('LOCALE')

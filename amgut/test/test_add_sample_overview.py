@@ -39,7 +39,6 @@ class TestAddSampleOverview(TestHandlerBase):
         # Check for some main text
         self.assertIn('sample source', response.body)
         self.assertIn('REMOVED-0 - Animal Source', response.body)
-        self.assertIn('REMOVED-0 - Human Source', response.body)
         self.assertIn('REMOVED-1 - Human Source', response.body)
         self.assertIn('Environmental', response.body)
 
