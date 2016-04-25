@@ -33,6 +33,14 @@ shorthand = American Gut
 # The email address where error reports are sent to
 ERROR_EMAIL =
 
+# ----------------------------- RedCap settings -------------------------------
+[redcap]
+# URL for the redcap API
+URL =
+
+# API token for the redcap server
+TOKEN =
+
 # ----------------------------- Postgres settings -----------------------------
 [postgres]
 # The user name to connect to the database

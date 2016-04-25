@@ -54,6 +54,10 @@ class ConfigurationManager(object):
         The secret used to secure user session cookies
     locale : str
         The locale
+    redcap_url : str
+        The redcap server URL
+    redcap_token : str
+        API token
     user : str
         The postgres user
     password : str
@@ -118,7 +122,7 @@ class ConfigurationManager(object):
             config.readfp(conf_file)
 
         _expected_sections = {'main', 'postgres', 'test', 'redis', 'email',
-                              'thirdparty'}
+                              'thirdparty', 'redcap'}
 
         missing = _expected_sections - set(config.sections())
         if missing:
@@ -127,6 +131,7 @@ class ConfigurationManager(object):
         _warn_on_extra(extra, 'sections')
 
         self._get_main(config)
+        self._get_redcap(config)
         self._get_postgres(config)
         self._get_test(config)
         self._get_redis(config)
@@ -173,6 +178,17 @@ class ConfigurationManager(object):
         if self.locale not in available_locales:
             raise ValueError("%s is not a recognized locale. Please select "
                              "from %r" % (self.locale, available_locales))
+
+    def _get_redcap(self, config):
+        """Get the configuration of the test section"""
+        expected_options = {'url', 'token'}
+        _warn_on_extra(set(config.options('redcap')) - expected_options -
+                       self.defaults, 'redcap section option(s)')
+
+        get = partial(config.get, 'redcap')
+
+        self.redcap_url = get('URL')
+        self.redcap_token = get('TOKEN')
 
     def _get_postgres(self, config):
         """Get the configuration of the postgres section"""
