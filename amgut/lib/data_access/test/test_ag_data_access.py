@@ -5,14 +5,17 @@ from string import ascii_letters
 from uuid import UUID
 
 from amgut.lib.data_access.ag_data_access import AGDataAccess
+from amgut import AMGUT_CONFIG
 
 
 class TestAGDataAccess(TestCase):
     def setUp(self):
         self.ag_data = AGDataAccess()
+        self.sitebase = AMGUT_CONFIG.sitebase
 
     def tearDown(self):
         del self.ag_data
+        AMGUT_CONFIG.sitebase = self.sitebase
 
     def test_authenticateWebAppUser(self):
         # Test right pass but non-existant kit ID
@@ -67,6 +70,16 @@ class TestAGDataAccess(TestCase):
             'test@EMAIL.com', 'TESTDUDE', '123 fake test street', 'testcity',
             'teststate', '1L2 2G3', 'United Kingdom')
         self.assertEqual(ag_login_id, obs)
+
+    def test_log_portal(self):
+        portal = ''.join([choice(ascii_letters)
+                          for i in range(randint(5, 10))])
+        AMGUT_CONFIG.sitebase = portal
+        self.ag_data.log_portal('tst_KWfyv')
+        self.assertEqual(self.ag_data.get_portal('tst_KWfyv'), portal)
+
+    def test_get_portal(self):
+        self.assertEqual(self.ag_data.get_portal('tst_ODmhG'), 'AmericanGut')
 
     def test_getAGBarcodeDetails_bad_barcode(self):
         # test non-existant barcode
@@ -182,6 +195,21 @@ class TestAGDataAccess(TestCase):
     def test_getConsentNotPresent(self):
         with self.assertRaises(ValueError):
             self.ag_data.getConsent("42")
+
+    def test_store_consent(self):
+        name = ''.join(choice(ascii_letters) for w in range(25))
+        consent = {'participant_name': name,
+                   'participant_email': 'test@foo.bar',
+                   'parent_1_name': 'parent 2',
+                   'parent_2_name': 'parent 2',
+                   'is_juvenile': True,
+                   'deceased_parent': False,
+                   'obtainer_name': None,
+                   'age_range': '7-14',
+                   'login_id': 'fecebeae-4244-2d78-e040-8a800c5d4f50',
+                   'language': 'en-US',
+                   'type': 'human'}
+        self.ag_data.store_consent(consent)
 
     def test_logParticipantSample_badinfo(self):
         # bad ag_login_id

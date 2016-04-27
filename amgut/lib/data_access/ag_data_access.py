@@ -161,6 +161,29 @@ class AGDataAccess(object):
                 ag_login_id = TRN.execute_fetchlast()
             return ag_login_id
 
+    def log_portal(self, supplied_kit_id):
+        """Logs what portal the user just logged in with to the DB
+
+        supplied_kit_id : str
+            kit ID user logged in with
+        """
+        with TRN:
+            ag_login_id = self.get_user_for_kit(supplied_kit_id)
+            sql = "UPDATE ag.ag_login SET portal = %s WHERE ag_login_id = %s"
+            TRN.add(sql, [AMGUT_CONFIG.sitebase, ag_login_id])
+
+    def get_portal(self, supplied_kit_id):
+        """Returns the portal used by the user
+
+        supplied_kit_id : str
+            kit ID user logged in with
+        """
+        with TRN:
+            ag_login_id = self.get_user_for_kit(supplied_kit_id)
+            sql = "SELECT portal FROM ag.ag_login WHERE ag_login_id = %s"
+            TRN.add(sql, [ag_login_id])
+            return TRN.execute_fetchlast()
+
     def getAGBarcodeDetails(self, barcode):
         """Returns information about the barcode from both AG and standard info
 
@@ -351,6 +374,26 @@ class AGDataAccess(object):
                                  survey_id)
             return dict(result[0])
 
+    def store_consent(self, values):
+        sql = """INSERT INTO ag.ag_consent
+                     (participant_name, participant_email, parent_1_name,
+                     parent_2_name, is_juvenile, deceased_parent,
+                     assent_obtainer, age_range, ag_login_id, lang, type)
+                     VALUES (%(participant_name)s, %(participant_email)s,
+                             %(parent_1_name)s, %(parent_2_name)s,
+                             %(is_juvenile)s, %(deceased_parent)s,
+                             %(obtainer_name)s, %(age_range)s, %(login_id)s,
+                             %(language)s, %(type)s)
+                     RETURNING redcap_record_id"""
+        with TRN:
+            if self.check_if_consent_exists(values['login_id'],
+                                            values['participant_name']):
+                raise ValueError("Participant already exists for user name!")
+
+            TRN.add(sql, values)
+            record_id = TRN.execute_fetchlast()
+            return record_id
+
     def logParticipantSample(self, ag_login_id, barcode, sample_site,
                              environment_sampled, sample_date, sample_time,
                              participant_name, notes):
@@ -405,10 +448,8 @@ class AGDataAccess(object):
 
     def getHumanParticipants(self, ag_login_id):
         # get people from new survey setup
-        sql = """SELECT DISTINCT participant_name from ag.ag_consent
-                 JOIN ag_login_surveys USING (redcap_record_id)
-                 JOIN redcap_instruments USING (redcap_instrument_id)
-                 WHERE ag_login_id = %s AND survey_type = 'Human'"""
+        sql = """SELECT participant_name from ag.ag_consent
+                 WHERE ag_login_id = %s AND type = 'human'"""
         with TRN:
             TRN.add(sql, [ag_login_id])
             return TRN.execute_fetchflatten()
@@ -450,9 +491,7 @@ class AGDataAccess(object):
 
     def getAnimalParticipants(self, ag_login_id):
         sql = """SELECT DISTINCT participant_name from ag.ag_consent
-                 JOIN ag_login_surveys USING (redcap_record_id)
-                 JOIN redcap_instruments USING (redcap_instrument_id)
-                 WHERE ag_login_id = %s AND survey_type = 'Animal'"""
+                 WHERE ag_login_id = %s AND type = 'animal'"""
         with TRN:
             TRN.add(sql, [ag_login_id])
             return TRN.execute_fetchflatten()
