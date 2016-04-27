@@ -4,6 +4,8 @@ ALTER TABLE ag.ag_login ADD portal varchar  NOT NULL DEFAULT 'AmericanGut';
 ALTER TABLE ag.ag_login ALTER COLUMN portal DROP DEFAULT;
 COMMENT ON COLUMN ag.ag_login.portal IS 'What portal this user logs in on';
 
+-- Remove participant name from barcodes table. Should only have that in consent table!
+ALTER TABLE ag.ag_kit_barcodes DROP COLUMN participant_name;
 
 --Create and rearrange tables for redcap survey integration
 CREATE TABLE ag.languages ( 

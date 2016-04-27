@@ -2,77 +2,66 @@ from urllib import urlencode
 from json import loads
 
 from tornado.web import HTTPError
-import tornado.gen as gen
-from tornado.httpclient import AsyncHTTPClient
+from tornado.httpclient import HTTPClient
 
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.lib.data_access.sql_connection import TRN
 
 
-def get_instrument(participant_type, language):
-    """Returns the instrument name for a given participant and parameters
+# Explanation of redcap and interactions with it:
+# Redcap has three layers of IDs: record_id, survey_id, and event_id.
 
-    participant_type : {human, animal, environmental}
-        What survey type to get
-    language : str
-        What language the person is consented in
-    """
-    return "ag-%s-%s" % (participant_type, language)
+# record_id is the id given to a single person in the redcap system, analagous
+# to the host_subject_id.
 
+# survey_id is the name of the survey the person will be taking.
 
-@gen.coroutine
-def create_record(record_id, ag_login_id, participant_name):
-    """Creates a new record on redcap for the participant
+# event_id is the id of the single time a person has taken the survey. It
+# counts up from 1 for each person in each survey. These must be manually
+# created for each survey before the survey is used, so we don't want to waste
+# any if a person starts a survey and does not finish and log it.
 
-    Parameters
-    ----------
-    record_id : int
-        record ID to add
-    ag_login_id : UUID4
-        Login ID to associate the record with
-    participant_name : str
-        participant name to associate the record with
-    """
-    info = '''<?xml version="1.0" encoding="UTF-8" ?>
-    <records>
-       <item>
-          <record>%(record)d</record>
-          <field_name>ag_login_id</field_name>
-          <value>%(login)s</value>
-          <redcap_event_name>event_1_arm_1</redcap_event_name>
-       </item>
-       <item>
-          <record>%(record)d</record>
-          <field_name>participant_name</field_name>
-          <value>%(name)s</value>
-          <redcap_event_name>event_1_arm_1</redcap_event_name>
-       </item>
-    </records>''' % {'record': record_id, 'login': ag_login_id,
-                     'name': participant_name}
-    data = {
-        'token': AMGUT_CONFIG.redcap_token,
-        'content': 'record',
-        'format': 'xml',
-        'type': 'eav',
-        'overwriteBehavior': 'normal',
-        'data': info,
-        'dateFormat': 'MDY',
-        'returnContent': 'count',
-        'returnFormat': 'json',
-        'record_id': record_id
-    }
+# Examples - all examples use a tuple of (record_id, survey_id, event_id) and
+# are ordered sequentially. Making redcap calls in this order produces a valid
+# survey database state.
+
+# (1, 'ag-human-en-US', 1) = User 1 just took the US english human survey for
+# the first time.
+# (1, 'ag-human-en-US', 2) = User 1 just took the US english human survey for
+# the second time.
+# (2, 'ag-human-en-US', 1) = User 2 just took the US english human survey for
+# the first time.
+# (1, 'ag-animal-en-US', 1) = User 1 just took the US english pet survey for
+# the first time.
+# (1, 'ag-human-fr-CA', 1) = User 1 just took the Canadian french human survey
+# for the first time.
+# (1, 'ag-human-fr-CA', 2) = User 1 just took the Canadian french human survey
+# for the second time.
+# (3, 'ag-human-fr-CA', 1) = User 3 just took the Canadian french human survey
+# for the first time.
+
+# From these examples, you can see that the event ID is tied to the survey and
+# record ID, with event_id starting at 1 for each record for each survey.
+
+def _make_request(data):
     body = urlencode(data)
-    client = AsyncHTTPClient()
-    response = yield client.fetch(AMGUT_CONFIG.redcap_url, method='POST',
-                                  headers=None, body=body)
-    # Response not always JSON, so can't always use loads
-    if '{"error"' in response.body:
-        raise HTTPError(400, loads(response.body)['error'])
-    raise gen.Return(response.body)
+    client = HTTPClient()
+    response = client.fetch(AMGUT_CONFIG.redcap_url, method='POST',
+                            headers=None, body=body)
+    # Response not always JSON, so can't always use loads. Error messages,
+    # however, are always JSON and are the only thing that have the error key.
+    try:
+        error = loads(response.body)['error']
+    except (KeyError, ValueError):
+        # Return JSON doesn't have error key, so valid, or return is a regualar
+        # non-JSON string, so valid
+        pass
+    else:
+        raise HTTPError(400, error)
+    return response.body
 
 
-@gen.coroutine
-def get_survey_url(record, instrument='ag-human-en-US'):
+def get_survey_url(record, instrument='ag_human_en_us'):
     """Genereates a new survey link for a given record
 
     Parameters
@@ -97,29 +86,22 @@ def get_survey_url(record, instrument='ag-human-en-US'):
                  WHERE redcap_record_id = %s AND redcap_instrument_id = %s;
         """
         TRN.add(sql, [record, instrument])
-        event_id = TRN.execute_fetchlast()
-        if event_id is None:
-            event_id = 1
+        event = TRN.execute_fetchlast()
+        if event is None:
+            event = 1
         data = {
             'token': AMGUT_CONFIG.redcap_token,
             'content': 'surveyLink',
             'format': 'json',
-            'instrument': instrument.lower().replace('-', ''),
-            'event': 'event_%d_arm_1' % event_id,
+            'instrument': 'ag_human',
+            'event': 'event_%d_arm_1' % event,
             'record': record,
             'returnFormat': 'json'
         }
-        body = urlencode(data)
-        client = AsyncHTTPClient()
-        response = yield client.fetch(AMGUT_CONFIG.redcap_url, method='POST',
-                                      headers=None, body=body)
-        # Response not always JSON, so can't always use loads
-        if '{"error"' in response.body:
-            raise HTTPError(400, loads(response.body)['error'])
-        raise gen.Return(response.body)
+        return _make_request(data)
 
 
-def log_complete(record, instrument, survey_id):
+def log_complete(record, instrument, event):
     """Logs a redcap survey as completed in the database
 
     Parameters
@@ -128,29 +110,18 @@ def log_complete(record, instrument, survey_id):
         record to log for
     instrument : str
         The instrument (survey) to log for
-    survey_id : str
-        Survey ID for this survey
+    event : int
+        Event to log for
     """
     with TRN:
-        event_sql = """SELECT max(redcap_event_id) + 1
-                       FROM ag.ag_login_surveys
-                       WHERE redcap_record_id = %s"""
         sql = """INSERT INTO ag.ag_login_surveys
-                 (redcap_instrument_id, redcap_record_id, survey_id,
+                 (redcap_instrument_id, redcap_record_id,
                   redcap_event_id)
-                 (SELECT %s, %s, %s, %s
-                  FROM ag.ag_login_surveys
-                  WHERE redcap_record_id = %s)"""
-        TRN.add(event_sql, [record])
-        event_id = TRN.execute_fetchlast()
-        if event_id is None:
-            # First survey so nothing logged for user, default to first event
-            event_id = 1
-        TRN.add(sql, [instrument, record, survey_id, event_id, record])
+                 VALUES (%s, %s, %s)"""
+        TRN.add(sql, [instrument, record, event])
         TRN.execute()
 
 
-@gen.coroutine
 def get_responses(records, instrument, event=None):
     """Get responses for the given records
 
@@ -163,7 +134,9 @@ def get_responses(records, instrument, event=None):
     event : int, optional
         What event to get responses from. Default all
 
-    Returns: list of dict of objects
+    Returns
+    -------
+    list of dict of objects
         List of all matching survey responses, where each is a dictionary of
         {header: resp, ...}
     """
@@ -183,11 +156,4 @@ def get_responses(records, instrument, event=None):
     }
     if event is not None:
         data['events'] = 'event_%d_arm_1' % event,
-    body = urlencode(data)
-    client = AsyncHTTPClient()
-    response = yield client.fetch(AMGUT_CONFIG.redcap_url, method='POST',
-                                  headers=None, body=body)
-    # Response not always JSON, so can't always use loads
-    if '{"error"' in response.body:
-        raise HTTPError(400, loads(response.body)['error'])
-    raise gen.Return(loads(response.body))
+    return loads(_make_request(data))

@@ -103,7 +103,7 @@ class TestAGDataAccess(TestCase):
             'status': 'Received',
             'ag_kit_id': 'd8592c74-7e35-2135-e040-8a80115d6401',
             'name': 'REMOVED',
-            'participant_name': 'REMOVED',
+            'participant_name': 'REMOVED-0',
             'email': 'REMOVED',
             'site_sampled': 'Stool',
             'environment_sampled': None,
@@ -269,7 +269,7 @@ class TestAGDataAccess(TestCase):
                'email': 'REMOVED',
                'other': None,
                'moldy': None,
-               'participant_name': 'REMOVED',
+               'participant_name': 'REMOVED-0',
                'refunded': None,
                'date_of_last_email': None,
                'other_text': 'REMOVED'
@@ -315,7 +315,7 @@ class TestAGDataAccess(TestCase):
 
     def test_getParticipantSamples(self):
         i = "d6b0f287-b9d9-40d4-82fd-a8fd3db6c476"
-        res = self.ag_data.getParticipantSamples(i, "REMOVED")
+        res = self.ag_data.getParticipantSamples(i, "REMOVED-0")
         exp = [{'status': None,
                 'sample_time': datetime.time(11, 55),
                 'notes': 'REMOVED',
@@ -325,7 +325,7 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(res, exp)
 
         i = "d8592c74-9694-2135-e040-8a80115d6401"
-        res = self.ag_data.getParticipantSamples(i, "REMOVED")
+        res = self.ag_data.getParticipantSamples(i, "REMOVED-0")
         exp = [{'status': 'Received',
                 'sample_time': datetime.time(7, 40),
                 'notes': 'REMOVED',
@@ -661,22 +661,22 @@ class TestAGDataAccess(TestCase):
 
     def test_get_barcode_results(self):
         obs = self.ag_data.get_barcode_results('tst_yCzro')
-        exp = [{'barcode': '000016704', 'participant_name': 'REMOVED'},
-               {'barcode': '000016705', 'participant_name': 'REMOVED'},
-               {'barcode': '000016706', 'participant_name': 'REMOVED'},
-               {'barcode': '000016707', 'participant_name': 'REMOVED'},
-               {'barcode': '000016708', 'participant_name': 'REMOVED'},
-               {'barcode': '000016709', 'participant_name': 'REMOVED'},
-               {'barcode': '000016710', 'participant_name': 'REMOVED'},
-               {'barcode': '000016711', 'participant_name': 'REMOVED'},
-               {'barcode': '000016712', 'participant_name': 'REMOVED'},
-               {'barcode': '000016713', 'participant_name': 'REMOVED'},
-               {'barcode': '000004213', 'participant_name': 'REMOVED'},
-               {'barcode': '000004214', 'participant_name': 'REMOVED'},
-               {'barcode': '000004215', 'participant_name': 'REMOVED'},
-               {'barcode': '000004216', 'participant_name': 'REMOVED'},
-               {'barcode': '000004218', 'participant_name': 'REMOVED'},
-               {'barcode': '000004219', 'participant_name': 'REMOVED'}]
+        exp = [{'barcode': '000004213', 'participant_name': 'REMOVED-0'},
+               {'barcode': '000004214', 'participant_name': 'REMOVED-0'},
+               {'barcode': '000004215', 'participant_name': 'REMOVED-0'},
+               {'barcode': '000004216', 'participant_name': 'REMOVED-0'},
+               {'barcode': '000004218', 'participant_name': 'REMOVED-0'},
+               {'barcode': '000004219', 'participant_name': 'REMOVED-0'},
+               {'barcode': '000016704', 'participant_name': 'REMOVED-0'},
+               {'barcode': '000016705', 'participant_name': 'REMOVED-0'},
+               {'barcode': '000016706', 'participant_name': 'REMOVED-0'},
+               {'barcode': '000016707', 'participant_name': 'REMOVED-0'},
+               {'barcode': '000016708', 'participant_name': 'REMOVED-0'},
+               {'barcode': '000016709', 'participant_name': 'REMOVED-0'},
+               {'barcode': '000016710', 'participant_name': 'REMOVED-0'},
+               {'barcode': '000016711', 'participant_name': 'REMOVED-0'},
+               {'barcode': '000016712', 'participant_name': 'REMOVED-0'},
+               {'barcode': '000016713', 'participant_name': 'REMOVED-0'}]
         self.assertEqual(obs, exp)
 
     def test_get_barcode_results_non_existant_id(self):

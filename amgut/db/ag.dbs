@@ -289,7 +289,6 @@
 			<column name="sample_barcode_file_md5" type="varchar" length="50" jt="12" />
 			<column name="site_sampled" type="varchar" length="200" jt="12" />
 			<column name="sample_date" type="date" length="20" jt="91" />
-			<column name="participant_name" type="varchar" length="200" jt="12" />
 			<column name="sample_time" type="time" length="100" jt="92" />
 			<column name="notes" type="varchar" length="2000" jt="12" />
 			<column name="environment_sampled" type="varchar" length="100" jt="12" />
