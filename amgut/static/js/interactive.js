@@ -144,7 +144,7 @@ function buildCats(site, catDropdown, disable) {
       return;
     }
     catDropdown.append(new Option('', ''));
-    for (pos in available_summaries[site]) {
+    for (var pos = 0; pos < available_summaries[site].length; pos++) {
       var cat = available_summaries[site][pos];
       catDropdown.append(new Option(translate_summaries[cat], cat));
     }
@@ -271,7 +271,7 @@ function collapse(dataset, level, max, prev_level, focus, sites) {
   }
 
   // Round data values to four decimals
-  for (pos in further_collapsed) {
+  for (var pos = 0; pos < further_collapsed.length; pos++) {
     otu = further_collapsed[pos];
     otu.data = otu.data.map(function(c, i, a) {
       return +c.toFixed(4);
