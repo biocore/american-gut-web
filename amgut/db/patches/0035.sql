@@ -24,10 +24,10 @@ ALTER TABLE ag.labadmin_users_access ADD CONSTRAINT fk_labadmin_access FOREIGN K
 ALTER TABLE ag.labadmin_users_access ADD CONSTRAINT fk_labadmin_users_access FOREIGN KEY ( access_id ) REFERENCES ag.labadmin_access( access_id );
 
 INSERT INTO ag.labadmin_access (access_name, access_description) VALUES
-('Create barcodes', 'Allows person to create barcodes and attach them to projects'),
-('Create AG kits', 'Allows a person to create AG kits in the system and add barcoes to existing kits'),
+('Barcodes', 'Allows a person to create barcodes and attach them to projects'),
+('AG kits', 'Allows a person to create AG kits in the system and add barcdoes to existing kits'),
 ('Scan Barcodes', 'Can Scan barcodes and get information'),
-('Add external surveys', 'Allows a person to add external surveys and survey data to the system'),
+('External surveys', 'Allows a person to add external surveys and survey data to the system'),
 ('Metadata Pulldown', 'Allows metadata pulldown access'),
 ('Search', 'Allows access to searching by barcode, name, kit id, etc'),
 ('Admin', 'Makes a person a sys admin');
