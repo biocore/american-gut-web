@@ -114,7 +114,7 @@ class MetadataHandler(BaseHandler):
             if barcode not in barcodes:
                 raise HTTPError(403, 'User %s does not have access to barcode '
                                 '%s' % (self.current_user, barcode))
-            site = ag_data.getAGBarcodeDetails(barcode)['site_sampled'].lower()
+            site = ag_data.getAGBarcodeDetails(barcode)['site_sampled'].upper()
         else:
             site = self.get_argument('site')
         cat = self.get_argument('category').replace(' ', '_')
@@ -154,7 +154,7 @@ class AlphaDivImgHandler(BaseHandler):
                                '%s.png' % barcode))
         if cat:
             cat = Image.open(join(AMGUT_CONFIG.base_data_dir, 'alpha-div',
-                             '%s-%s.png' % (site, cat)))
+                             'pd_%s-%s.png' % (site, cat)))
             new_image = Image.alpha_composite(cat, new_image)
         full_image = StringIO()
         new_image.save(full_image, format="png")

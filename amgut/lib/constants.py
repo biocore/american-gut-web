@@ -51,7 +51,7 @@ collapse_human_sites = defaultdict(lambda: '', {
     'Vaginal mucus': ''
     })
 
-# What categories of summary data aravailable for each collapsed body site
+# What categories of summary data are available for each collapsed body site
 available_summaries = {
     'stool': ['age-baby', 'age-child', 'age-teen', 'age-20s', 'age-30s',
               'age-40s', 'age-50s', 'age-60s', 'age-70+',
