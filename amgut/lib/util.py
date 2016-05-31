@@ -139,11 +139,26 @@ def survey_asd(survey_id):
     """Return a formatted text block and URL for the external survey"""
     tl = text_locale['human_survey_completed.html']
     url = media_locale['SURVEY_ASD_URL'] % {'survey_id': survey_id}
-    embedded_text = tl['SURVEY_ASD']
+    embedded_text = tl['SURVEY_FERMENTED']
     return embedded_text % url
 
 
-external_surveys = (survey_vioscreen,)  # survey_asd)
+def survey_fermented(survey_id):
+    """Return a formatted text block and URL for the external survey"""
+    tl = text_locale['human_survey_completed.html']
+    url = '/authed/secondary_survey/?type=fermented&survey=%s' % survey_id
+    embedded_text = tl['SURVEY_FERMENTED']
+    return embedded_text % url
+
+
+def survey_surf(survey_id):
+    """Return a formatted text block and URL for the external survey"""
+    tl = text_locale['human_survey_completed.html']
+    url = '/authed/secondary_survey/?type=surf&survey=%s' % survey_id
+    embedded_text = tl['SURVEY_SURF']
+    return embedded_text % url
+
+external_surveys = (survey_vioscreen, survey_fermented, survey_surf)
 
 
 def basejoin(base, url):

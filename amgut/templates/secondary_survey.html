@@ -1,0 +1,82 @@
+{% extends sitebase.html %}
+{% from wtforms import validators %}
+{% block head %}
+<import >
+<script type="text/javascript">
+    $(document).ready(function() {
+      $("div[id^=supp_]").hide();
+    });
+</script>
+<style>
+input[type="checkbox"] {
+    float:left;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+tr.questionrow {
+    border: dotted;
+    border-width: 0px;
+    border-bottom-width: 1px;
+}
+tr.questionrow:first-child {
+    border-top: none;
+}
+tr.questionrow:last-child {
+    border-bottom: none;
+}
+.tdmainform {
+    padding:20px;
+    border-spacing: 5px 0;"
+}
+ul {
+    list-style-type: none;
+}
+</style>
+{% end %}
+
+{% block content %}
+<h2>{% survey_name %} Survey</h2>
+<h3 style="color: red"><span name="status_message" id="status_message"></span></h3>
+<form action='{% raw media_locale["SITEBASE"] %}/authed/add_secondary/' id="secondary_survey" method="POST">
+<input type="hidden" name="survey_id" value="{{survey_id}}">
+    <div class="lefta">
+        <table id="mainsurveytable">
+        {% for form_item in the_form %}
+          {% if form_item.id in the_form.supplemental_eids %}
+              {% continue %}
+          {% end %}
+          {% set kwargs = {} %}
+          {% if form_item.id in the_form.triggers %}
+              {% set supp_div_id = "supp_" + form_item.id + "_div" %}
+              {% set kwargs["onchange"] = "toggle_div('" + supp_div_id + "', '" + form_item.id + "', " + repr(the_form.triggers[form_item.id]) + ");" %}
+          {% end %}
+        {% end %}
+          <tr class="questionrow">
+            <td width="50%" class="tdmainform">{% raw the_form.prompts[form_item.id] %}</td>
+            <td>
+              {% raw form_item(**kwargs) %}
+            </td>
+          </tr>
+          {% if form_item.id in the_form.triggers %}
+          <tr>
+              <td colspan="2">
+                  <div id="{{ supp_div_id }}" style="text-align: center">
+                      {% for eid in the_form.triggered[form_item.id] %}
+                          {% raw the_form.prompts[eid] %}
+                          {% raw the_form[eid]() %}<br/>
+                      {% end %}
+                  </div>
+              </td>
+          </tr>
+          {% end %}
+        {% end %}
+          <tr>
+            <td colspan=2><center><input type="submit" class="ui-button-text"></center></td>
+          </tr>
+        </table>
+    </div>
+</form>
+    <br />
+{% end %}
