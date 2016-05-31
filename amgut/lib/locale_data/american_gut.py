@@ -1020,7 +1020,7 @@ _HUMAN_SURVEY_COMPLETED = {
     'SURVEY_ASD': '<h3 style="text-align: center"><a href="%s" target="_blank">ASD-Cohort survey</a></h3><a href="http://www.anl.gov/contributors/jack-gilbert">Dr. Jack Gilbert</a> is exploring the relationship between gut dysbiosis and Autism Spectrum Disorders, and in conjunction with the American Gut Project, we started an ASD-Cohort study. This additional survey contains questions specific to that cohort, but it is open to any participant to take if they so choose.',
     'SURVEY_VIOSCREEN': '<h3 style="text-align: center"><a href="%s" target="_blank">Dietary Survey</a></h3>The American Gut Project and its sister projects are very interested in diet. If you\'d like to provide additional detail about your diet, please click the link above to take a detailed diet survey (known as an Food Frequency Questionnaire). This is a validated FFQ, and is the one used by the Mayo Clinic.',
     'SURVEY_FERMENTED': '<h3 style="text-align: center"><a href="%s" target="_blank">Fermented Foods Survey</a></h3>As part of our onging research into what drive changes in the human gut microbiome, we are looking at fermented foods and the microbiomes of fermented food eaters. Please click the link above if you would like to participate in this survey.',
-    'SURVEY_SURF': '<h3 style="text-align: center"><a href="%s" target="_blank">Surfing Survey</a></h3>Surfing!',
+    'SURVEY_SURF': '<h3 style="text-align: center"><a href="%s" target="_blank">Surfing Survey</a></h3>As part of our study, we are interested in the effects of frequent and prolonged exposure to salt water and the ocean, as it pertains to surfing and surfers. If you are interested in participating, you can click the link above and take the survey.',
 }
 
 _SURVEY_MAIN = {
