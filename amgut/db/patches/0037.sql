@@ -110,7 +110,7 @@ INSERT INTO survey_response (american, british) VALUES
 ('Kefir (milk)', 'Kefir (milk)'),
 ('Cottage cheese', 'Cottage cheese'),
 ('Yogurt/lassi', 'Yogurt/lassi'),
-('Sour cream/crème fraiche', 'Sour cream/crème fraiche'),
+('Sour cream/creme fraiche', 'Sour cream/creme fraiche'),
 ('Fermented fish', 'Fermented fish'),
 ('Fish sauce', 'Fish sauce'),
 ('Fermented bread/sourdough/injera', 'Fermented bread/sourdough/injera'),
@@ -214,7 +214,7 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 (166, 'Kefir (milk)', 7),
 (166, 'Cottage cheese', 8),
 (166, 'Yogurt/lassi', 9),
-(166, 'Sour cream/crème fraiche', 10),
+(166, 'Sour cream/creme fraiche', 10),
 (166, 'Fermented fish', 11),
 (166, 'Fish sauce', 12),
 (166, 'Fermented bread/sourdough/injera', 13),
@@ -237,7 +237,7 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 (168, 'Kefir (milk)', 7),
 (168, 'Cottage cheese', 8),
 (168, 'Yogurt/lassi', 9),
-(168, 'Sour cream/crème fraiche', 10),
+(168, 'Sour cream/creme fraiche', 10),
 (168, 'Fermented fish', 11),
 (168, 'Fish sauce', 12),
 (168, 'Fermented bread/sourdough/injera', 13),
@@ -260,7 +260,7 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 (170, 'Kefir (milk)', 7),
 (170, 'Cottage cheese', 8),
 (170, 'Yogurt/lassi', 9),
-(170, 'Sour cream/crème fraiche', 10),
+(170, 'Sour cream/creme fraiche', 10),
 (170, 'Fermented fish', 11),
 (170, 'Fish sauce', 12),
 (170, 'Fermented bread/sourdough/injera', 13),
@@ -273,96 +273,108 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 (170, 'Other', 20);
 
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
-(173, 'Point Loma/Ocean Beach, San Diego, California, USA', 0),
-(173, 'La Jolla, San Diego, California, USA', 1),
-(173, 'Encinitas, California, USA', 2),
-(173, 'Southern California, USA', 3),
-(173, 'Central California, USA', 4),
-(173, 'Northern, California', 5),
-(173, 'Pacific Northwest, USA', 6),
-(173, 'Hawaii, USA', 7),
-(173, 'Northeast, USA', 8),
-(173, 'Southeast, USA', 9),
-(173, 'South America', 10),
-(173, 'Europe', 11),
-(173, 'Africa', 12),
-(173, 'Australia', 13),
-(173, 'New Zealand', 14),
-(173, 'Southeast Asia', 15),
-(173, 'Asia', 16),
-(173, 'Other', 17);
+(173, 'Unspecified', 0),
+(173, 'Point Loma/Ocean Beach, San Diego, California, USA', 1),
+(173, 'La Jolla, San Diego, California, USA', 2),
+(173, 'Encinitas, California, USA', 3),
+(173, 'Southern California, USA', 4),
+(173, 'Central California, USA', 5),
+(173, 'Northern, California', 6),
+(173, 'Pacific Northwest, USA', 7),
+(173, 'Hawaii, USA', 8),
+(173, 'Northeast, USA', 9),
+(173, 'Southeast, USA', 10),
+(173, 'South America', 11),
+(173, 'Europe', 12),
+(173, 'Africa', 13),
+(173, 'Australia', 14),
+(173, 'New Zealand', 15),
+(173, 'Southeast Asia', 16),
+(173, 'Asia', 17),
+(173, 'Other', 18);
 
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
-(174, 'Multiple times a day', 0),
-(174, 'Once a day', 1),
-(174, 'Multiple times a week', 2),
-(174, 'Once a week', 3),
-(174, 'Multiple times a month', 4);
+(174, 'Unspecified', 0),
+(174, 'Multiple times a day', 1),
+(174, 'Once a day', 2),
+(174, 'Multiple times a week', 3),
+(174, 'Once a week', 4),
+(174, 'Multiple times a month', 5);
 
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
-(175, 'Multiple times a day', 0),
-(175, 'Once a day', 1),
-(175, 'Multiple times a week', 2),
-(175, 'Once a week', 3),
-(175, 'Multiple times a month', 4);
+(175, 'Unspecified', 0),
+(175, 'Multiple times a day', 1),
+(175, 'Once a day', 2),
+(175, 'Multiple times a week', 3),
+(175, 'Once a week', 4),
+(175, 'Multiple times a month', 5);
 
 
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
-(176, 'Multiple times a day', 0),
-(176, 'Once a day', 1),
-(176, 'Multiple times a week', 2),
-(176, 'Once a week', 3),
-(176, 'Multiple times a month', 4);
+(176, 'Unspecified', 0),
+(176, 'Multiple times a day', 1),
+(176, 'Once a day', 2),
+(176, 'Multiple times a week', 3),
+(176, 'Once a week', 4),
+(176, 'Multiple times a month', 5);
 
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
-(177, '<1 km', 0),
-(177, '5-10km', 1),
-(177, '>10km', 2);
+(177, 'Unspecified', 0),
+(177, '<1 km', 1),
+(177, '5-10km', 2),
+(177, '>10km', 3);
 
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
-(178, 'None', 0),
-(178, '<1mm', 1),
-(178, '2-3mm', 2),
-(178, '3-4mm', 3),
-(178, '4-5mm', 4);
+(178, 'Unspecified', 0),
+(178, 'None', 1),
+(178, '<1mm', 2),
+(178, '2-3mm', 3),
+(178, '3-4mm', 4),
+(178, '4-5mm', 5);
 
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
-(179, '<SPF25', 0),
-(179, 'SPF 25-50', 1),
-(179, 'SPF 50+', 2),
-(179, 'Other', 3);
+(179, 'Unspecified', 0),
+(179, '<SPF25', 1),
+(179, 'SPF 25-50', 2),
+(179, 'SPF 50+', 3),
+(179, 'Other', 4);
 
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
-(180, 'Every time I surf', 0),
-(180, 'Frequently', 1),
-(180, 'Rarely', 2),
-(180, 'Never', 3);
+(180, 'Unspecified', 0),
+(180, 'Every time I surf', 1),
+(180, 'Frequently', 2),
+(180, 'Rarely', 3),
+(180, 'Never', 4);
 
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
-(181, 'Every time I surf', 0),
-(181, 'Frequently', 1),
-(181, 'Rarely', 2),
-(181, 'Never', 3);
+(181, 'Unspecified', 0),
+(181, 'Every time I surf', 1),
+(181, 'Frequently', 2),
+(181, 'Rarely', 3),
+(181, 'Never', 4);
 
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
-(182, 'Natural', 0),
-(182, 'Goofy Foot', 1),
-(182, 'Prone', 2);
+(182, 'Unspecified', 0),
+(182, 'Natural', 1),
+(182, 'Goofy Foot', 2),
+(182, 'Prone', 3);
 
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
-(183, 'Longboard', 0),
-(183, 'Shortboard', 1),
-(183, 'Bodyboard', 2),
-(183, 'No Board', 3),
-(183, 'No preference', 4);
+(183, 'Unspecified', 0),
+(183, 'Longboard', 1),
+(183, 'Shortboard', 2),
+(183, 'Bodyboard', 3),
+(183, 'No Board', 4),
+(183, 'No preference', 5);
 
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
-(184, 'Sex Wax', 0),
-(184, 'Sticky Bumps', 1),
-(184, 'Mrs. Palmers', 2),
-(184, 'Bubble Gum', 3),
-(184, 'Famous', 4),
-(184, 'Other', 5);
+(184, 'Unspecified', 0),
+(184, 'Sex Wax', 1),
+(184, 'Sticky Bumps', 2),
+(184, 'Mrs. Palmers', 3),
+(184, 'Bubble Gum', 4),
+(184, 'Famous', 5),
+(184, 'Other', 6);
 
 ----------------------------------------------------------
 -- survey_question_triggers
