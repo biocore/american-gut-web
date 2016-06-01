@@ -4,7 +4,6 @@ import binascii
 import os
 
 from tornado.web import authenticated
-from tornado.websocket import WebSocketHandler
 
 from amgut.handlers.base_handlers import BaseHandler
 from amgut.lib.survey_supp import fermented_survey, surf_survey
@@ -75,24 +74,3 @@ class SecondarySurveyHandler(BaseHandler):
 
         url = sitebase + '/authed/portal/?%s' % message
         self.redirect(url)
-
-
-class CheckParticipantName(WebSocketHandler, BaseHandler):
-    @authenticated
-    def on_message(self, msg):
-        tl = text_locale['handlers']
-        skid = self.current_user
-        participant_name = msg
-
-        ag_login_id = ag_data.get_user_for_kit(skid)
-        human_participants = ag_data.getHumanParticipants(ag_login_id)
-        animal_participants = ag_data.getAnimalParticipants(ag_login_id)
-
-        if participant_name in (human_participants + animal_participants):
-            # if the participant already exists in the system, fail nicely
-            output_message = (tl['PARTICIPANT_EXISTS'] % participant_name)
-        else:
-            # otherwise, success!
-            output_message = 'success'
-
-        self.write_message(output_message)
