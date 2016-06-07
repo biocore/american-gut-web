@@ -53,6 +53,7 @@ class Transaction(object):
         self._connection = None
         self._post_commit_funcs = []
         self._post_rollback_funcs = []
+        self.auto_rollback = False
 
     def _open_connection(self):
         # If the connection already exists and is not closed, don't do anything
@@ -125,10 +126,12 @@ class Transaction(object):
         return self
 
     def _clean_up(self, exc_type):
-        if exc_type is not None:
+        if exc_type is not None or self.auto_rollback:
             # An exception occurred during the execution of the transaction
+            # or we have set the current transaction block to auto-rollback
             # Make sure that we leave the DB w/o any modification
             self.rollback()
+            self.auto_rollback = False
         elif self._queries:
             # There are still queries to be executed, execute them
             # It is safe to use the execute method here, as internally is

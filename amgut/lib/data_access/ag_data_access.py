@@ -296,12 +296,12 @@ class AGDataAccess(object):
     def deleteAGParticipantSurvey(self, ag_login_id, participant_name):
         # Remove user from new schema
         with TRN:
-            sql = """SELECT survey_id, email
+            sql = """SELECT survey_id, participant_email
                      FROM ag_login_surveys
                      JOIN ag_consent USING (ag_login_id, participant_name)
                      WHERE ag_login_id = %s AND participant_name = %s"""
             TRN.add(sql, (ag_login_id, participant_name))
-            survey_id, participant_email = TRN.execute_fetchlast()
+            survey_id, participant_email = TRN.execute_fetchindex()[0]
 
             sql = "DELETE FROM survey_answers WHERE survey_id = %s"
             TRN.add(sql, [survey_id])
@@ -327,9 +327,23 @@ class AGDataAccess(object):
             TRN.add(sql, [ag_login_id, participant_name])
 
             sql = """INSERT INTO ag.consent_revoked
-                     (ag_login_id,articipant_name, participant_email)
+                     (ag_login_id,participant_name, participant_email)
                      VALUES (%s, %s, %s)"""
             TRN.add(sql, [ag_login_id, participant_name, participant_email])
+
+    def get_withdrawn(self):
+        """Gets teh list of withdrawn participants and information
+
+        Returns
+        -------
+        list of tuple of strings
+            List of withdrawn participants, in the form
+            (ag_login_id, participant_name, participant_email, date_revoked)
+        """
+        with TRN:
+            sql = "SELECT * FROM consent_revoked"
+            TRN.add(sql)
+            return TRN.execute_fetchindex()
 
     def getConsent(self, survey_id):
         with TRN:
