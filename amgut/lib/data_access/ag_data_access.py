@@ -296,11 +296,12 @@ class AGDataAccess(object):
     def deleteAGParticipantSurvey(self, ag_login_id, participant_name):
         # Remove user from new schema
         with TRN:
-            sql = """SELECT survey_id
+            sql = """SELECT survey_id, email
                      FROM ag_login_surveys
+                     JOIN ag_consent USING (ag_login_id, participant_name)
                      WHERE ag_login_id = %s AND participant_name = %s"""
             TRN.add(sql, (ag_login_id, participant_name))
-            survey_id = TRN.execute_fetchlast()
+            survey_id, participant_email = TRN.execute_fetchlast()
 
             sql = "DELETE FROM survey_answers WHERE survey_id = %s"
             TRN.add(sql, [survey_id])
@@ -324,6 +325,11 @@ class AGDataAccess(object):
             sql = """DELETE FROM ag_consent
                      WHERE ag_login_id = %s AND participant_name = %s"""
             TRN.add(sql, [ag_login_id, participant_name])
+
+            sql = """INSERT INTO ag.consent_revoked
+                     (ag_login_id,articipant_name, participant_email)
+                     VALUES (%s, %s, %s)"""
+            TRN.add(sql, [ag_login_id, participant_name, participant_email])
 
     def getConsent(self, survey_id):
         with TRN:
@@ -380,25 +386,52 @@ class AGDataAccess(object):
                           barcode])
 
     def deleteSample(self, barcode, ag_login_id):
-        """
+        """ Removes by either releasing barcode back for relogging or withdraw
+
+        Parameters
+        ----------
+        barcode : str
+            Barcode to delete
+        ag_login_id : UUID4
+            Login ID for the barcode
+
+        Notes
+        -----
         Strictly speaking the ag_login_id isn't needed but it makes it really
         hard to hack the function when you would need to know someone else's
-        login id (a GUID) to delete something maliciously
+        login id (a GUID) to delete something maliciously,
+
+        If the barcode has never been scanned, assume a mis-log and wipe it so
+        barcode can be logged again. If barcode has been scanned, that means we
+        have recieved it and must withdraw it to delete it from the system.
         """
         with TRN:
+            # Figure out if we've received the barcode or not
+            sql = "SELECT scan_date FROM barcode WHERE barcode = %s"
+            TRN.add(sql, [barcode])
+            received = TRN.execute_fetchlast()
+
+            if not received:
+                # Not recieved, so we release the barcode back to be relogged
+                set_text = """participant_name = NULL, site_sampled = NULL,
+                             sample_time = NULL, sample_date = NULL,
+                             environment_sampled = NULL, notes = NULL,
+                             survey_id = NULL"""
+                sql = "UPDATE barcode SET status = NULL WHERE barcode = %s"
+                TRN.add(sql, [barcode])
+            else:
+                # barcode already recieved, so we withdraw the barcode
+                set_text = "withdrawn = 'Y'"
+
             sql = """UPDATE ag_kit_barcodes
-                     SET participant_name = NULL, site_sampled = NULL,
-                         sample_time = NULL, sample_date = NULL,
-                         environment_sampled = NULL, notes = NULL,
-                         survey_id = NULL
-                    WHERE barcode IN (
-                        SELECT  akb.barcode
+                     SET {}
+                     WHERE barcode IN (
+                     SELECT  akb.barcode
                         FROM ag_kit_barcodes akb
                         INNER JOIN ag_kit ak USING (ag_kit_id)
-                        WHERE ak.ag_login_id = %s and akb.barcode = %s)"""
+                        WHERE ak.ag_login_id = %s
+                        AND akb.barcode = %s)""".format(set_text)
             TRN.add(sql, [ag_login_id, barcode])
-            sql = "UPDATE barcode SET status = NULL WHERE barcode = %s"
-            TRN.add(sql, [barcode])
 
     def getHumanParticipants(self, ag_login_id):
         # get people from new survey setup
