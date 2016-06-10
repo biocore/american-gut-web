@@ -413,7 +413,7 @@ class AGDataAccess(object):
         -----
         Strictly speaking the ag_login_id isn't needed but it makes it really
         hard to hack the function when you would need to know someone else's
-        login id (a GUID) to delete something maliciously,
+        login id (a GUID) to delete something maliciously.
 
         If the barcode has never been scanned, assume a mis-log and wipe it so
         barcode can be logged again. If barcode has been scanned, that means we
