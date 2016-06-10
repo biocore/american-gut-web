@@ -1,0 +1,25 @@
+input[type="checkbox"] {
+    float:left;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+tr.questionrow {
+    border: dotted;
+    border-width: 0px;
+    border-bottom-width: 1px;
+}
+tr.questionrow:first-child {
+    border-top: none;
+}
+tr.questionrow:last-child {
+    border-bottom: none;
+}
+.tdmainform {
+    padding:20px;
+    border-spacing: 5px 0;"
+}
+ul {
+    list-style-type: none;
+}

@@ -139,7 +139,7 @@ def survey_asd(survey_id, consent_info):
     """Return a formatted text block and URL for the external survey"""
     tl = text_locale['human_survey_completed.html']
     url = media_locale['SURVEY_ASD_URL'] % {'survey_id': survey_id}
-    embedded_text = tl['SURVEY_FERMENTED']
+    embedded_text = tl['SURVEY_ASD']
     return embedded_text % url
 
 

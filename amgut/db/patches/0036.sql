@@ -18,7 +18,7 @@ INSERT INTO surveys (survey_id, survey_group) VALUES (4, -4);
 ----------------------------------------------------------
 -- Fermented
 INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES
-(164, 'FERMENTED_FREQUENCY', 'How often do you consume one or more servings of fermented vegetables or plant products a day in an average week? (1 serving = ½ cup sauerkraut, kimchi or fermented vegetable or 1 cup of kombucha)', 'How often do you consume one or more servings of fermented vegetables or plant products a day in an average week? (1 serving = ½ cup sauerkraut, kimchi or fermented vegetable or 1 cup of kombucha)'),
+(164, 'FERMENTED_FREQUENCY', 'How often do you consume one or more servings of fermented vegetables or plant products a day in an average week? (1 serving = 1/2 cup sauerkraut, kimchi or fermented vegetable or 1 cup of kombucha)', 'How often do you consume one or more servings of fermented vegetables or plant products a day in an average week? (1 serving = 1/2 cup sauerkraut, kimchi or fermented vegetable or 1 cup of kombucha)'),
 (165, 'FERMENTED_INCREASED', 'Excluding beer, wine, and alcohol, I have significantly increased (i.e. more than doubled) my intake of fermented foods in frequency or quantity within the last ____.', 'Excluding beer, wine, and alcohol, I have significantly increased (i.e. more than doubled) my intake of fermented foods in frequency or quantity within the last ____.'),
 (166, 'FERMENTED_CONSUMED', 'Which of the following fermented foods/beverages do you consume more than once a week? Check all that apply.', 'Which of the following fermented foods/beverages do you consume more than once a week? Check all that apply.'),
 (167, 'FERMENTED_CONSUMED_OTHER', 'Write in any consumed foods that are not listed under "Other"', 'Write in any consumed foods that are not listed under "Other"'),
@@ -185,7 +185,7 @@ INSERT INTO survey_response (american, british) VALUES
 ('Famous', 'Famous');
 
 ----------------------------------------------------------
--- survey_response
+-- survey_question_response
 ----------------------------------------------------------
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
 (164, 'Unspecified', 0),

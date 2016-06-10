@@ -1,39 +1,12 @@
 {% extends sitebase.html %}
 {% from wtforms import validators %}
 {% block head %}
-<import >
+<link rel="stylesheet" type="text/css" href="{% raw media_locale['SITEBASE'] %}/static/css/survey.css">
 <script type="text/javascript">
     $(document).ready(function() {
       $("div[id^=supp_]").hide();
     });
 </script>
-<style>
-input[type="checkbox"] {
-    float:left;
-}
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-tr.questionrow {
-    border: dotted;
-    border-width: 0px;
-    border-bottom-width: 1px;
-}
-tr.questionrow:first-child {
-    border-top: none;
-}
-tr.questionrow:last-child {
-    border-bottom: none;
-}
-.tdmainform {
-    padding:20px;
-    border-spacing: 5px 0;"
-}
-ul {
-    list-style-type: none;
-}
-</style>
 {% end %}
 
 {% block content %}

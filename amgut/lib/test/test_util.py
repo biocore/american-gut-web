@@ -1,5 +1,6 @@
 from unittest import TestCase, main
-from amgut.lib.util import survey_fermented, survey_surf
+from amgut.lib.util import (survey_fermented, survey_surf, survey_vioscreen,
+                            survey_asd)
 
 
 class TestUtil(TestCase):
@@ -24,6 +25,32 @@ class TestUtil(TestCase):
                'surfers. If you are interested in participating, you can click'
                ' the link above and take the survey.')
         self.assertEqual(obs, exp)
+
+    def test_survey_asd(self):
+        obs = survey_asd('survey_id', {'participant_name': 'test'})
+        exp = ('<h3 style="text-align: center"><a href="https://docs.google.'
+               'com/forms/d/1ZlaQzENj7NA7TcdfFhXfW0jshrToTywAarV0fjTZQxc/'
+               'viewform?entry.1089722816=survey_id&entry.1116725993&entry.'
+               '1983725631&entry.2036966278&entry.1785627282&entry.1461731626'
+               '&entry.1203990558&entry.843049551&entry.476318397&entry.'
+               '383297943&entry.228366248&entry.1651855735&entry.1234457826&'
+               'entry.1079752165" target="_blank">ASD-Cohort survey</a></h3>'
+               '<a href="http://www.anl.gov/contributors/jack-gilbert">Dr. '
+               'Jack Gilbert</a> is exploring the relationship between gut '
+               'dysbiosis and Autism Spectrum Disorders, and in conjunction '
+               'with the American Gut Project, we started an ASD-Cohort '
+               'study. This additional survey contains questions specific to '
+               'that cohort, but it is open to any participant to take if '
+               'they so choose.')
+        self.assertEqual(obs, exp)
+
+    def test_survey_vioscreen(self):
+        obs = survey_vioscreen('survey_id', {'participant_name': 'test'})
+        # Validate using in because key changes every time due to encription
+        self.assertIn('This is a validated FFQ, and is the one used '
+                      'by the Mayo Clinic.', obs)
+        self.assertIn('<h3 style="text-align: center"><a href="'
+                      'https://vioscreen.com/remotelogin.aspx?Key=', obs)
 
 
 if __name__ == '__main__':

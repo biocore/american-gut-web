@@ -13,7 +13,7 @@ from amgut import text_locale, media_locale
 
 
 class SecondarySurveyHandler(BaseHandler):
-    sec_surveys = {'fermented': fermented_survey,  'surf': surf_survey}
+    sec_surveys = {'fermented': fermented_survey, 'surf': surf_survey}
 
     @authenticated
     def get(self):
@@ -72,5 +72,5 @@ class SecondarySurveyHandler(BaseHandler):
             message = urlencode([('errmsg', tl['SUCCESSFULLY_ADDED'] %
                                  participant_name)])
 
-        url = sitebase + '/authed/portal/?%s' % message
+        url = '%s/authed/portal/?%s' % (sitebase, message)
         self.redirect(url)
