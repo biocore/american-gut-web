@@ -245,7 +245,7 @@ class TestSurvey(TestCase):
                83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 98,
                99, 101, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113,
                114, 115, 116, 117, 118, 119, 120, 122, 124, 126, 146, 148, 149,
-               150, 153, 154, 155, 156, 157, 158, 159, 160, 162, 163]
+               150, 153, 154, 155, 156, 157, 158, 159, 160, 162, 163, 164]
         self.assertEqual(survey.questions.keys(), exp)
         exp = {1: 'SINGLE', 2: 'SINGLE', 3: 'SINGLE', 4: 'SINGLE', 5: 'SINGLE',
                6: 'SINGLE', 7: 'SINGLE', 8: 'SINGLE', 9: 'MULTIPLE',
@@ -280,7 +280,7 @@ class TestSurvey(TestCase):
                149: 'SINGLE', 150: 'TEXT', 153: 'SINGLE',
                154: 'MULTIPLE', 155: 'SINGLE', 156: 'SINGLE', 157: 'SINGLE',
                158: 'SINGLE', 159: 'SINGLE', 160: 'SINGLE', 162: 'MULTIPLE',
-               163: 'SINGLE'}
+               163: 'SINGLE', 164: 'SINGLE'}
         self.assertItemsEqual(survey.question_types, exp)
         self.assertEqual(survey.unspecified, 'Unspecified')
 
