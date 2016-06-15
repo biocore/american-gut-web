@@ -73,7 +73,7 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 
 -- Add new question for more fine-grained IBD (question 161 only asks chron's, no illeal or colonic distinction)
 INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES
-(164, 'IBD_DIAGNOSIS2', 'Which type of IBD do you have?', 'Which type of IBD do you have?');
+(164, 'IBD_DIAGNOSIS_REFINED', 'Which type of IBD do you have?', 'Which type of IBD do you have?');
 
 INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (3, 164, 31.5);
 
