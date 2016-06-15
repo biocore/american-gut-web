@@ -32,18 +32,19 @@ INSERT INTO survey_response (american, british) VALUES
 
 
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
-(162, 'paleo-diet or primal diet', 0),
-(162, 'modified paleo diet', 1),
-(162, 'raw food diet', 2),
-(162, 'FODMAP', 3),
-(162, 'Westen-Price, or other low-grain, low processed food diet', 4),
-(162, 'Kosher', 5),
-(162, 'Halaal', 6),
-(162, 'Exclude nightshades', 7),
-(162, 'Exclude dairy', 8),
-(162, 'Exclude refined sugars', 9),
-(162, 'Other restrictions not described here', 10),
-(162, 'I do not eat a specialized diet', 11);
+(162, 'Unspecified', 0),
+(162, 'paleo-diet or primal diet', 1),
+(162, 'modified paleo diet', 2),
+(162, 'raw food diet', 3),
+(162, 'FODMAP', 4),
+(162, 'Westen-Price, or other low-grain, low processed food diet', 5),
+(162, 'Kosher', 6),
+(162, 'Halaal', 7),
+(162, 'Exclude nightshades', 8),
+(162, 'Exclude dairy', 9),
+(162, 'Exclude refined sugars', 10),
+(162, 'Other restrictions not described here', 11),
+(162, 'I do not eat a specialized diet', 12);
 
 -- Add new question for number of drinks
 INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES
@@ -62,9 +63,38 @@ INSERT INTO survey_response (american, british) VALUES
 ('I don''t drink', 'I don''t drink');
 
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
-(163, '1', 0),
-(163, '1-2', 1),
-(163, '2-3', 2),
-(163, '3-4', 3),
-(163, '4+', 4),
-(163, 'I don''t drink', 5);
+(163, 'Unspecified', 0),
+(163, '1', 1),
+(163, '1-2', 2),
+(163, '2-3', 3),
+(163, '3-4', 4),
+(163, '4+', 5),
+(163, 'I don''t drink', 6);
+
+-- Add new question for more fine-grained IBD (question 161 only asks chron's, no illeal or colonic distinction)
+INSERT INTO survey_question (survey_question_id, question_shortname, american, british) VALUES
+(164, 'IBD_DIAGNOSIS2', 'Which type of IBD do you have?', 'Which type of IBD do you have?');
+
+INSERT INTO group_questions (survey_group, survey_question_id, display_index) VALUES (3, 164, 31.5);
+
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (164, 'SINGLE');
+
+INSERT INTO survey_response (american, british) VALUES
+('Ileal Crohn''s Disease', 'Ileal Crohn''s Disease'),
+('Colonic Crohn''s Disease', 'Colonic Crohn''s Disease'),
+('Ileal and Colonic Crohn''s Disease', 'Ileal and Colonic Crohn''s Disease'),
+('Ulcerative Colitis', 'Ulcerative Colitis'),
+('Microcolitis','Microcolitis');
+
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
+(164, 'Unspecified', 0),
+(164, 'Ileal Crohn''s Disease', 1),
+(164, 'Colonic Crohn''s Disease', 2),
+(164, 'Ileal and Colonic Crohn''s Disease', 3),
+(164, 'Ulcerative Colitis', 4),
+(164, 'Microcolitis', 5);
+
+INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES
+(83, 164, 'Diagnosed by a medical professional (doctor, physician assistant)'),
+(83, 164, 'Diagnosed by an alternative medicine practitioner'),
+(83, 164, 'Self-diagnosed');
