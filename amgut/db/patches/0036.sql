@@ -83,7 +83,6 @@ INSERT INTO survey_response (american, british) VALUES
 ('Ileal Crohn''s Disease', 'Ileal Crohn''s Disease'),
 ('Colonic Crohn''s Disease', 'Colonic Crohn''s Disease'),
 ('Ileal and Colonic Crohn''s Disease', 'Ileal and Colonic Crohn''s Disease'),
-('Ulcerative Colitis', 'Ulcerative Colitis'),
 ('Microcolitis','Microcolitis');
 
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES
@@ -91,7 +90,7 @@ INSERT INTO survey_question_response (survey_question_id, response, display_inde
 (164, 'Ileal Crohn''s Disease', 1),
 (164, 'Colonic Crohn''s Disease', 2),
 (164, 'Ileal and Colonic Crohn''s Disease', 3),
-(164, 'Ulcerative Colitis', 4),
+(164, 'Ulcerative colitis', 4),
 (164, 'Microcolitis', 5);
 
 INSERT INTO survey_question_triggers (survey_question_id, triggered_question, triggering_response) VALUES
