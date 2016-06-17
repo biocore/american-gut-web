@@ -237,7 +237,7 @@ class TestSurvey(TestCase):
         self.assertEqual([str(type(x)) for x in survey.groups], exp)
         exp = [-1, 0, 1, 2, 3, 4, 5]
         self.assertEqual([x.id for x in survey.groups], exp)
-        exp = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+        exp = [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18,
                19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34,
                35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
                51, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66,
@@ -245,11 +245,11 @@ class TestSurvey(TestCase):
                83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 98,
                99, 101, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113,
                114, 115, 116, 117, 118, 119, 120, 122, 124, 126, 146, 148, 149,
-               150, 153, 154, 155, 156, 157, 158, 159, 160]
+               150, 153, 154, 155, 156, 157, 158, 159, 160, 162, 163, 164]
         self.assertEqual(survey.questions.keys(), exp)
         exp = {1: 'SINGLE', 2: 'SINGLE', 3: 'SINGLE', 4: 'SINGLE', 5: 'SINGLE',
                6: 'SINGLE', 7: 'SINGLE', 8: 'SINGLE', 9: 'MULTIPLE',
-               10: 'SINGLE', 11: 'SINGLE', 12: 'SINGLE', 13: 'SINGLE',
+               11: 'SINGLE', 12: 'SINGLE', 13: 'SINGLE',
                14: 'SINGLE', 15: 'SINGLE', 16: 'SINGLE', 17: 'SINGLE',
                18: 'SINGLE', 19: 'SINGLE', 20: 'SINGLE', 21: 'SINGLE',
                22: 'SINGLE', 23: 'SINGLE', 24: 'SINGLE', 25: 'SINGLE',
@@ -279,7 +279,8 @@ class TestSurvey(TestCase):
                124: 'TEXT', 126: 'TEXT', 146: 'SINGLE', 148: 'SINGLE',
                149: 'SINGLE', 150: 'TEXT', 153: 'SINGLE',
                154: 'MULTIPLE', 155: 'SINGLE', 156: 'SINGLE', 157: 'SINGLE',
-               158: 'SINGLE', 159: 'SINGLE', 160: 'SINGLE'}
+               158: 'SINGLE', 159: 'SINGLE', 160: 'SINGLE', 162: 'MULTIPLE',
+               163: 'SINGLE', 164: 'SINGLE'}
         self.assertItemsEqual(survey.question_types, exp)
         self.assertEqual(survey.unspecified, 'Unspecified')
 
