@@ -3,6 +3,7 @@ from tornado.web import authenticated
 from amgut.lib.util import external_surveys
 from amgut.handlers.base_handlers import BaseHandler
 from amgut import media_locale
+from amgut.connections import ag_data
 
 
 class HumanSurveyCompletedHandler(BaseHandler):
@@ -15,7 +16,9 @@ class HumanSurveyCompletedHandler(BaseHandler):
             self.redirect(media_locale['SITEBASE'] + '/authed/portal/')
 
         else:
-            surveys = [f(human_survey_id) for f in external_surveys]
+            consent_info = ag_data.getConsent(human_survey_id)
+            surveys = [f(human_survey_id, consent_info)
+                       for f in external_surveys]
 
             self.render('human_survey_completed.html', skid=self.current_user,
                         surveys=surveys)
