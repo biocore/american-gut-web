@@ -267,7 +267,7 @@ The following tests are available:</p>
 <p>We may need to report information about known or reasonably suspected incidents of abuse or neglect of a child, dependent adult or elder including physical, sexual, emotional, and financial abuse or neglect. The only way we could discover such abuse is if it is self-reported by the participant or the legal guardian, so this is not likely.  If any investigator has or is given such information, he or she may report such information to the appropriate authorities.</p>
 
 <p style='font-weight: bold;'>Who can you call if you have questions?</p>
-<p>If you have questions or research-related problems, you may reach Rob Knight at 858-246-1194 or contact Elaine Wolfe at 858-246-1964.</p>
+<p>If you have questions or research-related problems, you may reach Rob Knight at 858-246-1194 or contact Brent Erickson at 858-534-8739.</p>
 
 <p>You may call the Human Research Protections Program Office at (858) 657-5100 to inquire about your rights as a research subject or to report research-related problems.</p>
 
@@ -345,7 +345,7 @@ The following tests are available:</p>
 <p>We may need to report information about known or reasonably suspected incidents of abuse or neglect of a child, dependent adult or elder including physical, sexual, emotional, and financial abuse or neglect. The only way we could discover such abuse is if it is self-reported by the participant or the legal guardian, so this is not likely.  If any investigator has or is given such information, he or she may report such information to the appropriate authorities.</p>
 
 <p style='font-weight: bold;'>Who can you call if you have questions?</p>
-<p>If you have questions or research-related problems, you may reach Rob Knight at 858-246-1194 or contact Elaine Wolfe at 858-246-1964.</p>
+<p>If you have questions or research-related problems, you may reach Rob Knight at 858-246-1194 or contact Brent Erickson at 858-534-8739.</p>
 
 <p>You may call the Human Research Protections Program Office at (858) 657-5100 to inquire about your rights as a research subject or to report research-related problems.</p>
 
