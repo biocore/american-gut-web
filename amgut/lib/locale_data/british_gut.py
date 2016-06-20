@@ -267,7 +267,7 @@ The following tests are available:</p>
 <p>We may need to report information about known or reasonably suspected incidents of abuse or neglect of a child, dependent adult or elder including physical, sexual, emotional, and financial abuse or neglect. The only way we could discover such abuse is if it is self-reported by the participant or the legal guardian, so this is not likely.  If any investigator has or is given such information, he or she may report such information to the appropriate authorities.</p>
 
 <p style='font-weight: bold;'>Who can you call if you have questions?</p>
-<p>If you have questions or research-related problems, you may reach Rob Knight at 858-246-1194 or contact Elaine Wolfe at 858-246-1964.</p>
+<p>If you have questions or research-related problems, you may reach Rob Knight at 858-246-1194 or contact Brent Erickson at 858-534-8739.</p>
 
 <p>You may call the Human Research Protections Program Office at (858) 657-5100 to inquire about your rights as a research subject or to report research-related problems.</p>
 
@@ -345,7 +345,7 @@ The following tests are available:</p>
 <p>We may need to report information about known or reasonably suspected incidents of abuse or neglect of a child, dependent adult or elder including physical, sexual, emotional, and financial abuse or neglect. The only way we could discover such abuse is if it is self-reported by the participant or the legal guardian, so this is not likely.  If any investigator has or is given such information, he or she may report such information to the appropriate authorities.</p>
 
 <p style='font-weight: bold;'>Who can you call if you have questions?</p>
-<p>If you have questions or research-related problems, you may reach Rob Knight at 858-246-1194 or contact Elaine Wolfe at 858-246-1964.</p>
+<p>If you have questions or research-related problems, you may reach Rob Knight at 858-246-1194 or contact Brent Erickson at 858-534-8739.</p>
 
 <p>You may call the Human Research Protections Program Office at (858) 657-5100 to inquire about your rights as a research subject or to report research-related problems.</p>
 
@@ -1004,7 +1004,9 @@ _HUMAN_SURVEY_COMPLETED = {
     'COMPLETED_TEXT': 'You are now an enrolled participant in the %(PROJECT_TITLE)s! As a reminder, you still need to associate your sample(s) with the survey to complete the process. If your sample(s) are not associated with a survey, we will not be able to process them.' % media_locale,
     'AVAILABLE_SURVEYS': 'Below are a few additional surveys that you may be interested in completing. There is no requirement to take these surveys, and your decision does not affect your involvement in the project in any way.',
     'SURVEY_ASD': '<h3 style="text-align: center"><a href="%s">ASD-Cohort survey</a></h3><a href="http://www.anl.gov/contributors/jack-gilbert">Dr. Jack Gilbert</a> is exploring the relationship between gut dysbiosis and Autism Spectrum Disorders, and in conjunction with the British Gut Project, we started an ASD-Cohort study. This additional survey contains questions specific to that cohort, but it is open to any participant to take if they so choose.',
-    'SURVEY_VIOSCREEN': '<h3 style="text-align: center"><a href="%s">Dietary Survey</a></h3>The British Gut Project and its sister projects are very interested in diet. If you\'d like to provide additional detail about your diet, please click above to take a detailed diet survey (known as an Food Frequency Questionnaire). This is a validated FFQ, and is the one used by the Mayo Clinic.'
+    'SURVEY_VIOSCREEN': '<h3 style="text-align: center"><a href="%s">Dietary Survey</a></h3>The British Gut Project and its sister projects are very interested in diet. If you\'d like to provide additional detail about your diet, please click above to take a detailed diet survey (known as an Food Frequency Questionnaire). This is a validated FFQ, and is the one used by the Mayo Clinic.',
+    'SURVEY_FERMENTED': '<h3 style="text-align: center"><a href="%s" target="_blank">Fermented Foods Survey</a></h3>As part of our onging research into what drive changes in the human gut microbiome, we are looking at fermented foods and the microbiomes of fermented food eaters. Please click the link above if you would like to participate in this survey.',
+    'SURVEY_SURF': '<h3 style="text-align: center"><a href="%s" target="_blank">Surfing Survey</a></h3>As part of our study, we are interested in the effects of frequent and prolonged exposure to salt water and the ocean, as it pertains to surfing and surfers. If you are interested in participating, you can click the link above and take the survey.'
 }
 
 _NOJS = {

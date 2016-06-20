@@ -1,7 +1,7 @@
 {% extends sitebase.html %}
 {% from wtforms import validators %}
 {% block head %}
-    <link rel="stylesheet" type="text/css" href="{% raw media_locale['SITEBASE'] %}/static/css/survey.css">
+<link rel="stylesheet" type="text/css" href="{% raw media_locale['SITEBASE'] %}/static/css/survey.css">
 <script type="text/javascript">
     $(document).ready(function() {
       $("div[id^=supp_]").hide();
@@ -10,10 +10,12 @@
 {% end %}
 
 {% block content %}
-<h2>Animal Participant Survey</h2>
+<h2>{{ type.capitalize() }} Survey</h2>
 <h3 style="color: red"><span name="status_message" id="status_message"></span></h3>
-<form action='{% raw media_locale["SITEBASE"] %}/authed/add_animal/' id="human_survey" method="POST" onsubmit="return validateAnimalSurvey();">
+<form action='{% raw media_locale["SITEBASE"] %}/authed/secondary_survey/' id="human_survey" method="POST">
 <input type="hidden" name="survey_id" value="{{survey_id}}">
+<input type="hidden" name="type" value="{{type}}">
+<input type="hidden" name="participant_name" value="{{participant_name}}">
     <div class="lefta">
         <table id="mainsurveytable">
         {% for form_item in the_form %}
@@ -25,11 +27,7 @@
             {% set supp_div_id = "supp_" + form_item.id + "_div" %}
             {% set kwargs["onchange"] = "toggle_div('" + supp_div_id + "', '" + form_item.id + "', " + repr(the_form.triggers[form_item.id]) + ");" %}
         {% end %}
-        {% if  form_item.id == 'Pet_Information_130_0' %}
-          {% set kwargs["class_"] = "integer" %}
-        {% elif survey_id and form_item.id == 'Pet_Information_127_0' %}
-          {% set kwargs["readonly"] = True %}
-        {% end %}
+
           <tr class="questionrow">
             <td width="50%" class="tdmainform">{% raw the_form.prompts[form_item.id] %}</td>
             <td>
