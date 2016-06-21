@@ -1,5 +1,4 @@
 from os.path import join
-from ast import literal_eval
 from json import dumps
 from StringIO import StringIO
 
@@ -66,27 +65,6 @@ def _read_taxonomy(barcodes):
             otus[otu].append(0.0)
 
     return _build_taxa(otus)
-
-
-class SingleSampleHandler(BaseHandler):
-    @authenticated
-    def get(self):
-        user = ag_data.get_user_for_kit(self.current_user)
-        bc_info = ag_data.get_barcodes_by_user(user, results=True)
-        titles = [bc['sample_date'].strftime('%b %d, %Y') for bc in bc_info]
-        datasets = _read_taxonomy(bc_info)
-
-        with open(join(AMGUT_CONFIG.base_data_dir, 'emperor',
-                  'emperor.txt')) as f:
-            pcoa_data = f.readlines()
-        self.render("emperor.html", barcodes=bc_info,
-                    coords_ids=pcoa_data[0].strip(),
-                    coords=pcoa_data[1].strip(),
-                    pct_var=pcoa_data[2].strip(),
-                    md_headers=literal_eval(pcoa_data[3].strip()),
-                    metadata=pcoa_data[4].strip(),
-                    titles=titles, available_summaries=available_summaries,
-                    datasets=datasets)
 
 
 class MultiSampleHandler(BaseHandler):
