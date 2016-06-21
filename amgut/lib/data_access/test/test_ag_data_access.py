@@ -586,6 +586,34 @@ class TestAGDataAccess(TestCase):
         res = self.ag_data.getBarcodesByKit('42')
         self.assertEqual(res, [])
 
+    def test_get_barcodes_by_user(self):
+        self.maxDiff = None
+        res = self.ag_data.get_barcodes_by_user(
+            'd8592c74-7e7f-2135-e040-8a80115d6401')
+        exp = [{'date_of_last_email': None,
+                'ag_kit_id': 'd8592c74-7e80-2135-e040-8a80115d6401',
+                'barcode': '000001322',
+                'ag_kit_barcode_id': 'd8592c74-7e81-2135-e040-8a80115d6401',
+                'sample_barcode_file_md5': None,
+                'sample_time': datetime.time(14, 5),
+                'notes': 'REMOVED',
+                'overloaded': None,
+                'withdrawn': None,
+                'other': None,
+                'refunded': None,
+                'results_ready': 'Y',
+                'deposited': False,
+                'participant_name': 'REMOVED',
+                'environment_sampled': None,
+                'moldy': None,
+                'sample_date': datetime.date(2013, 3, 22),
+                'survey_id': '1bdce584d9846ff8',
+                'sample_barcode_file': '000001322.jpg',
+                'other_text': 'REMOVED',
+                'site_sampled': 'Stool'}]
+
+        self.assertItemsEqual(res, exp)
+
     def test_checkPrintResults(self):
         obs = self.ag_data.checkPrintResults('tst_oasoR')
         self.assertFalse(obs)

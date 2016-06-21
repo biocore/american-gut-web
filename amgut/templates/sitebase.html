@@ -1,8 +1,8 @@
 {% from future.utils import viewitems %}
 {% from amgut import media_locale %}
 {% from amgut.connections import ag_data, redis %}
-{% set human_participants, animal_participants, environmental_samples, kit_verified = ag_data.get_menu_items(skid) %}
-{% set base_user_id = ag_data.get_user_for_kit(skid) %}
+{% set human_participants, animal_participants, environmental_samples, kit_verified = ag_data.get_menu_items(current_user) %}
+{% set base_user_id = ag_data.get_user_for_kit(current_user) %}
 {% set avail_barcodes = ag_data.getAvailableBarcodes(base_user_id) %}
 {% set maintenance = redis.get('maintenance') %}
 <!DOCTYPE html>
@@ -155,6 +155,7 @@
                             </li>
 {% end %}
                         </ul>
+                        <li><a href="/authed/multiple/">Explore your samples!</a></li>
                     </li>
 {% if avail_barcodes %}
                     <li class="last"><a href="{% raw media_locale['SITEBASE'] %}/authed/add_sample_overview/"><strong>{% raw media_locale['NAV_LOG_SAMPLE'] %}</strong></a></li>
