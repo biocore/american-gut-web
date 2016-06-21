@@ -187,6 +187,7 @@ class AGDataAccess(object):
                   FROM ag_kit_barcodes
                   INNER JOIN ag_kit USING (ag_kit_id)
                   INNER JOIN ag_login USING (ag_login_id)
+                  INNER JOIN ag_login_surveys USING (survey_id, ag_login_id)
                   INNER JOIN barcode USING (barcode)
                   WHERE barcode = %s"""
 
@@ -310,10 +311,9 @@ class AGDataAccess(object):
             TRN.add(sql, [survey_id])
 
             # Reset survey attached to barcode(s)
-            sql = """UPDATE ag_kit_barcodes
-                     SET survey_id = NULL
-                     WHERE survey_id = %s"""
-            TRN.add(sql, [survey_id])
+            for info in self.getParticipantSamples(ag_login_id,
+                                                   participant_name):
+                self.deleteSample(info['barcode'])
 
             sql = "DELETE FROM promoted_survey_ids WHERE survey_id = %s"
             TRN.add(sql, [survey_id])
@@ -393,10 +393,10 @@ class AGDataAccess(object):
             sql = """UPDATE ag_kit_barcodes
                      SET site_sampled = %s, environment_sampled = %s,
                          sample_date = %s, sample_time = %s,
-                         participant_name = %s, notes = %s, survey_id = %s
+                         notes = %s, survey_id = %s
                      WHERE barcode = %s"""
             TRN.add(sql, [sample_site, environment_sampled, sample_date,
-                          sample_time, participant_name, notes, survey_id,
+                          sample_time, notes, survey_id,
                           barcode])
 
     def deleteSample(self, barcode, ag_login_id):
@@ -427,7 +427,7 @@ class AGDataAccess(object):
 
             if not received:
                 # Not recieved, so we release the barcode back to be relogged
-                set_text = """participant_name = NULL, site_sampled = NULL,
+                set_text = """site_sampled = NULL,
                              sample_time = NULL, sample_date = NULL,
                              environment_sampled = NULL, notes = NULL,
                              survey_id = NULL"""
@@ -494,7 +494,7 @@ class AGDataAccess(object):
             return status[0][0]
 
     def getAnimalParticipants(self, ag_login_id):
-        sql = """SELECT participant_name from ag.ag_login_surveys
+        sql = """SELECT DISTINCT participant_name from ag.ag_login_surveys
                  JOIN ag.survey_answers USING (survey_id)
                  JOIN ag.group_questions gq USING (survey_question_id)
                  JOIN ag.surveys ags USING (survey_group)
@@ -509,6 +509,7 @@ class AGDataAccess(object):
                  FROM ag_kit_barcodes akb
                  INNER JOIN barcode USING (barcode)
                  INNER JOIN ag_kit ak USING (ag_kit_id)
+                 INNER JOIN ag_login_surveys USING (survey_id, ag_login_id)
                  WHERE (site_sampled IS NOT NULL AND site_sampled::text <> '')
                  AND ag_login_id = %s AND participant_name = %s"""
         with TRN:
@@ -798,6 +799,7 @@ class AGDataAccess(object):
             sql = """SELECT barcode, participant_name
                      FROM ag_kit_barcodes
                      INNER JOIN ag_kit USING (ag_kit_id)
+                     INNER JOIN ag_login_surveys USING (survey_id, ag_login_id)
                      WHERE ag_login_id = %s AND results_ready = 'Y'"""
 
             TRN.add(sql, [ag_login_id])
