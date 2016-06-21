@@ -509,8 +509,9 @@ class AGDataAccess(object):
                  FROM ag_kit_barcodes akb
                  INNER JOIN barcode USING (barcode)
                  INNER JOIN ag_kit ak USING (ag_kit_id)
+                 RIGHT JOIN ag_login_surveys als USING (ag_login_id)
                  WHERE (site_sampled IS NOT NULL AND site_sampled::text <> '')
-                 AND ag_login_id = %s AND participant_name = %s"""
+                 AND ag_login_id = %s AND als.participant_name = %s"""
         with TRN:
             TRN.add(sql, [ag_login_id, participant_name])
             rows = TRN.execute_fetchindex()
