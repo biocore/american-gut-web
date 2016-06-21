@@ -129,7 +129,7 @@ class AlphaDivImgHandler(BaseHandler):
         # Build alpha div image by layering the sample and, optionally,
         # category lines onto the base alpha diversity distribution image
         new_image = Image.open(join(AMGUT_CONFIG.base_data_dir, 'alpha-div',
-                               '%s.png' % barcode))
+                               '%s_pd.png' % barcode))
         if cat:
             cat = Image.open(join(AMGUT_CONFIG.base_data_dir, 'alpha-div',
                              'pd_%s-%s.png' % (site, cat)))
