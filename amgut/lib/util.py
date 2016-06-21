@@ -16,6 +16,7 @@ from tornado.escape import url_escape
 from wtforms import Form
 
 from amgut import media_locale, text_locale
+from amgut.lib.data_access.sql_connection import TRN
 from amgut.connections import redis
 from amgut.lib.vioscreen import encrypt_key
 
@@ -161,6 +162,16 @@ def survey_surf(survey_id, consent_info):
     return embedded_text % url
 
 external_surveys = (survey_vioscreen, survey_fermented, survey_surf)
+
+
+def rollback(f):
+    """Decorator for test functions to rollback on complete."""
+    def inner(*args, **kwargs):
+        with TRN:
+            x = f(*args, **kwargs)
+            TRN.rollback()
+            return x
+    return inner
 
 
 def basejoin(base, url):

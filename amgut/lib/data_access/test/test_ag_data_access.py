@@ -5,6 +5,7 @@ from string import ascii_letters
 from uuid import UUID
 
 from amgut.lib.data_access.ag_data_access import AGDataAccess
+from amgut.lib.util import rollback
 
 
 class TestAGDataAccess(TestCase):
@@ -163,8 +164,20 @@ class TestAGDataAccess(TestCase):
         obs = self.ag_data.getAGKitDetails(kit)
         self.assertEqual(obs['supplied_kit_id'], kit)
 
-    def test_getConsent(self):
+    @rollback
+    def test_deleteAGParticipantSurvey(self):
+        self.ag_data.deleteAGParticipantSurvey(
+            '000fc4cd-8fa4-db8b-e050-8a800c5d02b5', 'REMOVED-0')
+        with self.assertRaises(ValueError):
+            self.ag_data.getConsent('8b2b45bb3390b585')
 
+        res = self.ag_data.get_withdrawn()
+        today = datetime.datetime.now().date()
+        exp = [['000fc4cd-8fa4-db8b-e050-8a800c5d02b5', 'REMOVED-0',
+                'REMOVED', today]]
+        self.assertItemsEqual(res, exp)
+
+    def test_getConsent(self):
         res = self.ag_data.getConsent("8b2b45bb3390b585")
         exp = {'date_signed': None,
                'assent_obtainer': None,
