@@ -168,8 +168,10 @@ def rollback(f):
     """Decorator for test functions to rollback on complete."""
     def inner(*args, **kwargs):
         with TRN:
-            f(*args, **kwargs)
+            x = f(*args, **kwargs)
             TRN.rollback()
+            return x
+    return inner
 
 
 def basejoin(base, url):

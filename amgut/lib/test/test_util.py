@@ -1,9 +1,16 @@
 from unittest import TestCase, main
 from amgut.lib.util import (survey_fermented, survey_surf, survey_vioscreen,
-                            survey_asd)
+                            survey_asd, rollback)
+from amgut.lib.data_access.ag_data_access import AGDataAccess
 
 
 class TestUtil(TestCase):
+    def setUp(self):
+        self.ag_data = AGDataAccess()
+
+    def tearDown(self):
+        del self.ag_data
+
     def test_survey_fermented(self):
         obs = survey_fermented('survey_id', {'participant_name': 'test'})
         exp = ('<h3 style="text-align: center"><a href="/authed/'
@@ -51,6 +58,20 @@ class TestUtil(TestCase):
                       'by the Mayo Clinic.', obs)
         self.assertIn('<h3 style="text-align: center"><a href="'
                       'https://vioscreen.com/remotelogin.aspx?Key=', obs)
+
+    def test_rolback(self):
+        kit = 'tst_QCSKc'
+
+        @rollback
+        def tf(kit):
+            self.ag_data.verifyKit(kit)
+
+        obs = self.ag_data.getAGKitDetails(kit)
+        self.assertEqual(obs['kit_verified'], 'n')
+
+        tf(kit)
+        obs = self.ag_data.getAGKitDetails(kit)
+        self.assertEqual(obs['kit_verified'], 'n')
 
 
 if __name__ == '__main__':
