@@ -177,7 +177,7 @@ class AGDataAccess(object):
         ValueError
             Barcode not found in AG information tables
         """
-        sql = """SELECT  email,
+        sql = """SELECT  DISTINCT email,
                     cast(ag_kit_barcode_id as varchar(100)),
                     cast(ag_kit_id as varchar(100)),
                     barcode, site_sampled, environment_sampled, sample_date,
@@ -186,8 +186,9 @@ class AGDataAccess(object):
                     name, status
                   FROM ag_kit_barcodes
                   INNER JOIN ag_kit USING (ag_kit_id)
+                  FULL OUTER JOIN ag_login_surveys
+                    USING (survey_id, ag_login_id)
                   INNER JOIN ag_login USING (ag_login_id)
-                  INNER JOIN ag_login_surveys USING (survey_id, ag_login_id)
                   INNER JOIN barcode USING (barcode)
                   WHERE barcode = %s"""
 
