@@ -6,14 +6,17 @@ import os
 from tornado.web import authenticated
 
 from amgut.handlers.base_handlers import BaseHandler
-from amgut.lib.survey_supp import fermented_survey, surf_survey
+from amgut.lib.survey_supp import (
+    fermented_survey, surf_survey, personal_microbiome_survey)
 from amgut.lib.util import make_survey_class, store_survey
 from amgut.connections import ag_data, redis
 from amgut import text_locale, media_locale
 
 
 class SecondarySurveyHandler(BaseHandler):
-    sec_surveys = {'fermented': fermented_survey, 'surf': surf_survey}
+    sec_surveys = {'fermented': fermented_survey,
+                   'surf': surf_survey,
+                   'personal_microbiome': personal_microbiome_survey}
 
     @authenticated
     def get(self):

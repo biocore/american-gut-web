@@ -10,7 +10,7 @@
 {% end %}
 
 {% block content %}
-<h2>{{ type.capitalize() }} Survey</h2>
+<h2>{{ type.replace('_', ' ').capitalize() }} Survey</h2>
 <h3 style="color: red"><span name="status_message" id="status_message"></span></h3>
 <form action='{% raw media_locale["SITEBASE"] %}/authed/secondary_survey/' id="human_survey" method="POST">
 <input type="hidden" name="survey_id" value="{{survey_id}}">
