@@ -181,7 +181,7 @@ class TestAddSample(TestHandlerBase):
             'email': 'REMOVED',
             'other': None,
             'moldy': None,
-            'participant_name': 'environmental',
+            'participant_name': None,
             'refunded': None,
             'date_of_last_email': None,
             'other_text': 'REMOVED'
