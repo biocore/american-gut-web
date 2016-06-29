@@ -147,8 +147,8 @@ def survey_asd(survey_id, consent_info):
 def survey_fermented(survey_id, consent_info):
     """Return a formatted text block and URL for the external survey"""
     tl = text_locale['human_survey_completed.html']
-    url = ('/authed/secondary_survey/?type=fermented&participant_name=%s' %
-           consent_info['participant_name'])
+    url = ('%s/authed/secondary_survey/?type=fermented&participant_name=%s' %
+           (media_locale['SITEBASE'], consent_info['participant_name']))
     embedded_text = tl['SURVEY_FERMENTED']
     return embedded_text % url
 
@@ -156,8 +156,8 @@ def survey_fermented(survey_id, consent_info):
 def survey_surf(survey_id, consent_info):
     """Return a formatted text block and URL for the external survey"""
     tl = text_locale['human_survey_completed.html']
-    url = ('/authed/secondary_survey/?type=surf&participant_name=%s' %
-           consent_info['participant_name'])
+    url = ('%s/authed/secondary_survey/?type=surf&participant_name=%s' %
+           (media_locale['SITEBASE'], consent_info['participant_name']))
     embedded_text = tl['SURVEY_SURF']
     return embedded_text % url
 
