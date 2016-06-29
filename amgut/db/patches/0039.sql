@@ -76,7 +76,7 @@ INSERT INTO survey_question_response_type (survey_question_id, survey_response_t
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (188, 'SINGLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (189, 'SINGLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (190, 'SINGLE');
-INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (191, 'SINGLE');
+INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (191, 'MULTIPLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (192, 'MULTIPLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (193, 'SINGLE');
 INSERT INTO survey_question_response_type (survey_question_id, survey_response_type) VALUES (194, 'SINGLE');
