@@ -40,7 +40,7 @@ class ParticipantOverviewHandler(BaseHandler):
         participant_type = self.get_argument('participant_type')
         vioscreen_status = None
         vioscreen_text = ''
-        survey_id = ag_data.get_survey_id(ag_login_id, participant_name)
+        survey_id = ag_data.get_survey_ids(ag_login_id, participant_name)[1]
 
         if survey_id is None:
             raise HTTPError(404, "Could not retrieve survey details for "
