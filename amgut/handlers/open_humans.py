@@ -58,8 +58,9 @@ class OpenHumansHandler(BaseHandler, OpenHumansMixin, OriginMixin):
             survey_ids = {}
 
             for participant_name in human_participants:
+                # Get survey ID 1, the main human survey
                 survey_id = ag_data.get_survey_ids(ag_login_id,
-                                                   participant_name)[0]
+                                                   participant_name)[1]
 
                 if survey_id:
                     survey_ids[participant_name] = survey_id
@@ -116,8 +117,9 @@ class OpenHumansHandler(BaseHandler, OpenHumansMixin, OriginMixin):
         human_participants = ag_data.getHumanParticipants(ag_login_id)
 
         for participant_name in human_participants:
+            # Get survey ID 1, the main human survey
             survey_id = ag_data.get_survey_ids(ag_login_id,
-                                               participant_name)[0]
+                                               participant_name)[1]
 
             if survey_id:
                 survey_ids[participant_name] = survey_id
