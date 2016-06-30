@@ -837,8 +837,8 @@ class AGDataAccess(object):
                                  ag_login_id)
             return [dict(row) for row in info]
 
-    def get_survey_id(self, ag_login_id, participant_name):
-        """Return the survey ID associated with a participant or None
+    def get_survey_ids(self, ag_login_id, participant_name):
+        """Return the survey IDs associated with a participant or None
 
         Parameters
         ----------
@@ -849,8 +849,9 @@ class AGDataAccess(object):
 
         Returns
         -------
-        str or None
-            The survey ID, or None if a survey ID cannot be found.
+        dict or None
+            The survey IDs keyed to the survey id,
+            or None if a survey ID cannot be found.
 
         Raises
         ------
@@ -858,14 +859,17 @@ class AGDataAccess(object):
             Unknown ag_login_id or participant_name passed
         """
         with TRN:
-            sql = """SELECT survey_id
-                     FROM ag_login_surveys
+            sql = """SELECT DISTINCT s.survey_id, als.survey_id
+                     FROM ag.ag_login_surveys als
+                     LEFT JOIN ag.survey_answers sa USING (survey_id)
+                     LEFT JOIN ag.group_questions gq USING (survey_question_id)
+                     LEFT JOIN ag.surveys s USING (survey_group)
                      WHERE ag_login_id=%s AND participant_name=%s"""
             TRN.add(sql, [ag_login_id, participant_name])
             survey_id = TRN.execute_fetchindex()
             if not survey_id:
                 raise ValueError("No survey ID found!")
-            return survey_id[0][0]
+            return dict(i for i in survey_id)
 
     def get_countries(self):
         """
