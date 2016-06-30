@@ -686,15 +686,15 @@ class TestAGDataAccess(TestCase):
         with self.assertRaises(ValueError):
             self.ag_data.get_login_info(id_)
 
-    def test_get_survey_id(self):
+    def test_get_survey_ids(self):
         id_ = '8ca47059-000a-469f-aa64-ff1afbd6fcb1'
-        obs = self.ag_data.get_survey_id(id_, 'REMOVED-0')
-        self.assertEquals(obs, 'd08758a1510256f0')
+        obs = self.ag_data.get_survey_ids(id_, 'REMOVED-0')
+        self.assertEquals(obs, {1: 'd08758a1510256f0'})
 
-    def test_get_survey_id_non_existant_id(self):
+    def test_get_survey_ids_non_existant_id(self):
         id_ = '00000000-0000-0000-0000-000000000000'
         with self.assertRaises(ValueError):
-            self.ag_data.get_survey_id(id_, 'REMOVED')
+            self.ag_data.get_survey_ids(id_, 'REMOVED')
 
     def test_get_countries(self):
         obs = self.ag_data.get_countries()
