@@ -26,20 +26,26 @@ Now by forking, clone and install the repository.  This will also install
 dependencies included in `extras_require`::
 
    git clone https://github.com/YOUR-GITHUB-USERNAME/american-gut-web.git
-   cd american-gut-web
    pip install -e .[test]
 
 And copy over the configuration file::
 
    cp ag_config.txt.example amgut/ag_config.txt
 
-To configure the webserver.  Namely, make sure to fill in entries for `POSTGRES` and `REDIS`.
+To configure the webserver.  Feel free to fill in entries for `POSTGRES` and `REDIS`.  The default user for `POSTGRES` is `postgres`.
 
 To enable uuid v4 function in postgres::
 
    echo 'CREATE EXTENSION "uuid-ossp";' | psql
 
-Make sure that all of your permissions are set correctly.  See `ALTER USER <http://www.postgresql.org/docs/9.4/static/sql-alterrole.html>`_.
+Make sure that all of your permissions are set correctly.  The following can be run with a user named `postgres`
+
+```
+CREATE USER postgres;
+ALTER ROLE postgres SUPERUSER;
+```
+
+See `CREATE USER <https://www.postgresql.org/docs/9.5/static/sql-createuser.html>`_ and `ALTER USER <http://www.postgresql.org/docs/9.4/static/sql-alterrole.html>`_ for more details.
 
 Finally create the database and populate it with test data, then launch the website::
 
