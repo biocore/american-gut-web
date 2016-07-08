@@ -40,9 +40,7 @@ To enable uuid v4 function in postgres::
 
 Make sure that all of your permissions are set correctly.  The following can be run with a user named `postgres`
 
-```
-CREATE USER postgres SUPERUSER;
-```
+``CREATE USER postgres SUPERUSER;``
 
 See `CREATE USER <https://www.postgresql.org/docs/9.5/static/sql-createuser.html>`_ and `ALTER USER <http://www.postgresql.org/docs/9.4/static/sql-alterrole.html>`_ for more details.
 
@@ -51,7 +49,7 @@ Finally create the database and populate it with test data, then launch the webs
    ./scripts/ag make test
    python amgut/webserver.py
    
-Navigating to localhost:8888 will now show the american gut site. Try using `tst_ACJUJ` as the username to log in. All test kits have `test` as their password.
+Navigating to localhost:8888 will now show the american gut site. Try using ``tst_ACJUJ`` as the username to log in. All test kits have ``test`` as their password.
 
 .. |Build Status| image:: https://travis-ci.org/biocore/american-gut-web.svg?branch=master
    :target: https://travis-ci.org/biocore/american-gut-web
