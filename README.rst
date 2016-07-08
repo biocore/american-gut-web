@@ -14,7 +14,7 @@ First install and run `Postgres.app <http://postgresapp.com/>`_. Make sure that 
    
 Now setup a new conda environment via `miniconda <http://conda.pydata.org/miniconda.html>`_::
 
-   conda create -n amgut tornado psycopg2
+   conda create -n amgut python=2.7 tornado psycopg2
    source activate amgut
    
 Next install and start Redis via conda. ::
