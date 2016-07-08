@@ -14,7 +14,7 @@ First install and run `Postgres.app <http://postgresapp.com/>`_. Make sure that 
    
 Now setup a new conda environment via `miniconda <http://conda.pydata.org/miniconda.html>`_::
 
-   conda create amgut tornado psycopg2
+   conda create -n amgut tornado psycopg2
    source activate amgut
    
 Next install and start Redis via conda. ::
@@ -22,8 +22,10 @@ Next install and start Redis via conda. ::
    conda install redis
    redis-server
 
-Now install all of the dependencies.  This will also install dependencies included in `extras_require`::
+Now by forking, clone and install the repository.  This will also install
+dependencies included in `extras_require`::
 
+   git clone https://github.com/YOUR-GITHUB-USERNAME/american-gut-web.git
    pip install -e .[test]
 
 And copy over the configuration file::
