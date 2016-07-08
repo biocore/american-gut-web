@@ -41,8 +41,7 @@ To enable uuid v4 function in postgres::
 Make sure that all of your permissions are set correctly.  The following can be run with a user named `postgres`
 
 ```
-CREATE USER postgres;
-ALTER ROLE postgres SUPERUSER;
+CREATE USER postgres SUPERUSER;
 ```
 
 See `CREATE USER <https://www.postgresql.org/docs/9.5/static/sql-createuser.html>`_ and `ALTER USER <http://www.postgresql.org/docs/9.4/static/sql-alterrole.html>`_ for more details.
