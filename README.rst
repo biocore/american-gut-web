@@ -32,7 +32,7 @@ And copy over the configuration file::
 
    cp ag_config.txt.example amgut/ag_config.txt
 
-To configure the webserver.  Feel free to fill in entries for `POSTGRES` and `REDIS`.  The default user for `POSTGRES` is `postgres`.
+To configure the webserver.  Feel free to fill in entries for `POSTGRES` and `REDIS`.  In the existing american gut config file, the default user for `POSTGRES` is `postgres`.
 
 To enable uuid v4 function in postgres::
 
