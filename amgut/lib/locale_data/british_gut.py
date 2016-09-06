@@ -83,7 +83,7 @@ media_locale = {
     'SWAB_HANDLING': "http://player.vimeo.com/video/62393487",
     'EMAIL_ERROR': "There was a problem sending your email. Please contact us directly at <a href='mailto:%(help_email)s'>%(help_email)s</a>" % {'help_email': HELP_EMAIL},
     'EMAIL_SENT': 'Your message has been sent. We will reply shortly',
-    'SHIPPING_ADDRESS': 'British Gut<br/>Department of Twin Research<br>Kings College London<br/>St Thomas’ Hospital Campus<br>The Rayne Institute<br>Lambeth Wing, 4th Floor<br/>Westminster Bridge Road<br>London SE1 7EH'
+    'SHIPPING_ADDRESS': 'British Gut<br/>Department of Twin Research<br>Kings College London<br/>St Thomas\' Hospital Campus<br>The Rayne Institute<br>Lambeth Wing, 4th Floor<br/>Westminster Bridge Road<br>London SE1 7EH'
 }
 
 _HANDLERS = {
