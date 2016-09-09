@@ -109,7 +109,7 @@ class TestAuthLoginHandler(TestHandlerBase):
         self.assertIn(text_locale['handlers']['INVALID_KITID'], response.body)
         self.assertEqual(response.code, 200)
 
-        # check that invalid Password is reported for wrong password
+        # check that invalid password is reported for wrong password
         response = self.post('/auth/login/', {'skid': 'tst_ACJUJ',
                                               'passwd': 'wrong'})
         self.assertIn(text_locale['handlers']['INVALID_KITID'], response.body)
