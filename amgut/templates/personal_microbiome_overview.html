@@ -6,12 +6,6 @@
 
 <style>
 ol {
-    display: block;
-    list-style-type: decimal;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    margin-left: 0;
-    margin-right: 0;
     padding-left: 10%;
     padding-right: 10%;
 }
@@ -20,8 +14,8 @@ ol {
 <h2>{% raw tl['HEADER'] %}</h2>
 <p class="note">{% raw tl['CONSENT_1'] %}</p>
 <p class="note">{% raw tl['CONSENT_2'] %}</p>
-<ol padding-left>
-    <li><p align='center' width="50%">{% raw tl['CONSENT_LIST_1'] %}</li></p>
+<ol>
+    <li><p align='center'>{% raw tl['CONSENT_LIST_1'] %}</li></p>
     <li><p align='center'>{% raw tl['CONSENT_LIST_2'] %}</li></p>
     <li><p align='center'>{% raw tl['CONSENT_LIST_3'] %}</li></p>
 </ol>
@@ -30,14 +24,17 @@ ol {
 <p class="note">{% raw tl['CONSENT_5'] %}</p>
 <p class="note">{% raw tl['CONSENT_6'] %}</p>
 <p class="note">{% raw tl['CONSENT_7'] %}</p>
+
 <form action="{% raw media_locale['SITEBASE'] %}/authed/secondary_survey/">
     <input type="hidden" name="type" value="personal_microbiome">
     <input type="hidden" name="participant_name" value={{ url_escape(participant_name) }}>
     <input tabindex="1" type="submit" value="{% raw tl['AGREE'] %}" id="submit_form">
 </form>
+
 <form action="{% raw media_locale['SITEBASE'] %}/authed/portal/">
     <input tabindex="2" type="submit" value="{% raw tl['DISAGREE'] %}" id="submit_form">
 </form>
+
 <br />
 <br />
 
