@@ -35,7 +35,8 @@ from amgut.handlers.new_participant_overview import (
 from amgut.handlers.taxa_summary import TaxaSummaryHandler
 from amgut.handlers.survey import SurveyMainHandler
 from amgut.handlers.secondary_survey import SecondarySurveyHandler
-from amgut.handlers.personal_microbiome_overview import PersonalMicrobiomeOverviewHandler
+from amgut.handlers.personal_microbiome_overview import \
+        PersonalMicrobiomeOverviewHandler
 from amgut.handlers.portal import PortalHandler
 from amgut.handlers.retrieve_kitid import KitIDHandler
 from amgut.handlers.forgot_password import ForgotPasswordHandler
