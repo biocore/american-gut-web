@@ -166,8 +166,12 @@ class TestAGDataAccess(TestCase):
 
     @rollback
     def test_deleteAGParticipantSurvey(self):
+        # make sure we can get the corresponding survey by ID
+        _ = self.ag_data.getConsent('8b2b45bb3390b585')
+
         self.ag_data.deleteAGParticipantSurvey(
             '000fc4cd-8fa4-db8b-e050-8a800c5d02b5', 'REMOVED-0')
+
         with self.assertRaises(ValueError):
             self.ag_data.getConsent('8b2b45bb3390b585')
 
