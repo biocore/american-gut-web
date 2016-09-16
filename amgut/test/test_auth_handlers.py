@@ -46,6 +46,7 @@ class TestAuthRegisterHandoutHandler(TestHandlerBase):
             'http://localhost:%d/?loginerror=%s' %
             (port, url_escape(text_locale['handlers']['INVALID_KITID'])))
 
+        # TODO: see issue #618
         unregistered_kits = ag_data.get_all_handout_kits()
         if len(unregistered_kits) <= 0:
             raise Exception(("Test cannot be performed. No more un-registered "
