@@ -83,7 +83,7 @@ media_locale = {
     'SWAB_HANDLING': "http://player.vimeo.com/video/62393487",
     'EMAIL_ERROR': "There was a problem sending your email. Please contact us directly at <a href='mailto:%(help_email)s'>%(help_email)s</a>" % {'help_email': HELP_EMAIL},
     'EMAIL_SENT': 'Your message has been sent. We will reply shortly',
-    'SHIPPING_ADDRESS': 'British Gut<br/>Department of Twin Research<br>Kings College London<br/>St Thomas’ Hospital Campus<br>The Rayne Institute<br>Lambeth Wing, 4th Floor<br/>Westminster Bridge Road<br>London SE1 7EH'
+    'SHIPPING_ADDRESS': u'British Gut<br/>Department of Twin Research<br>Kings College London<br/>St Thomas’ Hospital Campus<br>The Rayne Institute<br>Lambeth Wing, 4th Floor<br/>Westminster Bridge Road<br>London SE1 7EH'
 }
 
 _HANDLERS = {
@@ -1014,6 +1014,23 @@ _NOJS = {
     'NEED_HELP': 'If you need help enabling JavaScript in your browser, <br/>Please email us at <a href="mailto:americangut@gmail.com">americangut@gmail.com</a>'
 }
 
+_PERSONAL_MICROBIOME = {
+    'HEADER': 'Online Survey Consent Form',
+    'CONSENT_1': 'You are being invited to participate in a research study titled "Impact of Personal Microbiome Information on American Gut Study Volunteers." This study is being done by Dr. Cinnamon Bloss, Professor from the University of California - San Diego (UCSD) School of Medicine. You are being invited to participate in this research because you took part in the American Gut Project study.',
+    'CONSENT_2': "The purpose of this research study is to better understand how participation in the American Gut Project may have impacted people's health views, health behaviors, or communication with their healthcare provider. If you agree to take part in this study the following will happen to you:",
+    'CONSENT_LIST_1': 'You will complete an online survey. This survey will ask questions about how you feel about your experience in the American Gut Project, about the impact receiving your personal microbiome results has on you, and some demographic questions about you. It will take about 5-10 minutes to complete the survey.',
+    'CONSENT_LIST_2': 'Information that you provided as part of the American Gut Project will be collected and used in this study.',
+    'CONSENT_LIST_3': "The study may also involve follow up interviews at a later date to collect more detailed and specific information about how participation in the American Gut Project has impacted participant's health. If you would like to participate in the possible follow-up interviews to share more of your thoughts, you can provide your contact information at the end of the survey. However, you should note that, even if you agree to be interviewed it is possible that you will not be contacted.",
+    'CONSENT_3': "The data collected as part of this study may also be used in studies by other researchers from UCSD and other Universities. Dr. Bloss will be responsible for deciding how your data will be used. Dr. Bloss, her associates, or her successors in these studies will keep your data and the information derived from it for an indefinite period. By consenting to participate in this study you are indicating that you consent to the use of your data in other studies. If you do not consent to such use you should not participate in this study.",
+    'CONSENT_4': "There will not be any direct benefit to you from this research. The investigator(s), however, may better understand how participating in the American Gut Project impacts people's health views, health behaviors, and communication with their healthcare providers.",
+    'CONSENT_5': "There are minimal risks associated with this research study. Taking surveys can produce feelings of stress, frustration, discomfort, fatigue, and boredom.  To limit these risks, the questions have been written in a clear manner. There is a risk of loss of confidentiality. To protect against such a loss research records will be kept confidential to the extent allowed by law. Your survey data will be stored on a password protected secure computer will be identified by a study subject ID number.  If you decide to provide your name and contact information for potential follow-up, your name and contact information will be kept separate from your survey responses and will not be linked to your survey responses.  All analysis of the survey data will be done on data that is de-identified (e.g. does not contain your name). Research records may be reviewed by the UCSD Institutional Review Board and the National Institutes of Health. Results of this study may be reported in scientific journals, meeting, and news media, but none of these reports will use your name or use data that can point to any person who took part in the study.",
+    'CONSENT_6': "Your participation in this study is completely voluntary and you can withdraw at any time by simply exiting the survey. Choosing not to participate or withdrawing will result in no penalty or loss of benefits to which you are entitled. You are free to skip any question that you choose.",
+    'CONSENT_7': "If you have questions about this project or if you have a research-related problem, you may contact the researcher(s), Dr. Cinnamon Bloss at 858-534-9550. If you have any questions concerning your rights as a research subject, you may contact the UCSD Human Research Protections Program Office at (858) 657-5100.",
+    'CONSENT_8': 'By clicking "You agree" below you are indicating that you are at least 18 years old, have read this consent form, and agree to participate in this research study. Please print a copy of this page for your records.',
+    'AGREE': 'You Agree',
+    'DISAGREE': 'You Do Not Agree'
+}
+
 # Actual text locale
 text_locale = {
     'nojs.html': _NOJS,
@@ -1021,6 +1038,7 @@ text_locale = {
     '403.html': _403,
     'FAQ.html': _FAQ,
     'new_participant_overview.html': _NEW_PARTICIPANT_OVERVIEW,
+    'personal_microbiome_overview.html': _PERSONAL_MICROBIOME,
     'addendum.html': _ADDENDUM,
     'portal.html': _PORTAL,
     'db_error.html': _DB_ERROR,
