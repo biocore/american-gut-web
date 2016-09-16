@@ -83,10 +83,6 @@ class TestAuthLoginHandler(TestHandlerBase):
         port = self.get_http_port()
         self.assertEqual(response.effective_url, 'http://localhost:%d/' % port)
 
-        # check if url is wrong. SJ: Is this in general a good idea?
-        response = self.get('/authh/login/')
-        self.assertEqual(response.code, 404)
-
     def test_post_correct_pass(self):
         # test a sucessful login, for a handout kit
         self.mock_login('tst_ACJUJ')
@@ -114,10 +110,6 @@ class TestAuthLoginHandler(TestHandlerBase):
                                               'passwd': 'wrong'})
         self.assertIn(text_locale['handlers']['INVALID_KITID'], response.body)
         self.assertEqual(response.code, 200)
-
-    def test_set_current_user(self):
-        # TODO: add proper test for this once figure out how. Issue 567
-        pass
 
 
 class TestAuthLogoutHandler(TestHandlerBase):
