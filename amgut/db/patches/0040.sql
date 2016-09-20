@@ -183,7 +183,7 @@ CREATE TABLE pm.dna_plate (
 	extraction_kit_lot_id bigint  NOT NULL,
 	extraction_tool_id   bigint  NOT NULL,
 	CONSTRAINT pk_dna_plate PRIMARY KEY ( dna_plate_id ),
-	CONSTRAINT idx_dna_plate UNIQUE ( name ) ,
+	CONSTRAINT idx_dna_plate_unique_name UNIQUE ( name ) ,
 	CONSTRAINT fk_dna_plate_labadmin_users FOREIGN KEY ( email ) REFERENCES ag.labadmin_users( email )    ,
 	CONSTRAINT fk_dna_plate_sample_plate FOREIGN KEY ( sample_plate_id ) REFERENCES pm.sample_plate( sample_plate_id )    ,
 	CONSTRAINT fk_dna_plate_extraction_robot FOREIGN KEY ( extraction_robot_id ) REFERENCES pm.extraction_robot( extraction_robot_id )    ,
@@ -213,9 +213,9 @@ CREATE TABLE pm.plate_map (
 	CONSTRAINT fk_plate_map_sample FOREIGN KEY ( sample_id ) REFERENCES pm.sample( sample_id )
  );
 
-CREATE INDEX idx_plate_map ON pm.plate_map ( sample_plate_id );
+CREATE INDEX idx_plate_map_1 ON pm.plate_map ( sample_plate_id );
 
-CREATE INDEX idx_plate_map ON pm.plate_map ( sample_id );
+CREATE INDEX idx_plate_map_2 ON pm.plate_map ( sample_id );
 
 COMMENT ON COLUMN pm.plate_map.name IS 'The name of the sample in this plate in case that needs to be changed (e.g. if the sample has been plated twice)';
 
@@ -265,13 +265,13 @@ CREATE TABLE pm.protocol_plate (
 	CONSTRAINT fk_protocol_plate_ptg FOREIGN KEY ( protocol_target_gene_id ) REFERENCES pm.protocol_target_gene( protocol_target_gene_id )
  );
 
-CREATE INDEX idx_protocol_plate ON pm.protocol_plate ( email );
+CREATE INDEX idx_protocol_plate_0 ON pm.protocol_plate ( email );
 
-CREATE INDEX idx_protocol_plate ON pm.protocol_plate ( dna_plate_id );
+CREATE INDEX idx_protocol_plate_1 ON pm.protocol_plate ( dna_plate_id );
 
-CREATE INDEX idx_protocol_plate_0 ON pm.protocol_plate ( protocol_id );
+CREATE INDEX idx_protocol_plate_2 ON pm.protocol_plate ( protocol_id );
 
-CREATE INDEX idx_protocol_plate_1 ON pm.protocol_plate ( protocol_target_gene_id );
+CREATE INDEX idx_protocol_plate_3 ON pm.protocol_plate ( protocol_target_gene_id );
 
 CREATE TABLE pm.run_protocol_plate (
 	run_id               bigint  NOT NULL,
@@ -281,6 +281,6 @@ CREATE TABLE pm.run_protocol_plate (
 	CONSTRAINT fk_run_protocol_plate FOREIGN KEY ( protocol_plate_id ) REFERENCES pm.protocol_plate( protocol_plate_id )
  );
 
-CREATE INDEX idx_run_protocol_plate ON pm.run_protocol_plate ( run_id );
+CREATE INDEX idx_run_protocol_plate_1 ON pm.run_protocol_plate ( run_id );
 
-CREATE INDEX idx_run_protocol_plate ON pm.run_protocol_plate ( protocol_plate_id );
+CREATE INDEX idx_run_protocol_plate_2 ON pm.run_protocol_plate ( protocol_plate_id );
