@@ -532,7 +532,7 @@ table {
 	study_sample references sample ( sample_id )</title>
 </path>
 <text x='727' y='565' transform='rotate(0 727,565)' title='Foreign Key fk_study_sample_sample_id
-	study_sample references sample ( sample_id )' style='fill:#a1a0a0;'>sample_id</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 885 585 L 907,585 Q 915,585 915,577 L 915,532 Q 915,525 922,525 L 1582,525 Q 1590,525 1590,532 L 1590,540' >
+	study_sample references sample ( sample_id )' style='fill:#a1a0a0;'>sample_id</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 885 585 L 922,585 Q 930,585 930,577 L 930,532 Q 930,525 937,525 L 1582,525 Q 1590,525 1590,532 L 1590,540' >
 	<title>Foreign Key fk_sample_barcode
 	sample references barcode ( barcode )</title>
 </path>
@@ -557,17 +557,7 @@ table {
 	run_protocol_plate references protocol_plate ( protocol_plate_id )</title>
 </path>
 <text x='673' y='1375' transform='rotate(0 673,1375)' title='Foreign Key fk_run_protocol_plate
-	run_protocol_plate references protocol_plate ( protocol_plate_id )' style='fill:#a1a0a0;'>protocol_plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 765 675 L 757,675 Q 750,675 750,682 L 750,817 Q 750,825 757,825 L 765,825' >
-	<title>Foreign Key fk_plate_map_sample_plate
-	sample_plate_sample references sample_plate ( sample_plate_id )</title>
-</path>
-<text x='681' y='670' transform='rotate(0 681,670)' title='Foreign Key fk_plate_map_sample_plate
-	sample_plate_sample references sample_plate ( sample_plate_id )' style='fill:#a1a0a0;'>sample_plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 915 690 L 922,690 Q 930,690 930,682 L 930,562 Q 930,555 922,555 L 885,555' >
-	<title>Foreign Key fk_plate_map_sample
-	sample_plate_sample references sample ( sample_id )</title>
-</path>
-<text x='922' y='685' transform='rotate(0 922,685)' title='Foreign Key fk_plate_map_sample
-	sample_plate_sample references sample ( sample_id )' style='fill:#a1a0a0;'>sample_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 30 1125 L 7,1125 Q 0,1125 0,1117 L 0,817 Q 0,810 7,810 L 525,810' >
+	run_protocol_plate references protocol_plate ( protocol_plate_id )' style='fill:#a1a0a0;'>protocol_plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 30 1125 L 7,1125 Q 0,1125 0,1117 L 0,817 Q 0,810 7,810 L 525,810' >
 	<title>Foreign Key fk_template_plate_type_id
 	barcode_sequence_plate references plate_type ( plate_type_id )</title>
 </path>
@@ -637,7 +627,17 @@ table {
 	protocol_plate references protocol_target_gene ( protocol_target_gene_id )</title>
 </path>
 <text x='620' y='1270' transform='rotate(0 620,1270)' title='Foreign Key fk_protocol_plate_ptg
-	protocol_plate references protocol_target_gene ( protocol_target_gene_id )' style='fill:#a1a0a0;'>protocol_target_gene_id</text><!-- ============= Table 'ag_survey_answer' ============= -->
+	protocol_plate references protocol_target_gene ( protocol_target_gene_id )' style='fill:#a1a0a0;'>protocol_target_gene_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 765 675 L 757,675 Q 750,675 750,682 L 750,817 Q 750,825 757,825 L 765,825' >
+	<title>Foreign Key fk_plate_map_sample_plate
+	sample_plate_layout references sample_plate ( sample_plate_id )</title>
+</path>
+<text x='681' y='670' transform='rotate(0 681,670)' title='Foreign Key fk_plate_map_sample_plate
+	sample_plate_layout references sample_plate ( sample_plate_id )' style='fill:#a1a0a0;'>sample_plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 900 690 L 907,690 Q 915,690 915,682 L 915,562 Q 915,555 907,555 L 885,555' >
+	<title>Foreign Key fk_plate_map_sample
+	sample_plate_layout references sample ( sample_id )</title>
+</path>
+<text x='907' y='685' transform='rotate(0 907,685)' title='Foreign Key fk_plate_map_sample
+	sample_plate_layout references sample ( sample_id )' style='fill:#a1a0a0;'>sample_id</text><!-- ============= Table 'ag_survey_answer' ============= -->
 <rect class='table' x='1860' y='968' width='150' height='120' rx='7' ry='7' />
 <path d='M 1860.50 994.50 L 1860.50 975.50 Q 1860.50 968.50 1867.50 968.50 L 2002.50 968.50 Q 2009.50 968.50 2009.50 975.50 L 2009.50 994.50 L1860.50 994.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
 <a xlink:href='#ag_survey_answer'><text x='1885' y='982' class='tableTitle'>ag_survey_answer</text><title>Table ag.ag_survey_answer</title></a>
@@ -1411,7 +1411,7 @@ Deposited to EBI</title></a>
 <a xlink:href='#sample'><text x='821' y='532' class='tableTitle'>sample</text><title>Table pm.sample</title></a>
   <use id='nn' x='797' y='552' xlink:href='#nn'/><a xlink:href='#sample.sample_id'><use id='pk' x='797' y='551' xlink:href='#pk'/><title>Primary Key  ( sample_id ) </title></a>
 <a xlink:href='#sample.sample_id'><text x='813' y='562'>sample_id</text><title>sample_id varchar not null</title></a>
-<a xlink:href='#sample.sample_id'><use id='ref' x='873' y='551' xlink:href='#ref'/><title>Referred by sample_plate_sample ( sample_id ) 
+<a xlink:href='#sample.sample_id'><use id='ref' x='873' y='551' xlink:href='#ref'/><title>Referred by sample_plate_layout ( sample_id ) 
 Referred by study_sample ( sample_id ) </title></a>
   <use id='nn' x='797' y='567' xlink:href='#nn'/><a xlink:href='#sample.is_blank'><text x='813' y='577'>is_blank</text><title>is_blank bool not null default FALSE</title></a>
   <a xlink:href='#sample.barcode'><use id='idx' x='797' y='581' xlink:href='#idx'/><title>Index  ( barcode ) </title></a>
@@ -1475,7 +1475,7 @@ Holds the information about the initial plate that the wet lab creates&#046;</ti
   <use id='nn' x='782' y='822' xlink:href='#nn'/><a xlink:href='#sample_plate.sample_plate_id'><use id='pk' x='782' y='821' xlink:href='#pk'/><title>Primary Key  ( sample_plate_id ) </title></a>
 <a xlink:href='#sample_plate.sample_plate_id'><text x='798' y='832'>sample_plate_id</text><title>sample_plate_id bigserial not null</title></a>
 <a xlink:href='#sample_plate.sample_plate_id'><use id='ref' x='903' y='821' xlink:href='#ref'/><title>Referred by dna_plate ( sample_plate_id ) 
-Referred by sample_plate_sample ( sample_plate_id ) </title></a>
+Referred by sample_plate_layout ( sample_plate_id ) </title></a>
   <use id='nn' x='782' y='837' xlink:href='#nn'/><a xlink:href='#sample_plate.name'><use id='unq' x='782' y='836' xlink:href='#unq'/><title>Unique Index  ( name ) </title></a>
 <a xlink:href='#sample_plate.name'><text x='798' y='847'>name</text><title>name varchar not null</title></a>
   <a xlink:href='#sample_plate.email'><use id='idx' x='782' y='851' xlink:href='#idx'/><title>Index  ( email ) </title></a>
@@ -1574,24 +1574,6 @@ positive if Qiita study ID&#044; negative if others</title></a>
   <use id='nn' x='782' y='1377' xlink:href='#nn'/><a xlink:href='#run_protocol_plate.protocol_plate_id'><use id='pk' x='782' y='1376' xlink:href='#pk'/><title>Index  ( protocol_plate_id ) Primary Key  ( run_id, protocol_plate_id ) </title></a>
 <a xlink:href='#run_protocol_plate.protocol_plate_id'><text x='798' y='1387'>protocol_plate_id</text><title>protocol_plate_id bigint not null</title></a>
 <a xlink:href='#run_protocol_plate.protocol_plate_id'><use id='fk' x='903' y='1376' xlink:href='#fk'/><title>References protocol_plate ( protocol_plate_id ) </title></a>
-
-<!-- ============= Table 'sample_plate_sample' ============= -->
-<rect class='table' x='780' y='638' width='135' height='135' rx='7' ry='7' />
-<path d='M 780.50 664.50 L 780.50 645.50 Q 780.50 638.50 787.50 638.50 L 907.50 638.50 Q 914.50 638.50 914.50 645.50 L 914.50 664.50 L780.50 664.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
-<a xlink:href='#sample_plate_sample'><text x='790' y='652' class='tableTitle'>sample_plate_sample</text><title>Table pm.sample_plate_sample</title></a>
-  <use id='nn' x='782' y='672' xlink:href='#nn'/><a xlink:href='#sample_plate_sample.sample_plate_id'><use id='pk' x='782' y='671' xlink:href='#pk'/><title>Index  ( sample_plate_id ) Primary Key  ( sample_plate_id, sample_id, col, row ) </title></a>
-<a xlink:href='#sample_plate_sample.sample_plate_id'><text x='798' y='682'>sample_plate_id</text><title>sample_plate_id bigint not null</title></a>
-<a xlink:href='#sample_plate_sample.sample_plate_id'><use id='fk' x='903' y='671' xlink:href='#fk'/><title>References sample_plate ( sample_plate_id ) </title></a>
-  <use id='nn' x='782' y='687' xlink:href='#nn'/><a xlink:href='#sample_plate_sample.sample_id'><use id='pk' x='782' y='686' xlink:href='#pk'/><title>Index  ( sample_id ) Primary Key  ( sample_plate_id, sample_id, col, row ) </title></a>
-<a xlink:href='#sample_plate_sample.sample_id'><text x='798' y='697'>sample_id</text><title>sample_id varchar not null</title></a>
-<a xlink:href='#sample_plate_sample.sample_id'><use id='fk' x='903' y='686' xlink:href='#fk'/><title>References sample ( sample_id ) </title></a>
-  <use id='nn' x='782' y='702' xlink:href='#nn'/><a xlink:href='#sample_plate_sample.col'><use id='pk' x='782' y='701' xlink:href='#pk'/><title>Primary Key  ( sample_plate_id, sample_id, col, row ) </title></a>
-<a xlink:href='#sample_plate_sample.col'><text x='798' y='712'>col</text><title>col integer not null</title></a>
-  <use id='nn' x='782' y='717' xlink:href='#nn'/><a xlink:href='#sample_plate_sample.row'><use id='pk' x='782' y='716' xlink:href='#pk'/><title>Primary Key  ( sample_plate_id, sample_id, col, row ) </title></a>
-<a xlink:href='#sample_plate_sample.row'><text x='798' y='727'>row</text><title>row varchar not null</title></a>
-  <a xlink:href='#sample_plate_sample.name'><text x='798' y='742'>name</text><title>name varchar
-The name of the sample in this plate in case that needs to be changed &#040;e&#046;g&#046; if the sample has been plated twice&#041;</title></a>
-  <a xlink:href='#sample_plate_sample.notes'><text x='798' y='757'>notes</text><title>notes varchar</title></a>
 
 <!-- ============= Table 'barcode_sequence_plate' ============= -->
 <rect class='table' x='45' y='1058' width='180' height='105' rx='7' ry='7' />
@@ -1708,6 +1690,24 @@ Referred by protocol_target_gene ( barcode_sequence_plate_id ) </title></a>
   <a xlink:href='#protocol_plate.protocol_target_gene_id'><use id='idx' x='767' y='1271' xlink:href='#idx'/><title>Index  ( protocol_target_gene_id ) </title></a>
 <a xlink:href='#protocol_plate.protocol_target_gene_id'><text x='783' y='1282'>protocol_target_gene_id</text><title>protocol_target_gene_id bigint</title></a>
 <a xlink:href='#protocol_plate.protocol_target_gene_id'><use id='fk' x='918' y='1271' xlink:href='#fk'/><title>References protocol_target_gene ( protocol_target_gene_id ) </title></a>
+
+<!-- ============= Table 'sample_plate_layout' ============= -->
+<rect class='table' x='780' y='638' width='120' height='135' rx='7' ry='7' />
+<path d='M 780.50 664.50 L 780.50 645.50 Q 780.50 638.50 787.50 638.50 L 892.50 638.50 Q 899.50 638.50 899.50 645.50 L 899.50 664.50 L780.50 664.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
+<a xlink:href='#sample_plate_layout'><text x='785' y='652' class='tableTitle'>sample_plate_layout</text><title>Table pm.sample_plate_layout</title></a>
+  <use id='nn' x='782' y='672' xlink:href='#nn'/><a xlink:href='#sample_plate_layout.sample_plate_id'><use id='pk' x='782' y='671' xlink:href='#pk'/><title>Index  ( sample_plate_id ) Primary Key  ( sample_plate_id, sample_id, col, row ) </title></a>
+<a xlink:href='#sample_plate_layout.sample_plate_id'><text x='798' y='682'>sample_plate_id</text><title>sample_plate_id bigint not null</title></a>
+<a xlink:href='#sample_plate_layout.sample_plate_id'><use id='fk' x='888' y='671' xlink:href='#fk'/><title>References sample_plate ( sample_plate_id ) </title></a>
+  <use id='nn' x='782' y='687' xlink:href='#nn'/><a xlink:href='#sample_plate_layout.sample_id'><use id='pk' x='782' y='686' xlink:href='#pk'/><title>Index  ( sample_id ) Primary Key  ( sample_plate_id, sample_id, col, row ) </title></a>
+<a xlink:href='#sample_plate_layout.sample_id'><text x='798' y='697'>sample_id</text><title>sample_id varchar not null</title></a>
+<a xlink:href='#sample_plate_layout.sample_id'><use id='fk' x='888' y='686' xlink:href='#fk'/><title>References sample ( sample_id ) </title></a>
+  <use id='nn' x='782' y='702' xlink:href='#nn'/><a xlink:href='#sample_plate_layout.col'><use id='pk' x='782' y='701' xlink:href='#pk'/><title>Primary Key  ( sample_plate_id, sample_id, col, row ) </title></a>
+<a xlink:href='#sample_plate_layout.col'><text x='798' y='712'>col</text><title>col integer not null</title></a>
+  <use id='nn' x='782' y='717' xlink:href='#nn'/><a xlink:href='#sample_plate_layout.row'><use id='pk' x='782' y='716' xlink:href='#pk'/><title>Primary Key  ( sample_plate_id, sample_id, col, row ) </title></a>
+<a xlink:href='#sample_plate_layout.row'><text x='798' y='727'>row</text><title>row varchar not null</title></a>
+  <a xlink:href='#sample_plate_layout.name'><text x='798' y='742'>name</text><title>name varchar
+The name of the sample in this plate in case that needs to be changed &#040;e&#046;g&#046; if the sample has been plated twice&#041;</title></a>
+  <a xlink:href='#sample_plate_layout.notes'><text x='798' y='757'>notes</text><title>notes varchar</title></a>
 
 </g></svg>
 
@@ -4921,69 +4921,6 @@ Referred by protocol_target_gene ( barcode_sequence_plate_id ) </title></a>
 <br/><br/>
 <table class='bordered'>
 <thead>
-<tr><th colspan='3'><a name='sample_plate_sample'>Table sample_plate_sample</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td><a name='sample_plate_sample.sample_plate_id'>sample&#095;plate&#095;id</a></td>
-		<td> bigint  NOT NULL  </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='sample_plate_sample.sample_id'>sample&#095;id</a></td>
-		<td> varchar  NOT NULL  </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='sample_plate_sample.col'>col</a></td>
-		<td> integer  NOT NULL  </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='sample_plate_sample.row'>row</a></td>
-		<td> varchar  NOT NULL  </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='sample_plate_sample.name'>name</a></td>
-		<td> varchar   </td>
-		<td> The name of the sample in this plate in case that needs to be changed &#040;e&#046;g&#046; if the sample has been plated twice&#041; </td>
-	</tr>
-	<tr>
-		<td><a name='sample_plate_sample.notes'>notes</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='3'><b>Indexes</b></th></tr>
-	<tr>		<td>idx&#095;plate&#095;map </td>
-		<td> ON sample&#095;plate&#095;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;plate&#095;map </td>
-		<td> ON sample&#095;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;plate&#095;map&#095;0 primary key</td>
-		<td> ON sample&#095;plate&#095;id&#044; sample&#095;id&#044; col&#044; row</td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='3'><b>Foreign Keys</b></th></tr>
-	<tr>
-		<td>fk_plate_map_sample_plate</td>
-		<td > ( sample&#095;plate&#095;id ) ref <a href='#sample&#095;plate'>sample&#095;plate</a> (sample&#095;plate&#095;id) </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>fk_plate_map_sample</td>
-		<td > ( sample&#095;id ) ref <a href='#sample'>sample</a> (sample&#095;id) </td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table class='bordered'>
-<thead>
 <tr><th colspan='3'><a name='barcode_sequence_plate'>Table barcode_sequence_plate</a></th></tr>
 </thead>
 <tbody>
@@ -5416,6 +5353,69 @@ Referred by protocol_target_gene ( barcode_sequence_plate_id ) </title></a>
 	<tr>
 		<td>fk_protocol_plate_ptg</td>
 		<td > ( protocol&#095;target&#095;gene&#095;id ) ref <a href='#protocol&#095;target&#095;gene'>protocol&#095;target&#095;gene</a> (protocol&#095;target&#095;gene&#095;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='3'><a name='sample_plate_layout'>Table sample_plate_layout</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='sample_plate_layout.sample_plate_id'>sample&#095;plate&#095;id</a></td>
+		<td> bigint  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='sample_plate_layout.sample_id'>sample&#095;id</a></td>
+		<td> varchar  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='sample_plate_layout.col'>col</a></td>
+		<td> integer  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='sample_plate_layout.row'>row</a></td>
+		<td> varchar  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='sample_plate_layout.name'>name</a></td>
+		<td> varchar   </td>
+		<td> The name of the sample in this plate in case that needs to be changed &#040;e&#046;g&#046; if the sample has been plated twice&#041; </td>
+	</tr>
+	<tr>
+		<td><a name='sample_plate_layout.notes'>notes</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='3'><b>Indexes</b></th></tr>
+	<tr>		<td>idx&#095;plate&#095;map </td>
+		<td> ON sample&#095;plate&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;plate&#095;map </td>
+		<td> ON sample&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;plate&#095;map&#095;0 primary key</td>
+		<td> ON sample&#095;plate&#095;id&#044; sample&#095;id&#044; col&#044; row</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='3'><b>Foreign Keys</b></th></tr>
+	<tr>
+		<td>fk_plate_map_sample_plate</td>
+		<td > ( sample&#095;plate&#095;id ) ref <a href='#sample&#095;plate'>sample&#095;plate</a> (sample&#095;plate&#095;id) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>fk_plate_map_sample</td>
+		<td > ( sample&#095;id ) ref <a href='#sample'>sample</a> (sample&#095;id) </td>
 		<td>  </td>
 	</tr>
 </tbody>

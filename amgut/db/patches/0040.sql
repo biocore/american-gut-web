@@ -201,23 +201,23 @@ CREATE INDEX idx_dna_plate_2 ON pm.dna_plate ( extraction_kit_lot_id );
 
 CREATE INDEX idx_dna_plate_3 ON pm.dna_plate ( extraction_tool_id );
 
-CREATE TABLE pm.sample_plate_sample (
+CREATE TABLE pm.sample_plate_layout (
 	sample_plate_id      bigint  NOT NULL,
 	sample_id            varchar  NOT NULL,
 	col                  integer  NOT NULL,
 	row                  varchar  NOT NULL,
 	name                 varchar  ,
 	notes                varchar  ,
-	CONSTRAINT idx_sample_plate_sample_0 PRIMARY KEY ( sample_plate_id, sample_id, col, row ),
-	CONSTRAINT fk_sample_plate_sample_sample_plate FOREIGN KEY ( sample_plate_id ) REFERENCES pm.sample_plate( sample_plate_id )    ,
-	CONSTRAINT fk_sample_plate_sample_sample FOREIGN KEY ( sample_id ) REFERENCES pm.sample( sample_id )
+	CONSTRAINT idx_sample_plate_layout_0 PRIMARY KEY ( sample_plate_id, sample_id, col, row ),
+	CONSTRAINT fk_sample_plate_layout_sample_plate FOREIGN KEY ( sample_plate_id ) REFERENCES pm.sample_plate( sample_plate_id )    ,
+	CONSTRAINT fk_sample_plate_layout_sample FOREIGN KEY ( sample_id ) REFERENCES pm.sample( sample_id )
  );
 
-CREATE INDEX idx_sample_plate_sample_1 ON pm.sample_plate_sample ( sample_plate_id );
+CREATE INDEX idx_sample_plate_layout_1 ON pm.sample_plate_layout ( sample_plate_id );
 
-CREATE INDEX idx_sample_plate_sample_2 ON pm.sample_plate_sample ( sample_id );
+CREATE INDEX idx_sample_plate_layout_2 ON pm.sample_plate_layout ( sample_id );
 
-COMMENT ON COLUMN pm.sample_plate_sample.name IS 'The name of the sample in this plate in case that needs to be changed (e.g. if the sample has been plated twice)';
+COMMENT ON COLUMN pm.sample_plate_layout.name IS 'The name of the sample in this plate in case that needs to be changed (e.g. if the sample has been plated twice)';
 
 CREATE TABLE pm.protocol_target_gene (
 	protocol_target_gene_id bigserial  NOT NULL,

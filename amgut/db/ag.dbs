@@ -22914,7 +22914,7 @@ AS $function$xpath_exists$function$
 				<fk_column name="plate_type_id" pk="plate_type_id" />
 			</fk>
 		</table>
-		<table name="sample_plate_sample" >
+		<table name="sample_plate_layout" >
 			<column name="sample_plate_id" type="bigint" jt="-5" mandatory="y" />
 			<column name="sample_id" type="varchar" jt="12" mandatory="y" />
 			<column name="col" type="integer" jt="4" mandatory="y" />
@@ -23067,13 +23067,13 @@ AS $function$xpath_exists$function$
 		<entity schema="pm" name="protocol" color="b2cdf7" x="480" y="1245" />
 		<entity schema="pm" name="processing_robot" color="b2cdf7" x="270" y="1395" />
 		<entity schema="pm" name="run_protocol_plate" color="b2cdf7" x="780" y="1335" />
-		<entity schema="pm" name="sample_plate_sample" color="b2cdf7" x="780" y="645" />
 		<entity schema="pm" name="barcode_sequence_plate" color="b2cdf7" x="45" y="1065" />
 		<entity schema="pm" name="protocol_target_gene" color="b2cdf7" x="240" y="1065" />
 		<entity schema="pm" name="barcode_sequence_plate_layout" color="b2cdf7" x="45" y="915" />
 		<entity schema="pm" name="dna_plate" color="b2cdf7" x="765" y="945" />
 		<entity schema="pm" name="run" color="b2cdf7" x="780" y="1410" />
 		<entity schema="pm" name="protocol_plate" color="b2cdf7" x="765" y="1140" />
+		<entity schema="pm" name="sample_plate_layout" color="b2cdf7" x="780" y="645" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by :    american_gut_consent</comment>
 			<entity schema="ag" name="ag_survey_multiples" />
@@ -23145,7 +23145,7 @@ AS $function$xpath_exists$function$
 			<entity schema="pm" name="sample_plate" />
 			<entity schema="pm" name="dna_plate" />
 			<entity schema="pm" name="protocol_plate" />
-			<entity schema="pm" name="sample_plate_sample" />
+			<entity schema="pm" name="sample_plate_layout" />
 			<entity schema="pm" name="extraction_robot" />
 			<entity schema="pm" name="extraction_kit_lot" />
 			<entity schema="pm" name="extraction_tool" />
