@@ -22594,6 +22594,36 @@ AS $function$xpath_exists$function$
 		</function>
 	</schema>
 	<schema name="pm" schemaname="pm" defo="y" >
+		<table name="barcode_sequence_plate" >
+			<column name="barcode_sequence_plate_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="name" type="varchar" jt="12" mandatory="y" />
+			<column name="plate_type_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="notes" type="varchar" jt="12" />
+			<index name="pk_template" unique="PRIMARY_KEY" >
+				<column name="barcode_sequence_plate_id" />
+			</index>
+			<index name="uq_template_name" unique="UNIQUE" >
+				<column name="name" />
+			</index>
+			<index name="idx_template_plate_type_id" unique="NORMAL" >
+				<column name="plate_type_id" />
+			</index>
+			<fk name="fk_template_plate_type_id" to_schema="pm" to_table="plate_type" >
+				<fk_column name="plate_type_id" pk="plate_type_id" />
+			</fk>
+		</table>
+		<table name="barcode_sequence_plate_layout" >
+			<column name="barcode_sequence_plate_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="col" type="smallint" jt="5" mandatory="y" />
+			<column name="row" type="smallint" jt="5" mandatory="y" />
+			<column name="barcode_seq" type="varchar" jt="12" />
+			<index name="idx_template_barcode_seq_template_id" unique="NORMAL" >
+				<column name="barcode_sequence_plate_id" />
+			</index>
+			<fk name="fk_template_barcode_seq_template_id" to_schema="pm" to_table="barcode_sequence_plate" >
+				<fk_column name="barcode_sequence_plate_id" pk="barcode_sequence_plate_id" />
+			</fk>
+		</table>
 		<table name="dna_plate" >
 			<column name="dna_plate_id" type="bigint" jt="-5" mandatory="y" />
 			<column name="name" type="varchar" jt="12" mandatory="y" />
@@ -22686,34 +22716,6 @@ AS $function$xpath_exists$function$
 				<column name="name" />
 			</index>
 		</table>
-		<table name="plate_map" >
-			<column name="sample_plate_id" type="bigint" jt="-5" mandatory="y" />
-			<column name="sample_id" type="varchar" jt="12" mandatory="y" />
-			<column name="col" type="integer" jt="4" mandatory="y" />
-			<column name="row" type="varchar" jt="12" mandatory="y" />
-			<column name="name" type="varchar" jt="12" >
-				<comment><![CDATA[The name of the sample in this plate in case that needs to be changed (e.g. if the sample has been plated twice)]]></comment>
-			</column>
-			<column name="notes" type="varchar" jt="12" />
-			<index name="idx_plate_map" unique="NORMAL" >
-				<column name="sample_plate_id" />
-			</index>
-			<index name="idx_plate_map" unique="NORMAL" >
-				<column name="sample_id" />
-			</index>
-			<index name="idx_plate_map_0" unique="PRIMARY_KEY" >
-				<column name="sample_plate_id" />
-				<column name="sample_id" />
-				<column name="col" />
-				<column name="row" />
-			</index>
-			<fk name="fk_plate_map_sample_plate" to_schema="pm" to_table="sample_plate" >
-				<fk_column name="sample_plate_id" pk="sample_plate_id" />
-			</fk>
-			<fk name="fk_plate_map_sample" to_schema="pm" to_table="sample" >
-				<fk_column name="sample_id" pk="sample_id" />
-			</fk>
-		</table>
 		<table name="plate_type" >
 			<column name="plate_type_id" type="bigserial" jt="-5" mandatory="y" />
 			<column name="name" type="varchar" jt="12" mandatory="y" />
@@ -22787,7 +22789,7 @@ AS $function$xpath_exists$function$
 		</table>
 		<table name="protocol_target_gene" >
 			<column name="protocol_target_gene_id" type="bigserial" jt="-5" mandatory="y" />
-			<column name="template_id" type="bigint" jt="-5" />
+			<column name="barcode_sequence_plate_id" type="bigint" jt="-5" />
 			<column name="master_mix_lot_id" type="bigint" jt="-5" />
 			<column name="water_lot_id" type="bigint" jt="-5" />
 			<column name="tm300_8_tool_id" type="bigint" jt="-5" />
@@ -22797,7 +22799,7 @@ AS $function$xpath_exists$function$
 				<column name="protocol_target_gene_id" />
 			</index>
 			<index name="idx_protocol_target_gene" unique="NORMAL" >
-				<column name="template_id" />
+				<column name="barcode_sequence_plate_id" />
 			</index>
 			<index name="idx_protocol_target_gene_0" unique="NORMAL" >
 				<column name="master_mix_lot_id" />
@@ -22814,8 +22816,8 @@ AS $function$xpath_exists$function$
 			<index name="idx_protocol_target_gene_4" unique="NORMAL" >
 				<column name="processing_robot_id" />
 			</index>
-			<fk name="fk_protocol_target_gene" to_schema="pm" to_table="template" >
-				<fk_column name="template_id" pk="template_id" />
+			<fk name="fk_protocol_target_gene" to_schema="pm" to_table="barcode_sequence_plate" >
+				<fk_column name="barcode_sequence_plate_id" pk="barcode_sequence_plate_id" />
 			</fk>
 			<fk name="fk_protocol_target_gene_mm" to_schema="pm" to_table="master_mix_lot" >
 				<fk_column name="master_mix_lot_id" pk="master_mix_lot_id" />
@@ -22912,6 +22914,34 @@ AS $function$xpath_exists$function$
 				<fk_column name="plate_type_id" pk="plate_type_id" />
 			</fk>
 		</table>
+		<table name="sample_plate_sample" >
+			<column name="sample_plate_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="sample_id" type="varchar" jt="12" mandatory="y" />
+			<column name="col" type="integer" jt="4" mandatory="y" />
+			<column name="row" type="varchar" jt="12" mandatory="y" />
+			<column name="name" type="varchar" jt="12" >
+				<comment><![CDATA[The name of the sample in this plate in case that needs to be changed (e.g. if the sample has been plated twice)]]></comment>
+			</column>
+			<column name="notes" type="varchar" jt="12" />
+			<index name="idx_plate_map" unique="NORMAL" >
+				<column name="sample_plate_id" />
+			</index>
+			<index name="idx_plate_map" unique="NORMAL" >
+				<column name="sample_id" />
+			</index>
+			<index name="idx_plate_map_0" unique="PRIMARY_KEY" >
+				<column name="sample_plate_id" />
+				<column name="sample_id" />
+				<column name="col" />
+				<column name="row" />
+			</index>
+			<fk name="fk_plate_map_sample_plate" to_schema="pm" to_table="sample_plate" >
+				<fk_column name="sample_plate_id" pk="sample_plate_id" />
+			</fk>
+			<fk name="fk_plate_map_sample" to_schema="pm" to_table="sample" >
+				<fk_column name="sample_id" pk="sample_id" />
+			</fk>
+		</table>
 		<table name="study" >
 			<column name="study_id" type="bigint" jt="-5" mandatory="y" >
 				<comment><![CDATA[positive if Qiita study ID, negative if others]]></comment>
@@ -22940,36 +22970,6 @@ AS $function$xpath_exists$function$
 			</fk>
 			<fk name="fk_study_sample_sample_id" to_schema="pm" to_table="sample" >
 				<fk_column name="sample_id" pk="sample_id" />
-			</fk>
-		</table>
-		<table name="template" >
-			<column name="template_id" type="bigserial" jt="-5" mandatory="y" />
-			<column name="name" type="varchar" jt="12" mandatory="y" />
-			<column name="plate_type_id" type="bigint" jt="-5" mandatory="y" />
-			<column name="notes" type="varchar" jt="12" />
-			<index name="pk_template" unique="PRIMARY_KEY" >
-				<column name="template_id" />
-			</index>
-			<index name="uq_template_name" unique="UNIQUE" >
-				<column name="name" />
-			</index>
-			<index name="idx_template_plate_type_id" unique="NORMAL" >
-				<column name="plate_type_id" />
-			</index>
-			<fk name="fk_template_plate_type_id" to_schema="pm" to_table="plate_type" >
-				<fk_column name="plate_type_id" pk="plate_type_id" />
-			</fk>
-		</table>
-		<table name="template_barcode_seq" >
-			<column name="template_id" type="bigint" jt="-5" mandatory="y" />
-			<column name="col" type="smallint" jt="5" mandatory="y" />
-			<column name="row" type="smallint" jt="5" mandatory="y" />
-			<column name="barcode_seq" type="varchar" jt="12" />
-			<index name="idx_template_barcode_seq_template_id" unique="NORMAL" >
-				<column name="template_id" />
-			</index>
-			<fk name="fk_template_barcode_seq_template_id" to_schema="pm" to_table="template" >
-				<fk_column name="template_id" pk="template_id" />
 			</fk>
 		</table>
 		<table name="tm300_8_tool" >
@@ -23058,13 +23058,9 @@ AS $function$xpath_exists$function$
 		<entity schema="pm" name="extraction_robot" color="b2cdf7" x="480" y="960" />
 		<entity schema="pm" name="extraction_kit_lot" color="b2cdf7" x="480" y="1050" />
 		<entity schema="pm" name="extraction_tool" color="b2cdf7" x="495" y="1140" />
-		<entity schema="pm" name="plate_map" color="b2cdf7" x="780" y="645" />
 		<entity schema="pm" name="sample_plate" color="b2cdf7" x="780" y="795" />
 		<entity schema="pm" name="dna_plate" color="b2cdf7" x="765" y="945" />
 		<entity schema="pm" name="study" color="b2cdf7" x="510" y="525" />
-		<entity schema="pm" name="protocol_target_gene" color="b2cdf7" x="240" y="1065" />
-		<entity schema="pm" name="template" color="b2cdf7" x="60" y="1065" />
-		<entity schema="pm" name="template_barcode_seq" color="b2cdf7" x="45" y="915" />
 		<entity schema="pm" name="tm300_8_tool" color="b2cdf7" x="45" y="1200" />
 		<entity schema="pm" name="water_lot" color="b2cdf7" x="60" y="1305" />
 		<entity schema="pm" name="master_mix_lot" color="b2cdf7" x="105" y="1410" />
@@ -23074,6 +23070,10 @@ AS $function$xpath_exists$function$
 		<entity schema="pm" name="processing_robot" color="b2cdf7" x="270" y="1395" />
 		<entity schema="pm" name="run_protocol_plate" color="b2cdf7" x="780" y="1335" />
 		<entity schema="pm" name="run" color="b2cdf7" x="780" y="1410" />
+		<entity schema="pm" name="sample_plate_sample" color="b2cdf7" x="780" y="645" />
+		<entity schema="pm" name="barcode_sequence_plate" color="b2cdf7" x="45" y="1065" />
+		<entity schema="pm" name="protocol_target_gene" color="b2cdf7" x="240" y="1065" />
+		<entity schema="pm" name="barcode_sequence_plate_layout" color="b2cdf7" x="45" y="915" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by :    american_gut_consent</comment>
 			<entity schema="ag" name="ag_survey_multiples" />
@@ -23145,7 +23145,7 @@ AS $function$xpath_exists$function$
 			<entity schema="pm" name="sample_plate" />
 			<entity schema="pm" name="dna_plate" />
 			<entity schema="pm" name="protocol_plate" />
-			<entity schema="pm" name="plate_map" />
+			<entity schema="pm" name="sample_plate_sample" />
 			<entity schema="pm" name="extraction_robot" />
 			<entity schema="pm" name="extraction_kit_lot" />
 			<entity schema="pm" name="extraction_tool" />
@@ -23156,8 +23156,8 @@ AS $function$xpath_exists$function$
 		</group>
 		<group name="Group_target_gene_protocol" color="ffff99" >
 			<entity schema="pm" name="protocol_target_gene" />
-			<entity schema="pm" name="template" />
-			<entity schema="pm" name="template_barcode_seq" />
+			<entity schema="pm" name="barcode_sequence_plate" />
+			<entity schema="pm" name="barcode_sequence_plate_layout" />
 			<entity schema="pm" name="tm300_8_tool" />
 			<entity schema="pm" name="water_lot" />
 			<entity schema="pm" name="master_mix_lot" />

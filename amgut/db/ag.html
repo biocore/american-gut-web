@@ -532,22 +532,12 @@ table {
 	study_sample references sample ( sample_id )</title>
 </path>
 <text x='727' y='565' transform='rotate(0 727,565)' title='Foreign Key fk_study_sample_sample_id
-	study_sample references sample ( sample_id )' style='fill:#a1a0a0;'>sample_id</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 885 585 L 922,585 Q 930,585 930,577 L 930,532 Q 930,525 937,525 L 1582,525 Q 1590,525 1590,532 L 1590,540' >
+	study_sample references sample ( sample_id )' style='fill:#a1a0a0;'>sample_id</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 885 585 L 907,585 Q 915,585 915,577 L 915,532 Q 915,525 922,525 L 1582,525 Q 1590,525 1590,532 L 1590,540' >
 	<title>Foreign Key fk_sample_barcode
 	sample references barcode ( barcode )</title>
 </path>
 <text x='892' y='580' transform='rotate(0 892,580)' title='Foreign Key fk_sample_barcode
-	sample references barcode ( barcode )' style='fill:#a1a0a0;'>barcode</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 765 675 L 757,675 Q 750,675 750,682 L 750,817 Q 750,825 757,825 L 765,825' >
-	<title>Foreign Key fk_plate_map_sample_plate
-	plate_map references sample_plate ( sample_plate_id )</title>
-</path>
-<text x='681' y='670' transform='rotate(0 681,670)' title='Foreign Key fk_plate_map_sample_plate
-	plate_map references sample_plate ( sample_plate_id )' style='fill:#a1a0a0;'>sample_plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 900 690 L 907,690 Q 915,690 915,682 L 915,562 Q 915,555 907,555 L 885,555' >
-	<title>Foreign Key fk_plate_map_sample
-	plate_map references sample ( sample_id )</title>
-</path>
-<text x='907' y='685' transform='rotate(0 907,685)' title='Foreign Key fk_plate_map_sample
-	plate_map references sample ( sample_id )' style='fill:#a1a0a0;'>sample_id</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 915 855 L 922,855 Q 930,855 930,862 L 930,997 Q 930,1005 937,1005 L 945,1005' >
+	sample references barcode ( barcode )' style='fill:#a1a0a0;'>barcode</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 915 855 L 922,855 Q 930,855 930,862 L 930,997 Q 930,1005 937,1005 L 945,1005' >
 	<title>Foreign Key fk_sample_plate_labadmin_users
 	sample_plate references labadmin_users ( email )</title>
 </path>
@@ -582,42 +572,7 @@ table {
 	dna_plate references extraction_tool ( extraction_tool_id )</title>
 </path>
 <text x='654' y='1090' transform='rotate(0 654,1090)' title='Foreign Key fk_dna_plate_extraction_tool
-	dna_plate references extraction_tool ( extraction_tool_id )' style='fill:#a1a0a0;'>extraction_tool_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'  style='stroke-dasharray:4,2;'  d='M 225 1110 L 187,1110 Q 180,1110 180,1102 L 180,1102 Q 180,1095 172,1095 L 165,1095' >
-	<title>Foreign Key fk_protocol_target_gene
-	protocol_target_gene references template ( template_id )</title>
-</path>
-<text x='165' y='1105' transform='rotate(0 165,1105)' title='Foreign Key fk_protocol_target_gene
-	protocol_target_gene references template ( template_id )' style='fill:#a1a0a0;'>template_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'  style='stroke-dasharray:4,2;'  d='M 405 1125 L 442,1125 Q 450,1125 450,1132 L 450,1507 Q 450,1515 442,1515 L 82,1515 Q 75,1515 75,1507 L 75,1447 Q 75,1440 82,1440 L 90,1440' >
-	<title>Foreign Key fk_protocol_target_gene_mm
-	protocol_target_gene references master_mix_lot ( master_mix_lot_id )</title>
-</path>
-<text x='412' y='1120' transform='rotate(0 412,1120)' title='Foreign Key fk_protocol_target_gene_mm
-	protocol_target_gene references master_mix_lot ( master_mix_lot_id )' style='fill:#a1a0a0;'>master_mix_lot_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'  style='stroke-dasharray:4,2;'  d='M 225 1140 L 187,1140 Q 180,1140 180,1147 L 180,1327 Q 180,1335 172,1335 L 165,1335' >
-	<title>Foreign Key fk_protocol_target_gene_wl
-	protocol_target_gene references water_lot ( water_lot_id )</title>
-</path>
-<text x='162' y='1135' transform='rotate(0 162,1135)' title='Foreign Key fk_protocol_target_gene_wl
-	protocol_target_gene references water_lot ( water_lot_id )' style='fill:#a1a0a0;'>water_lot_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'  style='stroke-dasharray:4,2;'  d='M 225 1155 L 202,1155 Q 195,1155 195,1162 L 195,1222 Q 195,1230 187,1230 L 165,1230' >
-	<title>Foreign Key fk_protocol_target_gene_tm300
-	protocol_target_gene references tm300_8_tool ( tm300_8_tool_id )</title>
-</path>
-<text x='136' y='1150' transform='rotate(0 136,1150)' title='Foreign Key fk_protocol_target_gene_tm300
-	protocol_target_gene references tm300_8_tool ( tm300_8_tool_id )' style='fill:#a1a0a0;'>tm300_8_tool_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'  style='stroke-dasharray:4,2;'  d='M 225 1170 L 217,1170 Q 210,1170 210,1177 L 210,1297 Q 210,1305 217,1305 L 285,1305' >
-	<title>Foreign Key fk_protocol_target_gene_tm50
-	protocol_target_gene references tm50_8_tool ( tm50_8_tool_id )</title>
-</path>
-<text x='143' y='1165' transform='rotate(0 143,1165)' title='Foreign Key fk_protocol_target_gene_tm50
-	protocol_target_gene references tm50_8_tool ( tm50_8_tool_id )' style='fill:#a1a0a0;'>tm50_8_tool_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 165 1125 L 202,1125 Q 210,1125 210,1117 L 210,817 Q 210,810 217,810 L 525,810' >
-	<title>Foreign Key fk_template_plate_type_id
-	template references plate_type ( plate_type_id )</title>
-</path>
-<text x='172' y='1120' transform='rotate(0 172,1120)' title='Foreign Key fk_template_plate_type_id
-	template references plate_type ( plate_type_id )' style='fill:#a1a0a0;'>plate_type_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 30 945 L 22,945 Q 15,945 15,952 L 15,1087 Q 15,1095 22,1095 L 45,1095' >
-	<title>Foreign Key fk_template_barcode_seq_template_id
-	template_barcode_seq references template ( template_id )</title>
-</path>
-<text x='-30' y='940' transform='rotate(0 -30,940)' title='Foreign Key fk_template_barcode_seq_template_id
-	template_barcode_seq references template ( template_id )' style='fill:#a1a0a0;'>template_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 930 1200 L 937,1200 Q 945,1200 945,1192 L 945,1012 Q 945,1005 952,1005 L 960,1005' >
+	dna_plate references extraction_tool ( extraction_tool_id )' style='fill:#a1a0a0;'>extraction_tool_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 930 1200 L 937,1200 Q 945,1200 945,1192 L 945,1012 Q 945,1005 952,1005 L 960,1005' >
 	<title>Foreign Key fk_protocol_plate
 	protocol_plate references labadmin_users ( email )</title>
 </path>
@@ -632,7 +587,7 @@ table {
 	protocol_plate references protocol ( protocol_id )</title>
 </path>
 <text x='690' y='1255' transform='rotate(0 690,1255)' title='Foreign Key fk_protocol_plate_protocol
-	protocol_plate references protocol ( protocol_id )' style='fill:#a1a0a0;'>protocol_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'  style='stroke-dasharray:4,2;'  d='M 750 1275 L 622,1275 Q 615,1275 615,1282 L 615,1327 Q 615,1335 607,1335 L 442,1335 Q 435,1335 435,1327 L 435,1102 Q 435,1095 427,1095 L 405,1095' >
+	protocol_plate references protocol ( protocol_id )' style='fill:#a1a0a0;'>protocol_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'  style='stroke-dasharray:4,2;'  d='M 750 1275 L 622,1275 Q 615,1275 615,1282 L 615,1327 Q 615,1335 607,1335 L 442,1335 Q 435,1335 435,1327 L 435,1102 Q 435,1095 427,1095 L 420,1095' >
 	<title>Foreign Key fk_protocol_plate_ptg
 	protocol_plate references protocol_target_gene ( protocol_target_gene_id )</title>
 </path>
@@ -652,7 +607,37 @@ table {
 	run references labadmin_users ( email )</title>
 </path>
 <text x='922' y='1465' transform='rotate(0 922,1465)' title='Foreign Key fk_run_labadmin_users
-	run references labadmin_users ( email )' style='fill:#a1a0a0;'>email</text><!-- ============= Table 'ag_survey_answer' ============= -->
+	run references labadmin_users ( email )' style='fill:#a1a0a0;'>email</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 765 675 L 757,675 Q 750,675 750,682 L 750,817 Q 750,825 757,825 L 765,825' >
+	<title>Foreign Key fk_plate_map_sample_plate
+	sample_plate_sample references sample_plate ( sample_plate_id )</title>
+</path>
+<text x='681' y='670' transform='rotate(0 681,670)' title='Foreign Key fk_plate_map_sample_plate
+	sample_plate_sample references sample_plate ( sample_plate_id )' style='fill:#a1a0a0;'>sample_plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 915 690 L 922,690 Q 930,690 930,682 L 930,562 Q 930,555 922,555 L 885,555' >
+	<title>Foreign Key fk_plate_map_sample
+	sample_plate_sample references sample ( sample_id )</title>
+</path>
+<text x='922' y='685' transform='rotate(0 922,685)' title='Foreign Key fk_plate_map_sample
+	sample_plate_sample references sample ( sample_id )' style='fill:#a1a0a0;'>sample_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 30 1125 L 7,1125 Q 0,1125 0,1117 L 0,817 Q 0,810 7,810 L 525,810' >
+	<title>Foreign Key fk_template_plate_type_id
+	barcode_sequence_plate references plate_type ( plate_type_id )</title>
+</path>
+<text x='-39' y='1120' transform='rotate(0 -39,1120)' title='Foreign Key fk_template_plate_type_id
+	barcode_sequence_plate references plate_type ( plate_type_id )' style='fill:#a1a0a0;'>plate_type_id</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 420 1110 L 442,1110 Q 450,1110 450,1102 L 450,1042 Q 450,1035 442,1035 L 22,1035 Q 15,1035 15,1042 L 15,1050' >
+	<title>Foreign Key fk_protocol_target_gene
+	protocol_target_gene references barcode_sequence_plate ( barcode_sequence_plate_id )</title>
+</path>
+<text x='427' y='1105' transform='rotate(0 427,1105)' title='Foreign Key fk_protocol_target_gene
+	protocol_target_gene references barcode_sequence_plate ( barcode_sequence_plate_id )' style='fill:#a1a0a0;'>barcode_sequence_plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'  style='stroke-dasharray:4,2;'  d='M 420 1125 L 442,1125 Q 450,1125 450,1132 L 450,1507 Q 450,1515 442,1515 L 82,1515 Q 75,1515 75,1507 L 75,1447 Q 75,1440 82,1440 L 90,1440' >
+	<title>Foreign Key fk_protocol_target_gene_mm
+	protocol_target_gene references master_mix_lot ( master_mix_lot_id )</title>
+</path>
+<text x='427' y='1120' transform='rotate(0 427,1120)' title='Foreign Key fk_protocol_target_gene_mm
+	protocol_target_gene references master_mix_lot ( master_mix_lot_id )' style='fill:#a1a0a0;'>master_mix_lot_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 30 945 L 22,945 Q 15,945 15,952 L 15,1087 Q 15,1095 22,1095 L 30,1095' >
+	<title>Foreign Key fk_template_barcode_seq_template_id
+	barcode_sequence_plate_layout references barcode_sequence_plate ( barcode_sequence_plate_id )</title>
+</path>
+<text x='-117' y='940' transform='rotate(0 -117,940)' title='Foreign Key fk_template_barcode_seq_template_id
+	barcode_sequence_plate_layout references barcode_sequence_plate ( barcode_sequence_plate_id )' style='fill:#a1a0a0;'>barcode_sequence_plate_id</text><!-- ============= Table 'ag_survey_answer' ============= -->
 <rect class='table' x='1860' y='968' width='150' height='120' rx='7' ry='7' />
 <path d='M 1860.50 994.50 L 1860.50 975.50 Q 1860.50 968.50 1867.50 968.50 L 2002.50 968.50 Q 2009.50 968.50 2009.50 975.50 L 2009.50 994.50 L1860.50 994.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
 <a xlink:href='#ag_survey_answer'><text x='1885' y='982' class='tableTitle'>ag_survey_answer</text><title>Table ag.ag_survey_answer</title></a>
@@ -1190,11 +1175,10 @@ Referred by survey_answers_other ( survey_id ) </title></a>
   <use id='nn' x='1217' y='1092' xlink:href='#nn'/><a xlink:href='#labadmin_users.email'><use id='pk' x='1217' y='1091' xlink:href='#pk'/><title>Primary Key  ( email ) </title></a>
 <a xlink:href='#labadmin_users.email'><text x='1233' y='1102'>email</text><title>email varchar not null</title></a>
 <a xlink:href='#labadmin_users.email'><use id='ref' x='1308' y='1091' xlink:href='#ref'/><title>Referred by labadmin_users_access ( email ) 
-Referred by sample_plate ( email ) 
-Referred by sample_plate ( email ) 
 Referred by dna_plate ( email ) 
 Referred by protocol_plate ( email ) 
-Referred by run ( email ) </title></a>
+Referred by run ( email ) 
+Referred by sample_plate ( email ) </title></a>
   <use id='nn' x='1217' y='1107' xlink:href='#nn'/><a xlink:href='#labadmin_users.password'><text x='1233' y='1117'>password</text><title>password varchar not null</title></a>
 
 <!-- ============= Table 'labadmin_users_access' ============= -->
@@ -1427,8 +1411,8 @@ Deposited to EBI</title></a>
 <a xlink:href='#sample'><text x='821' y='532' class='tableTitle'>sample</text><title>Table pm.sample</title></a>
   <use id='nn' x='797' y='552' xlink:href='#nn'/><a xlink:href='#sample.sample_id'><use id='pk' x='797' y='551' xlink:href='#pk'/><title>Primary Key  ( sample_id ) </title></a>
 <a xlink:href='#sample.sample_id'><text x='813' y='562'>sample_id</text><title>sample_id varchar not null</title></a>
-<a xlink:href='#sample.sample_id'><use id='ref' x='873' y='551' xlink:href='#ref'/><title>Referred by study_sample ( sample_id ) 
-Referred by plate_map ( sample_id ) </title></a>
+<a xlink:href='#sample.sample_id'><use id='ref' x='873' y='551' xlink:href='#ref'/><title>Referred by sample_plate_sample ( sample_id ) 
+Referred by study_sample ( sample_id ) </title></a>
   <use id='nn' x='797' y='567' xlink:href='#nn'/><a xlink:href='#sample.is_blank'><text x='813' y='577'>is_blank</text><title>is_blank bool not null default FALSE</title></a>
   <a xlink:href='#sample.barcode'><use id='idx' x='797' y='581' xlink:href='#idx'/><title>Index  ( barcode ) </title></a>
 <a xlink:href='#sample.barcode'><text x='813' y='592'>barcode</text><title>barcode varchar</title></a>
@@ -1441,9 +1425,8 @@ Referred by plate_map ( sample_id ) </title></a>
 <a xlink:href='#plate_type'><text x='565' y='787' class='tableTitle'>plate_type</text><title>Table pm.plate_type</title></a>
   <use id='nn' x='542' y='807' xlink:href='#nn'/><a xlink:href='#plate_type.plate_type_id'><use id='pk' x='542' y='806' xlink:href='#pk'/><title>Primary Key  ( plate_type_id ) </title></a>
 <a xlink:href='#plate_type.plate_type_id'><text x='558' y='817'>plate_type_id</text><title>plate_type_id bigserial not null</title></a>
-<a xlink:href='#plate_type.plate_type_id'><use id='ref' x='633' y='806' xlink:href='#ref'/><title>Referred by template ( plate_type_id ) 
-Referred by sample_plate ( plate_type_id ) 
-Referred by sample_plate ( plate_type_id ) </title></a>
+<a xlink:href='#plate_type.plate_type_id'><use id='ref' x='633' y='806' xlink:href='#ref'/><title>Referred by sample_plate ( plate_type_id ) 
+Referred by barcode_sequence_plate ( plate_type_id ) </title></a>
   <use id='nn' x='542' y='822' xlink:href='#nn'/><a xlink:href='#plate_type.name'><use id='unq' x='542' y='821' xlink:href='#unq'/><title>Unique Index  ( name ) </title></a>
 <a xlink:href='#plate_type.name'><text x='558' y='832'>name</text><title>name varchar not null</title></a>
   <use id='nn' x='542' y='837' xlink:href='#nn'/><a xlink:href='#plate_type.cols'><text x='558' y='847'>cols</text><title>cols smallint not null</title></a>
@@ -1456,8 +1439,7 @@ Referred by sample_plate ( plate_type_id ) </title></a>
 <a xlink:href='#extraction_robot'><text x='509' y='967' class='tableTitle'>extraction_robot</text><title>Table pm.extraction_robot</title></a>
   <use id='nn' x='482' y='987' xlink:href='#nn'/><a xlink:href='#extraction_robot.extraction_robot_id'><use id='pk' x='482' y='986' xlink:href='#pk'/><title>Primary Key  ( extraction_robot_id ) </title></a>
 <a xlink:href='#extraction_robot.extraction_robot_id'><text x='498' y='997'>extraction_robot_id</text><title>extraction_robot_id bigserial not null</title></a>
-<a xlink:href='#extraction_robot.extraction_robot_id'><use id='ref' x='618' y='986' xlink:href='#ref'/><title>Referred by dna_plate ( extraction_robot_id ) 
-Referred by dna_plate ( extraction_robot_id ) </title></a>
+<a xlink:href='#extraction_robot.extraction_robot_id'><use id='ref' x='618' y='986' xlink:href='#ref'/><title>Referred by dna_plate ( extraction_robot_id ) </title></a>
   <use id='nn' x='482' y='1002' xlink:href='#nn'/><a xlink:href='#extraction_robot.name'><use id='unq' x='482' y='1001' xlink:href='#unq'/><title>Unique Index  ( name ) </title></a>
 <a xlink:href='#extraction_robot.name'><text x='498' y='1012'>name</text><title>name varchar not null</title></a>
   <a xlink:href='#extraction_robot.notes'><text x='498' y='1027'>notes</text><title>notes varchar</title></a>
@@ -1468,8 +1450,7 @@ Referred by dna_plate ( extraction_robot_id ) </title></a>
 <a xlink:href='#extraction_kit_lot'><text x='508' y='1057' class='tableTitle'>extraction_kit_lot</text><title>Table pm.extraction_kit_lot</title></a>
   <use id='nn' x='482' y='1077' xlink:href='#nn'/><a xlink:href='#extraction_kit_lot.extraction_kit_lot_id'><use id='pk' x='482' y='1076' xlink:href='#pk'/><title>Primary Key  ( extraction_kit_lot_id ) </title></a>
 <a xlink:href='#extraction_kit_lot.extraction_kit_lot_id'><text x='498' y='1087'>extraction_kit_lot_id</text><title>extraction_kit_lot_id bigserial not null</title></a>
-<a xlink:href='#extraction_kit_lot.extraction_kit_lot_id'><use id='ref' x='618' y='1076' xlink:href='#ref'/><title>Referred by dna_plate ( extraction_kit_lot_id ) 
-Referred by dna_plate ( extraction_kit_lot_id ) </title></a>
+<a xlink:href='#extraction_kit_lot.extraction_kit_lot_id'><use id='ref' x='618' y='1076' xlink:href='#ref'/><title>Referred by dna_plate ( extraction_kit_lot_id ) </title></a>
   <use id='nn' x='482' y='1092' xlink:href='#nn'/><a xlink:href='#extraction_kit_lot.name'><use id='unq' x='482' y='1091' xlink:href='#unq'/><title>Unique Index  ( name ) </title></a>
 <a xlink:href='#extraction_kit_lot.name'><text x='498' y='1102'>name</text><title>name varchar not null</title></a>
   <a xlink:href='#extraction_kit_lot.notes'><text x='498' y='1117'>notes</text><title>notes varchar</title></a>
@@ -1481,29 +1462,10 @@ Referred by dna_plate ( extraction_kit_lot_id ) </title></a>
 tm1000&#095;8 tools</title></a>
   <use id='nn' x='497' y='1167' xlink:href='#nn'/><a xlink:href='#extraction_tool.extraction_tool_id'><use id='pk' x='497' y='1166' xlink:href='#pk'/><title>Primary Key  ( extraction_tool_id ) </title></a>
 <a xlink:href='#extraction_tool.extraction_tool_id'><text x='513' y='1177'>extraction_tool_id</text><title>extraction_tool_id bigserial not null</title></a>
-<a xlink:href='#extraction_tool.extraction_tool_id'><use id='ref' x='618' y='1166' xlink:href='#ref'/><title>Referred by dna_plate ( extraction_tool_id ) 
-Referred by dna_plate ( extraction_tool_id ) </title></a>
+<a xlink:href='#extraction_tool.extraction_tool_id'><use id='ref' x='618' y='1166' xlink:href='#ref'/><title>Referred by dna_plate ( extraction_tool_id ) </title></a>
   <use id='nn' x='497' y='1182' xlink:href='#nn'/><a xlink:href='#extraction_tool.name'><use id='unq' x='497' y='1181' xlink:href='#unq'/><title>Unique Index  ( name ) </title></a>
 <a xlink:href='#extraction_tool.name'><text x='513' y='1192'>name</text><title>name varchar not null</title></a>
   <a xlink:href='#extraction_tool.notes'><text x='513' y='1207'>notes</text><title>notes varchar</title></a>
-
-<!-- ============= Table 'plate_map' ============= -->
-<rect class='table' x='780' y='638' width='120' height='135' rx='7' ry='7' />
-<path d='M 780.50 664.50 L 780.50 645.50 Q 780.50 638.50 787.50 638.50 L 892.50 638.50 Q 899.50 638.50 899.50 645.50 L 899.50 664.50 L780.50 664.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
-<a xlink:href='#plate_map'><text x='812' y='652' class='tableTitle'>plate_map</text><title>Table pm.plate_map</title></a>
-  <use id='nn' x='782' y='672' xlink:href='#nn'/><a xlink:href='#plate_map.sample_plate_id'><use id='pk' x='782' y='671' xlink:href='#pk'/><title>Index  ( sample_plate_id ) Primary Key  ( sample_plate_id, sample_id, col, row ) </title></a>
-<a xlink:href='#plate_map.sample_plate_id'><text x='798' y='682'>sample_plate_id</text><title>sample_plate_id bigint not null</title></a>
-<a xlink:href='#plate_map.sample_plate_id'><use id='fk' x='888' y='671' xlink:href='#fk'/><title>References sample_plate ( sample_plate_id ) </title></a>
-  <use id='nn' x='782' y='687' xlink:href='#nn'/><a xlink:href='#plate_map.sample_id'><use id='pk' x='782' y='686' xlink:href='#pk'/><title>Index  ( sample_id ) Primary Key  ( sample_plate_id, sample_id, col, row ) </title></a>
-<a xlink:href='#plate_map.sample_id'><text x='798' y='697'>sample_id</text><title>sample_id varchar not null</title></a>
-<a xlink:href='#plate_map.sample_id'><use id='fk' x='888' y='686' xlink:href='#fk'/><title>References sample ( sample_id ) </title></a>
-  <use id='nn' x='782' y='702' xlink:href='#nn'/><a xlink:href='#plate_map.col'><use id='pk' x='782' y='701' xlink:href='#pk'/><title>Primary Key  ( sample_plate_id, sample_id, col, row ) </title></a>
-<a xlink:href='#plate_map.col'><text x='798' y='712'>col</text><title>col integer not null</title></a>
-  <use id='nn' x='782' y='717' xlink:href='#nn'/><a xlink:href='#plate_map.row'><use id='pk' x='782' y='716' xlink:href='#pk'/><title>Primary Key  ( sample_plate_id, sample_id, col, row ) </title></a>
-<a xlink:href='#plate_map.row'><text x='798' y='727'>row</text><title>row varchar not null</title></a>
-  <a xlink:href='#plate_map.name'><text x='798' y='742'>name</text><title>name varchar
-The name of the sample in this plate in case that needs to be changed &#040;e&#046;g&#046; if the sample has been plated twice&#041;</title></a>
-  <a xlink:href='#plate_map.notes'><text x='798' y='757'>notes</text><title>notes varchar</title></a>
 
 <!-- ============= Table 'sample_plate' ============= -->
 <rect class='table' x='780' y='788' width='135' height='135' rx='7' ry='7' />
@@ -1513,8 +1475,7 @@ Holds the information about the initial plate that the wet lab creates&#046;</ti
   <use id='nn' x='782' y='822' xlink:href='#nn'/><a xlink:href='#sample_plate.sample_plate_id'><use id='pk' x='782' y='821' xlink:href='#pk'/><title>Primary Key  ( sample_plate_id ) </title></a>
 <a xlink:href='#sample_plate.sample_plate_id'><text x='798' y='832'>sample_plate_id</text><title>sample_plate_id bigserial not null</title></a>
 <a xlink:href='#sample_plate.sample_plate_id'><use id='ref' x='903' y='821' xlink:href='#ref'/><title>Referred by dna_plate ( sample_plate_id ) 
-Referred by dna_plate ( sample_plate_id ) 
-Referred by plate_map ( sample_plate_id ) </title></a>
+Referred by sample_plate_sample ( sample_plate_id ) </title></a>
   <use id='nn' x='782' y='837' xlink:href='#nn'/><a xlink:href='#sample_plate.name'><use id='unq' x='782' y='836' xlink:href='#unq'/><title>Unique Index  ( name ) </title></a>
 <a xlink:href='#sample_plate.name'><text x='798' y='847'>name</text><title>name varchar not null</title></a>
   <a xlink:href='#sample_plate.email'><use id='idx' x='782' y='851' xlink:href='#idx'/><title>Index  ( email ) </title></a>
@@ -1566,67 +1527,13 @@ positive if Qiita study ID&#044; negative if others</title></a>
   <a xlink:href='#study.alias'><text x='528' y='592'>alias</text><title>alias varchar</title></a>
   <a xlink:href='#study.notes'><text x='528' y='607'>notes</text><title>notes varchar</title></a>
 
-<!-- ============= Table 'protocol_target_gene' ============= -->
-<rect class='table' x='240' y='1058' width='165' height='150' rx='7' ry='7' />
-<path d='M 240.50 1084.50 L 240.50 1065.50 Q 240.50 1058.50 247.50 1058.50 L 397.50 1058.50 Q 404.50 1058.50 404.50 1065.50 L 404.50 1084.50 L240.50 1084.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
-<a xlink:href='#protocol_target_gene'><text x='264' y='1072' class='tableTitle'>protocol_target_gene</text><title>Table pm.protocol_target_gene</title></a>
-  <use id='nn' x='242' y='1092' xlink:href='#nn'/><a xlink:href='#protocol_target_gene.protocol_target_gene_id'><use id='pk' x='242' y='1091' xlink:href='#pk'/><title>Primary Key  ( protocol_target_gene_id ) </title></a>
-<a xlink:href='#protocol_target_gene.protocol_target_gene_id'><text x='258' y='1102'>protocol_target_gene_id</text><title>protocol_target_gene_id bigserial not null</title></a>
-<a xlink:href='#protocol_target_gene.protocol_target_gene_id'><use id='ref' x='393' y='1091' xlink:href='#ref'/><title>Referred by protocol_plate ( protocol_target_gene_id ) 
-Referred by protocol_plate ( protocol_target_gene_id ) </title></a>
-  <a xlink:href='#protocol_target_gene.template_id'><use id='idx' x='242' y='1106' xlink:href='#idx'/><title>Index  ( template_id ) </title></a>
-<a xlink:href='#protocol_target_gene.template_id'><text x='258' y='1117'>template_id</text><title>template_id bigint</title></a>
-<a xlink:href='#protocol_target_gene.template_id'><use id='fk' x='393' y='1106' xlink:href='#fk'/><title>References template ( template_id ) </title></a>
-  <a xlink:href='#protocol_target_gene.master_mix_lot_id'><use id='idx' x='242' y='1121' xlink:href='#idx'/><title>Index  ( master_mix_lot_id ) </title></a>
-<a xlink:href='#protocol_target_gene.master_mix_lot_id'><text x='258' y='1132'>master_mix_lot_id</text><title>master_mix_lot_id bigint</title></a>
-<a xlink:href='#protocol_target_gene.master_mix_lot_id'><use id='fk' x='393' y='1121' xlink:href='#fk'/><title>References master_mix_lot ( master_mix_lot_id ) </title></a>
-  <a xlink:href='#protocol_target_gene.water_lot_id'><use id='idx' x='242' y='1136' xlink:href='#idx'/><title>Index  ( water_lot_id ) </title></a>
-<a xlink:href='#protocol_target_gene.water_lot_id'><text x='258' y='1147'>water_lot_id</text><title>water_lot_id bigint</title></a>
-<a xlink:href='#protocol_target_gene.water_lot_id'><use id='fk' x='393' y='1136' xlink:href='#fk'/><title>References water_lot ( water_lot_id ) </title></a>
-  <a xlink:href='#protocol_target_gene.tm300_8_tool_id'><use id='idx' x='242' y='1151' xlink:href='#idx'/><title>Index  ( tm300_8_tool_id ) </title></a>
-<a xlink:href='#protocol_target_gene.tm300_8_tool_id'><text x='258' y='1162'>tm300_8_tool_id</text><title>tm300_8_tool_id bigint</title></a>
-<a xlink:href='#protocol_target_gene.tm300_8_tool_id'><use id='fk' x='393' y='1151' xlink:href='#fk'/><title>References tm300_8_tool ( tm300_8_tool_id ) </title></a>
-  <a xlink:href='#protocol_target_gene.tm50_8_tool_id'><use id='idx' x='242' y='1166' xlink:href='#idx'/><title>Index  ( tm50_8_tool_id ) </title></a>
-<a xlink:href='#protocol_target_gene.tm50_8_tool_id'><text x='258' y='1177'>tm50_8_tool_id</text><title>tm50_8_tool_id bigint</title></a>
-<a xlink:href='#protocol_target_gene.tm50_8_tool_id'><use id='fk' x='393' y='1166' xlink:href='#fk'/><title>References tm50_8_tool ( tm50_8_tool_id ) </title></a>
-  <a xlink:href='#protocol_target_gene.processing_robot_id'><use id='idx' x='242' y='1181' xlink:href='#idx'/><title>Index  ( processing_robot_id ) </title></a>
-<a xlink:href='#protocol_target_gene.processing_robot_id'><text x='258' y='1192'>processing_robot_id</text><title>processing_robot_id bigint</title></a>
-<a xlink:href='#protocol_target_gene.processing_robot_id'><use id='fk' x='393' y='1181' xlink:href='#fk'/><title>References processing_robot ( processing_robot_id ) </title></a>
-
-<!-- ============= Table 'template' ============= -->
-<rect class='table' x='60' y='1058' width='105' height='105' rx='7' ry='7' />
-<path d='M 60.50 1084.50 L 60.50 1065.50 Q 60.50 1058.50 67.50 1058.50 L 157.50 1058.50 Q 164.50 1058.50 164.50 1065.50 L 164.50 1084.50 L60.50 1084.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
-<a xlink:href='#template'><text x='89' y='1072' class='tableTitle'>template</text><title>Table pm.template</title></a>
-  <use id='nn' x='62' y='1092' xlink:href='#nn'/><a xlink:href='#template.template_id'><use id='pk' x='62' y='1091' xlink:href='#pk'/><title>Primary Key  ( template_id ) </title></a>
-<a xlink:href='#template.template_id'><text x='78' y='1102'>template_id</text><title>template_id bigserial not null</title></a>
-<a xlink:href='#template.template_id'><use id='ref' x='153' y='1091' xlink:href='#ref'/><title>Referred by template_barcode_seq ( template_id ) 
-Referred by protocol_target_gene ( template_id ) </title></a>
-  <use id='nn' x='62' y='1107' xlink:href='#nn'/><a xlink:href='#template.name'><use id='unq' x='62' y='1106' xlink:href='#unq'/><title>Unique Index  ( name ) </title></a>
-<a xlink:href='#template.name'><text x='78' y='1117'>name</text><title>name varchar not null</title></a>
-  <use id='nn' x='62' y='1122' xlink:href='#nn'/><a xlink:href='#template.plate_type_id'><use id='idx' x='62' y='1121' xlink:href='#idx'/><title>Index  ( plate_type_id ) </title></a>
-<a xlink:href='#template.plate_type_id'><text x='78' y='1132'>plate_type_id</text><title>plate_type_id bigint not null</title></a>
-<a xlink:href='#template.plate_type_id'><use id='fk' x='153' y='1121' xlink:href='#fk'/><title>References plate_type ( plate_type_id ) </title></a>
-  <a xlink:href='#template.notes'><text x='78' y='1147'>notes</text><title>notes varchar</title></a>
-
-<!-- ============= Table 'template_barcode_seq' ============= -->
-<rect class='table' x='45' y='908' width='135' height='105' rx='7' ry='7' />
-<path d='M 45.50 934.50 L 45.50 915.50 Q 45.50 908.50 52.50 908.50 L 172.50 908.50 Q 179.50 908.50 179.50 915.50 L 179.50 934.50 L45.50 934.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
-<a xlink:href='#template_barcode_seq'><text x='52' y='922' class='tableTitle'>template_barcode_seq</text><title>Table pm.template_barcode_seq</title></a>
-  <use id='nn' x='47' y='942' xlink:href='#nn'/><a xlink:href='#template_barcode_seq.template_id'><use id='idx' x='47' y='941' xlink:href='#idx'/><title>Index  ( template_id ) </title></a>
-<a xlink:href='#template_barcode_seq.template_id'><text x='63' y='952'>template_id</text><title>template_id bigint not null</title></a>
-<a xlink:href='#template_barcode_seq.template_id'><use id='fk' x='168' y='941' xlink:href='#fk'/><title>References template ( template_id ) </title></a>
-  <use id='nn' x='47' y='957' xlink:href='#nn'/><a xlink:href='#template_barcode_seq.col'><text x='63' y='967'>col</text><title>col smallint not null</title></a>
-  <use id='nn' x='47' y='972' xlink:href='#nn'/><a xlink:href='#template_barcode_seq.row'><text x='63' y='982'>row</text><title>row smallint not null</title></a>
-  <a xlink:href='#template_barcode_seq.barcode_seq'><text x='63' y='997'>barcode_seq</text><title>barcode_seq varchar</title></a>
-
 <!-- ============= Table 'tm300_8_tool' ============= -->
 <rect class='table' x='45' y='1193' width='120' height='90' rx='7' ry='7' />
 <path d='M 45.50 1219.50 L 45.50 1200.50 Q 45.50 1193.50 52.50 1193.50 L 157.50 1193.50 Q 164.50 1193.50 164.50 1200.50 L 164.50 1219.50 L45.50 1219.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
 <a xlink:href='#tm300_8_tool'><text x='67' y='1207' class='tableTitle'>tm300_8_tool</text><title>Table pm.tm300_8_tool</title></a>
   <use id='nn' x='47' y='1227' xlink:href='#nn'/><a xlink:href='#tm300_8_tool.tm300_8_tool_id'><use id='pk' x='47' y='1226' xlink:href='#pk'/><title>Primary Key  ( tm300_8_tool_id ) </title></a>
 <a xlink:href='#tm300_8_tool.tm300_8_tool_id'><text x='63' y='1237'>tm300_8_tool_id</text><title>tm300_8_tool_id bigserial not null</title></a>
-<a xlink:href='#tm300_8_tool.tm300_8_tool_id'><use id='ref' x='153' y='1226' xlink:href='#ref'/><title>Referred by protocol_target_gene ( tm300_8_tool_id ) 
-Referred by protocol_target_gene ( tm300_8_tool_id ) </title></a>
+<a xlink:href='#tm300_8_tool.tm300_8_tool_id'><use id='ref' x='153' y='1226' xlink:href='#ref'/><title>Referred by protocol_target_gene ( tm300_8_tool_id ) </title></a>
   <use id='nn' x='47' y='1242' xlink:href='#nn'/><a xlink:href='#tm300_8_tool.name'><use id='unq' x='47' y='1241' xlink:href='#unq'/><title>Unique Index  ( name ) </title></a>
 <a xlink:href='#tm300_8_tool.name'><text x='63' y='1252'>name</text><title>name varchar not null</title></a>
   <a xlink:href='#tm300_8_tool.notes'><text x='63' y='1267'>notes</text><title>notes varchar</title></a>
@@ -1637,8 +1544,7 @@ Referred by protocol_target_gene ( tm300_8_tool_id ) </title></a>
 <a xlink:href='#water_lot'><text x='88' y='1312' class='tableTitle'>water_lot</text><title>Table pm.water_lot</title></a>
   <use id='nn' x='62' y='1332' xlink:href='#nn'/><a xlink:href='#water_lot.water_lot_id'><use id='pk' x='62' y='1331' xlink:href='#pk'/><title>Primary Key  ( water_lot_id ) </title></a>
 <a xlink:href='#water_lot.water_lot_id'><text x='78' y='1342'>water_lot_id</text><title>water_lot_id bigserial not null</title></a>
-<a xlink:href='#water_lot.water_lot_id'><use id='ref' x='153' y='1331' xlink:href='#ref'/><title>Referred by protocol_target_gene ( water_lot_id ) 
-Referred by protocol_target_gene ( water_lot_id ) </title></a>
+<a xlink:href='#water_lot.water_lot_id'><use id='ref' x='153' y='1331' xlink:href='#ref'/><title>Referred by protocol_target_gene ( water_lot_id ) </title></a>
   <use id='nn' x='62' y='1347' xlink:href='#nn'/><a xlink:href='#water_lot.name'><use id='unq' x='62' y='1346' xlink:href='#unq'/><title>Unique Index  ( name ) </title></a>
 <a xlink:href='#water_lot.name'><text x='78' y='1357'>name</text><title>name varchar not null</title></a>
   <a xlink:href='#water_lot.notes'><text x='78' y='1372'>notes</text><title>notes varchar</title></a>
@@ -1649,8 +1555,7 @@ Referred by protocol_target_gene ( water_lot_id ) </title></a>
 <a xlink:href='#master_mix_lot'><text x='131' y='1417' class='tableTitle'>master_mix_lot</text><title>Table pm.master_mix_lot</title></a>
   <use id='nn' x='107' y='1437' xlink:href='#nn'/><a xlink:href='#master_mix_lot.master_mix_lot_id'><use id='pk' x='107' y='1436' xlink:href='#pk'/><title>Primary Key  ( master_mix_lot_id ) </title></a>
 <a xlink:href='#master_mix_lot.master_mix_lot_id'><text x='123' y='1447'>master_mix_lot_id</text><title>master_mix_lot_id bigserial not null</title></a>
-<a xlink:href='#master_mix_lot.master_mix_lot_id'><use id='ref' x='228' y='1436' xlink:href='#ref'/><title>Referred by protocol_target_gene ( master_mix_lot_id ) 
-Referred by protocol_target_gene ( master_mix_lot_id ) </title></a>
+<a xlink:href='#master_mix_lot.master_mix_lot_id'><use id='ref' x='228' y='1436' xlink:href='#ref'/><title>Referred by protocol_target_gene ( master_mix_lot_id ) </title></a>
   <use id='nn' x='107' y='1452' xlink:href='#nn'/><a xlink:href='#master_mix_lot.name'><use id='unq' x='107' y='1451' xlink:href='#unq'/><title>Unique Index  ( name ) </title></a>
 <a xlink:href='#master_mix_lot.name'><text x='123' y='1462'>name</text><title>name varchar not null</title></a>
   <a xlink:href='#master_mix_lot.notes'><text x='123' y='1477'>notes</text><title>notes varchar</title></a>
@@ -1661,8 +1566,7 @@ Referred by protocol_target_gene ( master_mix_lot_id ) </title></a>
 <a xlink:href='#tm50_8_tool'><text x='326' y='1282' class='tableTitle'>tm50_8_tool</text><title>Table pm.tm50_8_tool</title></a>
   <use id='nn' x='302' y='1302' xlink:href='#nn'/><a xlink:href='#tm50_8_tool.tm50_8_tool_id'><use id='pk' x='302' y='1301' xlink:href='#pk'/><title>Primary Key  ( tm50_8_tool_id ) </title></a>
 <a xlink:href='#tm50_8_tool.tm50_8_tool_id'><text x='318' y='1312'>tm50_8_tool_id</text><title>tm50_8_tool_id bigserial not null</title></a>
-<a xlink:href='#tm50_8_tool.tm50_8_tool_id'><use id='ref' x='408' y='1301' xlink:href='#ref'/><title>Referred by protocol_target_gene ( tm50_8_tool_id ) 
-Referred by protocol_target_gene ( tm50_8_tool_id ) </title></a>
+<a xlink:href='#tm50_8_tool.tm50_8_tool_id'><use id='ref' x='408' y='1301' xlink:href='#ref'/><title>Referred by protocol_target_gene ( tm50_8_tool_id ) </title></a>
   <use id='nn' x='302' y='1317' xlink:href='#nn'/><a xlink:href='#tm50_8_tool.name'><use id='unq' x='302' y='1316' xlink:href='#unq'/><title>Unique Index  ( name ) </title></a>
 <a xlink:href='#tm50_8_tool.name'><text x='318' y='1327'>name</text><title>name varchar not null</title></a>
   <a xlink:href='#tm50_8_tool.notes'><text x='318' y='1342'>notes</text><title>notes varchar</title></a>
@@ -1697,8 +1601,7 @@ Referred by protocol_target_gene ( tm50_8_tool_id ) </title></a>
 <a xlink:href='#protocol'><text x='509' y='1252' class='tableTitle'>protocol</text><title>Table pm.protocol</title></a>
   <use id='nn' x='482' y='1272' xlink:href='#nn'/><a xlink:href='#protocol.protocol_id'><use id='pk' x='482' y='1271' xlink:href='#pk'/><title>Primary Key  ( protocol_id ) </title></a>
 <a xlink:href='#protocol.protocol_id'><text x='498' y='1282'>protocol_id</text><title>protocol_id bigserial not null</title></a>
-<a xlink:href='#protocol.protocol_id'><use id='ref' x='573' y='1271' xlink:href='#ref'/><title>Referred by protocol_plate ( protocol_id ) 
-Referred by protocol_plate ( protocol_id ) </title></a>
+<a xlink:href='#protocol.protocol_id'><use id='ref' x='573' y='1271' xlink:href='#ref'/><title>Referred by protocol_plate ( protocol_id ) </title></a>
   <use id='nn' x='482' y='1287' xlink:href='#nn'/><a xlink:href='#protocol.name'><text x='498' y='1297'>name</text><title>name varchar not null</title></a>
 
 <!-- ============= Table 'processing_robot' ============= -->
@@ -1707,8 +1610,7 @@ Referred by protocol_plate ( protocol_id ) </title></a>
 <a xlink:href='#processing_robot'><text x='297' y='1402' class='tableTitle'>processing_robot</text><title>Table pm.processing_robot</title></a>
   <use id='nn' x='272' y='1422' xlink:href='#nn'/><a xlink:href='#processing_robot.processing_robot_id'><use id='pk' x='272' y='1421' xlink:href='#pk'/><title>Primary Key  ( processing_robot_id ) </title></a>
 <a xlink:href='#processing_robot.processing_robot_id'><text x='288' y='1432'>processing_robot_id</text><title>processing_robot_id bigserial not null</title></a>
-<a xlink:href='#processing_robot.processing_robot_id'><use id='ref' x='408' y='1421' xlink:href='#ref'/><title>Referred by protocol_target_gene ( processing_robot_id ) 
-Referred by protocol_target_gene ( processing_robot_id ) </title></a>
+<a xlink:href='#processing_robot.processing_robot_id'><use id='ref' x='408' y='1421' xlink:href='#ref'/><title>Referred by protocol_target_gene ( processing_robot_id ) </title></a>
   <use id='nn' x='272' y='1437' xlink:href='#nn'/><a xlink:href='#processing_robot.name'><use id='unq' x='272' y='1436' xlink:href='#unq'/><title>Unique Index  ( name ) </title></a>
 <a xlink:href='#processing_robot.name'><text x='288' y='1447'>name</text><title>name varchar not null</title></a>
   <a xlink:href='#processing_robot.notes'><text x='288' y='1462'>notes</text><title>notes varchar</title></a>
@@ -1736,6 +1638,76 @@ Referred by protocol_target_gene ( processing_robot_id ) </title></a>
 <a xlink:href='#run.email'><text x='798' y='1477'>email</text><title>email varchar not null</title></a>
 <a xlink:href='#run.email'><use id='fk' x='903' y='1466' xlink:href='#fk'/><title>References labadmin_users ( email ) </title></a>
   <a xlink:href='#run.creation_timestamp'><text x='798' y='1492'>creation_timestamp</text><title>creation_timestamp timestamp</title></a>
+
+<!-- ============= Table 'sample_plate_sample' ============= -->
+<rect class='table' x='780' y='638' width='135' height='135' rx='7' ry='7' />
+<path d='M 780.50 664.50 L 780.50 645.50 Q 780.50 638.50 787.50 638.50 L 907.50 638.50 Q 914.50 638.50 914.50 645.50 L 914.50 664.50 L780.50 664.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
+<a xlink:href='#sample_plate_sample'><text x='790' y='652' class='tableTitle'>sample_plate_sample</text><title>Table pm.sample_plate_sample</title></a>
+  <use id='nn' x='782' y='672' xlink:href='#nn'/><a xlink:href='#sample_plate_sample.sample_plate_id'><use id='pk' x='782' y='671' xlink:href='#pk'/><title>Index  ( sample_plate_id ) Primary Key  ( sample_plate_id, sample_id, col, row ) </title></a>
+<a xlink:href='#sample_plate_sample.sample_plate_id'><text x='798' y='682'>sample_plate_id</text><title>sample_plate_id bigint not null</title></a>
+<a xlink:href='#sample_plate_sample.sample_plate_id'><use id='fk' x='903' y='671' xlink:href='#fk'/><title>References sample_plate ( sample_plate_id ) </title></a>
+  <use id='nn' x='782' y='687' xlink:href='#nn'/><a xlink:href='#sample_plate_sample.sample_id'><use id='pk' x='782' y='686' xlink:href='#pk'/><title>Index  ( sample_id ) Primary Key  ( sample_plate_id, sample_id, col, row ) </title></a>
+<a xlink:href='#sample_plate_sample.sample_id'><text x='798' y='697'>sample_id</text><title>sample_id varchar not null</title></a>
+<a xlink:href='#sample_plate_sample.sample_id'><use id='fk' x='903' y='686' xlink:href='#fk'/><title>References sample ( sample_id ) </title></a>
+  <use id='nn' x='782' y='702' xlink:href='#nn'/><a xlink:href='#sample_plate_sample.col'><use id='pk' x='782' y='701' xlink:href='#pk'/><title>Primary Key  ( sample_plate_id, sample_id, col, row ) </title></a>
+<a xlink:href='#sample_plate_sample.col'><text x='798' y='712'>col</text><title>col integer not null</title></a>
+  <use id='nn' x='782' y='717' xlink:href='#nn'/><a xlink:href='#sample_plate_sample.row'><use id='pk' x='782' y='716' xlink:href='#pk'/><title>Primary Key  ( sample_plate_id, sample_id, col, row ) </title></a>
+<a xlink:href='#sample_plate_sample.row'><text x='798' y='727'>row</text><title>row varchar not null</title></a>
+  <a xlink:href='#sample_plate_sample.name'><text x='798' y='742'>name</text><title>name varchar
+The name of the sample in this plate in case that needs to be changed &#040;e&#046;g&#046; if the sample has been plated twice&#041;</title></a>
+  <a xlink:href='#sample_plate_sample.notes'><text x='798' y='757'>notes</text><title>notes varchar</title></a>
+
+<!-- ============= Table 'barcode_sequence_plate' ============= -->
+<rect class='table' x='45' y='1058' width='180' height='105' rx='7' ry='7' />
+<path d='M 45.50 1084.50 L 45.50 1065.50 Q 45.50 1058.50 52.50 1058.50 L 217.50 1058.50 Q 224.50 1058.50 224.50 1065.50 L 224.50 1084.50 L45.50 1084.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
+<a xlink:href='#barcode_sequence_plate'><text x='68' y='1072' class='tableTitle'>barcode_sequence_plate</text><title>Table pm.barcode_sequence_plate</title></a>
+  <use id='nn' x='47' y='1092' xlink:href='#nn'/><a xlink:href='#barcode_sequence_plate.barcode_sequence_plate_id'><use id='pk' x='47' y='1091' xlink:href='#pk'/><title>Primary Key  ( barcode_sequence_plate_id ) </title></a>
+<a xlink:href='#barcode_sequence_plate.barcode_sequence_plate_id'><text x='63' y='1102'>barcode_sequence_plate_id</text><title>barcode_sequence_plate_id bigserial not null</title></a>
+<a xlink:href='#barcode_sequence_plate.barcode_sequence_plate_id'><use id='ref' x='213' y='1091' xlink:href='#ref'/><title>Referred by protocol_target_gene ( barcode_sequence_plate_id ) 
+Referred by barcode_sequence_plate_layout ( barcode_sequence_plate_id ) </title></a>
+  <use id='nn' x='47' y='1107' xlink:href='#nn'/><a xlink:href='#barcode_sequence_plate.name'><use id='unq' x='47' y='1106' xlink:href='#unq'/><title>Unique Index  ( name ) </title></a>
+<a xlink:href='#barcode_sequence_plate.name'><text x='63' y='1117'>name</text><title>name varchar not null</title></a>
+  <use id='nn' x='47' y='1122' xlink:href='#nn'/><a xlink:href='#barcode_sequence_plate.plate_type_id'><use id='idx' x='47' y='1121' xlink:href='#idx'/><title>Index  ( plate_type_id ) </title></a>
+<a xlink:href='#barcode_sequence_plate.plate_type_id'><text x='63' y='1132'>plate_type_id</text><title>plate_type_id bigint not null</title></a>
+<a xlink:href='#barcode_sequence_plate.plate_type_id'><use id='fk' x='213' y='1121' xlink:href='#fk'/><title>References plate_type ( plate_type_id ) </title></a>
+  <a xlink:href='#barcode_sequence_plate.notes'><text x='63' y='1147'>notes</text><title>notes varchar</title></a>
+
+<!-- ============= Table 'protocol_target_gene' ============= -->
+<rect class='table' x='240' y='1058' width='180' height='150' rx='7' ry='7' />
+<path d='M 240.50 1084.50 L 240.50 1065.50 Q 240.50 1058.50 247.50 1058.50 L 412.50 1058.50 Q 419.50 1058.50 419.50 1065.50 L 419.50 1084.50 L240.50 1084.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
+<a xlink:href='#protocol_target_gene'><text x='272' y='1072' class='tableTitle'>protocol_target_gene</text><title>Table pm.protocol_target_gene</title></a>
+  <use id='nn' x='242' y='1092' xlink:href='#nn'/><a xlink:href='#protocol_target_gene.protocol_target_gene_id'><use id='pk' x='242' y='1091' xlink:href='#pk'/><title>Primary Key  ( protocol_target_gene_id ) </title></a>
+<a xlink:href='#protocol_target_gene.protocol_target_gene_id'><text x='258' y='1102'>protocol_target_gene_id</text><title>protocol_target_gene_id bigserial not null</title></a>
+<a xlink:href='#protocol_target_gene.protocol_target_gene_id'><use id='ref' x='408' y='1091' xlink:href='#ref'/><title>Referred by protocol_plate ( protocol_target_gene_id ) </title></a>
+  <a xlink:href='#protocol_target_gene.barcode_sequence_plate_id'><use id='idx' x='242' y='1106' xlink:href='#idx'/><title>Index  ( barcode_sequence_plate_id ) </title></a>
+<a xlink:href='#protocol_target_gene.barcode_sequence_plate_id'><text x='258' y='1117'>barcode_sequence_plate_id</text><title>barcode_sequence_plate_id bigint</title></a>
+<a xlink:href='#protocol_target_gene.barcode_sequence_plate_id'><use id='fk' x='408' y='1106' xlink:href='#fk'/><title>References barcode_sequence_plate ( barcode_sequence_plate_id ) </title></a>
+  <a xlink:href='#protocol_target_gene.master_mix_lot_id'><use id='idx' x='242' y='1121' xlink:href='#idx'/><title>Index  ( master_mix_lot_id ) </title></a>
+<a xlink:href='#protocol_target_gene.master_mix_lot_id'><text x='258' y='1132'>master_mix_lot_id</text><title>master_mix_lot_id bigint</title></a>
+<a xlink:href='#protocol_target_gene.master_mix_lot_id'><use id='fk' x='408' y='1121' xlink:href='#fk'/><title>References master_mix_lot ( master_mix_lot_id ) </title></a>
+  <a xlink:href='#protocol_target_gene.water_lot_id'><use id='idx' x='242' y='1136' xlink:href='#idx'/><title>Index  ( water_lot_id ) </title></a>
+<a xlink:href='#protocol_target_gene.water_lot_id'><text x='258' y='1147'>water_lot_id</text><title>water_lot_id bigint</title></a>
+<a xlink:href='#protocol_target_gene.water_lot_id'><use id='fk' x='408' y='1136' xlink:href='#fk'/><title>References water_lot ( water_lot_id ) </title></a>
+  <a xlink:href='#protocol_target_gene.tm300_8_tool_id'><use id='idx' x='242' y='1151' xlink:href='#idx'/><title>Index  ( tm300_8_tool_id ) </title></a>
+<a xlink:href='#protocol_target_gene.tm300_8_tool_id'><text x='258' y='1162'>tm300_8_tool_id</text><title>tm300_8_tool_id bigint</title></a>
+<a xlink:href='#protocol_target_gene.tm300_8_tool_id'><use id='fk' x='408' y='1151' xlink:href='#fk'/><title>References tm300_8_tool ( tm300_8_tool_id ) </title></a>
+  <a xlink:href='#protocol_target_gene.tm50_8_tool_id'><use id='idx' x='242' y='1166' xlink:href='#idx'/><title>Index  ( tm50_8_tool_id ) </title></a>
+<a xlink:href='#protocol_target_gene.tm50_8_tool_id'><text x='258' y='1177'>tm50_8_tool_id</text><title>tm50_8_tool_id bigint</title></a>
+<a xlink:href='#protocol_target_gene.tm50_8_tool_id'><use id='fk' x='408' y='1166' xlink:href='#fk'/><title>References tm50_8_tool ( tm50_8_tool_id ) </title></a>
+  <a xlink:href='#protocol_target_gene.processing_robot_id'><use id='idx' x='242' y='1181' xlink:href='#idx'/><title>Index  ( processing_robot_id ) </title></a>
+<a xlink:href='#protocol_target_gene.processing_robot_id'><text x='258' y='1192'>processing_robot_id</text><title>processing_robot_id bigint</title></a>
+<a xlink:href='#protocol_target_gene.processing_robot_id'><use id='fk' x='408' y='1181' xlink:href='#fk'/><title>References processing_robot ( processing_robot_id ) </title></a>
+
+<!-- ============= Table 'barcode_sequence_plate_layout' ============= -->
+<rect class='table' x='45' y='908' width='195' height='105' rx='7' ry='7' />
+<path d='M 45.50 934.50 L 45.50 915.50 Q 45.50 908.50 52.50 908.50 L 232.50 908.50 Q 239.50 908.50 239.50 915.50 L 239.50 934.50 L45.50 934.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
+<a xlink:href='#barcode_sequence_plate_layout'><text x='56' y='922' class='tableTitle'>barcode_sequence_plate_layout</text><title>Table pm.barcode_sequence_plate_layout</title></a>
+  <use id='nn' x='47' y='942' xlink:href='#nn'/><a xlink:href='#barcode_sequence_plate_layout.barcode_sequence_plate_id'><use id='idx' x='47' y='941' xlink:href='#idx'/><title>Index  ( barcode_sequence_plate_id ) </title></a>
+<a xlink:href='#barcode_sequence_plate_layout.barcode_sequence_plate_id'><text x='63' y='952'>barcode_sequence_plate_id</text><title>barcode_sequence_plate_id bigint not null</title></a>
+<a xlink:href='#barcode_sequence_plate_layout.barcode_sequence_plate_id'><use id='fk' x='228' y='941' xlink:href='#fk'/><title>References barcode_sequence_plate ( barcode_sequence_plate_id ) </title></a>
+  <use id='nn' x='47' y='957' xlink:href='#nn'/><a xlink:href='#barcode_sequence_plate_layout.col'><text x='63' y='967'>col</text><title>col smallint not null</title></a>
+  <use id='nn' x='47' y='972' xlink:href='#nn'/><a xlink:href='#barcode_sequence_plate_layout.row'><text x='63' y='982'>row</text><title>row smallint not null</title></a>
+  <a xlink:href='#barcode_sequence_plate_layout.barcode_seq'><text x='63' y='997'>barcode_seq</text><title>barcode_seq varchar</title></a>
 
 </g></svg>
 
@@ -4611,69 +4583,6 @@ Referred by protocol_target_gene ( processing_robot_id ) </title></a>
 <br/><br/>
 <table class='bordered'>
 <thead>
-<tr><th colspan='3'><a name='plate_map'>Table plate_map</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td><a name='plate_map.sample_plate_id'>sample&#095;plate&#095;id</a></td>
-		<td> bigint  NOT NULL  </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='plate_map.sample_id'>sample&#095;id</a></td>
-		<td> varchar  NOT NULL  </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='plate_map.col'>col</a></td>
-		<td> integer  NOT NULL  </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='plate_map.row'>row</a></td>
-		<td> varchar  NOT NULL  </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='plate_map.name'>name</a></td>
-		<td> varchar   </td>
-		<td> The name of the sample in this plate in case that needs to be changed &#040;e&#046;g&#046; if the sample has been plated twice&#041; </td>
-	</tr>
-	<tr>
-		<td><a name='plate_map.notes'>notes</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='3'><b>Indexes</b></th></tr>
-	<tr>		<td>idx&#095;plate&#095;map </td>
-		<td> ON sample&#095;plate&#095;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;plate&#095;map </td>
-		<td> ON sample&#095;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;plate&#095;map&#095;0 primary key</td>
-		<td> ON sample&#095;plate&#095;id&#044; sample&#095;id&#044; col&#044; row</td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='3'><b>Foreign Keys</b></th></tr>
-	<tr>
-		<td>fk_plate_map_sample_plate</td>
-		<td > ( sample&#095;plate&#095;id ) ref <a href='#sample&#095;plate'>sample&#095;plate</a> (sample&#095;plate&#095;id) </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>fk_plate_map_sample</td>
-		<td > ( sample&#095;id ) ref <a href='#sample'>sample</a> (sample&#095;id) </td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table class='bordered'>
-<thead>
 <tr><th colspan='3'><a name='sample_plate'>Table sample_plate</a></th></tr>
 <tr><td colspan='3'>Holds the information about the initial plate that the wet lab creates&#046; </td></tr>
 </thead>
@@ -4881,198 +4790,6 @@ Referred by protocol_target_gene ( processing_robot_id ) </title></a>
 	</tr>
 	<tr>		<td>uq&#095;study&#095;title unique</td>
 		<td> ON title</td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table class='bordered'>
-<thead>
-<tr><th colspan='3'><a name='protocol_target_gene'>Table protocol_target_gene</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td><a name='protocol_target_gene.protocol_target_gene_id'>protocol&#095;target&#095;gene&#095;id</a></td>
-		<td> bigserial  NOT NULL  </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='protocol_target_gene.template_id'>template&#095;id</a></td>
-		<td> bigint   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='protocol_target_gene.master_mix_lot_id'>master&#095;mix&#095;lot&#095;id</a></td>
-		<td> bigint   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='protocol_target_gene.water_lot_id'>water&#095;lot&#095;id</a></td>
-		<td> bigint   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='protocol_target_gene.tm300_8_tool_id'>tm300&#095;8&#095;tool&#095;id</a></td>
-		<td> bigint   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='protocol_target_gene.tm50_8_tool_id'>tm50&#095;8&#095;tool&#095;id</a></td>
-		<td> bigint   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='protocol_target_gene.processing_robot_id'>processing&#095;robot&#095;id</a></td>
-		<td> bigint   </td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='3'><b>Indexes</b></th></tr>
-	<tr>		<td>pk&#095;protocol&#095;target&#095;gene primary key</td>
-		<td> ON protocol&#095;target&#095;gene&#095;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;protocol&#095;target&#095;gene </td>
-		<td> ON template&#095;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;protocol&#095;target&#095;gene&#095;0 </td>
-		<td> ON master&#095;mix&#095;lot&#095;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;protocol&#095;target&#095;gene&#095;1 </td>
-		<td> ON water&#095;lot&#095;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;protocol&#095;target&#095;gene&#095;2 </td>
-		<td> ON tm300&#095;8&#095;tool&#095;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;protocol&#095;target&#095;gene&#095;3 </td>
-		<td> ON tm50&#095;8&#095;tool&#095;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;protocol&#095;target&#095;gene&#095;4 </td>
-		<td> ON processing&#095;robot&#095;id</td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='3'><b>Foreign Keys</b></th></tr>
-	<tr>
-		<td>fk_protocol_target_gene</td>
-		<td > ( template&#095;id ) ref <a href='#template'>template</a> (template&#095;id) </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>fk_protocol_target_gene_mm</td>
-		<td > ( master&#095;mix&#095;lot&#095;id ) ref <a href='#master&#095;mix&#095;lot'>master&#095;mix&#095;lot</a> (master&#095;mix&#095;lot&#095;id) </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>fk_protocol_target_gene_wl</td>
-		<td > ( water&#095;lot&#095;id ) ref <a href='#water&#095;lot'>water&#095;lot</a> (water&#095;lot&#095;id) </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>fk_protocol_target_gene_tm300</td>
-		<td > ( tm300&#095;8&#095;tool&#095;id ) ref <a href='#tm300&#095;8&#095;tool'>tm300&#095;8&#095;tool</a> (tm300&#095;8&#095;tool&#095;id) </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>fk_protocol_target_gene_tm50</td>
-		<td > ( tm50&#095;8&#095;tool&#095;id ) ref <a href='#tm50&#095;8&#095;tool'>tm50&#095;8&#095;tool</a> (tm50&#095;8&#095;tool&#095;id) </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>fk_protocol_target_gene_robot</td>
-		<td > ( processing&#095;robot&#095;id ) ref <a href='#processing&#095;robot'>processing&#095;robot</a> (processing&#095;robot&#095;id) </td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table class='bordered'>
-<thead>
-<tr><th colspan='3'><a name='template'>Table template</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td><a name='template.template_id'>template&#095;id</a></td>
-		<td> bigserial  NOT NULL  </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='template.name'>name</a></td>
-		<td> varchar  NOT NULL  </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='template.plate_type_id'>plate&#095;type&#095;id</a></td>
-		<td> bigint  NOT NULL  </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='template.notes'>notes</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='3'><b>Indexes</b></th></tr>
-	<tr>		<td>pk&#095;template primary key</td>
-		<td> ON template&#095;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>uq&#095;template&#095;name unique</td>
-		<td> ON name</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;template&#095;plate&#095;type&#095;id </td>
-		<td> ON plate&#095;type&#095;id</td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='3'><b>Foreign Keys</b></th></tr>
-	<tr>
-		<td>fk_template_plate_type_id</td>
-		<td > ( plate&#095;type&#095;id ) ref <a href='#plate&#095;type'>plate&#095;type</a> (plate&#095;type&#095;id) </td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table class='bordered'>
-<thead>
-<tr><th colspan='3'><a name='template_barcode_seq'>Table template_barcode_seq</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td><a name='template_barcode_seq.template_id'>template&#095;id</a></td>
-		<td> bigint  NOT NULL  </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='template_barcode_seq.col'>col</a></td>
-		<td> smallint  NOT NULL  </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='template_barcode_seq.row'>row</a></td>
-		<td> smallint  NOT NULL  </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='template_barcode_seq.barcode_seq'>barcode&#095;seq</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='3'><b>Indexes</b></th></tr>
-	<tr>		<td>idx&#095;template&#095;barcode&#095;seq&#095;template&#095;id </td>
-		<td> ON template&#095;id</td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='3'><b>Foreign Keys</b></th></tr>
-	<tr>
-		<td>fk_template_barcode_seq_template_id</td>
-		<td > ( template&#095;id ) ref <a href='#template'>template</a> (template&#095;id) </td>
 		<td>  </td>
 	</tr>
 </tbody>
@@ -5444,6 +5161,261 @@ Referred by protocol_target_gene ( processing_robot_id ) </title></a>
 	<tr>
 		<td>fk_run_labadmin_users</td>
 		<td > ( email ) ref <a href='#labadmin&#095;users'>labadmin&#095;users</a> (email) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='3'><a name='sample_plate_sample'>Table sample_plate_sample</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='sample_plate_sample.sample_plate_id'>sample&#095;plate&#095;id</a></td>
+		<td> bigint  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='sample_plate_sample.sample_id'>sample&#095;id</a></td>
+		<td> varchar  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='sample_plate_sample.col'>col</a></td>
+		<td> integer  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='sample_plate_sample.row'>row</a></td>
+		<td> varchar  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='sample_plate_sample.name'>name</a></td>
+		<td> varchar   </td>
+		<td> The name of the sample in this plate in case that needs to be changed &#040;e&#046;g&#046; if the sample has been plated twice&#041; </td>
+	</tr>
+	<tr>
+		<td><a name='sample_plate_sample.notes'>notes</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='3'><b>Indexes</b></th></tr>
+	<tr>		<td>idx&#095;plate&#095;map </td>
+		<td> ON sample&#095;plate&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;plate&#095;map </td>
+		<td> ON sample&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;plate&#095;map&#095;0 primary key</td>
+		<td> ON sample&#095;plate&#095;id&#044; sample&#095;id&#044; col&#044; row</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='3'><b>Foreign Keys</b></th></tr>
+	<tr>
+		<td>fk_plate_map_sample_plate</td>
+		<td > ( sample&#095;plate&#095;id ) ref <a href='#sample&#095;plate'>sample&#095;plate</a> (sample&#095;plate&#095;id) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>fk_plate_map_sample</td>
+		<td > ( sample&#095;id ) ref <a href='#sample'>sample</a> (sample&#095;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='3'><a name='barcode_sequence_plate'>Table barcode_sequence_plate</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='barcode_sequence_plate.barcode_sequence_plate_id'>barcode&#095;sequence&#095;plate&#095;id</a></td>
+		<td> bigserial  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='barcode_sequence_plate.name'>name</a></td>
+		<td> varchar  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='barcode_sequence_plate.plate_type_id'>plate&#095;type&#095;id</a></td>
+		<td> bigint  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='barcode_sequence_plate.notes'>notes</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='3'><b>Indexes</b></th></tr>
+	<tr>		<td>pk&#095;template primary key</td>
+		<td> ON barcode&#095;sequence&#095;plate&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>uq&#095;template&#095;name unique</td>
+		<td> ON name</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;template&#095;plate&#095;type&#095;id </td>
+		<td> ON plate&#095;type&#095;id</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='3'><b>Foreign Keys</b></th></tr>
+	<tr>
+		<td>fk_template_plate_type_id</td>
+		<td > ( plate&#095;type&#095;id ) ref <a href='#plate&#095;type'>plate&#095;type</a> (plate&#095;type&#095;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='3'><a name='protocol_target_gene'>Table protocol_target_gene</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='protocol_target_gene.protocol_target_gene_id'>protocol&#095;target&#095;gene&#095;id</a></td>
+		<td> bigserial  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='protocol_target_gene.barcode_sequence_plate_id'>barcode&#095;sequence&#095;plate&#095;id</a></td>
+		<td> bigint   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='protocol_target_gene.master_mix_lot_id'>master&#095;mix&#095;lot&#095;id</a></td>
+		<td> bigint   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='protocol_target_gene.water_lot_id'>water&#095;lot&#095;id</a></td>
+		<td> bigint   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='protocol_target_gene.tm300_8_tool_id'>tm300&#095;8&#095;tool&#095;id</a></td>
+		<td> bigint   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='protocol_target_gene.tm50_8_tool_id'>tm50&#095;8&#095;tool&#095;id</a></td>
+		<td> bigint   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='protocol_target_gene.processing_robot_id'>processing&#095;robot&#095;id</a></td>
+		<td> bigint   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='3'><b>Indexes</b></th></tr>
+	<tr>		<td>pk&#095;protocol&#095;target&#095;gene primary key</td>
+		<td> ON protocol&#095;target&#095;gene&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;protocol&#095;target&#095;gene </td>
+		<td> ON barcode&#095;sequence&#095;plate&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;protocol&#095;target&#095;gene&#095;0 </td>
+		<td> ON master&#095;mix&#095;lot&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;protocol&#095;target&#095;gene&#095;1 </td>
+		<td> ON water&#095;lot&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;protocol&#095;target&#095;gene&#095;2 </td>
+		<td> ON tm300&#095;8&#095;tool&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;protocol&#095;target&#095;gene&#095;3 </td>
+		<td> ON tm50&#095;8&#095;tool&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;protocol&#095;target&#095;gene&#095;4 </td>
+		<td> ON processing&#095;robot&#095;id</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='3'><b>Foreign Keys</b></th></tr>
+	<tr>
+		<td>fk_protocol_target_gene</td>
+		<td > ( barcode&#095;sequence&#095;plate&#095;id ) ref <a href='#barcode&#095;sequence&#095;plate'>barcode&#095;sequence&#095;plate</a> (barcode&#095;sequence&#095;plate&#095;id) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>fk_protocol_target_gene_mm</td>
+		<td > ( master&#095;mix&#095;lot&#095;id ) ref <a href='#master&#095;mix&#095;lot'>master&#095;mix&#095;lot</a> (master&#095;mix&#095;lot&#095;id) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>fk_protocol_target_gene_wl</td>
+		<td > ( water&#095;lot&#095;id ) ref <a href='#water&#095;lot'>water&#095;lot</a> (water&#095;lot&#095;id) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>fk_protocol_target_gene_tm300</td>
+		<td > ( tm300&#095;8&#095;tool&#095;id ) ref <a href='#tm300&#095;8&#095;tool'>tm300&#095;8&#095;tool</a> (tm300&#095;8&#095;tool&#095;id) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>fk_protocol_target_gene_tm50</td>
+		<td > ( tm50&#095;8&#095;tool&#095;id ) ref <a href='#tm50&#095;8&#095;tool'>tm50&#095;8&#095;tool</a> (tm50&#095;8&#095;tool&#095;id) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>fk_protocol_target_gene_robot</td>
+		<td > ( processing&#095;robot&#095;id ) ref <a href='#processing&#095;robot'>processing&#095;robot</a> (processing&#095;robot&#095;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='3'><a name='barcode_sequence_plate_layout'>Table barcode_sequence_plate_layout</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='barcode_sequence_plate_layout.barcode_sequence_plate_id'>barcode&#095;sequence&#095;plate&#095;id</a></td>
+		<td> bigint  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='barcode_sequence_plate_layout.col'>col</a></td>
+		<td> smallint  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='barcode_sequence_plate_layout.row'>row</a></td>
+		<td> smallint  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='barcode_sequence_plate_layout.barcode_seq'>barcode&#095;seq</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='3'><b>Indexes</b></th></tr>
+	<tr>		<td>idx&#095;template&#095;barcode&#095;seq&#095;template&#095;id </td>
+		<td> ON barcode&#095;sequence&#095;plate&#095;id</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='3'><b>Foreign Keys</b></th></tr>
+	<tr>
+		<td>fk_template_barcode_seq_template_id</td>
+		<td > ( barcode&#095;sequence&#095;plate&#095;id ) ref <a href='#barcode&#095;sequence&#095;plate'>barcode&#095;sequence&#095;plate</a> (barcode&#095;sequence&#095;plate&#095;id) </td>
 		<td>  </td>
 	</tr>
 </tbody>

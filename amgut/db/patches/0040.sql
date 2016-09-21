@@ -126,27 +126,27 @@ CREATE INDEX idx_study_sample_study_id ON pm.study_sample ( study_id );
 
 CREATE INDEX idx_study_sample_sample_id ON pm.study_sample ( sample_id );
 
-CREATE TABLE pm.template (
-	template_id          bigserial  NOT NULL,
+CREATE TABLE pm.barcode_sequence_plate (
+	barcode_sequence_plate_id          bigserial  NOT NULL,
 	name                 varchar  NOT NULL,
 	plate_type_id        bigint  NOT NULL,
 	notes                varchar  ,
-	CONSTRAINT pk_template PRIMARY KEY ( template_id ),
-	CONSTRAINT uq_template_name UNIQUE ( name ) ,
-	CONSTRAINT fk_template_plate_type_id FOREIGN KEY ( plate_type_id ) REFERENCES pm.plate_type( plate_type_id )
+	CONSTRAINT pk_barcode_sequence_plate PRIMARY KEY ( barcode_sequence_plate_id ),
+	CONSTRAINT uq_barcode_sequence_plate_name UNIQUE ( name ) ,
+	CONSTRAINT fk_barcode_sequence_plate_plate_type_id FOREIGN KEY ( plate_type_id ) REFERENCES pm.plate_type( plate_type_id )
  );
 
-CREATE INDEX idx_template_plate_type_id ON pm.template ( plate_type_id );
+CREATE INDEX idx_barcode_sequence_plate_plate_type_id ON pm.barcode_sequence_plate ( plate_type_id );
 
-CREATE TABLE pm.template_barcode_seq (
-	template_id          bigint  NOT NULL,
+CREATE TABLE pm.barcode_sequence_plate_layout (
+	barcode_sequence_plate_id          bigint  NOT NULL,
 	col                  smallint  NOT NULL,
 	row                  smallint  NOT NULL,
 	barcode_seq          varchar  ,
-	CONSTRAINT fk_template_barcode_seq_template_id FOREIGN KEY ( template_id ) REFERENCES pm.template( template_id )
+	CONSTRAINT fk_barcode_sequence_plate_layout_barcode_sequence_plate_id FOREIGN KEY ( barcode_sequence_plate_id ) REFERENCES pm.barcode_sequence_plate( barcode_sequence_plate_id )
  );
 
-CREATE INDEX idx_template_barcode_seq_template_id ON pm.template_barcode_seq ( template_id );
+CREATE INDEX idx_barcode_sequence_plate_layout_barcode_sequence_plate_id ON pm.barcode_sequence_plate_layout ( barcode_sequence_plate_id );
 
 CREATE TABLE pm.tm300_8_tool (
 	tm300_8_tool_id      bigserial  NOT NULL,
@@ -221,14 +221,14 @@ COMMENT ON COLUMN pm.plate_map.name IS 'The name of the sample in this plate in 
 
 CREATE TABLE pm.protocol_target_gene (
 	protocol_target_gene_id bigserial  NOT NULL,
-	template_id          bigint  ,
+	barcode_sequence_plate_id          bigint  ,
 	master_mix_lot_id    bigint  ,
 	water_lot_id         bigint  ,
 	tm300_8_tool_id      bigint  ,
 	tm50_8_tool_id       bigint  ,
 	processing_robot_id  bigint  ,
 	CONSTRAINT pk_protocol_target_gene PRIMARY KEY ( protocol_target_gene_id ),
-	CONSTRAINT fk_protocol_target_gene FOREIGN KEY ( template_id ) REFERENCES pm.template( template_id )    ,
+	CONSTRAINT fk_protocol_target_gene FOREIGN KEY ( barcode_sequence_plate_id ) REFERENCES pm.barcode_sequence_plate( barcode_sequence_plate_id )    ,
 	CONSTRAINT fk_protocol_target_gene_mm FOREIGN KEY ( master_mix_lot_id ) REFERENCES pm.master_mix_lot( master_mix_lot_id )    ,
 	CONSTRAINT fk_protocol_target_gene_wl FOREIGN KEY ( water_lot_id ) REFERENCES pm.water_lot( water_lot_id )    ,
 	CONSTRAINT fk_protocol_target_gene_tm300 FOREIGN KEY ( tm300_8_tool_id ) REFERENCES pm.tm300_8_tool( tm300_8_tool_id )    ,
@@ -236,7 +236,7 @@ CREATE TABLE pm.protocol_target_gene (
 	CONSTRAINT fk_protocol_target_gene_robot FOREIGN KEY ( processing_robot_id ) REFERENCES pm.processing_robot( processing_robot_id )
  );
 
-CREATE INDEX idx_protocol_target_gene ON pm.protocol_target_gene ( template_id );
+CREATE INDEX idx_protocol_target_gene ON pm.protocol_target_gene ( barcode_sequence_plate_id );
 
 CREATE INDEX idx_protocol_target_gene_0 ON pm.protocol_target_gene ( master_mix_lot_id );
 
