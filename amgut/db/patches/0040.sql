@@ -64,7 +64,7 @@ CREATE TABLE pm.protocol (
  );
 
 CREATE TABLE pm.run (
-	run_id               bigint  NOT NULL,
+	run_id               bigserial  NOT NULL,
 	name                 varchar  NOT NULL,
 	email                varchar  NOT NULL,
 	creation_timestamp   timestamp  ,
@@ -173,7 +173,7 @@ CREATE TABLE pm.water_lot (
  );
 
 CREATE TABLE pm.dna_plate (
-	dna_plate_id         bigint  NOT NULL,
+	dna_plate_id         bigserial  NOT NULL,
 	name                 varchar  NOT NULL,
 	email                varchar  ,
 	creation_timestamp   timestamp  ,
@@ -201,23 +201,23 @@ CREATE INDEX idx_dna_plate_2 ON pm.dna_plate ( extraction_kit_lot_id );
 
 CREATE INDEX idx_dna_plate_3 ON pm.dna_plate ( extraction_tool_id );
 
-CREATE TABLE pm.plate_map (
+CREATE TABLE pm.sample_plate_layout (
 	sample_plate_id      bigint  NOT NULL,
 	sample_id            varchar  NOT NULL,
 	col                  integer  NOT NULL,
 	row                  varchar  NOT NULL,
 	name                 varchar  ,
 	notes                varchar  ,
-	CONSTRAINT idx_plate_map_0 PRIMARY KEY ( sample_plate_id, sample_id, col, row ),
-	CONSTRAINT fk_plate_map_sample_plate FOREIGN KEY ( sample_plate_id ) REFERENCES pm.sample_plate( sample_plate_id )    ,
-	CONSTRAINT fk_plate_map_sample FOREIGN KEY ( sample_id ) REFERENCES pm.sample( sample_id )
+	CONSTRAINT idx_sample_plate_layout_0 PRIMARY KEY ( sample_plate_id, sample_id, col, row ),
+	CONSTRAINT fk_sample_plate_layout_sample_plate FOREIGN KEY ( sample_plate_id ) REFERENCES pm.sample_plate( sample_plate_id )    ,
+	CONSTRAINT fk_sample_plate_layout_sample FOREIGN KEY ( sample_id ) REFERENCES pm.sample( sample_id )
  );
 
-CREATE INDEX idx_plate_map_1 ON pm.plate_map ( sample_plate_id );
+CREATE INDEX idx_sample_plate_layout_1 ON pm.sample_plate_layout ( sample_plate_id );
 
-CREATE INDEX idx_plate_map_2 ON pm.plate_map ( sample_id );
+CREATE INDEX idx_sample_plate_layout_2 ON pm.sample_plate_layout ( sample_id );
 
-COMMENT ON COLUMN pm.plate_map.name IS 'The name of the sample in this plate in case that needs to be changed (e.g. if the sample has been plated twice)';
+COMMENT ON COLUMN pm.sample_plate_layout.name IS 'The name of the sample in this plate in case that needs to be changed (e.g. if the sample has been plated twice)';
 
 CREATE TABLE pm.protocol_target_gene (
 	protocol_target_gene_id bigserial  NOT NULL,
@@ -249,7 +249,7 @@ CREATE INDEX idx_protocol_target_gene_3 ON pm.protocol_target_gene ( tm50_8_tool
 CREATE INDEX idx_protocol_target_gene_4 ON pm.protocol_target_gene ( processing_robot_id );
 
 CREATE TABLE pm.protocol_plate (
-	protocol_plate_id    bigint  NOT NULL,
+	protocol_plate_id    bigserial  NOT NULL,
 	name                 varchar  NOT NULL,
 	email                varchar  NOT NULL,
 	creation_timestamp   timestamp  ,
