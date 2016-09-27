@@ -320,6 +320,9 @@ class AGDataAccess(object):
             TRN.add(sql, [survey_id])
 
             # Delete last due to foreign keys
+            sql = "DELETE FROM ag_kit_barcodes WHERE survey_id = %s"
+            TRN.add(sql, [survey_id])
+
             sql = "DELETE FROM ag_login_surveys WHERE survey_id = %s"
             TRN.add(sql, [survey_id])
 
