@@ -22940,9 +22940,8 @@ AS $function$xpath_exists$function$
 			</fk>
 		</table>
 		<table name="study" >
-			<column name="study_id" type="bigint" jt="-5" mandatory="y" >
-				<comment><![CDATA[positive if Qiita study ID, negative if others]]></comment>
-			</column>
+			<column name="study_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="qiita_study_id" type="bigint" jt="-5" />
 			<column name="title" type="varchar" jt="12" />
 			<column name="alias" type="varchar" jt="12" />
 			<column name="notes" type="varchar" jt="12" />
@@ -22951,6 +22950,9 @@ AS $function$xpath_exists$function$
 			</index>
 			<index name="uq_study_title" unique="UNIQUE" >
 				<column name="title" />
+			</index>
+			<index name="uq_study_qiita_study_id" unique="UNIQUE" >
+				<column name="qiita_study_id" />
 			</index>
 		</table>
 		<table name="study_sample" >
@@ -23049,7 +23051,6 @@ AS $function$xpath_exists$function$
 		<entity schema="barcodes" name="project" color="a8c4ef" x="1800" y="1470" />
 		<entity schema="ag" name="ag_login" color="f7e2c6" x="1890" y="735" />
 		<entity schema="ag" name="ag_kit_barcodes" color="f7e2c6" x="1620" y="600" />
-		<entity schema="pm" name="study" color="b2cdf7" x="285" y="975" />
 		<entity schema="pm" name="master_mix_lot" color="b2cdf7" x="525" y="405" />
 		<entity schema="pm" name="extraction_tool" color="b2cdf7" x="720" y="1140" />
 		<entity schema="pm" name="extraction_robot" color="b2cdf7" x="720" y="975" />
@@ -23071,6 +23072,7 @@ AS $function$xpath_exists$function$
 		<entity schema="pm" name="run" color="b2cdf7" x="420" y="600" />
 		<entity schema="pm" name="sample_plate" color="b2cdf7" x="420" y="780" />
 		<entity schema="pm" name="library_plate" color="b2cdf7" x="60" y="975" />
+		<entity schema="pm" name="study" color="b2cdf7" x="285" y="975" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by :    american_gut_consent</comment>
 			<entity schema="ag" name="ag_survey_multiples" />
