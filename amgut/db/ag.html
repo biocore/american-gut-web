@@ -532,17 +532,17 @@ table {
 	barcode_sequence_plate references plate_type ( plate_type_id )</title>
 </path>
 <text x='441' y='160' transform='rotate(0 441,160)' title='Foreign Key fk_template_plate_type_id
-	barcode_sequence_plate references plate_type ( plate_type_id )' style='fill:#a1a0a0;'>plate_type_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 405 1170 L 397,1170 Q 390,1170 390,1162 L 390,817 Q 390,810 397,810 L 405,810' >
+	barcode_sequence_plate references plate_type ( plate_type_id )' style='fill:#a1a0a0;'>plate_type_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 540 1170 L 547,1170 Q 555,1170 555,1162 L 555,1102 Q 555,1095 547,1095 L 532,1095 Q 525,1095 525,1087 L 525,937 Q 525,930 517,930 L 397,930 Q 390,930 390,922 L 390,817 Q 390,810 397,810 L 405,810' >
 	<title>Foreign Key fk_plate_map_sample_plate
 	sample_plate_layout references sample_plate ( sample_plate_id )</title>
 </path>
-<text x='321' y='1165' transform='rotate(0 321,1165)' title='Foreign Key fk_plate_map_sample_plate
+<text x='547' y='1165' transform='rotate(0 547,1165)' title='Foreign Key fk_plate_map_sample_plate
 	sample_plate_layout references sample_plate ( sample_plate_id )' style='fill:#a1a0a0;'>sample_plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 540 1185 L 667,1185 Q 675,1185 675,1177 L 675,1012 Q 675,1005 667,1005 L 660,1005' >
 	<title>Foreign Key fk_plate_map_sample
 	sample_plate_layout references sample ( sample_id )</title>
 </path>
 <text x='547' y='1180' transform='rotate(0 547,1180)' title='Foreign Key fk_plate_map_sample
-	sample_plate_layout references sample ( sample_id )' style='fill:#a1a0a0;'>sample_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 405 1005 L 360,1005' >
+	sample_plate_layout references sample ( sample_id )' style='fill:#a1a0a0;'>sample_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 405 1005 L 390,1005' >
 	<title>Foreign Key fk_study_sample_study_id
 	study_sample references study ( study_id )</title>
 </path>
@@ -597,7 +597,7 @@ table {
 	sample references barcode ( barcode )</title>
 </path>
 <text x='667' y='1030' transform='rotate(0 667,1030)' title='Foreign Key fk_sample_barcode
-	sample references barcode ( barcode )' style='fill:#a1a0a0;'>barcode</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 360 795 L 367,795 Q 375,795 375,802 L 375,1387 Q 375,1395 382,1395 L 1185,1395' >
+	sample references barcode ( barcode )' style='fill:#a1a0a0;'>barcode</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 360 795 L 382,795 Q 390,795 390,787 L 390,757 Q 390,750 397,750 L 922,750 Q 930,750 930,757 L 930,1387 Q 930,1395 937,1395 L 1185,1395' >
 	<title>Foreign Key fk_dna_plate_labadmin_users
 	dna_plate references labadmin_users ( email )</title>
 </path>
@@ -607,37 +607,42 @@ table {
 	dna_plate references sample_plate ( sample_plate_id )</title>
 </path>
 <text x='367' y='820' transform='rotate(0 367,820)' title='Foreign Key fk_dna_plate_sample_plate
-	dna_plate references sample_plate ( sample_plate_id )' style='fill:#a1a0a0;'>sample_plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 195 840 L 187,840 Q 180,840 180,847 L 180,922 Q 180,930 187,930 L 682,930 Q 690,930 690,937 L 690,997 Q 690,1005 697,1005 L 705,1005' >
+	dna_plate references sample_plate ( sample_plate_id )' style='fill:#a1a0a0;'>sample_plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 360 840 L 367,840 Q 375,840 375,832 L 375,742 Q 375,735 382,735 L 682,735 Q 690,735 690,742 L 690,997 Q 690,1005 697,1005 L 705,1005' >
 	<title>Foreign Key fk_dna_plate_extraction_robot
 	dna_plate references extraction_robot ( extraction_robot_id )</title>
 </path>
-<text x='90' y='835' transform='rotate(0 90,835)' title='Foreign Key fk_dna_plate_extraction_robot
-	dna_plate references extraction_robot ( extraction_robot_id )' style='fill:#a1a0a0;'>extraction_robot_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 195 855 L 172,855 Q 165,855 165,847 L 165,712 Q 165,705 172,705 L 382,705 Q 390,705 390,712 L 390,742 Q 390,750 397,750 L 682,750 Q 690,750 690,757 L 690,847 Q 690,855 697,855 L 705,855' >
-	<title>Foreign Key fk_dna_plate
-	dna_plate references extraction_kit_lot ( extraction_kit_lot_id )</title>
-</path>
-<text x='87' y='850' transform='rotate(0 87,850)' title='Foreign Key fk_dna_plate
-	dna_plate references extraction_kit_lot ( extraction_kit_lot_id )' style='fill:#a1a0a0;'>extraction_kit_lot_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 195 870 L 157,870 Q 150,870 150,862 L 150,787 Q 150,780 157,780 L 172,780 Q 180,780 180,772 L 180,697 Q 180,690 187,690 L 367,690 Q 375,690 375,697 L 375,727 Q 375,735 382,735 L 877,735 Q 885,735 885,742 L 885,1162 Q 885,1170 877,1170 L 855,1170' >
+<text x='367' y='835' transform='rotate(0 367,835)' title='Foreign Key fk_dna_plate_extraction_robot
+	dna_plate references extraction_robot ( extraction_robot_id )' style='fill:#a1a0a0;'>extraction_robot_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 195 870 L 187,870 Q 180,870 180,877 L 180,922 Q 180,930 187,930 L 247,930 Q 255,930 255,937 L 255,1102 Q 255,1110 262,1110 L 682,1110 Q 690,1110 690,1117 L 690,1162 Q 690,1170 697,1170 L 705,1170' >
 	<title>Foreign Key fk_dna_plate_extraction_tool
 	dna_plate references extraction_tool ( extraction_tool_id )</title>
 </path>
 <text x='99' y='865' transform='rotate(0 99,865)' title='Foreign Key fk_dna_plate_extraction_tool
-	dna_plate references extraction_tool ( extraction_tool_id )' style='fill:#a1a0a0;'>extraction_tool_id</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 510 660 L 562,660 Q 570,660 570,667 L 570,937 Q 570,945 577,945 L 892,945 Q 900,945 900,952 L 900,1387 Q 900,1395 907,1395 L 915,1395' >
+	dna_plate references extraction_tool ( extraction_tool_id )' style='fill:#a1a0a0;'>extraction_tool_id</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 405 660 L 397,660 Q 390,660 390,667 L 390,742 Q 390,750 397,750 L 405,750' >
 	<title>Foreign Key fk_run_labadmin_users
 	run references labadmin_users ( email )</title>
 </path>
-<text x='517' y='655' transform='rotate(0 517,655)' title='Foreign Key fk_run_labadmin_users
-	run references labadmin_users ( email )' style='fill:#a1a0a0;'>email</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 405 840 L 382,840 Q 375,840 375,847 L 375,855' >
+<text x='379' y='655' transform='rotate(0 379,655)' title='Foreign Key fk_run_labadmin_users
+	run references labadmin_users ( email )' style='fill:#a1a0a0;'>email</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 540 840 L 577,840 Q 585,840 585,832 L 585,757 Q 585,750 592,750 L 922,750 Q 930,750 930,757 L 930,1387 Q 930,1395 937,1395 L 1192,1395 Q 1200,1395 1200,1387 L 1200,1087 Q 1200,1080 1207,1080 L 1582,1080 Q 1590,1080 1590,1087 L 1590,1387 Q 1590,1395 1597,1395 L 1942,1395 Q 1950,1395 1950,1387 L 1950,997 Q 1950,990 1957,990 L 2227,990 Q 2235,990 2235,997 L 2235,1042 Q 2235,1050 2242,1050 L 2257,1050 Q 2265,1050 2265,1042 L 2265,982 Q 2265,975 2257,975 L 2032,975 Q 2025,975 2025,967 L 2025,772 Q 2025,765 2017,765 L 2002,765 Q 1995,765 1995,757 L 1995,682 Q 1995,675 2002,675 L 2032,675 Q 2040,675 2040,667 L 2040,577 Q 2040,570 2047,570 L 2932,570 Q 2940,570 2940,577 L 2940,637 Q 2940,645 2947,645 L 2962,645 Q 2970,645 2970,637 L 2970,562 Q 2970,555 2962,555 L 2692,555 Q 2685,555 2685,562 L 2685,967 Q 2685,975 2677,975 L 2032,975 Q 2025,975 2025,967 L 2025,772 Q 2025,765 2017,765 L 2002,765 Q 1995,765 1995,757 L 1995,682 Q 1995,675 2002,675 L 2032,675 Q 2040,675 2040,667 L 2040,577 Q 2040,570 2047,570 L 2932,570 Q 2940,570 2940,577 L 2940,637 Q 2940,645 2947,645 L 2962,645 Q 2970,645 2970,637 L 2970,562 Q 2970,555 2962,555 L 2692,555 Q 2685,555 2685,562 L 2685,967 Q 2685,975 2677,975 L 2032,975 Q 2025,975 2025,967 L 2025,772 Q 2025,765 2017,765 L 2002,765 Q 1995,765 1995,757 L 1995,682 Q 1995,675 2002,675 L 2032,675 Q 2040,675 2040,667 L 2040,577 Q 2040,570 2047,570 L 2932,570 Q 2940,570 2940,577 L 2940,637 Q 2940,645 2947,645 L 2962,645 Q 2970,645 2970,637 L 2970,562 Q 2970,555 2962,555 L 2692,555 Q 2685,555 2685,562 L 2685,967 Q 2685,975 2677,975 L 2032,975 Q 2025,975 2025,967 L 2025,772 Q 2025,765 2017,765 L 2002,765 Q 1995,765 1995,757 L 1995,682 Q 1995,675 2002,675 L 2032,675 Q 2040,675 2040,667 L 2040,577 Q 2040,570 2047,570 L 2932,570 Q 2940,570 2940,577 L 2940,637 Q 2940,645 2947,645 L 2962,645 Q 2970,645 2970,637 L 2970,562 Q 2970,555 2962,555 L 2692,555 Q 2685,555 2685,562 L 2685,967 Q 2685,975 2677,975 L 2032,975 Q 2025,975 2025,967 L 2025,772 Q 2025,765 2017,765 L 2002,765 Q 1995,765 1995,757 L 1995,682 Q 1995,675 2002,675 L 2032,675 Q 2040,675 2040,667 L 2040,577 Q 2040,570 2047,570 L 2932,570 Q 2940,570 2940,577 L 2940,637 Q 2940,645 2947,645 L 2962,645 Q 2970,645 2970,637 L 2970,562 Q 2970,555 2962,555 L 2692,555 Q 2685,555 2685,562 L 2685,967 Q 2685,975 2677,975 L 2032,975 Q 2025,975 2025,967 L 2025,772 Q 2025,765 2017,765 L 2002,765 Q 1995,765 1995,757 L 1995,682 Q 1995,675 2002,675 L 2032,675 Q 2040,675 2040,667 L 2040,577 Q 2040,570 2047,570 L 2932,570 Q 2940,570 2940,577 L 2940,637 Q 2940,645 2947,645 L 2962,645 Q 2970,645 2970,637 L 2970,562 Q 2970,555 2962,555 L 2692,555 Q 2685,555 2685,562 L 2685,967 Q 2685,975 2677,975 L 2032,975 Q 2025,975 2025,967 L 2025,772 Q 2025,765 2017,765 L 2002,765 Q 1995,765 1995,757 L 1995,682 Q 1995,675 2002,675 L 2032,675 Q 2040,675 2040,667 L 2040,577 Q 2040,570 2047,570 L 2932,570 Q 2940,570 2940,577 L 2940,637 Q 2940,645 2947,645 L 2962,645 Q 2970,645 2970,637 L 2970,562 Q 2970,555 2962,555 L 2692,555 Q 2685,555 2685,562 L 2685,967 Q 2685,975 2677,975 L 2032,975 Q 2025,975 2025,967 L 2025,772 Q 2025,765 2017,765 L 2002,765 Q 1995,765 1995,757 L 1995,682 Q 1995,675 2002,675 L 2032,675 Q 2040,675 2040,667 L 2040,577 Q 2040,570 2047,570 L 2932,570 Q 2940,570 2940,577 L 2940,637 Q 2940,645 2947,645 L 2962,645 Q 2970,645 2970,637 L 2970,562 Q 2970,555 2962,555 L 2692,555 Q 2685,555 2685,562 L 2685,967 Q 2685,975 2677,975 L 2032,975 Q 2025,975 2025,967 L 2025,772 Q 2025,765 2017,765 L 2002,765 Q 1995,765 1995,757 L 1995,682 Q 1995,675 2002,675 L 2032,675 Q 2040,675 2040,667 L 2040,577 Q 2040,570 2047,570 L 2932,570 Q 2940,570 2940,577 L 2940,637 Q 2940,645 2947,645 L 2962,645 Q 2970,645 2970,637 L 2970,562 Q 2970,555 2962,555 L 2692,555 Q 2685,555 2685,562 L 2685,967 Q 2685,975 2677,975' >
 	<title>Foreign Key fk_sample_plate_labadmin_users
 	sample_plate references labadmin_users ( email )</title>
 </path>
-<text x='379' y='835' transform='rotate(0 379,835)' title='Foreign Key fk_sample_plate_labadmin_users
-	sample_plate references labadmin_users ( email )' style='fill:#a1a0a0;'>email</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 210 1035 L 247,1035 Q 255,1035 255,1042 L 255,1087 Q 255,1095 262,1095 L 367,1095 Q 375,1095 375,1102 L 375,1110' >
+<text x='547' y='835' transform='rotate(0 547,835)' title='Foreign Key fk_sample_plate_labadmin_users
+	sample_plate references labadmin_users ( email )' style='fill:#a1a0a0;'>email</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 540 870 L 562,870 Q 570,870 570,862 L 570,577 Q 570,570 562,570 L 292,570 Q 285,570 285,577 L 285,585' >
+	<title>Foreign Key fk_sample_plate_plate_type
+	sample_plate references plate_type ( plate_type_id )</title>
+</path>
+<text x='547' y='865' transform='rotate(0 547,865)' title='Foreign Key fk_sample_plate_plate_type
+	sample_plate references plate_type ( plate_type_id )' style='fill:#a1a0a0;'>plate_type_id</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 210 1035 L 232,1035 Q 240,1035 240,1042 L 240,1282 Q 240,1290 247,1290 L 922,1290 Q 930,1290 930,1297 L 930,1305' >
 	<title>Foreign Key fk_library_plate
 	library_plate references labadmin_users ( email )</title>
 </path>
 <text x='217' y='1030' transform='rotate(0 217,1030)' title='Foreign Key fk_library_plate
-	library_plate references labadmin_users ( email )' style='fill:#a1a0a0;'>email</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 45 1080 L 37,1080 Q 30,1080 30,1087 L 30,1192 Q 30,1200 37,1200 L 45,1200' >
+	library_plate references labadmin_users ( email )' style='fill:#a1a0a0;'>email</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 45 1065 L 37,1065 Q 30,1065 30,1057 L 30,787 Q 30,780 37,780 L 172,780 Q 180,780 180,772 L 180,772 Q 180,765 187,765 L 195,765' >
+	<title>Foreign Key fk_library_plate_dna_plate
+	library_plate references dna_plate ( dna_plate_id )</title>
+</path>
+<text x='-21' y='1060' transform='rotate(0 -21,1060)' title='Foreign Key fk_library_plate_dna_plate
+	library_plate references dna_plate ( dna_plate_id )' style='fill:#a1a0a0;'>dna_plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 45 1080 L 37,1080 Q 30,1080 30,1087 L 30,1192 Q 30,1200 37,1200 L 45,1200' >
 	<title>Foreign Key fk_library_plate_protocol
 	library_plate references protocol ( protocol_id )</title>
 </path>
@@ -1404,19 +1409,6 @@ Referred by consent_revoked ( ag_login_id ) </title></a>
   <use id='nn' x='1622' y='927' xlink:href='#nn'/><a xlink:href='#ag_kit_barcodes.deposited'><text x='1638' y='937'>deposited</text><title>deposited bool not null default &#039;F&#039;
 Deposited to EBI</title></a>
 
-<!-- ============= Table 'study' ============= -->
-<rect class='table' x='285' y='968' width='75' height='105' rx='7' ry='7' />
-<path d='M 285.50 994.50 L 285.50 975.50 Q 285.50 968.50 292.50 968.50 L 352.50 968.50 Q 359.50 968.50 359.50 975.50 L 359.50 994.50 L285.50 994.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
-<a xlink:href='#study'><text x='307' y='982' class='tableTitle'>study</text><title>Table pm.study</title></a>
-  <use id='nn' x='287' y='1002' xlink:href='#nn'/><a xlink:href='#study.study_id'><use id='pk' x='287' y='1001' xlink:href='#pk'/><title>Primary Key  ( study_id ) </title></a>
-<a xlink:href='#study.study_id'><text x='303' y='1012'>study_id</text><title>study_id bigint not null
-positive if Qiita study ID&#044; negative if others</title></a>
-<a xlink:href='#study.study_id'><use id='ref' x='348' y='1001' xlink:href='#ref'/><title>Referred by study_sample ( study_id ) </title></a>
-  <a xlink:href='#study.title'><use id='unq' x='287' y='1016' xlink:href='#unq'/><title>Unique Index  ( title ) </title></a>
-<a xlink:href='#study.title'><text x='303' y='1027'>title</text><title>title varchar</title></a>
-  <a xlink:href='#study.alias'><text x='303' y='1042'>alias</text><title>alias varchar</title></a>
-  <a xlink:href='#study.notes'><text x='303' y='1057'>notes</text><title>notes varchar</title></a>
-
 <!-- ============= Table 'master_mix_lot' ============= -->
 <rect class='table' x='525' y='398' width='135' height='90' rx='7' ry='7' />
 <path d='M 525.50 424.50 L 525.50 405.50 Q 525.50 398.50 532.50 398.50 L 652.50 398.50 Q 659.50 398.50 659.50 405.50 L 659.50 424.50 L525.50 424.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
@@ -1719,6 +1711,20 @@ Referred by sample_plate_layout ( sample_plate_id ) </title></a>
 <a xlink:href='#library_plate.protocol_targeted_id'><text x='78' y='1102'>protocol_targeted_id</text><title>protocol_targeted_id bigint</title></a>
 <a xlink:href='#library_plate.protocol_targeted_id'><use id='fk' x='198' y='1091' xlink:href='#fk'/><title>References protocol_targeted ( protocol_targeted_id ) </title></a>
   <a xlink:href='#library_plate.notes'><text x='78' y='1117'>notes</text><title>notes varchar</title></a>
+
+<!-- ============= Table 'study' ============= -->
+<rect class='table' x='285' y='968' width='105' height='120' rx='7' ry='7' />
+<path d='M 285.50 994.50 L 285.50 975.50 Q 285.50 968.50 292.50 968.50 L 382.50 968.50 Q 389.50 968.50 389.50 975.50 L 389.50 994.50 L285.50 994.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
+<a xlink:href='#study'><text x='322' y='982' class='tableTitle'>study</text><title>Table pm.study</title></a>
+  <use id='nn' x='287' y='1002' xlink:href='#nn'/><a xlink:href='#study.study_id'><use id='pk' x='287' y='1001' xlink:href='#pk'/><title>Primary Key  ( study_id ) </title></a>
+<a xlink:href='#study.study_id'><text x='303' y='1012'>study_id</text><title>study_id bigserial not null</title></a>
+<a xlink:href='#study.study_id'><use id='ref' x='378' y='1001' xlink:href='#ref'/><title>Referred by study_sample ( study_id ) </title></a>
+  <a xlink:href='#study.qiita_study_id'><use id='unq' x='287' y='1016' xlink:href='#unq'/><title>Unique Index  ( qiita_study_id ) </title></a>
+<a xlink:href='#study.qiita_study_id'><text x='303' y='1027'>qiita_study_id</text><title>qiita_study_id bigint</title></a>
+  <a xlink:href='#study.title'><use id='unq' x='287' y='1031' xlink:href='#unq'/><title>Unique Index  ( title ) </title></a>
+<a xlink:href='#study.title'><text x='303' y='1042'>title</text><title>title varchar</title></a>
+  <a xlink:href='#study.alias'><text x='303' y='1057'>alias</text><title>alias varchar</title></a>
+  <a xlink:href='#study.notes'><text x='303' y='1072'>notes</text><title>notes varchar</title></a>
 
 </g></svg>
 
@@ -4368,44 +4374,6 @@ Referred by sample_plate_layout ( sample_plate_id ) </title></a>
 <br/><br/>
 <table class='bordered'>
 <thead>
-<tr><th colspan='3'><a name='study'>Table study</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td><a name='study.study_id'>study&#095;id</a></td>
-		<td> bigint  NOT NULL  </td>
-		<td> positive if Qiita study ID&#044; negative if others </td>
-	</tr>
-	<tr>
-		<td><a name='study.title'>title</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='study.alias'>alias</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='study.notes'>notes</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='3'><b>Indexes</b></th></tr>
-	<tr>		<td>pk&#095;study primary key</td>
-		<td> ON study&#095;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>uq&#095;study&#095;title unique</td>
-		<td> ON title</td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table class='bordered'>
-<thead>
 <tr><th colspan='3'><a name='master_mix_lot'>Table master_mix_lot</a></th></tr>
 </thead>
 <tbody>
@@ -5432,6 +5400,53 @@ Referred by sample_plate_layout ( sample_plate_id ) </title></a>
 	<tr>
 		<td>fk_library_plate_ptg</td>
 		<td > ( protocol&#095;targeted&#095;id ) ref <a href='#protocol&#095;targeted'>protocol&#095;targeted</a> (protocol&#095;targeted&#095;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='3'><a name='study'>Table study</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='study.study_id'>study&#095;id</a></td>
+		<td> bigserial  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='study.qiita_study_id'>qiita&#095;study&#095;id</a></td>
+		<td> bigint   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='study.title'>title</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='study.alias'>alias</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='study.notes'>notes</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='3'><b>Indexes</b></th></tr>
+	<tr>		<td>pk&#095;study primary key</td>
+		<td> ON study&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>uq&#095;study&#095;title unique</td>
+		<td> ON title</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>uq&#095;study&#095;qiita&#095;study&#095;id unique</td>
+		<td> ON qiita&#095;study&#095;id</td>
 		<td>  </td>
 	</tr>
 </tbody>
