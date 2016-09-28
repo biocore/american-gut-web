@@ -10,6 +10,7 @@ import urlparse
 
 from json import loads, dumps
 from collections import defaultdict
+from functools import wraps
 
 from future.utils import viewitems
 from tornado.escape import url_escape
@@ -166,12 +167,15 @@ external_surveys = (survey_vioscreen, survey_fermented, survey_surf)
 
 def rollback(f):
     """Decorator for test functions to rollback on complete."""
-    def inner(*args, **kwargs):
+    # nose ignores wrapped functions unless named and wrapped with wraps
+    # http://stackoverflow.com/q/7727678
+    @wraps(f)
+    def test_inner(*args, **kwargs):
         with TRN:
             x = f(*args, **kwargs)
             TRN.rollback()
             return x
-    return inner
+    return test_inner
 
 
 def basejoin(base, url):

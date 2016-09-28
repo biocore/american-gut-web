@@ -166,8 +166,12 @@ class TestAGDataAccess(TestCase):
 
     @rollback
     def test_deleteAGParticipantSurvey(self):
+        # make sure we can get the corresponding survey by ID
+        self.ag_data.getConsent('8b2b45bb3390b585')
+
         self.ag_data.deleteAGParticipantSurvey(
             '000fc4cd-8fa4-db8b-e050-8a800c5d02b5', 'REMOVED-0')
+
         with self.assertRaises(ValueError):
             self.ag_data.getConsent('8b2b45bb3390b585')
 
@@ -176,6 +180,14 @@ class TestAGDataAccess(TestCase):
         exp = [['000fc4cd-8fa4-db8b-e050-8a800c5d02b5', 'REMOVED-0',
                 'REMOVED', today]]
         self.assertItemsEqual(res, exp)
+
+    @rollback
+    def test_deleteAGParticipantSurvey_with_sample_bug(self):
+        # issue 616
+        self.ag_data.deleteAGParticipantSurvey(
+            'd8592c74-9694-2135-e040-8a80115d6401', 'REMOVED-0')
+        with self.assertRaises(ValueError):
+            self.ag_data.getConsent('be8516e8c5d4ff4d')
 
     def test_getConsent(self):
         res = self.ag_data.getConsent("8b2b45bb3390b585")

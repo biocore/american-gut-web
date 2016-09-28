@@ -314,12 +314,15 @@ class AGDataAccess(object):
             # Reset survey attached to barcode(s)
             for info in self.getParticipantSamples(ag_login_id,
                                                    participant_name):
-                self.deleteSample(info['barcode'])
+                self.deleteSample(info['barcode'], ag_login_id)
 
             sql = "DELETE FROM promoted_survey_ids WHERE survey_id = %s"
             TRN.add(sql, [survey_id])
 
             # Delete last due to foreign keys
+            sql = "DELETE FROM ag_kit_barcodes WHERE survey_id = %s"
+            TRN.add(sql, [survey_id])
+
             sql = "DELETE FROM ag_login_surveys WHERE survey_id = %s"
             TRN.add(sql, [survey_id])
 
