@@ -22792,12 +22792,14 @@ AS $function$xpath_exists$function$
 		</table>
 		<table name="protocol_targeted" >
 			<column name="protocol_targeted_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="name" type="varchar" jt="12" mandatory="y" />
 			<column name="barcode_sequence_plate_id" type="bigint" jt="-5" />
 			<column name="master_mix_lot_id" type="bigint" jt="-5" />
 			<column name="water_lot_id" type="bigint" jt="-5" />
 			<column name="tm300_8_tool_id" type="bigint" jt="-5" />
 			<column name="tm50_8_tool_id" type="bigint" jt="-5" />
 			<column name="processing_robot_id" type="bigint" jt="-5" />
+			<column name="notes" type="varchar" jt="12" />
 			<index name="pk_protocol_targeted" unique="PRIMARY_KEY" >
 				<column name="protocol_targeted_id" />
 			</index>
@@ -22818,6 +22820,9 @@ AS $function$xpath_exists$function$
 			</index>
 			<index name="idx_protocol_targeted_processing_robot_id" unique="NORMAL" >
 				<column name="processing_robot_id" />
+			</index>
+			<index name="uq_protocol_targeted_name" unique="UNIQUE" >
+				<column name="name" />
 			</index>
 			<fk name="fk_protocol_targeted" to_schema="pm" to_table="barcode_sequence_plate" >
 				<fk_column name="barcode_sequence_plate_id" pk="barcode_sequence_plate_id" />
@@ -22901,7 +22906,7 @@ AS $function$xpath_exists$function$
 			<index name="pk_sample_plate" unique="PRIMARY_KEY" >
 				<column name="sample_plate_id" />
 			</index>
-			<index name="idx_sample_plate" unique="UNIQUE" >
+			<index name="uq_sample_plate_name" unique="UNIQUE" >
 				<column name="name" />
 			</index>
 			<index name="idx_sample_plate_email" unique="NORMAL" >
@@ -23064,15 +23069,15 @@ AS $function$xpath_exists$function$
 		<entity schema="pm" name="sample_plate_layout" color="b2cdf7" x="420" y="1140" />
 		<entity schema="pm" name="study_sample" color="b2cdf7" x="420" y="975" />
 		<entity schema="pm" name="protocol" color="b2cdf7" x="60" y="1170" />
-		<entity schema="pm" name="protocol_targeted" color="b2cdf7" x="75" y="195" />
 		<entity schema="pm" name="plate_type" color="b2cdf7" x="45" y="645" />
 		<entity schema="pm" name="run_library_plate" color="b2cdf7" x="600" y="645" />
 		<entity schema="pm" name="sample" color="b2cdf7" x="570" y="975" />
 		<entity schema="pm" name="dna_plate" color="b2cdf7" x="210" y="735" />
 		<entity schema="pm" name="run" color="b2cdf7" x="420" y="600" />
-		<entity schema="pm" name="sample_plate" color="b2cdf7" x="420" y="780" />
 		<entity schema="pm" name="library_plate" color="b2cdf7" x="60" y="975" />
 		<entity schema="pm" name="study" color="b2cdf7" x="285" y="975" />
+		<entity schema="pm" name="sample_plate" color="b2cdf7" x="420" y="780" />
+		<entity schema="pm" name="protocol_targeted" color="b2cdf7" x="75" y="195" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by :    american_gut_consent</comment>
 			<entity schema="ag" name="ag_survey_multiples" />
