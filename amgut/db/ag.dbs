@@ -22793,13 +22793,15 @@ AS $function$xpath_exists$function$
 		<table name="protocol_targeted" >
 			<column name="protocol_targeted_id" type="bigserial" jt="-5" mandatory="y" />
 			<column name="name" type="varchar" jt="12" mandatory="y" />
+			<column name="updated_on" type="timestamp" jt="93" mandatory="y" >
+				<defo>current_timestamp</defo>
+			</column>
 			<column name="barcode_sequence_plate_id" type="bigint" jt="-5" />
 			<column name="master_mix_lot_id" type="bigint" jt="-5" />
 			<column name="water_lot_id" type="bigint" jt="-5" />
 			<column name="tm300_8_tool_id" type="bigint" jt="-5" />
 			<column name="tm50_8_tool_id" type="bigint" jt="-5" />
 			<column name="processing_robot_id" type="bigint" jt="-5" />
-			<column name="notes" type="varchar" jt="12" />
 			<index name="pk_protocol_targeted" unique="PRIMARY_KEY" >
 				<column name="protocol_targeted_id" />
 			</index>
@@ -22820,9 +22822,6 @@ AS $function$xpath_exists$function$
 			</index>
 			<index name="idx_protocol_targeted_processing_robot_id" unique="NORMAL" >
 				<column name="processing_robot_id" />
-			</index>
-			<index name="uq_protocol_targeted_name" unique="UNIQUE" >
-				<column name="name" />
 			</index>
 			<fk name="fk_protocol_targeted" to_schema="pm" to_table="barcode_sequence_plate" >
 				<fk_column name="barcode_sequence_plate_id" pk="barcode_sequence_plate_id" />
