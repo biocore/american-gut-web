@@ -1,4 +1,4 @@
--- Oct. 5, 2016
+-- Oct. 8, 2016
 -- Plate Mapper
 
 CREATE SCHEMA pm;
@@ -204,15 +204,14 @@ CREATE INDEX idx_dna_plate_extraction_tool_id ON pm.dna_plate ( extraction_tool_
 CREATE TABLE pm.protocol_targeted (
 	protocol_targeted_id bigserial  NOT NULL,
 	name                 varchar  NOT NULL,
+	updated_on           timestamp DEFAULT current_timestamp NOT NULL,
 	barcode_sequence_plate_id bigint  ,
 	master_mix_lot_id    bigint  ,
 	water_lot_id         bigint  ,
 	tm300_8_tool_id      bigint  ,
 	tm50_8_tool_id       bigint  ,
 	processing_robot_id  bigint  ,
-	notes                varchar  ,
 	CONSTRAINT pk_protocol_targeted PRIMARY KEY ( protocol_targeted_id ),
-	CONSTRAINT uq_protocol_targeted_name UNIQUE ( name ) ,
 	CONSTRAINT fk_protocol_targeted FOREIGN KEY ( barcode_sequence_plate_id ) REFERENCES pm.barcode_sequence_plate( barcode_sequence_plate_id )    ,
 	CONSTRAINT fk_protocol_targeted_mm FOREIGN KEY ( master_mix_lot_id ) REFERENCES pm.master_mix_lot( master_mix_lot_id )    ,
 	CONSTRAINT fk_protocol_targeted_wl FOREIGN KEY ( water_lot_id ) REFERENCES pm.water_lot( water_lot_id )    ,
