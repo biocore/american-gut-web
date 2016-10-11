@@ -1,4 +1,4 @@
--- Sep. 27, 2016
+-- Oct. 8, 2016
 -- Plate Mapper
 
 CREATE SCHEMA pm;
@@ -91,7 +91,7 @@ CREATE TABLE pm.sample_plate (
 	plate_type_id        bigint  NOT NULL,
 	notes                varchar  ,
 	CONSTRAINT pk_sample_plate PRIMARY KEY ( sample_plate_id ),
-	CONSTRAINT idx_sample_plate UNIQUE ( name ) ,
+	CONSTRAINT uq_sample_plate_name UNIQUE ( name ) ,
 	CONSTRAINT fk_sample_plate_labadmin_users FOREIGN KEY ( email ) REFERENCES ag.labadmin_users( email )    ,
 	CONSTRAINT fk_sample_plate_plate_type FOREIGN KEY ( plate_type_id ) REFERENCES pm.plate_type( plate_type_id )
  );
@@ -203,6 +203,8 @@ CREATE INDEX idx_dna_plate_extraction_tool_id ON pm.dna_plate ( extraction_tool_
 
 CREATE TABLE pm.protocol_targeted (
 	protocol_targeted_id bigserial  NOT NULL,
+	name                 varchar  NOT NULL,
+	updated_on           timestamp DEFAULT current_timestamp NOT NULL,
 	barcode_sequence_plate_id bigint  ,
 	master_mix_lot_id    bigint  ,
 	water_lot_id         bigint  ,
