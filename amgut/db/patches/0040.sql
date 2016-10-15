@@ -336,7 +336,6 @@ BEGIN
                 row := 1;
                 col := col + 1;
             END IF;
-            -- RAISE NOTICE 'Barcode: %', bcd;
         END LOOP;
     END LOOP;
 END
