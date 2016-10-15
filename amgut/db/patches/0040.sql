@@ -1,6 +1,8 @@
 -- Oct. 8, 2016
 -- Plate Mapper
 
+-- Create tables
+
 CREATE SCHEMA pm;
 
 CREATE TABLE pm.extraction_kit_lot (
@@ -255,3 +257,87 @@ CREATE TABLE pm.run_library_plate (
  );
 CREATE INDEX idx_run_library_plate_run_id ON pm.run_library_plate ( run_id );
 CREATE INDEX idx_run_library_plate_library_plate_id ON pm.run_library_plate ( library_plate_id );
+
+-- Add options for properties
+
+INSERT INTO pm.plate_type (name, cols, rows, notes)
+		VALUES ('96-well', 12, 8, 'Standard 96-well plate');
+
+INSERT INTO pm.extraction_robot (name)
+		VALUES ('HOWE_KF1'), ('HOWE_KF2'), ('HOWE_KF3'), ('HOWE_KF4');
+
+INSERT INTO pm.extraction_tool (name)
+		VALUES ('108379Z');
+
+INSERT INTO pm.processing_robot (name)
+		VALUES ('ROBE'), ('RIKE'), ('JERE'), ('CARMEN');
+
+INSERT INTO pm.tm300_8_tool (name)
+		VALUES ('208484Z'), ('311318B'), ('109375A'), ('3076189');
+
+INSERT INTO pm.tm50_8_tool (name)
+		VALUES ('108364Z'), ('311426B'), ('311441B'), ('409172Z');
+
+INSERT INTO pm.extraction_kit_lot (name)
+		VALUES ('PM16B11');
+
+INSERT INTO pm.master_mix_lot (name)
+		VALUES ('14459');
+
+INSERT INTO pm.water_lot (name)
+		VALUES ('RNBD9959');
+
+-- Migrate data from barcodes to pm
+
+INSERT INTO pm.sample (sample_id)
+		SELECT barcode FROM barcodes.barcode;
+
+UPDATE pm.sample SET barcode = sample_id;
+
+INSERT INTO pm.study (qiita_study_id, title)
+		SELECT project_id, project FROM barcodes.project;
+
+INSERT INTO pm.study_sample (study_id, sample_id)
+		SELECT study_id, barcode FROM barcodes.project_barcode
+		JOIN pm.study ON (project_id = qiita_study_id)
+		ORDER BY study_id, barcode;
+
+DO
+$do$
+DECLARE
+	  pid bigint;
+    pname text;
+	  spid bigint;
+	  bcd text;
+	  col smallint;
+    row smallint;
+BEGIN
+  	FOR pid, pname IN
+        SELECT plate_id, plate
+        FROM barcodes.plate
+        ORDER BY plate_id
+    LOOP
+        INSERT INTO pm.sample_plate (name, email, plate_type_id)
+        VALUES (pname, 'test', 1)
+        RETURNING sample_plate_id INTO spid;
+        col := 1;
+        row := 1;
+        FOR bcd IN
+            SELECT barcode
+            FROM barcodes.plate_barcode
+            WHERE plate_id = pid
+            ORDER BY barcode
+        LOOP
+            INSERT INTO pm.sample_plate_layout (sample_plate_id, sample_id, col, row)
+            VALUES (spid, bcd, col, row);
+            IF (row < 8) THEN
+                row := row + 1;
+            ELSE
+                row := 1;
+                col := col + 1;
+            END IF;
+            -- RAISE NOTICE 'Barcode: %', bcd;
+        END LOOP;
+    END LOOP;
+END
+$do$;
