@@ -1,4 +1,5 @@
 from urllib import urlencode
+from tornado.escape import url_unescape
 from json import dumps
 import binascii
 import os
@@ -23,7 +24,7 @@ class SecondarySurveyHandler(BaseHandler):
         skid = self.current_user
         survey_id = self.get_argument('survey', '')
         survey_type = self.get_argument('type')
-        participant_name = self.get_argument('participant_name')
+        participant_name = url_unescape(self.get_argument('participant_name'))
 
         sec_survey = self.sec_surveys[survey_type]
         survey_class = make_survey_class(sec_survey.groups[0],
@@ -43,7 +44,7 @@ class SecondarySurveyHandler(BaseHandler):
         ag_login_id = ag_data.get_user_for_kit(skid)
         survey_id = self.get_argument('survey_id', None)
         survey_type = self.get_argument('type')
-        participant_name = self.get_argument('participant_name')
+        participant_name = url_unescape(self.get_argument('participant_name'))
         sitebase = media_locale['SITEBASE']
 
         if not survey_id:
