@@ -25,7 +25,7 @@ class TestAddSampleOverview(TestHandlerBase):
     def test_get_surf(self):
         self.mock_login('tst_LbxUH')
         response = self.get(
-            '/authed/secondary_survey/?type=surf&participant_name=test')
+            '/authed/secondary_survey/?type=surf&participant_name=test%2Bfoo')
         self.assertEqual(response.code, 200)
         self.assertIn('<h2>Surf Survey</h2>', response.body)
         self.assertIn('<td width="50%" class="tdmainform">How often do you '
@@ -34,7 +34,8 @@ class TestAddSampleOverview(TestHandlerBase):
     def test_get_fermented(self):
         self.mock_login('tst_LbxUH')
         response = self.get(
-            '/authed/secondary_survey/?type=fermented&participant_name=test')
+            '/authed/secondary_survey/?type=fermented&'
+            'participant_name=test%20bar')
         self.assertEqual(response.code, 200)
         self.assertIn('<h2>Fermented Survey</h2>', response.body)
         self.assertIn('<td width="50%" class="tdmainform">How often do you '
