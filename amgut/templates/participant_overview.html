@@ -18,30 +18,53 @@
         <table class="list" id="survey" width="100%">
 {% if participant_type == 'human' %}
             <tr>
-                <td>{% raw tl['COMPLETED_CONSENT'] %}</td>
+                <td style="text-align: left">{% raw tl['COMPLETED_CONSENT'] %}:</td>
                 <td><img src="{% raw media_locale['SITEBASE'] %}/static/img/icon-green-checkmark.png"/></td>
             </tr>
 {% end %}
             <tr>
-                <td>{% raw tl['COMPLETED_SURVEY'] %}
-{% if participant_type == 'human' %}
-                    <form id="edit_survey" name="edit_survey" method="post" action="{% raw media_locale['SITEBASE'] %}/authed/human_survey/">
-                        <input type="hidden" name="survey_id" value={{ survey_id}}>
-                        <input type="hidden" name="page_number" value=-1>
-                        <input type="button" name="submit_button" id="submit_button" value="edit" onclick="submitEdit()">
-                    </form>
-                    {% raw vioscreen_text %}
-{% elif participant_type == 'animal' %}
-                    <form id="edit_survey" name="edit_survey" method="get" action="{% raw media_locale['SITEBASE'] %}/authed/add_animal/">
-                        <input type="hidden" name="survey" value={{ survey_id}}>
-                        <input type="button" name="submit_button" id="submit_button" value="edit" onclick="submitEdit()">
-                    </form>
+                <td style="text-align: left">{% raw tl['COMPLETED_SURVEY'] %}:
+					<ol>
+{% for survey in internal_surveys %}
+{% if survey[0] == -1 %}
+						<!-- Personal information -->
+						<li>
+							<form id="edit_survey" name="edit_survey" method="post" action="{% raw media_locale['SITEBASE'] %}/authed/human_survey/">
+								<input type="hidden" name="survey_id" value="{{survey[1]}}">
+								<input type="hidden" name="page_number" value=-1>
+								<input type="button" name="submit_button" id="submit_button" value="{{survey[2]}}" onclick="submitEdit()">
+							</form>
+						</li>
+{% elif survey[0] == -2 %}
+					<!-- Pet information -->
+						<li>
+							<form id="edit_survey" name="edit_survey" method="get" action="{% raw media_locale['SITEBASE'] %}/authed/add_animal/">
+								<input type="hidden" name="survey" value="{{survey[1]}}">
+								<input type="button" name="submit_button" id="submit_button" value="{{survey[2]}}" onclick="submitEdit()">
+							</form>
+						</li>
+{% elif survey[0] == -3 %}
+	<!-- Fermented Food -->
+	<!--<a href="{% raw media_locale['SITEBASE'] %}/authed/secondary_survey/?type=fermented&participant_name={{participant_name}}&survey_id={{survey[1]}}">{{survey[2]}}</a><br/>-->
+						<li>{{survey[2]}} Survey</li>
+{% elif survey[0] == -4 %}
+	<!-- Surfer -->
+	<!--<a href="{% raw media_locale['SITEBASE'] %}/authed/secondary_survey/?type=surf&participant_name={{participant_name}}&survey_id={{survey[1]}}">{{survey[2]}}</a><br/>-->
+						<li>{{survey[2]}} Survey</li>
+{% else %}
+						<li>{{survey[2]}} Survey</li>
 {% end %}
+{% end %}
+
+{% for survey in vioscreens %}
+						<li>{% raw survey %}</li>
+{% end %}
+					</ol>
                 </td>
-                <td><img src="{% raw media_locale['SITEBASE'] %}/static/img/icon-green-checkmark.png"/></td>
+                <td  style="vertical-align: top"><img src="{% raw media_locale['SITEBASE'] %}/static/img/icon-green-checkmark.png"/></td>
             </tr>
             <tr>
-                <td>{% raw tl['SAMPLES_ASSIGNED'] %}</td>
+                <td style="text-align: left; vertical-align: top">{% raw tl['SAMPLES_ASSIGNED'] %}:</td>
                 <td>
                     <ul class="sample_list">
 
