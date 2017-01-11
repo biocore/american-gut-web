@@ -40,8 +40,6 @@ class ParticipantOverviewHandler(BaseHandler):
         participant_type = self.get_argument('participant_type')
         internal_surveys = ag_data.get_participants_surveys(ag_login_id,
                                                             participant_name)
-        vioscreen_status = None
-        vioscreen_text = ''
         vioscreens = []
         if internal_surveys is None:
             raise HTTPError(404, "Could not retrieve survey details for "
