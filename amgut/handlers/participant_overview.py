@@ -38,33 +38,38 @@ class ParticipantOverviewHandler(BaseHandler):
             return
 
         participant_type = self.get_argument('participant_type')
+        internal_surveys = ag_data.get_participants_surveys(ag_login_id,
+                                                            participant_name)
         vioscreen_status = None
         vioscreen_text = ''
-        survey_id = ag_data.get_survey_ids(ag_login_id, participant_name)[1]
-
-        if survey_id is None:
+        vioscreens = []
+        if internal_surveys is None:
             raise HTTPError(404, "Could not retrieve survey details for "
                             "participant '%s'" % participant_name)
         else:
-            vioscreen_status = ag_data.get_vioscreen_status(survey_id)
-            url = ("https://vioscreen.com/remotelogin.aspx?Key=%s"
-                   "&RegCode=KLUCB" % url_escape(encrypt_key(survey_id)))
-            # Magic number 3 is the vioscreen code for complete survey
-            if vioscreen_status is not None and vioscreen_status != 3:
-                vioscreen_text = text['VIOSCREEN_CONTINUE'] % url
-            elif vioscreen_status is not None:
-                vioscreen_text = text['VIOSCREEN_COMPLETE']
-            else:
-                vioscreen_text = text['VIOSCREEN_START'] % url
+            for survey_group, survey_id, survey_name in internal_surveys:
+                if survey_group == -1:
+                    # Magic number 3 is the vioscreen code for complete survey
+                    status = ag_data.get_vioscreen_status(survey_id)
+                    url = (("https://vioscreen.com/remotelogin.aspx?Key=%s"
+                            "&RegCode=KLUCB") %
+                           url_escape(encrypt_key(survey_id)))
+                    if status is not None and status != 3:
+                        vioscreens.append(text['VIOSCREEN_CONTINUE'] % url)
+                    elif status is not None:
+                        vioscreens.append(text['VIOSCREEN_COMPLETE'])
+                    else:
+                        vioscreens.append(text['VIOSCREEN_START'] % url)
 
         # Get the list of samples for this participant
         samples = ag_data.getParticipantSamples(ag_login_id,
                                                 participant_name)
 
         self.render('participant_overview.html', skid=skid,
-                    participant_name=participant_name, survey_id=survey_id,
+                    participant_name=participant_name,
+                    internal_surveys=internal_surveys,
                     participant_type=participant_type, samples=samples,
-                    vioscreen_text=vioscreen_text, ebi_submitted=ebi_submitted)
+                    vioscreens=vioscreens, ebi_submitted=ebi_submitted)
 
     @authenticated
     def get(self, *args, **kwargs):
