@@ -241,4 +241,5 @@ class ConfigurationManager(object):
         self.open_humans_client_id = get('OPEN_HUMANS_CLIENT_ID')
         self.open_humans_client_secret = get('OPEN_HUMANS_CLIENT_SECRET')
 
+
 AMGUT_CONFIG = ConfigurationManager()

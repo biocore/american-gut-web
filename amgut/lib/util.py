@@ -162,6 +162,7 @@ def survey_surf(survey_id, consent_info):
     embedded_text = tl['SURVEY_SURF']
     return embedded_text % url
 
+
 external_surveys = (survey_vioscreen, survey_fermented, survey_surf)
 
 
