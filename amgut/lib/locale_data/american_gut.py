@@ -385,9 +385,9 @@ Assent to Act as a Research Subject<br/>
 <p>Research records may be reviewed by the UCSD Institutional Review Board.</p>
 
 <p style='font-weight: bold;'>Who can you call if you have questions?</p>
-<p>Dr Rob Knight and/or Gail Ackermann has explained this study to you and answered your questions. If you have other questions or research-related problems, you may reach Dr Knight at 858-246-1194</p>
+<p>Dr Rob Knight and/or Gail Ackermann has explained this study to you and answered your questions. If you have other questions or research-related problems, you may reach Dr Knight at 858-246-1184</p>
 
-<p>You may call the Human Research Protections Program Office at (858) 657-5100 to inquire about your rights as a research subject or to report research-related problems.</p>
+<p>You may call the Human Research Protections Program Office at (858) 246-7444 to inquire about your rights as a research subject or to report research-related problems.</p>
 
 <p style='font-weight: bold;'>Your Signature and Assent</p>
 <p>You have received a copy of this assent document and a copy of the "Experimental Subject's Bill of Rights" to keep.</p>
@@ -457,7 +457,7 @@ The following tests are available:</p>
 <p>You will be asked to contribute money to the project commensurate with the investigation you request ($99 for one sample, $1500 for "All in the family" (shallow shotgun metagenomic sequencing) and $2500 for "Beyond Bacteria" (deeper shotgun metagenome and virome characterization of one sample, plus additional sequencing). A receipt will be sent to you after you pay for the analysis you are requesting.  These contributions are used to partially finance the project.  Any additional funds required are provided from the funds UCSD has provided to Dr. Knight to set up his laboratory.</p>
 
 <p style='font-weight: bold;'>What if you are injured as a direct result of being in this study?</p>
-<p>If you are injured as a direct result of participation in this research, the University of California will provide any medical care you need to treat those injuries. The University will not provide any other form of compensation to you if you are injured. You may call the Human Research Protections Program Office at (858) 657-5100 for more information about this, to inquire about your rights as a research subject or to report research-related problems.</p>
+<p>If you are injured as a direct result of participation in this research, the University of California will provide any medical care you need to treat those injuries. The University will not provide any other form of compensation to you if you are injured. You may call the Human Research Protections Program Office at (858) 246-7444 for more information about this, to inquire about your rights as a research subject or to report research-related problems.</p>
 
 <p style='font-weight: bold;'>What about your confidentiality?</p>
 <p>Research records will be kept confidential to the extent allowed by law. All data about you that is entered on the web site is stored on a password-protected server located at the SDSC (San Diego Supercomputer Center) card access controlled facility at UCSD.  Financial information from participants contributing to the project is not accessible to the researchers.  The code key (that relates participant personal information to sample barcodes) is retained on a separate password-protected server that is accessible only to the PI, Co-I, sample coordinator and the database coders.  All analysis is done on de-identified data and the data deposited in a public repository for use by other investigators, is similarly de-identified. Research records may be reviewed by the UCSD Institutional Review Board.</p>
@@ -466,9 +466,9 @@ The following tests are available:</p>
 <p>We may need to report information about known or reasonably suspected incidents of abuse or neglect of a child, dependent adult or elder including physical, sexual, emotional, and financial abuse or neglect. The only way we could discover such abuse is if it is self-reported by the participant or the legal guardian, so this is not likely.  If any investigator has or is given such information, he or she may report such information to the appropriate authorities.</p>
 
 <p style='font-weight: bold;'>Who can you call if you have questions?</p>
-<p>If you have questions or research-related problems, you may reach Rob Knight at 858-246-1194 or contact Brent Erickson at 858-534-8739.</p>
+<p>If you have questions or research-related problems, you may reach Rob Knight at 858-246-1184 or contact Brent Erickson at 858-534-8739.</p>
 
-<p>You may call the Human Research Protections Program Office at (858) 657-5100 to inquire about your rights as a research subject or to report research-related problems.</p>
+<p>You may call the Human Research Protections Program Office at (858) 246-7444 to inquire about your rights as a research subject or to report research-related problems.</p>
 
 <p style='font-weight: bold;'>Your Signature and Consent</p>
 <p>You have received a copy of this consent document and a copy of the "Experimental Subject's Bill of Rights" to keep.</p>
@@ -536,7 +536,7 @@ The following tests are available:</p>
 <p>You will be asked to contribute money to the project commensurate with the investigation you request ($99 for one sample, $1500 for "All in the family" (shallow shotgun metagenomic sequencing) and $2500 for "Beyond Bacteria" (deeper shotgun metagenome and virome characterization of one sample, plus additional sequencing). A receipt will be sent to you after you pay for the analysis you are requesting.  These contributions are used to partially finance the project.  Any additional funds required are provided from the funds UCSD has provided to Dr. Knight to set up his laboratory.</p>
 
 <p style='font-weight: bold;'>What if your child is injured as a direct result of being in this study?</p>
-<p>If your child is injured as a direct result of participation in this research, the University of California will provide any medical care you need to treat those injuries. The University will not provide any other form of compensation to you if your child is injured. You or your child may call the Human Research Protections Program Office at (858) 657-5100 for more information about this, to inquire about your rights as a research subject or to report research-related problems.</p>
+<p>If your child is injured as a direct result of participation in this research, the University of California will provide any medical care you need to treat those injuries. The University will not provide any other form of compensation to you if your child is injured. You or your child may call the Human Research Protections Program Office at (858) 246-7444 for more information about this, to inquire about your rights as a research subject or to report research-related problems.</p>
 
 <p style='font-weight: bold;'>What about your confidentiality?</p>
 <p>Research records will be kept confidential to the extent allowed by law. All data about your child that is entered on the web site is stored on a password-protected server located at the SDSC (San Diego Supercomputer Center) card access controlled facility at UCSD.  Financial information from participants contributing to the project is not accessible to the researchers.  The code key (that relates participant personal information to sample barcodes) is retained on a separate password-protected server that is accessible only to the PI, Co-I, sample coordinator and the database coders.  All analysis is done on de-identified data and the data deposited in a public repository for use by other investigators, is similarly de-identified. Research records may be reviewed by the UCSD Institutional Review Board.</p>
@@ -544,9 +544,9 @@ The following tests are available:</p>
 <p>We may need to report information about known or reasonably suspected incidents of abuse or neglect of a child, dependent adult or elder including physical, sexual, emotional, and financial abuse or neglect. The only way we could discover such abuse is if it is self-reported by the participant or the legal guardian, so this is not likely.  If any investigator has or is given such information, he or she may report such information to the appropriate authorities.</p>
 
 <p style='font-weight: bold;'>Who can you call if you have questions?</p>
-<p>If you have questions or research-related problems, you may reach Rob Knight at 858-246-1194 or contact Brent Erickson at 858-534-8739.</p>
+<p>If you have questions or research-related problems, you may reach Rob Knight at 858-246-1184 or contact Brent Erickson at 858-534-8739.</p>
 
-<p>You may call the Human Research Protections Program Office at (858) 657-5100 to inquire about your rights as a research subject or to report research-related problems.</p>
+<p>You may call the Human Research Protections Program Office at (858) 246-7444 to inquire about your rights as a research subject or to report research-related problems.</p>
 
 <p style='font-weight: bold;'>Your Signature and Consent</p>
 <p>You have received a copy of this consent document and a copy of the "Experimental Subject's Bill of Rights" to keep.</p>
@@ -1048,7 +1048,7 @@ _PERSONAL_MICROBIOME = {
     'CONSENT_4': "There will not be any direct benefit to you from this research. The investigator(s), however, may better understand how participating in the American Gut Project impacts people's health views, health behaviors, and communication with their healthcare providers.",
     'CONSENT_5': "There are minimal risks associated with this research study. Taking surveys can produce feelings of stress, frustration, discomfort, fatigue, and boredom.  To limit these risks, the questions have been written in a clear manner. There is a risk of loss of confidentiality. To protect against such a loss research records will be kept confidential to the extent allowed by law. Your survey data will be stored on a password protected secure computer will be identified by a study subject ID number.  If you decide to provide your name and contact information for potential follow-up, your name and contact information will be kept separate from your survey responses and will not be linked to your survey responses.  All analysis of the survey data will be done on data that is de-identified (e.g. does not contain your name). Research records may be reviewed by the UCSD Institutional Review Board and the National Institutes of Health. Results of this study may be reported in scientific journals, meeting, and news media, but none of these reports will use your name or use data that can point to any person who took part in the study.",
     'CONSENT_6': "Your participation in this study is completely voluntary and you can withdraw at any time by simply exiting the survey. Choosing not to participate or withdrawing will result in no penalty or loss of benefits to which you are entitled. You are free to skip any question that you choose.",
-    'CONSENT_7': "If you have questions about this project or if you have a research-related problem, you may contact the researcher(s), Dr. Cinnamon Bloss at 858-534-9550. If you have any questions concerning your rights as a research subject, you may contact the UCSD Human Research Protections Program Office at (858) 657-5100.",
+    'CONSENT_7': "If you have questions about this project or if you have a research-related problem, you may contact the researcher(s), Dr. Cinnamon Bloss at 858-534-9550. If you have any questions concerning your rights as a research subject, you may contact the UCSD Human Research Protections Program Office at (858) 246-7444.",
     'CONSENT_8': 'By clicking "You agree" below you are indicating that you are at least 18 years old, have read this consent form, and agree to participate in this research study. Please print a copy of this page for your records.',
     'AGREE': 'You Agree',
     'DISAGREE': 'You Do Not Agree'
