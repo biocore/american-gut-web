@@ -252,5 +252,6 @@ class TestAddSample(TestHandlerBase):
         self.assertIn('000002011', ag_data.getAvailableBarcodes(
                       'd8592c74-8710-2135-e040-8a80115d6401'))
 
+
 if __name__ == '__main__':
     main()

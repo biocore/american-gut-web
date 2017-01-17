@@ -555,9 +555,9 @@ _PARTICIPANT_OVERVIEW = {
     'COMPLETED_SURVEY': "Completed survey",
     'OVERVIEW_FOR_PARTICPANT': "Overview for participant",
     'SAMPLES_ASSIGNED': "Samples assigned",
-    'VIOSCREEN_CONTINUE': '<a href="%s">Continue your Food Frequency Questionnaire</a>',
+    'VIOSCREEN_CONTINUE': '<a href="%s"><button>Continue your Food Frequency Questionnaire</button></a>',
     'VIOSCREEN_COMPLETE': 'Food Frequency Questionnaire completed',
-    'VIOSCREEN_START': '<a href="%s">Start the Food Frequency Questionnaire</a>'
+    'VIOSCREEN_START': '<a href="%s"><button>Start the Food Frequency Questionnaire</button></a>'
 }
 
 # helper tuples for the survey questions

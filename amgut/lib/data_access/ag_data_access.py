@@ -874,6 +874,52 @@ class AGDataAccess(object):
                 raise ValueError("No survey ID found!")
             return dict(i for i in survey_id)
 
+    def get_participants_surveys(self, ag_login_id, participant_name,
+                                 locale='american'):
+        """Returns all surveys (except external) for one participant for a
+           AG login.
+
+        Parameters
+        ----------
+        ag_login_id : str
+            A valid login ID, that should be a test as a valid UUID.
+        participant_name : str
+            A participant name.
+        locale : str
+            The names for the surveys are fetched from table ag.survey_group.
+            For localization, there are columns for each language, which is set
+            by locale.
+
+        Returns
+        -------
+        List of lists or None
+            A list for surveys for the given participant of the given
+            ag_login_id. Each element is a list again [int, str, str]. Where
+            the first element is the survey group id, the second the survey_id
+            and the third is a speaking name for the survey.
+            None if no survey ID can be found for the combination of
+            participant and ag_login_id.
+
+        Raises
+        ------
+        ValueError
+            Unknown ag_login_id or participant_name passed
+        """
+
+        with TRN:
+            sql = """SELECT DISTINCT gq.survey_group, als.survey_id, sg.{0}
+                     FROM ag.ag_login_surveys als
+                     LEFT JOIN ag.survey_answers sa USING (survey_id)
+                     LEFT JOIN ag.group_questions gq USING (survey_question_id)
+                     LEFT JOIN ag.survey_group sg ON (survey_group=group_order)
+                     WHERE als.ag_login_id = %s AND als.participant_name = %s
+                           AND gq.survey_group < 0""".format(locale)
+            TRN.add(sql, [ag_login_id, participant_name])
+            surveys = TRN.execute_fetchindex()
+            if not surveys:
+                raise ValueError("No survey IDs found!")
+            return surveys
+
     def get_countries(self):
         """
         Returns
