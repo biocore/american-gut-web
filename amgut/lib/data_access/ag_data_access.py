@@ -311,31 +311,26 @@ class AGDataAccess(object):
                 survey_ids.add(hit[0])
                 participant_emails.add(hit[1])
 
-            sql = "DELETE FROM survey_answers WHERE survey_id = %s"
-            for survey_id in survey_ids:
-                TRN.add(sql, [survey_id])
+            sql = "DELETE FROM survey_answers WHERE survey_id IN %s"
+            TRN.add(sql, [tubple(survey_ids)])
 
-            sql = "DELETE FROM survey_answers_other WHERE survey_id = %s"
-            for survey_id in survey_ids:
-                TRN.add(sql, [survey_id])
+            sql = "DELETE FROM survey_answers_other WHERE survey_id IN %s"
+            TRN.add(sql, [tuples(survey_ids)])
 
             # Reset survey attached to barcode(s)
             for info in self.getParticipantSamples(ag_login_id,
                                                    participant_name):
                 self.deleteSample(info['barcode'], ag_login_id)
 
-            sql = "DELETE FROM promoted_survey_ids WHERE survey_id = %s"
-            for survey_id in survey_ids:
-                TRN.add(sql, [survey_id])
+            sql = "DELETE FROM promoted_survey_ids WHERE survey_id IN %s"
+            TRN.add(sql, [tuple(survey_ids)])
 
             # Delete last due to foreign keys
-            sql = "DELETE FROM ag_kit_barcodes WHERE survey_id = %s"
-            for survey_id in survey_ids:
-                TRN.add(sql, [survey_id])
+            sql = "DELETE FROM ag_kit_barcodes WHERE survey_id IN %s"
+            TRN.add(sql, [tuple(survey_ids)])
 
-            sql = "DELETE FROM ag_login_surveys WHERE survey_id = %s"
-            for survey_id in survey_ids:
-                TRN.add(sql, [survey_id])
+            sql = "DELETE FROM ag_login_surveys WHERE survey_id IN %s"
+            TRN.add(sql, [tuple(survey_ids)])
 
             sql = """DELETE FROM ag_consent
                      WHERE ag_login_id = %s AND participant_name = %s"""
@@ -344,9 +339,10 @@ class AGDataAccess(object):
             sql = """INSERT INTO ag.consent_revoked
                      (ag_login_id,participant_name, participant_email)
                      VALUES (%s, %s, %s)"""
-            for participant_email in list(participant_emails):
-                TRN.add(sql, [ag_login_id, participant_name,
-                              participant_email])
+            sql_args = [[ag_login_id, participant_name, pemail]
+                        for pemail in participant_emails]
+            TRN.add(sql, sql_args, many=True)
+            TRN.execute()
 
     def get_withdrawn(self):
         """Gets teh list of withdrawn participants and information
