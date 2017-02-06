@@ -315,7 +315,7 @@ class AGDataAccess(object):
             TRN.add(sql, [tuple(survey_ids)])
 
             sql = "DELETE FROM survey_answers_other WHERE survey_id IN %s"
-            TRN.add(sql, [tuples(survey_ids)])
+            TRN.add(sql, [tuple(survey_ids)])
 
             # Reset survey attached to barcode(s)
             for info in self.getParticipantSamples(ag_login_id,
