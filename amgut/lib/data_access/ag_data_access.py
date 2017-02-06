@@ -312,7 +312,7 @@ class AGDataAccess(object):
                 participant_emails.add(hit[1])
 
             sql = "DELETE FROM survey_answers WHERE survey_id IN %s"
-            TRN.add(sql, [tubple(survey_ids)])
+            TRN.add(sql, [tuple(survey_ids)])
 
             sql = "DELETE FROM survey_answers_other WHERE survey_id IN %s"
             TRN.add(sql, [tuples(survey_ids)])
