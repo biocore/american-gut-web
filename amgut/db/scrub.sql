@@ -32,6 +32,21 @@ CREATE FUNCTION random_string(length integer, source varchar, suffix varchar) RE
     END;
 $$ language plpgsql;
 
+-- Function to generate a random latitude or longitude
+CREATE FUNCTION random_lat_or_long() RETURNS varchar AS $$
+    DECLARE
+        result varchar;
+        numsource varchar;
+    BEGIN
+        numsource := '0123456789';
+        result := random_string(2, numsource, '') || ',' || random_string(5, numsource, '');
+        IF random() < 0.5 THEN
+            result := '-' || result;
+        END IF;
+        RETURN result;
+    END;
+$$ language plpgsql;
+
 -- Function to generate random emails
 CREATE FUNCTION random_email(column_name varchar, table_name varchar) RETURNS varchar AS $$
     DECLARE
@@ -52,6 +67,10 @@ CREATE FUNCTION random_date() RETURNS varchar AS $$
         RETURN result;
     END
 $$ language plpgsql;
+
+-- Create a temp table for storing the zipcodes
+CREATE TEMP TABLE allzipcodes ON COMMIT DROP AS
+    SELECT DISTINCT zip_code FROM ag.ag_human_survey;
 
 -- We have all the functions that we need, start scrubbing data
 DO $do$
@@ -176,7 +195,7 @@ BEGIN
                 parent_2_name = random_string(10, source3, 'Name - '),
                 birth_date = random_date(),
                 phone_num = random_string(10, numsource, ''),
-                zip_code = random_string(5, numsource, ''),
+                zip_code = (SELECT zip_code FROM allzipcodes ORDER BY RANDOM() LIMIT 1),
                 foodallergies_other_text = random_string(50, source4, 'Free text - '),
                 race_other = random_string(20, source5, 'Free text - '),
                 antibiotic_condition = random_string(30, source6, 'Free text - '),
@@ -252,8 +271,8 @@ BEGIN
                 city = random_string(10, source2, 'City - '),
                 state = random_string(10, source3, 'State - '),
                 zip = random_string(5, numsource, ''),
-                latitude = random_string(2, numsource, '') || ',' || random_string(5, numsource, ''),
-                longitude = random_string(2, numsource, '') || ',' || random_string(5, numsource, '')
+                latitude = random_lat_or_long(),
+                longitude = random_lat_or_long()
             WHERE ag_login_id = rec.ag_login_id;
     END LOOP;
 
@@ -299,14 +318,13 @@ BEGIN
 
     -- Table: ag_kit; columns: kit_password, kit_verification_code, open_humans_token
     source := retrieve_chars('kit_verification_code', 'ag.ag_kit');
-    source2 := retrieve_chars('open_humans_token', 'ag.ag_kit');
     FOR rec IN
         SELECT ag_kit_id FROM ag.ag_kit
     LOOP
         UPDATE ag.ag_kit
             SET kit_password = passwd,
                 kit_verification_code = random_string(5, source, ''),
-                open_humans_token = random_string(10, source2, '')
+                open_humans_token = NULL
             WHERE ag_kit_id = rec.ag_kit_id;
     END LOOP;
 
@@ -318,7 +336,7 @@ BEGIN
     LOOP
         UPDATE ag.ag_kit_barcodes
             SET notes = random_string(50, source, 'Free text - '),
-                other_text = random_string(50, source, 'Free text - ')
+                other_text = random_string(50, source2, 'Free text - ')
             WHERE ag_kit_barcode_id = rec.ag_kit_barcode_id;
     END LOOP;
 
@@ -341,3 +359,4 @@ DROP FUNCTION retrieve_chars(varchar, varchar);
 DROP FUNCTION random_string(integer, varchar, varchar);
 DROP FUNCTION random_email(varchar, varchar);
 DROP FUNCTION random_date();
+DROP FUNCTION random_lat_or_long();
