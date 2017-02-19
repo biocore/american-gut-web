@@ -33,6 +33,12 @@ class SecondarySurveyHandler(BaseHandler):
         form = survey_class()
         if survey_id:
             form.process(data=sec_survey.fetch_survey(survey_id))
+
+        # load existing information into the form
+        if survey_id != '':
+            data = sec_survey.fetch_survey(survey_id)
+            form = survey_class(data=data)
+
         self.render('secondary_survey.html', skid=skid,
                     the_form=form, survey_id=survey_id,
                     type=survey_type, participant_name=participant_name)

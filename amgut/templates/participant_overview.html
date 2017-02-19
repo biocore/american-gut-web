@@ -45,12 +45,12 @@
 						</li>
 {% elif survey[0] == -3 %}
 	<!-- Fermented Food -->
-	<!--<a href="{% raw media_locale['SITEBASE'] %}/authed/secondary_survey/?type=fermented&participant_name={{participant_name}}&survey_id={{survey[1]}}">{{survey[2]}}</a><br/>-->
-						<li>{{survey[2]}} Survey</li>
+						<li><a href="{% raw media_locale['SITEBASE'] %}/authed/secondary_survey/?type=fermented&participant_name={{participant_name}}&survey={{survey[1]}}"><button>{{survey[2]}}</button></a></li>
+						<!--<li>{{survey[2]}} Survey</li>-->
 {% elif survey[0] == -4 %}
 	<!-- Surfer -->
-	<!--<a href="{% raw media_locale['SITEBASE'] %}/authed/secondary_survey/?type=surf&participant_name={{participant_name}}&survey_id={{survey[1]}}">{{survey[2]}}</a><br/>-->
-						<li>{{survey[2]}} Survey</li>
+						<li><a href="{% raw media_locale['SITEBASE'] %}/authed/secondary_survey/?type=surf&participant_name={{participant_name}}&survey={{survey[1]}}"><button>{{survey[2]}}</button></a></li>
+						<!--<li>{{survey[2]}} Survey</li>-->
 {% else %}
 						<li>{{survey[2]}} Survey</li>
 {% end %}
