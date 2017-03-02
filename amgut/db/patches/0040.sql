@@ -12,4 +12,4 @@ ALTER TABLE survey_question_response ADD CONSTRAINT idx_survey_question_response
 INSERT INTO survey_response (american, british) VALUES ('2016', '2016');
 INSERT INTO survey_response (american, british) VALUES ('2017', '2017');
 INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (112, '2017', 1);
-INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (112, '2017', 2);
+INSERT INTO survey_question_response (survey_question_id, response, display_index) VALUES (112, '2016', 2);
