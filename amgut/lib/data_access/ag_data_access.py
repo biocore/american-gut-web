@@ -818,6 +818,30 @@ class AGDataAccess(object):
             TRN.add(sql, [ag_login_id])
             return [dict(row) for row in TRN.execute_fetchindex()]
 
+    def get_random_handout_printed_min6_supplied_kit_id(self):
+        """ For testing: get a random supplied_kit_id with printed results
+            and 6 swaps per kit.
+
+        Returns
+        -------
+        supplied_kit_id : str
+            A supplied_kit_id.
+
+        Raises
+        ------
+        ValueError
+            If no hand out kit exists, satisfing the given conditions.
+        """
+        with TRN:
+            sql = """SELECT kit_id
+                     FROM ag.ag_handout_kits
+                     WHERE swabs_per_kit = 6 AND print_results = TRUE"""
+            TRN.add(sql, [])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('No kits found.')
+            return info[0][0]
+
     def get_supplied_kit_id(self, ag_login_id):
         """ Get supplied_kit_id for ag_login_id.
 
