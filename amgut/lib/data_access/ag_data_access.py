@@ -818,6 +818,21 @@ class AGDataAccess(object):
             TRN.add(sql, [ag_login_id])
             return [dict(row) for row in TRN.execute_fetchindex()]
 
+    def get_random_supplied_kit_id_scanned_unconsented(self):
+        with TRN:
+            sql = """SELECT supplied_kit_id, barcode
+                     FROM barcodes.barcode
+                     JOIN ag.ag_kit_barcodes USING (barcode)
+                     JOIN ag.ag_kit USING (ag_kit_id)
+                     WHERE barcodes.barcode.scan_date IS NOT NULL
+                     AND ag.ag_kit_barcodes.survey_id IS NULL
+                     LIMIT 1"""
+            TRN.add(sql, [])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('No kits found.')
+            return info[0]
+
     def get_random_handout_printed_min6_supplied_kit_id(self):
         """ For testing: get a random supplied_kit_id with printed results
             and 6 swaps per kit.
@@ -840,6 +855,17 @@ class AGDataAccess(object):
             info = TRN.execute_fetchindex()
             if not info:
                 raise ValueError('No kits found.')
+            return info[0][0]
+
+    def get_random_email(self):
+        with TRN:
+            sql = """SELECT email
+                     FROM ag.ag_login
+                     LIMIT 1"""
+            TRN.add(sql, [])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('No emails found.')
             return info[0][0]
 
     def get_supplied_kit_id(self, ag_login_id):
