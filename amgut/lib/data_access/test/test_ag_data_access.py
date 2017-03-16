@@ -139,7 +139,7 @@ class TestAGDataAccess(TestCase):
         self.assertTrue(len(obs) > 0)
 
         for kit_id in obs:
-            self.assertRegexpMatches(kit_id, 'tst_[a-zA-Z]{5}')
+            self.assertRegexpMatches(kit_id, '[a-zA-Z_]*')
 
     def test_registerHandoutKit_bad_data(self):
         # run on bad data
@@ -492,7 +492,7 @@ class TestAGDataAccess(TestCase):
         self.assertTrue(len(obs) > 0)
 
         for kit_id in obs:
-            self.assertRegexpMatches(kit_id, 'tst_[a-zA-Z]{5}')
+            self.assertRegexpMatches(kit_id, '[a-zA-Z_]*')
             obs = self.ag_data.getAGKitDetails(kit_id)
             self.assertEqual(obs['kit_verified'], 'n')
 
@@ -657,7 +657,8 @@ class TestAGDataAccess(TestCase):
                 'dc3172b2-792c-4087-8a20-714297821c6a'))
         self.assertFalse(obs)
 
-        obs = self.ag_data.checkPrintResults('tst_TMYwD')
+        kit_id = self.ag_data.get_random_handout_printed_min6_supplied_kit_id()
+        obs = self.ag_data.checkPrintResults(kit_id)
         self.assertTrue(obs)
 
     def test_checkPrintResults_invalid_ids(self):
@@ -683,7 +684,7 @@ class TestAGDataAccess(TestCase):
             self.ag_data.get_user_for_kit('the_fooster')
 
         with self.assertRaises(ValueError):
-            self.ag_data.get_user_for_kit('tst_esXXX')
+            self.ag_data.get_user_for_kit('NOT_IN_DB')
 
     def test_get_menu_items(self):
         obs = self.ag_data.get_menu_items(
@@ -698,7 +699,7 @@ class TestAGDataAccess(TestCase):
 
     def test_get_menu_items_errors(self):
         with self.assertRaises(ValueError):
-            self.ag_data.get_menu_items('tst_esXXX')
+            self.ag_data.get_menu_items('NOT_IN_DB')
 
     def test_check_if_consent_exists(self):
         obs = self.ag_data.check_if_consent_exists(
@@ -722,7 +723,7 @@ class TestAGDataAccess(TestCase):
 
     def test_get_user_info_non_existent(self):
         with self.assertRaises(ValueError):
-            self.ag_data.get_user_info('tst_XX1123')
+            self.ag_data.get_user_info('NOT_IN_DB')
 
     def test_get_barcode_results(self):
         obs = self.ag_data.get_barcode_results(
