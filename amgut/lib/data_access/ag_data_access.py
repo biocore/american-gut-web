@@ -818,6 +818,38 @@ class AGDataAccess(object):
             TRN.add(sql, [ag_login_id])
             return [dict(row) for row in TRN.execute_fetchindex()]
 
+    def get_supplied_kit_id(self, ag_login_id):
+        """ Get supplied_kit_id for ag_login_id.
+
+        Useful for unit tests, since the ag_login_id is stable along different
+        database versions, while the supplied_kit_id is subject to scrubbing.
+
+        Parameters
+        ----------
+        ag_login_id : str
+            A valid login ID, that should be a test as a valid UUID
+
+        Returns
+        -------
+        supplied_kit_id : str
+            The supplied_kit_id for the given ag_login_id
+
+        Raises
+        ------
+        ValueError
+            Unknown ag_login_id passed
+        """
+        with TRN:
+            sql = """SELECT supplied_kit_id
+                     FROM ag.ag_kit
+                     WHERE ag_login_id = %s"""
+            TRN.add(sql, [ag_login_id])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('ag_login_id not in database: %s' %
+                                 ag_login_id)
+            return [dict(row) for row in info]
+
     def get_login_info(self, ag_login_id):
         """Get kit registration information
 
