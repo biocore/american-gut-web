@@ -23,7 +23,9 @@ class TestAddSample(TestHandlerBase):
                 'participant_name%3DREMOVED-0'))
 
     def test_get_human(self):
-        self.mock_login('tst_LbxUH')
+        self.mock_login(
+            ag_data.get_supplied_kit_id(
+                'd8592c74-9694-2135-e040-8a80115d6401'))
         response = self.get(
             '/authed/add_sample_human/?participant_name=REMOVED-0')
         self.assertEqual(response.code, 200)
@@ -41,7 +43,9 @@ class TestAddSample(TestHandlerBase):
         self.assertIn('action="/authed/add_sample_human/"', response.body)
 
     def test_get_animal(self):
-        self.mock_login('tst_DbGvP')
+        self.mock_login(
+            ag_data.get_supplied_kit_id(
+                'd8592c74-8710-2135-e040-8a80115d6401'))
         response = self.get(
             '/authed/add_sample_animal/?participant_name=REMOVED-0')
         self.assertEqual(response.code, 200)
@@ -58,7 +62,9 @@ class TestAddSample(TestHandlerBase):
         self.assertIn('action="/authed/add_sample_animal/"', response.body)
 
     def test_get_general(self):
-        self.mock_login('tst_LbxUH')
+        self.mock_login(
+            ag_data.get_supplied_kit_id(
+                'd8592c74-9694-2135-e040-8a80115d6401'))
         response = self.get(
             '/authed/add_sample_general/?participant_name=environmental')
         self.assertEqual(response.code, 200)
@@ -77,7 +83,9 @@ class TestAddSample(TestHandlerBase):
         self.assertIn('action="/authed/add_sample_general/"', response.body)
 
     def test_get_no_participant(self):
-        self.mock_login('tst_LbxUH')
+        self.mock_login(
+            ag_data.get_supplied_kit_id(
+                'd8592c74-9694-2135-e040-8a80115d6401'))
         response = self.get('/authed/add_sample_general/')
         self.assertEqual(response.code, 200)
         self.assertTrue(
@@ -99,7 +107,9 @@ class TestAddSample(TestHandlerBase):
         self.assertEqual(response.code, 403)
 
     def test_post_human(self):
-        self.mock_login('tst_LbxUH')
+        self.mock_login(
+            ag_data.get_supplied_kit_id(
+                'd8592c74-9694-2135-e040-8a80115d6401'))
         # make sure barcode properly removed
         self.assertIn('000005628', ag_data.getAvailableBarcodes(
                       'd8592c74-9694-2135-e040-8a80115d6401'))
@@ -141,13 +151,17 @@ class TestAddSample(TestHandlerBase):
         self.assertDictEqual(obs, exp)
 
     def test_post_animal(self):
-        self.mock_login('tst_DbGvP')
+        self.mock_login(
+            ag_data.get_supplied_kit_id(
+                'd8592c74-8710-2135-e040-8a80115d6401'))
         # make sure barcode properly removed
         self.assertIn('000002011', ag_data.getAvailableBarcodes(
                       'd8592c74-8710-2135-e040-8a80115d6401'))
 
     def test_post_general(self):
-        self.mock_login('tst_LbxUH')
+        self.mock_login(
+            ag_data.get_supplied_kit_id(
+                'd8592c74-9694-2135-e040-8a80115d6401'))
         # make sure barcode properly removed
         self.assertIn('000005628', ag_data.getAvailableBarcodes(
                       'd8592c74-9694-2135-e040-8a80115d6401'))
@@ -189,7 +203,9 @@ class TestAddSample(TestHandlerBase):
         self.assertDictEqual(obs, exp)
 
     def test_post_bad_data(self):
-        self.mock_login('tst_LbxUH')
+        self.mock_login(
+            ag_data.get_supplied_kit_id(
+                'd8592c74-9694-2135-e040-8a80115d6401'))
         # Malformed date
         # make sure barcode properly removed
         self.assertIn('000005628', ag_data.getAvailableBarcodes(

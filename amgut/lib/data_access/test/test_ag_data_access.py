@@ -20,7 +20,8 @@ class TestAGDataAccess(TestCase):
         obs = self.ag_data.authenticateWebAppUser('randomkitID', 'test')
         self.assertEqual(obs, False)
 
-        kit_id = 'tst_xfphP'
+        kit_id = self.ag_data.get_supplied_kit_id(
+            'ded5101d-cafb-f6b3-e040-8a80115d6f03')
         # Test wrong password
         obs = self.ag_data.authenticateWebAppUser(kit_id, 'wrongPass')
         self.assertEqual(obs, False)
@@ -79,7 +80,9 @@ class TestAGDataAccess(TestCase):
             self.ag_data.getAGBarcodeDetails('000006232')
 
     def test_get_nonconsented_scanned_barcodes(self):
-        obs = self.ag_data.get_nonconsented_scanned_barcodes('tst_KWfyv')
+        obs = self.ag_data.get_nonconsented_scanned_barcodes(
+            self.ag_data.get_supplied_kit_id(
+                'a4b7f35e-e8b2-4847-9df3-4f599c3b4c23'))
         exp = ['000027262']
         self.assertEqual(obs, exp)
 
@@ -115,9 +118,13 @@ class TestAGDataAccess(TestCase):
             self.ag_data.getAGKitDetails('IDONTEXI5T')
 
         # test existing AG kit
-        obs = self.ag_data.getAGKitDetails('tst_ODmhG')
+        obs = self.ag_data.getAGKitDetails(
+            self.ag_data.get_supplied_kit_id(
+                'd8592c74-84ba-2135-e040-8a80115d6401'))
         exp = {'ag_kit_id': 'd8592c74-84bb-2135-e040-8a80115d6401',
-               'supplied_kit_id': 'tst_ODmhG',
+               'supplied_kit_id':
+               self.ag_data.get_supplied_kit_id(
+                'd8592c74-84ba-2135-e040-8a80115d6401'),
                'swabs_per_kit': 1,
                'verification_email_sent': 'n',
                'kit_verification_code': 'f4UjhV4B',
@@ -501,39 +508,61 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(obs, False)
 
         # Test non-handout kit
-        obs = self.ag_data.handoutCheck('tst_ODmhG', 'test')
+        obs = self.ag_data.handoutCheck(
+            self.ag_data.get_supplied_kit_id(
+                'd8592c74-84ba-2135-e040-8a80115d6401'),
+            'test')
         self.assertEqual(obs, False)
         obs = self.ag_data.handoutCheck('randomKitID', 'test')
         self.assertEqual(obs, False)
 
     def test_check_access(self):
         # Has access
-        obs = self.ag_data.check_access('tst_BudVu', '000001047')
+        obs = self.ag_data.check_access(
+            self.ag_data.get_supplied_kit_id(
+                'd8592c74-7e34-2135-e040-8a80115d6401'),
+            '000001047')
         self.assertEqual(obs, True)
 
         # No access
-        obs = self.ag_data.check_access('tst_BudVu', '000001111')
+        obs = self.ag_data.check_access(
+            self.ag_data.get_supplied_kit_id(
+                'd8592c74-7e34-2135-e040-8a80115d6401'),
+            '000001111')
         self.assertEqual(obs, False)
 
     def test_ag_set_pass_change_code(self):
         # Generate new random code and assign it
         testcode = ''.join(choice(ascii_letters) for i in range(10))
-        self.ag_data.ag_set_pass_change_code('REMOVED', 'tst_ULGcr', testcode)
+        self.ag_data.ag_set_pass_change_code(
+            'REMOVED',
+            self.ag_data.get_supplied_kit_id(
+                'd8592c74-8416-2135-e040-8a80115d6401'),
+            testcode)
 
         # Actually test the code change
         obs = self.ag_data.ag_verify_kit_password_change_code(
-            'REMOVED', 'tst_ULGcr', 'SOMELONGTHINGTHATWILLFAIL')
+            'REMOVED',
+            self.ag_data.get_supplied_kit_id(
+                'd8592c74-8416-2135-e040-8a80115d6401'),
+            'SOMELONGTHINGTHATWILLFAIL')
         self.assertEqual(obs, False)
         obs = self.ag_data.ag_verify_kit_password_change_code(
-            'REMOVED', 'tst_ULGcr', testcode)
+            'REMOVED',
+            self.ag_data.get_supplied_kit_id(
+                'd8592c74-8416-2135-e040-8a80115d6401'),
+            testcode)
         # Using equal to make sure boolean True is returned, not something that
         # equates to True
         self.assertEqual(obs, True)
 
         # Test giving nonsense email
         # TODO: make this raise error and test
-        self.ag_data.ag_set_pass_change_code('Fake@notarealemail.com',
-                                             'tst_ULGcr', testcode)
+        self.ag_data.ag_set_pass_change_code(
+            'Fake@notarealemail.com',
+            self.ag_data.get_supplied_kit_id(
+                'd8592c74-8416-2135-e040-8a80115d6401'),
+            testcode)
 
         # Test giving bad skid
         # TODO: make this raise error and test
@@ -542,13 +571,22 @@ class TestAGDataAccess(TestCase):
     def test_ag_update_kit_password(self):
         # Generate new pass and make sure is different from current pass
         newpass = ''.join(choice(ascii_letters) for i in range(randint(8, 15)))
-        auth = self.ag_data.authenticateWebAppUser('tst_ULGcr', newpass)
+        auth = self.ag_data.authenticateWebAppUser(
+            self.ag_data.get_supplied_kit_id(
+                'd8592c74-8416-2135-e040-8a80115d6401'),
+            newpass)
         self.assertFalse(
             auth, msg="Randomly generated password matches existing")
 
         # Actually test password change
-        self.ag_data.ag_update_kit_password('tst_ULGcr', newpass)
-        auth = self.ag_data.authenticateWebAppUser('tst_ULGcr', newpass)
+        self.ag_data.ag_update_kit_password(
+            self.ag_data.get_supplied_kit_id(
+                'd8592c74-8416-2135-e040-8a80115d6401'),
+            newpass)
+        auth = self.ag_data.authenticateWebAppUser(
+            self.ag_data.get_supplied_kit_id(
+                'd8592c74-8416-2135-e040-8a80115d6401'),
+            newpass)
         self.assertTrue(isinstance(auth, dict))
         self.assertEqual(auth['ag_login_id'],
                          'd8592c74-8416-2135-e040-8a80115d6401')
@@ -560,20 +598,33 @@ class TestAGDataAccess(TestCase):
     def test_ag_verify_kit_password_change_code(self):
         # Test actual functionality
         obs = self.ag_data.ag_verify_kit_password_change_code(
-            'REMOVED', 'tst_omubN', 'FAIL')
+            'REMOVED',
+            self.ag_data.get_supplied_kit_id(
+                '6165453f-e8bc-4edc-b00e-50e72fe550c9'),
+            'FAIL')
         # Using assertEqual to make sure boolean False is returned, not
         # something that equates to False. Same for rest of assertEquals below
         self.assertEqual(obs, False)
         # Outside reset time, should fail
         obs = self.ag_data.ag_verify_kit_password_change_code(
-            'REMOVED', 'tst_omubN', 'Mw1eY4wWVXpE0cQlvQwS')
+            'REMOVED',
+            self.ag_data.get_supplied_kit_id(
+                '6165453f-e8bc-4edc-b00e-50e72fe550c9'),
+            'Mw1eY4wWVXpE0cQlvQwS')
         self.assertEqual(obs, False)
 
         # Reset code and make sure it works
         testcode = ''.join(choice(ascii_letters) for i in range(10))
-        self.ag_data.ag_set_pass_change_code('REMOVED', 'tst_ULGcr', testcode)
+        self.ag_data.ag_set_pass_change_code(
+            'REMOVED',
+            self.ag_data.get_supplied_kit_id(
+                'd8592c74-8416-2135-e040-8a80115d6401'),
+            testcode)
         obs = self.ag_data.ag_verify_kit_password_change_code(
-            'REMOVED', 'tst_ULGcr', testcode)
+            'REMOVED',
+            self.ag_data.get_supplied_kit_id(
+                'd8592c74-8416-2135-e040-8a80115d6401'),
+            testcode)
         self.assertEqual(obs, True)
 
         # Test with incorrect kit id
@@ -583,11 +634,16 @@ class TestAGDataAccess(TestCase):
 
         # Test with incorrect email
         obs = self.ag_data.ag_verify_kit_password_change_code(
-            'notreal@fake.com', 'tst_ULGcr', testcode)
+            'notreal@fake.com',
+            self.ag_data.get_supplied_kit_id(
+                'd8592c74-8416-2135-e040-8a80115d6401'),
+            testcode)
         self.assertEqual(obs, False)
 
     def test_getBarcodesByKit(self):
-        res = self.ag_data.getBarcodesByKit('tst_qmhLX')
+        res = self.ag_data.getBarcodesByKit(
+            self.ag_data.get_supplied_kit_id(
+                'd8592c74-7e7f-2135-e040-8a80115d6401'))
         exp = ['000001322']
         self.assertItemsEqual(res, exp)
 
@@ -596,7 +652,9 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(res, [])
 
     def test_checkPrintResults(self):
-        obs = self.ag_data.checkPrintResults('tst_oasoR')
+        obs = self.ag_data.checkPrintResults(
+            self.ag_data.get_supplied_kit_id(
+                'dc3172b2-792c-4087-8a20-714297821c6a'))
         self.assertFalse(obs)
 
         obs = self.ag_data.checkPrintResults('tst_TMYwD')
@@ -610,10 +668,14 @@ class TestAGDataAccess(TestCase):
         self.assertFalse(obs)
 
     def test_get_user_for_kit(self):
-        obs = self.ag_data.get_user_for_kit('tst_IueFX')
+        obs = self.ag_data.get_user_for_kit(
+            self.ag_data.get_supplied_kit_id(
+                'ded5101d-c8e3-f6b3-e040-8a80115d6f03'))
         self.assertEqual('ded5101d-c8e3-f6b3-e040-8a80115d6f03', obs)
 
-        obs = self.ag_data.get_user_for_kit('tst_esABz')
+        obs = self.ag_data.get_user_for_kit(
+            self.ag_data.get_supplied_kit_id(
+                'd8592c74-8421-2135-e040-8a80115d6401'))
         self.assertEqual('d8592c74-8421-2135-e040-8a80115d6401', obs)
 
     def test_get_user_for_kit_errors(self):
@@ -624,10 +686,14 @@ class TestAGDataAccess(TestCase):
             self.ag_data.get_user_for_kit('tst_esXXX')
 
     def test_get_menu_items(self):
-        obs = self.ag_data.get_menu_items('tst_pDWcB')
+        obs = self.ag_data.get_menu_items(
+            self.ag_data.get_supplied_kit_id(
+                'd8592c74-844b-2135-e040-8a80115d6401'))
         self.assertEqual(({}, {}, [], True), obs)
 
-        obs = self.ag_data.get_menu_items('tst_VpQsT')
+        obs = self.ag_data.get_menu_items(
+            self.ag_data.get_supplied_kit_id(
+                'd8592c74-84c9-2135-e040-8a80115d6401'))
         self.assertEqual(({'REMOVED-0': []}, {}, [], True), obs)
 
     def test_get_menu_items_errors(self):
@@ -645,7 +711,9 @@ class TestAGDataAccess(TestCase):
         self.assertFalse(obs)
 
     def test_get_user_info(self):
-        obs = self.ag_data.get_user_info('tst_wAhSB')
+        obs = self.ag_data.get_user_info(
+            self.ag_data.get_supplied_kit_id(
+                'd8592c74-84a5-2135-e040-8a80115d6401'))
         exp = {'address': 'REMOVED', 'ag_login_id':
                'd8592c74-84a5-2135-e040-8a80115d6401', 'city': 'REMOVED',
                'country': 'REMOVED', 'email': 'REMOVED', 'name': 'REMOVED',
@@ -657,7 +725,9 @@ class TestAGDataAccess(TestCase):
             self.ag_data.get_user_info('tst_XX1123')
 
     def test_get_barcode_results(self):
-        obs = self.ag_data.get_barcode_results('tst_yCzro')
+        obs = self.ag_data.get_barcode_results(
+            self.ag_data.get_supplied_kit_id(
+                'd8592c74-9694-2135-e040-8a80115d6401'))
         exp = [{'barcode': '000016704', 'participant_name': 'REMOVED-0'},
                {'barcode': '000016705', 'participant_name': 'REMOVED-0'},
                {'barcode': '000016706', 'participant_name': 'REMOVED-0'},

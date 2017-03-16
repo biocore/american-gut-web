@@ -1,5 +1,6 @@
 from unittest import main
 from amgut.test.tornado_test_base import TestHandlerBase
+from amgut.connections import ag_data
 
 
 class TestAddSampleOverview(TestHandlerBase):
@@ -13,7 +14,9 @@ class TestAddSampleOverview(TestHandlerBase):
 
     def test_get_overview_human(self):
         # Test with human login id
-        self.mock_login('tst_LbxUH')
+        self.mock_login(
+            ag_data.get_supplied_kit_id(
+                'd8592c74-9694-2135-e040-8a80115d6401'))
         response = self.get(
             '/authed/add_sample_overview/')
         self.assertEqual(response.code, 200)
@@ -30,7 +33,9 @@ class TestAddSampleOverview(TestHandlerBase):
 
     def test_get_overview_animal(self):
         # Test with animal login id
-        self.mock_login('tst_DbGvP')
+        self.mock_login(
+            ag_data.get_supplied_kit_id(
+                'd8592c74-8710-2135-e040-8a80115d6401'))
         response = self.get(
             '/authed/add_sample_overview/')
         self.assertEqual(response.code, 200)

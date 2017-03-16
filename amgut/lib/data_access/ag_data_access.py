@@ -848,7 +848,7 @@ class AGDataAccess(object):
             if not info:
                 raise ValueError('ag_login_id not in database: %s' %
                                  ag_login_id)
-            return [dict(row) for row in info]
+            return info[0][0]
 
     def get_login_info(self, ag_login_id):
         """Get kit registration information
