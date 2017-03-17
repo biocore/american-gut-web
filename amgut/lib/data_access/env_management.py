@@ -17,7 +17,7 @@ get_db_file = partial(join, join(dirname(dirname(abspath(__file__))), '..',
                                  'db'))
 LAYOUT_FP = get_db_file('ag_unpatched.sql')
 INITIALIZE_FP = get_db_file('initialize.sql')
-POPULATE_FP = get_db_file('ag_test_patch39.sql.gz')
+POPULATE_FP = get_db_file('ag_test_patch22.sql.gz')
 PATCHES_DIR = get_db_file('patches')
 
 
