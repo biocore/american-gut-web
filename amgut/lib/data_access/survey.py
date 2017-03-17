@@ -295,17 +295,21 @@ class Survey(object):
         input into a WTForm.
         """
         with TRN:
-            sql = """SELECT survey_question_id, display_index,
+            sql = """SELECT survey_question_id, {1}.display_index,
                             survey_response_type
                      FROM {0}
                      JOIN {1} USING (response, survey_question_id)
                      JOIN {2} USING (survey_question_id)
                      LEFT JOIN {3} USING (survey_question_id)
-                     WHERE survey_id = %s AND retired = FALSE""".format(
+                     JOIN ag.group_questions USING (survey_question_id)
+                     WHERE survey_group = {4}
+                     AND survey_id = %s
+                     AND retired = FALSE""".format(
                 self._survey_answers_table,
                 self._survey_question_response_table,
                 self._survey_question_response_type_table,
-                self._questions_table)
+                self._questions_table,
+                str(-1*self.id))
             TRN.add(sql, [survey_id])
             answers = TRN.execute_fetchindex()
 
@@ -318,11 +322,8 @@ class Survey(object):
             answers_other = TRN.execute_fetchindex()
 
             survey = defaultdict(list)
-            print(answers)
             for qid, idx, qtype in answers:
-                print(qid, idx, qtype)
                 eid = self.questions[qid].interface_element_ids[0]
-                print(eid)
                 if qtype == 'SINGLE':
                     survey[eid] = idx
                 else:
