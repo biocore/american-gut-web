@@ -818,88 +818,6 @@ class AGDataAccess(object):
             TRN.add(sql, [ag_login_id])
             return [dict(row) for row in TRN.execute_fetchindex()]
 
-    def get_random_supplied_kit_id_scanned_unconsented(self):
-        with TRN:
-            sql = """SELECT supplied_kit_id, barcode
-                     FROM barcodes.barcode
-                     JOIN ag.ag_kit_barcodes USING (barcode)
-                     JOIN ag.ag_kit USING (ag_kit_id)
-                     WHERE barcodes.barcode.scan_date IS NOT NULL
-                     AND ag.ag_kit_barcodes.survey_id IS NULL
-                     LIMIT 1"""
-            TRN.add(sql, [])
-            info = TRN.execute_fetchindex()
-            if not info:
-                raise ValueError('No kits found.')
-            return info[0]
-
-    def get_random_handout_printed_min6_supplied_kit_id(self):
-        """ For testing: get a random supplied_kit_id with printed results
-            and 6 swaps per kit.
-
-        Returns
-        -------
-        supplied_kit_id : str
-            A supplied_kit_id.
-
-        Raises
-        ------
-        ValueError
-            If no hand out kit exists, satisfing the given conditions.
-        """
-        with TRN:
-            sql = """SELECT kit_id
-                     FROM ag.ag_handout_kits
-                     WHERE swabs_per_kit = 6 AND print_results = TRUE"""
-            TRN.add(sql, [])
-            info = TRN.execute_fetchindex()
-            if not info:
-                raise ValueError('No kits found.')
-            return info[0][0]
-
-    def get_random_email(self):
-        with TRN:
-            sql = """SELECT email
-                     FROM ag.ag_login
-                     LIMIT 1"""
-            TRN.add(sql, [])
-            info = TRN.execute_fetchindex()
-            if not info:
-                raise ValueError('No emails found.')
-            return info[0][0]
-
-    def get_supplied_kit_id(self, ag_login_id):
-        """ Get supplied_kit_id for ag_login_id.
-
-        Useful for unit tests, since the ag_login_id is stable along different
-        database versions, while the supplied_kit_id is subject to scrubbing.
-
-        Parameters
-        ----------
-        ag_login_id : str
-            A valid login ID, that should be a test as a valid UUID
-
-        Returns
-        -------
-        supplied_kit_id : str
-            The supplied_kit_id for the given ag_login_id
-
-        Raises
-        ------
-        ValueError
-            Unknown ag_login_id passed
-        """
-        with TRN:
-            sql = """SELECT supplied_kit_id
-                     FROM ag.ag_kit
-                     WHERE ag_login_id = %s"""
-            TRN.add(sql, [ag_login_id])
-            info = TRN.execute_fetchindex()
-            if not info:
-                raise ValueError('ag_login_id not in database: %s' %
-                                 ag_login_id)
-            return info[0][0]
-
     def get_login_info(self, ag_login_id):
         """Get kit registration information
 
@@ -1051,3 +969,136 @@ class AGDataAccess(object):
             sql = "SELECT deposited FROM ag.ag_kit_barcodes WHERE barcode = %s"
             TRN.add(sql, [barcode])
             return TRN.execute_fetchlast()
+
+    def get_random_supplied_kit_id_scanned_unconsented(self):
+        with TRN:
+            sql = """SELECT supplied_kit_id, barcode
+                     FROM barcodes.barcode
+                     JOIN ag.ag_kit_barcodes USING (barcode)
+                     JOIN ag.ag_kit USING (ag_kit_id)
+                     WHERE barcodes.barcode.scan_date IS NOT NULL
+                     AND ag.ag_kit_barcodes.survey_id IS NULL
+                     LIMIT 1"""
+            TRN.add(sql, [])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('No kits found.')
+            return info[0]
+
+    def get_random_handout_printed_min6_supplied_kit_id(self):
+        """ For testing: get a random supplied_kit_id with printed results
+            and 6 swaps per kit.
+
+        Returns
+        -------
+        supplied_kit_id : str
+            A supplied_kit_id.
+
+        Raises
+        ------
+        ValueError
+            If no hand out kit exists, satisfing the given conditions.
+        """
+        with TRN:
+            sql = """SELECT kit_id
+                     FROM ag.ag_handout_kits
+                     WHERE swabs_per_kit = 6 AND print_results = TRUE"""
+            TRN.add(sql, [])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('No kits found.')
+            return info[0][0]
+
+    def get_random_email(self):
+        with TRN:
+            sql = """SELECT email
+                     FROM ag.ag_login
+                     LIMIT 1"""
+            TRN.add(sql, [])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('No emails found.')
+            return info[0][0]
+
+    def get_random_barcode(self, deposited=True):
+        depos = 'TRUE'
+        if deposited is False:
+            depos = 'FALSE'
+        with TRN:
+            sql = """SELECT barcode
+                     FROM ag.ag_kit_barcodes
+                     WHERE deposited=%s
+                     LIMIT 1"""
+            TRN.add(sql, [depos])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('No barcodes found.')
+            return info[0][0]
+
+    def get_email_from_ag_login_id(self, ag_login_id):
+        with TRN:
+            sql = """SELECT email
+                     FROM ag.ag_login
+                     WHERE ag_login_id=%s"""
+            TRN.add(sql, [ag_login_id])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('No emails found.')
+            return info[0][0]
+
+    def get_supplied_kit_id(self, ag_login_id):
+        """ Get supplied_kit_id for ag_login_id.
+
+        Useful for unit tests, since the ag_login_id is stable along different
+        database versions, while the supplied_kit_id is subject to scrubbing.
+
+        Parameters
+        ----------
+        ag_login_id : str
+            A valid login ID, that should be a test as a valid UUID
+
+        Returns
+        -------
+        supplied_kit_id : str
+            The supplied_kit_id for the given ag_login_id
+
+        Raises
+        ------
+        ValueError
+            Unknown ag_login_id passed
+        """
+        with TRN:
+            sql = """SELECT supplied_kit_id
+                     FROM ag.ag_kit
+                     WHERE ag_login_id = %s"""
+            TRN.add(sql, [ag_login_id])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('ag_login_id not in database: %s' %
+                                 ag_login_id)
+            return info[0][0]
+
+    def get_participant_names_from_ag_login_id(self, ag_login_id):
+        with TRN:
+            sql = """SELECT participant_name
+                     FROM ag.ag_login_surveys
+                     WHERE ag_login_id = %s"""
+            TRN.add(sql, [ag_login_id])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('ag_login_id not in database: %s' %
+                                 ag_login_id)
+            return info
+
+    def get_barcode_from_ag_login_id(self, ag_login_id):
+        with TRN:
+            sql = """SELECT ag.ag_kit_barcodes.*, ag.ag_kit.kit_verified
+                     FROM ag.ag_kit_barcodes
+                     JOIN ag.ag_kit USING (ag_kit_id)
+                     WHERE ag_login_id = %s"""
+            TRN.add(sql, [ag_login_id])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('barcode not in database: %s' %
+                                 ag_login_id)
+            return [dict(row) for row in info]
