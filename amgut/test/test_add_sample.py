@@ -13,6 +13,11 @@ class TestAddSample(TestHandlerBase):
                              'd8592c74-8710-2135-e040-8a80115d6401')
         super(TestAddSample, self).tearDown()
 
+    # def test_first(self):
+    #     x = ag_data.get_ag_login_id_from_barcode('000005628')
+    #     print('TESTING STEFAN', x, type(x))
+    #     self.assertTrue(False)
+
     def test_get_not_authed(self):
         response = self.get(
             '/authed/add_sample_human/?participant_name=REMOVED-0')
@@ -116,7 +121,7 @@ class TestAddSample(TestHandlerBase):
         # Run test
         names = ag_data.get_participant_names_from_ag_login_id(ag_login_id)
         response = self.post('/authed/add_sample_human/',
-                             {'participant_name': names[0][0],
+                             {'participant_name': names[0],
                               'barcode': '000005628',
                               'sample_site': 'Stool',
                               'sample_date': '12/13/2014',
@@ -251,7 +256,7 @@ class TestAddSample(TestHandlerBase):
         ag_login_id = ag_data.get_ag_login_id_from_barcode(barcode)
         kit_id = ag_data.get_supplied_kit_id(ag_login_id)
         name = \
-            ag_data.get_participant_names_from_ag_login_id(ag_login_id)[0][0]
+            ag_data.get_participant_names_from_ag_login_id(ag_login_id)[0]
         response = self.post('/authed/add_sample_general/',
                              {'participant_name':  escape.url_escape(name),
                               'barcode': barcode,

@@ -26,7 +26,7 @@ class TestAddSampleOverview(TestHandlerBase):
         names = ag_data.get_participant_names_from_ag_login_id(
             ag_login_id)
         for name in names:
-            self.assertIn(escape.xhtml_escape(name[0]), response.body)
+            self.assertIn(escape.xhtml_escape(name), response.body)
         self.assertIn('Environmental', response.body)
         self.assertNotIn('- Animal Source', response.body)
 
@@ -43,7 +43,7 @@ class TestAddSampleOverview(TestHandlerBase):
             ag_login_id)
         self.assertIn('sample source', response.body)
         for name in names:
-            self.assertIn(escape.xhtml_escape(name[0]), response.body)
+            self.assertIn(escape.xhtml_escape(name), response.body)
         self.assertIn('Environmental', response.body)
 
 

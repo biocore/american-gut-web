@@ -175,7 +175,7 @@ class TestAGDataAccess(TestCase):
 
         names = self.ag_data.get_participant_names_from_ag_login_id(
             ag_login_id)
-        self.ag_data.deleteAGParticipantSurvey(ag_login_id, names[0][0])
+        self.ag_data.deleteAGParticipantSurvey(ag_login_id, names[0])
 
         with self.assertRaises(ValueError):
             self.ag_data.getConsent('8b2b45bb3390b585')
@@ -192,7 +192,7 @@ class TestAGDataAccess(TestCase):
     def test_deleteAGParticipantSurvey_with_sample_bug(self):
         ag_login_id = 'd8592c74-9694-2135-e040-8a80115d6401'
         names = self.ag_data.get_participant_names_from_ag_login_id(
-            ag_login_id)[0]
+            ag_login_id)
 
         # issue 616
         self.ag_data.deleteAGParticipantSurvey(ag_login_id, names[0])
@@ -227,7 +227,7 @@ class TestAGDataAccess(TestCase):
         ag_login_id = '7732aafe-c4e1-4ae4-8337-6f22704c1064'
         barcode = '000027376'
         names = self.ag_data.get_participant_names_from_ag_login_id(
-            ag_login_id)[0]
+            ag_login_id)
 
         self.ag_data.logParticipantSample(
             ag_login_id, barcode, 'Stool', None, datetime.date(2015, 9, 27),
@@ -282,7 +282,7 @@ class TestAGDataAccess(TestCase):
         exp = self.ag_data.get_participant_names_from_ag_login_id(i)
         # check if results are subset of all names for this ag_login_id
         for name in res:
-            self.assertIn([name], exp)
+            self.assertIn(name, exp)
 
     def test_getHumanParticipantsNotPresent(self):
         i = '00000000-0000-0000-0000-000000000000'
@@ -309,7 +309,7 @@ class TestAGDataAccess(TestCase):
         exp = self.ag_data.get_participant_names_from_ag_login_id(i)
         # check if results are subset of all names for this ag_login_id
         for name in res:
-            self.assertIn([name], exp)
+            self.assertIn(name, exp)
 
     def test_getAnimalParticipantsNotPresent(self):
         i = "00711b0a-67d6-0fed-e050-8a800c5d7570"
@@ -320,7 +320,7 @@ class TestAGDataAccess(TestCase):
         i = "d6b0f287-b9d9-40d4-82fd-a8fd3db6c476"
         names = self.ag_data.get_participant_names_from_ag_login_id(i)
         # collect results for ALL names
-        res = [self.ag_data.getParticipantSamples(i, name[0])
+        res = [self.ag_data.getParticipantSamples(i, name)
                for name in names]
         exp = {'sample_time': datetime.time(11, 55),
                'barcode': '000028432',
@@ -334,7 +334,7 @@ class TestAGDataAccess(TestCase):
         i = "d8592c74-9694-2135-e040-8a80115d6401"
         # collect all results for ALL names for this ag_login_id and remove
         # field "notes" since it gets scrubbed.
-        names = list(set([name[0] for name in
+        names = list(set([name for name in
                           self.ag_data
                           .get_participant_names_from_ag_login_id(i)]))
         obs = []
@@ -698,7 +698,7 @@ class TestAGDataAccess(TestCase):
             self.ag_data.get_supplied_kit_id(ag_login_id))
         names = self.ag_data.get_participant_names_from_ag_login_id(
             ag_login_id)
-        self.assertEqual((dict((name[0], []) for name in names),
+        self.assertEqual((dict((name, []) for name in names),
                          {}, [], True), obs)
 
     def test_get_menu_items_errors(self):
@@ -710,7 +710,7 @@ class TestAGDataAccess(TestCase):
         names = self.ag_data.get_participant_names_from_ag_login_id(
             ag_login_id)
         obs = self.ag_data.check_if_consent_exists(
-            ag_login_id, names[0][0])
+            ag_login_id, names[0])
         self.assertTrue(obs)
 
     def test_check_if_consent_exists_non_existent_user(self):
@@ -779,7 +779,7 @@ class TestAGDataAccess(TestCase):
     def test_get_survey_ids(self):
         id_ = '8ca47059-000a-469f-aa64-ff1afbd6fcb1'
         names = self.ag_data.get_participant_names_from_ag_login_id(id_)
-        obs = [self.ag_data.get_survey_ids(id_, name) for name in names[0]]
+        obs = [self.ag_data.get_survey_ids(id_, name) for name in names]
         self.assertIn({1: 'd08758a1510256f0'}, obs)
 
     def test_get_survey_ids_non_existant_id(self):

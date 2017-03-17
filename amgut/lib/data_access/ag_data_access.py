@@ -1152,13 +1152,13 @@ class AGDataAccess(object):
         Returns
         -------
         [[str]]
-            Example: [["Name - z\xc3\x96DOZ8(Z~'"],
-                      ["Name - z\xc3\x96DOZ8(Z~'"],
-                      ['Name - QpeY\xc3\xb8u#0\xc3\xa5<'],
-                      ['Name - S)#@G]xOdL'],
-                      ['Name - Y5"^&sGQiW'],
-                      ['Name - L\xc3\xa7+c\r\xc3\xa5?\r\xc2\xbf!'],
-                      ['Name - (~|w:S\xc3\x85#L\xc3\x84']]
+            Example: ["Name - z\xc3\x96DOZ8(Z~'",
+                      "Name - z\xc3\x96DOZ8(Z~'",
+                      'Name - QpeY\xc3\xb8u#0\xc3\xa5<',
+                      'Name - S)#@G]xOdL',
+                      'Name - Y5"^&sGQiW',
+                      'Name - L\xc3\xa7+c\r\xc3\xa5?\r\xc2\xbf!',
+                      'Name - (~|w:S\xc3\x85#L\xc3\x84']
 
         Raises
         ------
@@ -1174,7 +1174,7 @@ class AGDataAccess(object):
             if not info:
                 raise ValueError('ag_login_id not in database: %s' %
                                  ag_login_id)
-            return info
+            return [n[0] for n in info]
 
     def get_barcode_from_ag_login_id(self, ag_login_id):
         """ Returns all barcodes for a given ag_login_id.
