@@ -1102,3 +1102,27 @@ class AGDataAccess(object):
                 raise ValueError('barcode not in database: %s' %
                                  ag_login_id)
             return [dict(row) for row in info]
+
+    def get_random_supplied_kit_id_unverified(self):
+        with TRN:
+            sql = """SELECT supplied_kit_id
+                     FROM ag.ag_kit
+                     WHERE ag.ag_kit.kit_verified = 'n'
+                     LIMIT 1"""
+            TRN.add(sql, [])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('No unverified kits in DB')
+            return info[0][0]
+
+    def get_ag_login_id_from_barcode(self, barcode):
+        with TRN:
+            sql = """SELECT ag.ag_kit.ag_login_id
+                     FROM ag.ag_kit_barcodes
+                     JOIN ag.ag_kit USING (ag_kit_id)
+                     WHERE ag.ag_kit_barcodes.barcode = %s"""
+            TRN.add(sql, [barcode])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('Barcode "%s" not in DB' % barcode)
+            return info[0][0]
