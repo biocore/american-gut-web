@@ -13,11 +13,6 @@ class TestAddSample(TestHandlerBase):
                              'd8592c74-8710-2135-e040-8a80115d6401')
         super(TestAddSample, self).tearDown()
 
-    # def test_first(self):
-    #     x = ag_data.get_ag_login_id_from_barcode('000005628')
-    #     print('TESTING STEFAN', x, type(x))
-    #     self.assertTrue(False)
-
     def test_get_not_authed(self):
         response = self.get(
             '/authed/add_sample_human/?participant_name=REMOVED-0')
