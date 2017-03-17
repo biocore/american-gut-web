@@ -535,8 +535,6 @@ class TestAGDataAccess(TestCase):
 
         # Generate new random code and assign it
         testcode = ''.join(choice(ascii_letters) for i in range(10))
-        names = self.ag_data.get_participant_names_from_ag_login_id(
-            ag_login_id)
         email = self.ag_data.get_email_from_ag_login_id(ag_login_id)
         self.ag_data.ag_set_pass_change_code(
             email,
@@ -715,8 +713,6 @@ class TestAGDataAccess(TestCase):
 
     def test_check_if_consent_exists_non_existent_user(self):
         ag_login_id = '00711b0a-67d6-0fed-e050-8a800c5d7570'
-        names = self.ag_data.get_participant_names_from_ag_login_id(
-            ag_login_id)
         obs = self.ag_data.check_if_consent_exists(ag_login_id, 'REMOVED-111')
         self.assertFalse(obs)
 
