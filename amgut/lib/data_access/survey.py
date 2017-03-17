@@ -318,8 +318,11 @@ class Survey(object):
             answers_other = TRN.execute_fetchindex()
 
             survey = defaultdict(list)
+            print(answers)
             for qid, idx, qtype in answers:
+                print(qid, idx, qtype)
                 eid = self.questions[qid].interface_element_ids[0]
+                print(eid)
                 if qtype == 'SINGLE':
                     survey[eid] = idx
                 else:
