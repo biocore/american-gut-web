@@ -1187,8 +1187,12 @@ class AGDataAccess(object):
 
         Returns
         -------
-        dict(str, str)
-            Example: '000032951'
+        [dict(str, str)]
+            Example: [{'sample_time': None,
+                       'sample_date': None,
+                       'barcode': '000004217',
+                       'site_sampled': None,
+                       'kit_verified': 'y'}
 
         Raises
         ------
@@ -1196,7 +1200,11 @@ class AGDataAccess(object):
             If no barcodes can be found in the DB.
         """
         with TRN:
-            sql = """SELECT ag.ag_kit_barcodes.*, ag.ag_kit.kit_verified
+            sql = """SELECT ag.ag_kit_barcodes.sample_time,
+                            ag.ag_kit_barcodes.barcode,
+                            ag.ag_kit_barcodes.sample_date,
+                            ag.ag_kit_barcodes.site_sampled,
+                            ag.ag_kit.kit_verified
                      FROM ag.ag_kit_barcodes
                      JOIN ag.ag_kit USING (ag_kit_id)
                      WHERE ag_login_id = %s"""
