@@ -150,7 +150,6 @@ class TestAddSample(TestHandlerBase):
     def test_post_animal(self):
         barcode = '000001015'
         ag_login_id = ag_data.get_ag_login_id_from_barcode(barcode)
-        kit_id = ag_data.get_supplied_kit_id(ag_login_id)
         self.mock_login(ag_data.get_supplied_kit_id(ag_login_id))
         # make sure barcode properly removed
         self.assertIn('000001015', ag_data.getAvailableBarcodes(ag_login_id))
@@ -249,7 +248,6 @@ class TestAddSample(TestHandlerBase):
         # Non-owned barcode
         barcode = '000001015'
         ag_login_id = ag_data.get_ag_login_id_from_barcode(barcode)
-        kit_id = ag_data.get_supplied_kit_id(ag_login_id)
         name = \
             ag_data.get_participant_names_from_ag_login_id(ag_login_id)[0]
         response = self.post('/authed/add_sample_general/',
