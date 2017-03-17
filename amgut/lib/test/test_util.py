@@ -60,8 +60,8 @@ class TestUtil(TestCase):
                       'https://vioscreen.com/remotelogin.aspx?Key=', obs)
 
     def test_rolback(self):
-        kit = self.ag_data.get_supplied_kit_id(
-            'd8592c74-84c6-2135-e040-8a80115d6401')
+        # fetching a random kit ID from DB that is not yet verified
+        kit = self.ag_data.get_random_supplied_kit_id_unverified()
 
         @rollback
         def tf(kit):
