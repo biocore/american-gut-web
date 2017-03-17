@@ -970,7 +970,23 @@ class AGDataAccess(object):
             TRN.add(sql, [barcode])
             return TRN.execute_fetchlast()
 
+    # following are DB access functions only used for unit testing:
+
     def get_random_supplied_kit_id_scanned_unconsented(self):
+        """ Returns randomly chosen supplied_kit_id and barcode which has been
+        scanned but is without consent.
+        For unit testing only!
+
+        Returns
+        -------
+        str: [supplied_kit_id, barcode]
+            example: ['fNIYa', '000001053']
+
+        Raises
+        ------
+        ValueError
+            If no kits can be found in the DB that have been scanned and
+            are without consent."""
         with TRN:
             sql = """SELECT supplied_kit_id, barcode
                      FROM barcodes.barcode
@@ -986,19 +1002,19 @@ class AGDataAccess(object):
             return info[0]
 
     def get_random_handout_printed_min6_supplied_kit_id(self):
-        """ For testing: get a random supplied_kit_id with printed results
-            and 6 swaps per kit.
+        """ Returns a random supplied_kit_id with printed results
+        and 6 swaps per kit.
+        For unit testing only!
 
         Returns
         -------
         supplied_kit_id : str
-            A supplied_kit_id.
+            A supplied_kit_id. Example: 'DS_ubdvq'
 
         Raises
         ------
         ValueError
-            If no hand out kit exists, satisfing the given conditions.
-        """
+            If no hand out kit exists, satisfing the given conditions."""
         with TRN:
             sql = """SELECT kit_id
                      FROM ag.ag_handout_kits
@@ -1010,6 +1026,18 @@ class AGDataAccess(object):
             return info[0][0]
 
     def get_random_email(self):
+        """ Return randomly chosen email.
+        For unit testing only!
+
+        Returns
+        -------
+        str: email
+            Example: 'a03E9u6ZAu@glA+)./Vn'
+
+        Raises
+        ------
+        ValueError
+            If no emails be found in the DB."""
         with TRN:
             sql = """SELECT email
                      FROM ag.ag_login
@@ -1021,6 +1049,23 @@ class AGDataAccess(object):
             return info[0][0]
 
     def get_random_barcode(self, deposited=True):
+        """ Returns randomly chosen barcode.
+        For unit testing only!
+
+        Parameters
+        ----------
+        deposited : boolean
+            If true, pick a deposited barcode. Default = True
+
+        Returns
+        -------
+        str: barcode
+            Example: '000032951'
+
+        Raises
+        ------
+        ValueError
+            If no barcodes can be found in the DB."""
         depos = 'TRUE'
         if deposited is False:
             depos = 'FALSE'
@@ -1036,6 +1081,24 @@ class AGDataAccess(object):
             return info[0][0]
 
     def get_email_from_ag_login_id(self, ag_login_id):
+        """ Returns email for a given ag_login_id.
+        For unit testing only!
+
+        Parameters
+        ----------
+        ag_login_id : str
+            Existing ag_login_id.
+
+        Returns
+        -------
+        str: email
+            Example: 'xX/tEv7O+T@6Ri7C.)LO'
+
+        Raises
+        ------
+        ValueError
+            If ag_login_id is not in DB.
+        """
         with TRN:
             sql = """SELECT email
                      FROM ag.ag_login
@@ -1047,25 +1110,24 @@ class AGDataAccess(object):
             return info[0][0]
 
     def get_supplied_kit_id(self, ag_login_id):
-        """ Get supplied_kit_id for ag_login_id.
-
-        Useful for unit tests, since the ag_login_id is stable along different
-        database versions, while the supplied_kit_id is subject to scrubbing.
+        """ Returns supplied_kit_id for a given ag_login_id.
+        For unit testing only!
 
         Parameters
         ----------
         ag_login_id : str
-            A valid login ID, that should be a test as a valid UUID
+            Existing ag_login_id.
 
         Returns
         -------
-        supplied_kit_id : str
-            The supplied_kit_id for the given ag_login_id
+        str
+            The supplied_kit_id for the given ag_login_id.
+            Example: 'DokBF'
 
         Raises
         ------
         ValueError
-            Unknown ag_login_id passed
+            If ag_login_id is not in DB.
         """
         with TRN:
             sql = """SELECT supplied_kit_id
@@ -1079,6 +1141,30 @@ class AGDataAccess(object):
             return info[0][0]
 
     def get_participant_names_from_ag_login_id(self, ag_login_id):
+        """ Returns all participant_name(s) for a given ag_login_id.
+        For unit testing only!
+
+        Parameters
+        ----------
+        ag_login_id : str
+            Existing ag_login_id.
+
+        Returns
+        -------
+        [[str]]
+            Example: [["Name - z\xc3\x96DOZ8(Z~'"],
+                      ["Name - z\xc3\x96DOZ8(Z~'"],
+                      ['Name - QpeY\xc3\xb8u#0\xc3\xa5<'],
+                      ['Name - S)#@G]xOdL'],
+                      ['Name - Y5"^&sGQiW'],
+                      ['Name - L\xc3\xa7+c\r\xc3\xa5?\r\xc2\xbf!'],
+                      ['Name - (~|w:S\xc3\x85#L\xc3\x84']]
+
+        Raises
+        ------
+        ValueError
+            If ag_login_id is not in DB.
+        """
         with TRN:
             sql = """SELECT participant_name
                      FROM ag.ag_login_surveys
@@ -1091,6 +1177,24 @@ class AGDataAccess(object):
             return info
 
     def get_barcode_from_ag_login_id(self, ag_login_id):
+        """ Returns all barcodes for a given ag_login_id.
+        For unit testing only!
+
+        Parameters
+        ----------
+        ag_login_id : str
+            Existing ag_login_id.
+
+        Returns
+        -------
+        dict(str, str)
+            Example: '000032951'
+
+        Raises
+        ------
+        ValueError
+            If no barcodes can be found in the DB.
+        """
         with TRN:
             sql = """SELECT ag.ag_kit_barcodes.*, ag.ag_kit.kit_verified
                      FROM ag.ag_kit_barcodes
@@ -1104,6 +1208,19 @@ class AGDataAccess(object):
             return [dict(row) for row in info]
 
     def get_random_supplied_kit_id_unverified(self):
+        """ Returns a randomly chosen supplied_kit_id that is unverified.
+            For unit testing only!
+
+            Returns
+            -------
+            str: supplied_kit_id
+                Example: 'FajNh'
+
+            Raises
+            ------
+            ValueError
+                If no unverified supplied_kit_id can be found in the DB.
+            """
         with TRN:
             sql = """SELECT supplied_kit_id
                      FROM ag.ag_kit
@@ -1116,6 +1233,24 @@ class AGDataAccess(object):
             return info[0][0]
 
     def get_ag_login_id_from_barcode(self, barcode):
+        """ Returns ag_login_id for a given barcode.
+            For unit testing only!
+
+            Parameters
+            ----------
+            barcode : str
+                The barcode for which the ag_login_id should be retrieved.
+
+            Returns
+            -------
+            str: ag_login_id
+                Example: 'd8592c74-9694-2135-e040-8a80115d6401'
+
+            Raises
+            ------
+            ValueError
+                If the given barcode can not be found in the DB.
+            """
         with TRN:
             sql = """SELECT ag.ag_kit.ag_login_id
                      FROM ag.ag_kit_barcodes
