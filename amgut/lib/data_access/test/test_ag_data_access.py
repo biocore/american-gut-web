@@ -10,7 +10,6 @@ from amgut.lib.util import rollback
 
 class TestAGDataAccess(TestCase):
     def setUp(self):
-        self.maxDiff = None
         self.ag_data = AGDataAccess()
 
     def tearDown(self):
