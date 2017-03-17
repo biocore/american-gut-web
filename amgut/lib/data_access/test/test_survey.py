@@ -1,7 +1,6 @@
 # coding: utf-8
 from unittest import TestCase, main
 from string import ascii_letters
-from datetime import date
 from random import choice
 from future.utils import viewitems
 from wtforms.form import BaseForm
