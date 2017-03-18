@@ -285,8 +285,48 @@ class TestSurvey(TestCase):
 
     def test_fetch_survey(self):
         survey = Survey(2)
-        # use a survey_id that is present in DB versions 22 and 39
-        obs = survey.fetch_survey('817ff95701f4dd10')
+
+        # Create random string to test update happens
+        c = ascii_letters + '1234567890'
+        notes_test = ''.join([choice(c) for i in range(40)])
+
+        survey_id = '817ff95701f4dd10'
+        survey = Survey(2)
+        consent = {
+            'login_id': 'eba20873-b7db-33cc-e040-8a80115d392c',
+            'survey_id': survey_id,
+            'participant_name': 'some name that should be ignored',
+            'age_range': 'ANIMAL_SURVEY',
+            'parent_1_name': 'ANIMAL_SURVEY',
+            'parent_2_name': 'ANIMAL_SURVEY',
+            'deceased_parent': False,
+            'participant_email': 'REMOVED',
+            'obtainer_name': 'ANIMAL_SURVEY',
+            'assent_obtainer': 'ANIMAL_SURVEY',
+            'is_juvenile': True}
+        with_fk = [(survey_id, 128, 'Other'),
+                   (survey_id, 129, 'Wild'),
+                   (survey_id, 131, 'Male'),
+                   (survey_id, 132, 'Suburban'),
+                   (survey_id, 133, 'Normal'),
+                   (survey_id, 134, 'Omnivore'),
+                   (survey_id, 135, 'Wild food'),
+                   (survey_id, 136, 'Both'),
+                   (survey_id, 137, 'Unspecified'),
+                   (survey_id, 138, 'Lives alone with humans'),
+                   (survey_id, 139, '8+'),
+                   (survey_id, 140, 'Unspecified'),
+                   (survey_id, 141, 'Never')]
+        without_fk = [(survey_id, 130, '["20"]'),
+                      (survey_id, 142, '["Giant ratty pet!"]'),
+                      (survey_id, 143, '["Capybara"]'),
+                      (survey_id, 144, '["%s"]' % notes_test),
+                      (survey_id, 145, '["29 - Male"]'),
+                      (survey_id, 127, '["Fluffy"]')]
+
+        survey.store_survey(consent, with_fk, without_fk)
+
+        obs = survey.fetch_survey(survey_id)
         self.maxDiff = None
         exp = {'Pet_Information_127_0': 'Fluffy',
                'Pet_Information_128_0': 9,
