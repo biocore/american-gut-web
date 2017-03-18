@@ -287,6 +287,7 @@ class TestSurvey(TestCase):
         survey = Survey(2)
         # use a survey_id that is present in DB versions 22 and 39
         obs = survey.fetch_survey('817ff95701f4dd10')
+        self.maxDiff = None
         exp = {'Pet_Information_127_0': 'Fluffy',
                'Pet_Information_128_0': 9,
                'Pet_Information_129_0': 4,
