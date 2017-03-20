@@ -295,21 +295,17 @@ class Survey(object):
         input into a WTForm.
         """
         with TRN:
-            sql = """SELECT survey_question_id, {1}.display_index,
+            sql = """SELECT survey_question_id, display_index,
                             survey_response_type
                      FROM {0}
                      JOIN {1} USING (response, survey_question_id)
                      JOIN {2} USING (survey_question_id)
                      LEFT JOIN {3} USING (survey_question_id)
-                     JOIN ag.group_questions USING (survey_question_id)
-                     WHERE survey_group = {4}
-                     AND survey_id = %s
-                     AND retired = FALSE""".format(
+                     WHERE survey_id = %s AND retired = FALSE""".format(
                 self._survey_answers_table,
                 self._survey_question_response_table,
                 self._survey_question_response_type_table,
-                self._questions_table,
-                str(-1*self.id))
+                self._questions_table)
             TRN.add(sql, [survey_id])
             answers = TRN.execute_fetchindex()
 
