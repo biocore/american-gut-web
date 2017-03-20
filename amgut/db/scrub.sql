@@ -288,9 +288,9 @@ BEGIN
     -- For this table it is easier to drop everybody and add a test user
     DELETE FROM ag.labadmin_users_access;
     DELETE FROM ag.labadmin_users;
-    INSERT INTO ag.labadmin_users (email, password) VALUES ('test@foo.bar', passwd);
+    INSERT INTO ag.labadmin_users (email, password) VALUES ('test', passwd);
     -- Magic number 7 -> admin access
-    INSERT INTO ag.labadmin_users_access (email, access_id) VALUES ('test@foo.bar', 7);
+    INSERT INTO ag.labadmin_users_access (email, access_id) VALUES ('test', 7);
 
 END $do$;
 
