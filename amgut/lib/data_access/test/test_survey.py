@@ -239,6 +239,7 @@ class TestSurvey(TestCase):
         """
 
         # Create random string to test update happens
+        # TODO: implement utf8 capability for notes! See issue #646
         c = ascii_letters + '1234567890'
         notes_test = ''.join([choice(c) for i in range(40)])
 

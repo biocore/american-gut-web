@@ -123,6 +123,8 @@ class TestAGDataAccess(TestCase):
                self.ag_data.ut_get_supplied_kit_id(
                 'd8592c74-84ba-2135-e040-8a80115d6401'),
                'swabs_per_kit': 1L,
+               'kit_password':
+               '$2a$12$LiakUCHOpAMvEp9Wxehw5OIlD/TIIP0Bs3blw18ePcmKHWWAePrQ.',
                'verification_email_sent': 'n',
                'kit_verified': 'y'}
         # only look at those fields, that are not subject to scrubbing
