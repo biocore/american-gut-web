@@ -334,9 +334,7 @@ class TestAGDataAccess(TestCase):
         i = "d8592c74-9694-2135-e040-8a80115d6401"
         # collect all results for ALL names for this ag_login_id and remove
         # field "notes" since it gets scrubbed.
-        names = list(set([name for name in
-                          self.ag_data
-                          .ut_get_participant_names_from_ag_login_id(i)]))
+        names = set(self.ag_data.ut_get_participant_names_from_ag_login_id(i))
         obs = []
         for name in names:
             res = self.ag_data.getParticipantSamples(i, name)
