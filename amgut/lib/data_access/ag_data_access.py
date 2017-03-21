@@ -972,14 +972,14 @@ class AGDataAccess(object):
 
     # following are DB access functions only used for unit testing:
 
-    def get_random_supplied_kit_id_scanned_unconsented(self):
-        """ Returns randomly chosen supplied_kit_id and barcode which has been
-        scanned but is without consent.
+    def ut_get_arbitrary_supplied_kit_id_scanned_unconsented(self):
+        """ Returns arbitrarily chosen supplied_kit_id and barcode which has
+        been scanned but is without consent.
         For unit testing only!
 
         Returns
         -------
-        str: [supplied_kit_id, barcode]
+        list of str: [supplied_kit_id, barcode]
             example: ['fNIYa', '000001053']
 
         Raises
@@ -1001,8 +1001,8 @@ class AGDataAccess(object):
                 raise ValueError('No kits found.')
             return info[0]
 
-    def get_random_handout_printed_min6_supplied_kit_id(self):
-        """ Returns a random supplied_kit_id with printed results
+    def ut_get_arbitrary_handout_printed_min6_supplied_kit_id(self):
+        """ Returns a arbitrarily chosen supplied_kit_id with printed results
         and 6 swaps per kit.
         For unit testing only!
 
@@ -1025,8 +1025,8 @@ class AGDataAccess(object):
                 raise ValueError('No kits found.')
             return info[0][0]
 
-    def get_random_email(self):
-        """ Return randomly chosen email.
+    def ut_get_arbitrary_email(self):
+        """ Return arbitrarily chosen email.
         For unit testing only!
 
         Returns
@@ -1048,8 +1048,8 @@ class AGDataAccess(object):
                 raise ValueError('No emails found.')
             return info[0][0]
 
-    def get_random_barcode(self, deposited=True):
-        """ Returns randomly chosen barcode.
+    def ut_get_arbitrary_barcode(self, deposited=True):
+        """ Returns arbitrarily chosen barcode.
         For unit testing only!
 
         Parameters
@@ -1066,21 +1066,18 @@ class AGDataAccess(object):
         ------
         ValueError
             If no barcodes can be found in the DB."""
-        depos = 'TRUE'
-        if deposited is False:
-            depos = 'FALSE'
         with TRN:
             sql = """SELECT barcode
                      FROM ag.ag_kit_barcodes
                      WHERE deposited=%s
                      LIMIT 1"""
-            TRN.add(sql, [depos])
+            TRN.add(sql, [deposited])
             info = TRN.execute_fetchindex()
             if not info:
                 raise ValueError('No barcodes found.')
             return info[0][0]
 
-    def get_email_from_ag_login_id(self, ag_login_id):
+    def ut_get_email_from_ag_login_id(self, ag_login_id):
         """ Returns email for a given ag_login_id.
         For unit testing only!
 
@@ -1109,7 +1106,7 @@ class AGDataAccess(object):
                 raise ValueError('No emails found.')
             return info[0][0]
 
-    def get_supplied_kit_id(self, ag_login_id):
+    def ut_get_supplied_kit_id(self, ag_login_id):
         """ Returns supplied_kit_id for a given ag_login_id.
         For unit testing only!
 
@@ -1140,7 +1137,7 @@ class AGDataAccess(object):
                                  ag_login_id)
             return info[0][0]
 
-    def get_participant_names_from_ag_login_id(self, ag_login_id):
+    def ut_get_participant_names_from_ag_login_id(self, ag_login_id):
         """ Returns all participant_name(s) for a given ag_login_id.
         For unit testing only!
 
@@ -1176,7 +1173,7 @@ class AGDataAccess(object):
                                  ag_login_id)
             return [n[0] for n in info]
 
-    def get_barcode_from_ag_login_id(self, ag_login_id):
+    def ut_get_barcode_from_ag_login_id(self, ag_login_id):
         """ Returns all barcodes for a given ag_login_id.
         For unit testing only!
 
@@ -1215,7 +1212,7 @@ class AGDataAccess(object):
                                  ag_login_id)
             return [dict(row) for row in info]
 
-    def get_random_supplied_kit_id_unverified(self):
+    def ut_get_arbitrary_supplied_kit_id_unverified(self):
         """ Returns a randomly chosen supplied_kit_id that is unverified.
             For unit testing only!
 
@@ -1240,7 +1237,7 @@ class AGDataAccess(object):
                 raise ValueError('No unverified kits in DB')
             return info[0][0]
 
-    def get_ag_login_id_from_barcode(self, barcode):
+    def ut_get_ag_login_id_from_barcode(self, barcode):
         """ Returns ag_login_id for a given barcode.
             For unit testing only!
 

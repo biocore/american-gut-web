@@ -25,7 +25,7 @@ class TestAddSample(TestHandlerBase):
 
     def test_get_human(self):
         self.mock_login(
-            ag_data.get_supplied_kit_id(
+            ag_data.ut_get_supplied_kit_id(
                 'd8592c74-9694-2135-e040-8a80115d6401'))
         response = self.get(
             '/authed/add_sample_human/?participant_name=REMOVED-0')
@@ -45,7 +45,7 @@ class TestAddSample(TestHandlerBase):
 
     def test_get_animal(self):
         self.mock_login(
-            ag_data.get_supplied_kit_id(
+            ag_data.ut_get_supplied_kit_id(
                 'd8592c74-8710-2135-e040-8a80115d6401'))
         response = self.get(
             '/authed/add_sample_animal/?participant_name=REMOVED-0')
@@ -64,7 +64,7 @@ class TestAddSample(TestHandlerBase):
 
     def test_get_general(self):
         self.mock_login(
-            ag_data.get_supplied_kit_id(
+            ag_data.ut_get_supplied_kit_id(
                 'd8592c74-9694-2135-e040-8a80115d6401'))
         response = self.get(
             '/authed/add_sample_general/?participant_name=environmental')
@@ -85,7 +85,7 @@ class TestAddSample(TestHandlerBase):
 
     def test_get_no_participant(self):
         self.mock_login(
-            ag_data.get_supplied_kit_id(
+            ag_data.ut_get_supplied_kit_id(
                 'd8592c74-9694-2135-e040-8a80115d6401'))
         response = self.get('/authed/add_sample_general/')
         self.assertEqual(response.code, 200)
@@ -109,12 +109,12 @@ class TestAddSample(TestHandlerBase):
 
     def test_post_human(self):
         ag_login_id = 'd8592c74-9694-2135-e040-8a80115d6401'
-        self.mock_login(ag_data.get_supplied_kit_id(ag_login_id))
+        self.mock_login(ag_data.ut_get_supplied_kit_id(ag_login_id))
         # make sure barcode properly removed
         self.assertIn('000005628', ag_data.getAvailableBarcodes(ag_login_id))
 
         # Run test
-        names = ag_data.get_participant_names_from_ag_login_id(ag_login_id)
+        names = ag_data.ut_get_participant_names_from_ag_login_id(ag_login_id)
         response = self.post('/authed/add_sample_human/',
                              {'participant_name': names[0],
                               'barcode': '000005628',
@@ -145,18 +145,18 @@ class TestAddSample(TestHandlerBase):
             'date_of_last_email': None,
         }
         # only look at those fields, that are not subject to scrubbing
-        self.assertEqual(dict((k, obs[k]) for k in exp.keys()), exp)
+        self.assertEqual({k: obs[k] for k in exp}, exp)
 
     def test_post_animal(self):
         barcode = '000001015'
-        ag_login_id = ag_data.get_ag_login_id_from_barcode(barcode)
-        self.mock_login(ag_data.get_supplied_kit_id(ag_login_id))
+        ag_login_id = ag_data.ut_get_ag_login_id_from_barcode(barcode)
+        self.mock_login(ag_data.ut_get_supplied_kit_id(ag_login_id))
         # make sure barcode properly removed
         self.assertIn('000001015', ag_data.getAvailableBarcodes(ag_login_id))
 
     def test_post_general(self):
         self.mock_login(
-            ag_data.get_supplied_kit_id(
+            ag_data.ut_get_supplied_kit_id(
                 'd8592c74-9694-2135-e040-8a80115d6401'))
         # make sure barcode properly removed
         self.assertIn('000005628', ag_data.getAvailableBarcodes(
@@ -193,16 +193,16 @@ class TestAddSample(TestHandlerBase):
             'date_of_last_email': None
         }
         # only look at those fields, that are not subject to scrubbing
-        self.assertEqual(dict((k, obs[k]) for k in exp.keys()), exp)
+        self.assertEqual({k: obs[k] for k in exp}, exp)
 
     def test_post_bad_data(self):
         ag_login_id = 'd8592c74-9694-2135-e040-8a80115d6401'
-        self.mock_login(ag_data.get_supplied_kit_id(ag_login_id))
+        self.mock_login(ag_data.ut_get_supplied_kit_id(ag_login_id))
         # Malformed date
         # make sure barcode properly removed
         self.assertIn('000005628', ag_data.getAvailableBarcodes(ag_login_id))
         # Run test
-        names = ag_data.get_participant_names_from_ag_login_id(ag_login_id)
+        names = ag_data.ut_get_participant_names_from_ag_login_id(ag_login_id)
         response = self.post('/authed/add_sample_general/',
                              {'participant_name': names[0],
                               'barcode': '000005628',
@@ -247,9 +247,9 @@ class TestAddSample(TestHandlerBase):
 
         # Non-owned barcode
         barcode = '000001015'
-        ag_login_id = ag_data.get_ag_login_id_from_barcode(barcode)
+        ag_login_id = ag_data.ut_get_ag_login_id_from_barcode(barcode)
         name = \
-            ag_data.get_participant_names_from_ag_login_id(ag_login_id)[0]
+            ag_data.ut_get_participant_names_from_ag_login_id(ag_login_id)[0]
         response = self.post('/authed/add_sample_general/',
                              {'participant_name':  escape.url_escape(name),
                               'barcode': barcode,

@@ -16,7 +16,7 @@ class TestAddSampleOverview(TestHandlerBase):
 
     def test_get_missing_info(self):
         self.mock_login(
-            ag_data.get_supplied_kit_id(
+            ag_data.ut_get_supplied_kit_id(
                 'd8592c74-9694-2135-e040-8a80115d6401'))
         response = self.get(
             '/authed/secondary_survey/?type=surf')
@@ -27,7 +27,7 @@ class TestAddSampleOverview(TestHandlerBase):
 
     def test_get_surf(self):
         self.mock_login(
-            ag_data.get_supplied_kit_id(
+            ag_data.ut_get_supplied_kit_id(
                 'd8592c74-9694-2135-e040-8a80115d6401'))
         response = self.get(
             '/authed/secondary_survey/?type=surf&participant_name=test%2Bfoo')
@@ -38,7 +38,7 @@ class TestAddSampleOverview(TestHandlerBase):
 
     def test_get_fermented(self):
         self.mock_login(
-            ag_data.get_supplied_kit_id(
+            ag_data.ut_get_supplied_kit_id(
                 'd8592c74-9694-2135-e040-8a80115d6401'))
         response = self.get(
             '/authed/secondary_survey/?type=fermented&'

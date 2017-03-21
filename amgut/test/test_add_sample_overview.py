@@ -16,14 +16,14 @@ class TestAddSampleOverview(TestHandlerBase):
     def test_get_overview_human(self):
         # Test with human login id
         ag_login_id = 'd8592c74-9694-2135-e040-8a80115d6401'
-        self.mock_login(ag_data.get_supplied_kit_id(ag_login_id))
+        self.mock_login(ag_data.ut_get_supplied_kit_id(ag_login_id))
         response = self.get('/authed/add_sample_overview/')
         self.assertEqual(response.code, 200)
         self.assertTrue(
             response.effective_url.endswith('/authed/add_sample_overview/'))
         # Check for some main text
         self.assertIn('sample source', response.body)
-        names = ag_data.get_participant_names_from_ag_login_id(
+        names = ag_data.ut_get_participant_names_from_ag_login_id(
             ag_login_id)
         for name in names:
             self.assertIn(escape.xhtml_escape(name), response.body)
@@ -33,13 +33,13 @@ class TestAddSampleOverview(TestHandlerBase):
     def test_get_overview_animal(self):
         # Test with animal login id
         ag_login_id = 'd8592c74-8710-2135-e040-8a80115d6401'
-        self.mock_login(ag_data.get_supplied_kit_id(ag_login_id))
+        self.mock_login(ag_data.ut_get_supplied_kit_id(ag_login_id))
         response = self.get('/authed/add_sample_overview/')
         self.assertEqual(response.code, 200)
         self.assertTrue(
             response.effective_url.endswith('/authed/add_sample_overview/'))
         # Check for some main text
-        names = ag_data.get_participant_names_from_ag_login_id(
+        names = ag_data.ut_get_participant_names_from_ag_login_id(
             ag_login_id)
         self.assertIn('sample source', response.body)
         for name in names:

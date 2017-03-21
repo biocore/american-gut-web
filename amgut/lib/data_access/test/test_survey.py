@@ -234,8 +234,8 @@ class TestSurvey(TestCase):
 
         Returns
         -------
-        survey object, survey_id, notes_test and consent of the newly created
-        survey.
+        survey object, survey_id : str, notes_test : str and consent : dict
+        of the newly created survey.
         """
 
         # Create random string to test update happens
@@ -356,7 +356,7 @@ class TestSurvey(TestCase):
                'Pet_Information_143_0': 'Capybara',
                'Pet_Information_145_0': '29 - Male'}
         # only look at those fields, that are not subject to scrubbing
-        self.assertEqual(dict((k, obs[k]) for k in exp.keys()), exp)
+        self.assertEqual({k: obs[k] for k in exp}, exp)
 
     def test_fetch_survey_bad_id(self):
         survey = Survey(1)
