@@ -87,7 +87,7 @@ BEGIN
     numsteps := 18;
     currstep := 1;
     -- To simplify testing, all the passwords are going to be the same ('test')
-    passwd := '$2a$10$2.6Y9HmBqUFmSvKCjWmBte70WF.zd3h4VqbhLMQK1xP67Aj3rei86';
+    passwd := '$2a$12$rX8UTcDkIj8bwcxZ22iRpebAxblEclT83xBiUIdJGUJGoUfznu1RK';
     numsource := '0123456789';
 
     RAISE NOTICE 'STEP % of %: Gathering all characters', currstep, numsteps;

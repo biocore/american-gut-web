@@ -142,7 +142,7 @@ def populate_test_db():
     with gzip.open(POPULATE_FP, 'rb') as f:
         test_db = f.read()
 
-    command = ['psql', '-d', AMGUT_CONFIG.database]
+    command = ['pg_restore', '-d', AMGUT_CONFIG.database]
     proc = Popen(command, stdin=PIPE, stdout=PIPE)
     proc.communicate(test_db)
 
