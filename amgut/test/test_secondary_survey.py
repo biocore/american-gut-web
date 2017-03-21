@@ -1,5 +1,6 @@
 from unittest import main
 from amgut.test.tornado_test_base import TestHandlerBase
+from amgut.connections import ag_data
 
 
 class TestAddSampleOverview(TestHandlerBase):
@@ -14,7 +15,9 @@ class TestAddSampleOverview(TestHandlerBase):
                 '%26participant_name%3Dtest'))
 
     def test_get_missing_info(self):
-        self.mock_login('tst_LbxUH')
+        self.mock_login(
+            ag_data.ut_get_supplied_kit_id(
+                'd8592c74-9694-2135-e040-8a80115d6401'))
         response = self.get(
             '/authed/secondary_survey/?type=surf')
         self.assertEqual(response.code, 400)
@@ -23,7 +26,9 @@ class TestAddSampleOverview(TestHandlerBase):
         self.assertEqual(response.code, 400)
 
     def test_get_surf(self):
-        self.mock_login('tst_LbxUH')
+        self.mock_login(
+            ag_data.ut_get_supplied_kit_id(
+                'd8592c74-9694-2135-e040-8a80115d6401'))
         response = self.get(
             '/authed/secondary_survey/?type=surf&participant_name=test%2Bfoo')
         self.assertEqual(response.code, 200)
@@ -32,7 +37,9 @@ class TestAddSampleOverview(TestHandlerBase):
                       'travel to other surf breaks?</td>', response.body)
 
     def test_get_fermented(self):
-        self.mock_login('tst_LbxUH')
+        self.mock_login(
+            ag_data.ut_get_supplied_kit_id(
+                'd8592c74-9694-2135-e040-8a80115d6401'))
         response = self.get(
             '/authed/secondary_survey/?type=fermented&'
             'participant_name=test%20bar')
