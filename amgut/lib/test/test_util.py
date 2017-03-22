@@ -60,7 +60,8 @@ class TestUtil(TestCase):
                       'https://vioscreen.com/remotelogin.aspx?Key=', obs)
 
     def test_rolback(self):
-        kit = 'tst_QCSKc'
+        # fetching an arbitrary kit ID from DB that is not yet verified
+        kit = self.ag_data.ut_get_arbitrary_supplied_kit_id_unverified()
 
         @rollback
         def tf(kit):
