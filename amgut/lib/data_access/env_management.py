@@ -2,7 +2,6 @@ from os.path import abspath, dirname, join, split
 from glob import glob
 from functools import partial
 from subprocess import Popen, PIPE
-import gzip
 
 from click import echo
 from psycopg2 import (connect, OperationalError)
