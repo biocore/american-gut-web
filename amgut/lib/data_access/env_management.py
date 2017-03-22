@@ -17,7 +17,7 @@ get_db_file = partial(join, join(dirname(dirname(abspath(__file__))), '..',
                                  'db'))
 LAYOUT_FP = get_db_file('ag_unpatched.sql')
 INITIALIZE_FP = get_db_file('initialize.sql')
-POPULATE_FP = get_db_file('ag_test_patch22.sql.gz')
+POPULATE_FP = get_db_file('ag_test_patch_39_20170321.dump')
 PATCHES_DIR = get_db_file('patches')
 
 
@@ -139,12 +139,13 @@ def make_settings_table():
 
 
 def populate_test_db():
-    with gzip.open(POPULATE_FP, 'rb') as f:
-        test_db = f.read()
-
-    command = ['pg_restore', '-d', AMGUT_CONFIG.database]
+    command = ['pg_restore', '-d', AMGUT_CONFIG.database, '--no-privileges',
+               '--no-owner', '--role=%s' % AMGUT_CONFIG.user, POPULATE_FP]
     proc = Popen(command, stdin=PIPE, stdout=PIPE)
-    proc.communicate(test_db)
+    retcode = proc.wait()
+    if retcode != 0:
+        raise RuntimeError("Could not populat test database %s: retcode %d" %
+                           (AMGUT_CONFIG.database, retcode))
 
 
 def patch_db(patches_dir=PATCHES_DIR, verbose=False):
