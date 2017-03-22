@@ -124,7 +124,7 @@ class TestAGDataAccess(TestCase):
                 'd8592c74-84ba-2135-e040-8a80115d6401'),
                'swabs_per_kit': 1L,
                'kit_password':
-               '$2a$12$LiakUCHOpAMvEp9Wxehw5OIlD/TIIP0Bs3blw18ePcmKHWWAePrQ.',
+               '$2a$12$rX8UTcDkIj8bwcxZ22iRpebAxblEclT83xBiUIdJGUJGoUfznu1RK',
                'verification_email_sent': 'n',
                'kit_verified': 'y'}
         # only look at those fields, that are not subject to scrubbing
