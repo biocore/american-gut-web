@@ -87,7 +87,7 @@ BEGIN
     numsteps := 18;
     currstep := 1;
     -- To simplify testing, all the passwords are going to be the same ('test')
-    passwd := '$2a$10$2.6Y9HmBqUFmSvKCjWmBte70WF.zd3h4VqbhLMQK1xP67Aj3rei86';
+    passwd := '$2a$12$rX8UTcDkIj8bwcxZ22iRpebAxblEclT83xBiUIdJGUJGoUfznu1RK';
     numsource := '0123456789';
 
     RAISE NOTICE 'STEP % of %: Gathering all characters', currstep, numsteps;
@@ -140,7 +140,7 @@ BEGIN
                                   (retrieve_chars('participant_email', 'ag.ag_human_survey')),
                                   (retrieve_chars('email', 'ag.ag_login'));
     emailsource := retrieve_chars('source', 'allsources');
-    emailsource := replace(replace(emailsource, '@', ''), '.', '');
+    emailsource := replace(replace(replace(replace(replace(emailsource, '@', ''), '.', ''), ' ', ''), '!', ''), ',', '');
 
     RAISE NOTICE 'STEP % of %: Scrubbing ag_survey_multiples_backup', currstep, numsteps;
     currstep := currstep + 1;
@@ -288,9 +288,9 @@ BEGIN
     -- For this table it is easier to drop everybody and add a test user
     DELETE FROM ag.labadmin_users_access;
     DELETE FROM ag.labadmin_users;
-    INSERT INTO ag.labadmin_users (email, password) VALUES ('test@foo.bar', passwd);
+    INSERT INTO ag.labadmin_users (email, password) VALUES ('test', passwd);
     -- Magic number 7 -> admin access
-    INSERT INTO ag.labadmin_users_access (email, access_id) VALUES ('test@foo.bar', 7);
+    INSERT INTO ag.labadmin_users_access (email, access_id) VALUES ('test', 7);
 
 END $do$;
 
