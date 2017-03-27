@@ -116,7 +116,7 @@ class TestAddSample(TestHandlerBase):
         # Run test
         names = ag_data.ut_get_participant_names_from_ag_login_id(ag_login_id)
         response = self.post('/authed/add_sample_human/',
-                             {'participant_name': names[-1],
+                             {'participant_name': names[0],
                               'barcode': '000005628',
                               'sample_site': 'Stool',
                               'sample_date': '12/13/2014',
