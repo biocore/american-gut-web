@@ -143,7 +143,7 @@ def populate_test_db():
     proc = Popen(command, stdin=PIPE, stdout=PIPE)
     retcode = proc.wait()
     if retcode != 0:
-        raise RuntimeError("Could not populat test database %s: retcode %d" %
+        raise RuntimeError("Could not populate test database %s: retcode %d" %
                            (AMGUT_CONFIG.database, retcode))
 
 
