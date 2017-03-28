@@ -39,7 +39,7 @@ class TestAGDataAccess(TestCase):
 
         email = self.ag_data.ut_get_arbitrary_email()
         obs = self.ag_data.check_login_exists(email)
-        as_uuid = UUID(obs)
+        as_uuid = UUID(obs, version=4)
         self.assertTrue(as_uuid.version, 4)
 
     def test_addAGLogin(self):
