@@ -140,7 +140,7 @@ BEGIN
                                   (retrieve_chars('participant_email', 'ag.ag_human_survey')),
                                   (retrieve_chars('email', 'ag.ag_login'));
     emailsource := retrieve_chars('source', 'allsources');
-    emailsource := replace(replace(replace(replace(replace(emailsource, '@', ''), '.', ''), ' ', ''), '!', ''), ',', '');
+    emailsource := lower(replace(replace(replace(replace(replace(emailsource, '@', ''), '.', ''), ' ', ''), '!', ''), ',', ''));
 
     RAISE NOTICE 'STEP % of %: Scrubbing ag_survey_multiples_backup', currstep, numsteps;
     currstep := currstep + 1;
