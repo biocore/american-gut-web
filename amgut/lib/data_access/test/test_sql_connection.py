@@ -508,5 +508,6 @@ class TestTransaction(TestBase):
 
         self.assertEqual(TRN.index, 0)
 
+
 if __name__ == "__main__":
     main()

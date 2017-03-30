@@ -72,7 +72,7 @@ setup(name='American Gut participant UI',
           'py-bcrypt',
           'redis',
           'requests',
-          'tornado==3.2.2',
+          'tornado==4.4.2',
           'WTForms==2.0.1',
           'natsort'
       ],
