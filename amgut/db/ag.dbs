@@ -542,8 +542,8 @@
 			</fk>
 		</table>
 		<table name="labadmin_access" >
-			<column name="access_id" type="integer" jt="4" mandatory="y" />
-			<column name="access_name" type="varchar" length="100" jt="12" mandatory="y" />
+			<column name="access_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="access_name" type="varchar" jt="12" mandatory="y" />
 			<column name="access_description" type="varchar" jt="12" />
 			<index name="pk_labadmin_access" unique="PRIMARY_KEY" >
 				<column name="access_id" />
@@ -557,7 +557,7 @@
 			</index>
 		</table>
 		<table name="labadmin_users_access" >
-			<column name="access_id" type="integer" jt="4" mandatory="y" />
+			<column name="access_id" type="bigint" jt="-5" mandatory="y" />
 			<column name="email" type="varchar" jt="12" mandatory="y" />
 			<index name="idx_labadmin_users_access" unique="NORMAL" >
 				<column name="email" />
@@ -23041,9 +23041,7 @@ AS $function$xpath_exists$function$
 		<entity schema="ag" name="consent_revoked" color="b7c8e3" x="2730" y="2535" />
 		<entity schema="barcodes" name="project_barcode" color="a8c4ef" x="1950" y="1605" />
 		<entity schema="ag" name="settings" color="a8c4ef" x="1200" y="1500" />
-		<entity schema="ag" name="labadmin_access" color="b2cdf7" x="1395" y="1500" />
 		<entity schema="ag" name="labadmin_users" color="b2cdf7" x="1200" y="1365" />
-		<entity schema="ag" name="labadmin_users_access" color="b2cdf7" x="990" y="1500" />
 		<entity schema="ag" name="duplicate_consents" color="b7c8e3" x="2520" y="765" />
 		<entity schema="ag" name="ag_kit" color="f7e2c6" x="2265" y="1020" />
 		<entity schema="ag" name="ag_animal_survey" color="f7e2c6" x="2070" y="615" />
@@ -23077,6 +23075,8 @@ AS $function$xpath_exists$function$
 		<entity schema="pm" name="study" color="b2cdf7" x="285" y="975" />
 		<entity schema="pm" name="sample_plate" color="b2cdf7" x="420" y="780" />
 		<entity schema="pm" name="protocol_targeted" color="b2cdf7" x="75" y="195" />
+		<entity schema="ag" name="labadmin_access" color="b2cdf7" x="1395" y="1500" />
+		<entity schema="ag" name="labadmin_users_access" color="b2cdf7" x="990" y="1500" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by :    american_gut_consent</comment>
 			<entity schema="ag" name="ag_survey_multiples" />

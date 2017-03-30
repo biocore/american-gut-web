@@ -20,7 +20,8 @@ class TestAGDataAccess(TestCase):
         obs = self.ag_data.authenticateWebAppUser('randomkitID', 'test')
         self.assertEqual(obs, False)
 
-        kit_id = 'tst_xfphP'
+        kit_id = self.ag_data.ut_get_supplied_kit_id(
+            'ded5101d-cafb-f6b3-e040-8a80115d6f03')
         # Test wrong password
         obs = self.ag_data.authenticateWebAppUser(kit_id, 'wrongPass')
         self.assertEqual(obs, False)
@@ -36,9 +37,9 @@ class TestAGDataAccess(TestCase):
         obs = self.ag_data.check_login_exists(email)
         self.assertEqual(obs, None)
 
-        email = 'REMOVED'
+        email = self.ag_data.ut_get_arbitrary_email()
         obs = self.ag_data.check_login_exists(email)
-        as_uuid = UUID(obs)
+        as_uuid = UUID(obs, version=4)
         self.assertTrue(as_uuid.version, 4)
 
     def test_addAGLogin(self):
@@ -79,8 +80,10 @@ class TestAGDataAccess(TestCase):
             self.ag_data.getAGBarcodeDetails('000006232')
 
     def test_get_nonconsented_scanned_barcodes(self):
-        obs = self.ag_data.get_nonconsented_scanned_barcodes('tst_KWfyv')
-        exp = ['000027262']
+        supplied_kit_id, barcode =\
+            self.ag_data.ut_get_arbitrary_supplied_kit_id_scanned_unconsented()
+        obs = self.ag_data.get_nonconsented_scanned_barcodes(supplied_kit_id)
+        exp = [barcode]
         self.assertEqual(obs, exp)
 
     def test_getAGBarcodeDetails(self):
@@ -90,14 +93,10 @@ class TestAGDataAccess(TestCase):
             'barcode': '000001047',
             'status': 'Received',
             'ag_kit_id': 'd8592c74-7e35-2135-e040-8a80115d6401',
-            'name': 'REMOVED',
-            'participant_name': 'REMOVED-0',
-            'email': 'REMOVED',
             'site_sampled': 'Stool',
             'environment_sampled': None,
             'sample_date': datetime.date(2013, 3, 28),
             'sample_time': datetime.time(23, 25),
-            'notes': 'REMOVED',
             'overloaded': None,
             'withdrawn': None,
             'other': None,
@@ -105,9 +104,9 @@ class TestAGDataAccess(TestCase):
             'refunded': None,
             'ag_kit_barcode_id': 'd8592c74-7e36-2135-e040-8a80115d6401',
             'date_of_last_email': None,
-            'other_text': 'REMOVED'
         }
-        self.assertEqual(obs, exp)
+        # only look at those fields, that are not subject to scrubbing
+        self.assertEqual({k: obs[k] for k in exp}, exp)
 
     def test_getAGKitDetails(self):
         # test non-existant kit
@@ -115,16 +114,21 @@ class TestAGDataAccess(TestCase):
             self.ag_data.getAGKitDetails('IDONTEXI5T')
 
         # test existing AG kit
-        obs = self.ag_data.getAGKitDetails('tst_ODmhG')
+        obs = self.ag_data.getAGKitDetails(
+            self.ag_data.ut_get_supplied_kit_id(
+                'd8592c74-84ba-2135-e040-8a80115d6401'))
+        # deleted password, since it is not stable along DB versions
         exp = {'ag_kit_id': 'd8592c74-84bb-2135-e040-8a80115d6401',
-               'supplied_kit_id': 'tst_ODmhG',
-               'swabs_per_kit': 1,
+               'supplied_kit_id':
+               self.ag_data.ut_get_supplied_kit_id(
+                'd8592c74-84ba-2135-e040-8a80115d6401'),
+               'swabs_per_kit': 1L,
+               'kit_password':
+               '$2a$12$rX8UTcDkIj8bwcxZ22iRpebAxblEclT83xBiUIdJGUJGoUfznu1RK',
                'verification_email_sent': 'n',
-               'kit_verification_code': 'f4UjhV4B',
-               'kit_password': '$2a$12$LiakUCHOpAMvEp9Wxehw5OIlD/TIIP0Bs3blw18'
-                               'ePcmKHWWAePrQ.',
                'kit_verified': 'y'}
-        self.assertEqual(obs, exp)
+        # only look at those fields, that are not subject to scrubbing
+        self.assertEqual({k: obs[k] for k in exp}, exp)
 
     def test_get_all_handout_kits(self):
         obs = self.ag_data.get_all_handout_kits()
@@ -132,7 +136,7 @@ class TestAGDataAccess(TestCase):
         self.assertTrue(len(obs) > 0)
 
         for kit_id in obs:
-            self.assertRegexpMatches(kit_id, 'tst_[a-zA-Z]{5}')
+            self.assertRegexpMatches(kit_id, '[a-zA-Z_]*')
 
     def test_registerHandoutKit_bad_data(self):
         # run on bad data
@@ -166,31 +170,47 @@ class TestAGDataAccess(TestCase):
 
     @rollback
     def test_deleteAGParticipantSurvey(self):
-        self.ag_data.deleteAGParticipantSurvey(
-            '000fc4cd-8fa4-db8b-e050-8a800c5d02b5', 'REMOVED-0')
+        ag_login_id = '000fc4cd-8fa4-db8b-e050-8a800c5d02b5'
+
+        # make sure we can get the corresponding survey by ID
+        self.ag_data.getConsent('8b2b45bb3390b585')
+
+        names = self.ag_data.ut_get_participant_names_from_ag_login_id(
+            ag_login_id)
+        self.ag_data.deleteAGParticipantSurvey(ag_login_id, names[0])
+
         with self.assertRaises(ValueError):
             self.ag_data.getConsent('8b2b45bb3390b585')
 
         res = self.ag_data.get_withdrawn()
         today = datetime.datetime.now().date()
-        exp = [['000fc4cd-8fa4-db8b-e050-8a800c5d02b5', 'REMOVED-0',
-                'REMOVED', today]]
-        self.assertItemsEqual(res, exp)
+        self.assertIn(ag_login_id, [r[0] for r in res])
+        # we cannot check name and email since they get randomly scrubbed
+        for r in res:
+            if r[0] == ag_login_id:
+                self.assertEqual(r[3], today)
+
+    @rollback
+    def test_deleteAGParticipantSurvey_with_sample_bug(self):
+        ag_login_id = 'd8592c74-9694-2135-e040-8a80115d6401'
+        names = self.ag_data.ut_get_participant_names_from_ag_login_id(
+            ag_login_id)
+
+        # issue 616
+        self.ag_data.deleteAGParticipantSurvey(ag_login_id, names[0])
+        with self.assertRaises(ValueError):
+            self.ag_data.getConsent('be8516e8c5d4ff4d')
 
     def test_getConsent(self):
-        res = self.ag_data.getConsent("8b2b45bb3390b585")
+        obs = self.ag_data.getConsent("8b2b45bb3390b585")
         exp = {'date_signed': None,
-               'assent_obtainer': None,
                'age_range': None,
-               'parent_1_name': 'REMOVED',
-               'participant_email': 'REMOVED',
-               'parent_2_name': 'REMOVED',
                'ag_login_id': '000fc4cd-8fa4-db8b-e050-8a800c5d02b5',
                'deceased_parent': 'false',
-               'participant_name': 'REMOVED-0',
                'survey_id': '8b2b45bb3390b585',
                'is_juvenile': False}
-        self.assertEquals(res, exp)
+        # only look at those fields, that are not subject to scrubbing
+        self.assertEqual({k: obs[k] for k in exp}, exp)
 
     def test_getConsentNotPresent(self):
         with self.assertRaises(ValueError):
@@ -208,10 +228,12 @@ class TestAGDataAccess(TestCase):
         # regular sample
         ag_login_id = '7732aafe-c4e1-4ae4-8337-6f22704c1064'
         barcode = '000027376'
+        names = self.ag_data.ut_get_participant_names_from_ag_login_id(
+            ag_login_id)
 
         self.ag_data.logParticipantSample(
             ag_login_id, barcode, 'Stool', None, datetime.date(2015, 9, 27),
-            datetime.time(15, 54), 'REMOVED-0', '')
+            datetime.time(15, 54), names[0], '')
         obs = self.ag_data.getAGBarcodeDetails(barcode)
         exp = {'status': None,
                'ag_kit_id': '5bfa9526-8dbb-492f-937c-bceb6b5a56fe',
@@ -219,21 +241,18 @@ class TestAGDataAccess(TestCase):
                'barcode': '000027376',
                'site_sampled': 'Stool',
                'environment_sampled': None,
-               'name': 'REMOVED',
                'sample_date': datetime.date(2015, 9, 27),
                'sample_time': datetime.time(15, 54),
                'notes': '', 'overloaded': None,
                'withdrawn': None,
-               'email': 'REMOVED',
                'other': None,
                'moldy': None,
-               'participant_name': 'REMOVED-0',
                'refunded': None,
                'date_of_last_email': None,
-               'other_text': 'REMOVED'
                }
         self.ag_data.deleteSample(barcode, ag_login_id)
-        self.assertEqual(obs, exp)
+        # only look at those fields, that are not subject to scrubbing
+        self.assertEqual({k: obs[k] for k in exp}, exp)
 
         # env sample
         self.ag_data.logParticipantSample(
@@ -246,27 +265,26 @@ class TestAGDataAccess(TestCase):
                'barcode': '000027376',
                'site_sampled': None,
                'environment_sampled': 'animal_habitat',
-               'name': 'REMOVED',
                'sample_date': datetime.date(2015, 9, 26),
                'sample_time': datetime.time(15, 00),
                'notes': '', 'overloaded': None,
                'withdrawn': None,
-               'email': 'REMOVED',
                'other': None,
                'moldy': None,
-               'participant_name': None,
                'refunded': None,
                'date_of_last_email': None,
-               'other_text': 'REMOVED'
                }
         self.ag_data.deleteSample(barcode, ag_login_id)
-        self.assertEqual(obs, exp)
+        # only look at those fields, that are not subject to scrubbing
+        self.assertEqual({k: obs[k] for k in exp}, exp)
 
     def test_getHumanParticipants(self):
         i = "d8592c74-9694-2135-e040-8a80115d6401"
         res = self.ag_data.getHumanParticipants(i)
-        exp = ['REMOVED-2', 'REMOVED-0', 'REMOVED-3', 'REMOVED-1']
-        self.assertItemsEqual(res, exp)
+        exp = self.ag_data.ut_get_participant_names_from_ag_login_id(i)
+        # check if results are subset of all names for this ag_login_id
+        for name in res:
+            self.assertIn(name, exp)
 
     def test_getHumanParticipantsNotPresent(self):
         i = '00000000-0000-0000-0000-000000000000'
@@ -290,8 +308,10 @@ class TestAGDataAccess(TestCase):
     def test_getAnimalParticipants(self):
         i = "ed5ab96f-fe3b-ead5-e040-8a80115d1c4b"
         res = self.ag_data.getAnimalParticipants(i)
-        exp = ['REMOVED-0']
-        self.assertItemsEqual(res, exp)
+        exp = self.ag_data.ut_get_participant_names_from_ag_login_id(i)
+        # check if results are subset of all names for this ag_login_id
+        for name in res:
+            self.assertIn(name, exp)
 
     def test_getAnimalParticipantsNotPresent(self):
         i = "00711b0a-67d6-0fed-e050-8a800c5d7570"
@@ -300,125 +320,119 @@ class TestAGDataAccess(TestCase):
 
     def test_getParticipantSamples(self):
         i = "d6b0f287-b9d9-40d4-82fd-a8fd3db6c476"
-        res = self.ag_data.getParticipantSamples(i, "REMOVED-0")
-        exp = [{'status': None,
-                'sample_time': datetime.time(11, 55),
-                'notes': 'REMOVED',
-                'barcode': '000028432',
-                'sample_date': datetime.date(2015, 6, 7),
-                'site_sampled': 'Stool'}]
-        self.assertEqual(res, exp)
+        names = self.ag_data.ut_get_participant_names_from_ag_login_id(i)
+        # collect results for ALL names
+        res = [self.ag_data.getParticipantSamples(i, name)
+               for name in names]
+        exp = {'sample_time': datetime.time(11, 55),
+               'barcode': '000028432',
+               'sample_date': datetime.date(2015, 6, 7),
+               'site_sampled': 'Stool'}
+        # transform results
+        res = [dict((k, r[0][k]) for k in exp.keys()) for r in res if r != []]
+        # only look at those fields, that are not subject to scrubbing
+        self.assertIn(exp, res)
 
         i = "d8592c74-9694-2135-e040-8a80115d6401"
-        res = self.ag_data.getParticipantSamples(i, "REMOVED-0")
+        # collect all results for ALL names for this ag_login_id and remove
+        # field "notes" since it gets scrubbed.
+        names = set(self.ag_data.ut_get_participant_names_from_ag_login_id(i))
+        obs = []
+        for name in names:
+            res = self.ag_data.getParticipantSamples(i, name)
+            for r in res:
+                del r['notes']
+                obs.append(r)
         exp = [{'status': 'Received',
                 'sample_time': datetime.time(7, 40),
-                'notes': 'REMOVED',
                 'barcode': '000016704',
                 'sample_date': datetime.date(2014, 6, 5),
                 'site_sampled': 'Stool'},
                {'status': 'Received',
                 'sample_time': datetime.time(11, 30),
-                'notes': 'REMOVED',
                 'barcode': '000016705',
                 'sample_date': datetime.date(2014, 6, 1),
                 'site_sampled': 'Stool'},
                {'status': 'Received', 'sample_time': datetime.time(9, 20),
-                'notes': 'REMOVED',
                 'barcode': '000016706',
                 'sample_date': datetime.date(2014, 6, 8),
                 'site_sampled': 'Stool'},
                {'status': 'Received',
                 'sample_time': datetime.time(9, 20),
-                'notes': 'REMOVED',
                 'barcode': '000016707',
                 'sample_date': datetime.date(2014, 6, 1),
                 'site_sampled': 'Stool'},
                {'status': 'Received',
                 'sample_time': datetime.time(22, 0),
-                'notes': 'REMOVED',
                 'barcode': '000016708',
                 'sample_date': datetime.date(2014, 5, 28),
                 'site_sampled': 'Stool'},
                {'status': 'Received',
                 'sample_time': datetime.time(11, 0),
-                'notes': 'REMOVED',
                 'barcode': '000016709',
                 'sample_date': datetime.date(2014, 5, 29),
                 'site_sampled': 'Stool'},
                {'status': 'Received',
                 'sample_time': datetime.time(22, 20),
-                'notes': 'REMOVED',
                 'barcode': '000016710',
                 'sample_date': datetime.date(2014, 5, 27),
                 'site_sampled': 'Stool'},
                {'status': 'Received',
                 'sample_time': datetime.time(8, 0),
-                'notes': 'REMOVED',
                 'barcode': '000016711',
                 'sample_date': datetime.date(2014, 6, 11),
                 'site_sampled': 'Stool'},
                {'status': 'Received',
                 'sample_time': datetime.time(8, 15),
-                'notes': 'REMOVED',
                 'barcode': '000016712',
                 'sample_date': datetime.date(2014, 6, 2),
                 'site_sampled': 'Stool'},
                {'status': 'Received',
                 'sample_time': datetime.time(12, 0),
-                'notes': 'REMOVED',
                 'barcode': '000016713',
                 'sample_date': datetime.date(2014, 5, 30),
                 'site_sampled': 'Stool'},
                {'status': None,
                 'sample_time': datetime.time(19, 30),
-                'notes': 'REMOVED',
                 'barcode': '000016496',
                 'sample_date': datetime.date(2014, 4, 29),
                 'site_sampled': 'Stool'},
                {'status': None,
                 'sample_time': datetime.time(19, 30),
-                'notes': 'REMOVED',
                 'barcode': '000016497',
                 'sample_date': datetime.date(2014, 4, 29),
                 'site_sampled': 'Stool'},
                {'status': 'Received',
                 'sample_time': datetime.time(10, 20),
-                'notes': 'REMOVED',
                 'barcode': '000004213',
                 'sample_date': datetime.date(2013, 10, 16),
                 'site_sampled': 'Stool'},
                {'status': 'Received',
                 'sample_time': datetime.time(9, 50),
-                'notes': 'REMOVED',
                 'barcode': '000004214',
                 'sample_date': datetime.date(2013, 10, 14),
                 'site_sampled': 'Stool'},
                {'status': 'Received',
                 'sample_time': datetime.time(12, 0),
-                'notes': 'REMOVED',
                 'barcode': '000004215',
                 'sample_date': datetime.date(2013, 10, 13),
                 'site_sampled': 'Stool'},
                {'status': 'Received',
                 'sample_time': datetime.time(9, 30),
-                'notes': 'REMOVED',
                 'barcode': '000004216',
                 'sample_date': datetime.date(2013, 10, 15),
                 'site_sampled': 'Stool'},
                {'status': 'Received',
                 'sample_time': datetime.time(14, 25),
-                'notes': 'REMOVED',
                 'barcode': '000004218',
                 'sample_date': datetime.date(2013, 10, 12),
                 'site_sampled': 'Stool'},
                {'status': 'Received',
                 'sample_time': datetime.time(10, 15),
-                'notes': 'REMOVED',
                 'barcode': '000004219',
                 'sample_date': datetime.date(2013, 10, 17),
                 'site_sampled': 'Stool'}]
-        self.assertItemsEqual(res, exp)
+        self.assertItemsEqual(obs, exp)
 
     def test_getParticipantSamplesNotPresent(self):
         i = '00000000-0000-0000-0000-000000000000'
@@ -426,13 +440,15 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(res, [])
 
     def test_getEnvironmentalSamples(self):
-        i = "d6b0f287-b9d9-40d4-82fd-a8fd3db6c476"
-        res = self.ag_data.getEnvironmentalSamples(i)
-        exp = [{'status': None, 'sample_time': datetime.time(21, 45),
-                'notes': 'REMOVED', 'barcode': '000028433',
-                'sample_date': datetime.date(2015, 6, 7),
-                'site_sampled': None}]
-        self.assertItemsEqual(res, exp)
+        fields = ['sample_time', 'barcode', 'sample_date', 'site_sampled']
+
+        i = "df62647f-c7e1-9de7-e040-8a80115d5c07"
+        obs = []
+        for bc in self.ag_data.ut_get_barcode_from_ag_login_id(i):
+            obs.append(dict((k, bc[k]) for k in fields))
+
+        for bc in self.ag_data.getEnvironmentalSamples(i):
+            self.assertIn(dict((k, bc[k]) for k in fields), obs)
 
     def test_getEnvironmentalSamplesNotPresent(self):
         i = '00000000-0000-0000-0000-000000000000'
@@ -448,7 +464,9 @@ class TestAGDataAccess(TestCase):
 
         i = "d6b0f287-b9d9-40d4-82fd-a8fd3db6c476"
         res = self.ag_data.getAvailableBarcodes(i)
-        exp = ['000028434']
+        exp = [x['barcode'] for x in
+               self.ag_data.ut_get_barcode_from_ag_login_id(i)
+               if x['kit_verified'] == 'y' and x['sample_date'] is None]
         self.assertItemsEqual(res, exp)
 
     def test_getAvailableBarcodesNotPresent(self):
@@ -473,7 +491,7 @@ class TestAGDataAccess(TestCase):
         self.assertTrue(len(obs) > 0)
 
         for kit_id in obs:
-            self.assertRegexpMatches(kit_id, 'tst_[a-zA-Z]{5}')
+            self.assertRegexpMatches(kit_id, '[a-zA-Z_]*')
             obs = self.ag_data.getAGKitDetails(kit_id)
             self.assertEqual(obs['kit_verified'], 'n')
 
@@ -489,39 +507,60 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(obs, False)
 
         # Test non-handout kit
-        obs = self.ag_data.handoutCheck('tst_ODmhG', 'test')
+        obs = self.ag_data.handoutCheck(
+            self.ag_data.ut_get_supplied_kit_id(
+                'd8592c74-84ba-2135-e040-8a80115d6401'),
+            'test')
         self.assertEqual(obs, False)
         obs = self.ag_data.handoutCheck('randomKitID', 'test')
         self.assertEqual(obs, False)
 
     def test_check_access(self):
         # Has access
-        obs = self.ag_data.check_access('tst_BudVu', '000001047')
+        obs = self.ag_data.check_access(
+            self.ag_data.ut_get_supplied_kit_id(
+                'd8592c74-7e34-2135-e040-8a80115d6401'),
+            '000001047')
         self.assertEqual(obs, True)
 
         # No access
-        obs = self.ag_data.check_access('tst_BudVu', '000001111')
+        obs = self.ag_data.check_access(
+            self.ag_data.ut_get_supplied_kit_id(
+                'd8592c74-7e34-2135-e040-8a80115d6401'),
+            '000001111')
         self.assertEqual(obs, False)
 
     def test_ag_set_pass_change_code(self):
+        ag_login_id = 'd8592c74-8416-2135-e040-8a80115d6401'
+
         # Generate new random code and assign it
         testcode = ''.join(choice(ascii_letters) for i in range(10))
-        self.ag_data.ag_set_pass_change_code('REMOVED', 'tst_ULGcr', testcode)
+        email = self.ag_data.ut_get_email_from_ag_login_id(ag_login_id)
+        self.ag_data.ag_set_pass_change_code(
+            email,
+            self.ag_data.ut_get_supplied_kit_id(ag_login_id),
+            testcode)
 
         # Actually test the code change
         obs = self.ag_data.ag_verify_kit_password_change_code(
-            'REMOVED', 'tst_ULGcr', 'SOMELONGTHINGTHATWILLFAIL')
+            email,
+            self.ag_data.ut_get_supplied_kit_id(ag_login_id),
+            'SOMELONGTHINGTHATWILLFAIL')
         self.assertEqual(obs, False)
         obs = self.ag_data.ag_verify_kit_password_change_code(
-            'REMOVED', 'tst_ULGcr', testcode)
+            email,
+            self.ag_data.ut_get_supplied_kit_id(ag_login_id),
+            testcode)
         # Using equal to make sure boolean True is returned, not something that
         # equates to True
         self.assertEqual(obs, True)
 
         # Test giving nonsense email
         # TODO: make this raise error and test
-        self.ag_data.ag_set_pass_change_code('Fake@notarealemail.com',
-                                             'tst_ULGcr', testcode)
+        self.ag_data.ag_set_pass_change_code(
+            'Fake@notarealemail.com',
+            self.ag_data.ut_get_supplied_kit_id(ag_login_id),
+            testcode)
 
         # Test giving bad skid
         # TODO: make this raise error and test
@@ -530,13 +569,22 @@ class TestAGDataAccess(TestCase):
     def test_ag_update_kit_password(self):
         # Generate new pass and make sure is different from current pass
         newpass = ''.join(choice(ascii_letters) for i in range(randint(8, 15)))
-        auth = self.ag_data.authenticateWebAppUser('tst_ULGcr', newpass)
+        auth = self.ag_data.authenticateWebAppUser(
+            self.ag_data.ut_get_supplied_kit_id(
+                'd8592c74-8416-2135-e040-8a80115d6401'),
+            newpass)
         self.assertFalse(
             auth, msg="Randomly generated password matches existing")
 
         # Actually test password change
-        self.ag_data.ag_update_kit_password('tst_ULGcr', newpass)
-        auth = self.ag_data.authenticateWebAppUser('tst_ULGcr', newpass)
+        self.ag_data.ag_update_kit_password(
+            self.ag_data.ut_get_supplied_kit_id(
+                'd8592c74-8416-2135-e040-8a80115d6401'),
+            newpass)
+        auth = self.ag_data.authenticateWebAppUser(
+            self.ag_data.ut_get_supplied_kit_id(
+                'd8592c74-8416-2135-e040-8a80115d6401'),
+            newpass)
         self.assertTrue(isinstance(auth, dict))
         self.assertEqual(auth['ag_login_id'],
                          'd8592c74-8416-2135-e040-8a80115d6401')
@@ -546,22 +594,35 @@ class TestAGDataAccess(TestCase):
         self.ag_data.ag_update_kit_password('NOTINTHEDB', newpass)
 
     def test_ag_verify_kit_password_change_code(self):
+        ag_login_id = '6165453f-e8bc-4edc-b00e-50e72fe550c9'
+        email = self.ag_data.ut_get_email_from_ag_login_id(ag_login_id)
+
         # Test actual functionality
         obs = self.ag_data.ag_verify_kit_password_change_code(
-            'REMOVED', 'tst_omubN', 'FAIL')
+            email,
+            self.ag_data.ut_get_supplied_kit_id(ag_login_id),
+            'FAIL')
         # Using assertEqual to make sure boolean False is returned, not
         # something that equates to False. Same for rest of assertEquals below
         self.assertEqual(obs, False)
         # Outside reset time, should fail
         obs = self.ag_data.ag_verify_kit_password_change_code(
-            'REMOVED', 'tst_omubN', 'Mw1eY4wWVXpE0cQlvQwS')
+            email,
+            self.ag_data.ut_get_supplied_kit_id(
+                ag_login_id),
+            'Mw1eY4wWVXpE0cQlvQwS')
         self.assertEqual(obs, False)
 
         # Reset code and make sure it works
         testcode = ''.join(choice(ascii_letters) for i in range(10))
-        self.ag_data.ag_set_pass_change_code('REMOVED', 'tst_ULGcr', testcode)
+        self.ag_data.ag_set_pass_change_code(
+            email,
+            self.ag_data.ut_get_supplied_kit_id(ag_login_id),
+            testcode)
         obs = self.ag_data.ag_verify_kit_password_change_code(
-            'REMOVED', 'tst_ULGcr', testcode)
+            email,
+            self.ag_data.ut_get_supplied_kit_id(ag_login_id),
+            testcode)
         self.assertEqual(obs, True)
 
         # Test with incorrect kit id
@@ -570,12 +631,18 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(obs, False)
 
         # Test with incorrect email
+        ag_login_id = 'd8592c74-8416-2135-e040-8a80115d6401'
+        email = self.ag_data.ut_get_email_from_ag_login_id(ag_login_id)
         obs = self.ag_data.ag_verify_kit_password_change_code(
-            'notreal@fake.com', 'tst_ULGcr', testcode)
+            email,
+            self.ag_data.ut_get_supplied_kit_id(ag_login_id),
+            testcode)
         self.assertEqual(obs, False)
 
     def test_getBarcodesByKit(self):
-        res = self.ag_data.getBarcodesByKit('tst_qmhLX')
+        res = self.ag_data.getBarcodesByKit(
+            self.ag_data.ut_get_supplied_kit_id(
+                'd8592c74-7e7f-2135-e040-8a80115d6401'))
         exp = ['000001322']
         self.assertItemsEqual(res, exp)
 
@@ -584,10 +651,14 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(res, [])
 
     def test_checkPrintResults(self):
-        obs = self.ag_data.checkPrintResults('tst_oasoR')
+        obs = self.ag_data.checkPrintResults(
+            self.ag_data.ut_get_supplied_kit_id(
+                'dc3172b2-792c-4087-8a20-714297821c6a'))
         self.assertFalse(obs)
 
-        obs = self.ag_data.checkPrintResults('tst_TMYwD')
+        kit_id = self.ag_data\
+            .ut_get_arbitrary_handout_printed_min6_supplied_kit_id()
+        obs = self.ag_data.checkPrintResults(kit_id)
         self.assertTrue(obs)
 
     def test_checkPrintResults_invalid_ids(self):
@@ -598,10 +669,14 @@ class TestAGDataAccess(TestCase):
         self.assertFalse(obs)
 
     def test_get_user_for_kit(self):
-        obs = self.ag_data.get_user_for_kit('tst_IueFX')
+        obs = self.ag_data.get_user_for_kit(
+            self.ag_data.ut_get_supplied_kit_id(
+                'ded5101d-c8e3-f6b3-e040-8a80115d6f03'))
         self.assertEqual('ded5101d-c8e3-f6b3-e040-8a80115d6f03', obs)
 
-        obs = self.ag_data.get_user_for_kit('tst_esABz')
+        obs = self.ag_data.get_user_for_kit(
+            self.ag_data.ut_get_supplied_kit_id(
+                'd8592c74-8421-2135-e040-8a80115d6401'))
         self.assertEqual('d8592c74-8421-2135-e040-8a80115d6401', obs)
 
     def test_get_user_for_kit_errors(self):
@@ -609,59 +684,81 @@ class TestAGDataAccess(TestCase):
             self.ag_data.get_user_for_kit('the_fooster')
 
         with self.assertRaises(ValueError):
-            self.ag_data.get_user_for_kit('tst_esXXX')
+            self.ag_data.get_user_for_kit('NOT_IN_DB')
 
     def test_get_menu_items(self):
-        obs = self.ag_data.get_menu_items('tst_pDWcB')
+        obs = self.ag_data.get_menu_items(
+            self.ag_data.ut_get_supplied_kit_id(
+                'd8592c74-844b-2135-e040-8a80115d6401'))
         self.assertEqual(({}, {}, [], True), obs)
 
-        obs = self.ag_data.get_menu_items('tst_VpQsT')
-        self.assertEqual(({'REMOVED-0': []}, {}, [], True), obs)
+        ag_login_id = 'd8592c74-84c9-2135-e040-8a80115d6401'
+        obs = self.ag_data.get_menu_items(
+            self.ag_data.ut_get_supplied_kit_id(ag_login_id))
+        names = self.ag_data.ut_get_participant_names_from_ag_login_id(
+            ag_login_id)
+        self.assertEqual((dict((name, []) for name in names),
+                         {}, [], True), obs)
 
     def test_get_menu_items_errors(self):
         with self.assertRaises(ValueError):
-            self.ag_data.get_menu_items('tst_esXXX')
+            self.ag_data.get_menu_items('NOT_IN_DB')
 
     def test_check_if_consent_exists(self):
+        ag_login_id = '00711b0a-67d6-0fed-e050-8a800c5d7570'
+        names = self.ag_data.ut_get_participant_names_from_ag_login_id(
+            ag_login_id)
         obs = self.ag_data.check_if_consent_exists(
-            '00711b0a-67d6-0fed-e050-8a800c5d7570', 'REMOVED-42')
+            ag_login_id, names[0])
         self.assertTrue(obs)
 
     def test_check_if_consent_exists_non_existent_user(self):
-        obs = self.ag_data.check_if_consent_exists(
-            '00711b0a-67d6-0fed-e050-8a800c5d7570', 'REMOVED-111')
+        ag_login_id = '00711b0a-67d6-0fed-e050-8a800c5d7570'
+        obs = self.ag_data.check_if_consent_exists(ag_login_id, 'REMOVED-111')
         self.assertFalse(obs)
 
     def test_get_user_info(self):
-        obs = self.ag_data.get_user_info('tst_wAhSB')
-        exp = {'address': 'REMOVED', 'ag_login_id':
-               'd8592c74-84a5-2135-e040-8a80115d6401', 'city': 'REMOVED',
-               'country': 'REMOVED', 'email': 'REMOVED', 'name': 'REMOVED',
-               'state': 'REMOVED', 'zip': 'REMOVED'}
-        self.assertEqual(exp, obs)
+        ag_login_id = 'd8592c74-84a5-2135-e040-8a80115d6401'
+        obs = self.ag_data.get_user_info(
+            self.ag_data.ut_get_supplied_kit_id(ag_login_id))
+        # unfortunatly, most fields are scrubbed in the database, thus we
+        # cannot compare them over DB versions
+        exp = {'ag_login_id': ag_login_id,
+               'email': self.ag_data.ut_get_email_from_ag_login_id(
+                ag_login_id)}
+        self.assertEqual(exp, dict((k, obs[k]) for k in exp.keys()))
+        exp = ['address', 'ag_login_id', 'city', 'country', 'email', 'name',
+               'state', 'zip']
+        self.assertItemsEqual(obs.keys(), exp)
 
     def test_get_user_info_non_existent(self):
         with self.assertRaises(ValueError):
-            self.ag_data.get_user_info('tst_XX1123')
+            self.ag_data.get_user_info('NOT_IN_DB')
 
     def test_get_barcode_results(self):
-        obs = self.ag_data.get_barcode_results('tst_yCzro')
-        exp = [{'barcode': '000016704', 'participant_name': 'REMOVED-0'},
-               {'barcode': '000016705', 'participant_name': 'REMOVED-0'},
-               {'barcode': '000016706', 'participant_name': 'REMOVED-0'},
-               {'barcode': '000016707', 'participant_name': 'REMOVED-0'},
-               {'barcode': '000016708', 'participant_name': 'REMOVED-0'},
-               {'barcode': '000016709', 'participant_name': 'REMOVED-0'},
-               {'barcode': '000016710', 'participant_name': 'REMOVED-0'},
-               {'barcode': '000016711', 'participant_name': 'REMOVED-0'},
-               {'barcode': '000016712', 'participant_name': 'REMOVED-0'},
-               {'barcode': '000016713', 'participant_name': 'REMOVED-0'},
-               {'barcode': '000004213', 'participant_name': 'REMOVED-0'},
-               {'barcode': '000004214', 'participant_name': 'REMOVED-0'},
-               {'barcode': '000004215', 'participant_name': 'REMOVED-0'},
-               {'barcode': '000004216', 'participant_name': 'REMOVED-0'},
-               {'barcode': '000004218', 'participant_name': 'REMOVED-0'},
-               {'barcode': '000004219', 'participant_name': 'REMOVED-0'}]
+        ag_login_id = 'd8592c74-9694-2135-e040-8a80115d6401'
+        obs = self.ag_data.get_barcode_results(
+            self.ag_data.ut_get_supplied_kit_id(ag_login_id))
+        # remove participant_names from results
+        for o in obs:
+            del o['participant_name']
+        # we cannot compare participant_names, since they are scrubbed
+        exp = [{'barcode': '000016704'},
+               {'barcode': '000016705'},
+               {'barcode': '000016706'},
+               {'barcode': '000016707'},
+               {'barcode': '000016708'},
+               {'barcode': '000016709'},
+               {'barcode': '000016710'},
+               {'barcode': '000016711'},
+               {'barcode': '000016712'},
+               {'barcode': '000016713'},
+               {'barcode': '000004213'},
+               {'barcode': '000004214'},
+               {'barcode': '000004215'},
+               {'barcode': '000004216'},
+               {'barcode': '000004218'},
+               {'barcode': '000004219'}]
         self.assertItemsEqual(obs, exp)
 
     def test_get_barcode_results_non_existant_id(self):
@@ -670,16 +767,10 @@ class TestAGDataAccess(TestCase):
 
     def test_get_login_info(self):
         id_ = 'fecebeae-4244-2d78-e040-8a800c5d4f50'
-        exp = [{'ag_login_id': id_,
-                'email': 'REMOVED',
-                'name': 'REMOVED',
-                'address': 'REMOVED',
-                'city': 'REMOVED',
-                'state': 'REMOVED',
-                'zip': 'REMOVED',
-                'country': 'REMOVED'}]
+        exp = {'ag_login_id': id_,
+               'email': self.ag_data.ut_get_email_from_ag_login_id(id_)}
         obs = self.ag_data.get_login_info(id_)
-        self.assertEqual(obs, exp)
+        self.assertEqual(dict((k, obs[0][k]) for k in exp.keys()), exp)
 
     def test_get_login_info_non_existant_id(self):
         id_ = '00000000-0000-0000-0000-000000000000'
@@ -688,8 +779,9 @@ class TestAGDataAccess(TestCase):
 
     def test_get_survey_ids(self):
         id_ = '8ca47059-000a-469f-aa64-ff1afbd6fcb1'
-        obs = self.ag_data.get_survey_ids(id_, 'REMOVED-0')
-        self.assertEquals(obs, {1: 'd08758a1510256f0'})
+        names = self.ag_data.ut_get_participant_names_from_ag_login_id(id_)
+        obs = [self.ag_data.get_survey_ids(id_, name) for name in names]
+        self.assertIn({1: 'd08758a1510256f0'}, obs)
 
     def test_get_survey_ids_non_existant_id(self):
         id_ = '00000000-0000-0000-0000-000000000000'
@@ -707,7 +799,8 @@ class TestAGDataAccess(TestCase):
         self.assertIn('United Kingdom', obs)
 
     def test_is_deposited_ebi(self):
-        obs = self.ag_data.is_deposited_ebi('000027262')
+        barcode = self.ag_data.ut_get_arbitrary_barcode(deposited=False)
+        obs = self.ag_data.is_deposited_ebi(barcode)
         self.assertFalse(obs)
 
     def test_is_deposited_ebi_bad_barcode(self):

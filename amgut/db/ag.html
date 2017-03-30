@@ -467,17 +467,7 @@ table {
 	project_barcode references project ( project_id )</title>
 </path>
 <text x='1883' y='1630' transform='rotate(0 1883,1630)' title='Foreign Key fk_pb_to_project
-	project_barcode references project ( project_id )' style='fill:#a1a0a0;'>project_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 1140 1545 L 1162,1545 Q 1170,1545 1170,1537 L 1170,1402 Q 1170,1395 1177,1395 L 1185,1395' >
-	<title>Foreign Key fk_labadmin_access
-	labadmin_users_access references labadmin_users ( email )</title>
-</path>
-<text x='1147' y='1540' transform='rotate(0 1147,1540)' title='Foreign Key fk_labadmin_access
-	labadmin_users_access references labadmin_users ( email )' style='fill:#a1a0a0;'>email</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 1140 1530 L 1147,1530 Q 1155,1530 1155,1522 L 1155,1477 Q 1155,1470 1162,1470 L 1357,1470 Q 1365,1470 1365,1477 L 1365,1522 Q 1365,1530 1372,1530 L 1380,1530' >
-	<title>Foreign Key fk_labadmin_users_access
-	labadmin_users_access references labadmin_access ( access_id )</title>
-</path>
-<text x='1147' y='1525' transform='rotate(0 1147,1525)' title='Foreign Key fk_labadmin_users_access
-	labadmin_users_access references labadmin_access ( access_id )' style='fill:#a1a0a0;'>access_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 2430 1065 L 2437,1065 Q 2445,1065 2445,1057 L 2445,982 Q 2445,975 2437,975 L 2430,975' >
+	project_barcode references project ( project_id )' style='fill:#a1a0a0;'>project_id</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 2430 1065 L 2437,1065 Q 2445,1065 2445,1057 L 2445,982 Q 2445,975 2437,975 L 2430,975' >
 	<title>Foreign Key fk_ag_kit_to_login_id
 	ag_kit references ag_login ( ag_login_id )</title>
 </path>
@@ -652,7 +642,17 @@ table {
 	protocol_targeted references processing_robot ( processing_robot_id )</title>
 </path>
 <text x='-50' y='340' transform='rotate(0 -50,340)' title='Foreign Key fk_protocol_targeted_robot
-	protocol_targeted references processing_robot ( processing_robot_id )' style='fill:#a1a0a0;'>processing_robot_id</text><!-- ============= Table 'ag_survey_answer' ============= -->
+	protocol_targeted references processing_robot ( processing_robot_id )' style='fill:#a1a0a0;'>processing_robot_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 1140 1545 L 1162,1545 Q 1170,1545 1170,1537 L 1170,1402 Q 1170,1395 1177,1395 L 1185,1395' >
+	<title>Foreign Key fk_labadmin_access
+	labadmin_users_access references labadmin_users ( email )</title>
+</path>
+<text x='1147' y='1540' transform='rotate(0 1147,1540)' title='Foreign Key fk_labadmin_access
+	labadmin_users_access references labadmin_users ( email )' style='fill:#a1a0a0;'>email</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 1140 1530 L 1147,1530 Q 1155,1530 1155,1522 L 1155,1477 Q 1155,1470 1162,1470 L 1357,1470 Q 1365,1470 1365,1477 L 1365,1522 Q 1365,1530 1372,1530 L 1380,1530' >
+	<title>Foreign Key fk_labadmin_users_access
+	labadmin_users_access references labadmin_access ( access_id )</title>
+</path>
+<text x='1147' y='1525' transform='rotate(0 1147,1525)' title='Foreign Key fk_labadmin_users_access
+	labadmin_users_access references labadmin_access ( access_id )' style='fill:#a1a0a0;'>access_id</text><!-- ============= Table 'ag_survey_answer' ============= -->
 <rect class='table' x='1860' y='1013' width='150' height='120' rx='7' ry='7' />
 <path d='M 1860.50 1039.50 L 1860.50 1020.50 Q 1860.50 1013.50 1867.50 1013.50 L 2002.50 1013.50 Q 2009.50 1013.50 2009.50 1020.50 L 2009.50 1039.50 L1860.50 1039.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
 <a xlink:href='#ag_survey_answer'><text x='1885' y='1027' class='tableTitle'>ag_survey_answer</text><title>Table ag.ag_survey_answer</title></a>
@@ -1173,16 +1173,6 @@ Referred by survey_answers_other ( survey_id ) </title></a>
   <a xlink:href='#settings.locale'><text x='1218' y='1567'>locale</text><title>locale varchar&#040;2147483647&#041;</title></a>
   <use id='nn' x='1202' y='1572' xlink:href='#nn'/><a xlink:href='#settings.current_patch'><text x='1218' y='1582'>current_patch</text><title>current_patch varchar&#040;2147483647&#041; not null default &#039;unpatched&#039;&#058;&#058;character varying</title></a>
 
-<!-- ============= Table 'labadmin_access' ============= -->
-<rect class='table' x='1395' y='1493' width='135' height='90' rx='7' ry='7' />
-<path d='M 1395.50 1519.50 L 1395.50 1500.50 Q 1395.50 1493.50 1402.50 1493.50 L 1522.50 1493.50 Q 1529.50 1493.50 1529.50 1500.50 L 1529.50 1519.50 L1395.50 1519.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
-<a xlink:href='#labadmin_access'><text x='1417' y='1507' class='tableTitle'>labadmin_access</text><title>Table ag.labadmin_access</title></a>
-  <use id='nn' x='1397' y='1527' xlink:href='#nn'/><a xlink:href='#labadmin_access.access_id'><use id='pk' x='1397' y='1526' xlink:href='#pk'/><title>Primary Key  ( access_id ) </title></a>
-<a xlink:href='#labadmin_access.access_id'><text x='1413' y='1537'>access_id</text><title>access_id integer not null</title></a>
-<a xlink:href='#labadmin_access.access_id'><use id='ref' x='1518' y='1526' xlink:href='#ref'/><title>Referred by labadmin_users_access ( access_id ) </title></a>
-  <use id='nn' x='1397' y='1542' xlink:href='#nn'/><a xlink:href='#labadmin_access.access_name'><text x='1413' y='1552'>access_name</text><title>access_name varchar&#040;100&#041; not null</title></a>
-  <a xlink:href='#labadmin_access.access_description'><text x='1413' y='1567'>access_description</text><title>access_description varchar</title></a>
-
 <!-- ============= Table 'labadmin_users' ============= -->
 <rect class='table' x='1200' y='1358' width='105' height='75' rx='7' ry='7' />
 <path d='M 1200.50 1384.50 L 1200.50 1365.50 Q 1200.50 1358.50 1207.50 1358.50 L 1297.50 1358.50 Q 1304.50 1358.50 1304.50 1365.50 L 1304.50 1384.50 L1200.50 1384.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
@@ -1195,17 +1185,6 @@ Referred by library_plate ( email )
 Referred by run ( email ) 
 Referred by sample_plate ( email ) </title></a>
   <use id='nn' x='1202' y='1407' xlink:href='#nn'/><a xlink:href='#labadmin_users.password'><text x='1218' y='1417'>password</text><title>password varchar not null</title></a>
-
-<!-- ============= Table 'labadmin_users_access' ============= -->
-<rect class='table' x='990' y='1493' width='150' height='75' rx='7' ry='7' />
-<path d='M 990.50 1519.50 L 990.50 1500.50 Q 990.50 1493.50 997.50 1493.50 L 1132.50 1493.50 Q 1139.50 1493.50 1139.50 1500.50 L 1139.50 1519.50 L990.50 1519.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
-<a xlink:href='#labadmin_users_access'><text x='1001' y='1507' class='tableTitle'>labadmin_users_access</text><title>Table ag.labadmin_users_access</title></a>
-  <use id='nn' x='992' y='1527' xlink:href='#nn'/><a xlink:href='#labadmin_users_access.access_id'><use id='idx' x='992' y='1526' xlink:href='#idx'/><title>Index  ( access_id ) </title></a>
-<a xlink:href='#labadmin_users_access.access_id'><text x='1008' y='1537'>access_id</text><title>access_id integer not null</title></a>
-<a xlink:href='#labadmin_users_access.access_id'><use id='fk' x='1128' y='1526' xlink:href='#fk'/><title>References labadmin_access ( access_id ) </title></a>
-  <use id='nn' x='992' y='1542' xlink:href='#nn'/><a xlink:href='#labadmin_users_access.email'><use id='idx' x='992' y='1541' xlink:href='#idx'/><title>Index  ( email ) </title></a>
-<a xlink:href='#labadmin_users_access.email'><text x='1008' y='1552'>email</text><title>email varchar not null</title></a>
-<a xlink:href='#labadmin_users_access.email'><use id='fk' x='1128' y='1541' xlink:href='#fk'/><title>References labadmin_users ( email ) </title></a>
 
 <!-- ============= Table 'duplicate_consents' ============= -->
 <rect class='table' x='2520' y='758' width='150' height='90' rx='7' ry='7' />
@@ -1727,6 +1706,27 @@ Referred by sample_plate_layout ( sample_plate_id ) </title></a>
   <a xlink:href='#protocol_targeted.processing_robot_id'><use id='idx' x='77' y='341' xlink:href='#idx'/><title>Index  ( processing_robot_id ) </title></a>
 <a xlink:href='#protocol_targeted.processing_robot_id'><text x='93' y='352'>processing_robot_id</text><title>processing_robot_id bigint</title></a>
 <a xlink:href='#protocol_targeted.processing_robot_id'><use id='fk' x='243' y='341' xlink:href='#fk'/><title>References processing_robot ( processing_robot_id ) </title></a>
+
+<!-- ============= Table 'labadmin_access' ============= -->
+<rect class='table' x='1395' y='1493' width='135' height='90' rx='7' ry='7' />
+<path d='M 1395.50 1519.50 L 1395.50 1500.50 Q 1395.50 1493.50 1402.50 1493.50 L 1522.50 1493.50 Q 1529.50 1493.50 1529.50 1500.50 L 1529.50 1519.50 L1395.50 1519.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
+<a xlink:href='#labadmin_access'><text x='1417' y='1507' class='tableTitle'>labadmin_access</text><title>Table ag.labadmin_access</title></a>
+  <use id='nn' x='1397' y='1527' xlink:href='#nn'/><a xlink:href='#labadmin_access.access_id'><use id='pk' x='1397' y='1526' xlink:href='#pk'/><title>Primary Key  ( access_id ) </title></a>
+<a xlink:href='#labadmin_access.access_id'><text x='1413' y='1537'>access_id</text><title>access_id bigint not null</title></a>
+<a xlink:href='#labadmin_access.access_id'><use id='ref' x='1518' y='1526' xlink:href='#ref'/><title>Referred by labadmin_users_access ( access_id ) </title></a>
+  <use id='nn' x='1397' y='1542' xlink:href='#nn'/><a xlink:href='#labadmin_access.access_name'><text x='1413' y='1552'>access_name</text><title>access_name varchar not null</title></a>
+  <a xlink:href='#labadmin_access.access_description'><text x='1413' y='1567'>access_description</text><title>access_description varchar</title></a>
+
+<!-- ============= Table 'labadmin_users_access' ============= -->
+<rect class='table' x='990' y='1493' width='150' height='75' rx='7' ry='7' />
+<path d='M 990.50 1519.50 L 990.50 1500.50 Q 990.50 1493.50 997.50 1493.50 L 1132.50 1493.50 Q 1139.50 1493.50 1139.50 1500.50 L 1139.50 1519.50 L990.50 1519.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
+<a xlink:href='#labadmin_users_access'><text x='1001' y='1507' class='tableTitle'>labadmin_users_access</text><title>Table ag.labadmin_users_access</title></a>
+  <use id='nn' x='992' y='1527' xlink:href='#nn'/><a xlink:href='#labadmin_users_access.access_id'><use id='idx' x='992' y='1526' xlink:href='#idx'/><title>Index  ( access_id ) </title></a>
+<a xlink:href='#labadmin_users_access.access_id'><text x='1008' y='1537'>access_id</text><title>access_id bigint not null</title></a>
+<a xlink:href='#labadmin_users_access.access_id'><use id='fk' x='1128' y='1526' xlink:href='#fk'/><title>References labadmin_access ( access_id ) </title></a>
+  <use id='nn' x='992' y='1542' xlink:href='#nn'/><a xlink:href='#labadmin_users_access.email'><use id='idx' x='992' y='1541' xlink:href='#idx'/><title>Index  ( email ) </title></a>
+<a xlink:href='#labadmin_users_access.email'><text x='1008' y='1552'>email</text><title>email varchar not null</title></a>
+<a xlink:href='#labadmin_users_access.email'><use id='fk' x='1128' y='1541' xlink:href='#fk'/><title>References labadmin_users ( email ) </title></a>
 
 </g></svg>
 
@@ -3566,35 +3566,6 @@ Referred by sample_plate_layout ( sample_plate_id ) </title></a>
 <br/><br/>
 <table class='bordered'>
 <thead>
-<tr><th colspan='3'><a name='labadmin_access'>Table labadmin_access</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td><a name='labadmin_access.access_id'>access&#095;id</a></td>
-		<td> integer  NOT NULL  </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='labadmin_access.access_name'>access&#095;name</a></td>
-		<td> varchar&#040; 100 &#041;  NOT NULL  </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='labadmin_access.access_description'>access&#095;description</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='3'><b>Indexes</b></th></tr>
-	<tr>		<td>pk&#095;labadmin&#095;access primary key</td>
-		<td> ON access&#095;id</td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table class='bordered'>
-<thead>
 <tr><th colspan='3'><a name='labadmin_users'>Table labadmin_users</a></th></tr>
 </thead>
 <tbody>
@@ -3611,45 +3582,6 @@ Referred by sample_plate_layout ( sample_plate_id ) </title></a>
 <tr><th colspan='3'><b>Indexes</b></th></tr>
 	<tr>		<td>pk&#095;labadmin&#095;users primary key</td>
 		<td> ON email</td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table class='bordered'>
-<thead>
-<tr><th colspan='3'><a name='labadmin_users_access'>Table labadmin_users_access</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td><a name='labadmin_users_access.access_id'>access&#095;id</a></td>
-		<td> integer  NOT NULL  </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='labadmin_users_access.email'>email</a></td>
-		<td> varchar  NOT NULL  </td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='3'><b>Indexes</b></th></tr>
-	<tr>		<td>idx&#095;labadmin&#095;users&#095;access </td>
-		<td> ON email</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>idx&#095;labadmin&#095;users&#095;access&#095;0 </td>
-		<td> ON access&#095;id</td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='3'><b>Foreign Keys</b></th></tr>
-	<tr>
-		<td>fk_labadmin_access</td>
-		<td > ( email ) ref <a href='#labadmin&#095;users'>labadmin&#095;users</a> (email) </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>fk_labadmin_users_access</td>
-		<td > ( access&#095;id ) ref <a href='#labadmin&#095;access'>labadmin&#095;access</a> (access&#095;id) </td>
 		<td>  </td>
 	</tr>
 </tbody>
@@ -5459,6 +5391,74 @@ Referred by sample_plate_layout ( sample_plate_id ) </title></a>
 	<tr>
 		<td>fk_protocol_targeted_robot</td>
 		<td > ( processing&#095;robot&#095;id ) ref <a href='#processing&#095;robot'>processing&#095;robot</a> (processing&#095;robot&#095;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='3'><a name='labadmin_access'>Table labadmin_access</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='labadmin_access.access_id'>access&#095;id</a></td>
+		<td> bigint  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='labadmin_access.access_name'>access&#095;name</a></td>
+		<td> varchar  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='labadmin_access.access_description'>access&#095;description</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='3'><b>Indexes</b></th></tr>
+	<tr>		<td>pk&#095;labadmin&#095;access primary key</td>
+		<td> ON access&#095;id</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='3'><a name='labadmin_users_access'>Table labadmin_users_access</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='labadmin_users_access.access_id'>access&#095;id</a></td>
+		<td> bigint  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='labadmin_users_access.email'>email</a></td>
+		<td> varchar  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='3'><b>Indexes</b></th></tr>
+	<tr>		<td>idx&#095;labadmin&#095;users&#095;access </td>
+		<td> ON email</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>idx&#095;labadmin&#095;users&#095;access&#095;0 </td>
+		<td> ON access&#095;id</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='3'><b>Foreign Keys</b></th></tr>
+	<tr>
+		<td>fk_labadmin_access</td>
+		<td > ( email ) ref <a href='#labadmin&#095;users'>labadmin&#095;users</a> (email) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>fk_labadmin_users_access</td>
+		<td > ( access&#095;id ) ref <a href='#labadmin&#095;access'>labadmin&#095;access</a> (access&#095;id) </td>
 		<td>  </td>
 	</tr>
 </tbody>
