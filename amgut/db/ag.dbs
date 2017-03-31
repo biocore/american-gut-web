@@ -895,30 +895,6 @@
 				<fk_column name="barcode" pk="barcode" />
 			</fk>
 		</table>
-		<table name="plate" >
-			<column name="plate_id" type="bigint" length="19" jt="-5" mandatory="y" />
-			<column name="plate" type="varchar" length="50" jt="12" />
-			<column name="sequence_date" type="varchar" length="20" jt="12" />
-			<index name="plate_pkey" unique="PRIMARY_KEY" >
-				<column name="plate_id" />
-			</index>
-		</table>
-		<table name="plate_barcode" >
-			<column name="plate_id" type="bigint" length="19" jt="-5" mandatory="y" />
-			<column name="barcode" type="varchar" length="2147483647" jt="12" mandatory="y" />
-			<index name="idx_plate_barcode" unique="NORMAL" >
-				<column name="barcode" />
-			</index>
-			<index name="idx_plate_barcode_0" unique="NORMAL" >
-				<column name="plate_id" />
-			</index>
-			<fk name="fk_plate_barcode" to_schema="barcodes" to_table="barcode" >
-				<fk_column name="barcode" pk="barcode" />
-			</fk>
-			<fk name="fk_plate_barcode_0" to_schema="barcodes" to_table="plate" >
-				<fk_column name="plate_id" pk="plate_id" />
-			</fk>
-		</table>
 		<table name="project" >
 			<column name="project_id" type="bigint" length="19" jt="-5" mandatory="y" />
 			<column name="project" type="varchar" length="1000" jt="12" />
@@ -22943,20 +22919,35 @@ AS $function$xpath_exists$function$
 				<fk_column name="sample_id" pk="sample_id" />
 			</fk>
 		</table>
+		<table name="sample_plate_study" >
+			<column name="sample_plate_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="study_id" type="bigint" jt="-5" mandatory="y" />
+			<index name="idx_sample_plate_study" unique="NORMAL" >
+				<column name="sample_plate_id" />
+			</index>
+			<index name="idx_sample_plate_study" unique="NORMAL" >
+				<column name="study_id" />
+			</index>
+			<fk name="fk_sample_plate_study" to_schema="pm" to_table="sample_plate" >
+				<fk_column name="sample_plate_id" pk="sample_plate_id" />
+			</fk>
+			<fk name="fk_sample_plate_study_study" to_schema="pm" to_table="study" >
+				<fk_column name="study_id" pk="study_id" />
+			</fk>
+		</table>
 		<table name="study" >
-			<column name="study_id" type="bigserial" jt="-5" mandatory="y" />
-			<column name="qiita_study_id" type="bigint" jt="-5" />
-			<column name="title" type="varchar" jt="12" />
-			<column name="alias" type="varchar" jt="12" />
-			<column name="notes" type="varchar" jt="12" />
+			<column name="study_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="title" type="varchar" jt="12" mandatory="y" />
+			<column name="alias" type="varchar" jt="12" mandatory="y" />
+			<column name="jira_key" type="varchar" jt="12" mandatory="y" />
 			<index name="pk_study" unique="PRIMARY_KEY" >
 				<column name="study_id" />
 			</index>
-			<index name="uq_study_title" unique="UNIQUE" >
-				<column name="title" />
+			<index name="idx_study" unique="UNIQUE" >
+				<column name="jira_key" />
 			</index>
-			<index name="uq_study_qiita_study_id" unique="UNIQUE" >
-				<column name="qiita_study_id" />
+			<index name="idx_study_0" unique="UNIQUE" >
+				<column name="title" />
 			</index>
 		</table>
 		<table name="study_sample" >
@@ -22968,11 +22959,11 @@ AS $function$xpath_exists$function$
 			<index name="idx_study_sample_sample_id" unique="NORMAL" >
 				<column name="sample_id" />
 			</index>
-			<fk name="fk_study_sample_study_id" to_schema="pm" to_table="study" >
-				<fk_column name="study_id" pk="study_id" />
-			</fk>
 			<fk name="fk_study_sample_sample_id" to_schema="pm" to_table="sample" >
 				<fk_column name="sample_id" pk="sample_id" />
+			</fk>
+			<fk name="fk_study_sample_study" to_schema="pm" to_table="study" >
+				<fk_column name="study_id" pk="study_id" />
 			</fk>
 		</table>
 		<table name="tm300_8_tool" >
@@ -23010,73 +23001,72 @@ AS $function$xpath_exists$function$
 		</table>
 	</schema>
 	<layout id="Layout2861625" name="public" joined_routing="y" show_relation_columns="y" >
-		<entity schema="ag" name="ag_survey_answer" color="f7e2c6" x="1860" y="1020" />
-		<entity schema="ag" name="controlled_vocab_values" color="c6c6f7" x="1830" y="330" />
-		<entity schema="ag" name="controlled_vocabs" color="c6c6f7" x="1620" y="330" />
-		<entity schema="ag" name="ag_participant_exceptions" color="f7e2c6" x="1635" y="1020" />
-		<entity schema="ag" name="ag_survey_multiples" color="f7e2c6" x="2070" y="1020" />
-		<entity schema="ag" name="group_questions" color="ffcccc" x="2700" y="120" />
-		<entity schema="ag" name="survey_response_types" color="ffffff" x="2955" y="270" />
-		<entity schema="ag" name="surveys" color="a8c4ef" x="2970" y="2400" />
-		<entity schema="ag" name="survey_group" color="a8c4ef" x="2535" y="120" />
-		<entity schema="ag" name="survey_answers_other" color="a8c4ef" x="3165" y="615" />
-		<entity schema="ag" name="survey_question_triggers" color="a8c4ef" x="2955" y="405" />
-		<entity schema="ag" name="survey_response" color="a8c4ef" x="2535" y="270" />
-		<entity schema="ag" name="survey_question_response" color="ffcccc" x="2700" y="405" />
-		<entity schema="ag" name="iso_country_lookup" color="ffffff" x="2520" y="405" />
-		<entity schema="ag" name="survey_question_response_type" color="ffcccc" x="2700" y="270" />
-		<entity schema="ag" name="promoted_survey_ids" color="a8c4ef" x="2970" y="2535" />
-		<entity schema="ag" name="zipcodes" color="c6c6f7" x="2040" y="330" />
-		<entity schema="ag" name="ag_survey_multiples_backup" color="cef7c6" x="1185" y="600" />
-		<entity schema="ag" name="ag_import_stats_tmp" color="cef7c6" x="960" y="600" />
-		<entity schema="ag" name="ag_map_markers" color="cef7c6" x="1425" y="600" />
-		<entity schema="ag" name="survey_answers" color="a8c4ef" x="3165" y="765" />
-		<entity schema="ag" name="ag_human_survey" color="c6d9f7" x="2730" y="765" />
-		<entity schema="ag" name="external_survey_answers" color="a8c4ef" x="3165" y="1050" />
-		<entity schema="ag" name="external_survey_sources" color="a8c4ef" x="2715" y="600" />
-		<entity schema="barcodes" name="barcode_exceptions" color="a8c4ef" x="1950" y="1740" />
-		<entity schema="ag" name="survey_question" color="a8c4ef" x="2955" y="90" />
-		<entity schema="ag" name="ag_consent" color="c6d9f7" x="2970" y="765" />
-		<entity schema="ag" name="ag_login_surveys" color="ffcccc" x="2970" y="600" />
-		<entity schema="ag" name="consent_revoked" color="b7c8e3" x="2730" y="2535" />
-		<entity schema="barcodes" name="project_barcode" color="a8c4ef" x="1950" y="1605" />
-		<entity schema="ag" name="settings" color="a8c4ef" x="1200" y="1500" />
-		<entity schema="ag" name="labadmin_users" color="b2cdf7" x="1200" y="1365" />
-		<entity schema="ag" name="duplicate_consents" color="b7c8e3" x="2520" y="765" />
-		<entity schema="ag" name="ag_kit" color="f7e2c6" x="2265" y="1020" />
-		<entity schema="ag" name="ag_animal_survey" color="f7e2c6" x="2070" y="615" />
-		<entity schema="barcodes" name="barcode" color="a8c4ef" x="1950" y="1365" />
-		<entity schema="barcodes" name="plate" color="a8c4ef" x="1620" y="1605" />
-		<entity schema="barcodes" name="plate_barcode" color="a8c4ef" x="1800" y="1605" />
-		<entity schema="ag" name="ag_handout_barcodes" color="a8c4ef" x="1380" y="360" />
-		<entity schema="ag" name="ag_handout_kits" color="a8c4ef" x="1185" y="360" />
-		<entity schema="barcodes" name="project" color="a8c4ef" x="1800" y="1470" />
-		<entity schema="ag" name="ag_login" color="f7e2c6" x="1890" y="735" />
-		<entity schema="ag" name="ag_kit_barcodes" color="f7e2c6" x="1620" y="600" />
-		<entity schema="pm" name="master_mix_lot" color="b2cdf7" x="525" y="405" />
-		<entity schema="pm" name="extraction_tool" color="b2cdf7" x="720" y="1140" />
-		<entity schema="pm" name="extraction_robot" color="b2cdf7" x="720" y="975" />
-		<entity schema="pm" name="extraction_kit_lot" color="b2cdf7" x="720" y="825" />
-		<entity schema="pm" name="tm300_8_tool" color="b2cdf7" x="285" y="45" />
-		<entity schema="pm" name="water_lot" color="b2cdf7" x="330" y="405" />
-		<entity schema="pm" name="tm50_8_tool" color="b2cdf7" x="135" y="405" />
-		<entity schema="pm" name="barcode_sequence_plate_layout" color="b2cdf7" x="525" y="255" />
-		<entity schema="pm" name="barcode_sequence_plate" color="b2cdf7" x="525" y="105" />
-		<entity schema="pm" name="processing_robot" color="b2cdf7" x="75" y="45" />
-		<entity schema="pm" name="sample_plate_layout" color="b2cdf7" x="420" y="1140" />
-		<entity schema="pm" name="study_sample" color="b2cdf7" x="420" y="975" />
-		<entity schema="pm" name="protocol" color="b2cdf7" x="60" y="1170" />
-		<entity schema="pm" name="plate_type" color="b2cdf7" x="45" y="645" />
-		<entity schema="pm" name="run_library_plate" color="b2cdf7" x="600" y="645" />
-		<entity schema="pm" name="sample" color="b2cdf7" x="570" y="975" />
-		<entity schema="pm" name="dna_plate" color="b2cdf7" x="210" y="735" />
-		<entity schema="pm" name="run" color="b2cdf7" x="420" y="600" />
-		<entity schema="pm" name="library_plate" color="b2cdf7" x="60" y="975" />
-		<entity schema="pm" name="study" color="b2cdf7" x="285" y="975" />
-		<entity schema="pm" name="sample_plate" color="b2cdf7" x="420" y="780" />
-		<entity schema="pm" name="protocol_targeted" color="b2cdf7" x="75" y="195" />
-		<entity schema="ag" name="labadmin_access" color="b2cdf7" x="1395" y="1500" />
-		<entity schema="ag" name="labadmin_users_access" color="b2cdf7" x="990" y="1500" />
+		<entity schema="ag" name="ag_survey_answer" color="f7e2c6" x="1830" y="1020" />
+		<entity schema="ag" name="controlled_vocab_values" color="c6c6f7" x="1800" y="330" />
+		<entity schema="ag" name="controlled_vocabs" color="c6c6f7" x="1590" y="330" />
+		<entity schema="ag" name="ag_participant_exceptions" color="f7e2c6" x="1605" y="1020" />
+		<entity schema="ag" name="ag_survey_multiples" color="f7e2c6" x="2040" y="1020" />
+		<entity schema="ag" name="group_questions" color="ffcccc" x="2670" y="120" />
+		<entity schema="ag" name="survey_response_types" color="ffffff" x="2925" y="270" />
+		<entity schema="ag" name="surveys" color="a8c4ef" x="2940" y="2400" />
+		<entity schema="ag" name="survey_group" color="a8c4ef" x="2505" y="120" />
+		<entity schema="ag" name="survey_answers_other" color="a8c4ef" x="3135" y="615" />
+		<entity schema="ag" name="survey_question_triggers" color="a8c4ef" x="2925" y="405" />
+		<entity schema="ag" name="survey_response" color="a8c4ef" x="2505" y="270" />
+		<entity schema="ag" name="survey_question_response" color="ffcccc" x="2670" y="405" />
+		<entity schema="ag" name="iso_country_lookup" color="ffffff" x="2490" y="405" />
+		<entity schema="ag" name="survey_question_response_type" color="ffcccc" x="2670" y="270" />
+		<entity schema="ag" name="promoted_survey_ids" color="a8c4ef" x="2940" y="2535" />
+		<entity schema="ag" name="zipcodes" color="c6c6f7" x="2010" y="330" />
+		<entity schema="ag" name="ag_survey_multiples_backup" color="cef7c6" x="1155" y="600" />
+		<entity schema="ag" name="ag_import_stats_tmp" color="cef7c6" x="930" y="600" />
+		<entity schema="ag" name="ag_map_markers" color="cef7c6" x="1395" y="600" />
+		<entity schema="ag" name="survey_answers" color="a8c4ef" x="3135" y="765" />
+		<entity schema="ag" name="ag_human_survey" color="c6d9f7" x="2700" y="765" />
+		<entity schema="ag" name="external_survey_answers" color="a8c4ef" x="3135" y="1050" />
+		<entity schema="ag" name="external_survey_sources" color="a8c4ef" x="2685" y="600" />
+		<entity schema="barcodes" name="barcode_exceptions" color="a8c4ef" x="1845" y="1725" />
+		<entity schema="ag" name="survey_question" color="a8c4ef" x="2925" y="90" />
+		<entity schema="ag" name="ag_consent" color="c6d9f7" x="2940" y="765" />
+		<entity schema="ag" name="ag_login_surveys" color="ffcccc" x="2940" y="600" />
+		<entity schema="ag" name="consent_revoked" color="b7c8e3" x="2700" y="2535" />
+		<entity schema="barcodes" name="project_barcode" color="a8c4ef" x="1845" y="1590" />
+		<entity schema="ag" name="settings" color="a8c4ef" x="1170" y="1500" />
+		<entity schema="ag" name="labadmin_users" color="b2cdf7" x="1170" y="1365" />
+		<entity schema="ag" name="duplicate_consents" color="b7c8e3" x="2490" y="765" />
+		<entity schema="ag" name="ag_kit" color="f7e2c6" x="2235" y="1020" />
+		<entity schema="ag" name="ag_animal_survey" color="f7e2c6" x="2040" y="615" />
+		<entity schema="barcodes" name="barcode" color="a8c4ef" x="1845" y="1350" />
+		<entity schema="ag" name="ag_handout_barcodes" color="a8c4ef" x="1350" y="360" />
+		<entity schema="ag" name="ag_handout_kits" color="a8c4ef" x="1155" y="360" />
+		<entity schema="barcodes" name="project" color="a8c4ef" x="1695" y="1455" />
+		<entity schema="ag" name="ag_login" color="f7e2c6" x="1860" y="735" />
+		<entity schema="ag" name="ag_kit_barcodes" color="f7e2c6" x="1590" y="600" />
+		<entity schema="pm" name="master_mix_lot" color="b2cdf7" x="495" y="405" />
+		<entity schema="pm" name="tm300_8_tool" color="b2cdf7" x="255" y="45" />
+		<entity schema="pm" name="water_lot" color="b2cdf7" x="300" y="405" />
+		<entity schema="pm" name="tm50_8_tool" color="b2cdf7" x="105" y="405" />
+		<entity schema="pm" name="barcode_sequence_plate_layout" color="b2cdf7" x="495" y="255" />
+		<entity schema="pm" name="barcode_sequence_plate" color="b2cdf7" x="495" y="105" />
+		<entity schema="pm" name="processing_robot" color="b2cdf7" x="45" y="45" />
+		<entity schema="pm" name="protocol_targeted" color="b2cdf7" x="45" y="195" />
+		<entity schema="ag" name="labadmin_access" color="b2cdf7" x="1365" y="1500" />
+		<entity schema="ag" name="labadmin_users_access" color="b2cdf7" x="960" y="1500" />
+		<entity schema="pm" name="sample_plate" color="b2cdf7" x="75" y="690" />
+		<entity schema="pm" name="dna_plate" color="b2cdf7" x="60" y="855" />
+		<entity schema="pm" name="library_plate" color="b2cdf7" x="60" y="1065" />
+		<entity schema="pm" name="run_library_plate" color="b2cdf7" x="75" y="1275" />
+		<entity schema="pm" name="run" color="b2cdf7" x="240" y="1245" />
+		<entity schema="pm" name="protocol" color="b2cdf7" x="300" y="1155" />
+		<entity schema="pm" name="extraction_kit_lot" color="b2cdf7" x="330" y="990" />
+		<entity schema="pm" name="extraction_robot" color="b2cdf7" x="525" y="990" />
+		<entity schema="pm" name="extraction_tool" color="b2cdf7" x="690" y="1005" />
+		<entity schema="pm" name="sample_plate_layout" color="b2cdf7" x="345" y="585" />
+		<entity schema="pm" name="plate_type" color="b2cdf7" x="195" y="570" />
+		<entity schema="pm" name="sample" color="b2cdf7" x="675" y="585" />
+		<entity schema="pm" name="study_sample" color="b2cdf7" x="615" y="720" />
+		<entity schema="pm" name="sample_plate_study" color="b2cdf7" x="255" y="750" />
+		<entity schema="pm" name="study" color="b2cdf7" x="435" y="750" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by :    american_gut_consent</comment>
 			<entity schema="ag" name="ag_survey_multiples" />
@@ -23128,8 +23118,6 @@ AS $function$xpath_exists$function$
 			<entity schema="ag" name="ag_handout_kits" />
 		</group>
 		<group name="Schema_barcodes" color="c4e0f9" >
-			<entity schema="barcodes" name="plate_barcode" />
-			<entity schema="barcodes" name="plate" />
 			<entity schema="barcodes" name="project_barcode" />
 			<entity schema="barcodes" name="project" />
 			<entity schema="barcodes" name="barcode" />
@@ -23156,6 +23144,7 @@ AS $function$xpath_exists$function$
 			<entity schema="pm" name="run_library_plate" />
 			<entity schema="pm" name="plate_type" />
 			<entity schema="pm" name="protocol" />
+			<entity schema="pm" name="sample_plate_study" />
 		</group>
 		<group name="targeted_protocol" color="ffffcc" >
 			<entity schema="pm" name="protocol_targeted" />
@@ -23167,5 +23156,42 @@ AS $function$xpath_exists$function$
 			<entity schema="pm" name="processing_robot" />
 			<entity schema="pm" name="tm50_8_tool" />
 		</group>
+		<script name="Sql" id="SQL4682242" confirmed="y" >
+			<string><![CDATA[ALTER TABLE pm.study DROP COLUMN qiita_study_id;
+
+ALTER TABLE pm.study DROP COLUMN notes;
+
+ALTER TABLE pm.study DROP CONSTRAINT uq_study_qiita_study_id;
+
+ALTER TABLE pm.study ADD jira_key varchar  NOT NULL;
+
+ALTER TABLE pm.study ADD CONSTRAINT idx_study UNIQUE ( jira_key ) ;
+
+CREATE TABLE pm.sample_plate_study ( 
+	sample_plate_id      bigint  ,
+	study_id             bigint  
+ ) ;
+
+CREATE INDEX idx_sample_plate_study ON pm.sample_plate_study ( sample_plate_id ) ;
+
+CREATE INDEX idx_sample_plate_study ON pm.sample_plate_study ( study_id ) ;
+
+ALTER TABLE pm.study ALTER COLUMN study_id TYPE bigint;
+
+ALTER INDEX uq_study_title RENAME TO idx_study_0;
+
+ALTER TABLE pm.sample_plate_study ADD CONSTRAINT fk_sample_plate_study FOREIGN KEY ( sample_plate_id ) REFERENCES pm.sample_plate( sample_plate_id )    ;
+
+ALTER TABLE pm.sample_plate_study ADD CONSTRAINT fk_sample_plate_study_study FOREIGN KEY ( study_id ) REFERENCES pm.study( study_id )    ;
+
+]]></string>
+		</script>
+		<script name="Sql_001" id="SQL693528" >
+			<string><![CDATA[DROP TABLE barcodes.plate;
+
+DROP TABLE barcodes.plate_barcode;
+
+]]></string>
+		</script>
 	</layout>
 </project>
