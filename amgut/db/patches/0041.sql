@@ -7,8 +7,8 @@ CREATE SCHEMA pm;
 
 CREATE TABLE pm.extraction_kit_lot (
     extraction_kit_lot_id bigserial  NOT NULL,
-    name                 varchar  NOT NULL,
-    notes                varchar  ,
+    name                  varchar  NOT NULL,
+    notes                 varchar  ,
     CONSTRAINT pk_extraction_kit_lot PRIMARY KEY ( extraction_kit_lot_id ),
     CONSTRAINT uq_extraction_kit_lot_name UNIQUE ( name )
  );
@@ -119,7 +119,7 @@ CREATE TABLE pm.study (
     study_id             bigint   NOT NULL,
     title                varchar  NOT NULL,
     alias                varchar  NOT NULL,
-    jira_id			     varchar  NOT NULL,
+    jira_id              varchar  NOT NULL,
     CONSTRAINT pk_study PRIMARY KEY ( study_id ),
     CONSTRAINT uq_study_title UNIQUE ( title ) ,
     CONSTRAINT uq_jira_id UNIQUE ( jira_id )
@@ -188,15 +188,15 @@ CREATE TABLE pm.barcode_sequence_plate_layout (
 CREATE INDEX idx_barcode_sequence_plate_layout_barcode_sequence_plate_id ON pm.barcode_sequence_plate_layout ( barcode_sequence_plate_id );
 
 CREATE TABLE pm.dna_plate (
-    dna_plate_id         bigserial  NOT NULL,
-    name                 varchar  NOT NULL,
-    email                varchar  ,
-    created_on           timestamp  ,
-    sample_plate_id      bigint  NOT NULL,
-    extraction_robot_id  bigint  NOT NULL,
+    dna_plate_id          bigserial  NOT NULL,
+    name                  varchar  NOT NULL,
+    email                 varchar  ,
+    created_on            timestamp  ,
+    sample_plate_id       bigint  NOT NULL,
+    extraction_robot_id   bigint  NOT NULL,
     extraction_kit_lot_id bigint  NOT NULL,
-    extraction_tool_id   bigint  NOT NULL,
-    notes                varchar  ,
+    extraction_tool_id    bigint  NOT NULL,
+    notes                 varchar  ,
     CONSTRAINT pk_dna_plate PRIMARY KEY ( dna_plate_id ),
     CONSTRAINT uq_dna_plate_name UNIQUE ( name ) ,
     CONSTRAINT fk_dna_plate_labadmin_users FOREIGN KEY ( email ) REFERENCES ag.labadmin_users( email )    ,
@@ -212,15 +212,15 @@ CREATE INDEX idx_dna_plate_extraction_kit_lot_id ON pm.dna_plate ( extraction_ki
 CREATE INDEX idx_dna_plate_extraction_tool_id ON pm.dna_plate ( extraction_tool_id );
 
 CREATE TABLE pm.protocol_targeted (
-    protocol_targeted_id bigserial  NOT NULL,
-    name                 varchar  NOT NULL,
-    updated_on           timestamp DEFAULT current_timestamp NOT NULL,
+    protocol_targeted_id      bigserial  NOT NULL,
+    name                      varchar  NOT NULL,
+    updated_on                timestamp DEFAULT current_timestamp NOT NULL,
     barcode_sequence_plate_id bigint  ,
-    master_mix_lot_id    bigint  ,
-    water_lot_id         bigint  ,
-    tm300_8_tool_id      bigint  ,
-    tm50_8_tool_id       bigint  ,
-    processing_robot_id  bigint  ,
+    master_mix_lot_id         bigint  ,
+    water_lot_id              bigint  ,
+    tm300_8_tool_id           bigint  ,
+    tm50_8_tool_id            bigint  ,
+    processing_robot_id       bigint  ,
     CONSTRAINT pk_protocol_targeted PRIMARY KEY ( protocol_targeted_id ),
     CONSTRAINT fk_protocol_targeted FOREIGN KEY ( barcode_sequence_plate_id ) REFERENCES pm.barcode_sequence_plate( barcode_sequence_plate_id )    ,
     CONSTRAINT fk_protocol_targeted_mm FOREIGN KEY ( master_mix_lot_id ) REFERENCES pm.master_mix_lot( master_mix_lot_id )    ,
@@ -313,7 +313,7 @@ BEGIN
     -- Check that the sample being plated actually belongs to a study
     -- linked to the plate
     IF (SELECT study_id FROM pm.study_sample WHERE sample_id = NEW.sample_id) NOT IN (SELECT DISTINCT study_id FROM pm.sample_plate_study WHERE sample_plate_id = NEW.sample_plate_id) THEN
-    RAISE EXCEPTION 'Sample % does not belong to a study being plated in %', NEW.sample_id, NEW.sample_plate_id;
+        RAISE EXCEPTION 'Sample % does not belong to a study being plated in %', NEW.sample_id, NEW.sample_plate_id;
     END IF;
     RETURN NEW;
 END;
