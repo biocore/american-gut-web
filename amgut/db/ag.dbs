@@ -23156,35 +23156,5 @@ AS $function$xpath_exists$function$
 			<entity schema="pm" name="processing_robot" />
 			<entity schema="pm" name="tm50_8_tool" />
 		</group>
-		<script name="Sql" id="SQL4682242" confirmed="y" >
-			<string><![CDATA[ALTER TABLE pm.study DROP COLUMN qiita_study_id;
-
-ALTER TABLE pm.study DROP COLUMN notes;
-
-ALTER TABLE pm.study DROP CONSTRAINT uq_study_qiita_study_id;
-
-ALTER TABLE pm.study ADD jira_key varchar  NOT NULL;
-
-ALTER TABLE pm.study ADD CONSTRAINT idx_study UNIQUE ( jira_key ) ;
-
-CREATE TABLE pm.sample_plate_study ( 
-	sample_plate_id      bigint  ,
-	study_id             bigint  
- ) ;
-
-CREATE INDEX idx_sample_plate_study ON pm.sample_plate_study ( sample_plate_id ) ;
-
-CREATE INDEX idx_sample_plate_study ON pm.sample_plate_study ( study_id ) ;
-
-ALTER TABLE pm.study ALTER COLUMN study_id TYPE bigint;
-
-ALTER INDEX uq_study_title RENAME TO idx_study_0;
-
-ALTER TABLE pm.sample_plate_study ADD CONSTRAINT fk_sample_plate_study FOREIGN KEY ( sample_plate_id ) REFERENCES pm.sample_plate( sample_plate_id )    ;
-
-ALTER TABLE pm.sample_plate_study ADD CONSTRAINT fk_sample_plate_study_study FOREIGN KEY ( study_id ) REFERENCES pm.study( study_id )    ;
-
-]]></string>
-		</script>
 	</layout>
 </project>
