@@ -79,7 +79,7 @@ CREATE TABLE pm.sample (
     sample_id            varchar  NOT NULL,
     is_blank             bool DEFAULT FALSE NOT NULL,
     details              varchar  ,
-    CONSTRAINT pk_sample PRIMARY KEY ( sample_id ),
+    CONSTRAINT pk_sample PRIMARY KEY ( sample_id )
  );
 
 CREATE TABLE pm.sample_plate (
