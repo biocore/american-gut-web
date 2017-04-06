@@ -78,12 +78,9 @@ CREATE INDEX idx_run_email ON pm.run ( email );
 CREATE TABLE pm.sample (
     sample_id            varchar  NOT NULL,
     is_blank             bool DEFAULT FALSE NOT NULL,
-    barcode              varchar  ,
-    notes                varchar  ,
+    details              varchar  ,
     CONSTRAINT pk_sample PRIMARY KEY ( sample_id ),
-    CONSTRAINT fk_sample_barcode FOREIGN KEY ( barcode ) REFERENCES barcodes.barcode( barcode )
  );
-CREATE INDEX idx_sample_barcode ON pm.sample ( barcode );
 
 CREATE TABLE pm.sample_plate (
     sample_plate_id      bigserial  NOT NULL,
@@ -103,7 +100,7 @@ COMMENT ON TABLE pm.sample_plate IS 'Holds the information about the initial pla
 
 CREATE TABLE pm.sample_plate_layout (
     sample_plate_id      bigint  NOT NULL,
-    sample_id            varchar  NOT NULL,
+    sample_id            varchar,
     col                  smallint  NOT NULL,
     row                  smallint  NOT NULL,
     name                 varchar  ,
@@ -294,6 +291,10 @@ INSERT INTO pm.master_mix_lot (name)
 
 INSERT INTO pm.water_lot (name)
     VALUES ('RNBD9959');
+
+-- Add some control samples
+INSERT INTO pm.sample (sample_id, is_blank, details)
+    VALUES ('BLANK', TRUE, NULL);
 
 -- Drop these unused tables
 DROP TABLE barcodes.plate_barcode;
