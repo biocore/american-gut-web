@@ -1,6 +1,6 @@
 from unittest import TestCase, main
+
 from amgut.lib.util import (rollback)
-# from amgut.lib.data_access.ag_data_access import AGDataAccess
 from amgut.lib.geocode import geocode_aglogins
 from amgut.lib.data_access.ag_data_access import AGDataAccess
 
@@ -12,14 +12,6 @@ class TestGeocoder(TestCase):
     def tearDown(self):
         del self.ag_data
 
-    @classmethod
-    def setUpClass(cls):
-        cls.ag_logins = ["00164c87-73b3-deb2-e050-8a800c5d54e1",
-                         "001b21ee-85a2-457c-adf6-492b42134376",
-                         "0023cc03-3332-eec6-e050-8a800c5d3c04",
-                         "d8592c74-967c-2135-e040-8a80115d6401",
-                         "15370442-313f-452f-bf5b-cd155e3deefe"]
-
     @rollback
     def test_force(self):
         # test if force leads to updating existing locations in DB
@@ -27,12 +19,13 @@ class TestGeocoder(TestCase):
                   "d8592c74-8037-2135-e040-8a80115d6401",
                   "d8592c74-803a-2135-e040-8a80115d6401",
                   "884cba01-9d8a-4beb-816f-c74d85fb7227"]
-        login_id = self.ag_data.addAGLogin('notis2r4ndb@sdjlhsd.dkzdj',
-                                           'kurtasjuergen',
-                                           'skdgaasisdf', '', '', '', '')
+        login_id = self.ag_data.addAGLogin('t1@sdjlhsd.dkzdj',
+                                           'kurtjuergen_t1',
+                                           '9500 Gilman Drive',
+                                           'San Diego', 'CA', '', 'USA')
         logins.append(login_id)
         obs = geocode_aglogins(logins, force=True)
-        exp = {'successful': 4, 'provided': 5, 'cannot_geocode': 1,
+        exp = {'successful': 1, 'provided': 5, 'cannot_geocode': 4,
                'checked': 5}
         self.assertEqual(obs, exp)
 
@@ -43,9 +36,10 @@ class TestGeocoder(TestCase):
                   "0023cc03-3332-eec6-e050-8a800c5d3c04",
                   "d8592c74-967c-2135-e040-8a80115d6401",
                   "15370442-313f-452f-bf5b-cd155e3deefe"]
-        login_id = self.ag_data.addAGLogin('notinasdb@sdjlhsd.dkzdj',
-                                           'kurtjsuergen',
-                                           'skdgsssisdf', '', '', '', '')
+        login_id = self.ag_data.addAGLogin('t2@sdjlhsd.dkzdj',
+                                           'kurtjuergen_t2',
+                                           '9500 Gilman Drive',
+                                           'San Diego', 'CA', '', 'USA')
         logins.append(login_id)
         obs = geocode_aglogins(logins)
         exp = {'successful': 1, 'provided': 6, 'cannot_geocode': 3,
@@ -57,7 +51,7 @@ class TestGeocoder(TestCase):
         # check that a fantasy address cannot be geocoded.
         # Therefore we first need to insert a new ag_login_id
         login_id = self.ag_data.addAGLogin('notindb@sdjlhsd.dkzdj',
-                                           'kurtjuergen',
+                                           'kurtjuergen_t4',
                                            'skdgsisdf', '', '', '', '')
         old_loc = self.ag_data.ut_get_location(login_id)
         self.assertEqual(old_loc, {'latitude': None,
@@ -81,7 +75,10 @@ class TestGeocoder(TestCase):
     @rollback
     def test_update(self):
         # an ag_login_id without a location gets a new location assigned
-        login_id = "000c8c03-54f4-4b21-b1fd-871f745220f9"
+        login_id = self.ag_data.addAGLogin('t3@sdjlhsd.dkzdj',
+                                           'kurtjuergen_t3',
+                                           '9500 Gilman Drive',
+                                           'San Diego', 'CA', '', 'USA')
         old_loc = self.ag_data.ut_get_location(login_id)
         self.assertEqual(old_loc, {'latitude': None,
                                    'cannot_geocode': None,
@@ -92,20 +89,20 @@ class TestGeocoder(TestCase):
                'checked': 1}
         self.assertItemsEqual(obs, exp)
         new_loc = self.ag_data.ut_get_location(login_id)
-        self.assertEqual(new_loc, {'latitude': 51.6442244,
+        self.assertEqual(new_loc, {'latitude': 32.8747486,
                                    'cannot_geocode': None,
-                                   'elevation': 73.0654067993164,
-                                   'longitude': -0.1730126})
+                                   'elevation': 126.171813964844,
+                                   'longitude': -117.2420258})
 
     @rollback
     def test_noupdate(self):
         # an ag_login_id already with location does not get updated
         login_id = "000fc4cd-8fa4-db8b-e050-8a800c5d02b5"
         old_loc = self.ag_data.ut_get_location(login_id)
-        self.assertEqual(old_loc, {'latitude': 30.2118141,
+        self.assertEqual(old_loc, {'latitude': 22.28661,
                                    'cannot_geocode': None,
-                                   'elevation': 288.64208984375,
-                                   'longitude': -97.8909407})
+                                   'elevation': 232.096176147461,
+                                   'longitude': -80.73577})
         obs = geocode_aglogins(login_id)
         exp = {'successful': 0, 'provided': 1, 'cannot_geocode': 0,
                'checked': 0}
