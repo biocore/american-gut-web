@@ -56,19 +56,39 @@ class TestAGDataAccess(TestCase):
         # make sure the ag_login_id is a UUID4 string
         ag_login_id = self.ag_data.addAGLogin(
             new_email, 'TESTDUDE', '123 fake test street', 'testcity',
-            'teststate', '1L2 2G3', 'United Kingdom')
+            'teststate', '1L2 2G3', 'United Kingdom', geocode=False)
         as_uuid = UUID(ag_login_id)
         self.assertTrue(as_uuid.version, 4)
 
         # test existing user
         ag_login_id = self.ag_data.addAGLogin(
             'TEST@EMAIL.com', 'TESTOTHER', '123 fake test street', 'testcity',
-            'teststate', '1L2 2G3', 'United Kingdom')
+            'teststate', '1L2 2G3', 'United Kingdom', geocode=False)
 
         obs = self.ag_data.addAGLogin(
             'test@EMAIL.com', 'TESTDUDE', '123 fake test street', 'testcity',
-            'teststate', '1L2 2G3', 'United Kingdom')
+            'teststate', '1L2 2G3', 'United Kingdom', geocode=False)
         self.assertEqual(ag_login_id, obs)
+
+    @rollback
+    def test_addAGLogin_geocode(self):
+        # insert a new user and automatically geocode
+        ag_login = self.ag_data.addAGLogin(
+            'testgeo@geoEMAIL.com', 'TESTDUDE', '9500 Gilman Drive',
+            'San Diego', 'CA', '', '', geocode=True)
+        obs = self.ag_data.ut_get_location(ag_login)
+        exp = {'latitude': 32.8747486, 'cannot_geocode': None,
+               'elevation': 126.171813964844, 'longitude': -117.2420258}
+        self.assertEqual(obs, exp)
+
+        # insert a new user, which cannot be located, and automatically geocode
+        ag_login2 = self.ag_data.addAGLogin(
+            'testgeo2@geoEMAIL.com', 'TESTDUDE2', '',
+            '', '', '', '', geocode=True)
+        obs = self.ag_data.ut_get_location(ag_login2)
+        exp = {'latitude': None, 'cannot_geocode': 'Y',
+               'elevation': None, 'longitude': None}
+        self.assertEqual(obs, exp)
 
     def test_getAGBarcodeDetails_bad_barcode(self):
         # test non-existant barcode
