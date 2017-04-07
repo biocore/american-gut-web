@@ -22,7 +22,8 @@ class TestGeocoder(TestCase):
         login_id = self.ag_data.addAGLogin('t1@sdjlhsd.dkzdj',
                                            'kurtjuergen_t1',
                                            '9500 Gilman Drive',
-                                           'San Diego', 'CA', '', 'USA')
+                                           'San Diego', 'CA', '', 'USA',
+                                           geocode=False)
         logins.append(login_id)
         obs = geocode_aglogins(logins, force=True)
         exp = {'successful': 1, 'provided': 5, 'cannot_geocode': 4,
@@ -39,7 +40,8 @@ class TestGeocoder(TestCase):
         login_id = self.ag_data.addAGLogin('t2@sdjlhsd.dkzdj',
                                            'kurtjuergen_t2',
                                            '9500 Gilman Drive',
-                                           'San Diego', 'CA', '', 'USA')
+                                           'San Diego', 'CA', '', 'USA',
+                                           geocode=False)
         logins.append(login_id)
         obs = geocode_aglogins(logins)
         exp = {'successful': 1, 'provided': 6, 'cannot_geocode': 3,
@@ -52,7 +54,8 @@ class TestGeocoder(TestCase):
         # Therefore we first need to insert a new ag_login_id
         login_id = self.ag_data.addAGLogin('notindb@sdjlhsd.dkzdj',
                                            'kurtjuergen_t4',
-                                           'skdgsisdf', '', '', '', '')
+                                           'skdgsisdf', '', '', '', '',
+                                           geocode=False)
         old_loc = self.ag_data.ut_get_location(login_id)
         self.assertEqual(old_loc, {'latitude': None,
                                    'cannot_geocode': None,
@@ -78,7 +81,8 @@ class TestGeocoder(TestCase):
         login_id = self.ag_data.addAGLogin('t3@sdjlhsd.dkzdj',
                                            'kurtjuergen_t3',
                                            '9500 Gilman Drive',
-                                           'San Diego', 'CA', '', 'USA')
+                                           'San Diego', 'CA', '', 'USA',
+                                           geocode=False)
         old_loc = self.ag_data.ut_get_location(login_id)
         self.assertEqual(old_loc, {'latitude': None,
                                    'cannot_geocode': None,
