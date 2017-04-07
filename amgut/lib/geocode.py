@@ -1,6 +1,6 @@
-# from amgut.lib.data_access.ag_data_access import AGDataAccess
 import geocoder
 import requests
+from time import sleep
 
 from amgut.lib.data_access.sql_connection import TRN
 
@@ -9,7 +9,7 @@ class GoogleAPILimitExceeded(Exception):
     pass
 
 
-def geocode_aglogins(ag_login_ids, force=False):
+def geocode_aglogins(ag_login_ids, force=False, sleepduration=0.1):
     """ Retriev locations for one or more ag_login_ids and stores results in DB
 
     Parameters
@@ -21,6 +21,11 @@ def geocode_aglogins(ag_login_ids, force=False):
         If True, locations are retrieved from the geoservice even if we already
         have them in our DB. Useful, if locations needs to be updated.
         Default = False.
+    sleepduration : float
+        Number of seconds to sleep before returning. This is necessary to avoid
+        excessive google API calls within a too short period of time, which
+        would be blocked by google.
+        Default: 0.1
 
     Returns
     -------
@@ -69,38 +74,47 @@ def geocode_aglogins(ag_login_ids, force=False):
     with TRN:
         TRN.add(sql, [tuple(ag_login_ids)])
 
-        for address in TRN.execute_fetchindex():
-            lat, lng, elev, cannot_geocode = None, None, None, None
-            # lookup lat,lng by address
-            address_str = " ".join([x for x in address[1:]
-                                    if x is not None])
-            g = geocoder.google(address_str)
-            # only continue if we got a valid result
-            if g.error is None:
-                lat, lng = g.latlng
-                # lookup elevation in a second call
-                e = geocoder.elevation(g.latlng)
+        # FROM:
+        # In case you have several addresses to encode, to use persistent HTTP
+        # connection as recommended by the request-library http://docs.python-
+        # requests.org/en/master/user/advanced/#session-objects you might use
+        # the following:
+        with requests.Session() as session:
+            for address in TRN.execute_fetchindex():
+                lat, lng, elev, cannot_geocode = None, None, None, None
+                # lookup lat,lng by address
+                address_str = " ".join([x for x in address[1:]
+                                        if x is not None])
+                g = geocoder.google(address_str, session=session)
                 # only continue if we got a valid result
-                if e.error is None:
-                    elev = e.elevation
+                if g.error is None:
+                    lat, lng = g.latlng
+                    # lookup elevation in a second call
+                    e = geocoder.elevation(g.latlng, session=session)
+                    # only continue if we got a valid result
+                    if e.error is None:
+                        elev = e.elevation
+                    elif g.error == "OVER_QUERY_LIMIT":
+                        raise GoogleAPILimitExceeded()
+                    else:
+                        cannot_geocode = 'Y'
                 elif g.error == "OVER_QUERY_LIMIT":
                     raise GoogleAPILimitExceeded()
                 else:
                     cannot_geocode = 'Y'
-            elif g.error == "OVER_QUERY_LIMIT":
-                raise GoogleAPILimitExceeded()
-            else:
-                cannot_geocode = 'Y'
 
-            if cannot_geocode == 'Y':
-                stats['cannot_geocode'] += 1
-            else:
-                stats['successful'] += 1
-            stats['checked'] += 1
+                if cannot_geocode == 'Y':
+                    stats['cannot_geocode'] += 1
+                else:
+                    stats['successful'] += 1
+                stats['checked'] += 1
 
-            # update the database with results we just obtained
-            TRN.add(sql_update,
-                    [lat, lng, elev, cannot_geocode, address[0]])
+                # update the database with results we just obtained
+                TRN.add(sql_update,
+                        [lat, lng, elev, cannot_geocode, address[0]])
+
+                # currently necessary to avoid exceeding max calls per second
+                sleep(sleepduration)
         TRN.execute()
 
     return stats
