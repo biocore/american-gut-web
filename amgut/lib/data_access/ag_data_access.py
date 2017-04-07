@@ -19,6 +19,7 @@ import psycopg2
 from passlib.hash import bcrypt
 
 from amgut.lib.data_access.sql_connection import TRN
+from amgut.lib.geocode import geocode_aglogins
 
 
 # character sets for kit id, passwords and verification codes
@@ -120,7 +121,8 @@ class AGDataAccess(object):
                 value = value[0][0]
             return None if value == [] else value
 
-    def addAGLogin(self, email, name, address, city, state, zip_, country):
+    def addAGLogin(self, email, name, address, city, state, zip_, country,
+                   geocode=True):
         """Adds a new login or returns the login_id if email already exists
 
         Parameters
@@ -139,6 +141,10 @@ class AGDataAccess(object):
             Postal code to register for user
         country : str
             Country to register for user
+        geocode : bool
+            Use address to obtain lat,lng,elev via geocoding API.
+            Switch off useful for unit testing.
+            Default: True
 
         Returns
         -------
@@ -157,6 +163,9 @@ class AGDataAccess(object):
                 TRN.add(sql, [clean_email, name, address, city, state, zip_,
                               country])
                 ag_login_id = TRN.execute_fetchlast()
+                # geocode new address to retrieve lat,lng and elevation
+                if geocode:
+                    geocode_aglogins(ag_login_id)
             return ag_login_id
 
     def getAGBarcodeDetails(self, barcode):
