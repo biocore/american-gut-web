@@ -13,6 +13,15 @@ CREATE TABLE pm.adapter_aliquot (
     CONSTRAINT pk_adapter_aliquot PRIMARY KEY ( adapter_aliquot_id )
  ) ;
 
+ CREATE TABLE pm.index_aliquot (
+ 	index_aliquot_id     bigserial  NOT NULL,
+ 	name                 varchar  NOT NULL,
+ 	notes                varchar  ,
+ 	limit_freeze_thaw_cycles bigint  NOT NULL,
+ 	CONSTRAINT pk_index_aliquot PRIMARY KEY ( index_aliquot_id ),
+ 	CONSTRAINT idx_index_aliquot UNIQUE ( name )
+  ) ;
+
  CREATE TABLE pm.echo (
      echo_id              bigserial  NOT NULL,
      name                 varchar  NOT NULL,
@@ -275,14 +284,14 @@ CREATE TABLE pm.target_gene_plate (
     CONSTRAINT fk_target_gene_plate_water_lot FOREIGN KEY ( water_lot_id ) REFERENCES pm.water_lot( water_lot_id ),
     CONSTRAINT fk_target_gene_plate_robot FOREIGN KEY ( processing_robot_id ) REFERENCES pm.processing_robot( processing_robot_id )
  ) ;
-CREATE INDEX idx_target_gene_plate ON pm.target_gene_plate ( email ) ;
-CREATE INDEX idx_target_gene_plate_0 ON pm.target_gene_plate ( dna_plate_id ) ;
-CREATE INDEX idx_target_gene_plate_1 ON pm.target_gene_plate ( barcode_sequence_plate_id ) ;
-CREATE INDEX idx_target_gene_plate_2 ON pm.target_gene_plate ( master_mix_lot_id ) ;
-CREATE INDEX idx_target_gene_plate_3 ON pm.target_gene_plate ( tm300_8_tool_id ) ;
-CREATE INDEX idx_target_gene_plate_4 ON pm.target_gene_plate ( tm50_8_tool_id ) ;
-CREATE INDEX idx_target_gene_plate_5 ON pm.target_gene_plate ( water_lot_id ) ;
-CREATE INDEX idx_target_gene_plate_6 ON pm.target_gene_plate ( processing_robot_id ) ;
+CREATE INDEX idx_target_gene_plate_0 ON pm.target_gene_plate ( email ) ;
+CREATE INDEX idx_target_gene_plate_1 ON pm.target_gene_plate ( dna_plate_id ) ;
+CREATE INDEX idx_target_gene_plate_2 ON pm.target_gene_plate ( barcode_sequence_plate_id ) ;
+CREATE INDEX idx_target_gene_plate_3 ON pm.target_gene_plate ( master_mix_lot_id ) ;
+CREATE INDEX idx_target_gene_plate_4 ON pm.target_gene_plate ( tm300_8_tool_id ) ;
+CREATE INDEX idx_target_gene_plate_5 ON pm.target_gene_plate ( tm50_8_tool_id ) ;
+CREATE INDEX idx_target_gene_plate_6 ON pm.target_gene_plate ( water_lot_id ) ;
+CREATE INDEX idx_target_gene_plate_7 ON pm.target_gene_plate ( processing_robot_id ) ;
 
 CREATE TABLE pm.target_gene_pool (
     target_gene_pool_id  bigserial  NOT NULL,
@@ -313,18 +322,18 @@ CREATE TABLE pm.whole_genome_plate (
     dna_quantification_volume   real  ,
     plate_reader_id             bigint  ,
     CONSTRAINT pk_whole_genome_plate PRIMARY KEY ( whole_genome_plate_id ),
-    CONSTRAINT idx_whole_genome_plate UNIQUE ( name )
+    CONSTRAINT idx_whole_genome_plate UNIQUE ( name ),
     CONSTRAINT fk_whole_genome_plate FOREIGN KEY ( email ) REFERENCES ag.labadmin_users( email ),
     CONSTRAINT fk_whole_genome_plate_prc_robot FOREIGN KEY ( processing_robot_id ) REFERENCES pm.processing_robot( processing_robot_id ),
     CONSTRAINT fk_whole_genome_plate_type FOREIGN KEY ( plate_type_id ) REFERENCES pm.plate_type( plate_type_id ),
     CONSTRAINT fk_whole_genome_plate_email FOREIGN KEY ( dna_quantification_email ) REFERENCES ag.labadmin_users( email ),
     CONSTRAINT fk_whole_genome_plate_reader FOREIGN KEY ( plate_reader_id ) REFERENCES pm.plate_reader( plate_reader_id )
  ) ;
-CREATE INDEX idx_whole_genome_plate ON pm.whole_genome_plate ( email ) ;
-CREATE INDEX idx_whole_genome_plate_0 ON pm.whole_genome_plate ( processing_robot_id ) ;
-CREATE INDEX idx_whole_genome_plate_1 ON pm.whole_genome_plate ( plate_type_id ) ;
-CREATE INDEX idx_whole_genome_plate_2 ON pm.whole_genome_plate ( dna_quantification_email ) ;
-CREATE INDEX idx_whole_genome_plate_3 ON pm.whole_genome_plate ( plate_reader_id ) ;
+CREATE INDEX idx_whole_genome_plate_0 ON pm.whole_genome_plate ( email ) ;
+CREATE INDEX idx_whole_genome_plate_1 ON pm.whole_genome_plate ( processing_robot_id ) ;
+CREATE INDEX idx_whole_genome_plate_2 ON pm.whole_genome_plate ( plate_type_id ) ;
+CREATE INDEX idx_whole_genome_plate_3 ON pm.whole_genome_plate ( dna_quantification_email ) ;
+CREATE INDEX idx_whole_genome_plate_4 ON pm.whole_genome_plate ( plate_reader_id ) ;
 
 CREATE TABLE pm.condensed_plates (
     whole_genome_plate_id  bigint  NOT NULL,
@@ -363,7 +372,7 @@ CREATE TABLE pm.wgs_library_prep_kit (
      wgs_normalized_plate_id  bigserial  NOT NULL,
      whole_genome_plate_id    bigint  NOT NULL,
      created_on               timestamp  NOT NULL,
-     email                    varchar  NOT NULL,
+     email                    varchar  NOT NULL,
      echo_id                  bigint  NOT NULL,
      lp_date                  timestamp  ,
      lp_email                 varchar  ,
@@ -417,26 +426,6 @@ CREATE TABLE pm.wgs_library_prep_kit (
   ) ;
  CREATE INDEX idx_i7_index ON pm.i7_index ( index_aliquot_id ) ;
 
- CREATE TABLE pm.i5_index (
-     i5_index_id          bigserial  NOT NULL,
-     index_aliquot_id     bigint  NOT NULL,
-     name                 varchar  NOT NULL,
-     row                  integer  NOT NULL,
-     col                  integer  NOT NULL,
-     CONSTRAINT pk_i5_index PRIMARY KEY ( i5_index_id )
-  ) ;
- CREATE INDEX idx_i5_index ON pm.i5_index ( index_aliquot_id ) ;
-
- CREATE TABLE pm.i7_index (
-     i7_index_id          bigserial  NOT NULL,
-     index_aliquot_id     bigint  NOT NULL,
-     name                 varchar  NOT NULL,
-     row                  integer  NOT NULL,
-     col                  integer  NOT NULL,
-     CONSTRAINT pk_i7_index PRIMARY KEY ( i7_index_id )
-  ) ;
- CREATE INDEX idx_i7_index ON pm.i7_index ( index_aliquot_id ) ;
-
  CREATE TABLE pm.wgs_normalized_plate_well_values (
      wgs_normalized_plate_id bigint  NOT NULL,
      row                  integer  NOT NULL,
@@ -470,7 +459,7 @@ CREATE TABLE pm.wgs_library_prep_kit (
      notes                varchar ,
      CONSTRAINT fk_pool_run_wgs_pool FOREIGN KEY ( wgs_pool_id ) REFERENCES pm.wgs_pool( wgs_pool_id ),
      CONSTRAINT fk_pool_run_target_gene_pool_tg FOREIGN KEY ( target_gene_pool_id ) REFERENCES pm.target_gene_pool( target_gene_pool_id ),
-     CONSTRAINT fk_pool_run_run FOREIGN KEY ( run_id ) REFERENCES pm.run( run_id ),
+     CONSTRAINT fk_pool_run_run FOREIGN KEY ( run_id ) REFERENCES pm.run( run_id )
   ) ;
  CREATE INDEX idx_pool_run ON pm.pool_run ( wgs_pool_id ) ;
  CREATE INDEX idx_pool_run_0 ON pm.pool_run ( target_gene_pool_id ) ;
@@ -482,12 +471,12 @@ CREATE TABLE pm.wgs_library_prep_kit (
      wgs_pool_id          bigint  NOT NULL,
      wgs_normalized_plate_id bigint  NOT NULL,
      CONSTRAINT pk_wgs_pool_plate PRIMARY KEY ( wgs_pool_plate_id ),
-     CONSTRAINT idx_wgs_pool_plate_0 UNIQUE ( wgs_pool_id, wgs_normalized_plate_id ),
+     CONSTRAINT idx_wgs_pool_plate UNIQUE ( wgs_pool_id, wgs_normalized_plate_id ),
      CONSTRAINT fk_wgs_pool_plate_wgs_pool FOREIGN KEY ( wgs_pool_id ) REFERENCES pm.wgs_pool( wgs_pool_id ),
      CONSTRAINT fk_wgs_pool_plate FOREIGN KEY ( wgs_normalized_plate_id ) REFERENCES pm.wgs_normalized_plate( wgs_normalized_plate_id )
   ) ;
- CREATE INDEX idx_wgs_pool_plate ON pm.wgs_pool_plate ( wgs_pool_id ) ;
- CREATE INDEX idx_wgs_pool_plate_0 ON pm.wgs_pool_plate ( wgs_normalized_plate_id ) ;
+ CREATE INDEX idx_wgs_pool_plate_0 ON pm.wgs_pool_plate ( wgs_pool_id ) ;
+ CREATE INDEX idx_wgs_pool_plate_1 ON pm.wgs_pool_plate ( wgs_normalized_plate_id ) ;
 
  CREATE TABLE pm.wgs_pool_plate_well_values (
      wgs_pool_plate_id    bigint  NOT NULL,
