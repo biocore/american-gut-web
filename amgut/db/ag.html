@@ -537,7 +537,7 @@ table {
 	target_gene_plate references barcode_sequence_plate ( barcode_sequence_plate_id )</title>
 </path>
 <text x='528' y='1015' transform='rotate(0 528,1015)' title='Foreign Key fk_target_gene_barcode
-	target_gene_plate references barcode_sequence_plate ( barcode_sequence_plate_id )' style='fill:#a1a0a0;'>barcode_sequence_plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 675 1035 L 622,1035 Q 615,1035 615,1027 L 615,937 Q 615,930 607,930 L 600,930' >
+	target_gene_plate references barcode_sequence_plate ( barcode_sequence_plate_id )' style='fill:#a1a0a0;'>barcode_sequence_plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 675 1035 L 607,1035 Q 600,1035 600,1027 L 600,967 Q 600,960 592,960 L 585,960' >
 	<title>Foreign Key fk_target_gene_master_mix
 	target_gene_plate references master_mix_lot ( master_mix_lot_id )</title>
 </path>
@@ -562,12 +562,7 @@ table {
 	target_gene_plate references processing_robot ( processing_robot_id )</title>
 </path>
 <text x='565' y='1090' transform='rotate(0 565,1090)' title='Foreign Key fk_target_gene_plate_robot
-	target_gene_plate references processing_robot ( processing_robot_id )' style='fill:#a1a0a0;'>processing_robot_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 630 825 L 675,825' >
-	<title>Foreign Key fk_template_barcode_seq_template_id
-	barcode_sequence_plate_layout references barcode_sequence_plate ( barcode_sequence_plate_id )</title>
-</path>
-<text x='637' y='820' transform='rotate(0 637,820)' title='Foreign Key fk_template_barcode_seq_template_id
-	barcode_sequence_plate_layout references barcode_sequence_plate ( barcode_sequence_plate_id )' style='fill:#a1a0a0;'>barcode_sequence_plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 1320 705 L 1282,705 Q 1275,705 1275,712 L 1275,1312 Q 1275,1320 1282,1320 L 1290,1320' >
+	target_gene_plate references processing_robot ( processing_robot_id )' style='fill:#a1a0a0;'>processing_robot_id</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 1320 705 L 1282,705 Q 1275,705 1275,712 L 1275,1312 Q 1275,1320 1282,1320 L 1290,1320' >
 	<title>Foreign Key fk_sample_plate_labadmin_users
 	sample_plate references labadmin_users ( email )</title>
 </path>
@@ -812,7 +807,12 @@ table {
 	run references sequencer ( sequencer_id )</title>
 </path>
 <text x='1340' y='1690' transform='rotate(0 1340,1690)' title='Foreign Key fk_run_sequencer
-	run references sequencer ( sequencer_id )' style='fill:#a1a0a0;'>sequencer_id</text><!-- ============= Table 'ag_survey_answer' ============= -->
+	run references sequencer ( sequencer_id )' style='fill:#a1a0a0;'>sequencer_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 630 825 L 675,825' >
+	<title>Foreign Key fk_template_barcode_seq_template_id
+	barcode_sequence_plate_layout references barcode_sequence_plate ( barcode_sequence_plate_id )</title>
+</path>
+<text x='637' y='820' transform='rotate(0 637,820)' title='Foreign Key fk_template_barcode_seq_template_id
+	barcode_sequence_plate_layout references barcode_sequence_plate ( barcode_sequence_plate_id )' style='fill:#a1a0a0;'>barcode_sequence_plate_id</text><!-- ============= Table 'ag_survey_answer' ============= -->
 <rect class='table' x='2340' y='968' width='150' height='120' rx='7' ry='7' />
 <path d='M 2340.50 994.50 L 2340.50 975.50 Q 2340.50 968.50 2347.50 968.50 L 2482.50 968.50 Q 2489.50 968.50 2489.50 975.50 L 2489.50 994.50 L2340.50 994.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
 <a xlink:href='#ag_survey_answer'><text x='2365' y='982' class='tableTitle'>ag_survey_answer</text><title>Table ag.ag_survey_answer</title></a>
@@ -1576,29 +1576,6 @@ Referred by target_gene_plate ( barcode_sequence_plate_id ) </title></a>
 <a xlink:href='#target_gene_plate.processing_robot_id'><text x='708' y='1102'>processing_robot_id</text><title>processing_robot_id bigint not null</title></a>
 <a xlink:href='#target_gene_plate.processing_robot_id'><use id='fk' x='858' y='1091' xlink:href='#fk'/><title>References processing_robot ( processing_robot_id ) </title></a>
 
-<!-- ============= Table 'barcode_sequence_plate_layout' ============= -->
-<rect class='table' x='435' y='788' width='195' height='105' rx='7' ry='7' />
-<path d='M 435.50 814.50 L 435.50 795.50 Q 435.50 788.50 442.50 788.50 L 622.50 788.50 Q 629.50 788.50 629.50 795.50 L 629.50 814.50 L435.50 814.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
-<a xlink:href='#barcode_sequence_plate_layout'><text x='446' y='802' class='tableTitle'>barcode_sequence_plate_layout</text><title>Table pm.barcode_sequence_plate_layout</title></a>
-  <use id='nn' x='437' y='822' xlink:href='#nn'/><a xlink:href='#barcode_sequence_plate_layout.barcode_sequence_plate_id'><use id='idx' x='437' y='821' xlink:href='#idx'/><title>Index  ( barcode_sequence_plate_id ) </title></a>
-<a xlink:href='#barcode_sequence_plate_layout.barcode_sequence_plate_id'><text x='453' y='832'>barcode_sequence_plate_id</text><title>barcode_sequence_plate_id bigint not null</title></a>
-<a xlink:href='#barcode_sequence_plate_layout.barcode_sequence_plate_id'><use id='fk' x='618' y='821' xlink:href='#fk'/><title>References barcode_sequence_plate ( barcode_sequence_plate_id ) </title></a>
-  <use id='nn' x='437' y='837' xlink:href='#nn'/><a xlink:href='#barcode_sequence_plate_layout.col'><text x='453' y='847'>col</text><title>col smallint not null</title></a>
-  <use id='nn' x='437' y='852' xlink:href='#nn'/><a xlink:href='#barcode_sequence_plate_layout.row'><text x='453' y='862'>row</text><title>row smallint not null</title></a>
-  <a xlink:href='#barcode_sequence_plate_layout.barcode_sequence'><text x='453' y='877'>barcode_sequence</text><title>barcode_sequence varchar</title></a>
-
-<!-- ============= Table 'master_mix_lot' ============= -->
-<rect class='table' x='465' y='893' width='135' height='90' rx='7' ry='7' />
-<path d='M 465.50 919.50 L 465.50 900.50 Q 465.50 893.50 472.50 893.50 L 592.50 893.50 Q 599.50 893.50 599.50 900.50 L 599.50 919.50 L465.50 919.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
-<a xlink:href='#master_mix_lot'><text x='491' y='907' class='tableTitle'>master_mix_lot</text><title>Table pm.master_mix_lot</title></a>
-  <use id='nn' x='467' y='927' xlink:href='#nn'/><a xlink:href='#master_mix_lot.master_mix_lot_id'><use id='pk' x='467' y='926' xlink:href='#pk'/><title>Primary Key  ( master_mix_lot_id ) </title></a>
-<a xlink:href='#master_mix_lot.master_mix_lot_id'><text x='483' y='937'>master_mix_lot_id</text><title>master_mix_lot_id bigserial not null</title></a>
-<a xlink:href='#master_mix_lot.master_mix_lot_id'><use id='ref' x='588' y='926' xlink:href='#ref'/><title>Referred by target_gene_plate ( master_mix_lot_id ) 
-Referred by target_gene_plate ( master_mix_lot_id ) </title></a>
-  <use id='nn' x='467' y='942' xlink:href='#nn'/><a xlink:href='#master_mix_lot.name'><use id='unq' x='467' y='941' xlink:href='#unq'/><title>Unique Index  ( name ) </title></a>
-<a xlink:href='#master_mix_lot.name'><text x='483' y='952'>name</text><title>name varchar not null</title></a>
-  <a xlink:href='#master_mix_lot.notes'><text x='483' y='967'>notes</text><title>notes varchar</title></a>
-
 <!-- ============= Table 'tm300_8_tool' ============= -->
 <rect class='table' x='270' y='818' width='120' height='90' rx='7' ry='7' />
 <path d='M 270.50 844.50 L 270.50 825.50 Q 270.50 818.50 277.50 818.50 L 382.50 818.50 Q 389.50 818.50 389.50 825.50 L 389.50 844.50 L270.50 844.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
@@ -2190,6 +2167,30 @@ Referred by run ( sequencer_id ) </title></a>
   <use id='nn' x='1187' y='1752' xlink:href='#nn'/><a xlink:href='#sequencer.platform'><text x='1203' y='1762'>platform</text><title>platform varchar not null</title></a>
   <use id='nn' x='1187' y='1767' xlink:href='#nn'/><a xlink:href='#sequencer.instrument_model'><text x='1203' y='1777'>instrument_model</text><title>instrument_model varchar not null</title></a>
   <use id='nn' x='1187' y='1782' xlink:href='#nn'/><a xlink:href='#sequencer.name'><text x='1203' y='1792'>name</text><title>name varchar not null</title></a>
+
+<!-- ============= Table 'barcode_sequence_plate_layout' ============= -->
+<rect class='table' x='435' y='788' width='195' height='120' rx='7' ry='7' />
+<path d='M 435.50 814.50 L 435.50 795.50 Q 435.50 788.50 442.50 788.50 L 622.50 788.50 Q 629.50 788.50 629.50 795.50 L 629.50 814.50 L435.50 814.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
+<a xlink:href='#barcode_sequence_plate_layout'><text x='446' y='802' class='tableTitle'>barcode_sequence_plate_layout</text><title>Table pm.barcode_sequence_plate_layout</title></a>
+  <use id='nn' x='437' y='822' xlink:href='#nn'/><a xlink:href='#barcode_sequence_plate_layout.barcode_sequence_plate_id'><use id='idx' x='437' y='821' xlink:href='#idx'/><title>Index  ( barcode_sequence_plate_id ) </title></a>
+<a xlink:href='#barcode_sequence_plate_layout.barcode_sequence_plate_id'><text x='453' y='832'>barcode_sequence_plate_id</text><title>barcode_sequence_plate_id bigint not null</title></a>
+<a xlink:href='#barcode_sequence_plate_layout.barcode_sequence_plate_id'><use id='fk' x='618' y='821' xlink:href='#fk'/><title>References barcode_sequence_plate ( barcode_sequence_plate_id ) </title></a>
+  <use id='nn' x='437' y='837' xlink:href='#nn'/><a xlink:href='#barcode_sequence_plate_layout.col'><text x='453' y='847'>col</text><title>col smallint not null</title></a>
+  <use id='nn' x='437' y='852' xlink:href='#nn'/><a xlink:href='#barcode_sequence_plate_layout.row'><text x='453' y='862'>row</text><title>row smallint not null</title></a>
+  <use id='nn' x='437' y='867' xlink:href='#nn'/><a xlink:href='#barcode_sequence_plate_layout.barcode_sequence'><text x='453' y='877'>barcode_sequence</text><title>barcode_sequence varchar not null</title></a>
+  <use id='nn' x='437' y='882' xlink:href='#nn'/><a xlink:href='#barcode_sequence_plate_layout.linker_primer_sequence'><text x='453' y='892'>linker_primer_sequence</text><title>linker_primer_sequence varchar not null</title></a>
+
+<!-- ============= Table 'master_mix_lot' ============= -->
+<rect class='table' x='450' y='923' width='135' height='90' rx='7' ry='7' />
+<path d='M 450.50 949.50 L 450.50 930.50 Q 450.50 923.50 457.50 923.50 L 577.50 923.50 Q 584.50 923.50 584.50 930.50 L 584.50 949.50 L450.50 949.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
+<a xlink:href='#master_mix_lot'><text x='476' y='937' class='tableTitle'>master_mix_lot</text><title>Table pm.master_mix_lot</title></a>
+  <use id='nn' x='452' y='957' xlink:href='#nn'/><a xlink:href='#master_mix_lot.master_mix_lot_id'><use id='pk' x='452' y='956' xlink:href='#pk'/><title>Primary Key  ( master_mix_lot_id ) </title></a>
+<a xlink:href='#master_mix_lot.master_mix_lot_id'><text x='468' y='967'>master_mix_lot_id</text><title>master_mix_lot_id bigserial not null</title></a>
+<a xlink:href='#master_mix_lot.master_mix_lot_id'><use id='ref' x='573' y='956' xlink:href='#ref'/><title>Referred by target_gene_plate ( master_mix_lot_id ) 
+Referred by target_gene_plate ( master_mix_lot_id ) </title></a>
+  <use id='nn' x='452' y='972' xlink:href='#nn'/><a xlink:href='#master_mix_lot.name'><use id='unq' x='452' y='971' xlink:href='#unq'/><title>Unique Index  ( name ) </title></a>
+<a xlink:href='#master_mix_lot.name'><text x='468' y='982'>name</text><title>name varchar not null</title></a>
+  <a xlink:href='#master_mix_lot.notes'><text x='468' y='997'>notes</text><title>notes varchar</title></a>
 
 </g></svg>
 
@@ -4868,79 +4869,6 @@ Referred by run ( sequencer_id ) </title></a>
 <br/><br/>
 <table class='bordered'>
 <thead>
-<tr><th colspan='3'><a name='barcode_sequence_plate_layout'>Table barcode_sequence_plate_layout</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td><a name='barcode_sequence_plate_layout.barcode_sequence_plate_id'>barcode&#095;sequence&#095;plate&#095;id</a></td>
-		<td> bigint  NOT NULL  </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='barcode_sequence_plate_layout.col'>col</a></td>
-		<td> smallint  NOT NULL  </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='barcode_sequence_plate_layout.row'>row</a></td>
-		<td> smallint  NOT NULL  </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='barcode_sequence_plate_layout.barcode_sequence'>barcode&#095;sequence</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='3'><b>Indexes</b></th></tr>
-	<tr>		<td>idx&#095;barcode&#095;sequence&#095;plate&#095;layout&#095;barcode&#095;sequence&#095;plate&#095;id </td>
-		<td> ON barcode&#095;sequence&#095;plate&#095;id</td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='3'><b>Foreign Keys</b></th></tr>
-	<tr>
-		<td>fk_template_barcode_seq_template_id</td>
-		<td > ( barcode&#095;sequence&#095;plate&#095;id ) ref <a href='#barcode&#095;sequence&#095;plate'>barcode&#095;sequence&#095;plate</a> (barcode&#095;sequence&#095;plate&#095;id) </td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table class='bordered'>
-<thead>
-<tr><th colspan='3'><a name='master_mix_lot'>Table master_mix_lot</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td><a name='master_mix_lot.master_mix_lot_id'>master&#095;mix&#095;lot&#095;id</a></td>
-		<td> bigserial  NOT NULL  </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='master_mix_lot.name'>name</a></td>
-		<td> varchar  NOT NULL  </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td><a name='master_mix_lot.notes'>notes</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='3'><b>Indexes</b></th></tr>
-	<tr>		<td>pk&#095;master&#095;mix&#095;lot primary key</td>
-		<td> ON master&#095;mix&#095;lot&#095;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>uq&#095;master&#095;mix&#095;lot&#095;name unique</td>
-		<td> ON name</td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table class='bordered'>
-<thead>
 <tr><th colspan='3'><a name='tm300_8_tool'>Table tm300_8_tool</a></th></tr>
 </thead>
 <tbody>
@@ -6856,6 +6784,84 @@ Referred by run ( sequencer_id ) </title></a>
 <tr><th colspan='3'><b>Indexes</b></th></tr>
 	<tr>		<td>pk&#095;sequencer primary key</td>
 		<td> ON sequencer&#095;id</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='3'><a name='barcode_sequence_plate_layout'>Table barcode_sequence_plate_layout</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='barcode_sequence_plate_layout.barcode_sequence_plate_id'>barcode&#095;sequence&#095;plate&#095;id</a></td>
+		<td> bigint  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='barcode_sequence_plate_layout.col'>col</a></td>
+		<td> smallint  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='barcode_sequence_plate_layout.row'>row</a></td>
+		<td> smallint  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='barcode_sequence_plate_layout.barcode_sequence'>barcode&#095;sequence</a></td>
+		<td> varchar  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='barcode_sequence_plate_layout.linker_primer_sequence'>linker&#095;primer&#095;sequence</a></td>
+		<td> varchar  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='3'><b>Indexes</b></th></tr>
+	<tr>		<td>idx&#095;barcode&#095;sequence&#095;plate&#095;layout&#095;barcode&#095;sequence&#095;plate&#095;id </td>
+		<td> ON barcode&#095;sequence&#095;plate&#095;id</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='3'><b>Foreign Keys</b></th></tr>
+	<tr>
+		<td>fk_template_barcode_seq_template_id</td>
+		<td > ( barcode&#095;sequence&#095;plate&#095;id ) ref <a href='#barcode&#095;sequence&#095;plate'>barcode&#095;sequence&#095;plate</a> (barcode&#095;sequence&#095;plate&#095;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='3'><a name='master_mix_lot'>Table master_mix_lot</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td><a name='master_mix_lot.master_mix_lot_id'>master&#095;mix&#095;lot&#095;id</a></td>
+		<td> bigserial  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='master_mix_lot.name'>name</a></td>
+		<td> varchar  NOT NULL  </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td><a name='master_mix_lot.notes'>notes</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='3'><b>Indexes</b></th></tr>
+	<tr>		<td>pk&#095;master&#095;mix&#095;lot primary key</td>
+		<td> ON master&#095;mix&#095;lot&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>uq&#095;master&#095;mix&#095;lot&#095;name unique</td>
+		<td> ON name</td>
 		<td>  </td>
 	</tr>
 </tbody>
