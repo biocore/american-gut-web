@@ -142,7 +142,7 @@ CREATE TABLE pm.run (
  );
 CREATE INDEX idx_run_email ON pm.run ( email );
 CREATE INDEX idx_run ON pm.run ( sequencer_id ) ;
-CREATE INDEX idx_run_pool ON pm.run ( run_pool_id ) ;
+CREATE INDEX idx_run_pool_link ON pm.run ( run_pool_id ) ;
 
 CREATE TABLE pm.sample (
     sample_id            varchar  NOT NULL,
@@ -286,7 +286,7 @@ CREATE TABLE pm.dna_plate_well_values (
 	dna_plate_id         bigint  NOT NULL,
 	row                  integer  NOT NULL,
 	col                  integer  NOT NULL,
-	dna_concentration    integer  NOT NULL,
+	dna_concentration    real  NOT NULL,
     CONSTRAINT fk_dna_plate_well_values FOREIGN KEY ( dna_plate_id ) REFERENCES pm.dna_plate( dna_plate_id )
  ) ;
 CREATE INDEX idx_dna_plate_well_values ON pm.dna_plate_well_values ( dna_plate_id ) ;
@@ -375,7 +375,7 @@ CREATE INDEX idx_condensed_plates_1 ON pm.condensed_plates ( dna_plate_id ) ;
 
 CREATE TABLE pm.shotgun_plate_layout (
     shotgun_plate_id bigint  NOT NULL,
-    sample_id             varchar  ,
+    sample_id             varchar  NOT NULL,
     row                   integer  NOT NULL,
     col                   integer  NOT NULL,
     name                  varchar  ,
@@ -485,14 +485,14 @@ CREATE TABLE pm.shotgun_library_prep_kit (
      run_pool_id               bigint  NOT NULL,
      shotgun_pool_id           bigint  ,
      targeted_pool_id          bigint  ,
-     percentage                varchar ,
+     percentage                real ,
      CONSTRAINT fk_protocol_run_pool_shotgun_pool FOREIGN KEY ( shotgun_pool_id ) REFERENCES pm.shotgun_pool( shotgun_pool_id ),
      CONSTRAINT fk_protocol_run_pool_targeted_pool_tg FOREIGN KEY ( targeted_pool_id ) REFERENCES pm.targeted_pool( targeted_pool_id ),
      CONSTRAINT fk_protocol_run_pool_run_pool FOREIGN KEY ( run_pool_id ) REFERENCES pm.run_pool( run_pool_id )
   ) ;
  CREATE INDEX idx_protocol_run_pool ON pm.protocol_run_pool ( shotgun_pool_id ) ;
  CREATE INDEX idx_protocol_run_pool_0 ON pm.protocol_run_pool ( targeted_pool_id ) ;
- CREATE INDEX idx_protocol_run_pool_1 ON pm.protocol_run_pool ( run_id ) ;
+ CREATE INDEX idx_protocol_run_pool_1 ON pm.protocol_run_pool ( run_pool_id ) ;
 
 
  CREATE TABLE pm.shotgun_pool_plate (
