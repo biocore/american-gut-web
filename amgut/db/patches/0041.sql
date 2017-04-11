@@ -126,6 +126,18 @@ CREATE TYPE seq_instrument_model AS ENUM ('MiSeq', 'HiSeq 2500', 'HiSeq 4000');
   	CONSTRAINT idx_run_pool UNIQUE ( name )
  ) ;
 
+
+ CREATE TYPE reagent_type AS ENUM ('MiSeq v3 150 cycle');
+
+ CREATE TABLE pm.reagent_kit_lot (
+ 	reagent_kit_lot_id   bigserial  NOT NULL,
+ 	name                 varchar  NOT NULL,
+ 	notes                varchar  ,
+ 	reagent_kit_type     reagent_type  NOT NULL,
+ 	CONSTRAINT pk_reagent_kit_lot PRIMARY KEY ( reagent_kit_lot_id ),
+ 	CONSTRAINT idx_reagent_kit_lot UNIQUE ( name )
+  ) ;
+
 CREATE TABLE pm.run (
     run_id               bigserial  NOT NULL,
     name                 varchar  NOT NULL,
@@ -134,15 +146,18 @@ CREATE TABLE pm.run (
     notes                varchar  ,
     sequencer_id         bigint NOT NULL,
     run_pool_id          bigint NOT NULL,
+    reagent_kit_lot_id   bigint NOT NULL,
     CONSTRAINT pk_run PRIMARY KEY ( run_id ),
     CONSTRAINT uq_run_name UNIQUE ( name ) ,
     CONSTRAINT fk_run_labadmin_users FOREIGN KEY ( email ) REFERENCES ag.labadmin_users( email ),
     CONSTRAINT fk_run_sequencer FOREIGN KEY ( sequencer_id ) REFERENCES pm.sequencer( sequencer_id ),
-    CONSTRAINT fk_run_run_pool FOREIGN KEY ( run_pool_id ) REFERENCES pm.run_pool( run_pool_id )
+    CONSTRAINT fk_run_run_pool FOREIGN KEY ( run_pool_id ) REFERENCES pm.run_pool( run_pool_id ),
+    CONSTRAINT fk_run_reagent_kit_lot FOREIGN KEY ( regent_kit_lot_id ) REFERENCES pm.reagent_kit_lot( reagent_kit_lot_id )
  );
 CREATE INDEX idx_run_email ON pm.run ( email );
 CREATE INDEX idx_run ON pm.run ( sequencer_id ) ;
 CREATE INDEX idx_run_pool_link ON pm.run ( run_pool_id ) ;
+CREATE INDEX idx_run_reagent ON pm.run ( regent_kit_lot_id ) ;
 
 CREATE TABLE pm.sample (
     sample_id            varchar  NOT NULL,
