@@ -843,6 +843,14 @@ INSERT INTO pm.sample (sample_id, is_blank, details)
            ('SWAB', TRUE, NULL),
            ('PCRCONTROL', TRUE, NULL);
 
+-- Add sequencer values
+INSERT INTO pm.sequencer (platform, instrument_model, name)
+    VALUES ('Illumina', 'MiSeq', 'Knight Lab In house MiSeq');
+
+-- Add some reagent value
+INSERT INTO pm.reagent_kit_lot (name, reagent_kit_type)
+    VALUES ('MS1234', 'MiSeq v3 150 cycle');
+
 -- Drop these unused tables
 DROP TABLE barcodes.plate_barcode;
 DROP TABLE barcodes.plate;
