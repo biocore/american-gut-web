@@ -22810,7 +22810,7 @@ AS $function$xpath_exists$function$
 			<column name="notes" type="varchar" jt="12" />
 			<column name="sequencer_id" type="bigint" jt="-5" mandatory="y" />
 			<column name="run_pool_id" type="bigint" jt="-5" mandatory="y" />
-			<column name="regent_kit_lot_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="reagent_kit_lot_id" type="bigint" jt="-5" mandatory="y" />
 			<index name="pk_run" unique="PRIMARY_KEY" >
 				<column name="run_id" />
 			</index>
@@ -22827,7 +22827,7 @@ AS $function$xpath_exists$function$
 				<column name="run_pool_id" />
 			</index>
 			<index name="idx_run_1" unique="NORMAL" >
-				<column name="regent_kit_lot_id" />
+				<column name="reagent_kit_lot_id" />
 			</index>
 			<fk name="fk_run_labadmin_users" to_schema="ag" to_table="labadmin_users" >
 				<fk_column name="email" pk="email" />
@@ -22839,7 +22839,7 @@ AS $function$xpath_exists$function$
 				<fk_column name="run_pool_id" pk="run_pool_id" />
 			</fk>
 			<fk name="fk_run_reagent_kit_lot" to_schema="pm" to_table="reagent_kit_lot" >
-				<fk_column name="regent_kit_lot_id" pk="reagent_kit_lot_id" />
+				<fk_column name="reagent_kit_lot_id" pk="reagent_kit_lot_id" />
 			</fk>
 		</table>
 		<table name="run_pool" >

@@ -152,12 +152,12 @@ CREATE TABLE pm.run (
     CONSTRAINT fk_run_labadmin_users FOREIGN KEY ( email ) REFERENCES ag.labadmin_users( email ),
     CONSTRAINT fk_run_sequencer FOREIGN KEY ( sequencer_id ) REFERENCES pm.sequencer( sequencer_id ),
     CONSTRAINT fk_run_run_pool FOREIGN KEY ( run_pool_id ) REFERENCES pm.run_pool( run_pool_id ),
-    CONSTRAINT fk_run_reagent_kit_lot FOREIGN KEY ( regent_kit_lot_id ) REFERENCES pm.reagent_kit_lot( reagent_kit_lot_id )
+    CONSTRAINT fk_run_reagent_kit_lot FOREIGN KEY ( reagent_kit_lot_id ) REFERENCES pm.reagent_kit_lot( reagent_kit_lot_id )
  );
 CREATE INDEX idx_run_email ON pm.run ( email );
 CREATE INDEX idx_run ON pm.run ( sequencer_id ) ;
 CREATE INDEX idx_run_pool_link ON pm.run ( run_pool_id ) ;
-CREATE INDEX idx_run_reagent ON pm.run ( regent_kit_lot_id ) ;
+CREATE INDEX idx_run_reagent ON pm.run ( reagent_kit_lot_id ) ;
 
 CREATE TABLE pm.sample (
     sample_id            varchar  NOT NULL,
