@@ -22570,34 +22570,26 @@ AS $function$xpath_exists$function$
 		</function>
 	</schema>
 	<schema name="pm" schemaname="pm" defo="y" >
-		<table name="barcode_sequence_plate" >
-			<column name="barcode_sequence_plate_id" type="bigserial" jt="-5" mandatory="y" />
-			<column name="name" type="varchar" jt="12" mandatory="y" />
-			<column name="plate_type_id" type="bigint" jt="-5" mandatory="y" />
-			<column name="notes" type="varchar" jt="12" />
-			<index name="pk_barcode_sequence_plate" unique="PRIMARY_KEY" >
-				<column name="barcode_sequence_plate_id" />
+		<table name="condensed_plates" >
+			<column name="shotgun_plate_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="dna_plate_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="position" type="integer" jt="4" mandatory="y" />
+			<index name="idx_condensed_plates" unique="PRIMARY_KEY" >
+				<column name="shotgun_plate_id" />
+				<column name="dna_plate_id" />
+				<column name="position" />
 			</index>
-			<index name="uq_barcode_sequence_plate_name" unique="UNIQUE" >
-				<column name="name" />
+			<index name="idx_condensed_plates_0" unique="NORMAL" >
+				<column name="shotgun_plate_id" />
 			</index>
-			<index name="idx_barcode_sequence_plate_plate_type_id" unique="NORMAL" >
-				<column name="plate_type_id" />
+			<index name="idx_condensed_plates_1" unique="NORMAL" >
+				<column name="dna_plate_id" />
 			</index>
-			<fk name="fk_template_plate_type_id" to_schema="pm" to_table="plate_type" >
-				<fk_column name="plate_type_id" pk="plate_type_id" />
+			<fk name="fk_condensed_plates" to_schema="pm" to_table="shotgun_plate" >
+				<fk_column name="shotgun_plate_id" pk="shotgun_plate_id" />
 			</fk>
-		</table>
-		<table name="barcode_sequence_plate_layout" >
-			<column name="barcode_sequence_plate_id" type="bigint" jt="-5" mandatory="y" />
-			<column name="col" type="smallint" jt="5" mandatory="y" />
-			<column name="row" type="smallint" jt="5" mandatory="y" />
-			<column name="barcode_sequence" type="varchar" jt="12" />
-			<index name="idx_barcode_sequence_plate_layout_barcode_sequence_plate_id" unique="NORMAL" >
-				<column name="barcode_sequence_plate_id" />
-			</index>
-			<fk name="fk_template_barcode_seq_template_id" to_schema="pm" to_table="barcode_sequence_plate" >
-				<fk_column name="barcode_sequence_plate_id" pk="barcode_sequence_plate_id" />
+			<fk name="fk_condensed_plates_dna_plate" to_schema="pm" to_table="dna_plate" >
+				<fk_column name="dna_plate_id" pk="dna_plate_id" />
 			</fk>
 		</table>
 		<table name="dna_plate" >
@@ -22647,6 +22639,29 @@ AS $function$xpath_exists$function$
 				<fk_column name="extraction_tool_id" pk="extraction_tool_id" />
 			</fk>
 		</table>
+		<table name="dna_plate_well_values" >
+			<column name="dna_plate_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="row" type="integer" jt="4" mandatory="y" />
+			<column name="col" type="integer" jt="4" mandatory="y" />
+			<column name="dna_concentration" type="integer" jt="4" mandatory="y" />
+			<index name="idx_dna_plate_well_values" unique="NORMAL" >
+				<column name="dna_plate_id" />
+			</index>
+			<fk name="fk_dna_plate_well_values" to_schema="pm" to_table="dna_plate" >
+				<fk_column name="dna_plate_id" pk="dna_plate_id" />
+			</fk>
+		</table>
+		<table name="echo" >
+			<column name="echo_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="name" type="varchar" jt="12" mandatory="y" />
+			<column name="notes" type="varchar" jt="12" />
+			<index name="pk_echo" unique="PRIMARY_KEY" >
+				<column name="echo_id" />
+			</index>
+			<index name="idx_echo" unique="UNIQUE" >
+				<column name="name" />
+			</index>
+		</table>
 		<table name="extraction_kit_lot" >
 			<column name="extraction_kit_lot_id" type="bigserial" jt="-5" mandatory="y" />
 			<column name="name" type="varchar" jt="12" mandatory="y" />
@@ -22681,46 +22696,6 @@ AS $function$xpath_exists$function$
 				<column name="name" />
 			</index>
 		</table>
-		<table name="library_plate" >
-			<column name="library_plate_id" type="bigserial" jt="-5" mandatory="y" />
-			<column name="name" type="varchar" jt="12" mandatory="y" />
-			<column name="email" type="varchar" jt="12" />
-			<column name="created_on" type="timestamp" jt="93" />
-			<column name="dna_plate_id" type="bigint" jt="-5" mandatory="y" />
-			<column name="protocol_id" type="bigint" jt="-5" mandatory="y" />
-			<column name="protocol_targeted_id" type="bigint" jt="-5" />
-			<column name="notes" type="varchar" jt="12" />
-			<index name="pk_library_plate" unique="PRIMARY_KEY" >
-				<column name="library_plate_id" />
-			</index>
-			<index name="uq_library_plate_name" unique="UNIQUE" >
-				<column name="name" />
-			</index>
-			<index name="idx_library_plate_email" unique="NORMAL" >
-				<column name="email" />
-			</index>
-			<index name="idx_library_plate_dna_plate_id" unique="NORMAL" >
-				<column name="dna_plate_id" />
-			</index>
-			<index name="idx_library_plate_protocol_id" unique="NORMAL" >
-				<column name="protocol_id" />
-			</index>
-			<index name="idx_library_plate_protocol_targeted_id" unique="NORMAL" >
-				<column name="protocol_targeted_id" />
-			</index>
-			<fk name="fk_library_plate" to_schema="ag" to_table="labadmin_users" >
-				<fk_column name="email" pk="email" />
-			</fk>
-			<fk name="fk_library_plate_dna_plate" to_schema="pm" to_table="dna_plate" >
-				<fk_column name="dna_plate_id" pk="dna_plate_id" />
-			</fk>
-			<fk name="fk_library_plate_protocol" to_schema="pm" to_table="protocol" >
-				<fk_column name="protocol_id" pk="protocol_id" />
-			</fk>
-			<fk name="fk_library_plate_ptg" to_schema="pm" to_table="protocol_targeted" >
-				<fk_column name="protocol_targeted_id" pk="protocol_targeted_id" />
-			</fk>
-		</table>
 		<table name="master_mix_lot" >
 			<column name="master_mix_lot_id" type="bigserial" jt="-5" mandatory="y" />
 			<column name="name" type="varchar" jt="12" mandatory="y" />
@@ -22729,6 +22704,28 @@ AS $function$xpath_exists$function$
 				<column name="master_mix_lot_id" />
 			</index>
 			<index name="uq_master_mix_lot_name" unique="UNIQUE" >
+				<column name="name" />
+			</index>
+		</table>
+		<table name="mosquito" >
+			<column name="mosquito_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="name" type="varchar" jt="12" mandatory="y" />
+			<column name="notes" type="varchar" jt="12" />
+			<index name="pk_mosquito" unique="PRIMARY_KEY" >
+				<column name="mosquito_id" />
+			</index>
+			<index name="idx_mosquito" unique="UNIQUE" >
+				<column name="name" />
+			</index>
+		</table>
+		<table name="plate_reader" >
+			<column name="plate_reader_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="name" type="varchar" jt="12" mandatory="y" />
+			<column name="notes" type="varchar" jt="12" />
+			<index name="pk_plate_reader" unique="PRIMARY_KEY" >
+				<column name="plate_reader_id" />
+			</index>
+			<index name="idx_plate_reader" unique="UNIQUE" >
 				<column name="name" />
 			</index>
 		</table>
@@ -22756,67 +22753,54 @@ AS $function$xpath_exists$function$
 				<column name="name" />
 			</index>
 		</table>
-		<table name="protocol" >
-			<column name="protocol_id" type="bigserial" jt="-5" mandatory="y" />
-			<column name="name" type="varchar" jt="12" mandatory="y" />
-			<index name="pk_protocol" unique="PRIMARY_KEY" >
-				<column name="protocol_id" />
+		<table name="protocol_run_pool" >
+			<column name="run_pool_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="shotgun_pool_id" type="bigint" jt="-5" />
+			<column name="targeted_pool_id" type="bigint" jt="-5" />
+			<column name="percentage" type="real" jt="7" mandatory="y" />
+			<index name="idx_pool_run" unique="NORMAL" >
+				<column name="shotgun_pool_id" />
 			</index>
-			<index name="uq_protocol_name" unique="UNIQUE" >
+			<index name="idx_pool_run_0" unique="NORMAL" >
+				<column name="targeted_pool_id" />
+			</index>
+			<index name="idx_protocol_run_pool" unique="NORMAL" >
+				<column name="run_pool_id" />
+			</index>
+			<fk name="fk_pool_run_wgs_pool" to_schema="pm" to_table="shotgun_pool" >
+				<fk_column name="shotgun_pool_id" pk="shotgun_pool_id" />
+			</fk>
+			<fk name="fk_pool_run_target_gene_pool_tg" to_schema="pm" to_table="targeted_pool" >
+				<fk_column name="targeted_pool_id" pk="targeted_pool_id" />
+			</fk>
+			<fk name="fk_protocol_run_pool_run_pool" to_schema="pm" to_table="run_pool" >
+				<fk_column name="run_pool_id" pk="run_pool_id" />
+			</fk>
+		</table>
+		<table name="qpcr" >
+			<column name="qpcr_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="name" type="varchar" jt="12" mandatory="y" />
+			<column name="notes" type="varchar" jt="12" />
+			<index name="pk_qpcr" unique="PRIMARY_KEY" >
+				<column name="qpcr_id" />
+			</index>
+			<index name="idx_qpcr" unique="UNIQUE" >
 				<column name="name" />
 			</index>
 		</table>
-		<table name="protocol_targeted" >
-			<column name="protocol_targeted_id" type="bigserial" jt="-5" mandatory="y" />
+		<table name="reagent_kit_lot" >
+			<column name="reagent_kit_lot_id" type="bigserial" jt="-5" mandatory="y" />
 			<column name="name" type="varchar" jt="12" mandatory="y" />
-			<column name="updated_on" type="timestamp" jt="93" mandatory="y" >
-				<defo>current_timestamp</defo>
+			<column name="notes" type="varchar" jt="12" />
+			<column name="reagent_kit_type" type="varchar" jt="12" mandatory="y" >
+				<comment><![CDATA[In the DB this is an enum]]></comment>
 			</column>
-			<column name="barcode_sequence_plate_id" type="bigint" jt="-5" />
-			<column name="master_mix_lot_id" type="bigint" jt="-5" />
-			<column name="water_lot_id" type="bigint" jt="-5" />
-			<column name="tm300_8_tool_id" type="bigint" jt="-5" />
-			<column name="tm50_8_tool_id" type="bigint" jt="-5" />
-			<column name="processing_robot_id" type="bigint" jt="-5" />
-			<index name="pk_protocol_targeted" unique="PRIMARY_KEY" >
-				<column name="protocol_targeted_id" />
+			<index name="pk_reagent_kit_lot" unique="PRIMARY_KEY" >
+				<column name="reagent_kit_lot_id" />
 			</index>
-			<index name="idx_protocol_targeted_barcode_sequence_plate_id" unique="NORMAL" >
-				<column name="barcode_sequence_plate_id" />
+			<index name="idx_reagent_kit_lot" unique="UNIQUE" >
+				<column name="name" />
 			</index>
-			<index name="idx_protocol_targeted_master_mix_lot_id" unique="NORMAL" >
-				<column name="master_mix_lot_id" />
-			</index>
-			<index name="idx_protocol_targeted_water_lot_id" unique="NORMAL" >
-				<column name="water_lot_id" />
-			</index>
-			<index name="idx_protocol_targeted_tm300_8_tool_id" unique="NORMAL" >
-				<column name="tm300_8_tool_id" />
-			</index>
-			<index name="idx_protocol_targeted_tm50_8_tool_id" unique="NORMAL" >
-				<column name="tm50_8_tool_id" />
-			</index>
-			<index name="idx_protocol_targeted_processing_robot_id" unique="NORMAL" >
-				<column name="processing_robot_id" />
-			</index>
-			<fk name="fk_protocol_targeted" to_schema="pm" to_table="barcode_sequence_plate" >
-				<fk_column name="barcode_sequence_plate_id" pk="barcode_sequence_plate_id" />
-			</fk>
-			<fk name="fk_protocol_targeted_mm" to_schema="pm" to_table="master_mix_lot" >
-				<fk_column name="master_mix_lot_id" pk="master_mix_lot_id" />
-			</fk>
-			<fk name="fk_protocol_targeted_wl" to_schema="pm" to_table="water_lot" >
-				<fk_column name="water_lot_id" pk="water_lot_id" />
-			</fk>
-			<fk name="fk_protocol_targeted_tm300" to_schema="pm" to_table="tm300_8_tool" >
-				<fk_column name="tm300_8_tool_id" pk="tm300_8_tool_id" />
-			</fk>
-			<fk name="fk_protocol_targeted_tm50" to_schema="pm" to_table="tm50_8_tool" >
-				<fk_column name="tm50_8_tool_id" pk="tm50_8_tool_id" />
-			</fk>
-			<fk name="fk_protocol_targeted_robot" to_schema="pm" to_table="processing_robot" >
-				<fk_column name="processing_robot_id" pk="processing_robot_id" />
-			</fk>
 		</table>
 		<table name="run" >
 			<column name="run_id" type="bigserial" jt="-5" mandatory="y" />
@@ -22824,6 +22808,9 @@ AS $function$xpath_exists$function$
 			<column name="email" type="varchar" jt="12" />
 			<column name="created_on" type="timestamp" jt="93" />
 			<column name="notes" type="varchar" jt="12" />
+			<column name="sequencer_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="run_pool_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="reagent_kit_lot_id" type="bigint" jt="-5" mandatory="y" />
 			<index name="pk_run" unique="PRIMARY_KEY" >
 				<column name="run_id" />
 			</index>
@@ -22833,25 +22820,39 @@ AS $function$xpath_exists$function$
 			<index name="idx_run_email" unique="NORMAL" >
 				<column name="email" />
 			</index>
+			<index name="idx_run" unique="NORMAL" >
+				<column name="sequencer_id" />
+			</index>
+			<index name="idx_run_0" unique="NORMAL" >
+				<column name="run_pool_id" />
+			</index>
+			<index name="idx_run_1" unique="NORMAL" >
+				<column name="reagent_kit_lot_id" />
+			</index>
 			<fk name="fk_run_labadmin_users" to_schema="ag" to_table="labadmin_users" >
 				<fk_column name="email" pk="email" />
 			</fk>
+			<fk name="fk_run_sequencer" to_schema="pm" to_table="sequencer" >
+				<fk_column name="sequencer_id" pk="sequencer_id" />
+			</fk>
+			<fk name="fk_run_run_pool" to_schema="pm" to_table="run_pool" >
+				<fk_column name="run_pool_id" pk="run_pool_id" />
+			</fk>
+			<fk name="fk_run_reagent_kit_lot" to_schema="pm" to_table="reagent_kit_lot" >
+				<fk_column name="reagent_kit_lot_id" pk="reagent_kit_lot_id" />
+			</fk>
 		</table>
-		<table name="run_library_plate" >
-			<column name="run_id" type="bigint" jt="-5" mandatory="y" />
-			<column name="library_plate_id" type="bigint" jt="-5" mandatory="y" />
-			<index name="idx_run_library_plate_run_id" unique="NORMAL" >
-				<column name="run_id" />
+		<table name="run_pool" >
+			<column name="run_pool_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="name" type="varchar" jt="12" mandatory="y" />
+			<column name="volume" type="real" jt="7" mandatory="y" />
+			<column name="notes" type="varchar" jt="12" />
+			<index name="pk_run_pool" unique="PRIMARY_KEY" >
+				<column name="run_pool_id" />
 			</index>
-			<index name="idx_run_library_plate_library_plate_id" unique="NORMAL" >
-				<column name="library_plate_id" />
+			<index name="idx_run_pool" unique="UNIQUE" >
+				<column name="name" />
 			</index>
-			<fk name="fk_run_library_plate_run" to_schema="pm" to_table="run" >
-				<fk_column name="run_id" pk="run_id" />
-			</fk>
-			<fk name="fk_run_library_plate" to_schema="pm" to_table="library_plate" >
-				<fk_column name="library_plate_id" pk="library_plate_id" />
-			</fk>
 		</table>
 		<table name="sample" >
 			<column name="sample_id" type="varchar" jt="12" mandatory="y" />
@@ -22871,6 +22872,9 @@ AS $function$xpath_exists$function$
 			<column name="created_on" type="timestamp" jt="93" />
 			<column name="plate_type_id" type="bigint" jt="-5" mandatory="y" />
 			<column name="notes" type="varchar" jt="12" />
+			<column name="discarded" type="bool" jt="-7" mandatory="y" >
+				<defo>&#039;False&#039;</defo>
+			</column>
 			<index name="pk_sample_plate" unique="PRIMARY_KEY" >
 				<column name="sample_plate_id" />
 			</index>
@@ -22928,6 +22932,315 @@ AS $function$xpath_exists$function$
 				<fk_column name="study_id" pk="study_id" />
 			</fk>
 		</table>
+		<table name="sequencer" >
+			<column name="sequencer_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="platform" type="varchar" jt="12" mandatory="y" />
+			<column name="instrument_model" type="varchar" jt="12" mandatory="y" >
+				<comment><![CDATA[in the DB this is an enum]]></comment>
+			</column>
+			<column name="name" type="varchar" jt="12" mandatory="y" >
+				<comment><![CDATA[In the DB this is an enum]]></comment>
+			</column>
+			<index name="pk_sequencer" unique="PRIMARY_KEY" >
+				<column name="sequencer_id" />
+			</index>
+		</table>
+		<table name="shotgun_adapter_aliquot" >
+			<column name="shotgun_adapter_aliquot_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="name" type="varchar" jt="12" mandatory="y" />
+			<column name="notes" type="varchar" jt="12" />
+			<column name="limit_freeze_thaw_cycles" type="integer" jt="4" mandatory="y" />
+			<index name="pk_adapter_aliquot" unique="PRIMARY_KEY" >
+				<column name="shotgun_adapter_aliquot_id" />
+			</index>
+			<index name="idx_adapter_aliquot" unique="UNIQUE" >
+				<column name="name" />
+			</index>
+		</table>
+		<table name="shotgun_i5_index" >
+			<column name="shotgun_i5_index_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="shotgun_index_aliquot_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="name" type="varchar" jt="12" mandatory="y" />
+			<column name="row" type="integer" jt="4" mandatory="y" />
+			<column name="col" type="integer" jt="4" mandatory="y" />
+			<index name="idx_i5_index" unique="NORMAL" >
+				<column name="shotgun_index_aliquot_id" />
+			</index>
+			<index name="pk_i5_index" unique="PRIMARY_KEY" >
+				<column name="shotgun_i5_index_id" />
+			</index>
+			<fk name="fk_i5_index_index_aliquot" to_schema="pm" to_table="shotgun_index_aliquot" >
+				<fk_column name="shotgun_index_aliquot_id" pk="shotgun_index_aliquot_id" />
+			</fk>
+		</table>
+		<table name="shotgun_i7_index" >
+			<column name="shotgun_i7_index_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="shotgun_index_aliquot_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="name" type="varchar" jt="12" mandatory="y" />
+			<column name="row" type="integer" jt="4" mandatory="y" />
+			<column name="col" type="integer" jt="4" mandatory="y" />
+			<index name="pk_i7_index" unique="PRIMARY_KEY" >
+				<column name="shotgun_i7_index_id" />
+			</index>
+			<index name="idx_i7_index" unique="NORMAL" >
+				<column name="shotgun_index_aliquot_id" />
+			</index>
+			<fk name="fk_i7_index_index_aliquot" to_schema="pm" to_table="shotgun_index_aliquot" >
+				<fk_column name="shotgun_index_aliquot_id" pk="shotgun_index_aliquot_id" />
+			</fk>
+		</table>
+		<table name="shotgun_index_aliquot" >
+			<column name="shotgun_index_aliquot_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="name" type="varchar" jt="12" mandatory="y" />
+			<column name="notes" type="varchar" jt="12" />
+			<column name="limit_freeze_thaw_cycles" type="bigint" jt="-5" mandatory="y" />
+			<index name="pk_index_aliquot" unique="PRIMARY_KEY" >
+				<column name="shotgun_index_aliquot_id" />
+			</index>
+			<index name="idx_index_aliquot" unique="UNIQUE" >
+				<column name="name" />
+			</index>
+		</table>
+		<table name="shotgun_library_prep_kit" >
+			<column name="shotgun_library_prep_kit_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="name" type="varchar" jt="12" mandatory="y" />
+			<column name="notes" type="varchar" jt="12" />
+			<index name="pk_wgs_library_prep_kit" unique="PRIMARY_KEY" >
+				<column name="shotgun_library_prep_kit_id" />
+			</index>
+			<index name="idx_wgs_library_prep_kit" unique="UNIQUE" >
+				<column name="name" />
+			</index>
+		</table>
+		<table name="shotgun_normalized_plate" >
+			<column name="shotgun_normalized_plate_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="shotgun_plate_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="created_on" type="timestamp" jt="93" mandatory="y" />
+			<column name="email" type="varchar" jt="12" mandatory="y" />
+			<column name="echo_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="lp_date" type="timestamp" jt="93" />
+			<column name="lp_email" type="varchar" jt="12" />
+			<column name="mosquito" type="bigint" jt="-5" />
+			<column name="shotgun_library_prep_kit_id" type="bigint" jt="-5" />
+			<column name="shotgun_adapter_aliquot_id" type="bigint" jt="-5" />
+			<column name="qpcr_date" type="timestamp" jt="93" />
+			<column name="qpcr_email" type="varchar" jt="12" />
+			<column name="qpcr_std_ladder" type="varchar" jt="12" />
+			<column name="qpcr_id" type="bigint" jt="-5" />
+			<column name="discarded" type="bool" jt="-7" mandatory="y" >
+				<defo>&#039;False&#039;</defo>
+			</column>
+			<index name="pk_wgs_normalized_plate" unique="PRIMARY_KEY" >
+				<column name="shotgun_normalized_plate_id" />
+			</index>
+			<index name="idx_wgs_normalized_plate" unique="NORMAL" >
+				<column name="shotgun_plate_id" />
+			</index>
+			<index name="idx_wgs_normalized_plate_0" unique="NORMAL" >
+				<column name="email" />
+			</index>
+			<index name="idx_wgs_normalized_plate_1" unique="NORMAL" >
+				<column name="echo_id" />
+			</index>
+			<index name="idx_wgs_normalized_plate_2" unique="NORMAL" >
+				<column name="lp_email" />
+			</index>
+			<index name="idx_wgs_normalized_plate_3" unique="NORMAL" >
+				<column name="mosquito" />
+			</index>
+			<index name="idx_wgs_normalized_plate_4" unique="NORMAL" >
+				<column name="shotgun_library_prep_kit_id" />
+			</index>
+			<index name="idx_wgs_normalized_plate_5" unique="NORMAL" >
+				<column name="shotgun_adapter_aliquot_id" />
+			</index>
+			<index name="idx_wgs_normalized_plate_6" unique="NORMAL" >
+				<column name="qpcr_email" />
+			</index>
+			<index name="idx_wgs_normalized_plate_7" unique="NORMAL" >
+				<column name="qpcr_id" />
+			</index>
+			<fk name="fk_wgs_normalized_plate" to_schema="pm" to_table="shotgun_plate" >
+				<fk_column name="shotgun_plate_id" pk="shotgun_plate_id" />
+			</fk>
+			<fk name="fk_wgs_normalized_plate_email" to_schema="ag" to_table="labadmin_users" >
+				<fk_column name="email" pk="email" />
+			</fk>
+			<fk name="fk_wgs_normalized_plate_echo" to_schema="pm" to_table="echo" >
+				<fk_column name="echo_id" pk="echo_id" />
+			</fk>
+			<fk name="fk_wgs_normalized_plate_lp_email" to_schema="ag" to_table="labadmin_users" >
+				<fk_column name="lp_email" pk="email" />
+			</fk>
+			<fk name="fk_wgs_normalized_plate_mosquito" to_schema="pm" to_table="mosquito" >
+				<fk_column name="mosquito" pk="mosquito_id" />
+			</fk>
+			<fk name="fk_wgs_normalized_plate_kit" to_schema="pm" to_table="shotgun_library_prep_kit" >
+				<fk_column name="shotgun_library_prep_kit_id" pk="shotgun_library_prep_kit_id" />
+			</fk>
+			<fk name="fk_wgs_normalized_plate_adapter" to_schema="pm" to_table="shotgun_adapter_aliquot" >
+				<fk_column name="shotgun_adapter_aliquot_id" pk="shotgun_adapter_aliquot_id" />
+			</fk>
+			<fk name="fk_wgs_normalized_plate_qpcr_email" to_schema="ag" to_table="labadmin_users" >
+				<fk_column name="qpcr_email" pk="email" />
+			</fk>
+			<fk name="fk_wgs_normalized_plate_qpcr" to_schema="pm" to_table="qpcr" >
+				<fk_column name="qpcr_id" pk="qpcr_id" />
+			</fk>
+		</table>
+		<table name="shotgun_normalized_plate_well_values" >
+			<column name="shotgun_normalized_plate_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="row" type="integer" jt="4" mandatory="y" />
+			<column name="col" type="integer" jt="4" mandatory="y" />
+			<column name="sample_volume_nl" type="real" jt="7" mandatory="y" />
+			<column name="water_volume_nl" type="real" jt="7" mandatory="y" />
+			<column name="shotgun_i5_index_id" type="bigint" jt="-5" />
+			<column name="shotgun_i7_index_id" type="bigint" jt="-5" />
+			<index name="idx_wgs_normalized_plate_well_values" unique="NORMAL" >
+				<column name="shotgun_normalized_plate_id" />
+			</index>
+			<index name="idx_wgs_normalized_plate_well_values_0" unique="NORMAL" >
+				<column name="shotgun_i5_index_id" />
+			</index>
+			<index name="idx_wgs_normalized_plate_well_values_1" unique="NORMAL" >
+				<column name="shotgun_i7_index_id" />
+			</index>
+			<fk name="fk_wgs_normalized_plate_well_values" to_schema="pm" to_table="shotgun_normalized_plate" >
+				<fk_column name="shotgun_normalized_plate_id" pk="shotgun_normalized_plate_id" />
+			</fk>
+			<fk name="fk_wgs_normalized_plate_well_values_i5" to_schema="pm" to_table="shotgun_i5_index" >
+				<fk_column name="shotgun_i5_index_id" pk="shotgun_i5_index_id" />
+			</fk>
+			<fk name="fk_wgs_normalized_plate_well_values_i7" to_schema="pm" to_table="shotgun_i7_index" >
+				<fk_column name="shotgun_i7_index_id" pk="shotgun_i7_index_id" />
+			</fk>
+		</table>
+		<table name="shotgun_plate" >
+			<column name="shotgun_plate_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="name" type="varchar" jt="12" mandatory="y" />
+			<column name="email" type="varchar" jt="12" mandatory="y" />
+			<column name="created_on" type="timestamp" jt="93" mandatory="y" />
+			<column name="processing_robot_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="plate_type_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="volume" type="real" jt="7" mandatory="y" />
+			<column name="dna_quantification_date" type="timestamp" jt="93" />
+			<column name="dna_quantification_email" type="varchar" jt="12" />
+			<column name="dna_quantification_volume" type="real" jt="7" />
+			<column name="plate_reader_id" type="bigint" jt="-5" />
+			<index name="pk_whole_genome_plate" unique="PRIMARY_KEY" >
+				<column name="shotgun_plate_id" />
+			</index>
+			<index name="idx_whole_genome_plate" unique="UNIQUE" >
+				<column name="name" />
+			</index>
+			<index name="idx_whole_genome_plate" unique="NORMAL" >
+				<column name="email" />
+			</index>
+			<index name="idx_whole_genome_plate_0" unique="NORMAL" >
+				<column name="processing_robot_id" />
+			</index>
+			<index name="idx_whole_genome_plate_1" unique="NORMAL" >
+				<column name="plate_type_id" />
+			</index>
+			<index name="idx_whole_genome_plate_2" unique="NORMAL" >
+				<column name="dna_quantification_email" />
+			</index>
+			<index name="idx_whole_genome_plate_3" unique="NORMAL" >
+				<column name="plate_reader_id" />
+			</index>
+			<fk name="fk_whole_genome_plate" to_schema="ag" to_table="labadmin_users" >
+				<fk_column name="email" pk="email" />
+			</fk>
+			<fk name="fk_whole_genome_plate_prc_robot" to_schema="pm" to_table="processing_robot" >
+				<fk_column name="processing_robot_id" pk="processing_robot_id" />
+			</fk>
+			<fk name="fk_whole_genome_plate_type" to_schema="pm" to_table="plate_type" >
+				<fk_column name="plate_type_id" pk="plate_type_id" />
+			</fk>
+			<fk name="fk_whole_genome_plate_email" to_schema="ag" to_table="labadmin_users" >
+				<fk_column name="dna_quantification_email" pk="email" />
+			</fk>
+			<fk name="fk_whole_genome_plate_reader" to_schema="pm" to_table="plate_reader" >
+				<fk_column name="plate_reader_id" pk="plate_reader_id" />
+			</fk>
+		</table>
+		<table name="shotgun_plate_layout" >
+			<column name="shotgun_plate_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="sample_id" type="varchar" jt="12" mandatory="y" />
+			<column name="row" type="integer" jt="4" mandatory="y" />
+			<column name="col" type="integer" jt="4" mandatory="y" />
+			<column name="name" type="varchar" jt="12" />
+			<column name="notes" type="varchar" jt="12" />
+			<column name="dna_concentration" type="real" jt="7" />
+			<index name="idx_whole_genome_plate_layout" unique="NORMAL" >
+				<column name="shotgun_plate_id" />
+			</index>
+			<index name="idx_whole_genome_plate_layout_0" unique="NORMAL" >
+				<column name="sample_id" />
+			</index>
+			<fk name="fk_whole_genome_plate_layout" to_schema="pm" to_table="shotgun_plate" >
+				<fk_column name="shotgun_plate_id" pk="shotgun_plate_id" />
+			</fk>
+			<fk name="fk_whole_genome_plate_layout_sample" to_schema="pm" to_table="sample" >
+				<fk_column name="sample_id" pk="sample_id" />
+			</fk>
+		</table>
+		<table name="shotgun_pool" >
+			<column name="shotgun_pool_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="name" type="varchar" jt="12" mandatory="y" />
+			<column name="echo_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="discarded" type="bool" jt="-7" mandatory="y" >
+				<defo>&#039;False&#039;</defo>
+			</column>
+			<index name="pk_wgs_pool" unique="PRIMARY_KEY" >
+				<column name="shotgun_pool_id" />
+			</index>
+			<index name="idx_wgs_pool" unique="UNIQUE" >
+				<column name="name" />
+			</index>
+			<index name="idx_wgs_pool_0" unique="NORMAL" >
+				<column name="echo_id" />
+			</index>
+			<fk name="fk_wgs_pool_echo" to_schema="pm" to_table="echo" >
+				<fk_column name="echo_id" pk="echo_id" />
+			</fk>
+		</table>
+		<table name="shotgun_pool_plate" >
+			<column name="shotgun_pool_plate_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="shotgun_pool_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="shotgun_normalized_plate_id" type="bigint" jt="-5" mandatory="y" />
+			<index name="idx_wgs_pool_plate" unique="NORMAL" >
+				<column name="shotgun_pool_id" />
+			</index>
+			<index name="idx_wgs_pool_plate" unique="NORMAL" >
+				<column name="shotgun_normalized_plate_id" />
+			</index>
+			<index name="pk_wgs_pool_plate" unique="PRIMARY_KEY" >
+				<column name="shotgun_pool_plate_id" />
+			</index>
+			<index name="idx_wgs_pool_plate_0" unique="UNIQUE" >
+				<column name="shotgun_pool_id" />
+				<column name="shotgun_normalized_plate_id" />
+			</index>
+			<fk name="fk_wgs_pool_plate_wgs_pool" to_schema="pm" to_table="shotgun_pool" >
+				<fk_column name="shotgun_pool_id" pk="shotgun_pool_id" />
+			</fk>
+			<fk name="fk_wgs_pool_plate" to_schema="pm" to_table="shotgun_normalized_plate" >
+				<fk_column name="shotgun_normalized_plate_id" pk="shotgun_normalized_plate_id" />
+			</fk>
+		</table>
+		<table name="shotgun_pool_plate_well_values" >
+			<column name="shotgun_pool_plate_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="row" type="integer" jt="4" mandatory="y" />
+			<column name="col" type="integer" jt="4" mandatory="y" />
+			<column name="volume_sample_nl" type="real" jt="7" mandatory="y" />
+			<index name="idx_wgs_pool_plate_well_values" unique="NORMAL" >
+				<column name="shotgun_pool_plate_id" />
+			</index>
+			<fk name="fk_wgs_pool_plate_well_values" to_schema="pm" to_table="shotgun_pool_plate" >
+				<fk_column name="shotgun_pool_plate_id" pk="shotgun_pool_plate_id" />
+			</fk>
+		</table>
 		<table name="study" >
 			<column name="study_id" type="bigint" jt="-5" mandatory="y" />
 			<column name="title" type="varchar" jt="12" mandatory="y" />
@@ -22957,6 +23270,131 @@ AS $function$xpath_exists$function$
 			</fk>
 			<fk name="fk_study_sample_study" to_schema="pm" to_table="study" >
 				<fk_column name="study_id" pk="study_id" />
+			</fk>
+		</table>
+		<table name="targeted_plate" >
+			<column name="targeted_plate_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="name" type="varchar" jt="12" mandatory="y" />
+			<column name="email" type="varchar" jt="12" mandatory="y" />
+			<column name="created_on" type="timestamp" jt="93" mandatory="y" />
+			<column name="dna_plate_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="targeted_primer_plate_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="master_mix_lot_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="tm300_8_tool_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="tm50_8_tool_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="water_lot_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="processing_robot_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="discarded" type="bool" jt="-7" mandatory="y" >
+				<defo>&#039;False&#039;</defo>
+			</column>
+			<index name="pk_target_gene_plate" unique="PRIMARY_KEY" >
+				<column name="targeted_plate_id" />
+			</index>
+			<index name="idx_target_gene_plate" unique="UNIQUE" >
+				<column name="name" />
+			</index>
+			<index name="idx_target_gene_plate" unique="NORMAL" >
+				<column name="email" />
+			</index>
+			<index name="idx_target_gene_plate" unique="NORMAL" >
+				<column name="dna_plate_id" />
+			</index>
+			<index name="idx_target_gene_plate_0" unique="NORMAL" >
+				<column name="targeted_primer_plate_id" />
+			</index>
+			<index name="idx_target_gene_plate_1" unique="NORMAL" >
+				<column name="master_mix_lot_id" />
+			</index>
+			<index name="idx_target_gene_plate_2" unique="NORMAL" >
+				<column name="tm300_8_tool_id" />
+			</index>
+			<index name="idx_target_gene_plate_3" unique="NORMAL" >
+				<column name="tm50_8_tool_id" />
+			</index>
+			<index name="idx_target_gene_plate_4" unique="NORMAL" >
+				<column name="water_lot_id" />
+			</index>
+			<index name="idx_target_gene_plate_5" unique="NORMAL" >
+				<column name="processing_robot_id" />
+			</index>
+			<fk name="fk_target_gene_plate" to_schema="ag" to_table="labadmin_users" >
+				<fk_column name="email" pk="email" />
+			</fk>
+			<fk name="fk_target_gene_plate_dna_plate" to_schema="pm" to_table="dna_plate" >
+				<fk_column name="dna_plate_id" pk="dna_plate_id" />
+			</fk>
+			<fk name="fk_target_gene_barcode" to_schema="pm" to_table="targeted_primer_plate" >
+				<fk_column name="targeted_primer_plate_id" pk="targeted_primer_plate_id" />
+			</fk>
+			<fk name="fk_target_gene_master_mix" to_schema="pm" to_table="master_mix_lot" >
+				<fk_column name="master_mix_lot_id" pk="master_mix_lot_id" />
+			</fk>
+			<fk name="fk_target_gene_tm300_tool" to_schema="pm" to_table="tm300_8_tool" >
+				<fk_column name="tm300_8_tool_id" pk="tm300_8_tool_id" />
+			</fk>
+			<fk name="fk_target_gene_plate_tm50_8_tool" to_schema="pm" to_table="tm50_8_tool" >
+				<fk_column name="tm50_8_tool_id" pk="tm50_8_tool_id" />
+			</fk>
+			<fk name="fk_target_gene_plate_water_lot" to_schema="pm" to_table="water_lot" >
+				<fk_column name="water_lot_id" pk="water_lot_id" />
+			</fk>
+			<fk name="fk_target_gene_plate_robot" to_schema="pm" to_table="processing_robot" >
+				<fk_column name="processing_robot_id" pk="processing_robot_id" />
+			</fk>
+		</table>
+		<table name="targeted_pool" >
+			<column name="targeted_pool_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="name" type="varchar" jt="12" mandatory="y" />
+			<column name="targeted_plate_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="volume" type="real" jt="7" mandatory="y" />
+			<column name="discarded" type="bool" jt="-7" mandatory="y" >
+				<defo>&#039;False&#039;</defo>
+			</column>
+			<index name="pk_target_gene_pool" unique="PRIMARY_KEY" >
+				<column name="targeted_pool_id" />
+			</index>
+			<index name="idx_target_gene_pool" unique="UNIQUE" >
+				<column name="name" />
+			</index>
+			<index name="idx_target_gene_pool_0" unique="NORMAL" >
+				<column name="targeted_plate_id" />
+			</index>
+			<fk name="fk_target_gene_pool" to_schema="pm" to_table="targeted_plate" >
+				<fk_column name="targeted_plate_id" pk="targeted_plate_id" />
+			</fk>
+		</table>
+		<table name="targeted_primer_plate" >
+			<column name="targeted_primer_plate_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="name" type="varchar" jt="12" mandatory="y" />
+			<column name="plate_type_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="notes" type="varchar" jt="12" />
+			<column name="linker_primer_sequence" type="varchar" jt="12" mandatory="y" />
+			<column name="target_gene_region" type="varchar" jt="12" mandatory="y" >
+				<comment><![CDATA[In the DB this is an enum]]></comment>
+			</column>
+			<index name="pk_barcode_sequence_plate" unique="PRIMARY_KEY" >
+				<column name="targeted_primer_plate_id" />
+			</index>
+			<index name="uq_barcode_sequence_plate_name" unique="UNIQUE" >
+				<column name="name" />
+			</index>
+			<index name="idx_barcode_sequence_plate_plate_type_id" unique="NORMAL" >
+				<column name="plate_type_id" />
+			</index>
+			<fk name="fk_template_plate_type_id" to_schema="pm" to_table="plate_type" >
+				<fk_column name="plate_type_id" pk="plate_type_id" />
+			</fk>
+		</table>
+		<table name="targeted_primer_plate_layout" >
+			<column name="targeted_primer_plate_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="col" type="smallint" jt="5" mandatory="y" />
+			<column name="row" type="smallint" jt="5" mandatory="y" />
+			<column name="barcode_sequence" type="varchar" jt="12" mandatory="y" />
+			<index name="idx_barcode_sequence_plate_layout_barcode_sequence_plate_id" unique="NORMAL" >
+				<column name="targeted_primer_plate_id" />
+			</index>
+			<fk name="fk_template_barcode_seq_template_id" to_schema="pm" to_table="targeted_primer_plate" >
+				<fk_column name="targeted_primer_plate_id" pk="targeted_primer_plate_id" />
 			</fk>
 		</table>
 		<table name="tm300_8_tool" >
@@ -22994,72 +23432,92 @@ AS $function$xpath_exists$function$
 		</table>
 	</schema>
 	<layout id="Layout2861625" name="public" joined_routing="y" show_relation_columns="y" >
-		<entity schema="ag" name="ag_survey_answer" color="f7e2c6" x="1845" y="1020" />
-		<entity schema="ag" name="controlled_vocab_values" color="c6c6f7" x="1815" y="330" />
-		<entity schema="ag" name="controlled_vocabs" color="c6c6f7" x="1605" y="330" />
-		<entity schema="ag" name="ag_participant_exceptions" color="f7e2c6" x="1620" y="1020" />
-		<entity schema="ag" name="ag_survey_multiples" color="f7e2c6" x="2055" y="1020" />
-		<entity schema="ag" name="group_questions" color="ffcccc" x="2685" y="120" />
-		<entity schema="ag" name="survey_response_types" color="ffffff" x="2940" y="270" />
-		<entity schema="ag" name="surveys" color="a8c4ef" x="2955" y="2400" />
-		<entity schema="ag" name="survey_group" color="a8c4ef" x="2520" y="120" />
-		<entity schema="ag" name="survey_answers_other" color="a8c4ef" x="3150" y="615" />
-		<entity schema="ag" name="survey_question_triggers" color="a8c4ef" x="2940" y="405" />
-		<entity schema="ag" name="survey_response" color="a8c4ef" x="2520" y="270" />
-		<entity schema="ag" name="survey_question_response" color="ffcccc" x="2685" y="405" />
-		<entity schema="ag" name="iso_country_lookup" color="ffffff" x="2505" y="405" />
-		<entity schema="ag" name="survey_question_response_type" color="ffcccc" x="2685" y="270" />
-		<entity schema="ag" name="promoted_survey_ids" color="a8c4ef" x="2955" y="2535" />
-		<entity schema="ag" name="zipcodes" color="c6c6f7" x="2025" y="330" />
-		<entity schema="ag" name="ag_survey_multiples_backup" color="cef7c6" x="1170" y="600" />
-		<entity schema="ag" name="ag_import_stats_tmp" color="cef7c6" x="945" y="600" />
-		<entity schema="ag" name="ag_map_markers" color="cef7c6" x="1410" y="600" />
-		<entity schema="ag" name="survey_answers" color="a8c4ef" x="3150" y="765" />
-		<entity schema="ag" name="ag_human_survey" color="c6d9f7" x="2715" y="765" />
-		<entity schema="ag" name="external_survey_answers" color="a8c4ef" x="3150" y="1050" />
-		<entity schema="ag" name="external_survey_sources" color="a8c4ef" x="2700" y="600" />
-		<entity schema="barcodes" name="barcode_exceptions" color="a8c4ef" x="1860" y="1725" />
-		<entity schema="ag" name="survey_question" color="a8c4ef" x="2940" y="90" />
-		<entity schema="ag" name="ag_consent" color="c6d9f7" x="2955" y="765" />
-		<entity schema="ag" name="ag_login_surveys" color="ffcccc" x="2955" y="600" />
-		<entity schema="ag" name="consent_revoked" color="b7c8e3" x="2715" y="2535" />
-		<entity schema="barcodes" name="project_barcode" color="a8c4ef" x="1860" y="1590" />
-		<entity schema="ag" name="settings" color="a8c4ef" x="1185" y="1500" />
-		<entity schema="ag" name="labadmin_users" color="b2cdf7" x="1185" y="1365" />
-		<entity schema="ag" name="duplicate_consents" color="b7c8e3" x="2505" y="765" />
-		<entity schema="ag" name="ag_kit" color="f7e2c6" x="2250" y="1020" />
-		<entity schema="ag" name="ag_animal_survey" color="f7e2c6" x="2055" y="615" />
-		<entity schema="barcodes" name="barcode" color="a8c4ef" x="1860" y="1350" />
-		<entity schema="ag" name="ag_handout_barcodes" color="a8c4ef" x="1365" y="360" />
-		<entity schema="ag" name="ag_handout_kits" color="a8c4ef" x="1170" y="360" />
-		<entity schema="barcodes" name="project" color="a8c4ef" x="1710" y="1455" />
-		<entity schema="ag" name="ag_login" color="f7e2c6" x="1875" y="735" />
-		<entity schema="ag" name="ag_kit_barcodes" color="f7e2c6" x="1605" y="600" />
-		<entity schema="pm" name="master_mix_lot" color="b2cdf7" x="510" y="405" />
-		<entity schema="pm" name="tm300_8_tool" color="b2cdf7" x="270" y="45" />
-		<entity schema="pm" name="water_lot" color="b2cdf7" x="315" y="405" />
-		<entity schema="pm" name="tm50_8_tool" color="b2cdf7" x="120" y="405" />
-		<entity schema="pm" name="barcode_sequence_plate_layout" color="b2cdf7" x="510" y="255" />
-		<entity schema="pm" name="barcode_sequence_plate" color="b2cdf7" x="510" y="105" />
-		<entity schema="pm" name="processing_robot" color="b2cdf7" x="60" y="45" />
-		<entity schema="pm" name="protocol_targeted" color="b2cdf7" x="60" y="195" />
-		<entity schema="ag" name="labadmin_access" color="b2cdf7" x="1380" y="1500" />
-		<entity schema="ag" name="labadmin_users_access" color="b2cdf7" x="975" y="1500" />
-		<entity schema="pm" name="dna_plate" color="b2cdf7" x="75" y="855" />
-		<entity schema="pm" name="library_plate" color="b2cdf7" x="75" y="1065" />
-		<entity schema="pm" name="run_library_plate" color="b2cdf7" x="90" y="1275" />
-		<entity schema="pm" name="run" color="b2cdf7" x="255" y="1245" />
-		<entity schema="pm" name="protocol" color="b2cdf7" x="315" y="1155" />
-		<entity schema="pm" name="extraction_kit_lot" color="b2cdf7" x="345" y="990" />
-		<entity schema="pm" name="extraction_robot" color="b2cdf7" x="540" y="990" />
-		<entity schema="pm" name="extraction_tool" color="b2cdf7" x="705" y="1005" />
-		<entity schema="pm" name="plate_type" color="b2cdf7" x="210" y="570" />
-		<entity schema="pm" name="sample_plate_study" color="b2cdf7" x="270" y="750" />
-		<entity schema="pm" name="study" color="b2cdf7" x="450" y="750" />
-		<entity schema="pm" name="sample_plate" color="b2cdf7" x="45" y="690" />
-		<entity schema="pm" name="study_sample" color="b2cdf7" x="585" y="735" />
-		<entity schema="pm" name="sample" color="b2cdf7" x="690" y="585" />
-		<entity schema="pm" name="sample_plate_layout" color="b2cdf7" x="360" y="585" />
+		<entity schema="ag" name="ag_survey_answer" color="f7e2c6" x="2340" y="975" />
+		<entity schema="ag" name="controlled_vocab_values" color="c6c6f7" x="2610" y="270" />
+		<entity schema="ag" name="controlled_vocabs" color="c6c6f7" x="2400" y="270" />
+		<entity schema="ag" name="ag_participant_exceptions" color="f7e2c6" x="2115" y="975" />
+		<entity schema="ag" name="ag_survey_multiples" color="f7e2c6" x="2550" y="975" />
+		<entity schema="ag" name="group_questions" color="ffcccc" x="3180" y="75" />
+		<entity schema="ag" name="survey_response_types" color="ffffff" x="3435" y="225" />
+		<entity schema="ag" name="surveys" color="a8c4ef" x="3450" y="2355" />
+		<entity schema="ag" name="survey_group" color="a8c4ef" x="3015" y="75" />
+		<entity schema="ag" name="survey_answers_other" color="a8c4ef" x="3645" y="570" />
+		<entity schema="ag" name="survey_question_triggers" color="a8c4ef" x="3435" y="360" />
+		<entity schema="ag" name="survey_response" color="a8c4ef" x="3015" y="225" />
+		<entity schema="ag" name="survey_question_response" color="ffcccc" x="3180" y="360" />
+		<entity schema="ag" name="iso_country_lookup" color="ffffff" x="3000" y="360" />
+		<entity schema="ag" name="survey_question_response_type" color="ffcccc" x="3180" y="225" />
+		<entity schema="ag" name="promoted_survey_ids" color="a8c4ef" x="3450" y="2490" />
+		<entity schema="ag" name="zipcodes" color="c6c6f7" x="2820" y="270" />
+		<entity schema="ag" name="ag_survey_multiples_backup" color="cef7c6" x="2235" y="1410" />
+		<entity schema="ag" name="ag_import_stats_tmp" color="cef7c6" x="2010" y="1410" />
+		<entity schema="ag" name="ag_map_markers" color="cef7c6" x="2475" y="1410" />
+		<entity schema="ag" name="survey_answers" color="a8c4ef" x="3645" y="720" />
+		<entity schema="ag" name="ag_human_survey" color="c6d9f7" x="3210" y="720" />
+		<entity schema="ag" name="external_survey_answers" color="a8c4ef" x="3645" y="1005" />
+		<entity schema="ag" name="external_survey_sources" color="a8c4ef" x="3195" y="555" />
+		<entity schema="barcodes" name="barcode_exceptions" color="a8c4ef" x="2790" y="1665" />
+		<entity schema="ag" name="survey_question" color="a8c4ef" x="3435" y="45" />
+		<entity schema="ag" name="ag_consent" color="c6d9f7" x="3450" y="720" />
+		<entity schema="ag" name="ag_login_surveys" color="ffcccc" x="3450" y="555" />
+		<entity schema="ag" name="consent_revoked" color="b7c8e3" x="3210" y="2490" />
+		<entity schema="barcodes" name="project_barcode" color="a8c4ef" x="2790" y="1530" />
+		<entity schema="ag" name="labadmin_users" color="b2cdf7" x="1650" y="1290" />
+		<entity schema="ag" name="duplicate_consents" color="b7c8e3" x="3000" y="720" />
+		<entity schema="ag" name="ag_kit" color="f7e2c6" x="2745" y="975" />
+		<entity schema="ag" name="ag_animal_survey" color="f7e2c6" x="2550" y="570" />
+		<entity schema="barcodes" name="barcode" color="a8c4ef" x="2790" y="1290" />
+		<entity schema="ag" name="ag_handout_barcodes" color="a8c4ef" x="2190" y="330" />
+		<entity schema="ag" name="ag_handout_kits" color="a8c4ef" x="1995" y="330" />
+		<entity schema="barcodes" name="project" color="a8c4ef" x="2640" y="1395" />
+		<entity schema="ag" name="ag_login" color="f7e2c6" x="2370" y="690" />
+		<entity schema="ag" name="ag_kit_barcodes" color="f7e2c6" x="2100" y="555" />
+		<entity schema="pm" name="tm300_8_tool" color="b2cdf7" x="270" y="825" />
+		<entity schema="pm" name="tm50_8_tool" color="b2cdf7" x="225" y="930" />
+		<entity schema="pm" name="water_lot" color="b2cdf7" x="225" y="1035" />
+		<entity schema="pm" name="sample_plate_layout" color="b2cdf7" x="1485" y="510" />
+		<entity schema="pm" name="sample" color="b2cdf7" x="1680" y="510" />
+		<entity schema="pm" name="study_sample" color="b2cdf7" x="1815" y="525" />
+		<entity schema="pm" name="study" color="b2cdf7" x="1770" y="645" />
+		<entity schema="pm" name="sample_plate_study" color="b2cdf7" x="1590" y="660" />
+		<entity schema="pm" name="dna_plate" color="b2cdf7" x="1470" y="1005" />
+		<entity schema="pm" name="extraction_tool" color="b2cdf7" x="1740" y="1110" />
+		<entity schema="pm" name="extraction_robot" color="b2cdf7" x="1725" y="1005" />
+		<entity schema="pm" name="extraction_kit_lot" color="b2cdf7" x="1725" y="900" />
+		<entity schema="pm" name="plate_reader" color="b2cdf7" x="165" y="1500" />
+		<entity schema="pm" name="processing_robot" color="b2cdf7" x="45" y="1320" />
+		<entity schema="ag" name="labadmin_access" color="b2cdf7" x="1815" y="1290" />
+		<entity schema="ag" name="labadmin_users_access" color="b2cdf7" x="1725" y="1410" />
+		<entity schema="ag" name="settings" color="a8c4ef" x="1725" y="1500" />
+		<entity schema="pm" name="plate_type" color="b2cdf7" x="1110" y="870" />
+		<entity schema="pm" name="mosquito" color="b2cdf7" x="180" y="1665" />
+		<entity schema="pm" name="qpcr" color="b2cdf7" x="255" y="1965" />
+		<entity schema="pm" name="echo" color="b2cdf7" x="735" y="1830" />
+		<entity schema="pm" name="master_mix_lot" color="b2cdf7" x="450" y="930" />
+		<entity schema="pm" name="targeted_primer_plate_layout" color="b2cdf7" x="435" y="795" />
+		<entity schema="pm" name="shotgun_plate" color="b2cdf7" x="420" y="1485" />
+		<entity schema="pm" name="condensed_plates" color="b2cdf7" x="705" y="1485" />
+		<entity schema="pm" name="shotgun_library_prep_kit" color="b2cdf7" x="90" y="1770" />
+		<entity schema="pm" name="shotgun_i5_index" color="b2cdf7" x="315" y="2175" />
+		<entity schema="pm" name="shotgun_i7_index" color="b2cdf7" x="555" y="2175" />
+		<entity schema="pm" name="shotgun_index_aliquot" color="b2cdf7" x="420" y="2310" />
+		<entity schema="pm" name="shotgun_pool_plate" color="b2cdf7" x="705" y="1935" />
+		<entity schema="pm" name="shotgun_pool_plate_well_values" color="b2cdf7" x="825" y="2040" />
+		<entity schema="pm" name="shotgun_normalized_plate_well_values" color="b2cdf7" x="390" y="2010" />
+		<entity schema="pm" name="sample_plate" color="b2cdf7" x="1335" y="645" />
+		<entity schema="pm" name="targeted_plate" color="b2cdf7" x="675" y="945" />
+		<entity schema="pm" name="targeted_pool" color="b2cdf7" x="870" y="1125" />
+		<entity schema="pm" name="dna_plate_well_values" color="b2cdf7" x="1470" y="885" />
+		<entity schema="pm" name="sequencer" color="b2cdf7" x="1380" y="1875" />
+		<entity schema="pm" name="run_pool" color="b2cdf7" x="1185" y="1725" />
+		<entity schema="pm" name="shotgun_adapter_aliquot" color="b2cdf7" x="75" y="1890" />
+		<entity schema="pm" name="shotgun_normalized_plate" color="b2cdf7" x="420" y="1725" />
+		<entity schema="pm" name="shotgun_pool" color="b2cdf7" x="930" y="1815" />
+		<entity schema="pm" name="targeted_primer_plate" color="b2cdf7" x="690" y="795" />
+		<entity schema="pm" name="shotgun_plate_layout" color="b2cdf7" x="435" y="1320" />
+		<entity schema="pm" name="protocol_run_pool" color="b2cdf7" x="1155" y="1575" />
+		<entity schema="pm" name="reagent_kit_lot" color="b2cdf7" x="1170" y="2055" />
+		<entity schema="pm" name="run" color="b2cdf7" x="1170" y="1860" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by :    american_gut_consent</comment>
 			<entity schema="ag" name="ag_survey_multiples" />
@@ -23127,27 +23585,73 @@ AS $function$xpath_exists$function$
 			<entity schema="pm" name="study" />
 			<entity schema="pm" name="sample" />
 			<entity schema="pm" name="sample_plate" />
-			<entity schema="pm" name="dna_plate" />
-			<entity schema="pm" name="library_plate" />
 			<entity schema="pm" name="sample_plate_layout" />
-			<entity schema="pm" name="extraction_robot" />
-			<entity schema="pm" name="extraction_kit_lot" />
-			<entity schema="pm" name="extraction_tool" />
-			<entity schema="pm" name="run" />
-			<entity schema="pm" name="run_library_plate" />
-			<entity schema="pm" name="plate_type" />
-			<entity schema="pm" name="protocol" />
 			<entity schema="pm" name="sample_plate_study" />
 		</group>
 		<group name="targeted_protocol" color="ffffcc" >
-			<entity schema="pm" name="protocol_targeted" />
-			<entity schema="pm" name="barcode_sequence_plate" />
-			<entity schema="pm" name="barcode_sequence_plate_layout" />
+			<entity schema="pm" name="targeted_primer_plate" />
+			<entity schema="pm" name="targeted_primer_plate_layout" />
 			<entity schema="pm" name="tm300_8_tool" />
 			<entity schema="pm" name="water_lot" />
 			<entity schema="pm" name="master_mix_lot" />
-			<entity schema="pm" name="processing_robot" />
 			<entity schema="pm" name="tm50_8_tool" />
+			<entity schema="pm" name="targeted_plate" />
+			<entity schema="pm" name="targeted_pool" />
 		</group>
+		<group name="Group_extraction" color="ffcccc" >
+			<entity schema="pm" name="extraction_tool" />
+			<entity schema="pm" name="extraction_robot" />
+			<entity schema="pm" name="extraction_kit_lot" />
+			<entity schema="pm" name="dna_plate" />
+			<entity schema="pm" name="dna_plate_well_values" />
+		</group>
+		<group name="shotgun_protocol" color="c4e0f9" >
+			<entity schema="pm" name="shotgun_plate" />
+			<entity schema="pm" name="condensed_plates" />
+			<entity schema="pm" name="shotgun_plate_layout" />
+			<entity schema="pm" name="mosquito" />
+			<entity schema="pm" name="plate_reader" />
+			<entity schema="pm" name="shotgun_adapter_aliquot" />
+			<entity schema="pm" name="shotgun_normalized_plate" />
+			<entity schema="pm" name="shotgun_normalized_plate_well_values" />
+			<entity schema="pm" name="echo" />
+			<entity schema="pm" name="shotgun_library_prep_kit" />
+			<entity schema="pm" name="shotgun_index_aliquot" />
+			<entity schema="pm" name="shotgun_i5_index" />
+			<entity schema="pm" name="shotgun_i7_index" />
+			<entity schema="pm" name="qpcr" />
+			<entity schema="pm" name="shotgun_pool" />
+			<entity schema="pm" name="shotgun_pool_plate" />
+			<entity schema="pm" name="shotgun_pool_plate_well_values" />
+		</group>
+		<group name="pool_and_sequencing" color="ccffcc" >
+			<entity schema="pm" name="run" />
+			<entity schema="pm" name="protocol_run_pool" />
+			<entity schema="pm" name="sequencer" />
+			<entity schema="pm" name="run_pool" />
+			<entity schema="pm" name="reagent_kit_lot" />
+		</group>
+		<script name="Sql" id="SQL1489998" >
+			<string><![CDATA[ALTER TABLE pm.run ADD regent_kit_lot_id bigint  NOT NULL;
+
+CREATE INDEX idx_run_1 ON pm.run ( regent_kit_lot_id ) ;
+
+ALTER TABLE pm.run ADD CONSTRAINT fk_run_reagent_kit_lot FOREIGN KEY ( regent_kit_lot_id ) REFERENCES pm.reagent_kit_lot( reagent_kit_lot_id )    ;
+
+CREATE TABLE pm.reagent_kit_lot ( 
+	reagent_kit_lot_id   bigserial  NOT NULL,
+	name                 varchar  NOT NULL,
+	notes                varchar  ,
+	reagent_kit_type     varchar  NOT NULL,
+	CONSTRAINT pk_reagent_kit_lot PRIMARY KEY ( reagent_kit_lot_id ),
+	CONSTRAINT idx_reagent_kit_lot UNIQUE ( name ) 
+ ) ;
+
+COMMENT ON COLUMN pm.reagent_kit_lot.reagent_kit_type IS 'In the DB this is an enum';
+
+ALTER TABLE pm.shotgun_plate_layout ALTER COLUMN sample_id SET NOT NULL;
+
+]]></string>
+		</script>
 	</layout>
 </project>
