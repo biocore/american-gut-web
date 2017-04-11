@@ -249,7 +249,8 @@ CREATE TABLE pm.water_lot (
     CONSTRAINT uq_water_lot_name UNIQUE ( name )
  );
 
-CREATE TYPE target_region AS ENUM ('16S V4', '18S', 'ITS');
+CREATE TYPE target_region AS ENUM ('16S', '18S', 'ITS');
+CREATE TYPE target_subfragment AS ENUM ('V4');
 
 CREATE TABLE pm.targeted_primer_plate (
     targeted_primer_plate_id   bigserial  NOT NULL,
@@ -257,7 +258,8 @@ CREATE TABLE pm.targeted_primer_plate (
     plate_type_id              bigint  NOT NULL,
     notes                      varchar  ,
     linker_primer_sequence     varchar NOT NULL,
-    target_gene_region         target_region NOT NULL,
+    target_gene                target_region NOT NULL,
+    target_subfragment         target_subfragment NOT NULL,
     CONSTRAINT pk_targeted_primer_plate PRIMARY KEY ( targeted_primer_plate_id ),
     CONSTRAINT uq_targeted_primer_plate_name UNIQUE ( name ) ,
     CONSTRAINT fk_template_plate_type_id FOREIGN KEY ( plate_type_id ) REFERENCES pm.plate_type( plate_type_id )
@@ -561,11 +563,11 @@ INSERT INTO pm.water_lot (name)
     VALUES ('RNBD9959');
 
 -- Add the barcode sequence plates
-INSERT INTO pm.targeted_primer_plate (name, plate_type_id, linker_primer_sequence, target_gene_region)
-    VALUES ('Primer plate 1', 1, 'GTGTGCCAGCMGCCGCGGTAA', '16S V4'), ('Primer plate 2', 1, 'GTGTGCCAGCMGCCGCGGTAA', '16S V4'),
-           ('Primer plate 3', 1, 'GTGTGCCAGCMGCCGCGGTAA', '16S V4'), ('Primer plate 4', 1, 'GTGTGCCAGCMGCCGCGGTAA', '16S V4'),
-           ('Primer plate 5', 1, 'GTGTGCCAGCMGCCGCGGTAA', '16S V4'), ('Primer plate 6', 1, 'GTGTGCCAGCMGCCGCGGTAA', '16S V4'),
-           ('Primer plate 7', 1, 'GTGTGCCAGCMGCCGCGGTAA', '16S V4'), ('Primer plate 8', 1, 'GTGTGCCAGCMGCCGCGGTAA', '16S V4');
+INSERT INTO pm.targeted_primer_plate (name, plate_type_id, linker_primer_sequence, target_gene, target_subfragment)
+    VALUES ('Primer plate 1', 1, 'GTGTGCCAGCMGCCGCGGTAA', '16S', 'V4'), ('Primer plate 2', 1, 'GTGTGCCAGCMGCCGCGGTAA', '16S', 'V4'),
+           ('Primer plate 3', 1, 'GTGTGCCAGCMGCCGCGGTAA', '16S', 'V4'), ('Primer plate 4', 1, 'GTGTGCCAGCMGCCGCGGTAA', '16S', 'V4'),
+           ('Primer plate 5', 1, 'GTGTGCCAGCMGCCGCGGTAA', '16S', 'V4'), ('Primer plate 6', 1, 'GTGTGCCAGCMGCCGCGGTAA', '16S', 'V4'),
+           ('Primer plate 7', 1, 'GTGTGCCAGCMGCCGCGGTAA', '16S', 'V4'), ('Primer plate 8', 1, 'GTGTGCCAGCMGCCGCGGTAA', '16S', 'V4');
 
 INSERT INTO pm.targeted_primer_plate_layout (
         targeted_primer_plate_id, row, col, barcode_sequence)
