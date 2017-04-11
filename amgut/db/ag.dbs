@@ -23369,7 +23369,10 @@ AS $function$xpath_exists$function$
 			<column name="plate_type_id" type="bigint" jt="-5" mandatory="y" />
 			<column name="notes" type="varchar" jt="12" />
 			<column name="linker_primer_sequence" type="varchar" jt="12" mandatory="y" />
-			<column name="target_gene_region" type="varchar" jt="12" mandatory="y" >
+			<column name="target_gene" type="varchar" jt="12" mandatory="y" >
+				<comment><![CDATA[In the DB this is an enum]]></comment>
+			</column>
+			<column name="target_subfragment" type="varchar" jt="12" mandatory="y" >
 				<comment><![CDATA[In the DB this is an enum]]></comment>
 			</column>
 			<index name="pk_barcode_sequence_plate" unique="PRIMARY_KEY" >
@@ -23505,7 +23508,6 @@ AS $function$xpath_exists$function$
 		<entity schema="pm" name="shotgun_pool_plate_well_values" color="b2cdf7" x="825" y="2040" />
 		<entity schema="pm" name="shotgun_normalized_plate_well_values" color="b2cdf7" x="390" y="2010" />
 		<entity schema="pm" name="sample_plate" color="b2cdf7" x="1335" y="645" />
-		<entity schema="pm" name="targeted_plate" color="b2cdf7" x="675" y="945" />
 		<entity schema="pm" name="targeted_pool" color="b2cdf7" x="870" y="1125" />
 		<entity schema="pm" name="dna_plate_well_values" color="b2cdf7" x="1470" y="885" />
 		<entity schema="pm" name="sequencer" color="b2cdf7" x="1380" y="1875" />
@@ -23513,11 +23515,12 @@ AS $function$xpath_exists$function$
 		<entity schema="pm" name="shotgun_adapter_aliquot" color="b2cdf7" x="75" y="1890" />
 		<entity schema="pm" name="shotgun_normalized_plate" color="b2cdf7" x="420" y="1725" />
 		<entity schema="pm" name="shotgun_pool" color="b2cdf7" x="930" y="1815" />
-		<entity schema="pm" name="targeted_primer_plate" color="b2cdf7" x="690" y="795" />
 		<entity schema="pm" name="shotgun_plate_layout" color="b2cdf7" x="435" y="1320" />
 		<entity schema="pm" name="protocol_run_pool" color="b2cdf7" x="1155" y="1575" />
 		<entity schema="pm" name="reagent_kit_lot" color="b2cdf7" x="1170" y="2055" />
 		<entity schema="pm" name="run" color="b2cdf7" x="1170" y="1860" />
+		<entity schema="pm" name="targeted_primer_plate" color="b2cdf7" x="690" y="795" />
+		<entity schema="pm" name="targeted_plate" color="b2cdf7" x="675" y="960" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by :    american_gut_consent</comment>
 			<entity schema="ag" name="ag_survey_multiples" />
@@ -23631,27 +23634,5 @@ AS $function$xpath_exists$function$
 			<entity schema="pm" name="run_pool" />
 			<entity schema="pm" name="reagent_kit_lot" />
 		</group>
-		<script name="Sql" id="SQL1489998" >
-			<string><![CDATA[ALTER TABLE pm.run ADD regent_kit_lot_id bigint  NOT NULL;
-
-CREATE INDEX idx_run_1 ON pm.run ( regent_kit_lot_id ) ;
-
-ALTER TABLE pm.run ADD CONSTRAINT fk_run_reagent_kit_lot FOREIGN KEY ( regent_kit_lot_id ) REFERENCES pm.reagent_kit_lot( reagent_kit_lot_id )    ;
-
-CREATE TABLE pm.reagent_kit_lot ( 
-	reagent_kit_lot_id   bigserial  NOT NULL,
-	name                 varchar  NOT NULL,
-	notes                varchar  ,
-	reagent_kit_type     varchar  NOT NULL,
-	CONSTRAINT pk_reagent_kit_lot PRIMARY KEY ( reagent_kit_lot_id ),
-	CONSTRAINT idx_reagent_kit_lot UNIQUE ( name ) 
- ) ;
-
-COMMENT ON COLUMN pm.reagent_kit_lot.reagent_kit_type IS 'In the DB this is an enum';
-
-ALTER TABLE pm.shotgun_plate_layout ALTER COLUMN sample_id SET NOT NULL;
-
-]]></string>
-		</script>
 	</layout>
 </project>
