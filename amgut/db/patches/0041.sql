@@ -534,7 +534,8 @@ CREATE TABLE pm.shotgun_library_prep_kit (
 -- Add options for properties
 
 INSERT INTO pm.plate_type (name, cols, rows, notes)
-    VALUES ('96-well', 12, 8, 'Standard 96-well plate');
+    VALUES ('96-well', 12, 8, 'Standard 96-well plate'),
+           ('384-well', 24, 16, 'Standard 384-well plate');
 
 INSERT INTO pm.extraction_robot (name)
     VALUES ('HOWE_KF1'), ('HOWE_KF2'), ('HOWE_KF3'), ('HOWE_KF4');
