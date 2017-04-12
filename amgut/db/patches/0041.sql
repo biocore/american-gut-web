@@ -841,6 +841,10 @@ INSERT INTO pm.sample (sample_id, is_blank, details)
            ('SWAB', TRUE, NULL),
            ('PCRCONTROL', TRUE, NULL);
 
+-- Add a plate
+INSERT INTO pm.plate_reader (name, notes)
+    VALUES ('PR1234', 'Standard plate reader');
+
 -- Drop these unused tables
 DROP TABLE barcodes.plate_barcode;
 DROP TABLE barcodes.plate;
