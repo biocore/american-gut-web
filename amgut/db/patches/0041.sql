@@ -479,6 +479,8 @@ CREATE TABLE pm.shotgun_library_prep_kit (
      water_volume_nl              real  NOT NULL,
      shotgun_i5_index_id          bigint  ,
      shotgun_i7_index_id          bigint  ,
+     qpcr_concentration           real ,
+     qpcr_cp                      real,
      CONSTRAINT fk_shotgun_normalized_plate_well_values FOREIGN KEY ( shotgun_normalized_plate_id ) REFERENCES pm.shotgun_normalized_plate( shotgun_normalized_plate_id ),
      CONSTRAINT fk_shotgun_normalized_plate_well_values_i5 FOREIGN KEY ( shotgun_i5_index_id ) REFERENCES pm.shotgun_i5_index( shotgun_i5_index_id ),
      CONSTRAINT fk_shotgun_normalized_plate_well_values_i7 FOREIGN KEY ( shotgun_i7_index_id ) REFERENCES pm.shotgun_i7_index( shotgun_i7_index_id )

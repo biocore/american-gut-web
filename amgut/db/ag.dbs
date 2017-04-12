@@ -23096,6 +23096,8 @@ AS $function$xpath_exists$function$
 			<column name="water_volume_nl" type="real" jt="7" mandatory="y" />
 			<column name="shotgun_i5_index_id" type="bigint" jt="-5" />
 			<column name="shotgun_i7_index_id" type="bigint" jt="-5" />
+			<column name="qpcr_concentration" type="real" jt="7" />
+			<column name="qpcr_cp" type="real" jt="7" />
 			<index name="idx_wgs_normalized_plate_well_values" unique="NORMAL" >
 				<column name="shotgun_normalized_plate_id" />
 			</index>
@@ -23501,12 +23503,8 @@ AS $function$xpath_exists$function$
 		<entity schema="pm" name="shotgun_plate" color="b2cdf7" x="420" y="1485" />
 		<entity schema="pm" name="condensed_plates" color="b2cdf7" x="705" y="1485" />
 		<entity schema="pm" name="shotgun_library_prep_kit" color="b2cdf7" x="90" y="1770" />
-		<entity schema="pm" name="shotgun_i5_index" color="b2cdf7" x="315" y="2175" />
-		<entity schema="pm" name="shotgun_i7_index" color="b2cdf7" x="555" y="2175" />
-		<entity schema="pm" name="shotgun_index_aliquot" color="b2cdf7" x="420" y="2310" />
 		<entity schema="pm" name="shotgun_pool_plate" color="b2cdf7" x="705" y="1935" />
 		<entity schema="pm" name="shotgun_pool_plate_well_values" color="b2cdf7" x="825" y="2040" />
-		<entity schema="pm" name="shotgun_normalized_plate_well_values" color="b2cdf7" x="390" y="2010" />
 		<entity schema="pm" name="sample_plate" color="b2cdf7" x="1335" y="645" />
 		<entity schema="pm" name="targeted_pool" color="b2cdf7" x="870" y="1125" />
 		<entity schema="pm" name="dna_plate_well_values" color="b2cdf7" x="1470" y="885" />
@@ -23521,6 +23519,10 @@ AS $function$xpath_exists$function$
 		<entity schema="pm" name="run" color="b2cdf7" x="1170" y="1860" />
 		<entity schema="pm" name="targeted_primer_plate" color="b2cdf7" x="690" y="795" />
 		<entity schema="pm" name="targeted_plate" color="b2cdf7" x="675" y="960" />
+		<entity schema="pm" name="shotgun_normalized_plate_well_values" color="b2cdf7" x="390" y="2010" />
+		<entity schema="pm" name="shotgun_index_aliquot" color="b2cdf7" x="420" y="2355" />
+		<entity schema="pm" name="shotgun_i5_index" color="b2cdf7" x="315" y="2205" />
+		<entity schema="pm" name="shotgun_i7_index" color="b2cdf7" x="555" y="2205" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by :    american_gut_consent</comment>
 			<entity schema="ag" name="ag_survey_multiples" />
