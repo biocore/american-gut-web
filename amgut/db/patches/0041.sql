@@ -844,6 +844,10 @@ INSERT INTO pm.sample (sample_id, is_blank, details)
            ('SWAB', TRUE, NULL),
            ('PCRCONTROL', TRUE, NULL);
 
+-- Add a plate
+INSERT INTO pm.plate_reader (name, notes)
+    VALUES ('PR1234', 'Standard plate reader');
+
 -- Add sequencer values
 INSERT INTO pm.sequencer (platform, instrument_model, name)
     VALUES ('Illumina', 'MiSeq', 'Knight Lab In house MiSeq');
