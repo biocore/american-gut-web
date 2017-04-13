@@ -884,3 +884,14 @@ $plate_sample_test$ LANGUAGE plpgsql;
 
 CREATE TRIGGER plate_sample_test BEFORE INSERT OR UPDATE ON pm.sample_plate_layout
     FOR EACH ROW EXECUTE PROCEDURE pm.plate_sample_test();
+
+CREATE TABLE pm.targeted_plate_well_values (
+	targeted_plate_id    bigint  ,
+	row                  integer  NOT NULL,
+	col                  integer  NOT NULL,
+	raw_concentration    real  NOT NULL,
+	mod_concentration    real
+ );
+
+CREATE INDEX idx_targeted_plate_well_values ON pm.targeted_plate_well_values ( targeted_plate_id );
+ALTER TABLE pm.targeted_plate_well_values ADD CONSTRAINT fk_fadfasf_targeted_plate FOREIGN KEY ( targeted_plate_id ) REFERENCES pm.targeted_plate( targeted_plate_id );
