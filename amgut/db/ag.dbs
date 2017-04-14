@@ -22788,29 +22788,26 @@ AS $function$xpath_exists$function$
 				<column name="name" />
 			</index>
 		</table>
-		<table name="reagent_kit_lot" >
-			<column name="reagent_kit_lot_id" type="bigserial" jt="-5" mandatory="y" />
-			<column name="name" type="varchar" jt="12" mandatory="y" />
-			<column name="notes" type="varchar" jt="12" />
-			<column name="reagent_kit_type" type="varchar" jt="12" mandatory="y" >
-				<comment><![CDATA[In the DB this is an enum]]></comment>
-			</column>
-			<index name="pk_reagent_kit_lot" unique="PRIMARY_KEY" >
-				<column name="reagent_kit_lot_id" />
-			</index>
-			<index name="idx_reagent_kit_lot" unique="UNIQUE" >
-				<column name="name" />
-			</index>
-		</table>
 		<table name="run" >
 			<column name="run_id" type="bigserial" jt="-5" mandatory="y" />
 			<column name="name" type="varchar" jt="12" mandatory="y" />
 			<column name="email" type="varchar" jt="12" />
 			<column name="created_on" type="timestamp" jt="93" />
 			<column name="notes" type="varchar" jt="12" />
-			<column name="sequencer_id" type="bigint" jt="-5" mandatory="y" />
 			<column name="run_pool_id" type="bigint" jt="-5" mandatory="y" />
-			<column name="reagent_kit_lot_id" type="bigint" jt="-5" mandatory="y" />
+			<column name="platform" type="varchar" jt="12" mandatory="y" >
+				<comment><![CDATA[ENUM in the DB]]></comment>
+			</column>
+			<column name="instrument_model" type="varchar" jt="12" mandatory="y" >
+				<comment><![CDATA[ENUM in the DB]]></comment>
+			</column>
+			<column name="assay" type="varchar" jt="12" mandatory="y" >
+				<comment><![CDATA[ENUM in the DB]]></comment>
+			</column>
+			<column name="fwd_cycles" type="integer" jt="4" mandatory="y" />
+			<column name="rev_cycles" type="integer" jt="4" mandatory="y" />
+			<column name="reagent_kit_lot" type="varchar" jt="12" />
+			<column name="sequencer" type="varchar" jt="12" />
 			<index name="pk_run" unique="PRIMARY_KEY" >
 				<column name="run_id" />
 			</index>
@@ -22820,26 +22817,14 @@ AS $function$xpath_exists$function$
 			<index name="idx_run_email" unique="NORMAL" >
 				<column name="email" />
 			</index>
-			<index name="idx_run" unique="NORMAL" >
-				<column name="sequencer_id" />
-			</index>
 			<index name="idx_run_0" unique="NORMAL" >
 				<column name="run_pool_id" />
-			</index>
-			<index name="idx_run_1" unique="NORMAL" >
-				<column name="reagent_kit_lot_id" />
 			</index>
 			<fk name="fk_run_labadmin_users" to_schema="ag" to_table="labadmin_users" >
 				<fk_column name="email" pk="email" />
 			</fk>
-			<fk name="fk_run_sequencer" to_schema="pm" to_table="sequencer" >
-				<fk_column name="sequencer_id" pk="sequencer_id" />
-			</fk>
 			<fk name="fk_run_run_pool" to_schema="pm" to_table="run_pool" >
 				<fk_column name="run_pool_id" pk="run_pool_id" />
-			</fk>
-			<fk name="fk_run_reagent_kit_lot" to_schema="pm" to_table="reagent_kit_lot" >
-				<fk_column name="reagent_kit_lot_id" pk="reagent_kit_lot_id" />
 			</fk>
 		</table>
 		<table name="run_pool" >
@@ -22931,19 +22916,6 @@ AS $function$xpath_exists$function$
 			<fk name="fk_sample_plate_study_study" to_schema="pm" to_table="study" >
 				<fk_column name="study_id" pk="study_id" />
 			</fk>
-		</table>
-		<table name="sequencer" >
-			<column name="sequencer_id" type="bigserial" jt="-5" mandatory="y" />
-			<column name="platform" type="varchar" jt="12" mandatory="y" />
-			<column name="instrument_model" type="varchar" jt="12" mandatory="y" >
-				<comment><![CDATA[in the DB this is an enum]]></comment>
-			</column>
-			<column name="name" type="varchar" jt="12" mandatory="y" >
-				<comment><![CDATA[In the DB this is an enum]]></comment>
-			</column>
-			<index name="pk_sequencer" unique="PRIMARY_KEY" >
-				<column name="sequencer_id" />
-			</index>
 		</table>
 		<table name="shotgun_adapter_aliquot" >
 			<column name="shotgun_adapter_aliquot_id" type="bigserial" jt="-5" mandatory="y" />
@@ -23520,15 +23492,12 @@ AS $function$xpath_exists$function$
 		<entity schema="pm" name="sample_plate" color="b2cdf7" x="1335" y="645" />
 		<entity schema="pm" name="targeted_pool" color="b2cdf7" x="870" y="1125" />
 		<entity schema="pm" name="dna_plate_well_values" color="b2cdf7" x="1470" y="885" />
-		<entity schema="pm" name="sequencer" color="b2cdf7" x="1380" y="1875" />
 		<entity schema="pm" name="run_pool" color="b2cdf7" x="1185" y="1725" />
 		<entity schema="pm" name="shotgun_adapter_aliquot" color="b2cdf7" x="75" y="1890" />
 		<entity schema="pm" name="shotgun_normalized_plate" color="b2cdf7" x="420" y="1725" />
 		<entity schema="pm" name="shotgun_pool" color="b2cdf7" x="930" y="1815" />
 		<entity schema="pm" name="shotgun_plate_layout" color="b2cdf7" x="435" y="1320" />
 		<entity schema="pm" name="protocol_run_pool" color="b2cdf7" x="1155" y="1575" />
-		<entity schema="pm" name="reagent_kit_lot" color="b2cdf7" x="1170" y="2055" />
-		<entity schema="pm" name="run" color="b2cdf7" x="1170" y="1860" />
 		<entity schema="pm" name="targeted_primer_plate" color="b2cdf7" x="690" y="795" />
 		<entity schema="pm" name="shotgun_normalized_plate_well_values" color="b2cdf7" x="390" y="2010" />
 		<entity schema="pm" name="shotgun_index_aliquot" color="b2cdf7" x="420" y="2355" />
@@ -23537,6 +23506,7 @@ AS $function$xpath_exists$function$
 		<entity schema="pm" name="targeted_plate" color="b2cdf7" x="675" y="960" />
 		<entity schema="pm" name="shotgun_pool_plate_well_values" color="b2cdf7" x="825" y="2040" />
 		<entity schema="pm" name="targeted_plate_well_values" color="b2cdf7" x="405" y="1125" />
+		<entity schema="pm" name="run" color="b2cdf7" x="1170" y="1860" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by :    american_gut_consent</comment>
 			<entity schema="ag" name="ag_survey_multiples" />
@@ -23646,9 +23616,7 @@ AS $function$xpath_exists$function$
 		<group name="pool_and_sequencing" color="ccffcc" >
 			<entity schema="pm" name="run" />
 			<entity schema="pm" name="protocol_run_pool" />
-			<entity schema="pm" name="sequencer" />
 			<entity schema="pm" name="run_pool" />
-			<entity schema="pm" name="reagent_kit_lot" />
 		</group>
 	</layout>
 </project>

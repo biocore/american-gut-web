@@ -109,14 +109,6 @@ CREATE TABLE pm.processing_robot (
 CREATE TYPE seq_platform AS ENUM ('Illumina');
 CREATE TYPE seq_instrument_model AS ENUM ('MiSeq', 'HiSeq 2500', 'HiSeq 4000');
 
- CREATE TABLE pm.sequencer (
-     sequencer_id         bigserial  NOT NULL,
-     platform             seq_platform  NOT NULL,
-     instrument_model     seq_instrument_model  NOT NULL,
-     name                 varchar  NOT NULL,
-     CONSTRAINT pk_sequencer PRIMARY KEY ( sequencer_id )
-  ) ;
-
  CREATE TABLE pm.run_pool (
   	run_pool_id          bigserial  NOT NULL,
   	name                 varchar  NOT NULL,
@@ -127,16 +119,11 @@ CREATE TYPE seq_instrument_model AS ENUM ('MiSeq', 'HiSeq 2500', 'HiSeq 4000');
  ) ;
 
 
- CREATE TYPE reagent_type AS ENUM ('MiSeq v3 150 cycle');
+CREATE TYPE reagent_kit_lot_type AS ENUM ('MiSeq v3 150 cycle', 'MS1234');
 
- CREATE TABLE pm.reagent_kit_lot (
- 	reagent_kit_lot_id   bigserial  NOT NULL,
- 	name                 varchar  NOT NULL,
- 	notes                varchar  ,
- 	reagent_kit_type     reagent_type  NOT NULL,
- 	CONSTRAINT pk_reagent_kit_lot PRIMARY KEY ( reagent_kit_lot_id ),
- 	CONSTRAINT idx_reagent_kit_lot UNIQUE ( name )
-  ) ;
+CREATE TYPE sequencer_type AS ENUM ('Illumina', 'MiSeq', 'Knight Lab In house MiSeq');
+
+CREATE TYPE assay_type AS ENUM ('Kapa Hyper Plus', 'TrueSeq HT');
 
 CREATE TABLE pm.run (
     run_id               bigserial  NOT NULL,
@@ -144,18 +131,20 @@ CREATE TABLE pm.run (
     email                varchar  ,
     created_on           timestamp  ,
     notes                varchar  ,
-    sequencer_id         bigint NOT NULL,
     run_pool_id          bigint NOT NULL,
-    reagent_kit_lot_id   bigint NOT NULL,
+    sequencer            sequencer_type,
+    reagent_kit_lot      reagent_kit_lot_typ,
+    platform             seq_platform,
+    instrument_model     seq_instrument_model,
+    assay                assay_type,
+    fwd_cycles           integer  NOT NULL,
+    rev_cycles           integer  NOT NULL,
     CONSTRAINT pk_run PRIMARY KEY ( run_id ),
     CONSTRAINT uq_run_name UNIQUE ( name ) ,
     CONSTRAINT fk_run_labadmin_users FOREIGN KEY ( email ) REFERENCES ag.labadmin_users( email ),
-    CONSTRAINT fk_run_sequencer FOREIGN KEY ( sequencer_id ) REFERENCES pm.sequencer( sequencer_id ),
     CONSTRAINT fk_run_run_pool FOREIGN KEY ( run_pool_id ) REFERENCES pm.run_pool( run_pool_id ),
-    CONSTRAINT fk_run_reagent_kit_lot FOREIGN KEY ( reagent_kit_lot_id ) REFERENCES pm.reagent_kit_lot( reagent_kit_lot_id )
  );
 CREATE INDEX idx_run_email ON pm.run ( email );
-CREATE INDEX idx_run ON pm.run ( sequencer_id ) ;
 CREATE INDEX idx_run_pool_link ON pm.run ( run_pool_id ) ;
 CREATE INDEX idx_run_reagent ON pm.run ( reagent_kit_lot_id ) ;
 
@@ -850,14 +839,6 @@ INSERT INTO pm.sample (sample_id, is_blank, details)
 INSERT INTO pm.plate_reader (name, notes)
     VALUES ('PR1234', 'Standard plate reader');
 
--- Add sequencer values
-INSERT INTO pm.sequencer (platform, instrument_model, name)
-    VALUES ('Illumina', 'MiSeq', 'Knight Lab In house MiSeq');
-
--- Add some reagent value
-INSERT INTO pm.reagent_kit_lot (name, reagent_kit_type)
-    VALUES ('MS1234', 'MiSeq v3 150 cycle');
-
 -- Drop these unused tables
 DROP TABLE barcodes.plate_barcode;
 DROP TABLE barcodes.plate;
@@ -895,3 +876,4 @@ CREATE TABLE pm.targeted_plate_well_values (
 
 CREATE INDEX idx_targeted_plate_well_values ON pm.targeted_plate_well_values ( targeted_plate_id );
 ALTER TABLE pm.targeted_plate_well_values ADD CONSTRAINT fk_fadfasf_targeted_plate FOREIGN KEY ( targeted_plate_id ) REFERENCES pm.targeted_plate( targeted_plate_id );
+
