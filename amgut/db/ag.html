@@ -337,7 +337,7 @@ table {
 <rect style='fill:url(#groupUnderTitleLine); stroke-width:2;' x='1465' y='868' width='415' height='2' />
 
 <!-- ============= Group 'shotgun_protocol' ============= -->
-<rect class='grp' style='fill:#c4e0f9;stroke:#c5d4e0' x='59' y='1285' width='1007' height='1070' />
+<rect class='grp' style='fill:#c4e0f9;stroke:#c5d4e0' x='59' y='1285' width='1007' height='935' />
 <text x='70' y='1300'>shotgun_protocol</text>
 <rect style='fill:url(#groupUnderTitleLine); stroke-width:2;' x='70' y='1303' width='985' height='2' />
 
@@ -691,7 +691,7 @@ table {
 	shotgun_normalized_plate references labadmin_users ( qpcr_email -> email )</title>
 </path>
 <text x='622' y='1915' transform='rotate(0 622,1915)' title='Foreign Key fk_wgs_normalized_plate_qpcr_email
-	shotgun_normalized_plate references labadmin_users ( qpcr_email -> email )' style='fill:#a1a0a0;'>qpcr_email</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'  style='stroke-dasharray:4,2;'  d='M 405 1950 L 352,1950 Q 345,1950 345,1957 L 345,1987 Q 345,1995 337,1995 L 330,1995' >
+	shotgun_normalized_plate references labadmin_users ( qpcr_email -> email )' style='fill:#a1a0a0;'>qpcr_email</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'  style='stroke-dasharray:4,2;'  d='M 405 1950 L 397,1950 Q 390,1950 390,1957 L 390,1957 Q 390,1965 382,1965 L 375,1965' >
 	<title>Foreign Key fk_wgs_normalized_plate_qpcr
 	shotgun_normalized_plate references qpcr ( qpcr_id )</title>
 </path>
@@ -796,22 +796,22 @@ table {
 	shotgun_normalized_plate_well_values references shotgun_normalized_plate ( shotgun_normalized_plate_id )</title>
 </path>
 <text x='622' y='2035' transform='rotate(0 622,2035)' title='Foreign Key fk_wgs_normalized_plate_well_values
-	shotgun_normalized_plate_well_values references shotgun_normalized_plate ( shotgun_normalized_plate_id )' style='fill:#a1a0a0;'>shotgun_normalized_plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'  style='stroke-dasharray:4,2;'  d='M 375 2115 L 307,2115 Q 300,2115 300,2122 L 300,2122 Q 300,2130 292,2130 L 285,2130' >
+	shotgun_normalized_plate_well_values references shotgun_normalized_plate ( shotgun_normalized_plate_id )' style='fill:#a1a0a0;'>shotgun_normalized_plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'  style='stroke-dasharray:4,2;'  d='M 615 2115 L 622,2115 Q 630,2115 630,2122 L 630,2122 Q 630,2130 637,2130 L 645,2130' >
 	<title>Foreign Key fk_wgs_normalized_plate_well_values_i5
-	shotgun_normalized_plate_well_values references shotgun_i5_index ( shotgun_i5_index_id )</title>
+	shotgun_normalized_plate_well_values references shotgun_index ( shotgun_i5_index_id -> shotgun_index_id )</title>
 </path>
-<text x='264' y='2110' transform='rotate(0 264,2110)' title='Foreign Key fk_wgs_normalized_plate_well_values_i5
-	shotgun_normalized_plate_well_values references shotgun_i5_index ( shotgun_i5_index_id )' style='fill:#a1a0a0;'>shotgun_i5_index_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'  style='stroke-dasharray:4,2;'  d='M 615 2130 L 712,2130 Q 720,2130 720,2137 L 720,2227 Q 720,2235 712,2235 L 705,2235' >
-	<title>Foreign Key fk_wgs_normalized_plate_well_values_i7
-	shotgun_normalized_plate_well_values references shotgun_i7_index ( shotgun_i7_index_id )</title>
-</path>
-<text x='622' y='2125' transform='rotate(0 622,2125)' title='Foreign Key fk_wgs_normalized_plate_well_values_i7
-	shotgun_normalized_plate_well_values references shotgun_i7_index ( shotgun_i7_index_id )' style='fill:#a1a0a0;'>shotgun_i7_index_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 375 2040 L 352,2040 Q 345,2040 345,2047 L 345,2197 Q 345,2205 337,2205 L 202,2205 Q 195,2205 195,2212 L 195,2257 Q 195,2265 202,2265 L 210,2265' >
+<text x='622' y='2110' transform='rotate(0 622,2110)' title='Foreign Key fk_wgs_normalized_plate_well_values_i5
+	shotgun_normalized_plate_well_values references shotgun_index ( shotgun_i5_index_id -> shotgun_index_id )' style='fill:#a1a0a0;'>shotgun_i5_index_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 375 2040 L 367,2040 Q 360,2040 360,2047 L 360,2092 Q 360,2100 352,2100 L 345,2100' >
 	<title>Foreign Key fk_shotgun_normalized_plate_well_values_aliquot
 	shotgun_normalized_plate_well_values references shotgun_index_aliquot ( shotgun_normalized_plate_id -> shotgun_index_aliquot_id )</title>
 </path>
 <text x='218' y='2035' transform='rotate(0 218,2035)' title='Foreign Key fk_shotgun_normalized_plate_well_values_aliquot
-	shotgun_normalized_plate_well_values references shotgun_index_aliquot ( shotgun_normalized_plate_id -> shotgun_index_aliquot_id )' style='fill:#a1a0a0;'>shotgun_normalized_plate_id</text><!-- ============= Table 'ag_survey_answer' ============= -->
+	shotgun_normalized_plate_well_values references shotgun_index_aliquot ( shotgun_normalized_plate_id -> shotgun_index_aliquot_id )' style='fill:#a1a0a0;'>shotgun_normalized_plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 615 2130 L 645,2130' >
+	<title>Foreign Key fk_shotgun_normalized_plate_well_values
+	shotgun_normalized_plate_well_values references shotgun_index ( shotgun_i7_index_id -> shotgun_index_id )</title>
+</path>
+<text x='622' y='2125' transform='rotate(0 622,2125)' title='Foreign Key fk_shotgun_normalized_plate_well_values
+	shotgun_normalized_plate_well_values references shotgun_index ( shotgun_i7_index_id -> shotgun_index_id )' style='fill:#a1a0a0;'>shotgun_i7_index_id</text><!-- ============= Table 'ag_survey_answer' ============= -->
 <rect class='table' x='2340' y='968' width='150' height='120' rx='7' ry='7' />
 <path d='M 2340.50 994.50 L 2340.50 975.50 Q 2340.50 968.50 2347.50 968.50 L 2482.50 968.50 Q 2489.50 968.50 2489.50 975.50 L 2489.50 994.50 L2340.50 994.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
 <a xlink:href='#ag_survey_answer'><text x='2365' y='982' class='tableTitle'>ag_survey_answer</text><title>Table ag.ag_survey_answer</title></a>
@@ -1759,17 +1759,6 @@ Referred by targeted_primer_plate ( plate_type_id ) </title></a>
 <a xlink:href='#mosquito.name'><text x='198' y='1717'>name</text><title>name varchar not null</title></a>
   <a xlink:href='#mosquito.notes'><text x='198' y='1732'>notes</text><title>notes varchar</title></a>
 
-<!-- ============= Table 'qpcr' ============= -->
-<rect class='table' x='255' y='1958' width='75' height='90' rx='7' ry='7' />
-<path d='M 255.50 1984.50 L 255.50 1965.50 Q 255.50 1958.50 262.50 1958.50 L 322.50 1958.50 Q 329.50 1958.50 329.50 1965.50 L 329.50 1984.50 L255.50 1984.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
-<a xlink:href='#qpcr'><text x='280' y='1972' class='tableTitle'>qpcr</text><title>Table pm.qpcr</title></a>
-  <use id='nn' x='257' y='1992' xlink:href='#nn'/><a xlink:href='#qpcr.qpcr_id'><use id='pk' x='257' y='1991' xlink:href='#pk'/><title>Primary Key  ( qpcr_id ) </title></a>
-<a xlink:href='#qpcr.qpcr_id'><text x='273' y='2002'>qpcr_id</text><title>qpcr_id bigserial not null</title></a>
-<a xlink:href='#qpcr.qpcr_id'><use id='ref' x='318' y='1991' xlink:href='#ref'/><title>Referred by shotgun_normalized_plate ( qpcr_id ) </title></a>
-  <use id='nn' x='257' y='2007' xlink:href='#nn'/><a xlink:href='#qpcr.name'><use id='unq' x='257' y='2006' xlink:href='#unq'/><title>Unique Index  ( name ) </title></a>
-<a xlink:href='#qpcr.name'><text x='273' y='2017'>name</text><title>name varchar not null</title></a>
-  <a xlink:href='#qpcr.notes'><text x='273' y='2032'>notes</text><title>notes varchar</title></a>
-
 <!-- ============= Table 'echo' ============= -->
 <rect class='table' x='735' y='1823' width='75' height='90' rx='7' ry='7' />
 <path d='M 735.50 1849.50 L 735.50 1830.50 Q 735.50 1823.50 742.50 1823.50 L 802.50 1823.50 Q 809.50 1823.50 809.50 1830.50 L 809.50 1849.50 L735.50 1849.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
@@ -2143,36 +2132,16 @@ This is an enum in the DB</title></a>
   <a xlink:href='#run.sequencer'><text x='1188' y='2077'>sequencer</text><title>sequencer varchar</title></a>
   <a xlink:href='#run.reagent_lot'><text x='1188' y='2092'>reagent_lot</text><title>reagent_lot varchar</title></a>
 
-<!-- ============= Table 'shotgun_i7_index' ============= -->
-<rect class='table' x='555' y='2198' width='150' height='75' rx='7' ry='7' />
-<path d='M 555.50 2224.50 L 555.50 2205.50 Q 555.50 2198.50 562.50 2198.50 L 697.50 2198.50 Q 704.50 2198.50 704.50 2205.50 L 704.50 2224.50 L555.50 2224.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
-<a xlink:href='#shotgun_i7_index'><text x='581' y='2212' class='tableTitle'>shotgun_i7_index</text><title>Table pm.shotgun_i7_index</title></a>
-  <use id='nn' x='557' y='2232' xlink:href='#nn'/><a xlink:href='#shotgun_i7_index.shotgun_i7_index_id'><use id='pk' x='557' y='2231' xlink:href='#pk'/><title>Primary Key  ( shotgun_i7_index_id ) </title></a>
-<a xlink:href='#shotgun_i7_index.shotgun_i7_index_id'><text x='573' y='2242'>shotgun_i7_index_id</text><title>shotgun_i7_index_id varchar not null</title></a>
-<a xlink:href='#shotgun_i7_index.shotgun_i7_index_id'><use id='ref' x='693' y='2231' xlink:href='#ref'/><title>Referred by shotgun_normalized_plate_well_values ( shotgun_i7_index_id ) </title></a>
-  <use id='nn' x='557' y='2247' xlink:href='#nn'/><a xlink:href='#shotgun_i7_index.bases'><text x='573' y='2257'>bases</text><title>bases varchar not null</title></a>
-
-<!-- ============= Table 'shotgun_i5_index' ============= -->
-<rect class='table' x='135' y='2093' width='150' height='75' rx='7' ry='7' />
-<path d='M 135.50 2119.50 L 135.50 2100.50 Q 135.50 2093.50 142.50 2093.50 L 277.50 2093.50 Q 284.50 2093.50 284.50 2100.50 L 284.50 2119.50 L135.50 2119.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
-<a xlink:href='#shotgun_i5_index'><text x='161' y='2107' class='tableTitle'>shotgun_i5_index</text><title>Table pm.shotgun_i5_index</title></a>
-  <use id='nn' x='137' y='2127' xlink:href='#nn'/><a xlink:href='#shotgun_i5_index.shotgun_i5_index_id'><use id='pk' x='137' y='2126' xlink:href='#pk'/><title>Primary Key  ( shotgun_i5_index_id ) </title></a>
-<a xlink:href='#shotgun_i5_index.shotgun_i5_index_id'><text x='153' y='2137'>shotgun_i5_index_id</text><title>shotgun_i5_index_id varchar not null</title></a>
-<a xlink:href='#shotgun_i5_index.shotgun_i5_index_id'><use id='ref' x='273' y='2126' xlink:href='#ref'/><title>Referred by shotgun_normalized_plate_well_values ( shotgun_i5_index_id ) </title></a>
-  <use id='nn' x='137' y='2142' xlink:href='#nn'/><a xlink:href='#shotgun_i5_index.bases'><text x='153' y='2152'>bases</text><title>bases varchar not null</title></a>
-
-<!-- ============= Table 'shotgun_index_aliquot' ============= -->
-<rect class='table' x='225' y='2228' width='180' height='105' rx='7' ry='7' />
-<path d='M 225.50 2254.50 L 225.50 2235.50 Q 225.50 2228.50 232.50 2228.50 L 397.50 2228.50 Q 404.50 2228.50 404.50 2235.50 L 404.50 2254.50 L225.50 2254.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
-<a xlink:href='#shotgun_index_aliquot'><text x='253' y='2242' class='tableTitle'>shotgun_index_aliquot</text><title>Table pm.shotgun_index_aliquot</title></a>
-  <use id='nn' x='227' y='2262' xlink:href='#nn'/><a xlink:href='#shotgun_index_aliquot.shotgun_index_aliquot_id'><use id='pk' x='227' y='2261' xlink:href='#pk'/><title>Primary Key  ( shotgun_index_aliquot_id ) </title></a>
-<a xlink:href='#shotgun_index_aliquot.shotgun_index_aliquot_id'><text x='243' y='2272'>shotgun_index_aliquot_id</text><title>shotgun_index_aliquot_id bigserial not null</title></a>
-<a xlink:href='#shotgun_index_aliquot.shotgun_index_aliquot_id'><use id='ref' x='393' y='2261' xlink:href='#ref'/><title>Referred by shotgun_normalized_plate_well_values ( shotgun_normalized_plate_id -> shotgun_index_aliquot_id ) 
-Referred by shotgun_normalized_plate_well_values ( shotgun_normalized_plate_id -> shotgun_index_aliquot_id ) </title></a>
-  <use id='nn' x='227' y='2277' xlink:href='#nn'/><a xlink:href='#shotgun_index_aliquot.name'><use id='unq' x='227' y='2276' xlink:href='#unq'/><title>Unique Index  ( name ) </title></a>
-<a xlink:href='#shotgun_index_aliquot.name'><text x='243' y='2287'>name</text><title>name varchar not null</title></a>
-  <a xlink:href='#shotgun_index_aliquot.notes'><text x='243' y='2302'>notes</text><title>notes varchar</title></a>
-  <use id='nn' x='227' y='2307' xlink:href='#nn'/><a xlink:href='#shotgun_index_aliquot.limit_freeze_thaw_cycles'><text x='243' y='2317'>limit_freeze_thaw_cycles</text><title>limit_freeze_thaw_cycles bigint not null</title></a>
+<!-- ============= Table 'qpcr' ============= -->
+<rect class='table' x='300' y='1928' width='75' height='90' rx='7' ry='7' />
+<path d='M 300.50 1954.50 L 300.50 1935.50 Q 300.50 1928.50 307.50 1928.50 L 367.50 1928.50 Q 374.50 1928.50 374.50 1935.50 L 374.50 1954.50 L300.50 1954.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
+<a xlink:href='#qpcr'><text x='325' y='1942' class='tableTitle'>qpcr</text><title>Table pm.qpcr</title></a>
+  <use id='nn' x='302' y='1962' xlink:href='#nn'/><a xlink:href='#qpcr.qpcr_id'><use id='pk' x='302' y='1961' xlink:href='#pk'/><title>Primary Key  ( qpcr_id ) </title></a>
+<a xlink:href='#qpcr.qpcr_id'><text x='318' y='1972'>qpcr_id</text><title>qpcr_id bigserial not null</title></a>
+<a xlink:href='#qpcr.qpcr_id'><use id='ref' x='363' y='1961' xlink:href='#ref'/><title>Referred by shotgun_normalized_plate ( qpcr_id ) </title></a>
+  <use id='nn' x='302' y='1977' xlink:href='#nn'/><a xlink:href='#qpcr.name'><use id='unq' x='302' y='1976' xlink:href='#unq'/><title>Unique Index  ( name ) </title></a>
+<a xlink:href='#qpcr.name'><text x='318' y='1987'>name</text><title>name varchar not null</title></a>
+  <a xlink:href='#qpcr.notes'><text x='318' y='2002'>notes</text><title>notes varchar</title></a>
 
 <!-- ============= Table 'shotgun_normalized_plate_well_values' ============= -->
 <rect class='table' x='390' y='2003' width='225' height='195' rx='7' ry='7' />
@@ -2188,13 +2157,37 @@ References shotgun_index_aliquot ( shotgun_normalized_plate_id -> shotgun_index_
   <use id='nn' x='392' y='2097' xlink:href='#nn'/><a xlink:href='#shotgun_normalized_plate_well_values.water_volume_nl'><text x='408' y='2107'>water_volume_nl</text><title>water_volume_nl real not null</title></a>
   <a xlink:href='#shotgun_normalized_plate_well_values.shotgun_i5_index_id'><use id='idx' x='392' y='2111' xlink:href='#idx'/><title>Index  ( shotgun_i5_index_id ) </title></a>
 <a xlink:href='#shotgun_normalized_plate_well_values.shotgun_i5_index_id'><text x='408' y='2122'>shotgun_i5_index_id</text><title>shotgun_i5_index_id varchar</title></a>
-<a xlink:href='#shotgun_normalized_plate_well_values.shotgun_i5_index_id'><use id='fk' x='603' y='2111' xlink:href='#fk'/><title>References shotgun_i5_index ( shotgun_i5_index_id ) </title></a>
+<a xlink:href='#shotgun_normalized_plate_well_values.shotgun_i5_index_id'><use id='fk' x='603' y='2111' xlink:href='#fk'/><title>References shotgun_index ( shotgun_i5_index_id -> shotgun_index_id ) </title></a>
   <a xlink:href='#shotgun_normalized_plate_well_values.shotgun_i7_index_id'><use id='idx' x='392' y='2126' xlink:href='#idx'/><title>Index  ( shotgun_i7_index_id ) </title></a>
 <a xlink:href='#shotgun_normalized_plate_well_values.shotgun_i7_index_id'><text x='408' y='2137'>shotgun_i7_index_id</text><title>shotgun_i7_index_id varchar</title></a>
-<a xlink:href='#shotgun_normalized_plate_well_values.shotgun_i7_index_id'><use id='fk' x='603' y='2126' xlink:href='#fk'/><title>References shotgun_i7_index ( shotgun_i7_index_id ) </title></a>
+<a xlink:href='#shotgun_normalized_plate_well_values.shotgun_i7_index_id'><use id='fk' x='603' y='2126' xlink:href='#fk'/><title>References shotgun_index ( shotgun_i7_index_id -> shotgun_index_id ) </title></a>
   <a xlink:href='#shotgun_normalized_plate_well_values.qpcr_concentration'><text x='408' y='2152'>qpcr_concentration</text><title>qpcr_concentration real</title></a>
   <a xlink:href='#shotgun_normalized_plate_well_values.qpcr_cp'><text x='408' y='2167'>qpcr_cp</text><title>qpcr_cp real</title></a>
   <a xlink:href='#shotgun_normalized_plate_well_values.shotgun_index_aliquot'><text x='408' y='2182'>shotgun_index_aliquot</text><title>shotgun_index_aliquot bigint</title></a>
+
+<!-- ============= Table 'shotgun_index' ============= -->
+<rect class='table' x='660' y='2093' width='135' height='75' rx='7' ry='7' />
+<path d='M 660.50 2119.50 L 660.50 2100.50 Q 660.50 2093.50 667.50 2093.50 L 787.50 2093.50 Q 794.50 2093.50 794.50 2100.50 L 794.50 2119.50 L660.50 2119.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
+<a xlink:href='#shotgun_index'><text x='687' y='2107' class='tableTitle'>shotgun_index</text><title>Table pm.shotgun_index</title></a>
+  <use id='nn' x='662' y='2127' xlink:href='#nn'/><a xlink:href='#shotgun_index.shotgun_index_id'><use id='pk' x='662' y='2126' xlink:href='#pk'/><title>Primary Key  ( shotgun_index_id ) </title></a>
+<a xlink:href='#shotgun_index.shotgun_index_id'><text x='678' y='2137'>shotgun_index_id</text><title>shotgun_index_id varchar not null</title></a>
+<a xlink:href='#shotgun_index.shotgun_index_id'><use id='ref' x='783' y='2126' xlink:href='#ref'/><title>Referred by shotgun_normalized_plate_well_values ( shotgun_i5_index_id -> shotgun_index_id ) 
+Referred by shotgun_normalized_plate_well_values ( shotgun_i7_index_id -> shotgun_index_id ) 
+Referred by shotgun_normalized_plate_well_values ( shotgun_i7_index_id -> shotgun_index_id ) </title></a>
+  <use id='nn' x='662' y='2142' xlink:href='#nn'/><a xlink:href='#shotgun_index.bases'><text x='678' y='2152'>bases</text><title>bases varchar not null</title></a>
+
+<!-- ============= Table 'shotgun_index_aliquot' ============= -->
+<rect class='table' x='165' y='2063' width='180' height='105' rx='7' ry='7' />
+<path d='M 165.50 2089.50 L 165.50 2070.50 Q 165.50 2063.50 172.50 2063.50 L 337.50 2063.50 Q 344.50 2063.50 344.50 2070.50 L 344.50 2089.50 L165.50 2089.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
+<a xlink:href='#shotgun_index_aliquot'><text x='193' y='2077' class='tableTitle'>shotgun_index_aliquot</text><title>Table pm.shotgun_index_aliquot</title></a>
+  <use id='nn' x='167' y='2097' xlink:href='#nn'/><a xlink:href='#shotgun_index_aliquot.shotgun_index_aliquot_id'><use id='pk' x='167' y='2096' xlink:href='#pk'/><title>Primary Key  ( shotgun_index_aliquot_id ) </title></a>
+<a xlink:href='#shotgun_index_aliquot.shotgun_index_aliquot_id'><text x='183' y='2107'>shotgun_index_aliquot_id</text><title>shotgun_index_aliquot_id bigserial not null</title></a>
+<a xlink:href='#shotgun_index_aliquot.shotgun_index_aliquot_id'><use id='ref' x='333' y='2096' xlink:href='#ref'/><title>Referred by shotgun_normalized_plate_well_values ( shotgun_normalized_plate_id -> shotgun_index_aliquot_id ) 
+Referred by shotgun_normalized_plate_well_values ( shotgun_normalized_plate_id -> shotgun_index_aliquot_id ) </title></a>
+  <use id='nn' x='167' y='2112' xlink:href='#nn'/><a xlink:href='#shotgun_index_aliquot.name'><use id='unq' x='167' y='2111' xlink:href='#unq'/><title>Unique Index  ( name ) </title></a>
+<a xlink:href='#shotgun_index_aliquot.name'><text x='183' y='2122'>name</text><title>name varchar not null</title></a>
+  <a xlink:href='#shotgun_index_aliquot.notes'><text x='183' y='2137'>notes</text><title>notes varchar</title></a>
+  <use id='nn' x='167' y='2142' xlink:href='#nn'/><a xlink:href='#shotgun_index_aliquot.limit_freeze_thaw_cycles'><text x='183' y='2152'>limit_freeze_thaw_cycles</text><title>limit_freeze_thaw_cycles bigint not null</title></a>
 
 </g></svg>
 
@@ -5814,42 +5807,6 @@ References shotgun_index_aliquot ( shotgun_normalized_plate_id -> shotgun_index_
 <br/><br/>
 <table class='bordered'>
 <thead>
-<tr><th colspan='4'><a name='qpcr'>Table qpcr</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td>*</td>
-		<td><a name='qpcr.qpcr_id'>qpcr&#095;id</a></td>
-		<td> bigserial   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='qpcr.name'>name</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='qpcr.notes'>notes</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='4'><b>Indexes</b></th></tr>
-	<tr>		<td>Pk</td><td>pk&#095;qpcr</td>
-		<td> ON qpcr&#095;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>U</td><td>idx&#095;qpcr</td>
-		<td> ON name</td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table class='bordered'>
-<thead>
 <tr><th colspan='4'><a name='echo'>Table echo</a></th></tr>
 </thead>
 <tbody>
@@ -7323,91 +7280,33 @@ References shotgun_index_aliquot ( shotgun_normalized_plate_id -> shotgun_index_
 <br/><br/>
 <table class='bordered'>
 <thead>
-<tr><th colspan='4'><a name='shotgun_i7_index'>Table shotgun_i7_index</a></th></tr>
+<tr><th colspan='4'><a name='qpcr'>Table qpcr</a></th></tr>
 </thead>
 <tbody>
 	<tr>
 		<td>*</td>
-		<td><a name='shotgun_i7_index.shotgun_i7_index_id'>shotgun&#095;i7&#095;index&#095;id</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='shotgun_i7_index.bases'>bases</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='4'><b>Indexes</b></th></tr>
-	<tr>		<td>Pk</td><td>pk&#095;i7&#095;index</td>
-		<td> ON shotgun&#095;i7&#095;index&#095;id</td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table class='bordered'>
-<thead>
-<tr><th colspan='4'><a name='shotgun_i5_index'>Table shotgun_i5_index</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td>*</td>
-		<td><a name='shotgun_i5_index.shotgun_i5_index_id'>shotgun&#095;i5&#095;index&#095;id</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='shotgun_i5_index.bases'>bases</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='4'><b>Indexes</b></th></tr>
-	<tr>		<td>Pk</td><td>pk&#095;i5&#095;index</td>
-		<td> ON shotgun&#095;i5&#095;index&#095;id</td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table class='bordered'>
-<thead>
-<tr><th colspan='4'><a name='shotgun_index_aliquot'>Table shotgun_index_aliquot</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td>*</td>
-		<td><a name='shotgun_index_aliquot.shotgun_index_aliquot_id'>shotgun&#095;index&#095;aliquot&#095;id</a></td>
+		<td><a name='qpcr.qpcr_id'>qpcr&#095;id</a></td>
 		<td> bigserial   </td>
 		<td>  </td>
 	</tr>
 	<tr>
 		<td>*</td>
-		<td><a name='shotgun_index_aliquot.name'>name</a></td>
+		<td><a name='qpcr.name'>name</a></td>
 		<td> varchar   </td>
 		<td>  </td>
 	</tr>
 	<tr>
 		<td>&nbsp;</td>
-		<td><a name='shotgun_index_aliquot.notes'>notes</a></td>
+		<td><a name='qpcr.notes'>notes</a></td>
 		<td> varchar   </td>
 		<td>  </td>
 	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='shotgun_index_aliquot.limit_freeze_thaw_cycles'>limit&#095;freeze&#095;thaw&#095;cycles</a></td>
-		<td> bigint   </td>
-		<td>  </td>
-	</tr>
 <tr><th colspan='4'><b>Indexes</b></th></tr>
-	<tr>		<td>Pk</td><td>pk&#095;index&#095;aliquot</td>
-		<td> ON shotgun&#095;index&#095;aliquot&#095;id</td>
+	<tr>		<td>Pk</td><td>pk&#095;qpcr</td>
+		<td> ON qpcr&#095;id</td>
 		<td>  </td>
 	</tr>
-	<tr>		<td>U</td><td>idx&#095;index&#095;aliquot</td>
+	<tr>		<td>U</td><td>idx&#095;qpcr</td>
 		<td> ON name</td>
 		<td>  </td>
 	</tr>
@@ -7501,17 +7400,85 @@ References shotgun_index_aliquot ( shotgun_normalized_plate_id -> shotgun_index_
 	</tr>
 	<tr>
 		<td>&nbsp;</td><td>fk_wgs_normalized_plate_well_values_i5</td>
-		<td > ( shotgun&#095;i5&#095;index&#095;id ) ref <a href='#shotgun&#095;i5&#095;index'>shotgun&#095;i5&#095;index</a> (shotgun&#095;i5&#095;index&#095;id) </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td><td>fk_wgs_normalized_plate_well_values_i7</td>
-		<td > ( shotgun&#095;i7&#095;index&#095;id ) ref <a href='#shotgun&#095;i7&#095;index'>shotgun&#095;i7&#095;index</a> (shotgun&#095;i7&#095;index&#095;id) </td>
+		<td > ( shotgun&#095;i5&#095;index&#095;id ) ref <a href='#shotgun&#095;index'>shotgun&#095;index</a> (shotgun&#095;index&#095;id) </td>
 		<td>  </td>
 	</tr>
 	<tr>
 		<td>&nbsp;</td><td>fk_shotgun_normalized_plate_well_values_aliquot</td>
 		<td > ( shotgun&#095;normalized&#095;plate&#095;id ) ref <a href='#shotgun&#095;index&#095;aliquot'>shotgun&#095;index&#095;aliquot</a> (shotgun&#095;index&#095;aliquot&#095;id) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_shotgun_normalized_plate_well_values</td>
+		<td > ( shotgun&#095;i7&#095;index&#095;id ) ref <a href='#shotgun&#095;index'>shotgun&#095;index</a> (shotgun&#095;index&#095;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='shotgun_index'>Table shotgun_index</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='shotgun_index.shotgun_index_id'>shotgun&#095;index&#095;id</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='shotgun_index.bases'>bases</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>Pk</td><td>idx&#095;shotgun&#095;index</td>
+		<td> ON shotgun&#095;index&#095;id</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='shotgun_index_aliquot'>Table shotgun_index_aliquot</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='shotgun_index_aliquot.shotgun_index_aliquot_id'>shotgun&#095;index&#095;aliquot&#095;id</a></td>
+		<td> bigserial   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='shotgun_index_aliquot.name'>name</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='shotgun_index_aliquot.notes'>notes</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='shotgun_index_aliquot.limit_freeze_thaw_cycles'>limit&#095;freeze&#095;thaw&#095;cycles</a></td>
+		<td> bigint   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>Pk</td><td>pk&#095;index&#095;aliquot</td>
+		<td> ON shotgun&#095;index&#095;aliquot&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>U</td><td>idx&#095;index&#095;aliquot</td>
+		<td> ON name</td>
 		<td>  </td>
 	</tr>
 </tbody>
