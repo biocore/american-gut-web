@@ -23067,9 +23067,6 @@ AS $function$xpath_exists$function$
 			<fk name="fk_wgs_normalized_plate_well_values_i5" to_schema="pm" to_table="shotgun_index" >
 				<fk_column name="shotgun_i5_index_id" pk="shotgun_index_id" />
 			</fk>
-			<fk name="fk_shotgun_normalized_plate_well_values_aliquot" to_schema="pm" to_table="shotgun_index_aliquot" >
-				<fk_column name="shotgun_normalized_plate_id" pk="shotgun_index_aliquot_id" />
-			</fk>
 			<fk name="fk_shotgun_normalized_plate_well_values" to_schema="pm" to_table="shotgun_index" >
 				<fk_column name="shotgun_i7_index_id" pk="shotgun_index_id" />
 			</fk>
@@ -23487,10 +23484,10 @@ AS $function$xpath_exists$function$
 		<entity schema="pm" name="shotgun_pool_plate_well_values" color="b2cdf7" x="825" y="2040" />
 		<entity schema="pm" name="targeted_plate_well_values" color="b2cdf7" x="405" y="1125" />
 		<entity schema="pm" name="qpcr" color="b2cdf7" x="300" y="1935" />
-		<entity schema="pm" name="shotgun_normalized_plate_well_values" color="b2cdf7" x="390" y="2010" />
 		<entity schema="pm" name="shotgun_index_aliquot" color="b2cdf7" x="165" y="2070" />
 		<entity schema="pm" name="run" color="b2cdf7" x="1170" y="1860" />
 		<entity schema="pm" name="shotgun_index" color="b2cdf7" x="660" y="2100" />
+		<entity schema="pm" name="shotgun_normalized_plate_well_values" color="b2cdf7" x="390" y="2010" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by :    american_gut_consent</comment>
 			<entity schema="ag" name="ag_survey_multiples" />

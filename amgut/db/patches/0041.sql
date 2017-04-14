@@ -462,7 +462,7 @@ CREATE TABLE pm.shotgun_library_prep_kit (
  CREATE INDEX idx_wgs_normalized_plate_well_values_1 ON pm.shotgun_normalized_plate_well_values ( shotgun_i7_index_id );
  ALTER TABLE pm.shotgun_normalized_plate_well_values ADD CONSTRAINT fk_wgs_normalized_plate_well_values FOREIGN KEY ( shotgun_normalized_plate_id ) REFERENCES pm.shotgun_normalized_plate( shotgun_normalized_plate_id );
  ALTER TABLE pm.shotgun_normalized_plate_well_values ADD CONSTRAINT fk_wgs_normalized_plate_well_values_i5 FOREIGN KEY ( shotgun_i5_index_id ) REFERENCES pm.shotgun_index( shotgun_index_id );
- ALTER TABLE pm.shotgun_normalized_plate_well_values ADD CONSTRAINT fk_shotgun_normalized_plate_well_values_aliquot FOREIGN KEY ( shotgun_normalized_plate_id ) REFERENCES pm.shotgun_index_aliquot( shotgun_index_aliquot_id );
+ ALTER TABLE pm.shotgun_normalized_plate_well_values ADD CONSTRAINT fk_shotgun_normalized_plate_well_values_aliquot FOREIGN KEY ( shotgun_index_aliquot ) REFERENCES pm.shotgun_index_aliquot( shotgun_index_aliquot_id );
  ALTER TABLE pm.shotgun_normalized_plate_well_values ADD CONSTRAINT fk_shotgun_normalized_plate_well_values FOREIGN KEY ( shotgun_i7_index_id ) REFERENCES pm.shotgun_index( shotgun_index_id );
 
  CREATE TABLE pm.shotgun_pool (
