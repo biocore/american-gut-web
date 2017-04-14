@@ -781,17 +781,7 @@ table {
 	targeted_plate_well_values references targeted_plate ( targeted_plate_id )</title>
 </path>
 <text x='577' y='1150' transform='rotate(0 577,1150)' title='Foreign Key fk_fadfasf_targeted_plate
-	targeted_plate_well_values references targeted_plate ( targeted_plate_id )' style='fill:#a1a0a0;'>targeted_plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 1305 1920 L 1612,1920 Q 1620,1920 1620,1912 L 1620,1440' >
-	<title>Foreign Key fk_run_labadmin_users
-	run references labadmin_users ( email )</title>
-</path>
-<text x='1312' y='1915' transform='rotate(0 1312,1915)' title='Foreign Key fk_run_labadmin_users
-	run references labadmin_users ( email )' style='fill:#a1a0a0;'>email</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1305 1965 L 1312,1965 Q 1320,1965 1320,1957 L 1320,1762 Q 1320,1755 1312,1755 L 1290,1755' >
-	<title>Foreign Key fk_run_run_pool
-	run references run_pool ( run_pool_id )</title>
-</path>
-<text x='1312' y='1960' transform='rotate(0 1312,1960)' title='Foreign Key fk_run_run_pool
-	run references run_pool ( run_pool_id )' style='fill:#a1a0a0;'>run_pool_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 615 2040 L 622,2040 Q 630,2040 630,2032 L 630,1762 Q 630,1755 622,1755 L 615,1755' >
+	targeted_plate_well_values references targeted_plate ( targeted_plate_id )' style='fill:#a1a0a0;'>targeted_plate_id</text><path transform='translate(7,0)' marker-start='url(#foot)' marker-end='url(#arrow)'    d='M 615 2040 L 622,2040 Q 630,2040 630,2032 L 630,1762 Q 630,1755 622,1755 L 615,1755' >
 	<title>Foreign Key fk_wgs_normalized_plate_well_values
 	shotgun_normalized_plate_well_values references shotgun_normalized_plate ( shotgun_normalized_plate_id )</title>
 </path>
@@ -811,7 +801,17 @@ table {
 	shotgun_normalized_plate_well_values references shotgun_index ( shotgun_i7_index_id -> shotgun_index_id )</title>
 </path>
 <text x='622' y='2125' transform='rotate(0 622,2125)' title='Foreign Key fk_shotgun_normalized_plate_well_values
-	shotgun_normalized_plate_well_values references shotgun_index ( shotgun_i7_index_id -> shotgun_index_id )' style='fill:#a1a0a0;'>shotgun_i7_index_id</text><!-- ============= Table 'ag_survey_answer' ============= -->
+	shotgun_normalized_plate_well_values references shotgun_index ( shotgun_i7_index_id -> shotgun_index_id )' style='fill:#a1a0a0;'>shotgun_i7_index_id</text><path transform='translate(7,0)' marker-start='url(#foot)'   style='stroke-dasharray:4,2;'  d='M 1305 1920 L 1612,1920 Q 1620,1920 1620,1912 L 1620,1440' >
+	<title>Foreign Key fk_run_labadmin_users
+	run references labadmin_users ( email )</title>
+</path>
+<text x='1312' y='1915' transform='rotate(0 1312,1915)' title='Foreign Key fk_run_labadmin_users
+	run references labadmin_users ( email )' style='fill:#a1a0a0;'>email</text><path transform='translate(7,0)' marker-start='url(#foot)'     d='M 1305 1965 L 1312,1965 Q 1320,1965 1320,1957 L 1320,1762 Q 1320,1755 1312,1755 L 1290,1755' >
+	<title>Foreign Key fk_run_run_pool
+	run references run_pool ( run_pool_id )</title>
+</path>
+<text x='1312' y='1960' transform='rotate(0 1312,1960)' title='Foreign Key fk_run_run_pool
+	run references run_pool ( run_pool_id )' style='fill:#a1a0a0;'>run_pool_id</text><!-- ============= Table 'ag_survey_answer' ============= -->
 <rect class='table' x='2340' y='968' width='150' height='120' rx='7' ry='7' />
 <path d='M 2340.50 994.50 L 2340.50 975.50 Q 2340.50 968.50 2347.50 968.50 L 2482.50 968.50 Q 2489.50 968.50 2489.50 975.50 L 2489.50 994.50 L2340.50 994.50 ' style='fill:url(#tableHeaderGradient0); stroke:none;' />
 <a xlink:href='#ag_survey_answer'><text x='2365' y='982' class='tableTitle'>ag_survey_answer</text><title>Table ag.ag_survey_answer</title></a>
@@ -2103,35 +2103,6 @@ Referred by targeted_pool ( targeted_plate_id ) </title></a>
   <use id='nn' x='407' y='1197' xlink:href='#nn'/><a xlink:href='#targeted_plate_well_values.raw_concentration'><text x='423' y='1207'>raw_concentration</text><title>raw_concentration real not null</title></a>
   <a xlink:href='#targeted_plate_well_values.mod_concentration'><text x='423' y='1222'>mod_concentration</text><title>mod_concentration real</title></a>
 
-<!-- ============= Table 'run' ============= -->
-<rect class='table' x='1170' y='1853' width='135' height='255' rx='7' ry='7' />
-<path d='M 1170.50 1879.50 L 1170.50 1860.50 Q 1170.50 1853.50 1177.50 1853.50 L 1297.50 1853.50 Q 1304.50 1853.50 1304.50 1860.50 L 1304.50 1879.50 L1170.50 1879.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
-<a xlink:href='#run'><text x='1228' y='1867' class='tableTitle'>run</text><title>Table pm.run</title></a>
-  <use id='nn' x='1172' y='1887' xlink:href='#nn'/><a xlink:href='#run.run_id'><use id='pk' x='1172' y='1886' xlink:href='#pk'/><title>Primary Key  ( run_id ) </title></a>
-<a xlink:href='#run.run_id'><text x='1188' y='1897'>run_id</text><title>run_id bigserial not null</title></a>
-  <use id='nn' x='1172' y='1902' xlink:href='#nn'/><a xlink:href='#run.name'><use id='unq' x='1172' y='1901' xlink:href='#unq'/><title>Unique Index  ( name ) </title></a>
-<a xlink:href='#run.name'><text x='1188' y='1912'>name</text><title>name varchar not null</title></a>
-  <a xlink:href='#run.email'><use id='idx' x='1172' y='1916' xlink:href='#idx'/><title>Index  ( email ) </title></a>
-<a xlink:href='#run.email'><text x='1188' y='1927'>email</text><title>email varchar</title></a>
-<a xlink:href='#run.email'><use id='fk' x='1293' y='1916' xlink:href='#fk'/><title>References labadmin_users ( email ) </title></a>
-  <a xlink:href='#run.created_on'><text x='1188' y='1942'>created_on</text><title>created_on timestamp</title></a>
-  <a xlink:href='#run.notes'><text x='1188' y='1957'>notes</text><title>notes varchar</title></a>
-  <use id='nn' x='1172' y='1962' xlink:href='#nn'/><a xlink:href='#run.run_pool_id'><use id='idx' x='1172' y='1961' xlink:href='#idx'/><title>Index  ( run_pool_id ) </title></a>
-<a xlink:href='#run.run_pool_id'><text x='1188' y='1972'>run_pool_id</text><title>run_pool_id bigint not null</title></a>
-<a xlink:href='#run.run_pool_id'><use id='fk' x='1293' y='1961' xlink:href='#fk'/><title>References run_pool ( run_pool_id ) </title></a>
-  <use id='nn' x='1172' y='1977' xlink:href='#nn'/><a xlink:href='#run.platform'><text x='1188' y='1987'>platform</text><title>platform varchar not null
-ENUM in the DB</title></a>
-  <use id='nn' x='1172' y='1992' xlink:href='#nn'/><a xlink:href='#run.instrument_model'><text x='1188' y='2002'>instrument_model</text><title>instrument_model varchar not null
-ENUM in the DB</title></a>
-  <use id='nn' x='1172' y='2007' xlink:href='#nn'/><a xlink:href='#run.assay'><text x='1188' y='2017'>assay</text><title>assay varchar not null
-ENUM in the DB</title></a>
-  <use id='nn' x='1172' y='2022' xlink:href='#nn'/><a xlink:href='#run.fwd_cycles'><text x='1188' y='2032'>fwd_cycles</text><title>fwd_cycles integer not null</title></a>
-  <use id='nn' x='1172' y='2037' xlink:href='#nn'/><a xlink:href='#run.rev_cycles'><text x='1188' y='2047'>rev_cycles</text><title>rev_cycles integer not null</title></a>
-  <use id='nn' x='1172' y='2052' xlink:href='#nn'/><a xlink:href='#run.reagent_type'><text x='1188' y='2062'>reagent_type</text><title>reagent_type varchar not null
-This is an enum in the DB</title></a>
-  <a xlink:href='#run.sequencer'><text x='1188' y='2077'>sequencer</text><title>sequencer varchar</title></a>
-  <a xlink:href='#run.reagent_lot'><text x='1188' y='2092'>reagent_lot</text><title>reagent_lot varchar</title></a>
-
 <!-- ============= Table 'qpcr' ============= -->
 <rect class='table' x='300' y='1928' width='75' height='90' rx='7' ry='7' />
 <path d='M 300.50 1954.50 L 300.50 1935.50 Q 300.50 1928.50 307.50 1928.50 L 367.50 1928.50 Q 374.50 1928.50 374.50 1935.50 L 374.50 1954.50 L300.50 1954.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
@@ -2165,17 +2136,6 @@ References shotgun_index_aliquot ( shotgun_normalized_plate_id -> shotgun_index_
   <a xlink:href='#shotgun_normalized_plate_well_values.qpcr_cp'><text x='408' y='2167'>qpcr_cp</text><title>qpcr_cp real</title></a>
   <a xlink:href='#shotgun_normalized_plate_well_values.shotgun_index_aliquot'><text x='408' y='2182'>shotgun_index_aliquot</text><title>shotgun_index_aliquot bigint</title></a>
 
-<!-- ============= Table 'shotgun_index' ============= -->
-<rect class='table' x='660' y='2093' width='135' height='75' rx='7' ry='7' />
-<path d='M 660.50 2119.50 L 660.50 2100.50 Q 660.50 2093.50 667.50 2093.50 L 787.50 2093.50 Q 794.50 2093.50 794.50 2100.50 L 794.50 2119.50 L660.50 2119.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
-<a xlink:href='#shotgun_index'><text x='687' y='2107' class='tableTitle'>shotgun_index</text><title>Table pm.shotgun_index</title></a>
-  <use id='nn' x='662' y='2127' xlink:href='#nn'/><a xlink:href='#shotgun_index.shotgun_index_id'><use id='pk' x='662' y='2126' xlink:href='#pk'/><title>Primary Key  ( shotgun_index_id ) </title></a>
-<a xlink:href='#shotgun_index.shotgun_index_id'><text x='678' y='2137'>shotgun_index_id</text><title>shotgun_index_id varchar not null</title></a>
-<a xlink:href='#shotgun_index.shotgun_index_id'><use id='ref' x='783' y='2126' xlink:href='#ref'/><title>Referred by shotgun_normalized_plate_well_values ( shotgun_i5_index_id -> shotgun_index_id ) 
-Referred by shotgun_normalized_plate_well_values ( shotgun_i7_index_id -> shotgun_index_id ) 
-Referred by shotgun_normalized_plate_well_values ( shotgun_i7_index_id -> shotgun_index_id ) </title></a>
-  <use id='nn' x='662' y='2142' xlink:href='#nn'/><a xlink:href='#shotgun_index.bases'><text x='678' y='2152'>bases</text><title>bases varchar not null</title></a>
-
 <!-- ============= Table 'shotgun_index_aliquot' ============= -->
 <rect class='table' x='165' y='2063' width='180' height='105' rx='7' ry='7' />
 <path d='M 165.50 2089.50 L 165.50 2070.50 Q 165.50 2063.50 172.50 2063.50 L 337.50 2063.50 Q 344.50 2063.50 344.50 2070.50 L 344.50 2089.50 L165.50 2089.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
@@ -2188,6 +2148,48 @@ Referred by shotgun_normalized_plate_well_values ( shotgun_normalized_plate_id -
 <a xlink:href='#shotgun_index_aliquot.name'><text x='183' y='2122'>name</text><title>name varchar not null</title></a>
   <a xlink:href='#shotgun_index_aliquot.notes'><text x='183' y='2137'>notes</text><title>notes varchar</title></a>
   <use id='nn' x='167' y='2142' xlink:href='#nn'/><a xlink:href='#shotgun_index_aliquot.limit_freeze_thaw_cycles'><text x='183' y='2152'>limit_freeze_thaw_cycles</text><title>limit_freeze_thaw_cycles bigint not null</title></a>
+
+<!-- ============= Table 'run' ============= -->
+<rect class='table' x='1170' y='1853' width='135' height='255' rx='7' ry='7' />
+<path d='M 1170.50 1879.50 L 1170.50 1860.50 Q 1170.50 1853.50 1177.50 1853.50 L 1297.50 1853.50 Q 1304.50 1853.50 1304.50 1860.50 L 1304.50 1879.50 L1170.50 1879.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
+<a xlink:href='#run'><text x='1228' y='1867' class='tableTitle'>run</text><title>Table pm.run</title></a>
+  <use id='nn' x='1172' y='1887' xlink:href='#nn'/><a xlink:href='#run.run_id'><use id='pk' x='1172' y='1886' xlink:href='#pk'/><title>Primary Key  ( run_id ) </title></a>
+<a xlink:href='#run.run_id'><text x='1188' y='1897'>run_id</text><title>run_id bigserial not null</title></a>
+  <use id='nn' x='1172' y='1902' xlink:href='#nn'/><a xlink:href='#run.name'><use id='unq' x='1172' y='1901' xlink:href='#unq'/><title>Unique Index  ( name ) </title></a>
+<a xlink:href='#run.name'><text x='1188' y='1912'>name</text><title>name varchar not null</title></a>
+  <a xlink:href='#run.email'><use id='idx' x='1172' y='1916' xlink:href='#idx'/><title>Index  ( email ) </title></a>
+<a xlink:href='#run.email'><text x='1188' y='1927'>email</text><title>email varchar</title></a>
+<a xlink:href='#run.email'><use id='fk' x='1293' y='1916' xlink:href='#fk'/><title>References labadmin_users ( email ) </title></a>
+  <a xlink:href='#run.created_on'><text x='1188' y='1942'>created_on</text><title>created_on timestamp</title></a>
+  <a xlink:href='#run.notes'><text x='1188' y='1957'>notes</text><title>notes varchar</title></a>
+  <use id='nn' x='1172' y='1962' xlink:href='#nn'/><a xlink:href='#run.run_pool_id'><use id='idx' x='1172' y='1961' xlink:href='#idx'/><title>Index  ( run_pool_id ) </title></a>
+<a xlink:href='#run.run_pool_id'><text x='1188' y='1972'>run_pool_id</text><title>run_pool_id bigint not null</title></a>
+<a xlink:href='#run.run_pool_id'><use id='fk' x='1293' y='1961' xlink:href='#fk'/><title>References run_pool ( run_pool_id ) </title></a>
+  <use id='nn' x='1172' y='1977' xlink:href='#nn'/><a xlink:href='#run.platform'><text x='1188' y='1987'>platform</text><title>platform varchar not null
+ENUM in the DB</title></a>
+  <use id='nn' x='1172' y='1992' xlink:href='#nn'/><a xlink:href='#run.instrument_model'><text x='1188' y='2002'>instrument_model</text><title>instrument_model varchar not null
+ENUM in the DB</title></a>
+  <use id='nn' x='1172' y='2007' xlink:href='#nn'/><a xlink:href='#run.assay'><text x='1188' y='2017'>assay</text><title>assay varchar not null
+ENUM in the DB</title></a>
+  <use id='nn' x='1172' y='2022' xlink:href='#nn'/><a xlink:href='#run.fwd_cycles'><text x='1188' y='2032'>fwd_cycles</text><title>fwd_cycles integer not null</title></a>
+  <use id='nn' x='1172' y='2037' xlink:href='#nn'/><a xlink:href='#run.rev_cycles'><text x='1188' y='2047'>rev_cycles</text><title>rev_cycles integer not null</title></a>
+  <use id='nn' x='1172' y='2052' xlink:href='#nn'/><a xlink:href='#run.reagent_type'><text x='1188' y='2062'>reagent_type</text><title>reagent_type varchar not null
+This is an enum in the DB</title></a>
+  <a xlink:href='#run.sequencer'><text x='1188' y='2077'>sequencer</text><title>sequencer varchar</title></a>
+  <a xlink:href='#run.reagent_lot'><text x='1188' y='2092'>reagent_lot</text><title>reagent_lot varchar</title></a>
+
+<!-- ============= Table 'shotgun_index' ============= -->
+<rect class='table' x='660' y='2093' width='135' height='90' rx='7' ry='7' />
+<path d='M 660.50 2119.50 L 660.50 2100.50 Q 660.50 2093.50 667.50 2093.50 L 787.50 2093.50 Q 794.50 2093.50 794.50 2100.50 L 794.50 2119.50 L660.50 2119.50 ' style='fill:url(#tableHeaderGradient8); stroke:none;' />
+<a xlink:href='#shotgun_index'><text x='687' y='2107' class='tableTitle'>shotgun_index</text><title>Table pm.shotgun_index</title></a>
+  <use id='nn' x='662' y='2127' xlink:href='#nn'/><a xlink:href='#shotgun_index.shotgun_index_id'><use id='pk' x='662' y='2126' xlink:href='#pk'/><title>Primary Key  ( shotgun_index_id ) </title></a>
+<a xlink:href='#shotgun_index.shotgun_index_id'><text x='678' y='2137'>shotgun_index_id</text><title>shotgun_index_id varchar not null</title></a>
+<a xlink:href='#shotgun_index.shotgun_index_id'><use id='ref' x='783' y='2126' xlink:href='#ref'/><title>Referred by shotgun_normalized_plate_well_values ( shotgun_i5_index_id -> shotgun_index_id ) 
+Referred by shotgun_normalized_plate_well_values ( shotgun_i7_index_id -> shotgun_index_id ) 
+Referred by shotgun_normalized_plate_well_values ( shotgun_i7_index_id -> shotgun_index_id ) </title></a>
+  <use id='nn' x='662' y='2142' xlink:href='#nn'/><a xlink:href='#shotgun_index.bases'><text x='678' y='2152'>bases</text><title>bases varchar not null</title></a>
+  <a xlink:href='#shotgun_index.index_type'><text x='678' y='2167'>index_type</text><title>index_type varchar
+ENUM in the DB</title></a>
 
 </g></svg>
 
@@ -7159,127 +7161,6 @@ Referred by shotgun_normalized_plate_well_values ( shotgun_normalized_plate_id -
 <br/><br/>
 <table class='bordered'>
 <thead>
-<tr><th colspan='4'><a name='run'>Table run</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td>*</td>
-		<td><a name='run.run_id'>run&#095;id</a></td>
-		<td> bigserial   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='run.name'>name</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='run.email'>email</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='run.created_on'>created&#095;on</a></td>
-		<td> timestamp   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='run.notes'>notes</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='run.run_pool_id'>run&#095;pool&#095;id</a></td>
-		<td> bigint   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='run.platform'>platform</a></td>
-		<td> varchar   </td>
-		<td> ENUM in the DB </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='run.instrument_model'>instrument&#095;model</a></td>
-		<td> varchar   </td>
-		<td> ENUM in the DB </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='run.assay'>assay</a></td>
-		<td> varchar   </td>
-		<td> ENUM in the DB </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='run.fwd_cycles'>fwd&#095;cycles</a></td>
-		<td> integer   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='run.rev_cycles'>rev&#095;cycles</a></td>
-		<td> integer   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='run.reagent_type'>reagent&#095;type</a></td>
-		<td> varchar   </td>
-		<td> This is an enum in the DB </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='run.sequencer'>sequencer</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td>
-		<td><a name='run.reagent_lot'>reagent&#095;lot</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='4'><b>Indexes</b></th></tr>
-	<tr>		<td>Pk</td><td>pk&#095;run</td>
-		<td> ON run&#095;id</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>U</td><td>uq&#095;run&#095;name</td>
-		<td> ON name</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>&nbsp;</td><td>idx&#095;run&#095;email</td>
-		<td> ON email</td>
-		<td>  </td>
-	</tr>
-	<tr>		<td>&nbsp;</td><td>idx&#095;run&#095;0</td>
-		<td> ON run&#095;pool&#095;id</td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='4'><b>Foreign Keys</b></th></tr>
-	<tr>
-		<td>&nbsp;</td><td>fk_run_labadmin_users</td>
-		<td > ( email ) ref <a href='#labadmin&#095;users'>labadmin&#095;users</a> (email) </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>&nbsp;</td><td>fk_run_run_pool</td>
-		<td > ( run&#095;pool&#095;id ) ref <a href='#run&#095;pool'>run&#095;pool</a> (run&#095;pool&#095;id) </td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table class='bordered'>
-<thead>
 <tr><th colspan='4'><a name='qpcr'>Table qpcr</a></th></tr>
 </thead>
 <tbody>
@@ -7419,32 +7300,6 @@ Referred by shotgun_normalized_plate_well_values ( shotgun_normalized_plate_id -
 <br/><br/>
 <table class='bordered'>
 <thead>
-<tr><th colspan='4'><a name='shotgun_index'>Table shotgun_index</a></th></tr>
-</thead>
-<tbody>
-	<tr>
-		<td>*</td>
-		<td><a name='shotgun_index.shotgun_index_id'>shotgun&#095;index&#095;id</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-	<tr>
-		<td>*</td>
-		<td><a name='shotgun_index.bases'>bases</a></td>
-		<td> varchar   </td>
-		<td>  </td>
-	</tr>
-<tr><th colspan='4'><b>Indexes</b></th></tr>
-	<tr>		<td>Pk</td><td>idx&#095;shotgun&#095;index</td>
-		<td> ON shotgun&#095;index&#095;id</td>
-		<td>  </td>
-	</tr>
-</tbody>
-</table>
-
-<br/><br/>
-<table class='bordered'>
-<thead>
 <tr><th colspan='4'><a name='shotgun_index_aliquot'>Table shotgun_index_aliquot</a></th></tr>
 </thead>
 <tbody>
@@ -7479,6 +7334,159 @@ Referred by shotgun_normalized_plate_well_values ( shotgun_normalized_plate_id -
 	</tr>
 	<tr>		<td>U</td><td>idx&#095;index&#095;aliquot</td>
 		<td> ON name</td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='run'>Table run</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='run.run_id'>run&#095;id</a></td>
+		<td> bigserial   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='run.name'>name</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='run.email'>email</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='run.created_on'>created&#095;on</a></td>
+		<td> timestamp   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='run.notes'>notes</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='run.run_pool_id'>run&#095;pool&#095;id</a></td>
+		<td> bigint   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='run.platform'>platform</a></td>
+		<td> varchar   </td>
+		<td> ENUM in the DB </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='run.instrument_model'>instrument&#095;model</a></td>
+		<td> varchar   </td>
+		<td> ENUM in the DB </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='run.assay'>assay</a></td>
+		<td> varchar   </td>
+		<td> ENUM in the DB </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='run.fwd_cycles'>fwd&#095;cycles</a></td>
+		<td> integer   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='run.rev_cycles'>rev&#095;cycles</a></td>
+		<td> integer   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='run.reagent_type'>reagent&#095;type</a></td>
+		<td> varchar   </td>
+		<td> This is an enum in the DB </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='run.sequencer'>sequencer</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='run.reagent_lot'>reagent&#095;lot</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>Pk</td><td>pk&#095;run</td>
+		<td> ON run&#095;id</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>U</td><td>uq&#095;run&#095;name</td>
+		<td> ON name</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>&nbsp;</td><td>idx&#095;run&#095;email</td>
+		<td> ON email</td>
+		<td>  </td>
+	</tr>
+	<tr>		<td>&nbsp;</td><td>idx&#095;run&#095;0</td>
+		<td> ON run&#095;pool&#095;id</td>
+		<td>  </td>
+	</tr>
+<tr><th colspan='4'><b>Foreign Keys</b></th></tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_run_labadmin_users</td>
+		<td > ( email ) ref <a href='#labadmin&#095;users'>labadmin&#095;users</a> (email) </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td><td>fk_run_run_pool</td>
+		<td > ( run&#095;pool&#095;id ) ref <a href='#run&#095;pool'>run&#095;pool</a> (run&#095;pool&#095;id) </td>
+		<td>  </td>
+	</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<table class='bordered'>
+<thead>
+<tr><th colspan='4'><a name='shotgun_index'>Table shotgun_index</a></th></tr>
+</thead>
+<tbody>
+	<tr>
+		<td>*</td>
+		<td><a name='shotgun_index.shotgun_index_id'>shotgun&#095;index&#095;id</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td><a name='shotgun_index.bases'>bases</a></td>
+		<td> varchar   </td>
+		<td>  </td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><a name='shotgun_index.index_type'>index&#095;type</a></td>
+		<td> varchar   </td>
+		<td> ENUM in the DB </td>
+	</tr>
+<tr><th colspan='4'><b>Indexes</b></th></tr>
+	<tr>		<td>Pk</td><td>idx&#095;shotgun&#095;index</td>
+		<td> ON shotgun&#095;index&#095;id</td>
 		<td>  </td>
 	</tr>
 </tbody>
