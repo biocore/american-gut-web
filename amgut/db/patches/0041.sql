@@ -119,7 +119,7 @@ CREATE TYPE seq_instrument_model AS ENUM ('MiSeq', 'HiSeq 2500', 'HiSeq 4000');
  ) ;
 
 
-CREATE TYPE reagent_kit_lot_type AS ENUM ('MiSeq v3 150 cycle', 'MS1234');
+CREATE TYPE reagent_type AS ENUM ('MiSeq v3 150 cycle');
 
 CREATE TYPE assay_type AS ENUM ('Kapa Hyper Plus', 'TrueSeq HT');
 
@@ -131,7 +131,8 @@ CREATE TABLE pm.run (
     notes                varchar  ,
     run_pool_id          bigint NOT NULL,
     sequencer            varchar,
-    reagent_kit_lot      reagent_kit_lot_type,
+    reagent_type         reagent_type NOT NULL,
+    reagent_lot          varchar,
     platform             seq_platform,
     instrument_model     seq_instrument_model,
     assay                assay_type,
