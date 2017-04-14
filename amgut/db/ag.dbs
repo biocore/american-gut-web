@@ -22806,8 +22806,11 @@ AS $function$xpath_exists$function$
 			</column>
 			<column name="fwd_cycles" type="integer" jt="4" mandatory="y" />
 			<column name="rev_cycles" type="integer" jt="4" mandatory="y" />
-			<column name="reagent_kit_lot" type="varchar" jt="12" />
+			<column name="reagent_type" type="varchar" jt="12" mandatory="y" >
+				<comment><![CDATA[This is an enum in the DB]]></comment>
+			</column>
 			<column name="sequencer" type="varchar" jt="12" />
+			<column name="reagent_lot" type="varchar" jt="12" />
 			<index name="pk_run" unique="PRIMARY_KEY" >
 				<column name="run_id" />
 			</index>
