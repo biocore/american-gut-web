@@ -437,44 +437,36 @@ CREATE TABLE pm.shotgun_library_prep_kit (
  CREATE INDEX idx_shotgun_normalized_plate_7 ON pm.shotgun_normalized_plate ( qpcr_id ) ;
 
  CREATE TABLE pm.shotgun_i5_index (
-     shotgun_i5_index_id          bigserial  NOT NULL,
-     shotgun_index_aliquot_id     bigint  NOT NULL,
-     name                         varchar  NOT NULL,
-     row                          integer  NOT NULL,
-     col                          integer  NOT NULL,
-     CONSTRAINT pk_shotgun_i5_index PRIMARY KEY ( shotgun_i5_index_id ),
-     CONSTRAINT fk_shotgun_i5_index_shotgun_index_aliquot FOREIGN KEY ( shotgun_index_aliquot_id ) REFERENCES pm.shotgun_index_aliquot( shotgun_index_aliquot_id )
-  ) ;
- CREATE INDEX idx_shotgun_i5_index ON pm.shotgun_i5_index ( shotgun_index_aliquot_id ) ;
+	shotgun_i5_index_id  varchar  NOT NULL,
+	bases                varchar  NOT NULL,
+	CONSTRAINT pk_i5_index PRIMARY KEY ( shotgun_i5_index_id )
+ );
 
  CREATE TABLE pm.shotgun_i7_index (
-     shotgun_i7_index_id          bigserial  NOT NULL,
-     shotgun_index_aliquot_id     bigint  NOT NULL,
-     name                 varchar  NOT NULL,
-     row                  integer  NOT NULL,
-     col                  integer  NOT NULL,
-     CONSTRAINT pk_shotgun_i7_index PRIMARY KEY ( shotgun_i7_index_id ),
-     CONSTRAINT fk_shotgun_i7_index_shotgun_index_aliquot FOREIGN KEY ( shotgun_index_aliquot_id ) REFERENCES pm.shotgun_index_aliquot( shotgun_index_aliquot_id )
-  ) ;
- CREATE INDEX idx_shotgun_i7_index ON pm.shotgun_i7_index ( shotgun_index_aliquot_id ) ;
+	shotgun_i7_index_id  varchar  NOT NULL,
+	bases                varchar  NOT NULL,
+	CONSTRAINT pk_i7_index PRIMARY KEY ( shotgun_i7_index_id )
+ );
 
  CREATE TABLE pm.shotgun_normalized_plate_well_values (
-     shotgun_normalized_plate_id  bigint  NOT NULL,
-     row                          integer  NOT NULL,
-     col                          integer  NOT NULL,
-     sample_volume_nl             real  NOT NULL,
-     water_volume_nl              real  NOT NULL,
-     shotgun_i5_index_id          bigint  ,
-     shotgun_i7_index_id          bigint  ,
-     qpcr_concentration           real ,
-     qpcr_cp                      real,
-     CONSTRAINT fk_shotgun_normalized_plate_well_values FOREIGN KEY ( shotgun_normalized_plate_id ) REFERENCES pm.shotgun_normalized_plate( shotgun_normalized_plate_id ),
-     CONSTRAINT fk_shotgun_normalized_plate_well_values_i5 FOREIGN KEY ( shotgun_i5_index_id ) REFERENCES pm.shotgun_i5_index( shotgun_i5_index_id ),
-     CONSTRAINT fk_shotgun_normalized_plate_well_values_i7 FOREIGN KEY ( shotgun_i7_index_id ) REFERENCES pm.shotgun_i7_index( shotgun_i7_index_id )
-  ) ;
- CREATE INDEX idx_shotgun_normalized_plate_well_values ON pm.shotgun_normalized_plate_well_values ( shotgun_normalized_plate_id ) ;
- CREATE INDEX idx_shotgun_normalized_plate_well_values_0 ON pm.shotgun_normalized_plate_well_values ( shotgun_i5_index_id ) ;
- CREATE INDEX idx_shotgun_normalized_plate_well_values_1 ON pm.shotgun_normalized_plate_well_values ( shotgun_i7_index_id ) ;
+	shotgun_normalized_plate_id bigint  NOT NULL,
+	row                  integer  NOT NULL,
+	col                  integer  NOT NULL,
+	sample_volume_nl     real  NOT NULL,
+	water_volume_nl      real  NOT NULL,
+	shotgun_i5_index_id  varchar  ,
+	shotgun_i7_index_id  varchar  ,
+	qpcr_concentration   real  ,
+	qpcr_cp              real  ,
+	shotgun_index_aliquot bigint
+ );
+ CREATE INDEX idx_wgs_normalized_plate_well_values ON pm.shotgun_normalized_plate_well_values ( shotgun_normalized_plate_id );
+ CREATE INDEX idx_wgs_normalized_plate_well_values_0 ON pm.shotgun_normalized_plate_well_values ( shotgun_i5_index_id );
+ CREATE INDEX idx_wgs_normalized_plate_well_values_1 ON pm.shotgun_normalized_plate_well_values ( shotgun_i7_index_id );
+ ALTER TABLE pm.shotgun_normalized_plate_well_values ADD CONSTRAINT fk_wgs_normalized_plate_well_values FOREIGN KEY ( shotgun_normalized_plate_id ) REFERENCES pm.shotgun_normalized_plate( shotgun_normalized_plate_id );
+ ALTER TABLE pm.shotgun_normalized_plate_well_values ADD CONSTRAINT fk_wgs_normalized_plate_well_values_i5 FOREIGN KEY ( shotgun_i5_index_id ) REFERENCES pm.shotgun_i5_index( shotgun_i5_index_id );
+ ALTER TABLE pm.shotgun_normalized_plate_well_values ADD CONSTRAINT fk_wgs_normalized_plate_well_values_i7 FOREIGN KEY ( shotgun_i7_index_id ) REFERENCES pm.shotgun_i7_index( shotgun_i7_index_id );
+ ALTER TABLE pm.shotgun_normalized_plate_well_values ADD CONSTRAINT fk_shotgun_normalized_plate_well_values_aliquot FOREIGN KEY ( shotgun_normalized_plate_id ) REFERENCES pm.shotgun_index_aliquot( shotgun_index_aliquot_id );
 
  CREATE TABLE pm.shotgun_pool (
      shotgun_pool_id          bigserial  NOT NULL,
@@ -836,6 +828,10 @@ INSERT INTO pm.sample (sample_id, is_blank, details)
 -- Add a plate
 INSERT INTO pm.plate_reader (name, notes)
     VALUES ('PR1234', 'Standard plate reader');
+
+-- Add a mosquito machine
+INSERT INTO pm.mosquito (name, notes)
+    VALUES ('Mosquito1', 'Standard mosquito machine');
 
 -- Drop these unused tables
 DROP TABLE barcodes.plate_barcode;

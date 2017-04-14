@@ -22933,36 +22933,18 @@ AS $function$xpath_exists$function$
 			</index>
 		</table>
 		<table name="shotgun_i5_index" >
-			<column name="shotgun_i5_index_id" type="bigserial" jt="-5" mandatory="y" />
-			<column name="shotgun_index_aliquot_id" type="bigint" jt="-5" mandatory="y" />
-			<column name="name" type="varchar" jt="12" mandatory="y" />
-			<column name="row" type="integer" jt="4" mandatory="y" />
-			<column name="col" type="integer" jt="4" mandatory="y" />
-			<index name="idx_i5_index" unique="NORMAL" >
-				<column name="shotgun_index_aliquot_id" />
-			</index>
+			<column name="shotgun_i5_index_id" type="varchar" jt="12" mandatory="y" />
+			<column name="bases" type="varchar" jt="12" mandatory="y" />
 			<index name="pk_i5_index" unique="PRIMARY_KEY" >
 				<column name="shotgun_i5_index_id" />
 			</index>
-			<fk name="fk_i5_index_index_aliquot" to_schema="pm" to_table="shotgun_index_aliquot" >
-				<fk_column name="shotgun_index_aliquot_id" pk="shotgun_index_aliquot_id" />
-			</fk>
 		</table>
 		<table name="shotgun_i7_index" >
-			<column name="shotgun_i7_index_id" type="bigserial" jt="-5" mandatory="y" />
-			<column name="shotgun_index_aliquot_id" type="bigint" jt="-5" mandatory="y" />
-			<column name="name" type="varchar" jt="12" mandatory="y" />
-			<column name="row" type="integer" jt="4" mandatory="y" />
-			<column name="col" type="integer" jt="4" mandatory="y" />
+			<column name="shotgun_i7_index_id" type="varchar" jt="12" mandatory="y" />
+			<column name="bases" type="varchar" jt="12" mandatory="y" />
 			<index name="pk_i7_index" unique="PRIMARY_KEY" >
 				<column name="shotgun_i7_index_id" />
 			</index>
-			<index name="idx_i7_index" unique="NORMAL" >
-				<column name="shotgun_index_aliquot_id" />
-			</index>
-			<fk name="fk_i7_index_index_aliquot" to_schema="pm" to_table="shotgun_index_aliquot" >
-				<fk_column name="shotgun_index_aliquot_id" pk="shotgun_index_aliquot_id" />
-			</fk>
 		</table>
 		<table name="shotgun_index_aliquot" >
 			<column name="shotgun_index_aliquot_id" type="bigserial" jt="-5" mandatory="y" />
@@ -23069,10 +23051,11 @@ AS $function$xpath_exists$function$
 			<column name="col" type="integer" jt="4" mandatory="y" />
 			<column name="sample_volume_nl" type="real" jt="7" mandatory="y" />
 			<column name="water_volume_nl" type="real" jt="7" mandatory="y" />
-			<column name="shotgun_i5_index_id" type="bigint" jt="-5" />
-			<column name="shotgun_i7_index_id" type="bigint" jt="-5" />
+			<column name="shotgun_i5_index_id" type="varchar" jt="12" />
+			<column name="shotgun_i7_index_id" type="varchar" jt="12" />
 			<column name="qpcr_concentration" type="real" jt="7" />
 			<column name="qpcr_cp" type="real" jt="7" />
+			<column name="shotgun_index_aliquot" type="bigint" jt="-5" />
 			<index name="idx_wgs_normalized_plate_well_values" unique="NORMAL" >
 				<column name="shotgun_normalized_plate_id" />
 			</index>
@@ -23090,6 +23073,9 @@ AS $function$xpath_exists$function$
 			</fk>
 			<fk name="fk_wgs_normalized_plate_well_values_i7" to_schema="pm" to_table="shotgun_i7_index" >
 				<fk_column name="shotgun_i7_index_id" pk="shotgun_i7_index_id" />
+			</fk>
+			<fk name="fk_shotgun_normalized_plate_well_values_aliquot" to_schema="pm" to_table="shotgun_index_aliquot" >
+				<fk_column name="shotgun_normalized_plate_id" pk="shotgun_index_aliquot_id" />
 			</fk>
 		</table>
 		<table name="shotgun_plate" >
@@ -23502,14 +23488,14 @@ AS $function$xpath_exists$function$
 		<entity schema="pm" name="shotgun_plate_layout" color="b2cdf7" x="435" y="1320" />
 		<entity schema="pm" name="protocol_run_pool" color="b2cdf7" x="1155" y="1575" />
 		<entity schema="pm" name="targeted_primer_plate" color="b2cdf7" x="690" y="795" />
-		<entity schema="pm" name="shotgun_normalized_plate_well_values" color="b2cdf7" x="390" y="2010" />
-		<entity schema="pm" name="shotgun_index_aliquot" color="b2cdf7" x="420" y="2355" />
-		<entity schema="pm" name="shotgun_i5_index" color="b2cdf7" x="315" y="2205" />
-		<entity schema="pm" name="shotgun_i7_index" color="b2cdf7" x="555" y="2205" />
 		<entity schema="pm" name="targeted_plate" color="b2cdf7" x="675" y="960" />
 		<entity schema="pm" name="shotgun_pool_plate_well_values" color="b2cdf7" x="825" y="2040" />
 		<entity schema="pm" name="targeted_plate_well_values" color="b2cdf7" x="405" y="1125" />
 		<entity schema="pm" name="run" color="b2cdf7" x="1170" y="1860" />
+		<entity schema="pm" name="shotgun_i7_index" color="b2cdf7" x="555" y="2205" />
+		<entity schema="pm" name="shotgun_i5_index" color="b2cdf7" x="135" y="2100" />
+		<entity schema="pm" name="shotgun_index_aliquot" color="b2cdf7" x="225" y="2235" />
+		<entity schema="pm" name="shotgun_normalized_plate_well_values" color="b2cdf7" x="390" y="2010" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by :    american_gut_consent</comment>
 			<entity schema="ag" name="ag_survey_multiples" />
