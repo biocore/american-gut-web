@@ -133,7 +133,7 @@ CREATE TABLE pm.run (
     notes                varchar  ,
     run_pool_id          bigint NOT NULL,
     sequencer            sequencer_type,
-    reagent_kit_lot      reagent_kit_lot_typ,
+    reagent_kit_lot      reagent_kit_lot_type,
     platform             seq_platform,
     instrument_model     seq_instrument_model,
     assay                assay_type,
@@ -142,11 +142,10 @@ CREATE TABLE pm.run (
     CONSTRAINT pk_run PRIMARY KEY ( run_id ),
     CONSTRAINT uq_run_name UNIQUE ( name ) ,
     CONSTRAINT fk_run_labadmin_users FOREIGN KEY ( email ) REFERENCES ag.labadmin_users( email ),
-    CONSTRAINT fk_run_run_pool FOREIGN KEY ( run_pool_id ) REFERENCES pm.run_pool( run_pool_id ),
+    CONSTRAINT fk_run_run_pool FOREIGN KEY ( run_pool_id ) REFERENCES pm.run_pool( run_pool_id )
  );
 CREATE INDEX idx_run_email ON pm.run ( email );
 CREATE INDEX idx_run_pool_link ON pm.run ( run_pool_id ) ;
-CREATE INDEX idx_run_reagent ON pm.run ( reagent_kit_lot_id ) ;
 
 CREATE TABLE pm.sample (
     sample_id            varchar  NOT NULL,
