@@ -526,6 +526,9 @@ INSERT INTO pm.extraction_tool (name)
 INSERT INTO pm.processing_robot (name)
     VALUES ('ROBE'), ('RIKE'), ('JERE'), ('CARMEN');
 
+INSERT INTO pm.qpcr (name)
+    VALUES ('QPCR-KL-1234');
+
 INSERT INTO pm.tm300_8_tool (name)
     VALUES ('208484Z'), ('311318B'), ('109375A'), ('3076189');
 
