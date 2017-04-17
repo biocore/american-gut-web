@@ -22938,9 +22938,16 @@ AS $function$xpath_exists$function$
 			<column name="index_type" type="varchar" jt="12" >
 				<comment><![CDATA[ENUM in the DB]]></comment>
 			</column>
+			<column name="shotgun_index_tech_id" type="bigint" jt="-5" />
 			<index name="idx_shotgun_index" unique="PRIMARY_KEY" >
 				<column name="shotgun_index_id" />
 			</index>
+			<index name="idx_shotgun_index_0" unique="NORMAL" >
+				<column name="shotgun_index_tech_id" />
+			</index>
+			<fk name="fk_shotgun_index_shotgun_index_tech" to_schema="pm" to_table="shotgun_index_tech" >
+				<fk_column name="shotgun_index_tech_id" pk="shotgun_index_tech_id" />
+			</fk>
 		</table>
 		<table name="shotgun_index_aliquot" >
 			<column name="shotgun_index_aliquot_id" type="bigserial" jt="-5" mandatory="y" />
@@ -22952,6 +22959,15 @@ AS $function$xpath_exists$function$
 			</index>
 			<index name="idx_index_aliquot" unique="UNIQUE" >
 				<column name="name" />
+			</index>
+		</table>
+		<table name="shotgun_index_tech" >
+			<column name="shotgun_index_tech_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="name" type="varchar" length="100" jt="12" />
+			<column name="dual_index" type="bool" jt="-7" />
+			<column name="last_index_idx" type="integer" jt="4" />
+			<index name="pk_shotgun_index_tech" unique="PRIMARY_KEY" >
+				<column name="shotgun_index_tech_id" />
 			</index>
 		</table>
 		<table name="shotgun_library_prep_kit" >
@@ -23061,14 +23077,20 @@ AS $function$xpath_exists$function$
 			<index name="idx_wgs_normalized_plate_well_values_1" unique="NORMAL" >
 				<column name="shotgun_i7_index_id" />
 			</index>
+			<index name="idx_shotgun_normalized_plate_well_values" unique="NORMAL" >
+				<column name="shotgun_index_aliquot" />
+			</index>
 			<fk name="fk_wgs_normalized_plate_well_values" to_schema="pm" to_table="shotgun_normalized_plate" >
 				<fk_column name="shotgun_normalized_plate_id" pk="shotgun_normalized_plate_id" />
 			</fk>
 			<fk name="fk_wgs_normalized_plate_well_values_i5" to_schema="pm" to_table="shotgun_index" >
 				<fk_column name="shotgun_i5_index_id" pk="shotgun_index_id" />
 			</fk>
-			<fk name="fk_shotgun_normalized_plate_well_values" to_schema="pm" to_table="shotgun_index" >
+			<fk name="fk_wgs_normalized_plate_well_values_i7" to_schema="pm" to_table="shotgun_index" >
 				<fk_column name="shotgun_i7_index_id" pk="shotgun_index_id" />
+			</fk>
+			<fk name="fk_shotgun_normalized_plate_well_values_aliquot" to_schema="pm" to_table="shotgun_index_aliquot" >
+				<fk_column name="shotgun_index_aliquot" pk="shotgun_index_aliquot_id" />
 			</fk>
 		</table>
 		<table name="shotgun_plate" >
@@ -23404,90 +23426,91 @@ AS $function$xpath_exists$function$
 		</table>
 	</schema>
 	<layout id="Layout2861625" name="public" joined_routing="y" show_relation_columns="y" >
-		<entity schema="ag" name="ag_survey_answer" color="f7e2c6" x="2340" y="975" />
-		<entity schema="ag" name="controlled_vocab_values" color="c6c6f7" x="2610" y="270" />
-		<entity schema="ag" name="controlled_vocabs" color="c6c6f7" x="2400" y="270" />
-		<entity schema="ag" name="ag_participant_exceptions" color="f7e2c6" x="2115" y="975" />
-		<entity schema="ag" name="ag_survey_multiples" color="f7e2c6" x="2550" y="975" />
-		<entity schema="ag" name="group_questions" color="ffcccc" x="3180" y="75" />
-		<entity schema="ag" name="survey_response_types" color="ffffff" x="3435" y="225" />
-		<entity schema="ag" name="surveys" color="a8c4ef" x="3450" y="2355" />
-		<entity schema="ag" name="survey_group" color="a8c4ef" x="3015" y="75" />
-		<entity schema="ag" name="survey_answers_other" color="a8c4ef" x="3645" y="570" />
-		<entity schema="ag" name="survey_question_triggers" color="a8c4ef" x="3435" y="360" />
-		<entity schema="ag" name="survey_response" color="a8c4ef" x="3015" y="225" />
-		<entity schema="ag" name="survey_question_response" color="ffcccc" x="3180" y="360" />
-		<entity schema="ag" name="iso_country_lookup" color="ffffff" x="3000" y="360" />
-		<entity schema="ag" name="survey_question_response_type" color="ffcccc" x="3180" y="225" />
-		<entity schema="ag" name="promoted_survey_ids" color="a8c4ef" x="3450" y="2490" />
-		<entity schema="ag" name="zipcodes" color="c6c6f7" x="2820" y="270" />
-		<entity schema="ag" name="ag_survey_multiples_backup" color="cef7c6" x="2235" y="1410" />
-		<entity schema="ag" name="ag_import_stats_tmp" color="cef7c6" x="2010" y="1410" />
-		<entity schema="ag" name="ag_map_markers" color="cef7c6" x="2475" y="1410" />
-		<entity schema="ag" name="survey_answers" color="a8c4ef" x="3645" y="720" />
-		<entity schema="ag" name="ag_human_survey" color="c6d9f7" x="3210" y="720" />
-		<entity schema="ag" name="external_survey_answers" color="a8c4ef" x="3645" y="1005" />
-		<entity schema="ag" name="external_survey_sources" color="a8c4ef" x="3195" y="555" />
-		<entity schema="barcodes" name="barcode_exceptions" color="a8c4ef" x="2790" y="1665" />
-		<entity schema="ag" name="survey_question" color="a8c4ef" x="3435" y="45" />
-		<entity schema="ag" name="ag_consent" color="c6d9f7" x="3450" y="720" />
-		<entity schema="ag" name="ag_login_surveys" color="ffcccc" x="3450" y="555" />
-		<entity schema="ag" name="consent_revoked" color="b7c8e3" x="3210" y="2490" />
-		<entity schema="barcodes" name="project_barcode" color="a8c4ef" x="2790" y="1530" />
-		<entity schema="ag" name="labadmin_users" color="b2cdf7" x="1650" y="1290" />
-		<entity schema="ag" name="duplicate_consents" color="b7c8e3" x="3000" y="720" />
-		<entity schema="ag" name="ag_kit" color="f7e2c6" x="2745" y="975" />
-		<entity schema="ag" name="ag_animal_survey" color="f7e2c6" x="2550" y="570" />
-		<entity schema="barcodes" name="barcode" color="a8c4ef" x="2790" y="1290" />
-		<entity schema="ag" name="ag_handout_barcodes" color="a8c4ef" x="2190" y="330" />
-		<entity schema="ag" name="ag_handout_kits" color="a8c4ef" x="1995" y="330" />
-		<entity schema="barcodes" name="project" color="a8c4ef" x="2640" y="1395" />
-		<entity schema="ag" name="ag_login" color="f7e2c6" x="2370" y="690" />
-		<entity schema="ag" name="ag_kit_barcodes" color="f7e2c6" x="2100" y="555" />
-		<entity schema="pm" name="tm300_8_tool" color="b2cdf7" x="270" y="825" />
-		<entity schema="pm" name="tm50_8_tool" color="b2cdf7" x="225" y="930" />
-		<entity schema="pm" name="water_lot" color="b2cdf7" x="225" y="1035" />
-		<entity schema="pm" name="sample_plate_layout" color="b2cdf7" x="1485" y="510" />
-		<entity schema="pm" name="sample" color="b2cdf7" x="1680" y="510" />
-		<entity schema="pm" name="study_sample" color="b2cdf7" x="1815" y="525" />
-		<entity schema="pm" name="study" color="b2cdf7" x="1770" y="645" />
-		<entity schema="pm" name="sample_plate_study" color="b2cdf7" x="1590" y="660" />
-		<entity schema="pm" name="dna_plate" color="b2cdf7" x="1470" y="1005" />
-		<entity schema="pm" name="extraction_tool" color="b2cdf7" x="1740" y="1110" />
-		<entity schema="pm" name="extraction_robot" color="b2cdf7" x="1725" y="1005" />
-		<entity schema="pm" name="extraction_kit_lot" color="b2cdf7" x="1725" y="900" />
-		<entity schema="pm" name="plate_reader" color="b2cdf7" x="165" y="1500" />
-		<entity schema="pm" name="processing_robot" color="b2cdf7" x="45" y="1320" />
-		<entity schema="ag" name="labadmin_access" color="b2cdf7" x="1815" y="1290" />
-		<entity schema="ag" name="labadmin_users_access" color="b2cdf7" x="1725" y="1410" />
-		<entity schema="ag" name="settings" color="a8c4ef" x="1725" y="1500" />
-		<entity schema="pm" name="plate_type" color="b2cdf7" x="1110" y="870" />
-		<entity schema="pm" name="mosquito" color="b2cdf7" x="180" y="1665" />
-		<entity schema="pm" name="echo" color="b2cdf7" x="735" y="1830" />
-		<entity schema="pm" name="master_mix_lot" color="b2cdf7" x="450" y="930" />
-		<entity schema="pm" name="targeted_primer_plate_layout" color="b2cdf7" x="435" y="795" />
-		<entity schema="pm" name="shotgun_plate" color="b2cdf7" x="420" y="1485" />
-		<entity schema="pm" name="condensed_plates" color="b2cdf7" x="705" y="1485" />
-		<entity schema="pm" name="shotgun_library_prep_kit" color="b2cdf7" x="90" y="1770" />
-		<entity schema="pm" name="shotgun_pool_plate" color="b2cdf7" x="705" y="1935" />
-		<entity schema="pm" name="sample_plate" color="b2cdf7" x="1335" y="645" />
-		<entity schema="pm" name="targeted_pool" color="b2cdf7" x="870" y="1125" />
-		<entity schema="pm" name="dna_plate_well_values" color="b2cdf7" x="1470" y="885" />
-		<entity schema="pm" name="run_pool" color="b2cdf7" x="1185" y="1725" />
-		<entity schema="pm" name="shotgun_adapter_aliquot" color="b2cdf7" x="75" y="1890" />
-		<entity schema="pm" name="shotgun_normalized_plate" color="b2cdf7" x="420" y="1725" />
-		<entity schema="pm" name="shotgun_pool" color="b2cdf7" x="930" y="1815" />
-		<entity schema="pm" name="shotgun_plate_layout" color="b2cdf7" x="435" y="1320" />
-		<entity schema="pm" name="protocol_run_pool" color="b2cdf7" x="1155" y="1575" />
-		<entity schema="pm" name="targeted_primer_plate" color="b2cdf7" x="690" y="795" />
-		<entity schema="pm" name="targeted_plate" color="b2cdf7" x="675" y="960" />
-		<entity schema="pm" name="shotgun_pool_plate_well_values" color="b2cdf7" x="825" y="2040" />
-		<entity schema="pm" name="targeted_plate_well_values" color="b2cdf7" x="405" y="1125" />
-		<entity schema="pm" name="qpcr" color="b2cdf7" x="300" y="1935" />
-		<entity schema="pm" name="shotgun_index_aliquot" color="b2cdf7" x="165" y="2070" />
-		<entity schema="pm" name="run" color="b2cdf7" x="1170" y="1860" />
-		<entity schema="pm" name="shotgun_index" color="b2cdf7" x="660" y="2100" />
-		<entity schema="pm" name="shotgun_normalized_plate_well_values" color="b2cdf7" x="390" y="2010" />
+		<entity schema="ag" name="ag_survey_answer" color="f7e2c6" x="2295" y="975" />
+		<entity schema="ag" name="controlled_vocab_values" color="c6c6f7" x="2565" y="270" />
+		<entity schema="ag" name="controlled_vocabs" color="c6c6f7" x="2355" y="270" />
+		<entity schema="ag" name="ag_participant_exceptions" color="f7e2c6" x="2070" y="975" />
+		<entity schema="ag" name="ag_survey_multiples" color="f7e2c6" x="2505" y="975" />
+		<entity schema="ag" name="group_questions" color="ffcccc" x="3135" y="75" />
+		<entity schema="ag" name="survey_response_types" color="ffffff" x="3390" y="225" />
+		<entity schema="ag" name="surveys" color="a8c4ef" x="3405" y="2355" />
+		<entity schema="ag" name="survey_group" color="a8c4ef" x="2970" y="75" />
+		<entity schema="ag" name="survey_answers_other" color="a8c4ef" x="3600" y="570" />
+		<entity schema="ag" name="survey_question_triggers" color="a8c4ef" x="3390" y="360" />
+		<entity schema="ag" name="survey_response" color="a8c4ef" x="2970" y="225" />
+		<entity schema="ag" name="survey_question_response" color="ffcccc" x="3135" y="360" />
+		<entity schema="ag" name="iso_country_lookup" color="ffffff" x="2955" y="360" />
+		<entity schema="ag" name="survey_question_response_type" color="ffcccc" x="3135" y="225" />
+		<entity schema="ag" name="promoted_survey_ids" color="a8c4ef" x="3405" y="2490" />
+		<entity schema="ag" name="zipcodes" color="c6c6f7" x="2775" y="270" />
+		<entity schema="ag" name="ag_survey_multiples_backup" color="cef7c6" x="2190" y="1410" />
+		<entity schema="ag" name="ag_import_stats_tmp" color="cef7c6" x="1965" y="1410" />
+		<entity schema="ag" name="ag_map_markers" color="cef7c6" x="2430" y="1410" />
+		<entity schema="ag" name="survey_answers" color="a8c4ef" x="3600" y="720" />
+		<entity schema="ag" name="ag_human_survey" color="c6d9f7" x="3165" y="720" />
+		<entity schema="ag" name="external_survey_answers" color="a8c4ef" x="3600" y="1005" />
+		<entity schema="ag" name="external_survey_sources" color="a8c4ef" x="3150" y="555" />
+		<entity schema="barcodes" name="barcode_exceptions" color="a8c4ef" x="2745" y="1665" />
+		<entity schema="ag" name="survey_question" color="a8c4ef" x="3390" y="45" />
+		<entity schema="ag" name="ag_consent" color="c6d9f7" x="3405" y="720" />
+		<entity schema="ag" name="ag_login_surveys" color="ffcccc" x="3405" y="555" />
+		<entity schema="ag" name="consent_revoked" color="b7c8e3" x="3165" y="2490" />
+		<entity schema="barcodes" name="project_barcode" color="a8c4ef" x="2745" y="1530" />
+		<entity schema="ag" name="labadmin_users" color="b2cdf7" x="1605" y="1290" />
+		<entity schema="ag" name="duplicate_consents" color="b7c8e3" x="2955" y="720" />
+		<entity schema="ag" name="ag_kit" color="f7e2c6" x="2700" y="975" />
+		<entity schema="ag" name="ag_animal_survey" color="f7e2c6" x="2505" y="570" />
+		<entity schema="barcodes" name="barcode" color="a8c4ef" x="2745" y="1290" />
+		<entity schema="ag" name="ag_handout_barcodes" color="a8c4ef" x="2145" y="330" />
+		<entity schema="ag" name="ag_handout_kits" color="a8c4ef" x="1950" y="330" />
+		<entity schema="barcodes" name="project" color="a8c4ef" x="2595" y="1395" />
+		<entity schema="ag" name="ag_login" color="f7e2c6" x="2325" y="690" />
+		<entity schema="ag" name="ag_kit_barcodes" color="f7e2c6" x="2055" y="555" />
+		<entity schema="pm" name="tm300_8_tool" color="b2cdf7" x="225" y="825" />
+		<entity schema="pm" name="tm50_8_tool" color="b2cdf7" x="180" y="930" />
+		<entity schema="pm" name="water_lot" color="b2cdf7" x="180" y="1035" />
+		<entity schema="pm" name="sample_plate_layout" color="b2cdf7" x="1440" y="510" />
+		<entity schema="pm" name="sample" color="b2cdf7" x="1635" y="510" />
+		<entity schema="pm" name="study_sample" color="b2cdf7" x="1770" y="525" />
+		<entity schema="pm" name="study" color="b2cdf7" x="1725" y="645" />
+		<entity schema="pm" name="sample_plate_study" color="b2cdf7" x="1545" y="660" />
+		<entity schema="pm" name="dna_plate" color="b2cdf7" x="1425" y="1005" />
+		<entity schema="pm" name="extraction_tool" color="b2cdf7" x="1695" y="1110" />
+		<entity schema="pm" name="extraction_robot" color="b2cdf7" x="1680" y="1005" />
+		<entity schema="pm" name="extraction_kit_lot" color="b2cdf7" x="1680" y="900" />
+		<entity schema="pm" name="plate_reader" color="b2cdf7" x="135" y="1545" />
+		<entity schema="ag" name="labadmin_access" color="b2cdf7" x="1770" y="1290" />
+		<entity schema="ag" name="labadmin_users_access" color="b2cdf7" x="1680" y="1410" />
+		<entity schema="ag" name="settings" color="a8c4ef" x="1680" y="1500" />
+		<entity schema="pm" name="plate_type" color="b2cdf7" x="1065" y="870" />
+		<entity schema="pm" name="echo" color="b2cdf7" x="705" y="1875" />
+		<entity schema="pm" name="master_mix_lot" color="b2cdf7" x="405" y="930" />
+		<entity schema="pm" name="targeted_primer_plate_layout" color="b2cdf7" x="390" y="795" />
+		<entity schema="pm" name="shotgun_plate" color="b2cdf7" x="390" y="1530" />
+		<entity schema="pm" name="condensed_plates" color="b2cdf7" x="675" y="1530" />
+		<entity schema="pm" name="shotgun_library_prep_kit" color="b2cdf7" x="60" y="1815" />
+		<entity schema="pm" name="shotgun_pool_plate" color="b2cdf7" x="675" y="1980" />
+		<entity schema="pm" name="sample_plate" color="b2cdf7" x="1290" y="645" />
+		<entity schema="pm" name="targeted_pool" color="b2cdf7" x="825" y="1125" />
+		<entity schema="pm" name="dna_plate_well_values" color="b2cdf7" x="1425" y="885" />
+		<entity schema="pm" name="run_pool" color="b2cdf7" x="1140" y="1725" />
+		<entity schema="pm" name="shotgun_adapter_aliquot" color="b2cdf7" x="45" y="1935" />
+		<entity schema="pm" name="shotgun_normalized_plate" color="b2cdf7" x="390" y="1770" />
+		<entity schema="pm" name="shotgun_pool" color="b2cdf7" x="900" y="1860" />
+		<entity schema="pm" name="shotgun_plate_layout" color="b2cdf7" x="405" y="1365" />
+		<entity schema="pm" name="protocol_run_pool" color="b2cdf7" x="1110" y="1575" />
+		<entity schema="pm" name="targeted_primer_plate" color="b2cdf7" x="645" y="795" />
+		<entity schema="pm" name="targeted_plate" color="b2cdf7" x="630" y="960" />
+		<entity schema="pm" name="shotgun_pool_plate_well_values" color="b2cdf7" x="795" y="2085" />
+		<entity schema="pm" name="targeted_plate_well_values" color="b2cdf7" x="360" y="1125" />
+		<entity schema="pm" name="qpcr" color="b2cdf7" x="270" y="1980" />
+		<entity schema="pm" name="run" color="b2cdf7" x="1125" y="1860" />
+		<entity schema="pm" name="mosquito" color="b2cdf7" x="150" y="1710" />
+		<entity schema="pm" name="processing_robot" color="b2cdf7" x="75" y="1335" />
+		<entity schema="pm" name="shotgun_index" color="b2cdf7" x="495" y="2115" />
+		<entity schema="pm" name="shotgun_index_tech" color="b2cdf7" x="705" y="2205" />
+		<entity schema="pm" name="shotgun_index_aliquot" color="b2cdf7" x="480" y="2250" />
+		<entity schema="pm" name="shotgun_normalized_plate_well_values" color="b2cdf7" x="210" y="2085" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by :    american_gut_consent</comment>
 			<entity schema="ag" name="ag_survey_multiples" />
@@ -23598,5 +23621,70 @@ AS $function$xpath_exists$function$
 			<entity schema="pm" name="protocol_run_pool" />
 			<entity schema="pm" name="run_pool" />
 		</group>
+		<script name="Sql" id="SQL7396650" >
+			<string><![CDATA[CREATE SCHEMA pm;
+
+CREATE TABLE pm.shotgun_index_aliquot ( 
+	shotgun_index_aliquot_id bigserial  NOT NULL,
+	name                 varchar  NOT NULL,
+	notes                varchar  ,
+	limit_freeze_thaw_cycles bigint  NOT NULL,
+	CONSTRAINT pk_index_aliquot PRIMARY KEY ( shotgun_index_aliquot_id ),
+	CONSTRAINT idx_index_aliquot UNIQUE ( name ) 
+ );
+
+CREATE TABLE pm.shotgun_index_tech ( 
+	shotgun_index_tech_id bigserial  NOT NULL,
+	name                 varchar(100)  ,
+	dual_index           bool  ,
+	last_index_idx       integer  ,
+	CONSTRAINT pk_shotgun_index_tech PRIMARY KEY ( shotgun_index_tech_id )
+ );
+
+CREATE TABLE pm.shotgun_index ( 
+	shotgun_index_id     varchar  NOT NULL,
+	bases                varchar  NOT NULL,
+	index_type           varchar  ,
+	shotgun_index_tech_id bigint  ,
+	CONSTRAINT idx_shotgun_index PRIMARY KEY ( shotgun_index_id )
+ );
+
+CREATE INDEX idx_shotgun_index_0 ON pm.shotgun_index ( shotgun_index_tech_id );
+
+COMMENT ON COLUMN pm.shotgun_index.index_type IS 'ENUM in the DB';
+
+CREATE TABLE pm.shotgun_normalized_plate_well_values ( 
+	shotgun_normalized_plate_id bigint  NOT NULL,
+	row                  integer  NOT NULL,
+	col                  integer  NOT NULL,
+	sample_volume_nl     real  NOT NULL,
+	water_volume_nl      real  NOT NULL,
+	shotgun_i5_index_id  varchar  ,
+	shotgun_i7_index_id  varchar  ,
+	qpcr_concentration   real  ,
+	qpcr_cp              real  ,
+	shotgun_index_aliquot bigint  
+ );
+
+CREATE INDEX idx_wgs_normalized_plate_well_values ON pm.shotgun_normalized_plate_well_values ( shotgun_normalized_plate_id );
+
+CREATE INDEX idx_wgs_normalized_plate_well_values_0 ON pm.shotgun_normalized_plate_well_values ( shotgun_i5_index_id );
+
+CREATE INDEX idx_wgs_normalized_plate_well_values_1 ON pm.shotgun_normalized_plate_well_values ( shotgun_i7_index_id );
+
+CREATE INDEX idx_shotgun_normalized_plate_well_values ON pm.shotgun_normalized_plate_well_values ( shotgun_index_aliquot );
+
+ALTER TABLE pm.shotgun_index ADD CONSTRAINT fk_shotgun_index_shotgun_index_tech FOREIGN KEY ( shotgun_index_tech_id ) REFERENCES pm.shotgun_index_tech( shotgun_index_tech_id );
+
+ALTER TABLE pm.shotgun_normalized_plate_well_values ADD CONSTRAINT fk_wgs_normalized_plate_well_values FOREIGN KEY ( shotgun_normalized_plate_id ) REFERENCES pm.shotgun_normalized_plate( shotgun_normalized_plate_id );
+
+ALTER TABLE pm.shotgun_normalized_plate_well_values ADD CONSTRAINT fk_wgs_normalized_plate_well_values_i5 FOREIGN KEY ( shotgun_i5_index_id ) REFERENCES pm.shotgun_index( shotgun_index_id );
+
+ALTER TABLE pm.shotgun_normalized_plate_well_values ADD CONSTRAINT fk_wgs_normalized_plate_well_values_i7 FOREIGN KEY ( shotgun_i7_index_id ) REFERENCES pm.shotgun_index( shotgun_index_id );
+
+ALTER TABLE pm.shotgun_normalized_plate_well_values ADD CONSTRAINT fk_shotgun_normalized_plate_well_values_aliquot FOREIGN KEY ( shotgun_index_aliquot ) REFERENCES pm.shotgun_index_aliquot( shotgun_index_aliquot_id );
+
+]]></string>
+		</script>
 	</layout>
 </project>
