@@ -453,6 +453,7 @@ CREATE TABLE pm.shotgun_library_prep_kit (
 	water_volume_nl      real  NOT NULL,
 	shotgun_i5_index_id  varchar  ,
 	shotgun_i7_index_id  varchar  ,
+	i5_i7_index          integer  ,
 	qpcr_concentration   real  ,
 	qpcr_cp              real  ,
 	shotgun_index_aliquot bigint
