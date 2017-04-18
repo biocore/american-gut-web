@@ -857,6 +857,31 @@ INSERT INTO pm.shotgun_index_tech (name, dual_index, last_index_idx, i5_i7_samep
 	    -- this will be 3
 	    ('iTru', True, 0, False);
 
+-- code to parse the files sent by @tanaes to generate the below inserts
+-- import pandas as pd
+--
+-- contents = pd.read_csv(open('iTru_indexes.txt'), sep=',', dtype=str,
+--                        encoding='utf-8')
+-- for idx, row in contents.iterrows():
+--     ri7 = ord(row.i7_well[0]) - ord('A')
+--     ci7 = int(row.i7_well[1:]) - 1
+--     ri5 = ord(row.i5_well[0]) - ord('A')
+--     ci5 = int(row.i5_well[1:]) - 1
+--     print "      ('%s', '%s', %d, %d, '%s', '%s', %d, %d, %d)," % (
+--         row.i7_name, row.i7_bases, ri7, ci7,
+--         row.i5_name, row.i5_bases, ri5, ci5,
+--         3)
+--
+-- contents = pd.read_csv(open('Nextera_indexes.txt'), sep=',', dtype=str,
+--                        encoding='utf-8')
+-- for idx, row in contents.iterrows():
+--     r = ord(row.Row) - ord('A')
+--     c = int(row.Col) - 1
+--     print "      ('%s', '%s', %d, %d, '%s', '%s', %d, %d, %d)," % (
+--         row.i7_name, row.i7_bases, r, c,
+--         row.i5_name, row.i5_bases, r, c,
+--         2)
+
 -- Add shotgun_index valid values
 INSERT INTO pm.shotgun_index (i7_name, i7_bases, i7_row, i7_col,
 							  i5_name, i5_bases, i5_row, i5_col,
