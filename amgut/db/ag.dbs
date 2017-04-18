@@ -22933,11 +22933,15 @@ AS $function$xpath_exists$function$
 			</index>
 		</table>
 		<table name="shotgun_index" >
-			<column name="shotgun_index_id" type="varchar" jt="12" mandatory="y" />
-			<column name="bases" type="varchar" jt="12" mandatory="y" />
-			<column name="index_type" type="varchar" jt="12" >
-				<comment><![CDATA[ENUM in the DB]]></comment>
-			</column>
+			<column name="shotgun_index_id" type="bigserial" jt="-5" mandatory="y" />
+			<column name="i7_name" type="varchar" jt="12" />
+			<column name="i7_bases" type="varchar" jt="12" />
+			<column name="i7_row" type="integer" jt="4" />
+			<column name="i7_col" type="integer" jt="4" />
+			<column name="i5_name" type="varchar" jt="12" />
+			<column name="i5_bases" type="varchar" jt="12" />
+			<column name="i5_row" type="integer" jt="4" />
+			<column name="i5_col" type="integer" jt="4" />
 			<column name="shotgun_index_tech_id" type="bigint" jt="-5" />
 			<index name="idx_shotgun_index" unique="PRIMARY_KEY" >
 				<column name="shotgun_index_id" />
@@ -22965,6 +22969,7 @@ AS $function$xpath_exists$function$
 			<column name="shotgun_index_tech_id" type="bigserial" jt="-5" mandatory="y" />
 			<column name="name" type="varchar" length="100" jt="12" />
 			<column name="dual_index" type="bool" jt="-7" />
+			<column name="i5_i7_sameplate" type="bool" jt="-7" />
 			<column name="last_index_idx" type="integer" jt="4" />
 			<index name="pk_shotgun_index_tech" unique="PRIMARY_KEY" >
 				<column name="shotgun_index_tech_id" />
@@ -23063,34 +23068,27 @@ AS $function$xpath_exists$function$
 			<column name="col" type="integer" jt="4" mandatory="y" />
 			<column name="sample_volume_nl" type="real" jt="7" mandatory="y" />
 			<column name="water_volume_nl" type="real" jt="7" mandatory="y" />
-			<column name="shotgun_i5_index_id" type="varchar" jt="12" />
-			<column name="shotgun_i7_index_id" type="varchar" jt="12" />
 			<column name="qpcr_concentration" type="real" jt="7" />
 			<column name="qpcr_cp" type="real" jt="7" />
+			<column name="shotgun_index_id" type="bigint" jt="-5" />
 			<column name="shotgun_index_aliquot" type="bigint" jt="-5" />
 			<index name="idx_wgs_normalized_plate_well_values" unique="NORMAL" >
 				<column name="shotgun_normalized_plate_id" />
 			</index>
-			<index name="idx_wgs_normalized_plate_well_values_0" unique="NORMAL" >
-				<column name="shotgun_i5_index_id" />
-			</index>
-			<index name="idx_wgs_normalized_plate_well_values_1" unique="NORMAL" >
-				<column name="shotgun_i7_index_id" />
-			</index>
 			<index name="idx_shotgun_normalized_plate_well_values" unique="NORMAL" >
 				<column name="shotgun_index_aliquot" />
+			</index>
+			<index name="idx_shotgun_normalized_plate_well_values_0" unique="NORMAL" >
+				<column name="shotgun_index_id" />
 			</index>
 			<fk name="fk_wgs_normalized_plate_well_values" to_schema="pm" to_table="shotgun_normalized_plate" >
 				<fk_column name="shotgun_normalized_plate_id" pk="shotgun_normalized_plate_id" />
 			</fk>
-			<fk name="fk_wgs_normalized_plate_well_values_i5" to_schema="pm" to_table="shotgun_index" >
-				<fk_column name="shotgun_i5_index_id" pk="shotgun_index_id" />
-			</fk>
-			<fk name="fk_wgs_normalized_plate_well_values_i7" to_schema="pm" to_table="shotgun_index" >
-				<fk_column name="shotgun_i7_index_id" pk="shotgun_index_id" />
-			</fk>
 			<fk name="fk_shotgun_normalized_plate_well_values_aliquot" to_schema="pm" to_table="shotgun_index_aliquot" >
 				<fk_column name="shotgun_index_aliquot" pk="shotgun_index_aliquot_id" />
+			</fk>
+			<fk name="fk_shotgun_normalized_plate_well_values" to_schema="pm" to_table="shotgun_index" >
+				<fk_column name="shotgun_index_id" pk="shotgun_index_id" />
 			</fk>
 		</table>
 		<table name="shotgun_plate" >
@@ -23503,14 +23501,14 @@ AS $function$xpath_exists$function$
 		<entity schema="pm" name="targeted_plate" color="b2cdf7" x="630" y="960" />
 		<entity schema="pm" name="shotgun_pool_plate_well_values" color="b2cdf7" x="795" y="2085" />
 		<entity schema="pm" name="targeted_plate_well_values" color="b2cdf7" x="360" y="1125" />
-		<entity schema="pm" name="qpcr" color="b2cdf7" x="270" y="1980" />
 		<entity schema="pm" name="run" color="b2cdf7" x="1125" y="1860" />
 		<entity schema="pm" name="mosquito" color="b2cdf7" x="150" y="1710" />
 		<entity schema="pm" name="processing_robot" color="b2cdf7" x="75" y="1335" />
-		<entity schema="pm" name="shotgun_index" color="b2cdf7" x="495" y="2115" />
-		<entity schema="pm" name="shotgun_index_tech" color="b2cdf7" x="705" y="2205" />
-		<entity schema="pm" name="shotgun_index_aliquot" color="b2cdf7" x="480" y="2250" />
-		<entity schema="pm" name="shotgun_normalized_plate_well_values" color="b2cdf7" x="210" y="2085" />
+		<entity schema="pm" name="qpcr" color="b2cdf7" x="240" y="1965" />
+		<entity schema="pm" name="shotgun_normalized_plate_well_values" color="b2cdf7" x="135" y="2100" />
+		<entity schema="pm" name="shotgun_index" color="b2cdf7" x="420" y="2055" />
+		<entity schema="pm" name="shotgun_index_tech" color="b2cdf7" x="630" y="2190" />
+		<entity schema="pm" name="shotgun_index_aliquot" color="b2cdf7" x="420" y="2265" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by :    american_gut_consent</comment>
 			<entity schema="ag" name="ag_survey_multiples" />
@@ -23621,70 +23619,5 @@ AS $function$xpath_exists$function$
 			<entity schema="pm" name="protocol_run_pool" />
 			<entity schema="pm" name="run_pool" />
 		</group>
-		<script name="Sql" id="SQL7396650" >
-			<string><![CDATA[CREATE SCHEMA pm;
-
-CREATE TABLE pm.shotgun_index_aliquot ( 
-	shotgun_index_aliquot_id bigserial  NOT NULL,
-	name                 varchar  NOT NULL,
-	notes                varchar  ,
-	limit_freeze_thaw_cycles bigint  NOT NULL,
-	CONSTRAINT pk_index_aliquot PRIMARY KEY ( shotgun_index_aliquot_id ),
-	CONSTRAINT idx_index_aliquot UNIQUE ( name ) 
- );
-
-CREATE TABLE pm.shotgun_index_tech ( 
-	shotgun_index_tech_id bigserial  NOT NULL,
-	name                 varchar(100)  ,
-	dual_index           bool  ,
-	last_index_idx       integer  ,
-	CONSTRAINT pk_shotgun_index_tech PRIMARY KEY ( shotgun_index_tech_id )
- );
-
-CREATE TABLE pm.shotgun_index ( 
-	shotgun_index_id     varchar  NOT NULL,
-	bases                varchar  NOT NULL,
-	index_type           varchar  ,
-	shotgun_index_tech_id bigint  ,
-	CONSTRAINT idx_shotgun_index PRIMARY KEY ( shotgun_index_id )
- );
-
-CREATE INDEX idx_shotgun_index_0 ON pm.shotgun_index ( shotgun_index_tech_id );
-
-COMMENT ON COLUMN pm.shotgun_index.index_type IS 'ENUM in the DB';
-
-CREATE TABLE pm.shotgun_normalized_plate_well_values ( 
-	shotgun_normalized_plate_id bigint  NOT NULL,
-	row                  integer  NOT NULL,
-	col                  integer  NOT NULL,
-	sample_volume_nl     real  NOT NULL,
-	water_volume_nl      real  NOT NULL,
-	shotgun_i5_index_id  varchar  ,
-	shotgun_i7_index_id  varchar  ,
-	qpcr_concentration   real  ,
-	qpcr_cp              real  ,
-	shotgun_index_aliquot bigint  
- );
-
-CREATE INDEX idx_wgs_normalized_plate_well_values ON pm.shotgun_normalized_plate_well_values ( shotgun_normalized_plate_id );
-
-CREATE INDEX idx_wgs_normalized_plate_well_values_0 ON pm.shotgun_normalized_plate_well_values ( shotgun_i5_index_id );
-
-CREATE INDEX idx_wgs_normalized_plate_well_values_1 ON pm.shotgun_normalized_plate_well_values ( shotgun_i7_index_id );
-
-CREATE INDEX idx_shotgun_normalized_plate_well_values ON pm.shotgun_normalized_plate_well_values ( shotgun_index_aliquot );
-
-ALTER TABLE pm.shotgun_index ADD CONSTRAINT fk_shotgun_index_shotgun_index_tech FOREIGN KEY ( shotgun_index_tech_id ) REFERENCES pm.shotgun_index_tech( shotgun_index_tech_id );
-
-ALTER TABLE pm.shotgun_normalized_plate_well_values ADD CONSTRAINT fk_wgs_normalized_plate_well_values FOREIGN KEY ( shotgun_normalized_plate_id ) REFERENCES pm.shotgun_normalized_plate( shotgun_normalized_plate_id );
-
-ALTER TABLE pm.shotgun_normalized_plate_well_values ADD CONSTRAINT fk_wgs_normalized_plate_well_values_i5 FOREIGN KEY ( shotgun_i5_index_id ) REFERENCES pm.shotgun_index( shotgun_index_id );
-
-ALTER TABLE pm.shotgun_normalized_plate_well_values ADD CONSTRAINT fk_wgs_normalized_plate_well_values_i7 FOREIGN KEY ( shotgun_i7_index_id ) REFERENCES pm.shotgun_index( shotgun_index_id );
-
-ALTER TABLE pm.shotgun_normalized_plate_well_values ADD CONSTRAINT fk_shotgun_normalized_plate_well_values_aliquot FOREIGN KEY ( shotgun_index_aliquot ) REFERENCES pm.shotgun_index_aliquot( shotgun_index_aliquot_id );
-
-]]></string>
-		</script>
 	</layout>
 </project>
