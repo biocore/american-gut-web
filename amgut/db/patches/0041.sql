@@ -541,7 +541,10 @@ INSERT INTO pm.processing_robot (name)
     VALUES ('ROBE'), ('RIKE'), ('JERE'), ('CARMEN');
 
 INSERT INTO pm.qpcr (name)
-    VALUES ('QPCR-KL-1234');
+    VALUES ('IGM light cycler 480');
+
+INSERT INTO pm.echo (name)
+    VALUES ('Echo 550');
 
 INSERT INTO pm.tm300_8_tool (name)
     VALUES ('208484Z'), ('311318B'), ('109375A'), ('3076189');
@@ -841,18 +844,19 @@ INSERT INTO pm.sample (sample_id, is_blank, details)
 
 -- Add a plate
 INSERT INTO pm.plate_reader (name, notes)
-    VALUES ('PR1234', 'Standard plate reader');
+    VALUES ('Synergy HT', 'Knight Lab Plate reader');
 
 -- Add a mosquito machine
 INSERT INTO pm.mosquito (name, notes)
-    VALUES ('Mosquito1', 'Standard mosquito machine');
+    VALUES ('Mosquito left', 'Mosquito machine on the left'),
+           ('Mosquito right', 'Mosquito machine on the right');
 
 -- Add index technologies
 INSERT INTO pm.shotgun_index_tech (name, dual_index, last_index_idx, i5_i7_sameplate)
 	VALUES
-	    -- this will be 1 
+	    -- this will be 1
 		('BiooNEXTflex-HT', False, 0, True),
-	    -- this will be 2 
+	    -- this will be 2
 		('Nextera', True, 0, True),
 	    -- this will be 3
 	    ('iTru', True, 0, False);
@@ -2669,4 +2673,3 @@ CREATE TABLE pm.targeted_plate_well_values (
 
 CREATE INDEX idx_targeted_plate_well_values ON pm.targeted_plate_well_values ( targeted_plate_id );
 ALTER TABLE pm.targeted_plate_well_values ADD CONSTRAINT fk_fadfasf_targeted_plate FOREIGN KEY ( targeted_plate_id ) REFERENCES pm.targeted_plate( targeted_plate_id );
-
