@@ -20,4 +20,5 @@ DROP TABLE ag.controlled_vocabs;
 DROP TABLE ag.promoted_survey_ids;
 
 -- a table we only read from, but never write. Thus, it is static. Can't we correct information elsewhere and get rid of this table?
+-- see discussion: https://github.com/biocore/american-gut-web/issues/669
 --DROP TABLE ag.duplicate_consents;
