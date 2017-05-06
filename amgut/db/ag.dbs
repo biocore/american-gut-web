@@ -1,35 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <project name="PostgreSQL" id="Project2769587" database="PostgreSQL" >
 	<schema name="ag" catalogname="ag" schemaname="ag" >
-		<table name="ag_animal_survey" >
-			<column name="ag_login_id" type="uuid" length="2147483647" jt="1111" mandatory="y" />
-			<column name="participant_name" type="varchar" length="200" jt="12" mandatory="y" />
-			<column name="type" type="varchar" length="100" jt="12" />
-			<column name="origin" type="varchar" length="100" jt="12" />
-			<column name="age" type="varchar" length="100" jt="12" />
-			<column name="gender" type="varchar" length="100" jt="12" />
-			<column name="setting" type="varchar" length="100" jt="12" />
-			<column name="weight" type="varchar" length="100" jt="12" />
-			<column name="diet" type="varchar" length="100" jt="12" />
-			<column name="food_source_store" type="varchar" length="100" jt="12" />
-			<column name="food_source_human" type="varchar" length="100" jt="12" />
-			<column name="food_source_wild" type="varchar" length="100" jt="12" />
-			<column name="food_type" type="varchar" length="100" jt="12" />
-			<column name="organic_food" type="varchar" length="100" jt="12" />
-			<column name="grain_free_food" type="varchar" length="100" jt="12" />
-			<column name="living_status" type="varchar" length="100" jt="12" />
-			<column name="outside_time" type="varchar" length="100" jt="12" />
-			<column name="toilet" type="varchar" length="100" jt="12" />
-			<column name="coprophage" type="varchar" length="100" jt="12" />
-			<column name="comments" type="varchar" length="2000" jt="12" />
-			<index name="ag_animal_survey_pkey" unique="PRIMARY_KEY" >
-				<column name="ag_login_id" />
-				<column name="participant_name" />
-			</index>
-			<fk name="fk_ag_animal_surv_to_ag_login" to_schema="ag" to_table="ag_login" >
-				<fk_column name="ag_login_id" pk="ag_login_id" />
-			</fk>
-		</table>
 		<table name="ag_consent" >
 			<column name="ag_login_id" type="uuid" jt="1111" mandatory="y" />
 			<column name="participant_name" type="varchar" length="200" jt="12" mandatory="y" />
@@ -56,8 +27,8 @@
 		</table>
 		<table name="ag_handout_barcodes" >
 			<column name="kit_id" type="varchar" jt="12" mandatory="y" />
-			<column name="sample_barcode_file" type="varchar" length="13" jt="12" mandatory="y" />
 			<column name="barcode" type="varchar" length="9" jt="12" mandatory="y" />
+			<column name="sample_barcode_file" type="varchar" length="13" jt="12" mandatory="y" />
 			<index name="idx_handout_barcode_1" unique="NORMAL" >
 				<column name="kit_id" />
 			</index>
@@ -88,140 +59,6 @@
 			<index name="ag_handout_kits_pkey" unique="PRIMARY_KEY" >
 				<column name="kit_id" />
 			</index>
-		</table>
-		<table name="ag_human_survey" >
-			<column name="ag_login_id" type="uuid" length="2147483647" jt="1111" mandatory="y" />
-			<column name="participant_name" type="varchar" length="200" jt="12" mandatory="y" />
-			<column name="consent" type="varchar" length="20" jt="12" />
-			<column name="juvenile_age" type="varchar" length="20" jt="12" />
-			<column name="parent_1_name" type="varchar" length="200" jt="12" />
-			<column name="parent_2_name" type="varchar" length="200" jt="12" />
-			<column name="deceased_parent" type="varchar" length="20" jt="12" />
-			<column name="country_of_birth" type="varchar" length="100" jt="12" />
-			<column name="birth_date" type="varchar" length="100" jt="12" />
-			<column name="gender" type="varchar" length="100" jt="12" />
-			<column name="height_in" type="varchar" length="100" jt="12" />
-			<column name="height_cm" type="varchar" length="100" jt="12" />
-			<column name="weight_lbs" type="varchar" length="100" jt="12" />
-			<column name="weight_kg" type="varchar" length="100" jt="12" />
-			<column name="phone_num" type="varchar" length="100" jt="12" />
-			<column name="zip_code" type="varchar" length="100" jt="12" />
-			<column name="diet_type" type="varchar" length="100" jt="12" />
-			<column name="multivitamin" type="varchar" length="100" jt="12" />
-			<column name="supplements" type="varchar" length="100" jt="12" />
-			<column name="lactose" type="varchar" length="100" jt="12" />
-			<column name="gluten" type="varchar" length="100" jt="12" />
-			<column name="foodallergies_peanuts" type="varchar" length="100" jt="12" />
-			<column name="foodallergies_treenuts" type="varchar" length="100" jt="12" />
-			<column name="foodallergies_shellfish" type="varchar" length="100" jt="12" />
-			<column name="foodallergies_other" type="varchar" length="100" jt="12" />
-			<column name="foodallergies_other_text" type="varchar" length="400" jt="12" />
-			<column name="special_restrictions" type="varchar" length="100" jt="12" />
-			<column name="drinking_water_source" type="varchar" length="100" jt="12" />
-			<column name="race" type="varchar" length="100" jt="12" />
-			<column name="race_other" type="varchar" length="100" jt="12" />
-			<column name="current_residence_duration" type="varchar" length="100" jt="12" />
-			<column name="last_travel" type="varchar" length="100" jt="12" />
-			<column name="livingwith" type="varchar" length="100" jt="12" />
-			<column name="dog" type="varchar" length="100" jt="12" />
-			<column name="cat" type="varchar" length="100" jt="12" />
-			<column name="hand" type="varchar" length="100" jt="12" />
-			<column name="shared_housing" type="varchar" length="100" jt="12" />
-			<column name="tanning_beds" type="varchar" length="100" jt="12" />
-			<column name="tanning_sprays" type="varchar" length="100" jt="12" />
-			<column name="exercise_frequency" type="varchar" length="100" jt="12" />
-			<column name="exercise_location" type="varchar" length="100" jt="12" />
-			<column name="nails" type="varchar" length="100" jt="12" />
-			<column name="pool_frequency" type="varchar" length="100" jt="12" />
-			<column name="smoking_frequency" type="varchar" length="100" jt="12" />
-			<column name="alcohol_frequency" type="varchar" length="100" jt="12" />
-			<column name="teethbrushing_frequency" type="varchar" length="100" jt="12" />
-			<column name="flossing_frequency" type="varchar" length="100" jt="12" />
-			<column name="cosmetics_frequency" type="varchar" length="100" jt="12" />
-			<column name="deoderant_use" type="varchar" length="100" jt="12" />
-			<column name="sleep_duration" type="varchar" length="100" jt="12" />
-			<column name="softener" type="varchar" length="100" jt="12" />
-			<column name="antibiotic_select" type="varchar" length="100" jt="12" />
-			<column name="antibiotic_condition" type="varchar" length="100" jt="12" />
-			<column name="flu_vaccine_date" type="varchar" length="100" jt="12" />
-			<column name="weight_change" type="varchar" length="100" jt="12" />
-			<column name="tonsils_removed" type="varchar" length="100" jt="12" />
-			<column name="appendix_removed" type="varchar" length="100" jt="12" />
-			<column name="chickenpox" type="varchar" length="100" jt="12" />
-			<column name="acne_medication" type="varchar" length="100" jt="12" />
-			<column name="acne_medication_otc" type="varchar" length="100" jt="12" />
-			<column name="conditions_medication" type="varchar" length="100" jt="12" />
-			<column name="csection" type="varchar" length="100" jt="12" />
-			<column name="pku" type="varchar" length="100" jt="12" />
-			<column name="asthma" type="varchar" length="100" jt="12" />
-			<column name="seasonal_allergies" type="varchar" length="100" jt="12" />
-			<column name="nonfoodallergies_drug" type="varchar" length="100" jt="12" />
-			<column name="nonfoodallergies_dander" type="varchar" length="100" jt="12" />
-			<column name="nonfoodallergies_beestings" type="varchar" length="100" jt="12" />
-			<column name="nonfoodallergies_poisonivy" type="varchar" length="100" jt="12" />
-			<column name="nonfoodallergies_sun" type="varchar" length="100" jt="12" />
-			<column name="nonfoodallergies_no" type="varchar" length="100" jt="12" />
-			<column name="ibd" type="varchar" length="100" jt="12" />
-			<column name="skin_condition" type="varchar" length="100" jt="12" />
-			<column name="diabetes" type="varchar" length="100" jt="12" />
-			<column name="migraine" type="varchar" length="100" jt="12" />
-			<column name="protein_per" type="varchar" length="100" jt="12" />
-			<column name="fat_per" type="varchar" length="100" jt="12" />
-			<column name="carbohydrate_per" type="varchar" length="100" jt="12" />
-			<column name="plant_per" type="varchar" length="100" jt="12" />
-			<column name="animal_per" type="varchar" length="100" jt="12" />
-			<column name="fiber_grams" type="varchar" length="100" jt="12" />
-			<column name="types_of_plants" type="varchar" length="100" jt="12" />
-			<column name="percentage_from_carbs" type="varchar" length="100" jt="12" />
-			<column name="primary_vegetable" type="varchar" length="100" jt="12" />
-			<column name="primary_carb" type="varchar" length="100" jt="12" />
-			<column name="diabetes_diagnose_date" type="varchar" length="100" jt="12" />
-			<column name="diabetes_medication" type="varchar" length="100" jt="12" />
-			<column name="contraceptive" type="varchar" length="100" jt="12" />
-			<column name="pregnant" type="varchar" length="100" jt="12" />
-			<column name="pregnant_due_date" type="varchar" length="100" jt="12" />
-			<column name="frat" type="varchar" length="100" jt="12" />
-			<column name="communal_dining" type="varchar" length="100" jt="12" />
-			<column name="roommates" type="varchar" length="100" jt="12" />
-			<column name="migraine_frequency" type="varchar" length="100" jt="12" />
-			<column name="migraine_factor_1" type="varchar" length="100" jt="12" />
-			<column name="mainfactor_other_1" type="varchar" length="100" jt="12" />
-			<column name="migraine_factor_2" type="varchar" length="100" jt="12" />
-			<column name="mainfactor_other_2" type="varchar" length="100" jt="12" />
-			<column name="migraine_factor_3" type="varchar" length="100" jt="12" />
-			<column name="mainfactor_other_3" type="varchar" length="100" jt="12" />
-			<column name="migraine_pain" type="varchar" length="100" jt="12" />
-			<column name="migraine_photophobia" type="varchar" length="100" jt="12" />
-			<column name="migraine_phonophobia" type="varchar" length="100" jt="12" />
-			<column name="migraine_nausea" type="varchar" length="100" jt="12" />
-			<column name="migraine_aggravation" type="varchar" length="100" jt="12" />
-			<column name="migraine_aura" type="varchar" length="100" jt="12" />
-			<column name="migraine_relatives" type="varchar" length="100" jt="12" />
-			<column name="migrainemeds" type="varchar" length="100" jt="12" />
-			<column name="about_yourself_text" type="varchar" length="2000" jt="12" />
-			<column name="participant_email" type="varchar" length="300" jt="12" />
-			<column name="participant_name_u" type="varchar" length="400" jt="12" />
-			<index name="ag_human_survey_pkey" unique="PRIMARY_KEY" >
-				<column name="ag_login_id" />
-				<column name="participant_name" />
-			</index>
-			<fk name="fk_ag_hum_surv_to_ag_login" to_schema="ag" to_table="ag_login" >
-				<fk_column name="ag_login_id" pk="ag_login_id" />
-			</fk>
-		</table>
-		<table name="ag_import_stats_tmp" >
-			<column name="tmp_login_count" type="bigint" length="19" jt="-5" />
-			<column name="tmp_kit_count" type="bigint" length="19" jt="-5" />
-			<column name="tmp_barcode_count" type="bigint" length="19" jt="-5" />
-			<column name="before_login_count" type="bigint" length="19" jt="-5" />
-			<column name="before_kit_count" type="bigint" length="19" jt="-5" />
-			<column name="before_barcode_count" type="bigint" length="19" jt="-5" />
-			<column name="after_login_count" type="bigint" length="19" jt="-5" />
-			<column name="after_kit_count" type="bigint" length="19" jt="-5" />
-			<column name="after_barcode_count" type="bigint" length="19" jt="-5" />
-			<column name="login_diff" type="bigint" length="19" jt="-5" />
-			<column name="kit_diff" type="bigint" length="19" jt="-5" />
-			<column name="barcode_diff" type="bigint" length="19" jt="-5" />
 		</table>
 		<table name="ag_kit" >
 			<column name="ag_kit_id" type="uuid" length="2147483647" jt="1111" mandatory="y" >
@@ -273,7 +110,6 @@
 			<column name="sample_barcode_file_md5" type="varchar" length="50" jt="12" />
 			<column name="site_sampled" type="varchar" length="200" jt="12" />
 			<column name="sample_date" type="date" length="20" jt="91" />
-			<column name="participant_name" type="varchar" length="200" jt="12" />
 			<column name="sample_time" type="time" length="100" jt="92" />
 			<column name="notes" type="varchar" length="2000" jt="12" />
 			<column name="environment_sampled" type="varchar" length="100" jt="12" />
@@ -356,66 +192,6 @@
 				<fk_column name="participant_name" pk="participant_name" />
 			</fk>
 		</table>
-		<table name="ag_map_markers" >
-			<column name="zipcode" type="varchar" length="20" jt="12" />
-			<column name="latitude" type="float8" length="17" decimal="17" jt="6" />
-			<column name="longitude" type="float8" length="17" decimal="17" jt="6" />
-			<column name="marker_color" type="varchar" length="10" jt="12" />
-			<column name="order_by" type="bigint" length="19" jt="-5" />
-		</table>
-		<table name="ag_participant_exceptions" >
-			<column name="ag_login_id" type="uuid" length="2147483647" jt="1111" />
-			<column name="participant_name" type="varchar" length="200" jt="12" />
-			<index name="idx_ag_participant_exceptions" unique="NORMAL" >
-				<column name="ag_login_id" />
-			</index>
-			<fk name="fk_ag_participant_exceptions" to_schema="ag" to_table="ag_login" >
-				<fk_column name="ag_login_id" pk="ag_login_id" />
-			</fk>
-		</table>
-		<table name="ag_survey_answer" >
-			<column name="ag_login_id" type="uuid" length="2147483647" jt="1111" mandatory="y" />
-			<column name="participant_name" type="varchar" length="200" jt="12" mandatory="y" />
-			<column name="question" type="varchar" length="100" jt="12" mandatory="y" />
-			<column name="ag_survery_answer_id" type="uuid" length="2147483647" jt="1111" >
-				<defo>ag.uuid_generate_v4()</defo>
-			</column>
-			<column name="answer" type="varchar" length="4000" jt="12" />
-			<index name="ag_survey_answer_pkey" unique="PRIMARY_KEY" >
-				<column name="ag_login_id" />
-				<column name="participant_name" />
-				<column name="question" />
-			</index>
-			<fk name="fk_sur_an_to_ag_login" to_schema="ag" to_table="ag_login" >
-				<fk_column name="ag_login_id" pk="ag_login_id" />
-			</fk>
-		</table>
-		<table name="ag_survey_multiples" >
-			<column name="ag_login_id" type="uuid" length="2147483647" jt="1111" mandatory="y" />
-			<column name="participant_name" type="varchar" length="200" jt="12" mandatory="y" />
-			<column name="item_name" type="varchar" length="50" jt="12" mandatory="y" />
-			<column name="item_value" type="varchar" length="1000" jt="12" />
-			<index name="ag_survey_multiples_pkey" unique="PRIMARY_KEY" >
-				<column name="ag_login_id" />
-				<column name="participant_name" />
-				<column name="item_name" />
-			</index>
-			<fk name="fk_ag_mul_to_ag_login" to_schema="ag" to_table="ag_login" >
-				<fk_column name="ag_login_id" pk="ag_login_id" />
-			</fk>
-		</table>
-		<table name="ag_survey_multiples_backup" >
-			<column name="ag_login_id" type="uuid" length="2147483647" jt="1111" mandatory="y" />
-			<column name="participant_name" type="varchar" length="200" jt="12" />
-			<column name="item_name" type="varchar" length="50" jt="12" mandatory="y" />
-			<column name="item_value" type="varchar" length="1000" jt="12" />
-			<index name="idx_ag_survey_multiples_backup" unique="NORMAL" >
-				<column name="ag_login_id" />
-			</index>
-			<index name="idx_ag_survey_multiples_backup_0" unique="NORMAL" >
-				<column name="participant_name" />
-			</index>
-		</table>
 		<table name="consent_revoked" >
 			<column name="ag_login_id" type="uuid" jt="1111" mandatory="y" />
 			<column name="participant_name" type="varchar" jt="12" mandatory="y" />
@@ -433,26 +209,6 @@
 			<fk name="fk_consent_revoked" to_schema="ag" to_table="ag_login" >
 				<fk_column name="ag_login_id" pk="ag_login_id" />
 			</fk>
-		</table>
-		<table name="controlled_vocab_values" >
-			<column name="vocab_value_id" type="bigint" length="19" jt="-5" mandatory="y" />
-			<column name="controlled_vocab_id" type="bigint" length="19" jt="-5" mandatory="y" />
-			<column name="term" type="varchar" length="500" jt="12" mandatory="y" />
-			<column name="order_by" type="bigint" length="19" jt="-5" />
-			<column name="default_item" type="char" length="1" jt="1" />
-			<index name="controlled_vocab_values_pkey" unique="PRIMARY_KEY" >
-				<column name="vocab_value_id" />
-			</index>
-			<fk name="fk_cont_vcb_values_cont_vcbs" to_schema="ag" to_table="controlled_vocabs" >
-				<fk_column name="controlled_vocab_id" pk="controlled_vocab_id" />
-			</fk>
-		</table>
-		<table name="controlled_vocabs" >
-			<column name="controlled_vocab_id" type="bigint" length="19" jt="-5" mandatory="y" />
-			<column name="vocab_name" type="varchar" length="500" jt="12" />
-			<index name="controlled_vocabs_pkey" unique="PRIMARY_KEY" >
-				<column name="controlled_vocab_id" />
-			</index>
 		</table>
 		<table name="duplicate_consents" >
 			<column name="ag_login_id" type="uuid" jt="1111" mandatory="y" />
@@ -531,6 +287,7 @@
 				<comment><![CDATA[The ISO code for the country]]></comment>
 			</column>
 			<column name="country" type="varchar" length="2147483647" jt="12" mandatory="y" />
+			<column name="ebi" type="varchar" length="3" jt="12" />
 			<index name="pk_iso_country_lookup" unique="PRIMARY_KEY" >
 				<column name="iso_code" />
 			</index>
@@ -570,16 +327,6 @@
 			</fk>
 			<fk name="fk_labadmin_users_access_0" to_schema="ag" to_table="labadmin_users" >
 				<fk_column name="email" pk="email" />
-			</fk>
-		</table>
-		<table name="promoted_survey_ids" >
-			<comment>Keeps track of the survey_ids that correspond to surveys that were ported from first questionnaire to the second</comment>
-			<column name="survey_id" type="varchar" length="2147483647" jt="12" mandatory="y" />
-			<index name="pk_promoted_survey_ids" unique="PRIMARY_KEY" >
-				<column name="survey_id" />
-			</index>
-			<fk name="fk_promoted_survey_ids" to_schema="ag" to_table="ag_login_surveys" >
-				<fk_column name="survey_id" pk="survey_id" />
 			</fk>
 		</table>
 		<table name="settings" >
@@ -666,18 +413,18 @@
 			<column name="survey_question_id" type="bigint" jt="-5" mandatory="y" >
 				<comment><![CDATA[The unique question ID]]></comment>
 			</column>
-			<column name="retired" type="bool" jt="-7" >
-				<defo>&#039;F&#039;</defo>
-				<comment><![CDATA[Whether the question is shown or not]]></comment>
-			</column>
-			<column name="question_shortname" type="varchar" length="100" jt="12" mandatory="y" >
-				<comment><![CDATA[A QIIME mapping file-compatible header that describes the question and can be used for metadata pulldown]]></comment>
-			</column>
 			<column name="american" type="varchar" length="2147483647" jt="12" >
 				<comment><![CDATA[The american english version of the question]]></comment>
 			</column>
 			<column name="british" type="varchar" length="2147483647" jt="12" >
 				<comment><![CDATA[The british english version of the question]]></comment>
+			</column>
+			<column name="question_shortname" type="varchar" length="100" jt="12" mandatory="y" >
+				<comment><![CDATA[A QIIME mapping file-compatible header that describes the question and can be used for metadata pulldown]]></comment>
+			</column>
+			<column name="retired" type="bool" jt="-7" >
+				<defo>&#039;F&#039;</defo>
+				<comment><![CDATA[Whether the question is shown or not]]></comment>
 			</column>
 			<index name="pk_human_survey_question" unique="PRIMARY_KEY" >
 				<column name="survey_question_id" />
@@ -808,6 +555,7 @@
 			<column name="longitude" type="float8" jt="6" />
 			<column name="elevation" type="float8" jt="6" />
 			<column name="cannot_geocode" type="bool" jt="-7" />
+			<column name="country" type="varchar" length="9" jt="12" />
 			<index name="zipcodes_pkey" unique="PRIMARY_KEY" >
 				<column name="zipcode" />
 			</index>
@@ -885,15 +633,6 @@
 			<index name="barcode_pkey" unique="PRIMARY_KEY" >
 				<column name="barcode" />
 			</index>
-		</table>
-		<table name="barcode_exceptions" >
-			<column name="barcode" type="varchar" length="100" jt="12" mandatory="y" />
-			<index name="pk_barcode_exceptions" unique="PRIMARY_KEY" >
-				<column name="barcode" />
-			</index>
-			<fk name="fk_barcode_exceptions" to_schema="barcodes" to_table="barcode" >
-				<fk_column name="barcode" pk="barcode" />
-			</fk>
 		</table>
 		<table name="plate" >
 			<column name="plate_id" type="bigint" length="19" jt="-5" mandatory="y" />
@@ -22593,72 +22332,52 @@ AS $function$xpath_exists$function$
 			<comment><![CDATA[test XML value against XPath expression]]></comment>
 		</function>
 	</schema>
-	<layout id="Layout2861625" name="public" joined_routing="y" show_relation_columns="y" >
-		<entity schema="ag" name="ag_survey_answer" color="f7e2c6" x="75" y="1380" />
-		<entity schema="ag" name="controlled_vocab_values" color="c6c6f7" x="1035" y="45" />
-		<entity schema="ag" name="controlled_vocabs" color="c6c6f7" x="825" y="45" />
-		<entity schema="ag" name="ag_participant_exceptions" color="f7e2c6" x="480" y="1005" />
-		<entity schema="ag" name="ag_animal_survey" color="f7e2c6" x="285" y="975" />
-		<entity schema="ag" name="ag_survey_multiples" color="f7e2c6" x="300" y="1440" />
-		<entity schema="ag" name="group_questions" color="ffcccc" x="330" y="2040" />
-		<entity schema="ag" name="survey_response_types" color="ffffff" x="1020" y="2415" />
-		<entity schema="ag" name="survey_group" color="a8c4ef" x="75" y="2040" />
-		<entity schema="ag" name="survey_answers_other" color="a8c4ef" x="855" y="990" />
-		<entity schema="ag" name="survey_question_triggers" color="a8c4ef" x="675" y="2100" />
-		<entity schema="ag" name="survey_response" color="a8c4ef" x="720" y="2310" />
-		<entity schema="ag" name="survey_question_response" color="ffcccc" x="720" y="2205" />
-		<entity schema="ag" name="iso_country_lookup" color="ffffff" x="930" y="2295" />
-		<entity schema="ag" name="survey_question_response_type" color="ffcccc" x="720" y="2400" />
-		<entity schema="ag" name="zipcodes" color="c6c6f7" x="1245" y="45" />
-		<entity schema="ag" name="ag_survey_multiples_backup" color="cef7c6" x="390" y="45" />
-		<entity schema="ag" name="ag_import_stats_tmp" color="cef7c6" x="615" y="45" />
-		<entity schema="ag" name="ag_map_markers" color="cef7c6" x="255" y="45" />
-		<entity schema="ag" name="survey_answers" color="a8c4ef" x="960" y="1080" />
-		<entity schema="ag" name="external_survey_answers" color="a8c4ef" x="990" y="1200" />
-		<entity schema="barcodes" name="plate" color="a8c4ef" x="270" y="810" />
-		<entity schema="barcodes" name="project_barcode" color="a8c4ef" x="300" y="720" />
-		<entity schema="barcodes" name="plate_barcode" color="a8c4ef" x="105" y="810" />
-		<entity schema="ag" name="external_survey_sources" color="a8c4ef" x="945" y="1350" />
-		<entity schema="ag" name="ag_handout_barcodes" color="a8c4ef" x="255" y="330" />
-		<entity schema="barcodes" name="barcode_exceptions" color="a8c4ef" x="90" y="540" />
-		<entity schema="barcodes" name="project" color="a8c4ef" x="315" y="630" />
-		<entity schema="barcodes" name="barcode" color="a8c4ef" x="75" y="615" />
-		<entity schema="ag" name="survey_question" color="a8c4ef" x="450" y="2205" />
-		<entity schema="ag" name="ag_handout_kits" color="a8c4ef" x="60" y="330" />
-		<entity schema="ag" name="ag_kit" color="f7e2c6" x="510" y="1380" />
-		<entity schema="ag" name="duplicate_consents" color="b7c8e3" x="825" y="870" />
-		<entity schema="ag" name="ag_login" color="f7e2c6" x="105" y="1095" />
-		<entity schema="ag" name="ag_consent" color="c6d9f7" x="990" y="525" />
-		<entity schema="ag" name="ag_login_surveys" color="ffcccc" x="1035" y="870" />
-		<entity schema="ag" name="ag_kit_barcodes" color="f7e2c6" x="135" y="1575" />
-		<entity schema="ag" name="settings" color="a8c4ef" x="45" y="60" />
-		<entity schema="ag" name="consent_revoked" color="b7c8e3" x="870" y="345" />
-		<entity schema="ag" name="promoted_survey_ids" color="a8c4ef" x="1035" y="780" />
-		<entity schema="ag" name="surveys" color="a8c4ef" x="135" y="2175" />
-		<entity schema="ag" name="ag_human_survey" color="c6d9f7" x="1215" y="270" />
-		<entity schema="ag" name="labadmin_users" color="b2cdf7" x="1245" y="2055" />
-		<entity schema="ag" name="labadmin_access" color="b2cdf7" x="1245" y="2295" />
-		<entity schema="ag" name="labadmin_users_access" color="b2cdf7" x="1230" y="2175" />
+	<layout name="public" id="Layout2861625" joined_routing="y" show_relation="cascade" >
+		<entity schema="ag" name="group_questions" color="ffcccc" x="336" y="2080" />
+		<entity schema="ag" name="survey_response_types" color="ffffff" x="1024" y="2448" />
+		<entity schema="ag" name="survey_group" color="a8c4ef" x="80" y="2080" />
+		<entity schema="ag" name="survey_answers_other" color="a8c4ef" x="848" y="1024" />
+		<entity schema="ag" name="survey_question_triggers" color="a8c4ef" x="672" y="2128" />
+		<entity schema="ag" name="survey_response" color="a8c4ef" x="720" y="2336" />
+		<entity schema="ag" name="survey_question_response" color="ffcccc" x="720" y="2240" />
+		<entity schema="ag" name="survey_question_response_type" color="ffcccc" x="720" y="2432" />
+		<entity schema="ag" name="survey_answers" color="a8c4ef" x="960" y="1120" />
+		<entity schema="ag" name="external_survey_answers" color="a8c4ef" x="992" y="1232" />
+		<entity schema="barcodes" name="plate" color="a8c4ef" x="272" y="848" />
+		<entity schema="barcodes" name="project_barcode" color="a8c4ef" x="304" y="752" />
+		<entity schema="barcodes" name="plate_barcode" color="a8c4ef" x="112" y="848" />
+		<entity schema="ag" name="external_survey_sources" color="a8c4ef" x="944" y="1376" />
+		<entity schema="barcodes" name="project" color="a8c4ef" x="320" y="656" />
+		<entity schema="barcodes" name="barcode" color="a8c4ef" x="80" y="640" />
+		<entity schema="ag" name="ag_handout_kits" color="a8c4ef" x="64" y="368" />
+		<entity schema="ag" name="ag_kit" color="f7e2c6" x="512" y="1408" />
+		<entity schema="ag" name="duplicate_consents" color="b7c8e3" x="832" y="896" />
+		<entity schema="ag" name="ag_login" color="f7e2c6" x="112" y="1120" />
+		<entity schema="ag" name="ag_consent" color="c6d9f7" x="992" y="560" />
+		<entity schema="ag" name="ag_login_surveys" color="ffcccc" x="1040" y="896" />
+		<entity schema="ag" name="settings" color="a8c4ef" x="48" y="96" />
+		<entity schema="ag" name="consent_revoked" color="b7c8e3" x="864" y="384" />
+		<entity schema="ag" name="surveys" color="a8c4ef" x="128" y="2208" />
+		<entity schema="ag" name="labadmin_users" color="b2cdf7" x="1248" y="2080" />
+		<entity schema="ag" name="labadmin_access" color="b2cdf7" x="1248" y="2320" />
+		<entity schema="ag" name="labadmin_users_access" color="b2cdf7" x="1232" y="2208" />
+		<entity schema="ag" name="zipcodes" color="c6c6f7" x="1248" y="80" />
+		<entity schema="ag" name="ag_handout_barcodes" color="a8c4ef" x="256" y="368" />
+		<entity schema="ag" name="ag_kit_barcodes" color="f7e2c6" x="128" y="1600" />
+		<entity schema="ag" name="survey_question" color="a8c4ef" x="448" y="2240" />
+		<entity schema="ag" name="iso_country_lookup" color="ffffff" x="928" y="2320" />
 		<group name="ag_survey_multiples" color="faf6f0" >
 			<comment>Used by :    american_gut_consent</comment>
-			<entity schema="ag" name="ag_survey_multiples" />
-			<entity schema="ag" name="ag_survey_answer" />
 			<entity schema="ag" name="ag_kit" />
-			<entity schema="ag" name="ag_animal_survey" />
 			<entity schema="ag" name="ag_login" />
-			<entity schema="ag" name="ag_participant_exceptions" />
 			<entity schema="ag" name="ag_kit_barcodes" />
 		</group>
 		<group name="disconnected tables" color="f2faf0" >
 			<comment>These tables are not connected to any other table in the database by foreign key or anything else...</comment>
-			<entity schema="ag" name="ag_survey_multiples_backup" />
-			<entity schema="ag" name="ag_import_stats_tmp" />
-			<entity schema="ag" name="ag_map_markers" />
 			<entity schema="ag" name="settings" />
 		</group>
 		<group name="american_gut_consent" color="f0f4fa" >
 			<entity schema="ag" name="ag_consent" />
-			<entity schema="ag" name="ag_human_survey" />
 			<entity schema="ag" name="survey_answers" />
 			<entity schema="ag" name="ag_login_surveys" />
 			<entity schema="ag" name="survey_answers_other" />
@@ -22666,12 +22385,9 @@ AS $function$xpath_exists$function$
 			<entity schema="ag" name="external_survey_sources" />
 			<entity schema="ag" name="duplicate_consents" />
 			<entity schema="ag" name="consent_revoked" />
-			<entity schema="ag" name="promoted_survey_ids" />
 		</group>
 		<group name="controlled_vocab_values" color="f0f0fa" >
 			<comment>Used by :    american_gut_consent</comment>
-			<entity schema="ag" name="controlled_vocab_values" />
-			<entity schema="ag" name="controlled_vocabs" />
 			<entity schema="ag" name="zipcodes" />
 		</group>
 		<group name="survey_questions" color="c4e0f9" >
@@ -22696,7 +22412,6 @@ AS $function$xpath_exists$function$
 			<entity schema="barcodes" name="project_barcode" />
 			<entity schema="barcodes" name="project" />
 			<entity schema="barcodes" name="barcode" />
-			<entity schema="barcodes" name="barcode_exceptions" />
 		</group>
 		<group name="Group_labadmin_users" color="ffccff" >
 			<entity schema="ag" name="labadmin_users" />
