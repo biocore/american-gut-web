@@ -1,13 +1,14 @@
 -- create the new many-to-many relation between barcodes and surveys
 CREATE TABLE ag.source_barcodes_surveys (
-	barcode              varchar  ,
-	survey_id            varchar
+	barcode              varchar NOT NULL ,
+	survey_id            varchar NOT NULL
  );
 CREATE INDEX idx_source ON ag.source_barcodes_surveys ( barcode );
 CREATE INDEX idx_source_0 ON ag.source_barcodes_surveys ( survey_id );
 COMMENT ON COLUMN ag.source_barcodes_surveys.barcode IS 'Points to barcode(s) that are assigned to this source.';
 COMMENT ON COLUMN ag.source_barcodes_surveys.survey_id IS 'Points to survey(s) that are assigned to this source.';
 ALTER TABLE ag.source_barcodes_surveys ADD CONSTRAINT fk_source_barcode FOREIGN KEY ( barcode ) REFERENCES barcodes.barcode( barcode );
+ALTER TABLE ag.source_barcodes_surveys ADD CONSTRAINT fk_source_survey_id FOREIGN KEY ( survey_id ) REFERENCES ag.ag_login_surveys (survey_id);
 
 
 -- create a view of all of the participants with multiple survey ids
@@ -49,9 +50,8 @@ JOIN multi_source_bc USING (ag_login_id, participant_name);
 
 
 -- insert barcode survey (many-to-many) into newly created table
-DELETE FROM ag.source_barcodes_surveys; -- clear table prior to insertion
 INSERT INTO ag.source_barcodes_surveys (survey_id, barcode)
-SELECT survey_id, barcode FROM (SELECT * FROM multi_source_bc_survey UNION SELECT * FROM single_source_bc_survey) AS foo;
+SELECT survey_id, barcode FROM multi_source_bc_survey UNION SELECT survey_id, barcode FROM single_source_bc_survey;
 
 -- remove views
 DROP VIEW multi_source_bc_survey;
