@@ -340,11 +340,11 @@ class AGDataAccess(object):
                 self.deleteSample(info['barcode'], ag_login_id)
 
             # Delete last due to foreign keys
-            sql = "DELETE FROM ag.ag_kit_barcodes WHERE barcode IN %s"
-            TRN.add(sql, [tuple(barcodes)])
             sql = """DELETE FROM ag.source_barcodes_surveys
                      WHERE survey_id IN %s"""
             TRN.add(sql, [tuple(survey_ids)])
+            sql = "DELETE FROM ag.ag_kit_barcodes WHERE barcode IN %s"
+            TRN.add(sql, [tuple(barcodes)])
 
             sql = "DELETE FROM ag_login_surveys WHERE survey_id IN %s"
             TRN.add(sql, [tuple(survey_ids)])
@@ -409,11 +409,12 @@ class AGDataAccess(object):
                          WHERE ag_login_id = %s AND participant_name = %s"""
 
                 TRN.add(sql, (ag_login_id, participant_name))
-                survey_ids = [x[0] for x in TRN.execute_fetchindex()]
+                survey_ids = TRN.execute_fetchindex()
                 if not survey_ids:
                     raise ValueError("No survey IDs for ag_login_id %s and "
                                      "participant name %s" %
                                      (ag_login_id, participant_name))
+                survey_ids = [x[0] for x in survey_ids]
             else:
                 # otherwise, it is an environmental sample
                 survey_ids = []
