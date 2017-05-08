@@ -6,7 +6,7 @@ from uuid import UUID
 
 from amgut.lib.data_access.ag_data_access import AGDataAccess
 from amgut.lib.util import rollback
-
+from amgut.lib.data_access.ag_data_access import TRN
 
 class TestAGDataAccess(TestCase):
     def setUp(self):
@@ -172,6 +172,19 @@ class TestAGDataAccess(TestCase):
     def test_deleteAGParticipantSurvey(self):
         ag_login_id = '000fc4cd-8fa4-db8b-e050-8a800c5d02b5'
 
+        with TRN:
+            sql = """SELECT survey_id
+                     FROM ag.ag_login_surveys
+                     WHERE ag_login_id = %s"""
+            TRN.add(sql, [ag_login_id])
+            old_survey_ids = [x[0] for x in TRN.execute_fetchindex()]
+
+            sql = """SELECT barcode
+                     FROM ag.source_barcodes_surveys
+                     WHERE survey_id IN %s"""
+            TRN.add(sql, [tuple(old_survey_ids)])
+            old_barcodes = [x[0] for x in TRN.execute_fetchindex()]
+
         # make sure we can get the corresponding survey by ID
         self.ag_data.getConsent('8b2b45bb3390b585')
 
@@ -189,6 +202,31 @@ class TestAGDataAccess(TestCase):
         for r in res:
             if r[0] == ag_login_id:
                 self.assertEqual(r[3], today)
+
+        with TRN:
+            # check that barcode are really deleted from
+            # source_barcodes_surveys
+            sql = """SELECT COUNT(*)
+                     FROM ag.source_barcodes_surveys
+                     WHERE barcode IN %s"""
+            TRN.add(sql, [tuple(old_barcodes)])
+            self.assertEqual(TRN.execute_fetchindex()[0][0], 0)
+
+            # check that survey_ids are really deleted from
+            # source_barcodes_surveys
+            sql = """SELECT COUNT(*)
+                     FROM ag.source_barcodes_surveys
+                     WHERE survey_id IN %s"""
+            TRN.add(sql, [tuple(old_survey_ids)])
+            self.assertEqual(TRN.execute_fetchindex()[0][0], 0)
+
+            # check that barcode are really deleted from
+            # ag_kit_barcodes
+            sql = """SELECT COUNT(*)
+                     FROM ag.ag_kit_barcodes
+                     WHERE barcode IN %s"""
+            TRN.add(sql, [tuple(old_barcodes)])
+            self.assertEqual(TRN.execute_fetchindex()[0][0], 0)
 
     @rollback
     def test_deleteAGParticipantSurvey_with_sample_bug(self):

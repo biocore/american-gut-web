@@ -334,7 +334,13 @@ class AGDataAccess(object):
                 self.deleteSample(info['barcode'], ag_login_id)
 
             # Delete last due to foreign keys
-            sql = "DELETE FROM ag_kit_barcodes WHERE survey_id IN %s"
+            sql = """DELETE FROM ag.ag_kit_barcodes
+                     WHERE barcode IN (SELECT barcode
+                                       FROM ag.source_barcodes_surveys
+                                       WHERE survey_id IN %s)"""
+            TRN.add(sql, [tuple(survey_ids)])
+            sql = """DELETE FROM ag.source_barcodes_surveys
+                     WHERE survey_id IN %s"""
             TRN.add(sql, [tuple(survey_ids)])
 
             sql = "DELETE FROM ag_login_surveys WHERE survey_id IN %s"
