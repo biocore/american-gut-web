@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from unittest import TestCase, main
 import datetime
 from random import choice, randint
@@ -7,6 +9,7 @@ from uuid import UUID
 from amgut.lib.data_access.ag_data_access import AGDataAccess
 from amgut.lib.util import rollback
 from amgut.lib.data_access.ag_data_access import TRN
+
 
 class TestAGDataAccess(TestCase):
     def setUp(self):
@@ -261,6 +264,32 @@ class TestAGDataAccess(TestCase):
                 '11111111-1111-1111-1111-714297821c6a', '000001047',
                 'stool', None, datetime.date(2015, 9, 27),
                 datetime.time(15, 54), 'BADNAME', '')
+
+    @rollback
+    def test_logParticipantSample_tomultiplesurveys(self):
+        ag_login_id = '5a10ea3e-9c7f-4ec3-9e96-3dc42e896668'
+        participant_name = "Name - )?Åú*IüKb+"
+        barcode = "000027913"
+
+        # check that there are no barcode <-> survey assignments, prior to
+        # logging
+        with TRN:
+            sql = """SELECT COUNT(*) FROM ag.source_barcodes_surveys
+                     WHERE survey_id IN (SELECT survey_id
+                                         FROM ag.ag_login_surveys
+                                         WHERE ag_login_id = %s
+                                         AND participant_name = %s)"""
+            TRN.add(sql, [ag_login_id, participant_name])
+            self.assertEqual(TRN.execute_fetchindex()[0][0], 0)
+
+        self.ag_data.logParticipantSample(
+            ag_login_id, barcode, 'Stool', None, datetime.date(2015, 9, 27),
+            datetime.time(15, 54), participant_name, '')
+
+        # check that single barcode gets assigned to BOTH surveys
+        with TRN:
+            TRN.add(sql, [ag_login_id, participant_name])
+            self.assertEqual(TRN.execute_fetchindex()[0][0], 2)
 
     def test_logParticipantSample(self):
         # regular sample

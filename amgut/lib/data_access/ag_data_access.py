@@ -406,25 +406,30 @@ class AGDataAccess(object):
                          WHERE ag_login_id = %s AND participant_name = %s"""
 
                 TRN.add(sql, (ag_login_id, participant_name))
-                survey_id = TRN.execute_fetchindex()
-                if not survey_id:
-                    raise ValueError("No survey ID for ag_login_id %s and "
+                survey_ids = [x[0] for x in TRN.execute_fetchindex()]
+                if not survey_ids:
+                    raise ValueError("No survey IDs for ag_login_id %s and "
                                      "participant name %s" %
                                      (ag_login_id, participant_name))
-                survey_id = survey_id[0][0]
             else:
                 # otherwise, it is an environmental sample
-                survey_id = None
+                survey_ids = []
 
             # Add barcode info
             sql = """UPDATE ag_kit_barcodes
                      SET site_sampled = %s, environment_sampled = %s,
                          sample_date = %s, sample_time = %s,
-                         notes = %s, survey_id = %s
+                         notes = %s
                      WHERE barcode = %s"""
             TRN.add(sql, [sample_site, environment_sampled, sample_date,
-                          sample_time, notes, survey_id,
+                          sample_time, notes,
                           barcode])
+            if len(survey_ids) > 0:
+                sql = """INSERT INTO ag.source_barcodes_surveys (survey_id,
+                                                                 barcode)
+                         VALUES (%s, %s)"""
+                for survey_id in survey_ids:
+                    TRN.add(sql, [survey_id, barcode])
 
     def deleteSample(self, barcode, ag_login_id):
         """ Removes by either releasing barcode back for relogging or withdraw
