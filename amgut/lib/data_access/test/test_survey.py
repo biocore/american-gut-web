@@ -361,6 +361,8 @@ class TestSurvey(TestCase):
         # only look at those fields, that are not subject to scrubbing
         self.assertEqual({k: obs[k] for k in exp}, exp)
 
+        self.delete_survey(survey_id)
+
     def test_fetch_survey_bad_id(self):
         survey = Survey(1)
         with self.assertRaises(ValueError):
@@ -520,6 +522,8 @@ class TestSurvey(TestCase):
         del obs['parent_2_name']
         del obs['participant_name']
         self.assertEqual(obs, consent)
+
+        self.delete_survey(survey_id)
 
 
 if __name__ == "__main__":
