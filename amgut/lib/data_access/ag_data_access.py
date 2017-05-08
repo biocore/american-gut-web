@@ -177,20 +177,32 @@ class AGDataAccess(object):
         ValueError
             Barcode not found in AG information tables
         """
-        sql = """SELECT  DISTINCT email,
-                    cast(ag_kit_barcode_id as varchar(100)),
-                    cast(ag_kit_id as varchar(100)),
-                    barcode, site_sampled, environment_sampled, sample_date,
-                    sample_time, participant_name, notes, refunded, withdrawn,
-                    moldy, other, other_text, date_of_last_email ,overloaded,
-                    name, status
-                  FROM ag_kit_barcodes
-                  INNER JOIN ag_kit USING (ag_kit_id)
-                  FULL OUTER JOIN ag_login_surveys
-                    USING (survey_id, ag_login_id)
-                  INNER JOIN ag_login USING (ag_login_id)
-                  INNER JOIN barcode USING (barcode)
-                  WHERE barcode = %s"""
+        sql = """SELECT ag_login.email,
+                        cast(ag_kit_barcodes.ag_kit_barcode_id
+                             as varchar(100)),
+                        cast(ag_kit_barcodes.ag_kit_id as varchar(100)),
+                        barcodes.barcode,
+                        ag_kit_barcodes.site_sampled,
+                        ag_kit_barcodes.environment_sampled,
+                        ag_kit_barcodes.sample_date,
+                        ag_kit_barcodes.sample_time,
+                        ag_login_surveys.participant_name,
+                        ag_kit_barcodes.notes,
+                        ag_kit_barcodes.refunded,
+                        ag_kit_barcodes.withdrawn,
+                        ag_kit_barcodes.moldy,
+                        ag_kit_barcodes.other,
+                        ag_kit_barcodes.other_text,
+                        ag_kit_barcodes.date_of_last_email ,
+                        ag_kit_barcodes.overloaded,
+                        ag_login.name,
+                        barcodes.status
+                 FROM ag.ag_kit_barcodes
+                 LEFT JOIN barcodes.barcode USING (barcode)
+                 LEFT JOIN ag.ag_kit USING (ag_kit_id)
+                 LEFT JOIN ag.ag_login_surveys USING (ag_login_id)
+                 LEFT JOIN ag.ag_login USING (ag_login_id)
+                 WHERE barcode = %s"""
 
         with TRN:
             TRN.add(sql, [barcode])
