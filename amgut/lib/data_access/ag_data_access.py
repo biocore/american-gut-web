@@ -737,7 +737,7 @@ class AGDataAccess(object):
                  RIGHT JOIN ag_login USING (ag_login_id)
                  LEFT JOIN barcode USING (barcode)
                  FULL JOIN ag.source_barcodes_surveys USING (barcode)
-                 WHERE survey_id IS NULL
+                 WHERE ag.source_barcodes_surveys.survey_id IS NULL
                  AND scan_date IS NOT NULL
                  AND ag_login_id = %s"""
         with TRN:
