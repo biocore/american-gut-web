@@ -322,7 +322,9 @@ class AGDataAccess(object):
                 survey_ids.add(hit[0])
                 participant_emails.add(hit[1])
 
-            sql = "SELECT barcode FROM ag.source_barcodes_surveys WHERE survey_id IN %s"
+            sql = """SELECT barcode
+                     FROM ag.source_barcodes_surveys
+                     WHERE survey_id IN %s"""
             TRN.add(sql, [tuple(survey_ids)])
             barcodes = [x[0] for x in TRN.execute_fetchindex()]
 
