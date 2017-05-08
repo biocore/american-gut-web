@@ -86,8 +86,7 @@ class TestAGDataAccess(TestCase):
         supplied_kit_id, barcode =\
             self.ag_data.ut_get_arbitrary_supplied_kit_id_scanned_unconsented()
         obs = self.ag_data.get_nonconsented_scanned_barcodes(supplied_kit_id)
-        exp = [barcode]
-        self.assertEqual(obs, exp)
+        self.assertIn(barcode, obs)
 
     def test_getAGBarcodeDetails(self):
         # test existing AG barcode

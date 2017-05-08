@@ -464,8 +464,7 @@ class AGDataAccess(object):
                 # Not recieved, so we release the barcode back to be relogged
                 set_text = """site_sampled = NULL,
                              sample_time = NULL, sample_date = NULL,
-                             environment_sampled = NULL, notes = NULL,
-                             survey_id = NULL"""
+                             environment_sampled = NULL, notes = NULL"""
                 sql = "UPDATE barcode SET status = NULL WHERE barcode = %s"
                 TRN.add(sql, [barcode])
             else:
@@ -543,14 +542,21 @@ class AGDataAccess(object):
             return TRN.execute_fetchflatten()
 
     def getParticipantSamples(self, ag_login_id, participant_name):
-        sql = """SELECT  barcode, site_sampled, sample_date, sample_time,
-                    notes, status
-                 FROM ag_kit_barcodes akb
-                 INNER JOIN barcode USING (barcode)
-                 INNER JOIN ag_kit ak USING (ag_kit_id)
-                 INNER JOIN ag_login_surveys USING (survey_id, ag_login_id)
-                 WHERE (site_sampled IS NOT NULL AND site_sampled::text <> '')
-                 AND ag_login_id = %s AND participant_name = %s"""
+        sql = """SELECT DISTINCT
+                        ag_kit_barcodes.barcode,
+                        ag_kit_barcodes.site_sampled,
+                        ag_kit_barcodes.sample_date,
+                        ag_kit_barcodes.sample_time,
+                        ag_kit_barcodes.notes,
+                        barcodes.barcode.status
+                 FROM ag.ag_login_surveys
+                 JOIN ag.source_barcodes_surveys USING (survey_id)
+                 JOIN ag.ag_kit_barcodes USING (barcode)
+                 JOIN barcodes.barcode USING (barcode)
+                 WHERE ag_login_id = %s
+                 AND participant_name = %s
+                 AND (site_sampled IS NOT NULL
+                 AND site_sampled::text <> '')"""
         with TRN:
             TRN.add(sql, [ag_login_id, participant_name])
             rows = TRN.execute_fetchindex()
@@ -730,8 +736,10 @@ class AGDataAccess(object):
                  INNER JOIN ag_kit USING (ag_kit_id)
                  RIGHT JOIN ag_login USING (ag_login_id)
                  LEFT JOIN barcode USING (barcode)
-                 WHERE survey_id IS NULL AND scan_date IS NOT NULL
-                    AND ag_login_id = %s"""
+                 FULL JOIN ag.source_barcodes_surveys USING (barcode)
+                 WHERE survey_id IS NULL
+                 AND scan_date IS NOT NULL
+                 AND ag_login_id = %s"""
         with TRN:
             user = self.get_user_for_kit(kit_id)
             TRN.add(sql, [user])
@@ -835,12 +843,11 @@ class AGDataAccess(object):
         """
         with TRN:
             ag_login_id = self.get_user_for_kit(supplied_kit_id)
-            sql = """SELECT barcode, participant_name
-                     FROM ag_kit_barcodes
-                     INNER JOIN ag_kit USING (ag_kit_id)
-                     INNER JOIN ag_login_surveys USING (survey_id, ag_login_id)
+            sql = """SELECT DISTINCT barcode, participant_name
+                     FROM ag.ag_login_surveys
+                     JOIN ag.source_barcodes_surveys USING (survey_id)
+                     JOIN ag.ag_kit_barcodes USING (barcode)
                      WHERE ag_login_id = %s AND results_ready = 'Y'"""
-
             TRN.add(sql, [ag_login_id])
             return [dict(row) for row in TRN.execute_fetchindex()]
 
@@ -1018,8 +1025,9 @@ class AGDataAccess(object):
                      FROM barcodes.barcode
                      JOIN ag.ag_kit_barcodes USING (barcode)
                      JOIN ag.ag_kit USING (ag_kit_id)
+                     LEFT JOIN ag.source_barcodes_surveys USING (barcode)
                      WHERE barcodes.barcode.scan_date IS NOT NULL
-                     AND ag.ag_kit_barcodes.survey_id IS NULL
+                     AND ag.source_barcodes_surveys.survey_id IS NULL
                      LIMIT 1"""
             TRN.add(sql, [])
             info = TRN.execute_fetchindex()
