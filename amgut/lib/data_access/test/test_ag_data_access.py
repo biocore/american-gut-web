@@ -159,6 +159,7 @@ class TestAGDataAccess(TestCase):
         obs = self.ag_data.registerHandoutKit(ag_login_id, kit)
         self.assertFalse(obs)
 
+    @rollback
     def test_registerHandoutKit(self):
         # run on real data
         ag_login_id = 'dc3172b2-792c-4087-8a20-714297821c6a'
@@ -291,6 +292,31 @@ class TestAGDataAccess(TestCase):
             TRN.add(sql, [ag_login_id, participant_name])
             self.assertEqual(TRN.execute_fetchindex()[0][0], 2)
 
+    @rollback
+    def test_deleteSample_removeallsurveys(self):
+        ag_login_id = '5a10ea3e-9c7f-4ec3-9e96-3dc42e896668'
+        participant_name = "Name - )?Åú*IüKb+"
+        barcode = "000027913"
+        self.ag_data.logParticipantSample(
+            ag_login_id, barcode, 'Stool', None, datetime.date(2015, 9, 27),
+            datetime.time(15, 54), participant_name, '')
+
+        sql = """SELECT COUNT(*)
+                 FROM ag.source_barcodes_surveys
+                 WHERE barcode = %s"""
+        # check that barcodes are assigned to surveys
+        with TRN:
+            TRN.add(sql, [barcode])
+            self.assertEqual(TRN.execute_fetchindex()[0][0], 2)
+
+        self.ag_data.deleteSample(barcode, ag_login_id)
+
+        # ensure barcode to survey assignment is deleted
+        with TRN:
+            TRN.add(sql, [barcode])
+            self.assertEqual(TRN.execute_fetchindex()[0][0], 0)
+
+    @rollback
     def test_logParticipantSample(self):
         # regular sample
         ag_login_id = '7732aafe-c4e1-4ae4-8337-6f22704c1064'
@@ -358,6 +384,7 @@ class TestAGDataAccess(TestCase):
         res = self.ag_data.getHumanParticipants(i)
         self.assertEqual(res, [])
 
+    @rollback
     def test_vioscreen_status(self):
         survey_id = 'eba20dea4f54b997'
         self.ag_data.updateVioscreenStatus(survey_id, 3)
@@ -541,6 +568,7 @@ class TestAGDataAccess(TestCase):
         res = self.ag_data.getAvailableBarcodes(i)
         self.assertEqual(res, [])
 
+    @rollback
     def test_verifyKit(self):
         # Test verifying works
         kit = self.ag_data._get_unverified_kits()[0]
@@ -562,6 +590,7 @@ class TestAGDataAccess(TestCase):
             obs = self.ag_data.getAGKitDetails(kit_id)
             self.assertEqual(obs['kit_verified'], 'n')
 
+    @rollback
     def test_handoutCheck(self):
         # Test proper password for handout
         # All tests use assertEqual to make sure bool object returned
@@ -597,6 +626,7 @@ class TestAGDataAccess(TestCase):
             '000001111')
         self.assertEqual(obs, False)
 
+    @rollback
     def test_ag_set_pass_change_code(self):
         ag_login_id = 'd8592c74-8416-2135-e040-8a80115d6401'
 
@@ -633,6 +663,7 @@ class TestAGDataAccess(TestCase):
         # TODO: make this raise error and test
         self.ag_data.ag_set_pass_change_code('REMOVED', 'NOTINTHEDB', testcode)
 
+    @rollback
     def test_ag_update_kit_password(self):
         # Generate new pass and make sure is different from current pass
         newpass = ''.join(choice(ascii_letters) for i in range(randint(8, 15)))
@@ -660,6 +691,7 @@ class TestAGDataAccess(TestCase):
         # TODO: make this raise error and test
         self.ag_data.ag_update_kit_password('NOTINTHEDB', newpass)
 
+    @rollback
     def test_ag_verify_kit_password_change_code(self):
         ag_login_id = '6165453f-e8bc-4edc-b00e-50e72fe550c9'
         email = self.ag_data.ut_get_email_from_ag_login_id(ag_login_id)

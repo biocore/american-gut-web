@@ -322,6 +322,10 @@ class AGDataAccess(object):
                 survey_ids.add(hit[0])
                 participant_emails.add(hit[1])
 
+            sql = "SELECT barcode FROM ag.source_barcodes_surveys WHERE survey_id IN %s"
+            TRN.add(sql, [tuple(survey_ids)])
+            barcodes = [x[0] for x in TRN.execute_fetchindex()]
+
             sql = "DELETE FROM survey_answers WHERE survey_id IN %s"
             TRN.add(sql, [tuple(survey_ids)])
 
@@ -334,11 +338,8 @@ class AGDataAccess(object):
                 self.deleteSample(info['barcode'], ag_login_id)
 
             # Delete last due to foreign keys
-            sql = """DELETE FROM ag.ag_kit_barcodes
-                     WHERE barcode IN (SELECT barcode
-                                       FROM ag.source_barcodes_surveys
-                                       WHERE survey_id IN %s)"""
-            TRN.add(sql, [tuple(survey_ids)])
+            sql = "DELETE FROM ag.ag_kit_barcodes WHERE barcode IN %s"
+            TRN.add(sql, [tuple(barcodes)])
             sql = """DELETE FROM ag.source_barcodes_surveys
                      WHERE survey_id IN %s"""
             TRN.add(sql, [tuple(survey_ids)])
@@ -478,6 +479,10 @@ class AGDataAccess(object):
                         WHERE ak.ag_login_id = %s
                         AND akb.barcode = %s)""".format(set_text)
             TRN.add(sql, [ag_login_id, barcode])
+
+            sql = """DELETE FROM ag.source_barcodes_surveys
+                     WHERE barcode = %s"""
+            TRN.add(sql, [barcode])
 
     def getHumanParticipants(self, ag_login_id):
         # get people from new survey setup
