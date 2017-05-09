@@ -58,7 +58,3 @@ DROP VIEW multi_source_bc_survey;
 DROP VIEW multi_source_bc;
 DROP VIEW single_source_bc_survey;
 DROP VIEW multiple_ids;
-
--- remove incomplete information from other table:
--- save that for another PR
--- ALTER TABLE ag.ag_kit_barcodes DROP COLUMN survey_id;
