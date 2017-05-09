@@ -343,7 +343,13 @@ class AGDataAccess(object):
             sql = """DELETE FROM ag.source_barcodes_surveys
                      WHERE survey_id IN %s"""
             TRN.add(sql, [tuple(survey_ids)])
-            sql = "DELETE FROM ag.ag_kit_barcodes WHERE barcode IN %s"
+            # only delete barcode information, if this is the last survey for
+            # the given source, i.e. ag_login_id, participant_name combination
+            sql = """DELETE FROM ag.ag_kit_barcodes
+                     WHERE barcode IN %s
+                     AND (SELECT COUNT(survey_id) as numsurv
+                          FROM ag.source_barcodes_surveys
+                          WHERE barcode IN %s) = 1"""
             TRN.add(sql, [tuple(barcodes)])
 
             sql = "DELETE FROM ag_login_surveys WHERE survey_id IN %s"
