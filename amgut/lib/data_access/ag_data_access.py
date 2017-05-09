@@ -177,20 +177,31 @@ class AGDataAccess(object):
         ValueError
             Barcode not found in AG information tables
         """
-        sql = """SELECT  DISTINCT email,
-                    cast(ag_kit_barcode_id as varchar(100)),
-                    cast(ag_kit_id as varchar(100)),
-                    barcode, site_sampled, environment_sampled, sample_date,
-                    sample_time, participant_name, notes, refunded, withdrawn,
-                    moldy, other, other_text, date_of_last_email ,overloaded,
-                    name, status
-                  FROM ag_kit_barcodes
-                  INNER JOIN ag_kit USING (ag_kit_id)
-                  FULL OUTER JOIN ag_login_surveys
-                    USING (survey_id, ag_login_id)
-                  INNER JOIN ag_login USING (ag_login_id)
-                  INNER JOIN barcode USING (barcode)
-                  WHERE barcode = %s"""
+        sql = """SELECT email,
+                        cast(ag_kit_barcode_id as varchar(100)),
+                        cast(ag_kit_id as varchar(100)),
+                        barcode,
+                        site_sampled,
+                        environment_sampled,
+                        sample_date,
+                        sample_time,
+                        participant_name,
+                        notes,
+                        refunded,
+                        withdrawn,
+                        moldy,
+                        other,
+                        other_text,
+                        date_of_last_email,
+                        overloaded,
+                        name,
+                        status
+                 FROM ag.ag_kit_barcodes
+                 LEFT JOIN barcodes.barcode USING (barcode)
+                 LEFT JOIN ag.ag_kit USING (ag_kit_id)
+                 LEFT JOIN ag.ag_login_surveys USING (ag_login_id)
+                 LEFT JOIN ag.ag_login USING (ag_login_id)
+                 WHERE barcode = %s"""
 
         with TRN:
             TRN.add(sql, [barcode])
@@ -311,6 +322,12 @@ class AGDataAccess(object):
                 survey_ids.add(hit[0])
                 participant_emails.add(hit[1])
 
+            sql = """SELECT barcode
+                     FROM ag.source_barcodes_surveys
+                     WHERE survey_id IN %s"""
+            TRN.add(sql, [tuple(survey_ids)])
+            barcodes = [x[0] for x in TRN.execute_fetchindex()]
+
             sql = "DELETE FROM survey_answers WHERE survey_id IN %s"
             TRN.add(sql, [tuple(survey_ids)])
 
@@ -323,8 +340,11 @@ class AGDataAccess(object):
                 self.deleteSample(info['barcode'], ag_login_id)
 
             # Delete last due to foreign keys
-            sql = "DELETE FROM ag_kit_barcodes WHERE survey_id IN %s"
+            sql = """DELETE FROM ag.source_barcodes_surveys
+                     WHERE survey_id IN %s"""
             TRN.add(sql, [tuple(survey_ids)])
+            sql = "DELETE FROM ag.ag_kit_barcodes WHERE barcode IN %s"
+            TRN.add(sql, [tuple(barcodes)])
 
             sql = "DELETE FROM ag_login_surveys WHERE survey_id IN %s"
             TRN.add(sql, [tuple(survey_ids)])
@@ -389,25 +409,31 @@ class AGDataAccess(object):
                          WHERE ag_login_id = %s AND participant_name = %s"""
 
                 TRN.add(sql, (ag_login_id, participant_name))
-                survey_id = TRN.execute_fetchindex()
-                if not survey_id:
-                    raise ValueError("No survey ID for ag_login_id %s and "
+                survey_ids = TRN.execute_fetchindex()
+                if not survey_ids:
+                    raise ValueError("No survey IDs for ag_login_id %s and "
                                      "participant name %s" %
                                      (ag_login_id, participant_name))
-                survey_id = survey_id[0][0]
+                survey_ids = [x[0] for x in survey_ids]
             else:
                 # otherwise, it is an environmental sample
-                survey_id = None
+                survey_ids = []
 
             # Add barcode info
             sql = """UPDATE ag_kit_barcodes
                      SET site_sampled = %s, environment_sampled = %s,
                          sample_date = %s, sample_time = %s,
-                         notes = %s, survey_id = %s
+                         notes = %s
                      WHERE barcode = %s"""
             TRN.add(sql, [sample_site, environment_sampled, sample_date,
-                          sample_time, notes, survey_id,
+                          sample_time, notes,
                           barcode])
+            if len(survey_ids) > 0:
+                sql = """INSERT INTO ag.source_barcodes_surveys (survey_id,
+                                                                 barcode)
+                         VALUES (%s, %s)"""
+                for survey_id in survey_ids:
+                    TRN.add(sql, [survey_id, barcode])
 
     def deleteSample(self, barcode, ag_login_id):
         """ Removes by either releasing barcode back for relogging or withdraw
@@ -439,8 +465,7 @@ class AGDataAccess(object):
                 # Not recieved, so we release the barcode back to be relogged
                 set_text = """site_sampled = NULL,
                              sample_time = NULL, sample_date = NULL,
-                             environment_sampled = NULL, notes = NULL,
-                             survey_id = NULL"""
+                             environment_sampled = NULL, notes = NULL"""
                 sql = "UPDATE barcode SET status = NULL WHERE barcode = %s"
                 TRN.add(sql, [barcode])
             else:
@@ -456,6 +481,10 @@ class AGDataAccess(object):
                         WHERE ak.ag_login_id = %s
                         AND akb.barcode = %s)""".format(set_text)
             TRN.add(sql, [ag_login_id, barcode])
+
+            sql = """DELETE FROM ag.source_barcodes_surveys
+                     WHERE barcode = %s"""
+            TRN.add(sql, [barcode])
 
     def getHumanParticipants(self, ag_login_id):
         # get people from new survey setup
@@ -514,14 +543,21 @@ class AGDataAccess(object):
             return TRN.execute_fetchflatten()
 
     def getParticipantSamples(self, ag_login_id, participant_name):
-        sql = """SELECT  barcode, site_sampled, sample_date, sample_time,
-                    notes, status
-                 FROM ag_kit_barcodes akb
-                 INNER JOIN barcode USING (barcode)
-                 INNER JOIN ag_kit ak USING (ag_kit_id)
-                 INNER JOIN ag_login_surveys USING (survey_id, ag_login_id)
-                 WHERE (site_sampled IS NOT NULL AND site_sampled::text <> '')
-                 AND ag_login_id = %s AND participant_name = %s"""
+        sql = """SELECT DISTINCT
+                        ag_kit_barcodes.barcode,
+                        ag_kit_barcodes.site_sampled,
+                        ag_kit_barcodes.sample_date,
+                        ag_kit_barcodes.sample_time,
+                        ag_kit_barcodes.notes,
+                        barcodes.barcode.status
+                 FROM ag.ag_login_surveys
+                 JOIN ag.source_barcodes_surveys USING (survey_id)
+                 JOIN ag.ag_kit_barcodes USING (barcode)
+                 JOIN barcodes.barcode USING (barcode)
+                 WHERE ag_login_id = %s
+                 AND participant_name = %s
+                 AND (site_sampled IS NOT NULL
+                 AND site_sampled::text <> '')"""
         with TRN:
             TRN.add(sql, [ag_login_id, participant_name])
             rows = TRN.execute_fetchindex()
@@ -701,8 +737,10 @@ class AGDataAccess(object):
                  INNER JOIN ag_kit USING (ag_kit_id)
                  RIGHT JOIN ag_login USING (ag_login_id)
                  LEFT JOIN barcode USING (barcode)
-                 WHERE survey_id IS NULL AND scan_date IS NOT NULL
-                    AND ag_login_id = %s"""
+                 FULL JOIN ag.source_barcodes_surveys USING (barcode)
+                 WHERE ag.source_barcodes_surveys.survey_id IS NULL
+                 AND scan_date IS NOT NULL
+                 AND ag_login_id = %s"""
         with TRN:
             user = self.get_user_for_kit(kit_id)
             TRN.add(sql, [user])
@@ -806,12 +844,11 @@ class AGDataAccess(object):
         """
         with TRN:
             ag_login_id = self.get_user_for_kit(supplied_kit_id)
-            sql = """SELECT barcode, participant_name
-                     FROM ag_kit_barcodes
-                     INNER JOIN ag_kit USING (ag_kit_id)
-                     INNER JOIN ag_login_surveys USING (survey_id, ag_login_id)
+            sql = """SELECT DISTINCT barcode, participant_name
+                     FROM ag.ag_login_surveys
+                     JOIN ag.source_barcodes_surveys USING (survey_id)
+                     JOIN ag.ag_kit_barcodes USING (barcode)
                      WHERE ag_login_id = %s AND results_ready = 'Y'"""
-
             TRN.add(sql, [ag_login_id])
             return [dict(row) for row in TRN.execute_fetchindex()]
 
@@ -989,8 +1026,9 @@ class AGDataAccess(object):
                      FROM barcodes.barcode
                      JOIN ag.ag_kit_barcodes USING (barcode)
                      JOIN ag.ag_kit USING (ag_kit_id)
+                     LEFT JOIN ag.source_barcodes_surveys USING (barcode)
                      WHERE barcodes.barcode.scan_date IS NOT NULL
-                     AND ag.ag_kit_barcodes.survey_id IS NULL
+                     AND ag.source_barcodes_surveys.survey_id IS NULL
                      LIMIT 1"""
             TRN.add(sql, [])
             info = TRN.execute_fetchindex()
