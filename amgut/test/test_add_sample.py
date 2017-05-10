@@ -3,16 +3,10 @@ import datetime
 from amgut.test.tornado_test_base import TestHandlerBase
 from amgut.connections import ag_data
 from tornado import escape
+from amgut.lib.util import rollback
 
 
 class TestAddSample(TestHandlerBase):
-    def tearDown(self):
-        ag_data.deleteSample('000005628',
-                             'd8592c74-9694-2135-e040-8a80115d6401')
-        ag_data.deleteSample('000002011',
-                             'd8592c74-8710-2135-e040-8a80115d6401')
-        super(TestAddSample, self).tearDown()
-
     def test_get_not_authed(self):
         response = self.get(
             '/authed/add_sample_human/?participant_name=REMOVED-0')
@@ -107,6 +101,7 @@ class TestAddSample(TestHandlerBase):
                              {'participant_name': 'REMOVED-0'})
         self.assertEqual(response.code, 403)
 
+    @rollback
     def test_post_human(self):
         ag_login_id = 'd8592c74-9694-2135-e040-8a80115d6401'
         self.mock_login(ag_data.ut_get_supplied_kit_id(ag_login_id))
@@ -128,7 +123,7 @@ class TestAddSample(TestHandlerBase):
 
         obs = ag_data.getAGBarcodeDetails('000005628')
         exp = {
-            'status': None,
+            'status': '',
             'ag_kit_barcode_id': 'db447092-620e-54d8-e040-8a80115d3637',
             'ag_kit_id': 'db447092-6209-54d8-e040-8a80115d3637',
             'barcode': '000005628',
@@ -154,6 +149,7 @@ class TestAddSample(TestHandlerBase):
         # make sure barcode properly removed
         self.assertIn('000001015', ag_data.getAvailableBarcodes(ag_login_id))
 
+    @rollback
     def test_post_general(self):
         self.mock_login(
             ag_data.ut_get_supplied_kit_id(
@@ -176,7 +172,7 @@ class TestAddSample(TestHandlerBase):
 
         obs = ag_data.getAGBarcodeDetails('000005628')
         exp = {
-            'status': None,
+            'status': '',
             'ag_kit_barcode_id': 'db447092-620e-54d8-e040-8a80115d3637',
             'ag_kit_id': 'db447092-6209-54d8-e040-8a80115d3637',
             'barcode': '000005628',
@@ -195,6 +191,7 @@ class TestAddSample(TestHandlerBase):
         # only look at those fields, that are not subject to scrubbing
         self.assertEqual({k: obs[k] for k in exp}, exp)
 
+    @rollback
     def test_post_bad_data(self):
         ag_login_id = 'd8592c74-9694-2135-e040-8a80115d6401'
         self.mock_login(ag_data.ut_get_supplied_kit_id(ag_login_id))

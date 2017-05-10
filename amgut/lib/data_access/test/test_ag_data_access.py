@@ -45,6 +45,7 @@ class TestAGDataAccess(TestCase):
         as_uuid = UUID(obs, version=4)
         self.assertTrue(as_uuid.version, 4)
 
+    @rollback
     def test_addAGLogin(self):
         # test new user
         exists = 'EXISTS'
