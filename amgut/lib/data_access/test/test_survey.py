@@ -10,6 +10,8 @@ from amgut.lib.data_access.survey import (
     Survey)
 # Question
 
+from amgut.lib.data_access.sql_connection import TRN
+
 
 class TestQuestionSingle(TestCase):
     def test_create_no_triggers(self):
@@ -359,6 +361,8 @@ class TestSurvey(TestCase):
         # only look at those fields, that are not subject to scrubbing
         self.assertEqual({k: obs[k] for k in exp}, exp)
 
+        self.delete_survey(survey_id)
+
     def test_fetch_survey_bad_id(self):
         survey = Survey(1)
         with self.assertRaises(ValueError):
@@ -436,6 +440,48 @@ class TestSurvey(TestCase):
         consent['deceased_parent'] = 'false'
         self.assertEqual(obs, consent)
 
+        # revert database
+        self.delete_survey(survey_id)
+
+    def delete_survey(self, survey_id):
+        ag_login_id = None
+        participant_name = None
+        with TRN:
+            sql = """SELECT ag_login_id, participant_name
+                     FROM ag.ag_login_surveys
+                     WHERE survey_id = %s"""
+            TRN.add(sql, [survey_id])
+            [ag_login_id, participant_name] = TRN.execute_fetchindex()[0]
+
+        num_surveys = None
+        with TRN:
+            sql = """SELECT COUNT(*) FROM ag.ag_login_surveys
+                     WHERE ag_login_id = %s AND participant_name = %s"""
+            TRN.add(sql, [ag_login_id, participant_name])
+            num_surveys = TRN.execute_fetchindex()[0][0]
+
+        with TRN:
+            # delete survey answers
+            sql = """DELETE FROM ag.survey_answers WHERE survey_id = %s"""
+            TRN.add(sql, [survey_id])
+            sql = """DELETE FROM ag.survey_answers_other
+                     WHERE survey_id = %s"""
+            TRN.add(sql, [survey_id])
+
+            # delete source
+            sql = """DELETE FROM ag.ag_login_surveys WHERE survey_id = %s"""
+            TRN.add(sql, [survey_id])
+
+            TRN.execute()
+
+        # delete consent if this survey is the only one for this source
+        if num_surveys == 1:
+            with TRN:
+                sql = """DELETE FROM ag.ag_consent
+                         WHERE ag_login_id = %s AND participant_name = %s"""
+                TRN.add(sql, [ag_login_id, participant_name])
+                TRN.execute()
+
     def test_store_survey_edit(self):
         survey, survey_id, notes_test, consent = self.insert_data()
 
@@ -476,6 +522,8 @@ class TestSurvey(TestCase):
         del obs['parent_2_name']
         del obs['participant_name']
         self.assertEqual(obs, consent)
+
+        self.delete_survey(survey_id)
 
 
 if __name__ == "__main__":
