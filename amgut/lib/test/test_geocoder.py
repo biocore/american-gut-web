@@ -3,6 +3,7 @@ from unittest import TestCase, main
 from amgut.lib.util import (rollback)
 from amgut.lib.geocode import geocode_aglogins
 from amgut.lib.data_access.ag_data_access import AGDataAccess
+from math import radians, cos, sin, asin, sqrt
 
 
 class TestGeocoder(TestCase):
@@ -11,6 +12,21 @@ class TestGeocoder(TestCase):
 
     def tearDown(self):
         del self.ag_data
+
+    def haversine(self, lon1, lat1, lon2, lat2):
+        """
+        Calculate the great circle distance between two points
+        on the earth (specified in decimal degrees)
+        """
+        # convert decimal degrees to radians
+        lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+        # haversine formula
+        dlon = lon2 - lon1
+        dlat = lat2 - lat1
+        a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+        c = 2 * asin(sqrt(a))
+        km = 6367 * c
+        return km
 
     @rollback
     def test_force(self):
@@ -93,10 +109,20 @@ class TestGeocoder(TestCase):
                'checked': 1}
         self.assertItemsEqual(obs, exp)
         new_loc = self.ag_data.ut_get_location(login_id)
-        self.assertEqual(new_loc, {'latitude': 32.8747486,
-                                   'cannot_geocode': None,
-                                   'elevation': 126.171813964844,
-                                   'longitude': -117.2420258})
+        exp_loc = {'latitude': 32.8747486,
+                   'cannot_geocode': None,
+                   'elevation': 126.171813964844,
+                   'longitude': -117.2420258}
+        distance = self.haversine(exp_loc['longitude'],
+                                  exp_loc['latitude'],
+                                  new_loc['longitude'],
+                                  new_loc['latitude'])
+        # broad addresses like "Gilman Drive 9500" might return different
+        # locations over time, since it is the address of the whole UCSD
+        # campus. Therefore, checking exact lat,lng will fail once the map
+        # service slightly changes its algorithms. Instead we check here if the
+        # location is in close vicinity from what we expact: less than 5km
+        self.assertTrue(distance < 5.0)
 
     @rollback
     def test_noupdate(self):
