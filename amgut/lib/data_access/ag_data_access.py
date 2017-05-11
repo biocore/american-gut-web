@@ -1313,3 +1313,30 @@ class AGDataAccess(object):
             if not info:
                 raise ValueError('Barcode "%s" not in DB' % barcode)
             return info[0][0]
+
+    def ut_get_location(self, ag_login_id):
+        """Get kit registration information
+        Parameters
+        ----------
+        ag_login_id : str
+            A valid login ID, that should be a test as a valid UUID
+        Returns
+        -------
+        list of dict
+            A list of registration information associated with a common login
+            ID.
+        Raises
+        ------
+        ValueError
+            Unknown ag_login_id passed
+        """
+        with TRN:
+            sql = """SELECT latitude, longitude, elevation, cannot_geocode
+                     FROM ag_login
+                     WHERE ag_login_id = %s"""
+            TRN.add(sql, [ag_login_id])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('ag_login_id not in database: %s' %
+                                 ag_login_id)
+            return [dict(row) for row in info][0]
