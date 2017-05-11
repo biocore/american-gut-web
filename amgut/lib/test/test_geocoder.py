@@ -82,10 +82,20 @@ class TestGeocoder(TestCase):
                'checked': 1}
         self.assertItemsEqual(obs, exp)
         new_loc = self.ag_data.ut_get_location(login_id)
-        self.assertEqual(new_loc, {'latitude': None,
-                                   'cannot_geocode': 'Y',
-                                   'elevation': None,
-                                   'longitude': None})
+        exp_loc = {'latitude': None,
+                   'cannot_geocode': 'Y',
+                   'elevation': None,
+                   'longitude': None}
+        distance = self.haversine(exp_loc['longitude'],
+                                  exp_loc['latitude'],
+                                  new_loc['longitude'],
+                                  new_loc['latitude'])
+        # broad addresses like "Gilman Drive 9500" might return different
+        # locations over time, since it is the address of the whole UCSD
+        # campus. Therefore, checking exact lat,lng will fail once the map
+        # service slightly changes its algorithms. Instead we check here if the
+        # location is in close vicinity from what we expact: less than 5km
+        self.assertTrue(distance < 5)
 
         # test that geocoding is re-done
         obs = geocode_aglogins(login_id)
