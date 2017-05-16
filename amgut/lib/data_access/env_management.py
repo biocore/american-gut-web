@@ -137,6 +137,26 @@ def make_settings_table():
         TRN.add(sql, args)
 
 
+def add_labadmin_superuser():
+    command = ['psql',
+               '--dbname', AMGUT_CONFIG.database,
+               '--host', AMGUT_CONFIG.host,
+               '--port', AMGUT_CONFIG.port,
+               '--username', AMGUT_CONFIG.user,
+               '--password', AMGUT_CONFIG.password,
+               '-c', ("INSERT INTO ag.labadmin_users (email, password)"
+                      "VALUES ('master', '$2a$10$2.6Y9HmBqUFmSvKCjWmBte70WF."
+                      "zd3h4VqbhLMQK1xP67Aj3rei86');"
+                      "INSERT INTO ag.labadmin_users_access (access_id, email)"
+                      "VALUES (7, 'master');")]
+    proc = Popen(command, stdin=PIPE, stdout=PIPE)
+    retcode = proc.wait()
+    if retcode != 0:
+        raise RuntimeError(("Could not add labadmin superuser 'master' to "
+                            "database %s: retcode %d") %
+                           (AMGUT_CONFIG.database, retcode))
+
+
 def populate_test_db():
     command = ['pg_restore', '-d', AMGUT_CONFIG.database, '--no-privileges',
                '--no-owner', '--role=%s' % AMGUT_CONFIG.user, POPULATE_FP]
