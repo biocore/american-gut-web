@@ -1,5 +1,4 @@
 from os.path import abspath, dirname, join, split
-import os
 from glob import glob
 from functools import partial
 from subprocess import Popen, PIPE
@@ -138,29 +137,6 @@ def make_settings_table():
         TRN.add(sql, args)
 
 
-def add_labadmin_superuser():
-    """Adds a new labadmin user names 'master' to the database and grants
-       highest privileges to this user. Password is 'password'."""
-    os.environ['PGPASSWORD'] = AMGUT_CONFIG.password
-    command = ['psql',
-               '--dbname', AMGUT_CONFIG.database,
-               '--host', AMGUT_CONFIG.host,
-               '--port', str(AMGUT_CONFIG.port),
-               '--username', AMGUT_CONFIG.user,
-               '-c', ("INSERT INTO ag.labadmin_users (email, password) "
-                      "VALUES ('master', '$2a$10$2.6Y9HmBqUFmSvKCjWmBte70WF."
-                      "zd3h4VqbhLMQK1xP67Aj3rei86'); "
-                      "INSERT INTO ag.labadmin_users_access (access_id, email)"
-                      " VALUES (7, 'master');")]
-    proc = Popen(command, stdin=PIPE, stdout=PIPE)
-    retcode = proc.wait()
-    os.environ['PGPASSWORD'] = ''
-    if retcode != 0:
-        raise RuntimeError(("Could not add labadmin superuser 'master' to "
-                            "database %s: retcode %d") %
-                           (AMGUT_CONFIG.database, retcode))
-
-
 def populate_test_db():
     command = ['pg_restore', '-d', AMGUT_CONFIG.database, '--no-privileges',
                '--no-owner', '--role=%s' % AMGUT_CONFIG.user, POPULATE_FP]
@@ -169,6 +145,22 @@ def populate_test_db():
     if retcode != 0:
         raise RuntimeError("Could not populate test database %s: retcode %d" %
                            (AMGUT_CONFIG.database, retcode))
+
+    # Adds a new labadmin user names 'master' to the database and grants
+    # highest privileges to this user. Password is 'password'.
+    with TRN:
+        username = 'master'
+        # create new labadmin user 'master'
+        sql = """INSERT INTO ag.labadmin_users (email, password)
+                 VALUES (%s, %s)"""
+        TRN.add(sql, [username, ('$2a$10$2.6Y9HmBqUFmSvKCjWmBte70WF.'
+                                 'zd3h4VqbhLMQK1xP67Aj3rei86')])
+        # granting new user highest privileges
+        sql = """INSERT INTO ag.labadmin_users_access (access_id, email)
+                 VALUES (%s, %s)"""
+        TRN.add(sql, [7, username])
+
+        TRN.execute()
 
 
 def patch_db(patches_dir=PATCHES_DIR, verbose=False):

@@ -12,7 +12,7 @@ import click
 from amgut.connections import redis
 from amgut.lib.data_access.env_management import (
     create_database, build, initialize, make_settings_table, patch_db,
-    populate_test_db, rebuild_test, add_labadmin_superuser)
+    populate_test_db, rebuild_test)
 
 
 @click.group()
@@ -63,8 +63,6 @@ def make(db, force):
         # Test database includes initialization and settings table already
         click.echo("Populating the test database")
         populate_test_db()
-        click.echo("Adding labadmin superuser 'master', pwd is 'password'")
-        add_labadmin_superuser()
         initialize(verbose=True)
 
     click.echo("Applying patches to database")
