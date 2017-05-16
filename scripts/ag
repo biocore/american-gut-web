@@ -63,6 +63,7 @@ def make(db, force):
         # Test database includes initialization and settings table already
         click.echo("Populating the test database")
         populate_test_db()
+        click.echo("Adding labadmin superuser 'master', pwd is 'password'")
         add_labadmin_superuser()
         initialize(verbose=True)
 

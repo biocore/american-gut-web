@@ -1,4 +1,5 @@
 from os.path import abspath, dirname, join, split
+import os
 from glob import glob
 from functools import partial
 from subprocess import Popen, PIPE
@@ -138,19 +139,22 @@ def make_settings_table():
 
 
 def add_labadmin_superuser():
+    """Adds a new labadmin user names 'master' to the database and grants
+       highest privileges to this user. Password is 'password'."""
+    os.environ['PGPASSWORD'] = AMGUT_CONFIG.password
     command = ['psql',
                '--dbname', AMGUT_CONFIG.database,
                '--host', AMGUT_CONFIG.host,
-               '--port', AMGUT_CONFIG.port,
+               '--port', str(AMGUT_CONFIG.port),
                '--username', AMGUT_CONFIG.user,
-               '--password', AMGUT_CONFIG.password,
-               '-c', ("INSERT INTO ag.labadmin_users (email, password)"
+               '-c', ("INSERT INTO ag.labadmin_users (email, password) "
                       "VALUES ('master', '$2a$10$2.6Y9HmBqUFmSvKCjWmBte70WF."
-                      "zd3h4VqbhLMQK1xP67Aj3rei86');"
+                      "zd3h4VqbhLMQK1xP67Aj3rei86'); "
                       "INSERT INTO ag.labadmin_users_access (access_id, email)"
-                      "VALUES (7, 'master');")]
+                      " VALUES (7, 'master');")]
     proc = Popen(command, stdin=PIPE, stdout=PIPE)
     retcode = proc.wait()
+    os.environ['PGPASSWORD'] = ''
     if retcode != 0:
         raise RuntimeError(("Could not add labadmin superuser 'master' to "
                             "database %s: retcode %d") %
