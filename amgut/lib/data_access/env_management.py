@@ -146,6 +146,22 @@ def populate_test_db():
         raise RuntimeError("Could not populate test database %s: retcode %d" %
                            (AMGUT_CONFIG.database, retcode))
 
+    # Adds a new labadmin user names 'master' to the database and grants
+    # highest privileges to this user. Password is 'password'.
+    with TRN:
+        username = 'master'
+        # create new labadmin user 'master'
+        sql = """INSERT INTO ag.labadmin_users (email, password)
+                 VALUES (%s, %s)"""
+        TRN.add(sql, [username, ('$2a$10$2.6Y9HmBqUFmSvKCjWmBte70WF.'
+                                 'zd3h4VqbhLMQK1xP67Aj3rei86')])
+        # granting new user highest privileges
+        sql = """INSERT INTO ag.labadmin_users_access (access_id, email)
+                 VALUES (%s, %s)"""
+        TRN.add(sql, [7, username])
+
+        TRN.execute()
+
 
 def patch_db(patches_dir=PATCHES_DIR, verbose=False):
     """Patches the database schema based on the settings table
