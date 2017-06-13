@@ -16,7 +16,7 @@ import logging
 from uuid import UUID
 
 import psycopg2
-from passlib.hash import bcrypt
+import bcrypt
 
 from amgut.lib.data_access.sql_connection import TRN
 
@@ -92,7 +92,7 @@ class AGDataAccess(object):
 
             results = dict(row[0])
 
-            if not bcrypt.verify(password, results['kit_password']):
+            if not bcrypt.checkpw(password, results['kit_password']):
                 return False
             results['ag_login_id'] = str(results['ag_login_id'])
 
