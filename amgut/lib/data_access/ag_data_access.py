@@ -92,6 +92,7 @@ class AGDataAccess(object):
 
             results = dict(row[0])
 
+            password = password.encode('utf-8')
             if not bcrypt.checkpw(password, results['kit_password']):
                 return False
             results['ag_login_id'] = str(results['ag_login_id'])
@@ -616,6 +617,7 @@ class AGDataAccess(object):
 
     def handoutCheck(self, username, password):
         with TRN:
+            password = password.encode('utf-8')
             sql = "SELECT password FROM ag.ag_handout_kits WHERE kit_id = %s"
             TRN.add(sql, [username])
             to_check = TRN.execute_fetchindex()
@@ -686,6 +688,7 @@ class AGDataAccess(object):
         password is the new password
         """
         with TRN:
+            password = password.encode('utf-8')
             password = bcrypt.hashpw(password, bcrypt.gensalt())
             sql = """UPDATE AG_KIT
                      SET kit_password = %s, pass_reset_code = NULL
