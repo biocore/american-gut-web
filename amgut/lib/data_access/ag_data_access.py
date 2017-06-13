@@ -623,7 +623,7 @@ class AGDataAccess(object):
             if not to_check:
                 return False
             else:
-                return bcrypt.verify(password, to_check[0][0])
+                return bcrypt.checkpw(password, to_check[0][0])
 
     def check_access(self, supplied_kit_id, barcode):
         """Check if the user has access to the barcode
@@ -686,7 +686,7 @@ class AGDataAccess(object):
         password is the new password
         """
         with TRN:
-            password = bcrypt.encrypt(password)
+            password = bcrypt.hashpw(password, bcrypt.gensalt())
             sql = """UPDATE AG_KIT
                      SET kit_password = %s, pass_reset_code = NULL
                      WHERE supplied_kit_id = %s"""
