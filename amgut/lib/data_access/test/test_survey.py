@@ -1,7 +1,6 @@
 # coding: utf-8
 from unittest import TestCase, main
 from string import ascii_letters
-from datetime import date
 from random import choice
 from future.utils import viewitems
 from wtforms.form import BaseForm
@@ -10,6 +9,8 @@ from amgut.lib.data_access.survey import (
     QuestionSingle, QuestionMultiple, QuestionText, QuestionString, Group,
     Survey)
 # Question
+
+from amgut.lib.data_access.sql_connection import TRN
 
 
 class TestQuestionSingle(TestCase):
@@ -230,6 +231,57 @@ class TestGroup(TestCase):
 
 
 class TestSurvey(TestCase):
+    def insert_data(self):
+        """ Prepare tests by inserting some data into the DB.
+
+        Returns
+        -------
+        survey object, survey_id : str, notes_test : str and consent : dict
+        of the newly created survey.
+        """
+
+        # Create random string to test update happens
+        # TODO: implement utf8 capability for notes! See issue #646
+        c = ascii_letters + '1234567890'
+        notes_test = ''.join([choice(c) for i in range(40)])
+
+        survey_id = '817ff95701f4dd10'
+        survey = Survey(2)
+        consent = {
+            'login_id': 'eba20873-b7db-33cc-e040-8a80115d392c',
+            'survey_id': survey_id,
+            'participant_name': 'some name that should be ignored',
+            'age_range': 'ANIMAL_SURVEY',
+            'parent_1_name': 'ANIMAL_SURVEY',
+            'parent_2_name': 'ANIMAL_SURVEY',
+            'deceased_parent': False,
+            'participant_email': 'REMOVED',
+            'obtainer_name': 'ANIMAL_SURVEY',
+            'assent_obtainer': 'ANIMAL_SURVEY',
+            'is_juvenile': True}
+        with_fk = [(survey_id, 128, 'Other'),
+                   (survey_id, 129, 'Wild'),
+                   (survey_id, 131, 'Male'),
+                   (survey_id, 132, 'Suburban'),
+                   (survey_id, 133, 'Normal'),
+                   (survey_id, 134, 'Omnivore'),
+                   (survey_id, 135, 'Wild food'),
+                   (survey_id, 136, 'Both'),
+                   (survey_id, 137, 'Unspecified'),
+                   (survey_id, 138, 'Lives alone with humans'),
+                   (survey_id, 139, '8+'),
+                   (survey_id, 140, 'Unspecified'),
+                   (survey_id, 141, 'Never')]
+        without_fk = [(survey_id, 130, '["20"]'),
+                      (survey_id, 142, '["Giant ratty pet!"]'),
+                      (survey_id, 143, '["Capybara"]'),
+                      (survey_id, 144, '["%s"]' % notes_test),
+                      (survey_id, 145, '["29 - Male"]'),
+                      (survey_id, 127, '["Fluffy"]')]
+
+        survey.store_survey(consent, with_fk, without_fk)
+        return survey, survey_id, notes_test, consent
+
     def test_create(self):
         survey = Survey(1)
         self.assertEqual(survey.id, 1)
@@ -285,28 +337,31 @@ class TestSurvey(TestCase):
         self.assertEqual(survey.unspecified, 'Unspecified')
 
     def test_fetch_survey(self):
-        survey = Survey(2)
-        obs = survey.fetch_survey('cb367dcf9a9af7e9')
-        self.assertEqual(obs, {
-            'Pet_Information_127_0': 'REMOVED',
-            'Pet_Information_128_0': 1,
-            'Pet_Information_129_0': 2,
-            'Pet_Information_130_0': '6',
-            'Pet_Information_131_0': 1,
-            'Pet_Information_132_0': 1,
-            'Pet_Information_133_0': 3,
-            'Pet_Information_134_0': 2,
-            'Pet_Information_135_0': [1],
-            'Pet_Information_136_0': 3,
-            'Pet_Information_137_0': [0],
-            'Pet_Information_138_0': 1,
-            'Pet_Information_139_0': 3,
-            'Pet_Information_140_0': 3,
-            'Pet_Information_141_0': 4,
-            'Pet_Information_142_0': 'REMOVED',
-            'Pet_Information_143_0': 'REMOVED',
-            'Pet_Information_144_0': 'REMOVED',
-            'Pet_Information_145_0': 'Female: 50; Male: 59'})
+        survey, survey_id, notes_test, consent = self.insert_data()
+
+        obs = survey.fetch_survey(survey_id)
+        exp = {'Pet_Information_127_0': 'Fluffy',
+               'Pet_Information_128_0': 9,
+               'Pet_Information_129_0': 4,
+               'Pet_Information_130_0': '20',
+               'Pet_Information_131_0': 1,
+               'Pet_Information_132_0': 2,
+               'Pet_Information_133_0': 3,
+               'Pet_Information_134_0': 2,
+               'Pet_Information_135_0': [3],
+               'Pet_Information_136_0': 3,
+               'Pet_Information_137_0': [0],
+               'Pet_Information_138_0': 1,
+               'Pet_Information_139_0': 5,
+               'Pet_Information_140_0': 0,
+               'Pet_Information_141_0': 4,
+               'Pet_Information_142_0': 'Giant ratty pet!',
+               'Pet_Information_143_0': 'Capybara',
+               'Pet_Information_145_0': '29 - Male'}
+        # only look at those fields, that are not subject to scrubbing
+        self.assertEqual({k: obs[k] for k in exp}, exp)
+
+        self.delete_survey(survey_id)
 
     def test_fetch_survey_bad_id(self):
         survey = Survey(1)
@@ -385,47 +440,51 @@ class TestSurvey(TestCase):
         consent['deceased_parent'] = 'false'
         self.assertEqual(obs, consent)
 
+        # revert database
+        self.delete_survey(survey_id)
+
+    def delete_survey(self, survey_id):
+        ag_login_id = None
+        participant_name = None
+        with TRN:
+            sql = """SELECT ag_login_id, participant_name
+                     FROM ag.ag_login_surveys
+                     WHERE survey_id = %s"""
+            TRN.add(sql, [survey_id])
+            [ag_login_id, participant_name] = TRN.execute_fetchindex()[0]
+
+        num_surveys = None
+        with TRN:
+            sql = """SELECT COUNT(*) FROM ag.ag_login_surveys
+                     WHERE ag_login_id = %s AND participant_name = %s"""
+            TRN.add(sql, [ag_login_id, participant_name])
+            num_surveys = TRN.execute_fetchindex()[0][0]
+
+        with TRN:
+            # delete survey answers
+            sql = """DELETE FROM ag.survey_answers WHERE survey_id = %s"""
+            TRN.add(sql, [survey_id])
+            sql = """DELETE FROM ag.survey_answers_other
+                     WHERE survey_id = %s"""
+            TRN.add(sql, [survey_id])
+
+            # delete source
+            sql = """DELETE FROM ag.ag_login_surveys WHERE survey_id = %s"""
+            TRN.add(sql, [survey_id])
+
+            TRN.execute()
+
+        # delete consent if this survey is the only one for this source
+        if num_surveys == 1:
+            with TRN:
+                sql = """DELETE FROM ag.ag_consent
+                         WHERE ag_login_id = %s AND participant_name = %s"""
+                TRN.add(sql, [ag_login_id, participant_name])
+                TRN.execute()
+
     def test_store_survey_edit(self):
-        # Create random string to test update happens
-        c = ascii_letters + '1234567890'
-        notes_test = ''.join([choice(c) for i in range(40)])
+        survey, survey_id, notes_test, consent = self.insert_data()
 
-        # Set up survey
-        survey_id = '817ff95701f4dd10'
-        survey = Survey(2)
-        consent = {
-            'login_id': 'eba20873-b7db-33cc-e040-8a80115d392c',
-            'survey_id': survey_id,
-            'participant_name': 'some name that should be ignored',
-            'age_range': 'ANIMAL_SURVEY',
-            'parent_1_name': 'ANIMAL_SURVEY',
-            'parent_2_name': 'ANIMAL_SURVEY',
-            'deceased_parent': False,
-            'participant_email': 'REMOVED',
-            'obtainer_name': 'ANIMAL_SURVEY',
-            'assent_obtainer': 'ANIMAL_SURVEY',
-            'is_juvenile': True}
-        with_fk = [(survey_id, 128, 'Other'),
-                   (survey_id, 129, 'Wild'),
-                   (survey_id, 131, 'Male'),
-                   (survey_id, 132, 'Suburban'),
-                   (survey_id, 133, 'Normal'),
-                   (survey_id, 134, 'Omnivore'),
-                   (survey_id, 135, 'Wild food'),
-                   (survey_id, 136, 'Both'),
-                   (survey_id, 137, 'Unspecified'),
-                   (survey_id, 138, 'Lives alone with humans'),
-                   (survey_id, 139, '8+'),
-                   (survey_id, 140, 'Unspecified'),
-                   (survey_id, 141, 'Never')]
-        without_fk = [(survey_id, 130, '["20"]'),
-                      (survey_id, 142, '["Giant ratty pet!"]'),
-                      (survey_id, 143, '["Capybara"]'),
-                      (survey_id, 144, '["%s"]' % notes_test),
-                      (survey_id, 145, '["29 - Male"]'),
-                      (survey_id, 127, '["Fluffy"]')]
-
-        survey.store_survey(consent, with_fk, without_fk)
         obs = survey.fetch_survey(survey_id)
         exp = {'Pet_Information_127_0': 'Fluffy',
                'Pet_Information_137_0': [0],
@@ -449,16 +508,22 @@ class TestSurvey(TestCase):
         self.assertEqual(obs, exp)
 
         obs = ag_data.getConsent(survey_id)
+        # change datatypes as postgres does:
+        consent['deceased_parent'] = 'false' \
+            if consent['deceased_parent'] is False else 'true'
         consent['ag_login_id'] = consent['login_id']
         del consent['login_id']
         del consent['obtainer_name']
-        consent['deceased_parent'] = 'false'
-        consent['date_signed'] = date(2015, 9, 27)
-        consent['parent_1_name'] = 'REMOVED'
-        consent['parent_2_name'] = 'REMOVED'
-        consent['participant_name'] = 'REMOVED-0'
-        consent['parent_1_name'] = 'REMOVED'
+        del consent['parent_1_name']
+        del consent['parent_2_name']
+        del consent['participant_name']
+        del obs['date_signed']
+        del obs['parent_1_name']
+        del obs['parent_2_name']
+        del obs['participant_name']
         self.assertEqual(obs, consent)
+
+        self.delete_survey(survey_id)
 
 
 if __name__ == "__main__":

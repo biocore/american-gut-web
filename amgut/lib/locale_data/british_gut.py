@@ -83,7 +83,7 @@ media_locale = {
     'SWAB_HANDLING': "http://player.vimeo.com/video/62393487",
     'EMAIL_ERROR': "There was a problem sending your email. Please contact us directly at <a href='mailto:%(help_email)s'>%(help_email)s</a>" % {'help_email': HELP_EMAIL},
     'EMAIL_SENT': 'Your message has been sent. We will reply shortly',
-    'SHIPPING_ADDRESS': 'British Gut<br/>Department of Twin Research<br>Kings College London<br/>St Thomas’ Hospital Campus<br>The Rayne Institute<br>Lambeth Wing, 4th Floor<br/>Westminster Bridge Road<br>London SE1 7EH'
+    'SHIPPING_ADDRESS': u'British Gut<br/>Department of Twin Research<br>Kings College London<br/>St Thomas’ Hospital Campus<br>The Rayne Institute<br>Lambeth Wing, 4th Floor<br/>Westminster Bridge Road<br>London SE1 7EH'
 }
 
 _HANDLERS = {
@@ -186,9 +186,9 @@ Assent to Act as a Research Subject<br/>
 <p>Research records may be reviewed by the UCSD Institutional Review Board.</p>
 
 <p style='font-weight: bold;'>Who can you call if you have questions?</p>
-<p>Dr Rob Knight and/or Gail Ackermann has explained this study to you and answered your questions. If you have other questions or research-related problems, you may reach Dr Knight at 858-246-1194</p>
+<p>Dr Rob Knight and/or Gail Ackermann has explained this study to you and answered your questions. If you have other questions or research-related problems, you may reach Dr Knight at 858-246-1184</p>
 
-<p>You may call the Human Research Protections Program Office at (858) 657-5100 to inquire about your rights as a research subject or to report research-related problems.</p>
+<p>You may call the Human Research Protections Program Office at (858) 246-7444 to inquire about your rights as a research subject or to report research-related problems.</p>
 
 <p style='font-weight: bold;'>Your Signature and Assent</p>
 <p>You have received a copy of this assent document and a copy of the "Experimental Subject's Bill of Rights" to keep.</p>
@@ -258,7 +258,7 @@ The following tests are available:</p>
 <p>You will be asked to contribute money to the project commensurate with the investigation you request ($99 for one sample, $1500 for "All in the family" (shallow shotgun metagenomic sequencing) and $2500 for "Beyond Bacteria" (deeper shotgun metagenome and virome characterization of one sample, plus additional sequencing). A receipt will be sent to you after you pay for the analysis you are requesting.  These contributions are used to partially finance the project.  Any additional funds required are provided from the funds UCSD has provided to Dr. Knight to set up his laboratory.</p>
 
 <p style='font-weight: bold;'>What if you are injured as a direct result of being in this study?</p>
-<p>If you are injured as a direct result of participation in this research, the University of California will provide any medical care you need to treat those injuries. The University will not provide any other form of compensation to you if you are injured. You may call the Human Research Protections Program Office at (858) 657-5100 for more information about this, to inquire about your rights as a research subject or to report research-related problems.</p>
+<p>If you are injured as a direct result of participation in this research, the University of California will provide any medical care you need to treat those injuries. The University will not provide any other form of compensation to you if you are injured. You may call the Human Research Protections Program Office at (858) 246-7444 for more information about this, to inquire about your rights as a research subject or to report research-related problems.</p>
 
 <p style='font-weight: bold;'>What about your confidentiality?</p>
 <p>Research records will be kept confidential to the extent allowed by law. All data about you that is entered on the web site is stored on a password-protected server located at the SDSC (San Diego Supercomputer Center) card access controlled facility at UCSD.  Financial information from participants contributing to the project is not accessible to the researchers.  The code key (that relates participant personal information to sample barcodes) is retained on a separate password-protected server that is accessible only to the PI, Co-I, sample coordinator and the database coders.  All analysis is done on de-identified data and the data deposited in a public repository for use by other investigators, is similarly de-identified. Research records may be reviewed by the UCSD Institutional Review Board.</p>
@@ -267,9 +267,9 @@ The following tests are available:</p>
 <p>We may need to report information about known or reasonably suspected incidents of abuse or neglect of a child, dependent adult or elder including physical, sexual, emotional, and financial abuse or neglect. The only way we could discover such abuse is if it is self-reported by the participant or the legal guardian, so this is not likely.  If any investigator has or is given such information, he or she may report such information to the appropriate authorities.</p>
 
 <p style='font-weight: bold;'>Who can you call if you have questions?</p>
-<p>If you have questions or research-related problems, you may reach Rob Knight at 858-246-1194 or contact Brent Erickson at 858-534-8739.</p>
+<p>If you have questions or research-related problems, you may reach Rob Knight at 858-246-1184 or contact Brent Erickson at 858-534-8739.</p>
 
-<p>You may call the Human Research Protections Program Office at (858) 657-5100 to inquire about your rights as a research subject or to report research-related problems.</p>
+<p>You may call the Human Research Protections Program Office at (858) 246-7444 to inquire about your rights as a research subject or to report research-related problems.</p>
 
 <p style='font-weight: bold;'>Your Signature and Consent</p>
 <p>You have received a copy of this consent document and a copy of the "Experimental Subject's Bill of Rights" to keep.</p>
@@ -337,7 +337,7 @@ The following tests are available:</p>
 <p>You will be asked to contribute money to the project commensurate with the investigation you request ($99 for one sample, $1500 for "All in the family" (shallow shotgun metagenomic sequencing) and $2500 for "Beyond Bacteria" (deeper shotgun metagenome and virome characterization of one sample, plus additional sequencing). A receipt will be sent to you after you pay for the analysis you are requesting.  These contributions are used to partially finance the project.  Any additional funds required are provided from the funds UCSD has provided to Dr. Knight to set up his laboratory.</p>
 
 <p style='font-weight: bold;'>What if your child is injured as a direct result of being in this study?</p>
-<p>If your child is injured as a direct result of participation in this research, the University of California will provide any medical care you need to treat those injuries. The University will not provide any other form of compensation to you if your child is injured. You or your child may call the Human Research Protections Program Office at (858) 657-5100 for more information about this, to inquire about your rights as a research subject or to report research-related problems.</p>
+<p>If your child is injured as a direct result of participation in this research, the University of California will provide any medical care you need to treat those injuries. The University will not provide any other form of compensation to you if your child is injured. You or your child may call the Human Research Protections Program Office at (858) 246-7444 for more information about this, to inquire about your rights as a research subject or to report research-related problems.</p>
 
 <p style='font-weight: bold;'>What about your confidentiality?</p>
 <p>Research records will be kept confidential to the extent allowed by law. All data about your child that is entered on the web site is stored on a password-protected server located at the SDSC (San Diego Supercomputer Center) card access controlled facility at UCSD.  Financial information from participants contributing to the project is not accessible to the researchers.  The code key (that relates participant personal information to sample barcodes) is retained on a separate password-protected server that is accessible only to the PI, Co-I, sample coordinator and the database coders.  All analysis is done on de-identified data and the data deposited in a public repository for use by other investigators, is similarly de-identified. Research records may be reviewed by the UCSD Institutional Review Board.</p>
@@ -345,9 +345,9 @@ The following tests are available:</p>
 <p>We may need to report information about known or reasonably suspected incidents of abuse or neglect of a child, dependent adult or elder including physical, sexual, emotional, and financial abuse or neglect. The only way we could discover such abuse is if it is self-reported by the participant or the legal guardian, so this is not likely.  If any investigator has or is given such information, he or she may report such information to the appropriate authorities.</p>
 
 <p style='font-weight: bold;'>Who can you call if you have questions?</p>
-<p>If you have questions or research-related problems, you may reach Rob Knight at 858-246-1194 or contact Brent Erickson at 858-534-8739.</p>
+<p>If you have questions or research-related problems, you may reach Rob Knight at 858-246-1184 or contact Brent Erickson at 858-534-8739.</p>
 
-<p>You may call the Human Research Protections Program Office at (858) 657-5100 to inquire about your rights as a research subject or to report research-related problems.</p>
+<p>You may call the Human Research Protections Program Office at (858) 246-7444 to inquire about your rights as a research subject or to report research-related problems.</p>
 
 <p style='font-weight: bold;'>Your Signature and Consent</p>
 <p>You have received a copy of this consent document and a copy of the "Experimental Subject's Bill of Rights" to keep.</p>
@@ -486,7 +486,7 @@ _FAQ = {
     'MULTIPLE_KITS_DIFFERENT_TIMES': "I have a 2+ sample kit, and would like to collect and send them in at different times",
     'MULTIPLE_KITS_DIFFERENT_TIMES_ANS': "For best results, we recommend that you mail each sample within 24 hours of collection.",
     'NOT_A_BUSINESS': "We are not a business",
-    'NOT_A_BUSINESS_ANS': 'We have had many enquiries about our "service" or "business". %(project_shorthand)s is a contribution-supported academic project that is a collaboration between the <a href="http://www.earthmicrobiome.org">Earth Microbiome Project</a> and the <a href="http://humanfoodproject.com/">Human Food Project</a>, primarily run out of the <a href="https://knightlab.colorado.edu/">Knight Lab</a> at the University of Colorado at Boulder, and is not a business or service.  In particular, the project is not a diagnostic test (although the information gained through the project may in future contribute to the development of diagnostic tests). All data except for information that needs to be kept confidential for privacy reasons is openly and freely released into public databases, and the project is not intended to make a profit (any surplus funds would be recycled back into furthering human microbiome research).' % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
+    'NOT_A_BUSINESS_ANS': 'We have had many enquiries about our "service" or "business". %(project_shorthand)s is a contribution-supported academic project that is a collaboration between the <a href="http://www.earthmicrobiome.org">Earth Microbiome Project</a> and the <a href="http://humanfoodproject.com/">Human Food Project</a>, primarily run out of the <a href="https://knightlab.ucsd.edu/">Knight Lab</a> at the University of California San Diego, and is not a business or service.  In particular, the project is not a diagnostic test (although the information gained through the project may in future contribute to the development of diagnostic tests). All data except for information that needs to be kept confidential for privacy reasons is openly and freely released into public databases, and the project is not intended to make a profit (any surplus funds would be recycled back into furthering human microbiome research).' % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
     'ONLY_FECAL_RESULTS': "I sent more than one kind of sample, but I only received data for my faecal sample. What happened to my other samples?",
     'ONLY_FECAL_RESULTS_ANS': 'We have only sent out results for faecal samples and are in the process of evaluating how best to present the other sample types. Please see <a href="#faq12">the previous question </a>',
     'PARTICIPATE_WITH_DIAGNOSIS': "Can I participate in the project if I am diagnosed with ...?",
@@ -617,9 +617,9 @@ _PARTICIPANT_OVERVIEW = {
     'COMPLETED_SURVEY': "Completed survey",
     'OVERVIEW_FOR_PARTICPANT': "Overview for participant",
     'SAMPLES_ASSIGNED': "Samples assigned",
-    'VIOSCREEN_CONTINUE': '<a href="%s">Continue your Food Frequency Questionnaire</a>',
+    'VIOSCREEN_CONTINUE': '<a href="%s"><button>Continue your Food Frequency Questionnaire</button></a>',
     'VIOSCREEN_COMPLETE': 'Food Frequency Questionnaire completed',
-    'VIOSCREEN_START': '<a href="%s">Start the Food Frequency Questionnaire</a>'
+    'VIOSCREEN_START': '<a href="%s"><button>Start the Food Frequency Questionnaire</button></a>'
 }
 
 # helper tuples for the survey questions
@@ -1076,6 +1076,23 @@ _NOJS = {
     'NEED_HELP': 'If you need help enabling JavaScript in your browser, <br/>Please email us at <a href="mailto:americangut@gmail.com">americangut@gmail.com</a>'
 }
 
+_PERSONAL_MICROBIOME = {
+    'HEADER': 'Online Survey Consent Form',
+    'CONSENT_1': 'You are being invited to participate in a research study titled "Impact of Personal Microbiome Information on American Gut Study Volunteers." This study is being done by Dr. Cinnamon Bloss, Professor from the University of California - San Diego (UCSD) School of Medicine. You are being invited to participate in this research because you took part in the American Gut Project study.',
+    'CONSENT_2': "The purpose of this research study is to better understand how participation in the American Gut Project may have impacted people's health views, health behaviors, or communication with their healthcare provider. If you agree to take part in this study the following will happen to you:",
+    'CONSENT_LIST_1': 'You will complete an online survey. This survey will ask questions about how you feel about your experience in the American Gut Project, about the impact receiving your personal microbiome results has on you, and some demographic questions about you. It will take about 5-10 minutes to complete the survey.',
+    'CONSENT_LIST_2': 'Information that you provided as part of the American Gut Project will be collected and used in this study.',
+    'CONSENT_LIST_3': "The study may also involve follow up interviews at a later date to collect more detailed and specific information about how participation in the American Gut Project has impacted participant's health. If you would like to participate in the possible follow-up interviews to share more of your thoughts, you can provide your contact information at the end of the survey. However, you should note that, even if you agree to be interviewed it is possible that you will not be contacted.",
+    'CONSENT_3': "The data collected as part of this study may also be used in studies by other researchers from UCSD and other Universities. Dr. Bloss will be responsible for deciding how your data will be used. Dr. Bloss, her associates, or her successors in these studies will keep your data and the information derived from it for an indefinite period. By consenting to participate in this study you are indicating that you consent to the use of your data in other studies. If you do not consent to such use you should not participate in this study.",
+    'CONSENT_4': "There will not be any direct benefit to you from this research. The investigator(s), however, may better understand how participating in the American Gut Project impacts people's health views, health behaviors, and communication with their healthcare providers.",
+    'CONSENT_5': "There are minimal risks associated with this research study. Taking surveys can produce feelings of stress, frustration, discomfort, fatigue, and boredom.  To limit these risks, the questions have been written in a clear manner. There is a risk of loss of confidentiality. To protect against such a loss research records will be kept confidential to the extent allowed by law. Your survey data will be stored on a password protected secure computer will be identified by a study subject ID number.  If you decide to provide your name and contact information for potential follow-up, your name and contact information will be kept separate from your survey responses and will not be linked to your survey responses.  All analysis of the survey data will be done on data that is de-identified (e.g. does not contain your name). Research records may be reviewed by the UCSD Institutional Review Board and the National Institutes of Health. Results of this study may be reported in scientific journals, meeting, and news media, but none of these reports will use your name or use data that can point to any person who took part in the study.",
+    'CONSENT_6': "Your participation in this study is completely voluntary and you can withdraw at any time by simply exiting the survey. Choosing not to participate or withdrawing will result in no penalty or loss of benefits to which you are entitled. You are free to skip any question that you choose.",
+    'CONSENT_7': "If you have questions about this project or if you have a research-related problem, you may contact the researcher(s), Dr. Cinnamon Bloss at 858-534-9550. If you have any questions concerning your rights as a research subject, you may contact the UCSD Human Research Protections Program Office at (858) 246-7444.",
+    'CONSENT_8': 'By clicking "You agree" below you are indicating that you are at least 18 years old, have read this consent form, and agree to participate in this research study. Please print a copy of this page for your records.',
+    'AGREE': 'You Agree',
+    'DISAGREE': 'You Do Not Agree'
+}
+
 # Actual text locale
 text_locale = {
     'nojs.html': _NOJS,
@@ -1083,6 +1100,7 @@ text_locale = {
     '403.html': _403,
     'FAQ.html': _FAQ,
     'new_participant_overview.html': _NEW_PARTICIPANT_OVERVIEW,
+    'personal_microbiome_overview.html': _PERSONAL_MICROBIOME,
     'addendum.html': _ADDENDUM,
     'portal.html': _PORTAL,
     'db_error.html': _DB_ERROR,
