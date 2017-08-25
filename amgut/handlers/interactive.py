@@ -130,10 +130,11 @@ class AlphaDivImgHandler(BaseHandler):
         # category lines onto the base alpha diversity distribution image
         new_image = Image.open(join(AMGUT_CONFIG.base_data_dir, 'alpha-div',
                                '%s.png' % barcode))
-        if cat:
-            cat = Image.open(join(AMGUT_CONFIG.base_data_dir, 'alpha-div',
-                             'pd_%s-%s.png' % (site, cat)))
-            new_image = Image.alpha_composite(cat, new_image)
+        #Deactivated until pipeline can support category overlay
+        #if cat:
+        #    cat = Image.open(join(AMGUT_CONFIG.base_data_dir, 'alpha-div',
+        #                     'pd_%s-%s.png' % (site, cat)))
+        #    new_image = Image.alpha_composite(cat, new_image)
         full_image = StringIO()
         new_image.save(full_image, format="png")
         self.write(full_image.getvalue())
