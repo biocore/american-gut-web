@@ -7,7 +7,7 @@
   <script src="/static/js/interactive.js"></script>
   <script type="text/javascript">
   var barChartSummaryData = {
-    labels: {% raw [b['barcode'] + ' - ' + t + ' site' for b, t in zip(barcodes, titles)] %},
+    labels: {% raw [b['barcode'] + ' - ' + t for b, t in zip(barcodes, titles)] %},
     rawLabels: null,
     datasets: null,
     rawData: {% raw datasets %},
