@@ -1,11 +1,11 @@
 from unittest import main
-import datetime
 from amgut.test.tornado_test_base import TestHandlerBase
 from amgut.connections import ag_data, redis
-from tornado import escape
-from amgut.lib.util import rollback, store_survey, make_survey_class
+from amgut.lib.util import rollback, store_survey
 from amgut.lib.data_access.survey import Survey
-from amgut.lib.survey_supp import (fermented_survey, surf_survey, personal_microbiome_survey)
+from amgut.lib.survey_supp import (fermented_survey,
+                                   surf_survey,
+                                   personal_microbiome_survey)
 from json import dumps
 
 
