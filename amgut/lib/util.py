@@ -128,7 +128,7 @@ def store_survey(survey, survey_id):
     survey.store_survey(consent_details, with_fk_inserts, without_fk_inserts)
 
 
-def survey_vioscreen(survey_id, consent_info, internal_surveys):
+def survey_vioscreen(survey_id, consent_info, internal_surveys=[]):
     """Return a formatted text block and URL for the external survey"""
     tl = text_locale['human_survey_completed.html']
     embedded_text = tl['SURVEY_VIOSCREEN']
@@ -137,7 +137,7 @@ def survey_vioscreen(survey_id, consent_info, internal_surveys):
     return embedded_text % url
 
 
-def survey_asd(survey_id, consent_info, internal_surveys):
+def survey_asd(survey_id, consent_info, internal_surveys=[]):
     """Return a formatted text block and URL for the external survey"""
     tl = text_locale['human_survey_completed.html']
     url = media_locale['SURVEY_ASD_URL'] % {'survey_id': survey_id}
@@ -145,7 +145,7 @@ def survey_asd(survey_id, consent_info, internal_surveys):
     return embedded_text % url
 
 
-def survey_fermented(survey_id, consent_info, internal_surveys):
+def survey_fermented(survey_id, consent_info, internal_surveys=[]):
     """Return a formatted text block and URL for the external survey"""
     tl = text_locale['human_survey_completed.html']
     existing_surveys = [survey[1]
@@ -163,7 +163,7 @@ def survey_fermented(survey_id, consent_info, internal_surveys):
     return embedded_text % url
 
 
-def survey_surf(survey_id, consent_info, internal_surveys):
+def survey_surf(survey_id, consent_info, internal_surveys=[]):
     """Return a formatted text block and URL for the external survey"""
     tl = text_locale['human_survey_completed.html']
     existing_surveys = [survey[1]
