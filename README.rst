@@ -11,12 +11,12 @@ First install and run `Postgres.app <http://postgresapp.com/>`_. Make sure that 
 
    export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
 
-   
+
 Now setup a new conda environment via `miniconda <http://conda.pydata.org/miniconda.html>`_::
 
    conda create -n amgut python=2.7 tornado=4.4.2 psycopg2
    source activate amgut
-   
+
 Next install and start Redis via conda. ::
 
    conda install redis
@@ -48,8 +48,11 @@ Finally create the database and populate it with test data, then launch the webs
 
    ./scripts/ag make test
    python amgut/webserver.py
-   
-Navigating to localhost:8888 will now show the american gut site. Try using ``tst_ACJUJ`` as the username to log in. All test kits have ``test`` as their password.
+
+Navigating to localhost:8888 will now show the american gut site. Try using ``tst_ACJUJ`` as the username to log in. All test kits have ``test`` as their password. More users can
+be found by navigating to users in the psql postgres database.
+
+Additional test data can be downloaded into your base data directory from the ``test_data`` file and used for username ``cs_qdnyn``. This data was used for testing interactivity specifically. 
 
 .. |Build Status| image:: https://travis-ci.org/biocore/american-gut-web.svg?branch=master
    :target: https://travis-ci.org/biocore/american-gut-web
