@@ -128,18 +128,19 @@ window.foldBar = new Chart(ctf, {
     window.summaryBar.update();
   })
 
-  $("#reset-summary").on("click", function () {
-    $("#collapse").val('phylum');
-    barChartSummaryData.labels = JSON.parse(JSON.stringify(barChartSummaryData.rawLabels));
-    barChartSummaryData.metaData = JSON.parse(JSON.stringify(barChartSummaryData.rawData));
-    barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, 'phylum', 10);
+  $("#reset-summary").on("click", function () {window.location.reload();
+    // Commented out because reset button would hide "explore a sample in detail controls"
+    //$("#collapse").val('phylum');
+    //barChartSummaryData.labels = JSON.parse(JSON.stringify(barChartSummaryData.rawLabels));
+    //barChartSummaryData.metaData = JSON.parse(JSON.stringify(barChartSummaryData.rawData));
+    //barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, 'phylum', 10);
     //re-add all remove links
-    $.each($("td"), function( i, val ) { val.remove(); });
-    for(var i=0;i<barChartSummaryData.labels.length;i++) {
-      var rem = $('<td><button href="#" onclick="remove_sample(\'' + barChartSummaryData.labels[i] + '\'); return false;">{% raw tl["REMOVE"] %}</button></td>');
-      $("#remove-row").append(rem);
-    }
-    window.summaryBar.update();
+    //$.each($("td"), function( i, val ) { val.remove(); });
+    //for(var i=0;i<barChartSummaryData.labels.length;i++) {
+    // var rem = $('<td><button href="#" onclick="remove_sample(\'' + barChartSummaryData.labels[i] + '\'); return false;">{% raw tl["REMOVE"] %}</button></td>');
+    //  $("#remove-row").append(rem);
+    //}
+    //window.summaryBar.update();
   });
   $("#meta-site").on("change", function (evt) {
     var site = $("#meta-site").val();
