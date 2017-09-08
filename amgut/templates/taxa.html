@@ -191,7 +191,7 @@ window.foldBar = new Chart(ctf, {
       <canvas id="canvas-bar-summary"></canvas>
       <table style="width:94%; float:right;" id="remove-table"><tr id="remove-row">
     {% for b, t in zip(barcodes, titles) %}
-      <td><a href="#" onclick="remove_sample('{% raw b['barcode'] + ' - ' + t %}'); return false;">{% raw tl['REMOVE'] %}</a></td>
+      <td><button href="#" onclick="remove_sample('{% raw b['barcode'] + ' - ' + t %}'); return false;">{% raw tl['REMOVE'] %}</button></td>
     {% end %}
       </tr></table>
   </div>
