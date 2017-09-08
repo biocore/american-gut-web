@@ -550,7 +550,7 @@ _INTERACTIVE_MULTIPLE = {'TAXA_CHART_TEXT': '<strong>These are your microbes!</s
                          'STOOL': 'stool',
                          'CATEGORY': 'category',
                          'ADD': 'Add',
-                         'REMOVE': 'Remove',
+                         'REMOVE': 'X',
                          'SAMPLE': 'Sample',
                          'TAX_REL_ABUNDANCES': 'Taxonomic Relative Abundances',
                          'PERCENT_ABUNDANCE': 'Percent abundance',
