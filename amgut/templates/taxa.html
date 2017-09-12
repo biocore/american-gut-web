@@ -2,12 +2,12 @@
 {% block head %}
 {% from amgut import text_locale, media_locale %}
 {% set tl = text_locale['taxa.html'] %}
-  <script src="/static/vendor/js/Chart.bundle.min.js"></script>
+  <script src="/static/vendor/js/Chart.js"></script>
   <script src="/static/vendor/js/chroma.min.js"></script>
   <script src="/static/js/interactive.js"></script>
   <script type="text/javascript">
   var barChartSummaryData = {
-    labels: {% raw [b['barcode'] + ' - ' + t for b, t in zip(barcodes, titles)] %},
+    labels: {% raw [b['barcode'] for b in barcodes] %},
     rawLabels: null,
     datasets: null,
     rawData: {% raw datasets %},
@@ -19,9 +19,13 @@
     barcodes: {% raw [b['barcode'] for b in barcodes] %},
     titles: {% raw titles %}
   };
+// Make these arguments of buildCats (not global variables)
+///
+///
+///
+///
   var available_summaries = {% raw available_summaries %};
   var translate_summaries = {% raw text_locale['interactive_categories'] %};
-
 window.onload = function() {
 var ctx = document.getElementById("canvas-bar-summary").getContext("2d");
 var ctf = document.getElementById("canvas-bar-fold").getContext("2d");
@@ -38,20 +42,27 @@ window.summaryBar = new Chart(ctx, {
       position: 'top'
     },
     title:{
-      display:true,
+      display: false,
       text:"{% raw tl['TAX_REL_ABUNDANCES'] %}"
     },
-    tooltips: {
-      mode: 'label', // single if just want one OTU
-    },
+     tooltips: {
+       mode: 'index', // single if just want one OTU
+     },
     responsive: true,
     scales: {
       xAxes: [{
         stacked: true,
-        showVerticalLines: false
+        showVerticalLines: false,
+        ticks: {
+            autoSkip: false,
+            maxRotation: 90,
+            minRotation: 90
+        }
       }],
       yAxes: [{
-        ticks: {max:100},
+        ticks: {
+            max: 100
+        },
         stacked: true,
         display: true,
         scaleLabel: {
@@ -62,6 +73,98 @@ window.summaryBar = new Chart(ctx, {
     }
     }
 });
+
+// Get the modal
+var modal1 = document.getElementById('modal-one');
+
+// Get the button that opens the modal
+var btn1 = document.getElementById("modal-button-one");
+
+// Get the <span> element that closes the modal
+var span1 = document.getElementsByClassName("close1")[0];
+
+// When the user clicks the button, open the modal
+btn1.onclick = function() {
+    modal1.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span1.onclick = function() {
+    modal1.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal1) {
+        modal1.style.display = "none";
+    }
+};
+
+
+
+// Get the modal
+var modal2 = document.getElementById('modal-two');
+
+// Get the button that opens the modal
+var btn2 = document.getElementById("modal-button-two");
+
+// Get the <span> element that closes the modal
+var span2 = document.getElementsByClassName("close2")[0];
+
+// When the user clicks the button, open the modal
+btn2.onclick = function() {
+    modal2.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span2.onclick = function() {
+    modal2.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal2) {
+        modal2.style.display = "none";
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+// Get the modal
+var modal3 = document.getElementById('modal-three');
+
+// Get the button that opens the modal
+var btn3 = document.getElementById("modal-button-three");
+
+// Get the <span> element that closes the modal
+var span3 = document.getElementsByClassName("close3")[0];
+
+
+// When the user clicks the button, open the modal
+btn3.onclick = function() {
+    modal3.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span3.onclick = function() {
+    modal3.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal3) {
+        modal3.style.display = "none";
+    }
+};
+
 
 window.foldBar = new Chart(ctf, {
   type: 'bar',
@@ -81,8 +184,8 @@ window.foldBar = new Chart(ctf, {
     responsive: true,
     scales: {
       xAxes: [{
+        display: true,
         ticks: {
-          autoSkip: false
         }
       }],
       yAxes: [{
@@ -116,10 +219,21 @@ window.foldBar = new Chart(ctf, {
       if(taxa == "Other") {
         return;
       }
+
+      console.log('xxaaa')
+      Chart.defaults.global.showTooltips = false;
+      window.summaryBar.update();
+
+      console.log('eeeeee')
       var label = activePoints[0]._model.label;
+console.log('ffffff')
       var prev_level = $("#collapse").val();
+console.log('ggggg')
       $("#collapse > option:selected").prop("selected", false).next().prop("selected", true);
+console.log('hhashaha')
       barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, $("#collapse").val(), 10, prev_level, taxa);
+console.log('HELL')
+      Chart.defaults.global.showTooltips = true;
       window.summaryBar.update();
     }
   });
@@ -191,9 +305,9 @@ window.foldBar = new Chart(ctf, {
   </div>
   <div style="width: 100%;">
       <canvas id="canvas-bar-summary"></canvas>
-      <table style="width:94%; float:right;" id="remove-table"><tr id="remove-row">
+      <table style="width:94.5%; float:right;" id="remove-table"><tr id="remove-row">
     {% for b, t in zip(barcodes, titles) %}
-      <td><button href="#" onclick="remove_sample('{% raw b['barcode'] + ' - ' + t %}'); return false;">{% raw tl['REMOVE'] %}</button></td>
+      <td><button href="#" onclick="remove_sample('{% raw b['barcode'] %}'); return false;">{% raw tl['REMOVE'] %}</button></td>
     {% end %}
       </tr></table>
   </div>
