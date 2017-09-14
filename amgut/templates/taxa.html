@@ -31,7 +31,7 @@ window.onload = function() {
     barChartSummaryData.metaData = JSON.parse(JSON.stringify(barChartSummaryData.rawData));
     barChartSummaryData.rawLabels = JSON.parse(JSON.stringify(barChartSummaryData.labels));
     barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, 'phylum', 10);
-    // Creating and formatting taxa summary bar chart using Chart.js
+    // Creates and formats taxa summary bar chart using Chart.js
   window.summaryBar = new Chart(ctx, {
     type: 'bar',
     data: barChartSummaryData,
@@ -60,6 +60,7 @@ window.onload = function() {
         }],
         yAxes: [{
           ticks: {
+              // sets the graph maximum to 100 (problem displaying 120)
               max: 100
           },
           stacked: true,
@@ -102,7 +103,6 @@ window.onload = function() {
   };
 
 
-
   // Get the modal
   var modal2 = document.getElementById('modal-two');
 
@@ -128,15 +128,6 @@ window.onload = function() {
       modal2.style.display = "none";
     }
   };
-
-
-
-
-
-
-
-
-
 
 
   // Get the modal
@@ -166,6 +157,7 @@ window.onload = function() {
       }
   };
 
+  // Creates and formats fold change bar chart using Chart.js
 
   window.foldBar = new Chart(ctf, {
     type: 'bar',
@@ -188,7 +180,9 @@ window.onload = function() {
           display: true,
           ticks: {
               autoSkip: false,
-              suggestMinRotation: 90
+              // TOFIX: labels rotate to fit until cannot fit, then hide labels
+              // Sets labels to vertical
+              // minRotation: 90
           }
         }],
         yAxes: [{
@@ -201,8 +195,11 @@ window.onload = function() {
       }
     }
   });
+
   fold_change();
-  //fill categories based on site
+  // Fills categories based on site selected from dropdown
+  // TOFIX: Global variables "available_summaries" and "translate_summaries"
+  // need to be set as arguments of 'buildCats' to reflect unit test changes
   buildCats($('#barcode-fold option:selected').data('site'), $('#meta-cat-fold'), false);
 
   $("#collapse-fold").on("change", fold_change);
@@ -223,18 +220,16 @@ window.onload = function() {
         return;
       }
 
-      console.log('xxaaa')
+      // TOFIX: Tooltips break when clicking on a specific taxa to display the
+      // deeper taxanomic level. Potential culprits could be an orphaned Tooltips
+      // display when chart is reloaded with new data. Need to refresh tooltips
+      // when the new, deeper taxanomic level is displayed
       Chart.defaults.global.showTooltips = false;
       window.summaryBar.update();
-      console.log('eeeeee')
       var label = activePoints[0]._model.label;
-      console.log('ffffff')
       var prev_level = $("#collapse").val();
-      console.log('ggggg')
       $("#collapse > option:selected").prop("selected", false).next().prop("selected", true);
-      console.log('hhashaha')
       barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, $("#collapse").val(), 10, prev_level, taxa);
-      console.log('HELLO')
       Chart.defaults.global.showTooltips = true;
       window.summaryBar.update();
     }
@@ -244,9 +239,13 @@ window.onload = function() {
     barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, $("#collapse").val(), 10);
     window.summaryBar.update();
   })
-
+    //"Reset Graph" button recoded to simply refresh entire page
   $("#reset-summary").on("click", function () {window.location.reload();
-    // Commented out because reset button would hide "explore a sample in detail controls"
+
+    // Code commented out temporarily because reset button would hide "explore a sample in
+    // detail controls"
+    // Most likely doesn't repopulate all content on the reload
+    //..............//
     //$("#collapse").val('phylum');
     //barChartSummaryData.labels = JSON.parse(JSON.stringify(barChartSummaryData.rawLabels));
     //barChartSummaryData.metaData = JSON.parse(JSON.stringify(barChartSummaryData.rawData));
@@ -258,6 +257,7 @@ window.onload = function() {
     //  $("#remove-row").append(rem);
     //}
     //window.summaryBar.update();
+    //..............//
   });
 
   $("#meta-site").on("change", function (evt) {
@@ -312,6 +312,7 @@ window.onload = function() {
     </div>
     <div style="width: 100%;">
       <canvas id="canvas-bar-summary"></canvas>
+      <!-- Manually aligns the "X" buttons beneath bars in canvas...potential better solution here -->
       <table style="width:94.5%; float:right;" id="remove-table"><tr id="remove-row">
         {% for b, t in zip(barcodes, titles) %}
         <td><button href="#" onclick="remove_sample('{% raw b['barcode'] %}'); return false;">{% raw tl['REMOVE'] %}</button></td>
