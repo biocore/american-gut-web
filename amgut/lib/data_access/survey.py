@@ -368,23 +368,25 @@ class Survey(object):
                                WHERE survey_id=%s""",
                         [consent_details['survey_id']])
             else:
-                # otherwise, we have a new survey so we need to attach this
-                # survey ID to the consent and the login surveys join table
-                TRN.add("""INSERT INTO ag_consent
-                               (ag_login_id, participant_name, is_juvenile,
-                                parent_1_name, parent_2_name, deceased_parent,
-                                participant_email, assent_obtainer, age_range,
-                                date_signed)
-                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, NOW())""",
-                        (consent_details['login_id'],
-                         consent_details['participant_name'],
-                         consent_details['is_juvenile'],
-                         consent_details['parent_1_name'],
-                         consent_details['parent_2_name'],
-                         consent_details['deceased_parent'],
-                         consent_details['participant_email'],
-                         consent_details['obtainer_name'],
-                         consent_details['age_range']))
+                # otherwise, we have a new survey
+                # If this is a primary survey, we need to add the consent
+                if 'secondary' not in consent_details:
+                    TRN.add("""INSERT INTO ag_consent
+                                   (ag_login_id, participant_name, is_juvenile,
+                                    parent_1_name, parent_2_name,
+                                    deceased_parent, participant_email,
+                                    assent_obtainer, age_range, date_signed)
+                             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s,
+                                     NOW())""",
+                            (consent_details['login_id'],
+                             consent_details['participant_name'],
+                             consent_details['is_juvenile'],
+                             consent_details['parent_1_name'],
+                             consent_details['parent_2_name'],
+                             consent_details['deceased_parent'],
+                             consent_details['participant_email'],
+                             consent_details['obtainer_name'],
+                             consent_details['age_range']))
 
                 TRN.add("""INSERT INTO ag_login_surveys
                                (ag_login_id, survey_id, participant_name)

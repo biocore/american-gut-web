@@ -34,6 +34,9 @@ from amgut.handlers.new_participant_overview import (
     NewParticipantOverviewHandler)
 from amgut.handlers.taxa_summary import TaxaSummaryHandler
 from amgut.handlers.survey import SurveyMainHandler
+from amgut.handlers.secondary_survey import SecondarySurveyHandler
+from amgut.handlers.personal_microbiome_overview import \
+        PersonalMicrobiomeOverviewHandler
 from amgut.handlers.portal import PortalHandler
 from amgut.handlers.retrieve_kitid import KitIDHandler
 from amgut.handlers.forgot_password import ForgotPasswordHandler
@@ -79,6 +82,9 @@ class AGWebApplication(Application):
             (r"/authed/human_survey/", HumanSurveyHandler),
             (r"/authed/human_survey_completed/", HumanSurveyCompletedHandler),
             (r"/authed/vspassthrough/", VioscreenPassthroughHandler),
+            (r"/authed/secondary_survey/", SecondarySurveyHandler),
+            (r"/authed/personal_microbiome_overview/",
+             PersonalMicrobiomeOverviewHandler),
             (r"/authed/portal/", PortalHandler),
             (r"/authed/add_sample_human/", AddHumanSampleHandler),
             (r"/authed/add_sample_animal/", AddAnimalSampleHandler),
@@ -127,6 +133,7 @@ def main():
     http_server.listen(options.port)
     print("Tornado started on port", options.port)
     IOLoop.instance().start()
+
 
 if __name__ == "__main__":
     main()

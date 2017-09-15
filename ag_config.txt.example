@@ -88,9 +88,9 @@ BADPASSWORD = oldpass
 # ----------------------------- Third-Party settings ------------------------
 [thirdparty]
 
-VIOSCREEN_REGCODE =
+VIOSCREEN_REGCODE = regcode
 
-VIOSCREEN_CRYPTOKEY =
+VIOSCREEN_CRYPTOKEY = 1234567891011121
 
 OPEN_HUMANS_BASE_URL = https://openhumans.org
 
