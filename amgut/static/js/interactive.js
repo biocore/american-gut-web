@@ -49,7 +49,7 @@ function group(list, prop) {
     grouped[key].push(list[i]);
   }
   return grouped;
-}
+};
 
 
 /**
@@ -65,7 +65,7 @@ function getAvg(list) {
   return list.reduce(function(x, y) {
     return x + y;
   }) / list.length;
-}
+};
 
 /**
 *
@@ -90,7 +90,7 @@ function sumArrays(ar1, ar2) {
     throw 'Arrays unequal length: ' + ar1.length + '  ' + ar2.length;
   }
   return sum;
-}
+};
 
 /**
 *
@@ -114,11 +114,11 @@ function findOTU(list, otu, level) {
     return false;
   }
   return list.findIndex(inner, otu);
-}
+};
 
 function filterSites(list, sites) {
 
-}
+};
 
 /**
 *
@@ -150,7 +150,7 @@ function buildCats(site, catDropdown, disable) {
     }
     catDropdown.prop('disabled', false);
   }
-}
+};
 
 /**
 *
@@ -278,7 +278,7 @@ function collapse(dataset, level, max, prev_level, focus, sites) {
     });
   }
   return further_collapsed;
-}
+};
 
 /**
 *
@@ -328,7 +328,7 @@ function calcFoldChange(newData, rawData, level, dataPos) {
     labels.push(sorted[i][0]);
   }
   return [labels, foldData];
-}
+};
 
 /**
 *
@@ -339,14 +339,13 @@ function fold_change() {
   var level = $('#collapse-fold').val();
   var category = $('#meta-cat-fold').val();
   var barcode = $('#barcode-fold').val();
-  //Set alpha diversity image going first
+  //Set alpha diversity image going first, adds image.
   if (category === '') {
     $('#alpha-div-image').attr('src', '/interactive/alpha_div/' + barcode);
   } else {
       $('#alpha-div-image').attr('src', '/interactive/alpha_div/' + barcode +
         '?category=' + category);
   }
-
   $.get('/interactive/metadata/', {category: category, barcode: barcode})
     .done(function(data) {
       var dataPos = barChartFoldData.barcodes.findIndex(function(y) {
@@ -358,7 +357,7 @@ function fold_change() {
       var foldData = foldChanges[1];
       barChartFoldData.labels = labels;
       barChartFoldData.datasets = [{
-        backgroundColor: 'rgba(151,187,205,0.7)',
+        backgroundColor: 'rgba(120,163,186,0.7)',
         strokeColor: 'rgba(151,187,205,0.8)',
         highlightBackground: 'rgba(220,220,220,1)',
         highlightStroke: 'rgba(220,220,220,1)',
@@ -370,7 +369,7 @@ function fold_change() {
     .fail(function() {
       alert('FAIL!');
     });
-}
+};
 
 /**
 *
@@ -411,7 +410,7 @@ function addMetadata(target, newCol, collapseTo) {
   }
 
   return collapse(target, collapseTo, 10);
-}
+};
 
 /**
 *
@@ -438,15 +437,13 @@ function add_metadata_barchart() {
                                                  data, $('#collapse').val());
       barChartSummaryData.labels.push(title);
       window.summaryBar.update();
-      var rem = $("<td><a onclick='remove_sample(\'" + title +
-                   "\'); return false;'>Remove</a></td>");
+      var rem = $("<td><button href='#' onclick='remove_sample(\"" + title + "\"); return false;'>X</button></td>");
       $('#remove-row').append(rem);
     })
     .fail(function() {
       alert('FAIL!');
     });
-}
-
+};
 /**
 *
 * Removes a column from the stacked bar chart
@@ -481,4 +478,4 @@ function remove_sample(title) {
   window.summaryBar.update();
   $('td').eq(data_pos).remove();
   return false;
-}
+};

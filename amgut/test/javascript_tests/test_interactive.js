@@ -42,6 +42,12 @@ $(document).ready(function() {
     },
 
     teardown: function() {
+        rawData = null;
+        colData = null;
+        available_summaries = null;
+        translate_summaries = null;
+
+
     }
 
   });
@@ -401,6 +407,7 @@ $(document).ready(function() {
     obs = findOTU(rawData, "Thiohalorhabdales", "order");
     equal(obs, 8);
 
+  //Search for an OTU that is not present
     obs = findOTU(rawData, "jvrieopwbrwjojvewbhwirobuihw0", "full");
     equal(obs, -1);
   });

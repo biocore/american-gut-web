@@ -2,100 +2,204 @@
 {% block head %}
 {% from amgut import text_locale, media_locale %}
 {% set tl = text_locale['taxa.html'] %}
-  <script src="/static/vendor/js/Chart.bundle.min.js"></script>
+  <script src="/static/vendor/js/Chart.js"></script>
   <script src="/static/vendor/js/chroma.min.js"></script>
   <script src="/static/js/interactive.js"></script>
   <script type="text/javascript">
-  var barChartSummaryData = {
-    labels: {% raw [b['barcode'] + ' - ' + t for b, t in zip(barcodes, titles)] %},
-    rawLabels: null,
-    datasets: null,
-    rawData: {% raw datasets %},
-    metaData: null
-  };
-  var barChartFoldData = {
-    labels: [],
-    datasets: [],
-    barcodes: {% raw [b['barcode'] for b in barcodes] %},
-    titles: {% raw titles %}
-  };
-  var available_summaries = {% raw available_summaries %};
-  var translate_summaries = {% raw text_locale['interactive_categories'] %};
+    //Raw taxa summary data
+    var barChartSummaryData = {
+      labels: {% raw [b['barcode'] for b in barcodes] %},
+      rawLabels: null,
+      datasets: null,
+      rawData: {% raw datasets %},
+      metaData: null
+    };
+    var barChartFoldData = {
+      labels: [],
+      datasets: [],
+      barcodes: {% raw [b['barcode'] for b in barcodes] %},
+      titles: {% raw titles %}
+    };
+    // These two variables should be arguments of buildCats(), not global variables
+    var available_summaries = {% raw available_summaries %};
+    var translate_summaries = {% raw text_locale['interactive_categories'] %};
 
 window.onload = function() {
-var ctx = document.getElementById("canvas-bar-summary").getContext("2d");
-var ctf = document.getElementById("canvas-bar-fold").getContext("2d");
-// Exploit JSON to make extremely fast deep copy of objects
-barChartSummaryData.metaData = JSON.parse(JSON.stringify(barChartSummaryData.rawData));
-barChartSummaryData.rawLabels = JSON.parse(JSON.stringify(barChartSummaryData.labels));
-barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, 'phylum', 10);
-window.summaryBar = new Chart(ctx, {
-  type: 'bar',
-  data: barChartSummaryData,
-  barStrokeWidth:0,
-  options: {
-    legend: {
-      position: 'top'
-    },
-    title:{
-      display:true,
-      text:"{% raw tl['TAX_REL_ABUNDANCES'] %}"
-    },
-    tooltips: {
-      mode: 'label', // single if just want one OTU
-    },
-    responsive: true,
-    scales: {
-      xAxes: [{
-        stacked: true,
-        showVerticalLines: false
-      }],
-      yAxes: [{
-        stacked: true,
-        display: true,
-        scaleLabel: {
-          display: true,
-          labelString: "{% raw tl['PERCENT_ABUNDANCE'] %}"
+    var ctx = document.getElementById("canvas-bar-summary").getContext("2d");
+    var ctf = document.getElementById("canvas-bar-fold").getContext("2d");
+    // Exploit JSON to make extremely fast deep copy of objects
+    barChartSummaryData.metaData = JSON.parse(JSON.stringify(barChartSummaryData.rawData));
+    barChartSummaryData.rawLabels = JSON.parse(JSON.stringify(barChartSummaryData.labels));
+    barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, 'phylum', 10);
+    // Creates and formats taxa summary bar chart using Chart.js
+  window.summaryBar = new Chart(ctx, {
+    type: 'bar',
+    data: barChartSummaryData,
+    barStrokeWidth:0,
+    options: {
+      legend: {
+        position: 'top'
+      },
+      title:{
+        display: false,
+        text:"{% raw tl['TAX_REL_ABUNDANCES'] %}"
+      },
+        tooltips: {
+         mode: 'index', // index displays all taxa, null displays just one under mousetip
         },
-      }]
-    }
-    }
-});
-
-window.foldBar = new Chart(ctf, {
-  type: 'bar',
-  data: barChartFoldData,
-  barStrokeWidth:0,
-  options: {
-    legend: {
-      display: false
-    },
-    title:{
-      display:true,
-      text:"{% raw tl['TAX_FOLD_CHANGES'] %}"
-    },
-    tooltips: {
-      mode: 'single',
-    },
-    responsive: true,
-    scales: {
-      xAxes: [{
-        ticks: {
-          autoSkip: false
-        }
-      }],
-      yAxes: [{
-        display: true,
-        scaleLabel: {
+      responsive: true,
+      scales: {
+        xAxes: [{
+          stacked: true,
+          showVerticalLines: false,
+          ticks: {
+              autoSkip: false,
+              maxRotation: 90,
+              minRotation: 90
+          }
+        }],
+        yAxes: [{
+          ticks: {
+              // sets the graph maximum to 100 (problem displaying 120)
+              max: 100
+          },
+          stacked: true,
           display: true,
-          labelString: "{% raw tl['LOG2_FOLD_CHANGE'] %}"
-        }
-      }]
+          scaleLabel: {
+            display: true,
+            labelString: "{% raw tl['PERCENT_ABUNDANCE'] %}"
+          },
+        }]
       }
     }
   });
+
+  // Script ("Read More") modals (end of each chart explanation)
+  // TOFIX: Modals should be called by IDs not unique classes
+
+  var modal1 = document.getElementById('modal-one');
+
+  // Get the button that opens the modal
+  var btn1 = document.getElementById("modal-button-one");
+
+  // Get the <span> element that closes the modal
+  var span1 = document.getElementsByClassName("close1")[0];
+
+  // When the user clicks the button, open the modal
+  btn1.onclick = function() {
+      modal1.style.display = "block";
+  }
+
+  // When the user clicks on <span> (x), close the modal
+  span1.onclick = function() {
+      modal1.style.display = "none";
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal1) {
+      modal1.style.display = "none";
+    }
+  };
+
+
+  // Get the modal
+  var modal2 = document.getElementById('modal-two');
+
+  // Get the button that opens the modal
+  var btn2 = document.getElementById("modal-button-two");
+
+  // Get the <span> element that closes the modal
+  var span2 = document.getElementsByClassName("close2")[0];
+
+  // When the user clicks the button, open the modal
+  btn2.onclick = function() {
+    modal2.style.display = "block";
+  }
+
+  // When the user clicks on <span> (x), close the modal
+  span2.onclick = function() {
+    modal2.style.display = "none";
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal2) {
+      modal2.style.display = "none";
+    }
+  };
+
+
+  // Get the modal
+  var modal3 = document.getElementById('modal-three');
+
+  // Get the button that opens the modal
+  var btn3 = document.getElementById("modal-button-three");
+
+  // Get the <span> element that closes the modal
+  var span3 = document.getElementsByClassName("close3")[0];
+
+
+  // When the user clicks the button, open the modal
+  btn3.onclick = function() {
+    modal3.style.display = "block";
+  }
+
+  // When the user clicks on <span> (x), close the modal
+  span3.onclick = function() {
+      modal3.style.display = "none";
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+      if (event.target == modal3) {
+          modal3.style.display = "none";
+      }
+  };
+
+  // Creates and formats fold change bar chart using Chart.js
+
+  window.foldBar = new Chart(ctf, {
+    type: 'bar',
+    data: barChartFoldData,
+    barStrokeWidth:0,
+    options: {
+      legend: {
+        display: false
+      },
+      title:{
+        display:true,
+        text:"{% raw tl['TAX_FOLD_CHANGES'] %}"
+      },
+      tooltips: {
+        mode: 'single',
+      },
+      responsive: true,
+      scales: {
+        xAxes: [{
+          display: true,
+          ticks: {
+              autoSkip: false,
+              // TOFIX: labels rotate to fit until cannot fit, then hide labels
+              // Sets labels to vertical
+              // minRotation: 90
+          }
+        }],
+        yAxes: [{
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: "{% raw tl['LOG2_FOLD_CHANGE'] %}"
+          }
+        }]
+      }
+    }
+  });
+
   fold_change();
-  //fill categories based on site
+  // Fills categories based on site selected from dropdown
+  // TOFIX: Global variables "available_summaries" and "translate_summaries"
+  // need to be set as arguments of 'buildCats' to reflect unit test changes
   buildCats($('#barcode-fold option:selected').data('site'), $('#meta-cat-fold'), false);
 
   $("#collapse-fold").on("change", fold_change);
@@ -115,10 +219,18 @@ window.foldBar = new Chart(ctf, {
       if(taxa == "Other") {
         return;
       }
+
+      // TOFIX: Tooltips break when clicking on a specific taxa to display the
+      // deeper taxanomic level. Potential culprits could be an orphaned Tooltips
+      // display when chart is reloaded with new data. Need to refresh tooltips
+      // when the new, deeper taxanomic level is displayed
+      Chart.defaults.global.showTooltips = false;
+      window.summaryBar.update();
       var label = activePoints[0]._model.label;
       var prev_level = $("#collapse").val();
       $("#collapse > option:selected").prop("selected", false).next().prop("selected", true);
       barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, $("#collapse").val(), 10, prev_level, taxa);
+      Chart.defaults.global.showTooltips = true;
       window.summaryBar.update();
     }
   });
@@ -127,20 +239,27 @@ window.foldBar = new Chart(ctf, {
     barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, $("#collapse").val(), 10);
     window.summaryBar.update();
   })
+    //"Reset Graph" button recoded to simply refresh entire page
+  $("#reset-summary").on("click", function () {window.location.reload();
 
-  $("#reset-summary").on("click", function () {
-    $("#collapse").val('phylum');
-    barChartSummaryData.labels = JSON.parse(JSON.stringify(barChartSummaryData.rawLabels));
-    barChartSummaryData.metaData = JSON.parse(JSON.stringify(barChartSummaryData.rawData));
-    barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, 'phylum', 10);
+    // Code commented out temporarily because reset button would hide "explore a sample in
+    // detail controls"
+    // Most likely doesn't repopulate all content on the reload
+    //..............//
+    //$("#collapse").val('phylum');
+    //barChartSummaryData.labels = JSON.parse(JSON.stringify(barChartSummaryData.rawLabels));
+    //barChartSummaryData.metaData = JSON.parse(JSON.stringify(barChartSummaryData.rawData));
+    //barChartSummaryData.datasets = collapse(barChartSummaryData.metaData, 'phylum', 10);
     //re-add all remove links
-    $.each($("td"), function( i, val ) { val.remove(); });
-    for(var i=0;i<barChartSummaryData.labels.length;i++) {
-      var rem = $('<td><a href="#" onclick="remove_sample(\'' + barChartSummaryData.labels[i] + '\'); return false;">{% raw tl["REMOVE"] %}</a></td>');
-      $("#remove-row").append(rem);
-    }
-    window.summaryBar.update();
+    //$.each($("td"), function( i, val ) { val.remove(); });
+    //for(var i=0;i<barChartSummaryData.labels.length;i++) {
+    // var rem = $('<td><button href="#" onclick="remove_sample(\'' + barChartSummaryData.labels[i] + '\'); return false;">{% raw tl["REMOVE"] %}</button></td>');
+    //  $("#remove-row").append(rem);
+    //}
+    //window.summaryBar.update();
+    //..............//
   });
+
   $("#meta-site").on("change", function (evt) {
     var site = $("#meta-site").val();
     var catDropdown = $("#meta-cat");
@@ -149,7 +268,8 @@ window.foldBar = new Chart(ctf, {
   $("#meta-cat").on("change", function (evt) {
     if($("#meta-cat").val() == "") {
       $("#add-sumary-cat").prop("disabled", true);
-    } else {
+    }
+    else {
       $("#add-sumary-cat").prop("disabled", false);
     }
   });
@@ -158,88 +278,165 @@ window.foldBar = new Chart(ctf, {
 };
   </script>
   <style>
-  canvas {
+    canvas {
       -moz-user-select: none;
       -webkit-user-select: none;
       -ms-user-select: none;
-  }
+    }
   </style>
 {% end%}
 {% block content %}
-<div id="taxa-summary-wrapper" style="width:100%; position: relative;">
-<div id="taxa-summary-controls">
-  <h3>{% raw tl['REL_TAXONOMY'] %}</h3>
-    {% raw tl['SELECT_LEVEL'] %}:
-    <select id="collapse">
-      <option value="phylum">{% raw tl['PHYLUM'] %}</option>
-      <option value="class">{% raw tl['CLASS'] %}</option>
-      <option value="order">{% raw tl['ORDER'] %}</option>
-      <option value="family">{% raw tl['FAMILY'] %}</option>
-      <option value="genus">{% raw tl['GENUS'] %}</option>
-    </select> <button id="reset-summary">{% raw tl['RESET_GRAPH'] %}</button><br/>
-    {% raw tl['ADD_SITE'] %} <select id="meta-site">
-      <option value=""></option>
-      <option value="stool">{% raw tl['STOOL'] %}</option>
-      <option value="skin">{% raw tl['SKIN'] %}</option>
-      <option value="oral">{% raw tl['ORAL'] %}</option>
-    </select> 
-    {% raw tl['CATEGORY'] %}:<select id="meta-cat">
-      <option value=""></option>
-    </select><button onclick="add_metadata_barchart()" id="add-sumary-cat">{% raw tl['ADD'] %}</button>
-  </div>
-  <div style="width: 100%;">
-      <canvas id="canvas-bar-summary"></canvas>
-      <table style="width:94%; float:right;" id="remove-table"><tr id="remove-row">
-    {% for b, t in zip(barcodes, titles) %}
-      <td><a href="#" onclick="remove_sample('{% raw b['barcode'] + ' - ' + t %}'); return false;">{% raw tl['REMOVE'] %}</a></td>
-    {% end %}
-      </tr></table>
-  </div>
-</div>
-<div id="taxa-summary-text" style="position:relative;clear: right;padding:5px;text-align: left;">
-{% raw tl['TAXA_CHART_TEXT'] %}
-</div>
-<hr>
-<div id="taxa-fold-wrapper" style="width:100%; position: relative;">
-    <div id="taxa-fold-controls">
-    <table style="width: 70%"><tr><td>
-      <h3>{% raw tl['EXPLORE_IN_DETAIL'] %}</h3>
-      {% raw tl['SAMPLE'] %}:
-      <select id="barcode-fold">
-    {% for bc in barcodes %}
-      {% if collapse[bc['site_sampled']] == '' %}
-        {% continue %}
-      {% end %}
-        <option value="{{bc['barcode']}}" data-site="{{collapse[bc['site_sampled']].lower()}}">{{bc['barcode']}} - {{bc['sample_date'].strftime('%b %d, %Y')}}</option>
-    {% end %}
+
+  <!-- Beginning of HTML -->
+
+  <div id="taxa-summary-wrapper" style="width:100%; position: relative;">
+    <div id="taxa-summary-controls">
+      <h3>{% raw tl['REL_TAXONOMY'] %}</h3>
+        {% raw tl['SELECT_LEVEL'] %}:
+      <select id="collapse">
+        <option value="phylum">{% raw tl['PHYLUM'] %}</option>
+        <option value="class">{% raw tl['CLASS'] %}</option>
+        <option value="order">{% raw tl['ORDER'] %}</option>
+        <option value="family">{% raw tl['FAMILY'] %}</option>
+        <option value="genus">{% raw tl['GENUS'] %}</option>
+      </select> <button id="reset-summary">{% raw tl['RESET_GRAPH'] %}</button><br/>
+      {% raw tl['ADD_SITE'] %} <select id="meta-site">
+        <option value=""></option>
+        <option value="stool">{% raw tl['STOOL'] %}</option>
+        <option value="skin">{% raw tl['SKIN'] %}</option>
+        <option value="oral">{% raw tl['ORAL'] %}</option>
       </select>
-    </td><td>
-    <h3>{% raw tl['COMPARE_POP'] %}</h3>
-    {% raw tl['SELECT_LEVEL'] %}:
-    <select id="collapse-fold">
-      <option value="phylum">{% raw tl['PHYLUM'] %}</option>
-      <option value="class">{% raw tl['CLASS'] %}</option>
-      <option value="order">{% raw tl['ORDER'] %}</option>
-      <option value="family">{% raw tl['FAMILY'] %}</option>
-      <option value="genus">{% raw tl['GENUS'] %}</option>
-    </select>
-    {% raw tl['CATEGORY'] %}:<select id="meta-cat-fold">
-    <option value=''></option>
-    </select>
-    </td></tr>
-  </table>
+      {% raw tl['CATEGORY'] %}:<select id="meta-cat">
+        <option value=""></option>
+      </select><button onclick="add_metadata_barchart()" id="add-sumary-cat">{% raw tl['ADD'] %}</button>
+    </div>
+    <div style="width: 100%;">
+      <canvas id="canvas-bar-summary"></canvas>
+      <!-- Manually aligns the "X" buttons beneath bars in canvas...potential better solution here -->
+      <table style="width:94.5%; float:right;" id="remove-table"><tr id="remove-row">
+        {% for b, t in zip(barcodes, titles) %}
+        <td><button href="#" onclick="remove_sample('{% raw b['barcode'] %}'); return false;">{% raw tl['REMOVE'] %}</button></td>
+        {% end %}
+      </tr></table>
+    </div>
   </div>
-  <div style="width: 59%; float:left;">
-      <canvas id="canvas-bar-fold"></canvas>
+
+  <div id="taxa-summary-text" style="position: relative; clear: right; padding: 5px; text-align: left;">
+{% raw tl['TAXA_CHART_TEXT'] %}
+
+<!-- "Read More" modal for taxa-summary-text -->
+<!-- Trigger/Open The Modal -->
+   <button id="modal-button-one">Read More</button>
+
+<!-- The Modal -->
+    <div id="modal-one" class="modal1">
+
+<!-- Modal content -->
+      <div class="modal-content1">
+      <div class="modal-header1">
+        <span class="close1">&times;</span>
+        <h2>Relative Taxonomy</h2>
+      </div>
+      <div class="modal-body1">
+        <p>{% raw tl['TAXA_CHART_TEXT_MODAL'] %}</p>
+      </div>
+      <div class="modal-footer1">
+        <h3>{% raw tl['AGGREGATION SITE'] %}</h3>
+      </div>
+      </div>
+    </div>
   </div>
-  <div style="width: 39%; float:left;"><h4>{% raw tl['ALPHA_DIVERSITY'] %}</h4><img src="" id="alpha-div-image" style="vertical-align: middle; width: 100%;"></div>
-</div>
-<div id="taxa-fold-text-wrapper" style="width:100%; position: relative;">
+
+<hr>
+  <div id="taxa-fold-wrapper" style="width:100%; min-height: 106px; position: relative;">
+    <div id="taxa-fold-controls">
+      <table style="width: 60%"><tr><td>
+        <h3>{% raw tl['EXPLORE_IN_DETAIL'] %}</h3>
+        {% raw tl['SAMPLE'] %}:
+        <select id="barcode-fold">
+          {% for bc in barcodes %}
+          {% if collapse[bc['site_sampled']] == '' %}
+          {% continue %}
+          {% end %}
+          <option value="{{bc['barcode']}}" data-site="{{collapse[bc['site_sampled']].lower()}}">{{bc['barcode']}} - {{bc['sample_date'].strftime('%b %d, %Y')}}</option>
+          {% end %}
+        </select>
+        </td><td>
+          <h3>{% raw tl['COMPARE_POP'] %}</h3>
+          {% raw tl['SELECT_LEVEL'] %}:
+        <select id="collapse-fold">
+          <option value="phylum">{% raw tl['PHYLUM'] %}</option>
+          <option value="class">{% raw tl['CLASS'] %}</option>
+          <option value="order">{% raw tl['ORDER'] %}</option>
+          <option value="family">{% raw tl['FAMILY'] %}</option>
+          <option value="genus">{% raw tl['GENUS'] %}</option>
+        </select>
+          {% raw tl['CATEGORY'] %}:<select id="meta-cat-fold">
+        <option value=''></option>
+        </select>
+        </td></tr>
+      </table>
+    </div>
+
+      <div style="width: 59%; float:left;">
+        <canvas id="canvas-bar-fold"></canvas>
+      </div>
+      <div style="width: 39%; float:left;"><h4>{% raw tl['ALPHA_DIVERSITY'] %}</h4><img src="" id="alpha-div-image" style="vertical-align: middle; width: 100%;">
+      </div>
+  </div>
+
+  <div id="taxa-fold-text-wrapper" style="width:100%; position: relative;">
     <div id="taxa-fold-text" style="width: 59%; float: left; padding:5px; text-align: left;">
     {% raw tl['COMP_CHART_TEXT'] %}
+
+      <!-- Trigger/Open The Modal -->
+      <button id="modal-button-two">Read More</button>
+
+      <!-- The Modal -->
+      <div id="modal-two" class="modal2">
+
+      <!-- Modal content -->
+        <div class="modal-content2">
+          <div class="modal-header2">
+            <span class="close2">&times;</span>
+            <h2>Taxanomic Fold Changes</h2>
+          </div>
+          <div class="modal-body2">
+            <p>{% raw tl['COMP_CHART_TEXT_MODAL'] %}</p>
+          </div>
+          <div class="modal-footer2">
+            <h3>{% raw tl['AGGREGATION SITE'] %}</h3>
+          </div>
+        </div>
+
+      </div>
     </div>
-    <div id="alpha-div-text" style="width: 39%; float: left; padding:5px; text-align: left;">
-    {% raw tl['ALPHA_DIV_TEXT'] %}
+    <div id="alpha-div-text" style="width: 38%; float: left; padding:5px; text-align: left;">
+      {% raw tl['ALPHA_DIV_TEXT'] %}
+
+      <!-- Trigger/Open The Modal -->
+      <button id="modal-button-three">Read More</button>
+
+      <!-- The Modal -->
+      <div id="modal-three" class="modal3">
+
+      <!-- Modal content -->
+        <div class="modal-content3">
+          <div class="modal-header3">
+            <span class="close3">&times;</span>
+            <h2>Alpha Diversity</h2>
+          </div>
+          <div class="modal-body3">
+            <p>{% raw tl['ALPHA_DIV_TEXT_MODAL'] %}</p>
+          </div>
+          <div class="modal-footer3">
+            <h3>{% raw tl['AGGREGATION SITE'] %}</h3>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
-{% end %}
+    <div id="alpha-div-text" style="width: 38%; float: left; padding:5px; text-align: left;">
+    </div>
+
+  </div>
+  {% end %}

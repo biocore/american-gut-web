@@ -123,17 +123,19 @@ class AlphaDivImgHandler(BaseHandler):
         if barcode not in barcodes:
             raise HTTPError(403, 'User %s does not have access to barcode '
                             '%s' % (self.current_user, barcode))
-        site = ag_data.getAGBarcodeDetails(barcode)['site_sampled'].lower()
-        cat = self.get_argument('category', False)
+        # These variables are introduced but not used
+        # site = ag_data.getAGBarcodeDetails(barcode)['site_sampled'].lower()
+        # cat = self.get_argument('category', False)
 
         # Build alpha div image by layering the sample and, optionally,
         # category lines onto the base alpha diversity distribution image
         new_image = Image.open(join(AMGUT_CONFIG.base_data_dir, 'alpha-div',
                                '%s.png' % barcode))
-        if cat:
-            cat = Image.open(join(AMGUT_CONFIG.base_data_dir, 'alpha-div',
-                             'pd_%s-%s.png' % (site, cat)))
-            new_image = Image.alpha_composite(cat, new_image)
+        # Deactivated until pipeline can support category overlay
+        # if cat:
+        #    cat = Image.open(join(AMGUT_CONFIG.base_data_dir, 'alpha-div',
+        #                     'pd_%s-%s.png' % (site, cat)))
+        #    new_image = Image.alpha_composite(cat, new_image)
         full_image = StringIO()
         new_image.save(full_image, format="png")
         self.write(full_image.getvalue())
