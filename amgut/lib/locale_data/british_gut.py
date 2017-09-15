@@ -557,6 +557,8 @@ _INTERACTIVE_MULTIPLE = {'TAXA_CHART_TEXT': '<strong>These are your microbes!</s
                          'TAX_FOLD_CHANGES': 'Taxonomic Fold Changes',
                          'LOG2_FOLD_CHANGE': 'Log2 Fold Change',
                          'AGGREGATION SITE': '%(shorthand)s' % {'sitebase': _SITEBASE, 'shorthand': AMGUT_CONFIG.project_shorthand}
+}
+
 
 _INTERACTIVE_CATEGORIES = {
     'age-baby': 'age-baby',
