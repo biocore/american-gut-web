@@ -16,7 +16,7 @@ import logging
 from uuid import UUID
 
 import psycopg2
-from passlib.hash import bcrypt
+import bcrypt
 
 from amgut.lib.data_access.sql_connection import TRN
 
@@ -58,7 +58,8 @@ class AGDataAccess(object):
 
             results = dict(row[0])
 
-            if not bcrypt.verify(password, results['kit_password']):
+            password = password.encode('utf-8')
+            if not bcrypt.checkpw(password, results['kit_password']):
                 return False
             results['ag_login_id'] = str(results['ag_login_id'])
 
@@ -143,18 +144,31 @@ class AGDataAccess(object):
         ValueError
             Barcode not found in AG information tables
         """
-        sql = """SELECT  email,
-                    cast(ag_kit_barcode_id as varchar(100)),
-                    cast(ag_kit_id as varchar(100)),
-                    barcode, site_sampled, environment_sampled, sample_date,
-                    sample_time, participant_name, notes, refunded, withdrawn,
-                    moldy, other, other_text, date_of_last_email ,overloaded,
-                    name, status
-                  FROM ag_kit_barcodes
-                  INNER JOIN ag_kit USING (ag_kit_id)
-                  INNER JOIN ag_login USING (ag_login_id)
-                  INNER JOIN barcode USING (barcode)
-                  WHERE barcode = %s"""
+        sql = """SELECT email,
+                        cast(ag_kit_barcode_id as varchar(100)),
+                        cast(ag_kit_id as varchar(100)),
+                        barcode,
+                        site_sampled,
+                        environment_sampled,
+                        sample_date,
+                        sample_time,
+                        participant_name,
+                        notes,
+                        refunded,
+                        withdrawn,
+                        moldy,
+                        other,
+                        other_text,
+                        date_of_last_email,
+                        overloaded,
+                        name,
+                        status
+                 FROM ag.ag_kit_barcodes
+                 LEFT JOIN barcodes.barcode USING (barcode)
+                 LEFT JOIN ag.ag_kit USING (ag_kit_id)
+                 LEFT JOIN ag.ag_login_surveys USING (ag_login_id)
+                 LEFT JOIN ag.ag_login USING (ag_login_id)
+                 WHERE barcode = %s"""
 
         with TRN:
             TRN.add(sql, [barcode])
@@ -262,34 +276,74 @@ class AGDataAccess(object):
     def deleteAGParticipantSurvey(self, ag_login_id, participant_name):
         # Remove user from new schema
         with TRN:
-            sql = """SELECT survey_id
+            sql = """SELECT survey_id, participant_email
                      FROM ag_login_surveys
+                     JOIN ag_consent USING (ag_login_id, participant_name)
                      WHERE ag_login_id = %s AND participant_name = %s"""
             TRN.add(sql, (ag_login_id, participant_name))
-            survey_id = TRN.execute_fetchlast()
+            # collect all survey_ids and participant_names, since at least the
+            # former might be more than one.
+            survey_ids = set()
+            participant_emails = set()
+            for hit in TRN.execute_fetchindex():
+                survey_ids.add(hit[0])
+                participant_emails.add(hit[1])
 
-            sql = "DELETE FROM survey_answers WHERE survey_id = %s"
-            TRN.add(sql, [survey_id])
+            sql = """SELECT barcode
+                     FROM ag.source_barcodes_surveys
+                     WHERE survey_id IN %s"""
+            TRN.add(sql, [tuple(survey_ids)])
+            barcodes = [x[0] for x in TRN.execute_fetchindex()]
 
-            sql = "DELETE FROM survey_answers_other WHERE survey_id = %s"
-            TRN.add(sql, [survey_id])
+            sql = "DELETE FROM survey_answers WHERE survey_id IN %s"
+            TRN.add(sql, [tuple(survey_ids)])
+
+            sql = "DELETE FROM survey_answers_other WHERE survey_id IN %s"
+            TRN.add(sql, [tuple(survey_ids)])
 
             # Reset survey attached to barcode(s)
-            sql = """UPDATE ag_kit_barcodes
-                     SET survey_id = NULL
-                     WHERE survey_id = %s"""
-            TRN.add(sql, [survey_id])
-
-            sql = "DELETE FROM promoted_survey_ids WHERE survey_id = %s"
-            TRN.add(sql, [survey_id])
+            for info in self.getParticipantSamples(ag_login_id,
+                                                   participant_name):
+                self.deleteSample(info['barcode'], ag_login_id)
 
             # Delete last due to foreign keys
-            sql = "DELETE FROM ag_login_surveys WHERE survey_id = %s"
-            TRN.add(sql, [survey_id])
+            sql = """DELETE FROM ag.source_barcodes_surveys
+                     WHERE survey_id IN %s"""
+            TRN.add(sql, [tuple(survey_ids)])
+            # only delete barcode information, if this is the last survey for
+            # the given source, i.e. ag_login_id, participant_name combination
+            if len(survey_ids) == 1:
+                sql = """DELETE FROM ag.ag_kit_barcodes WHERE barcode IN %s"""
+                TRN.add(sql, [tuple(barcodes)])
+
+            sql = "DELETE FROM ag_login_surveys WHERE survey_id IN %s"
+            TRN.add(sql, [tuple(survey_ids)])
 
             sql = """DELETE FROM ag_consent
                      WHERE ag_login_id = %s AND participant_name = %s"""
             TRN.add(sql, [ag_login_id, participant_name])
+
+            sql = """INSERT INTO ag.consent_revoked
+                     (ag_login_id,participant_name, participant_email)
+                     VALUES (%s, %s, %s)"""
+            sql_args = [[ag_login_id, participant_name, pemail]
+                        for pemail in participant_emails]
+            TRN.add(sql, sql_args, many=True)
+            TRN.execute()
+
+    def get_withdrawn(self):
+        """Gets teh list of withdrawn participants and information
+
+        Returns
+        -------
+        list of tuple of strings
+            List of withdrawn participants, in the form
+            (ag_login_id, participant_name, participant_email, date_revoked)
+        """
+        with TRN:
+            sql = "SELECT * FROM consent_revoked"
+            TRN.add(sql)
+            return TRN.execute_fetchindex()
 
     def getConsent(self, survey_id):
         with TRN:
@@ -325,45 +379,81 @@ class AGDataAccess(object):
                          WHERE ag_login_id = %s AND participant_name = %s"""
 
                 TRN.add(sql, (ag_login_id, participant_name))
-                survey_id = TRN.execute_fetchindex()
-                if not survey_id:
-                    raise ValueError("No survey ID for ag_login_id %s and "
+                survey_ids = TRN.execute_fetchindex()
+                if not survey_ids:
+                    raise ValueError("No survey IDs for ag_login_id %s and "
                                      "participant name %s" %
                                      (ag_login_id, participant_name))
-                survey_id = survey_id[0][0]
+                survey_ids = [x[0] for x in survey_ids]
             else:
                 # otherwise, it is an environmental sample
-                survey_id = None
+                survey_ids = []
 
             # Add barcode info
             sql = """UPDATE ag_kit_barcodes
                      SET site_sampled = %s, environment_sampled = %s,
                          sample_date = %s, sample_time = %s,
-                         participant_name = %s, notes = %s, survey_id = %s
+                         notes = %s
                      WHERE barcode = %s"""
             TRN.add(sql, [sample_site, environment_sampled, sample_date,
-                          sample_time, participant_name, notes, survey_id,
+                          sample_time, notes,
                           barcode])
+            if len(survey_ids) > 0:
+                sql = """INSERT INTO ag.source_barcodes_surveys (survey_id,
+                                                                 barcode)
+                         VALUES (%s, %s)"""
+                for survey_id in survey_ids:
+                    TRN.add(sql, [survey_id, barcode])
 
     def deleteSample(self, barcode, ag_login_id):
-        """
+        """ Removes by either releasing barcode back for relogging or withdraw
+
+        Parameters
+        ----------
+        barcode : str
+            Barcode to delete
+        ag_login_id : UUID4
+            Login ID for the barcode
+
+        Notes
+        -----
         Strictly speaking the ag_login_id isn't needed but it makes it really
         hard to hack the function when you would need to know someone else's
-        login id (a GUID) to delete something maliciously
+        login id (a GUID) to delete something maliciously.
+
+        If the barcode has never been scanned, assume a mis-log and wipe it so
+        barcode can be logged again. If barcode has been scanned, that means we
+        have recieved it and must withdraw it to delete it from the system.
         """
         with TRN:
+            # Figure out if we've received the barcode or not
+            sql = "SELECT scan_date FROM barcode WHERE barcode = %s"
+            TRN.add(sql, [barcode])
+            received = TRN.execute_fetchlast()
+
+            if not received:
+                # Not recieved, so we release the barcode back to be relogged
+                set_text = """site_sampled = NULL,
+                             sample_time = NULL, sample_date = NULL,
+                             environment_sampled = NULL, notes = NULL"""
+                sql = "UPDATE barcode SET status = NULL WHERE barcode = %s"
+                TRN.add(sql, [barcode])
+            else:
+                # barcode already recieved, so we withdraw the barcode
+                set_text = "withdrawn = 'Y'"
+
             sql = """UPDATE ag_kit_barcodes
-                     SET participant_name = NULL, site_sampled = NULL,
-                         sample_time = NULL, sample_date = NULL,
-                         environment_sampled = NULL, notes = NULL,
-                         survey_id = NULL
-                    WHERE barcode IN (
-                        SELECT  akb.barcode
+                     SET {}
+                     WHERE barcode IN (
+                     SELECT  akb.barcode
                         FROM ag_kit_barcodes akb
                         INNER JOIN ag_kit ak USING (ag_kit_id)
-                        WHERE ak.ag_login_id = %s and akb.barcode = %s)"""
+                        WHERE ak.ag_login_id = %s
+                        AND akb.barcode = %s)""".format(set_text)
             TRN.add(sql, [ag_login_id, barcode])
-            sql = "UPDATE barcode SET status = NULL WHERE barcode = %s"
+
+            sql = """DELETE FROM ag.source_barcodes_surveys
+                     WHERE barcode = %s"""
             TRN.add(sql, [barcode])
 
     def getHumanParticipants(self, ag_login_id):
@@ -413,7 +503,7 @@ class AGDataAccess(object):
             return status[0][0]
 
     def getAnimalParticipants(self, ag_login_id):
-        sql = """SELECT participant_name from ag.ag_login_surveys
+        sql = """SELECT DISTINCT participant_name from ag.ag_login_surveys
                  JOIN ag.survey_answers USING (survey_id)
                  JOIN ag.group_questions gq USING (survey_question_id)
                  JOIN ag.surveys ags USING (survey_group)
@@ -423,13 +513,21 @@ class AGDataAccess(object):
             return TRN.execute_fetchflatten()
 
     def getParticipantSamples(self, ag_login_id, participant_name):
-        sql = """SELECT  barcode, site_sampled, sample_date, sample_time,
-                    notes, status
-                 FROM ag_kit_barcodes akb
-                 INNER JOIN barcode USING (barcode)
-                 INNER JOIN ag_kit ak USING (ag_kit_id)
-                 WHERE (site_sampled IS NOT NULL AND site_sampled::text <> '')
-                 AND ag_login_id = %s AND participant_name = %s"""
+        sql = """SELECT DISTINCT
+                        ag_kit_barcodes.barcode,
+                        ag_kit_barcodes.site_sampled,
+                        ag_kit_barcodes.sample_date,
+                        ag_kit_barcodes.sample_time,
+                        ag_kit_barcodes.notes,
+                        barcodes.barcode.status
+                 FROM ag.ag_login_surveys
+                 JOIN ag.source_barcodes_surveys USING (survey_id)
+                 JOIN ag.ag_kit_barcodes USING (barcode)
+                 JOIN barcodes.barcode USING (barcode)
+                 WHERE ag_login_id = %s
+                 AND participant_name = %s
+                 AND (site_sampled IS NOT NULL
+                 AND site_sampled::text <> '')"""
         with TRN:
             TRN.add(sql, [ag_login_id, participant_name])
             rows = TRN.execute_fetchindex()
@@ -485,6 +583,7 @@ class AGDataAccess(object):
 
     def handoutCheck(self, username, password):
         with TRN:
+            password = password.encode('utf-8')
             sql = "SELECT password FROM ag.ag_handout_kits WHERE kit_id = %s"
             TRN.add(sql, [username])
             to_check = TRN.execute_fetchindex()
@@ -492,7 +591,7 @@ class AGDataAccess(object):
             if not to_check:
                 return False
             else:
-                return bcrypt.verify(password, to_check[0][0])
+                return bcrypt.checkpw(password, to_check[0][0])
 
     def check_access(self, supplied_kit_id, barcode):
         """Check if the user has access to the barcode
@@ -555,7 +654,8 @@ class AGDataAccess(object):
         password is the new password
         """
         with TRN:
-            password = bcrypt.encrypt(password)
+            password = password.encode('utf-8')
+            password = bcrypt.hashpw(password, bcrypt.gensalt())
             sql = """UPDATE AG_KIT
                      SET kit_password = %s, pass_reset_code = NULL
                      WHERE supplied_kit_id = %s"""
@@ -645,8 +745,10 @@ class AGDataAccess(object):
                  INNER JOIN ag_kit USING (ag_kit_id)
                  RIGHT JOIN ag_login USING (ag_login_id)
                  LEFT JOIN barcode USING (barcode)
-                 WHERE survey_id IS NULL AND scan_date IS NOT NULL
-                    AND ag_login_id = %s"""
+                 FULL JOIN ag.source_barcodes_surveys USING (barcode)
+                 WHERE ag.source_barcodes_surveys.survey_id IS NULL
+                 AND scan_date IS NOT NULL
+                 AND ag_login_id = %s"""
         with TRN:
             user = self.get_user_for_kit(kit_id)
             TRN.add(sql, [user])
@@ -750,11 +852,11 @@ class AGDataAccess(object):
         """
         with TRN:
             ag_login_id = self.get_user_for_kit(supplied_kit_id)
-            sql = """SELECT barcode, participant_name
-                     FROM ag_kit_barcodes
-                     INNER JOIN ag_kit USING (ag_kit_id)
+            sql = """SELECT DISTINCT barcode, participant_name
+                     FROM ag.ag_login_surveys
+                     JOIN ag.source_barcodes_surveys USING (survey_id)
+                     JOIN ag.ag_kit_barcodes USING (barcode)
                      WHERE ag_login_id = %s AND results_ready = 'Y'"""
-
             TRN.add(sql, [ag_login_id])
             return [dict(row) for row in TRN.execute_fetchindex()]
 
@@ -789,8 +891,8 @@ class AGDataAccess(object):
                                  ag_login_id)
             return [dict(row) for row in info]
 
-    def get_survey_id(self, ag_login_id, participant_name):
-        """Return the survey ID associated with a participant or None
+    def get_survey_ids(self, ag_login_id, participant_name):
+        """Return the survey IDs associated with a participant or None
 
         Parameters
         ----------
@@ -801,8 +903,9 @@ class AGDataAccess(object):
 
         Returns
         -------
-        str or None
-            The survey ID, or None if a survey ID cannot be found.
+        dict or None
+            The survey IDs keyed to the survey id,
+            or None if a survey ID cannot be found.
 
         Raises
         ------
@@ -810,14 +913,63 @@ class AGDataAccess(object):
             Unknown ag_login_id or participant_name passed
         """
         with TRN:
-            sql = """SELECT survey_id
-                     FROM ag_login_surveys
+            sql = """SELECT DISTINCT s.survey_id, als.survey_id
+                     FROM ag.ag_login_surveys als
+                     LEFT JOIN ag.survey_answers sa USING (survey_id)
+                     LEFT JOIN ag.group_questions gq USING (survey_question_id)
+                     LEFT JOIN ag.surveys s USING (survey_group)
                      WHERE ag_login_id=%s AND participant_name=%s"""
             TRN.add(sql, [ag_login_id, participant_name])
             survey_id = TRN.execute_fetchindex()
             if not survey_id:
                 raise ValueError("No survey ID found!")
-            return survey_id[0][0]
+            return dict(i for i in survey_id)
+
+    def get_participants_surveys(self, ag_login_id, participant_name,
+                                 locale='american'):
+        """Returns all surveys (except external) for one participant for a
+           AG login.
+
+        Parameters
+        ----------
+        ag_login_id : str
+            A valid login ID, that should be a test as a valid UUID.
+        participant_name : str
+            A participant name.
+        locale : str
+            The names for the surveys are fetched from table ag.survey_group.
+            For localization, there are columns for each language, which is set
+            by locale.
+
+        Returns
+        -------
+        List of lists or None
+            A list for surveys for the given participant of the given
+            ag_login_id. Each element is a list again [int, str, str]. Where
+            the first element is the survey group id, the second the survey_id
+            and the third is a speaking name for the survey.
+            None if no survey ID can be found for the combination of
+            participant and ag_login_id.
+
+        Raises
+        ------
+        ValueError
+            Unknown ag_login_id or participant_name passed
+        """
+
+        with TRN:
+            sql = """SELECT DISTINCT gq.survey_group, als.survey_id, sg.{0}
+                     FROM ag.ag_login_surveys als
+                     LEFT JOIN ag.survey_answers sa USING (survey_id)
+                     LEFT JOIN ag.group_questions gq USING (survey_question_id)
+                     LEFT JOIN ag.survey_group sg ON (survey_group=group_order)
+                     WHERE als.ag_login_id = %s AND als.participant_name = %s
+                           AND gq.survey_group < 0""".format(locale)
+            TRN.add(sql, [ag_login_id, participant_name])
+            surveys = TRN.execute_fetchindex()
+            if not surveys:
+                raise ValueError("No survey IDs found!")
+            return surveys
 
     def get_countries(self):
         """
@@ -859,3 +1011,301 @@ class AGDataAccess(object):
             sql = "SELECT deposited FROM ag.ag_kit_barcodes WHERE barcode = %s"
             TRN.add(sql, [barcode])
             return TRN.execute_fetchlast()
+
+    # following are DB access functions only used for unit testing:
+
+    def ut_get_arbitrary_supplied_kit_id_scanned_unconsented(self):
+        """ Returns arbitrarily chosen supplied_kit_id and barcode which has
+        been scanned but is without consent.
+        For unit testing only!
+
+        Returns
+        -------
+        list of str: [supplied_kit_id, barcode]
+            example: ['fNIYa', '000001053']
+
+        Raises
+        ------
+        ValueError
+            If no kits can be found in the DB that have been scanned and
+            are without consent."""
+        with TRN:
+            sql = """SELECT supplied_kit_id, barcode
+                     FROM barcodes.barcode
+                     JOIN ag.ag_kit_barcodes USING (barcode)
+                     JOIN ag.ag_kit USING (ag_kit_id)
+                     LEFT JOIN ag.source_barcodes_surveys USING (barcode)
+                     WHERE barcodes.barcode.scan_date IS NOT NULL
+                     AND ag.source_barcodes_surveys.survey_id IS NULL
+                     LIMIT 1"""
+            TRN.add(sql, [])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('No kits found.')
+            return info[0]
+
+    def ut_get_arbitrary_handout_printed_min6_supplied_kit_id(self):
+        """ Returns a arbitrarily chosen supplied_kit_id with printed results
+        and 6 swaps per kit.
+        For unit testing only!
+
+        Returns
+        -------
+        supplied_kit_id : str
+            A supplied_kit_id. Example: 'DS_ubdvq'
+
+        Raises
+        ------
+        ValueError
+            If no hand out kit exists, satisfing the given conditions."""
+        with TRN:
+            sql = """SELECT kit_id
+                     FROM ag.ag_handout_kits
+                     WHERE swabs_per_kit = 6 AND print_results = TRUE"""
+            TRN.add(sql, [])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('No kits found.')
+            return info[0][0]
+
+    def ut_get_arbitrary_email(self):
+        """ Return arbitrarily chosen email.
+        For unit testing only!
+
+        Returns
+        -------
+        str: email
+            Example: 'a03E9u6ZAu@glA+)./Vn'
+
+        Raises
+        ------
+        ValueError
+            If no emails be found in the DB."""
+        with TRN:
+            sql = """SELECT email
+                     FROM ag.ag_login
+                     LIMIT 1"""
+            TRN.add(sql, [])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('No emails found.')
+            return info[0][0]
+
+    def ut_get_arbitrary_barcode(self, deposited=True):
+        """ Returns arbitrarily chosen barcode.
+        For unit testing only!
+
+        Parameters
+        ----------
+        deposited : boolean
+            If true, pick a deposited barcode. Default = True
+
+        Returns
+        -------
+        str: barcode
+            Example: '000032951'
+
+        Raises
+        ------
+        ValueError
+            If no barcodes can be found in the DB."""
+        with TRN:
+            sql = """SELECT barcode
+                     FROM ag.ag_kit_barcodes
+                     WHERE deposited=%s
+                     LIMIT 1"""
+            TRN.add(sql, [deposited])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('No barcodes found.')
+            return info[0][0]
+
+    def ut_get_email_from_ag_login_id(self, ag_login_id):
+        """ Returns email for a given ag_login_id.
+        For unit testing only!
+
+        Parameters
+        ----------
+        ag_login_id : str
+            Existing ag_login_id.
+
+        Returns
+        -------
+        str: email
+            Example: 'xX/tEv7O+T@6Ri7C.)LO'
+
+        Raises
+        ------
+        ValueError
+            If ag_login_id is not in DB.
+        """
+        with TRN:
+            sql = """SELECT email
+                     FROM ag.ag_login
+                     WHERE ag_login_id=%s"""
+            TRN.add(sql, [ag_login_id])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('No emails found.')
+            return info[0][0]
+
+    def ut_get_supplied_kit_id(self, ag_login_id):
+        """ Returns supplied_kit_id for a given ag_login_id.
+        For unit testing only!
+
+        Parameters
+        ----------
+        ag_login_id : str
+            Existing ag_login_id.
+
+        Returns
+        -------
+        str
+            The supplied_kit_id for the given ag_login_id.
+            Example: 'DokBF'
+
+        Raises
+        ------
+        ValueError
+            If ag_login_id is not in DB.
+        """
+        with TRN:
+            sql = """SELECT supplied_kit_id
+                     FROM ag.ag_kit
+                     WHERE ag_login_id = %s"""
+            TRN.add(sql, [ag_login_id])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('ag_login_id not in database: %s' %
+                                 ag_login_id)
+            return info[0][0]
+
+    def ut_get_participant_names_from_ag_login_id(self, ag_login_id):
+        """ Returns all participant_name(s) for a given ag_login_id.
+        For unit testing only!
+
+        Parameters
+        ----------
+        ag_login_id : str
+            Existing ag_login_id.
+
+        Returns
+        -------
+        [[str]]
+            Example: ["Name - z\xc3\x96DOZ8(Z~'",
+                      "Name - z\xc3\x96DOZ8(Z~'",
+                      'Name - QpeY\xc3\xb8u#0\xc3\xa5<',
+                      'Name - S)#@G]xOdL',
+                      'Name - Y5"^&sGQiW',
+                      'Name - L\xc3\xa7+c\r\xc3\xa5?\r\xc2\xbf!',
+                      'Name - (~|w:S\xc3\x85#L\xc3\x84']
+
+        Raises
+        ------
+        ValueError
+            If ag_login_id is not in DB.
+        """
+        with TRN:
+            sql = """SELECT participant_name
+                     FROM ag.ag_login_surveys
+                     WHERE ag_login_id = %s"""
+            TRN.add(sql, [ag_login_id])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('ag_login_id not in database: %s' %
+                                 ag_login_id)
+            return [n[0] for n in info]
+
+    def ut_get_barcode_from_ag_login_id(self, ag_login_id):
+        """ Returns all barcodes for a given ag_login_id.
+        For unit testing only!
+
+        Parameters
+        ----------
+        ag_login_id : str
+            Existing ag_login_id.
+
+        Returns
+        -------
+        [dict(str, str)]
+            Example: [{'sample_time': None,
+                       'sample_date': None,
+                       'barcode': '000004217',
+                       'site_sampled': None,
+                       'kit_verified': 'y'}
+
+        Raises
+        ------
+        ValueError
+            If no barcodes can be found in the DB.
+        """
+        with TRN:
+            sql = """SELECT ag.ag_kit_barcodes.sample_time,
+                            ag.ag_kit_barcodes.barcode,
+                            ag.ag_kit_barcodes.sample_date,
+                            ag.ag_kit_barcodes.site_sampled,
+                            ag.ag_kit.kit_verified
+                     FROM ag.ag_kit_barcodes
+                     JOIN ag.ag_kit USING (ag_kit_id)
+                     WHERE ag_login_id = %s"""
+            TRN.add(sql, [ag_login_id])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('barcode not in database: %s' %
+                                 ag_login_id)
+            return [dict(row) for row in info]
+
+    def ut_get_arbitrary_supplied_kit_id_unverified(self):
+        """ Returns a randomly chosen supplied_kit_id that is unverified.
+            For unit testing only!
+
+            Returns
+            -------
+            str: supplied_kit_id
+                Example: 'FajNh'
+
+            Raises
+            ------
+            ValueError
+                If no unverified supplied_kit_id can be found in the DB.
+            """
+        with TRN:
+            sql = """SELECT supplied_kit_id
+                     FROM ag.ag_kit
+                     WHERE ag.ag_kit.kit_verified = 'n'
+                     LIMIT 1"""
+            TRN.add(sql, [])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('No unverified kits in DB')
+            return info[0][0]
+
+    def ut_get_ag_login_id_from_barcode(self, barcode):
+        """ Returns ag_login_id for a given barcode.
+            For unit testing only!
+
+            Parameters
+            ----------
+            barcode : str
+                The barcode for which the ag_login_id should be retrieved.
+
+            Returns
+            -------
+            str: ag_login_id
+                Example: 'd8592c74-9694-2135-e040-8a80115d6401'
+
+            Raises
+            ------
+            ValueError
+                If the given barcode can not be found in the DB.
+            """
+        with TRN:
+            sql = """SELECT ag.ag_kit.ag_login_id
+                     FROM ag.ag_kit_barcodes
+                     JOIN ag.ag_kit USING (ag_kit_id)
+                     WHERE ag.ag_kit_barcodes.barcode = %s"""
+            TRN.add(sql, [barcode])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('Barcode "%s" not in DB' % barcode)
+            return info[0][0]

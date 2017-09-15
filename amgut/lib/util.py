@@ -10,12 +10,14 @@ import urlparse
 
 from json import loads, dumps
 from collections import defaultdict
+from functools import wraps
 
 from future.utils import viewitems
 from tornado.escape import url_escape
 from wtforms import Form
 
 from amgut import media_locale, text_locale
+from amgut.lib.data_access.sql_connection import TRN
 from amgut.connections import redis
 from amgut.lib.vioscreen import encrypt_key
 
@@ -126,7 +128,7 @@ def store_survey(survey, survey_id):
     survey.store_survey(consent_details, with_fk_inserts, without_fk_inserts)
 
 
-def survey_vioscreen(survey_id):
+def survey_vioscreen(survey_id, consent_info):
     """Return a formatted text block and URL for the external survey"""
     tl = text_locale['human_survey_completed.html']
     embedded_text = tl['SURVEY_VIOSCREEN']
@@ -135,7 +137,7 @@ def survey_vioscreen(survey_id):
     return embedded_text % url
 
 
-def survey_asd(survey_id):
+def survey_asd(survey_id, consent_info):
     """Return a formatted text block and URL for the external survey"""
     tl = text_locale['human_survey_completed.html']
     url = media_locale['SURVEY_ASD_URL'] % {'survey_id': survey_id}
@@ -143,7 +145,38 @@ def survey_asd(survey_id):
     return embedded_text % url
 
 
-external_surveys = (survey_vioscreen,)  # survey_asd)
+def survey_fermented(survey_id, consent_info):
+    """Return a formatted text block and URL for the external survey"""
+    tl = text_locale['human_survey_completed.html']
+    url = ('%s/authed/secondary_survey/?type=fermented&participant_name=%s' %
+           (media_locale['SITEBASE'], consent_info['participant_name']))
+    embedded_text = tl['SURVEY_FERMENTED']
+    return embedded_text % url
+
+
+def survey_surf(survey_id, consent_info):
+    """Return a formatted text block and URL for the external survey"""
+    tl = text_locale['human_survey_completed.html']
+    url = ('%s/authed/secondary_survey/?type=surf&participant_name=%s' %
+           (media_locale['SITEBASE'], consent_info['participant_name']))
+    embedded_text = tl['SURVEY_SURF']
+    return embedded_text % url
+
+
+external_surveys = (survey_vioscreen, survey_fermented, survey_surf)
+
+
+def rollback(f):
+    """Decorator for test functions to rollback on complete."""
+    # nose ignores wrapped functions unless named and wrapped with wraps
+    # http://stackoverflow.com/q/7727678
+    @wraps(f)
+    def test_inner(*args, **kwargs):
+        with TRN:
+            x = f(*args, **kwargs)
+            TRN.rollback()
+            return x
+    return test_inner
 
 
 def basejoin(base, url):

@@ -7,39 +7,49 @@ The website for the American Gut Project participant portal
 Installation Guide for OSX
 --------------------------
 
-First install `Postgres.app <http://postgresapp.com/>`_. Make sure that the path is configured properly so add the following to your `.profile` file::
+First install and run `Postgres.app <http://postgresapp.com/>`_. Make sure that the path is configured properly so add the following to your `.bash_profile`::
 
    export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
 
-Next install Redis. To install via `Homebrew <http://brew.sh/>`_ do::
-
-   brew install redis
    
-Now setup an virtual environment via `virtualenv <https://virtualenvwrapper.readthedocs.org/en/latest/>`_::
+Now setup a new conda environment via `miniconda <http://conda.pydata.org/miniconda.html>`_::
 
-   mkvirtualenv amgut
-   workon amgut
+   conda create -n amgut python=2.7 tornado=4.4.2 psycopg2
+   source activate amgut
+   
+Next install and start Redis via conda. ::
 
-Now install all of the dependencies.  This will also install dependencies included in `extras_require`::
+   conda install redis
+   redis-server
 
+Now by forking, clone and install the repository.  This will also install
+dependencies included in `extras_require`::
+
+   git clone https://github.com/YOUR-GITHUB-USERNAME/american-gut-web.git
    pip install -e .[test]
 
 And copy over the configuration file::
 
    cp ag_config.txt.example amgut/ag_config.txt
 
-To configure some of the configurations.  Namely, make sure to fill in entries for `DATABASE`.
+To configure the webserver.  Feel free to fill in entries for `POSTGRES` and `REDIS`.  In the existing american gut config file, the default user for `POSTGRES` is `postgres`.
 
 To enable uuid v4 function in postgres::
 
    echo 'CREATE EXTENSION "uuid-ossp";' | psql
 
-Make sure that all of your permissions are set correctly.  See `ALTER USER <http://www.postgresql.org/docs/9.4/static/sql-alterrole.html>`_.
+Make sure that all of your permissions are set correctly.  The following can be run with a user named `postgres`
 
-Finally run the tests to populate the databases and launch the website::
+``CREATE USER postgres SUPERUSER;``
+
+See `CREATE USER <https://www.postgresql.org/docs/9.5/static/sql-createuser.html>`_ and `ALTER USER <http://www.postgresql.org/docs/9.4/static/sql-alterrole.html>`_ for more details.
+
+Finally create the database and populate it with test data, then launch the website::
 
    ./scripts/ag make test
    python amgut/webserver.py
+   
+Navigating to localhost:8888 will now show the american gut site. Try using ``tst_ACJUJ`` as the username to log in. All test kits have ``test`` as their password.
 
 .. |Build Status| image:: https://travis-ci.org/biocore/american-gut-web.svg?branch=master
    :target: https://travis-ci.org/biocore/american-gut-web
