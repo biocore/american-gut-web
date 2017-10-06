@@ -26,6 +26,7 @@ Now by forking, clone and install the repository.  This will also install
 dependencies included in `extras_require`::
 
    git clone https://github.com/YOUR-GITHUB-USERNAME/american-gut-web.git
+   cd american-gut-web
    pip install -e .[test]
 
 And copy over the configuration file::
