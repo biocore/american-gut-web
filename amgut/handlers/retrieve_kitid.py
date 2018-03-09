@@ -24,7 +24,7 @@ class KitIDHandler(BaseHandler):
                     self.render('retrieve_kitid.html', message='',
                                 output='success', loginerror='',
                                 kit_counts=kit_counts)
-                except:
+                except BaseException:
                     self.render('retrieve_kitid.html', message=MESSAGE,
                                 output='noemail', loginerror='',
                                 kit_counts=kit_counts)
@@ -33,6 +33,6 @@ class KitIDHandler(BaseHandler):
                             output='form', loginerror='',
                             kit_counts=kit_counts)
 
-        except:
+        except BaseException:
             self.render('retrieve_kitid.html', message='', output='exception',
                         loginerror='', kit_counts=kit_counts)

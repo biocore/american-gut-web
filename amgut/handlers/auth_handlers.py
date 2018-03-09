@@ -21,6 +21,7 @@ class AuthBasehandler(BaseHandler):
 
 class AuthRegisterHandoutHandler(AuthBasehandler):
     """User Creation"""
+
     def get(self):
         kit_counts = ag_data.getMapMarkers()
         countries = ag_data.get_countries()
@@ -76,12 +77,13 @@ class AuthRegisterHandoutHandler(AuthBasehandler):
         try:
             send_email(body, subject, recipient=info['email'],
                        sender=media_locale['HELP_EMAIL'])
-        except:
+        except BaseException:
             logging.exception('Error on skid %s:' % skid)
 
 
 class AuthLoginHandler(AuthBasehandler):
     """user login, no page necessary"""
+
     def get(self, *args, **kwargs):
         self.redirect(media_locale['SITEBASE'] + "/")
 

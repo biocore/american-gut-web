@@ -70,7 +70,7 @@ class PortalHandler(BaseHandler):
             try:
                 send_email(body, subject, recipient=user_info['email'],
                            sender=media_locale['HELP_EMAIL'])
-            except:
+            except BaseException:
                 errmsg = media_locale['EMAIL_ERROR']
         else:
             # Verify the given kit verification code

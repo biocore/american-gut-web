@@ -37,14 +37,14 @@ class ForgotPasswordHandler(BaseHandler):
 
             # send the user an email and tell them to change their password
             try:
-                    send_email(MESSAGE, tl['CHANGE_PASS_SUBJECT'], email)
-                    self.render('forgot_password.html', email='', kitid='',
-                                result=1, message='',
-                                kit_counts=kit_counts, loginerror='')
-            except:
-                    self.render('forgot_password.html', email='', kitid='',
-                                result=2, message=MESSAGE,
-                                kit_counts=kit_counts, loginerror='')
+                send_email(MESSAGE, tl['CHANGE_PASS_SUBJECT'], email)
+                self.render('forgot_password.html', email='', kitid='',
+                            result=1, message='',
+                            kit_counts=kit_counts, loginerror='')
+            except BaseException:
+                self.render('forgot_password.html', email='', kitid='',
+                            result=2, message=MESSAGE,
+                            kit_counts=kit_counts, loginerror='')
 
         else:
             self.render('forgot_password.html', email='', kitid='',
