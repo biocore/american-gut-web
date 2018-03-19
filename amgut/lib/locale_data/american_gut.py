@@ -614,7 +614,6 @@ The following tests are available:</p>
 
 <p>You agree to allow your child to participate.</p>''',
 
-    'CONSENT_YOUR_CHILD_UPDATE': '''<p style="text-align: center;font-weight: bold;"></p>''',
     'PARTICIPATION_AGREEMENT': '''<p style="text-align: center;">University of California, San Diego</p>
 <p style="text-align: center;">
 Parent Consent for Child to Act as a Research Subject
