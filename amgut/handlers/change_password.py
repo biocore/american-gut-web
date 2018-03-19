@@ -36,7 +36,7 @@ class ChangePasswordHandler(BaseHandler):
                         skid=self.current_user,
                         new_password='', confirm_password='', result=4,
                         message='')
-        except:
+        except BaseException:
             self.render('change_password.html', email='',
                         skid=self.current_user,
                         new_password='', confirm_password='', result=5,

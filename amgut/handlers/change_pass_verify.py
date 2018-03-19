@@ -56,7 +56,7 @@ class ChangePassVerifyHandler(BaseHandler):
                         passocde='', new_password='',
                         confirm_password='', result=4, message='',
                         kit_counts=kit_counts, loginerror='')
-        except:
+        except BaseException:
             # result=5 is for showing message in if statement of
             # change_pass_verify.html
             self.render('change_pass_verify.html', email='', kitid='',

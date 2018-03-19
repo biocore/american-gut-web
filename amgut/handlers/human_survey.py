@@ -145,7 +145,7 @@ class HumanSurveyHandler(BaseHandler):
                     send_email(message, 'American Gut-Signed Consent Form(s)',
                                recipient=consent_info['participant_email'],
                                sender='donotreply@americangut.com', html=True)
-                except:
+                except BaseException:
                     logging.exception('Error sending signed consent form for '
                                       'survey ID: %s to email: %s' %
                                       (human_survey_id,

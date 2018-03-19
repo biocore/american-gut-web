@@ -32,7 +32,7 @@ class HelpRequestHandler(BaseHandler):
             try:
                 send_email(MESSAGE, SUBJECT, sender=email_address)
                 result = media_locale["EMAIL_SENT"]
-            except:
+            except BaseException:
                 result = media_locale['EMAIL_ERROR']
 
             self.render('help_request.html', skid=self.current_user,
