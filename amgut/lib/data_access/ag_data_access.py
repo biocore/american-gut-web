@@ -32,40 +32,6 @@ KIT_VERCODE_NOZEROS = KIT_PASSWD_NOZEROS
 class AGDataAccess(object):
     """Data Access implementation for all the American Gut web portal
     """
-    # arbitrary, unique ID and value
-    human_sites = ['Stool',
-                   'Mouth',
-                   'Right hand',
-                   'Left hand',
-                   'Forehead',
-                   'Torso',
-                   'Left leg',
-                   'Right leg',
-                   'Nares',
-                   'Hair',
-                   'Tears',
-                   'Nasal mucus',
-                   'Ear wax',
-                   'Vaginal mucus']
-
-    animal_sites = ['Stool',
-                    'Mouth',
-                    'Nares',
-                    'Ears',
-                    'Skin',
-                    'Fur']
-
-    general_sites = ['Animal Habitat',
-                     'Biofilm',
-                     'Dust',
-                     'Food',
-                     'Fermented Food',
-                     'Indoor Surface',
-                     'Outdoor Surface',
-                     'Plant habitat',
-                     'Soil',
-                     'Sole of shoe',
-                     'Water']
 
     #####################################
     # Users
@@ -724,6 +690,42 @@ class AGDataAccess(object):
         with TRN:
             TRN.add(sql, [kitid])
             return TRN.execute_fetchflatten()
+
+    def get_barcodes_by_user(self, ag_login_id, sites=None, results=False):
+        """Get all logged barcodes for a user, over all kitids
+
+        Parameters
+        ----------
+        ag_login_id : UUID4
+          The login id
+        sites: list of str, optional
+          Sites to get barcodes for. Default all sites.
+        results : bool, optional
+          Whether to only return barcodes that have results attached.
+          Default False
+
+        Returns
+        -------
+        list of dict of object
+          List of all barcodes that have been logged by the user, with all
+          information in the ag_kit_barcodes table
+        """
+        sql = """SELECT DISTINCT AKB.*
+                 FROM ag_kit_barcodes AKB
+                 RIGHT JOIN ag_kit USING (ag_kit_id)
+                 RIGHT JOIN ag_login USING (ag_login_id)
+                 WHERE ag_login_id = %s
+             """
+        sql_args = [ag_login_id]
+        if results:
+            sql += " AND results_ready = 'Y'"
+        if sites is not None:
+            sql += " AND sample_site IN %s"
+            sql_args.append(tuple(sites))
+        sql += " ORDER BY sample_date ASC"
+        with TRN:
+            TRN.add(sql, sql_args)
+            return [dict(x) for x in TRN.execute_fetchindex()]
 
     def get_nonconsented_scanned_barcodes(self, kit_id):
         """Returns list of barcodes that have been scanned but not consented

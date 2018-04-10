@@ -72,6 +72,7 @@ setup(name='American Gut participant UI',
           'requests',
           'tornado==4.4.2',
           'WTForms==2.0.1',
-          'natsort'
+          'natsort',
+          'pillow'
       ],
       classifiers=classifiers)

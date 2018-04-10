@@ -526,6 +526,68 @@ _TAXA_SUMMARY = {
     'RESOLUTION_NOTE': "Note: Where there are blanks in the table below, the taxonomy could not be resolved in finer detail."
 }
 
+_INTERACTIVE_MULTIPLE = {'TAXA_CHART_TEXT': 'You can explore the relative abundances of bacterial taxa found in your sample(s). The taxonomic levels that you can look at range from Phylum (shallow) to Genus (deep). An explanation of taxonomy and taxonomic levels can be read <a href="https://microbio.me/%(sitebase)sauthed/addendum/#taxcharts">here</a>; for an explanation of why 16S marker gene sequencing cannot identify species, please see <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1950982/">this paper</a>). If you look at deeper taxonomic levels, they will be colored different shades of the corresponding phylum color. Rolling over a color will tell you the bacterial taxonomy and relative abundance of that taxonomy in that sample. Clicking on a specific taxa of interest in the bar chart will show that taxa alone, expanded to the next lowest taxonomic level (i.e. clicking on a taxa at phylum level will expand it to the class level).  If you have more than one sample, they are all shown for easy comparison, and are ordered by collection date. You can remove any sample you don\'t want to visualize by clicking "Remove" below an individual sample label. You can also choose to add a bar specific to a body site (i.e., stool) and category (i.e., age group) so that you can compare your sample(s) to a defined set of all %(shorthand)s data.' % {'sitebase': _SITEBASE, 'shorthand': AMGUT_CONFIG.project_shorthand},
+                         'COMP_CHART_TEXT': 'You can compare the bacteria (from Phylum to Genus level) we found in your sample to specific groups; for example, people in the same age group as you. The graph will show the direction of change for the taxa that are different between your sample and the comparison group you choose. For example, if you choose Class as the taxa level and age-20s as the category for  comparison, you will see several bars pointing up (increased in your sample compared to the comparison group) and down (decreased in your sample compared to the comparison group), and each bar will be labelled by bacterial Class. By default, we compare you with all samples of the same type, e.g. all stool if your sample is stool.',
+                         'ALPHA_DIV_TEXT': 'This graph compares the alpha diversity in your sample to the alpha diversity from all samples at the same body site in %(shorthand)s. You can explore the diversity of your sample in relation to the diversity of a specific comparison group (i.e. age-20s). The black line represents your sample diversity, while the blue line represents the average diversity for the comparison group you chose (with the blue shading indicating where 68%% of the population typically falls).<br/><br/>Here you can see the alpha diversity of your sample. We are illustrating PD Whole Tree, which calculates the level of phylogenetic diversity in your sample. For example, two samples, each with 5 taxa, might be considered equally diverse (the number of taxa in each is the same). BUT-if one of those samples is only Bacteroides and the other contains a mix of Bacteroides, Prevotella, and Ruminococcus, the second sample is more phylogenetically diverse. For more information about alpha diversity, please see our two part blog post: <a href="http://americangut.org/using-my-thai-chili-experiment-to-describe-variability-of-diversity-part-1/">(1) <a href="http://americangut.org/using-my-thai-chili-experiment-to-describe-variability-of-diversity-part-2/">(2)</a>' % {'shorthand': AMGUT_CONFIG.project_shorthand},
+                         'RESET_GRAPH': 'Reset graph',
+                         'COMPARE_POP': 'Compare with population averages',
+                         'EXPLORE_IN_DETAIL': 'Explore a sample in detail',
+                         'CATEGORY': 'Category',
+                         'SELECT_LEVEL': 'Select taxa level',
+                         'PHYLUM': 'Phylum',
+                         'CLASS': 'Class',
+                         'ORDER': 'Order',
+                         'FAMILY': 'Family',
+                         'GENUS': 'Genus',
+                         'ALPHA_DIVERSITY': 'Alpha Diversity',
+                         'REL_TAXONOMY': 'Relative taxonomy',
+                         'ADD_SITE': 'Add site',
+                         'SKIN': 'skin',
+                         'ORAL': 'oral',
+                         'STOOL': 'stool',
+                         'CATEGORY': 'category',
+                         'ADD': 'Add',
+                         'REMOVE': 'Remove',
+                         'SAMPLE': 'Sample',
+                         'TAX_REL_ABUNDANCES': 'Taxonomic Relative Abundances',
+                         'PERCENT_ABUNDANCE': 'Percent abundance',
+                         'TAX_FOLD_CHANGES': 'Taxonomic Fold Changes',
+                         'LOG2_FOLD_CHANGE': 'Log2 Fold Change'
+}
+
+_INTERACTIVE_CATEGORIES = {
+    'age-baby': 'age-baby',
+    'age-child': 'age-child',
+    'age-teen': 'age-teen',
+    'age-20s': 'age-20s',
+    'age-30s': 'age-30s',
+    'age-40s': 'age-40s',
+    'age-50s': 'age-50s',
+    'age-60s': 'age-60s',
+    'age-70+': 'age-70+',
+    'bmi-Underweight': 'bmi-Underweight',
+    'bmi-Normal': 'bmi-Normal',
+    'bmi-Overweight': 'bmi-Overweight',
+    'bmi-Obese': 'bmi-Obese',
+    'sex-male': 'sex-male',
+    'sex-female': 'sex-female',
+    'diet-Omnivore': 'diet-Omnivore',
+    'diet-Omnivore but do not eat red meat': 'diet-Omnivore but do not eat red meat',
+    'diet-Vegetarian but eat seafood': 'diet-Vegetarian but eat seafood',
+    'diet-Vegetarian': 'diet-Vegetarian',
+    'diet-Vegan': 'diet-Vegan',
+    'cosmetics-Daily': 'cosmetics-Daily',
+    'cosmetics-Regularly': 'cosmetics-Regularly',
+    'cosmetics-Occasionally': 'cosmetics-Occasionally',
+    'cosmetics-Rarely': 'cosmetics-Rarely',
+    'cosmetics-Never': 'cosmetics-Never',
+    'flossing-Regularly': 'flossing-Regularly',
+    'flossing-Occasionally': 'flossing-Occasionally',
+    'flossing-Rarely': 'flossing-Rarely',
+    'flossing-Never': 'flossing-Never'
+
+}
+
 _HELP_REQUEST = {
     'FIRST_NAME': "First name",
     'LAST_NAME': "Last name",
