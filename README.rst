@@ -50,7 +50,7 @@ Finally create the database and populate it with test data, then launch the webs
    ./scripts/ag make test
    python amgut/webserver.py
    
-Navigating to localhost:8888 will now show the american gut site. Try using ``tst_ACJUJ`` as the username to log in. All test kits have ``test`` as their password.
+Navigating to localhost:8888 will now show the american gut site. Try using ``DokBF`` as the username to log in. All test kits have ``test`` as their password.
 
 .. |Build Status| image:: https://travis-ci.org/biocore/american-gut-web.svg?branch=master
    :target: https://travis-ci.org/biocore/american-gut-web
