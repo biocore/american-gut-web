@@ -18,6 +18,7 @@ from amgut.handlers.auth_handlers import (
 from amgut.handlers.help_request import HelpRequestHandler
 from amgut.handlers.addendum import AddendumHandler
 from amgut.handlers.sample_overview import SampleOverviewHandler
+from amgut.handlers.interactive_report import InteractiveReportHandler
 from amgut.handlers.FAQ import FAQHandler
 from amgut.handlers.participant_overview import ParticipantOverviewHandler
 from amgut.handlers.international import InternationalHandler
@@ -97,6 +98,7 @@ class AGWebApplication(Application):
             (r"/international_shipping/", InternationalHandler),
             (r"/check_participant_name/", CheckParticipantName),
             (r"/authed/taxa_summaries/(.*)", TaxaSummaryHandler),
+            (r"/authed/interactive_report/(.*)", InteractiveReportHandler),
             (r"/retrieve_kitid/", KitIDHandler),
             (r"/forgot_password/", ForgotPasswordHandler),
             (r"/change_pass_verify/", ChangePassVerifyHandler),
@@ -121,13 +123,13 @@ def main():
     prefix = (join(AMGUT_CONFIG.base_log_dir, "%s_%d.log" %
               (media_locale['LOCALE'], options.port)).replace(' ', '_'))
     options.log_file_prefix = prefix
-    options.logging = 'warning'
+    options.logging = 'info'
     parse_command_line()
     http_server = HTTPServer(AGWebApplication())
     http_server.listen(options.port)
     print("Tornado started on port", options.port)
     IOLoop.instance().start()
-
+    print("asdasdasasd")
 
 if __name__ == "__main__":
     main()

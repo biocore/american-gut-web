@@ -290,6 +290,10 @@ _SAMPLE_OVERVIEW = {
     'test2': 'some other test caption'
 }
 
+_INTERACTIVE_REPORT = {
+    'VIEW_INTERACTIVE_REPORT': 'View Interactive Report',
+}
+
 _NEW_PARTICIPANT_OVERVIEW = {
     'ADD_NEW': 'Add a New Human Sample Source',
     'EXPLANATION': 'You have entered the add human source workflow. During this workflow you will add a human source that represents whoever is being sampled. You be asked for consent to join the project and then asked survey questions.',
@@ -1253,5 +1257,6 @@ text_locale = {
     'chage_pass_verify.html': _CHANGE_PASS_VERIFY,
     'survey_main.html': _SURVEY_MAIN,
     'animal_survey.html': _ANIMAL_SURVEY,
+    'interactive_report.html': _INTERACTIVE_REPORT,
     'handlers': _HANDLERS
 }

@@ -706,6 +706,10 @@ _SAMPLE_OVERVIEW = {
     'test2': 'some other test caption'
 }
 
+_INTERACTIVE_REPORT = {
+    'VIEW_INTERACTIVE_REPORT': 'View Interactive Report',
+}
+
 _NEW_PARTICIPANT_OVERVIEW = {
     'ADD_NEW': "Add a New Human Sample Source",
     'CONTINUE': "Continue",
@@ -1052,6 +1056,7 @@ text_locale = {
     'add_sample_overview.html': _ADD_SAMPLE_OVERVIEW,
     'participant_overview.html': _PARTICIPANT_OVERVIEW,
     'sample_overview.html': _SAMPLE_OVERVIEW,
+    'interactive_report.html': _INTERACTIVE_REPORT,
     'taxa_summary.html': _TAXA_SUMMARY,
     'map.html': _MAP,
     'register_user.html': _REGISTER_USER,
