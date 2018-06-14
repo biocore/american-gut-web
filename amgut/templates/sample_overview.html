@@ -30,6 +30,12 @@
                         <input type="submit" name="taxa_summary" value="{% raw tl['VIEW_TAXA_SUMMARY'] %}">
                     </form>
                 </td>
+
+                <td>
+                    <form action="{% raw media_locale['SITEBASE'] %}/authed/interactive_report/{{barcode}}">
+                        <input type="submit" name="interactive_report" value="{% raw tl['VIEW_INTERACTIVE_REPORT'] %}">
+                    </form>
+                </td>
 {% else %}
                 <td>{% raw tl['SAMPLE_NOT_PROCESSED'] %}</td>
 {% end %}
