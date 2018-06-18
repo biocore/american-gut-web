@@ -11,8 +11,8 @@ from amgut import media_locale, text_locale
 
 class InteractiveReportHandler(BaseHandler):
     @authenticated
-    def get(self, *args, **kwargs):
-        barcode = self.get_argument('barcode', None)
+    def get(self, barcode):
+        #barcode = self.get_argument('barcode', None)
         print(barcode)
         if barcode is None:
             self.redirect(media_locale['SITEBASE'] + '/authed/portal/')
