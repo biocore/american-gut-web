@@ -9,12 +9,12 @@ from amgut.handlers.base_handlers import BaseHandler
 from amgut import media_locale, text_locale
 
 
-class InteractiveReportHandler(BaseHandler):
+class BasicReportHandler(BaseHandler):
     @authenticated
     def get(self, barcode):
         if barcode is None:
             self.redirect(media_locale['SITEBASE'] + '/authed/portal/')
             return
 
-        self.render('interactive_report.html', skid=self.current_user,
+        self.render('basic_report.html', skid=self.current_user,
                     barcode=barcode)

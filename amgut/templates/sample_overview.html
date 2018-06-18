@@ -21,7 +21,6 @@
                 <td>{% raw tl['SAMPLE_NOT_PROCESSED'] %}</td>
 {% end %}
             </tr>
-
             <tr>
                 <td>{% raw tl['TAXA_SUM_TITLE'] %}</td>
 {% if barcode_txt %}
@@ -33,10 +32,22 @@
 {% else %}
                 <td>{% raw tl['SAMPLE_NOT_PROCESSED'] %}</td>
 {% end %}
-	    </tr>
-	    <tr>
-		<td>{% raw tl['INTERACTIVE_REPORT_TITLE'] %}</td>
+	        </tr>
+            <tr>
+                <td>{% raw tl['BASIC_REPORT_TITLE'] %}</td>
 {% if barcode_txt %}
+                <td>
+                    <form action="{% raw media_locale['SITEBASE'] %}/authed/basic_report/{{barcode}}">
+                        <input type="submit" name="basic_report" value="{% raw tl['VIEW_BASIC_REPORT'] %}">
+                    </form>
+                </td>
+{% else %}
+                <td>{% raw tl['SAMPLE_NOT_PROCESSED'] %}</td>
+{% end %}
+	        </tr>
+            <tr>
+                <td>{% raw tl['INTERACTIVE_REPORT_TITLE'] %}</td>
+{% if True %}
                 <td>
                     <form action="{% raw media_locale['SITEBASE'] %}/authed/interactive_report/{{barcode}}">
                         <input type="submit" name="interactive_report" value="{% raw tl['VIEW_INTERACTIVE_REPORT'] %}">
@@ -111,12 +122,4 @@
         </table>
     </div>
 </div>
-<br/>
-<br/>
-
-<iframe src=https://view.qiime2.org/visualization/?src=https%3A%2F%2Fdocs.qiime2.org%2F2018.4%2Fdata%2Ftutorials%2Fmoving-pictures%2Ftaxa-bar-plots.qzv&type=html width=1000 height=750></iframe>
-<br>
-<br/>
-
-
 {% end %}
