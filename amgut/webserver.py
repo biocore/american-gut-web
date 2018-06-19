@@ -131,7 +131,6 @@ def main():
     http_server.listen(options.port)
     print("Tornado started on port", options.port)
     IOLoop.instance().start()
-    print("asdasdasasd")
 
 if __name__ == "__main__":
     main()

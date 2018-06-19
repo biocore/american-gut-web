@@ -47,7 +47,7 @@
 	        </tr>
             <tr>
                 <td>{% raw tl['INTERACTIVE_REPORT_TITLE'] %}</td>
-{% if True %}
+{% if barcode_txt %}
                 <td>
                     <form action="{% raw media_locale['SITEBASE'] %}/authed/interactive_report/{{barcode}}">
                         <input type="submit" name="interactive_report" value="{% raw tl['VIEW_INTERACTIVE_REPORT'] %}">
