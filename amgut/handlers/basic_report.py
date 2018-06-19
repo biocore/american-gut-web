@@ -2,6 +2,8 @@ from tornado.web import authenticated
 
 from amgut.connections import ag_data
 from amgut.handlers.base_handlers import BaseHandler
+from amgut import media_locale
+
 
 class BasicReportHandler(BaseHandler):
     @authenticated
