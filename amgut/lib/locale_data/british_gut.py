@@ -83,7 +83,8 @@ media_locale = {
     'SWAB_HANDLING': "http://player.vimeo.com/video/62393487",
     'EMAIL_ERROR': "There was a problem sending your email. Please contact us directly at <a href='mailto:%(help_email)s'>%(help_email)s</a>" % {'help_email': HELP_EMAIL},
     'EMAIL_SENT': 'Your message has been sent. We will reply shortly',
-    'SHIPPING_ADDRESS': u'British Gut<br/>Department of Twin Research<br>Kings College London<br/>St Thomas’ Hospital Campus<br>The Rayne Institute<br>Lambeth Wing, 4th Floor<br/>Westminster Bridge Road<br>London SE1 7EH'
+    'SHIPPING_ADDRESS': u'British Gut<br/>Department of Twin Research<br>Kings College London<br/>St Thomas’ Hospital Campus<br>The Rayne Institute<br>Lambeth Wing, 4th Floor<br/>Westminster Bridge Road<br>London SE1 7EH',
+    'AMGUT_SHIPPING_ADDRESS': "University of California, San Diego<br>Knight Lab/ATTN: Greg Humphrey<br>BRF II Room 1220D<br>9500 Gilman Drive, MC 0763<br>La Jolla, CA 92093-0763"
 }
 
 _HANDLERS = {
@@ -911,7 +912,7 @@ _INTERNATIONAL = {
     'INTERNATIONAL_TEXT_4': "If you do not follow these directions the sample will be destroyed by United States Customs at the port of entry into the United States.",
     'YOUR_SAMPLES': 'Your samples',
     'YOUR_SAMPLES_LIST': '<li>Are considered dried specimens</li><li>Must be shipped via FedEx</li><li>Must have tape to sealing the plastic tube that contains the swab</li><li>Must be placed in a buff mailing envelope with the buff envelope placed inside a Tyvek/plastic mailer prior to FedEx shipment</li><li>Must be shipped with an airway bill and must be labeled with the complete address of the sender and complete address of recipient, and with the words "Human exempt sample(s)"</li>',
-    'AMERICAN_GUT_ADDRESS': "American Gut Project<br>Knight Lab, JSCBB<br>596 UCB<br>Boulder, CO 80309"
+    'AMERICAN_GUT_ADDRESS': media_locale['AMGUT_SHIPPING_ADDRESS']:
 }
 
 _PORTAL = {
