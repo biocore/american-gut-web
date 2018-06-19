@@ -220,6 +220,9 @@ _TAXA_SUMMARY = {'RESOLUTION_NOTE': "Note: Where there are blanks in the table b
                  'PERCENTAGES_NOTE': "Note: The percentages listed represent the relative abundance of each taxon. This summary is based off of normalized data. Because of limitations in the way the samples are processed, we cannot reliably obtain species level resolution. As such, the data shown are collapsed at the genus level.",
                  'DOWNLOAD_LINK': "Download the table"}
 
+_BASIC_REPORT = {'TITLE': "Basic Report for %(barcode)s"}
+
+_INTERACTIVE_REPORT = {'TITLE': "Interactive Report for %(barcode)s"}
 
 _HELP_REQUEST = {
     'CONTACT_HEADER': "Contact the %(shorthand)s" % {"shorthand": AMGUT_CONFIG.project_shorthand},
@@ -274,10 +277,14 @@ _SAMPLE_OVERVIEW = {
     'SAMPLE_NOT_PROCESSED': 'This sample has not yet been processed. Please check back later.',
     'DATA_VIS_TITLE': 'Data Visualization',
     'TAXA_SUM_TITLE': 'Taxa Summary',
+    'BASIC_REPORT_TITLE': 'Basic Report',
+    'INTERACTIVE_REPORT_TITLE': 'Interactive Report',
     'RAW_SEQUENCE_TITLE': 'Raw sequences',
     'EXCEL_TABLE_TITLE': 'Summarized data',
     'BIOM_TABLE_TITLE': 'Summarized data (<a href="http://biom-format.org">biom-format.org</a>)',
     'VIEW_TAXA_SUMMARY': 'View Taxa Summary',
+    'VIEW_BASIC_REPORT': 'View Basic Report',
+    'VIEW_INTERACTIVE_REPORT': 'View Interactive Report',
     'SAMPLE_STATUS': 'Sample Status',
     'SAMPLE_SITE': 'Sample Site',
     'SAMPLE_DATE': 'Sample Date',
@@ -1253,5 +1260,7 @@ text_locale = {
     'chage_pass_verify.html': _CHANGE_PASS_VERIFY,
     'survey_main.html': _SURVEY_MAIN,
     'animal_survey.html': _ANIMAL_SURVEY,
+    'basic_report.html': _BASIC_REPORT,
+    'interactive_report.html': _INTERACTIVE_REPORT,
     'handlers': _HANDLERS
 }
