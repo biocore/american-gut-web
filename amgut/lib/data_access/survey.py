@@ -353,11 +353,18 @@ class Survey(object):
             of the data to insert
         """
         with TRN:
+            # checks if user has previously been
+            # removed and is has still revoked consent
+            sql = """SELECT ag_login_id FROM ag.consent_revoked"""
+            TRN.add(sql)
+            revoked = [result[0] for result in TRN.execute()[0]]
+
             TRN.add("""SELECT EXISTS(
                        SELECT 1
                        FROM ag_login_surveys
                        WHERE survey_id=%s)""",
                     [consent_details['survey_id']])
+
 
             if TRN.execute_fetchlast():
                 # if the survey exists, remove all its current answers
@@ -387,13 +394,21 @@ class Survey(object):
                              consent_details['participant_email'],
                              consent_details['obtainer_name'],
                              consent_details['age_range']))
-
                 TRN.add("""INSERT INTO ag_login_surveys
                                (ag_login_id, survey_id, participant_name)
                            VALUES (%s, %s, %s)""",
                         (consent_details['login_id'],
                          consent_details['survey_id'],
                          consent_details['participant_name']))
+
+            # removes the user from the consent_revoked table if they are currently there
+            if consent_details['login_id'] in revoked:
+                sql = """DELETE FROM ag.consent_revoked WHERE ag_login_id = %s
+                    AND participant_name = %s
+                    AND participant_email = %s"""
+                TRN.add(sql, [consent_details['login_id'], consent_details['participant_name'],
+                    consent_details['participant_email']])
+                TRN.execute()
 
             # now we insert the answers
             TRN.add("""INSERT INTO survey_answers

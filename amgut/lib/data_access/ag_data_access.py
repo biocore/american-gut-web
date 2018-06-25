@@ -310,11 +310,18 @@ class AGDataAccess(object):
     def deleteAGParticipantSurvey(self, ag_login_id, participant_name):
         # Remove user from new schema
         with TRN:
+            # checks if user has previously been
+            # removed and is has still revoked consent
+            sql = """SELECT ag_login_id FROM ag.consent_revoked"""
+            TRN.add(sql)
+            revoked = [result[0] for result in TRN.execute()[0]]
+
             sql = """SELECT survey_id, participant_email
                      FROM ag_login_surveys
                      JOIN ag_consent USING (ag_login_id, participant_name)
                      WHERE ag_login_id = %s AND participant_name = %s"""
             TRN.add(sql, (ag_login_id, participant_name))
+
             # collect all survey_ids and participant_names, since at least the
             # former might be more than one.
             survey_ids = set()
@@ -344,11 +351,12 @@ class AGDataAccess(object):
             sql = """DELETE FROM ag.source_barcodes_surveys
                      WHERE survey_id IN %s"""
             TRN.add(sql, [tuple(survey_ids)])
-            # only delete barcode information, if this is the last survey for
-            # the given source, i.e. ag_login_id, participant_name combination
-            if len(survey_ids) == 1:
-                sql = """DELETE FROM ag.ag_kit_barcodes WHERE barcode IN %s"""
-                TRN.add(sql, [tuple(barcodes)])
+            if len(barcodes) != 0:
+                # only delete barcode information, if this is the last survey for
+                # the given source, i.e. ag_login_id, participant_name combination
+                if len(survey_ids) == 1:
+                    sql = """DELETE FROM ag.ag_kit_barcodes WHERE barcode IN %s"""
+                    TRN.add(sql, [tuple(barcodes)])
 
             sql = "DELETE FROM ag_login_surveys WHERE survey_id IN %s"
             TRN.add(sql, [tuple(survey_ids)])
@@ -357,16 +365,18 @@ class AGDataAccess(object):
                      WHERE ag_login_id = %s AND participant_name = %s"""
             TRN.add(sql, [ag_login_id, participant_name])
 
-            sql = """INSERT INTO ag.consent_revoked
-                     (ag_login_id,participant_name, participant_email)
+            # only removes user from ag.consent_revoked if they are already not there
+            if ag_login_id not in revoked:
+                sql = """INSERT INTO ag.consent_revoked
+                     (ag_login_id, participant_name, participant_email)
                      VALUES (%s, %s, %s)"""
-            sql_args = [[ag_login_id, participant_name, pemail]
+                sql_args = [[ag_login_id, participant_name, pemail]
                         for pemail in participant_emails]
-            TRN.add(sql, sql_args, many=True)
+                TRN.add(sql, sql_args, many=True)
             TRN.execute()
 
     def get_withdrawn(self):
-        """Gets teh list of withdrawn participants and information
+        """Gets the list of withdrawn participants and information
 
         Returns
         -------
