@@ -394,7 +394,8 @@ class Survey(object):
                              consent_details['participant_email'],
                              consent_details['obtainer_name'],
                              consent_details['age_range']))
-                TRN.add("""INSERT INTO ag_login_surveys
+
+                    TRN.add("""INSERT INTO ag_login_surveys
                                (ag_login_id, survey_id, participant_name)
                            VALUES (%s, %s, %s)""",
                         (consent_details['login_id'],
