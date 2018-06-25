@@ -398,8 +398,8 @@ class Survey(object):
                                    (ag_login_id, survey_id, participant_name)
                              VALUES (%s, %s, %s)""",
                             (consent_details['login_id'],
-                            consent_details['survey_id'],
-                            consent_details['participant_name']))
+                             consent_details['survey_id'],
+                             consent_details['participant_name']))
 
             # removes the user from the consent_revoked table already there
             if consent_details['login_id'] in revoked:
