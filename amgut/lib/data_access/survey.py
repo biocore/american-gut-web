@@ -365,7 +365,6 @@ class Survey(object):
                        WHERE survey_id=%s)""",
                     [consent_details['survey_id']])
 
-
             if TRN.execute_fetchlast():
                 # if the survey exists, remove all its current answers
                 TRN.add("""DELETE FROM survey_answers
@@ -396,19 +395,20 @@ class Survey(object):
                              consent_details['age_range']))
 
                     TRN.add("""INSERT INTO ag_login_surveys
-                               (ag_login_id, survey_id, participant_name)
-                           VALUES (%s, %s, %s)""",
-                        (consent_details['login_id'],
-                         consent_details['survey_id'],
-                         consent_details['participant_name']))
+                                   (ag_login_id, survey_id, participant_name)
+                             VALUES (%s, %s, %s)""",
+                            (consent_details['login_id'],
+                            consent_details['survey_id'],
+                            consent_details['participant_name']))
 
-            # removes the user from the consent_revoked table if they are currently there
+            # removes the user from the consent_revoked table already there
             if consent_details['login_id'] in revoked:
                 sql = """DELETE FROM ag.consent_revoked WHERE ag_login_id = %s
                     AND participant_name = %s
                     AND participant_email = %s"""
-                TRN.add(sql, [consent_details['login_id'], consent_details['participant_name'],
-                    consent_details['participant_email']])
+                TRN.add(sql, [consent_details['login_id'],
+                        consent_details['participant_name'],
+                        consent_details['participant_email']])
                 TRN.execute()
 
             # now we insert the answers

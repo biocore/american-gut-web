@@ -352,10 +352,12 @@ class AGDataAccess(object):
                      WHERE survey_id IN %s"""
             TRN.add(sql, [tuple(survey_ids)])
             if len(barcodes) != 0:
-                # only delete barcode information, if this is the last survey for
-                # the given source, i.e. ag_login_id, participant_name combination
+                # only delete barcode information, if this is the
+                # last survey for the given source, i.e. ag_login_id,
+                # participant_name combination
                 if len(survey_ids) == 1:
-                    sql = """DELETE FROM ag.ag_kit_barcodes WHERE barcode IN %s"""
+                    sql = """DELETE FROM ag.ag_kit_barcodes
+                        WHERE barcode IN %s"""
                     TRN.add(sql, [tuple(barcodes)])
 
             sql = "DELETE FROM ag_login_surveys WHERE survey_id IN %s"
@@ -365,13 +367,13 @@ class AGDataAccess(object):
                      WHERE ag_login_id = %s AND participant_name = %s"""
             TRN.add(sql, [ag_login_id, participant_name])
 
-            # only removes user from ag.consent_revoked if they are already not there
+            # only removes user from ag.consent_revoked if already there
             if ag_login_id not in revoked:
                 sql = """INSERT INTO ag.consent_revoked
-                     (ag_login_id, participant_name, participant_email)
-                     VALUES (%s, %s, %s)"""
+                         (ag_login_id, participant_name, participant_email)
+                         VALUES (%s, %s, %s)"""
                 sql_args = [[ag_login_id, participant_name, pemail]
-                        for pemail in participant_emails]
+                            for pemail in participant_emails]
                 TRN.add(sql, sql_args, many=True)
             TRN.execute()
 
