@@ -21,7 +21,6 @@
                 <td>{% raw tl['SAMPLE_NOT_PROCESSED'] %}</td>
 {% end %}
             </tr>
-
             <tr>
                 <td>{% raw tl['TAXA_SUM_TITLE'] %}</td>
 {% if barcode_txt %}
@@ -33,6 +32,31 @@
 {% else %}
                 <td>{% raw tl['SAMPLE_NOT_PROCESSED'] %}</td>
 {% end %}
+	        </tr>
+            <tr>
+                <td>{% raw tl['BASIC_REPORT_TITLE'] %}</td>
+{% if barcode_txt %}
+                <td>
+                    <form action="{% raw media_locale['SITEBASE'] %}/authed/basic_report/{{barcode}}">
+                        <input type="submit" name="basic_report" value="{% raw tl['VIEW_BASIC_REPORT'] %}">
+                    </form>
+                </td>
+{% else %}
+                <td>{% raw tl['SAMPLE_NOT_PROCESSED'] %}</td>
+{% end %}
+	        </tr>
+            <tr>
+                <td>{% raw tl['INTERACTIVE_REPORT_TITLE'] %}</td>
+{% if barcode_txt %}
+                <td>
+                    <form action="{% raw media_locale['SITEBASE'] %}/authed/interactive_report/{{barcode}}">
+                        <input type="submit" name="interactive_report" value="{% raw tl['VIEW_INTERACTIVE_REPORT'] %}">
+                    </form>
+                </td>
+{% else %}
+		<td>{% raw tl['SAMPLE_NOT_PROCESSED'] %}</td>
+{% end %}
+
             </tr>
             <tr>
                 <td style="width: 150px;">{% raw tl['SAMPLE_STATUS'] %}</td>
@@ -98,6 +122,4 @@
         </table>
     </div>
 </div>
-<br/>
-<br/>
 {% end %}

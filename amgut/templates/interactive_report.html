@@ -1,0 +1,14 @@
+{% extends sitebase.html %}
+{% block content %}
+{% from amgut import text_locale %}
+{% set tl = text_locale['interactive_report.html'] %}
+{% set fmt = {'barcode': barcode} %}
+
+<h2>{% raw tl['TITLE'] % fmt %}</h2>
+
+<iframe src=https://view.qiime2.org/visualization/?src=https%3A%2F%2Fdocs.qiime2.org%2F2018.4%2Fdata%2Ftutorials%2Fmoving-pictures%2Ftaxa-bar-plots.qzv&type=html width=1000 height=750></iframe>
+<br>
+<br/>
+<br>
+<br/>
+{% end %}

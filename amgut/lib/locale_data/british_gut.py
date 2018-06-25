@@ -83,7 +83,8 @@ media_locale = {
     'SWAB_HANDLING': "http://player.vimeo.com/video/62393487",
     'EMAIL_ERROR': "There was a problem sending your email. Please contact us directly at <a href='mailto:%(help_email)s'>%(help_email)s</a>" % {'help_email': HELP_EMAIL},
     'EMAIL_SENT': 'Your message has been sent. We will reply shortly',
-    'SHIPPING_ADDRESS': u'British Gut<br/>Department of Twin Research<br>Kings College London<br/>St Thomas’ Hospital Campus<br>The Rayne Institute<br>Lambeth Wing, 4th Floor<br/>Westminster Bridge Road<br>London SE1 7EH'
+    'SHIPPING_ADDRESS': u'British Gut<br/>Department of Twin Research<br>Kings College London<br/>St Thomas’ Hospital Campus<br>The Rayne Institute<br>Lambeth Wing, 4th Floor<br/>Westminster Bridge Road<br>London SE1 7EH',
+    'AMGUT_SHIPPING_ADDRESS': "University of California, San Diego<br>Knight Lab/ATTN: Greg Humphrey<br>BRF II Room 1220D<br>9500 Gilman Drive, MC 0763<br>La Jolla, CA 92093-0763"
 }
 
 _HANDLERS = {
@@ -526,6 +527,10 @@ _TAXA_SUMMARY = {
     'RESOLUTION_NOTE': "Note: Where there are blanks in the table below, the taxonomy could not be resolved in finer detail."
 }
 
+_BASIC_REPORT = {'TITLE': "Basic Report for %(barcode)s"}
+
+_INTERACTIVE_REPORT = {'TITLE': "Interactive Report for %(barcode)s"
+}
 _HELP_REQUEST = {
     'FIRST_NAME': "First name",
     'LAST_NAME': "Last name",
@@ -696,10 +701,14 @@ _SAMPLE_OVERVIEW = {
     'SAMPLE_STATUS': "Sample Status",
     'SAMPLE_TIME': "Sample Time",
     'TAXA_SUM_TITLE': "Taxa Summary",
+    'BASIC_REPORT_TITLE': 'Basic Report',
+    'INTERACTIVE_REPORT_TITLE': 'Interactive Report',
     'RAW_SEQUENCE_TITLE': 'Raw sequences',
     'BIOM_TABLE_TITLE': 'Summarized data (<a href="http://biom-format.org">biom-format.org</a>)',
     'EXCEL_TABLE_TITLE': 'Summarized data',
     'VIEW_TAXA_SUMMARY': "View Taxa Summary",
+    'VIEW_BASIC_REPORT': 'View Basic Report',
+    'VIEW_INTERACTIVE_REPORT': 'View Interactive Report',
     'DATA_NOT_AVAILABLE': 'These data are not available yet for download.',
     'sequence_url': 'Download FASTQ from EBI',
     'test': 'some test caption',
@@ -903,7 +912,7 @@ _INTERNATIONAL = {
     'INTERNATIONAL_TEXT_4': "If you do not follow these directions the sample will be destroyed by United States Customs at the port of entry into the United States.",
     'YOUR_SAMPLES': 'Your samples',
     'YOUR_SAMPLES_LIST': '<li>Are considered dried specimens</li><li>Must be shipped via FedEx</li><li>Must have tape to sealing the plastic tube that contains the swab</li><li>Must be placed in a buff mailing envelope with the buff envelope placed inside a Tyvek/plastic mailer prior to FedEx shipment</li><li>Must be shipped with an airway bill and must be labeled with the complete address of the sender and complete address of recipient, and with the words "Human exempt sample(s)"</li>',
-    'AMERICAN_GUT_ADDRESS': "American Gut Project<br>Knight Lab, JSCBB<br>596 UCB<br>Boulder, CO 80309"
+    'AMERICAN_GUT_ADDRESS': media_locale['AMGUT_SHIPPING_ADDRESS']
 }
 
 _PORTAL = {
@@ -1026,11 +1035,7 @@ _PERSONAL_MICROBIOME = {
     'CONSENT_5': "There are minimal risks associated with this research study. Taking surveys can produce feelings of stress, frustration, discomfort, fatigue, and boredom.  To limit these risks, the questions have been written in a clear manner. There is a risk of loss of confidentiality. To protect against such a loss research records will be kept confidential to the extent allowed by law. Your survey data will be stored on a password protected secure computer will be identified by a study subject ID number.  If you decide to provide your name and contact information for potential follow-up, your name and contact information will be kept separate from your survey responses and will not be linked to your survey responses.  All analysis of the survey data will be done on data that is de-identified (e.g. does not contain your name). Research records may be reviewed by the UCSD Institutional Review Board and the National Institutes of Health. Results of this study may be reported in scientific journals, meeting, and news media, but none of these reports will use your name or use data that can point to any person who took part in the study.",
     'CONSENT_6': "Your participation in this study is completely voluntary and you can withdraw at any time by simply exiting the survey. Choosing not to participate or withdrawing will result in no penalty or loss of benefits to which you are entitled. You are free to skip any question that you choose.",
     'CONSENT_7': "If you have questions about this project or if you have a research-related problem, you may contact the researcher(s), Dr. Cinnamon Bloss at 858-534-9550. If you have any questions concerning your rights as a research subject, you may contact the UCSD Human Research Protections Program Office at (858) 246-7444.",
-    'CONSENT_8': 'By clicking "You agree" below you are indicating that you are at least 18 years old, have read this consent form, and agree to participate in this research study. Please print a copy of this page for your records.',
-    'AGREE': 'You Agree',
-    'DISAGREE': 'You Do Not Agree'
-}
-
+    'CONSENT_8': 'By clicking "You agree" below you are indicating that you are at least 18 years old, have read this consent form, and agree to participate in this research study. Please print a copy of this page for your records.', 'AGREE': 'You Agree', 'DISAGREE': 'You Do Not Agree' } 
 # Actual text locale
 text_locale = {
     'nojs.html': _NOJS,
@@ -1052,6 +1057,8 @@ text_locale = {
     'add_sample_overview.html': _ADD_SAMPLE_OVERVIEW,
     'participant_overview.html': _PARTICIPANT_OVERVIEW,
     'sample_overview.html': _SAMPLE_OVERVIEW,
+    'basic_report.html': _BASIC_REPORT,
+    'interactive_report.html': _INTERACTIVE_REPORT,
     'taxa_summary.html': _TAXA_SUMMARY,
     'map.html': _MAP,
     'register_user.html': _REGISTER_USER,
