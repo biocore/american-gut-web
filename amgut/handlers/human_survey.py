@@ -138,6 +138,7 @@ class HumanSurveyHandler(BaseHandler):
             store_survey(primary_human_survey, human_survey_id)
             existing = redis.hget(human_survey_id, 'existing')
             if existing is None:
+                print('TEST THIS IS A NEW SURVEY')
                 # Send consent info email since new participant
                 consent_info = ag_data.getConsent(human_survey_id)
                 try:
@@ -150,7 +151,8 @@ class HumanSurveyHandler(BaseHandler):
                                       'survey ID: %s to email: %s' %
                                       (human_survey_id,
                                        consent_info['participant_email']))
-
+            else:
+                print('TEST WE ARE EDITING AN OLD SURVEY CHECK IT OUT')
             self.redirect(sitebase + '/authed/human_survey_completed/')
 
     @authenticated
