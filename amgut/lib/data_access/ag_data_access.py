@@ -310,12 +310,6 @@ class AGDataAccess(object):
     def deleteAGParticipantSurvey(self, ag_login_id, participant_name):
         # Remove user from new schema
         with TRN:
-            # checks if user has previously been
-            # removed and is has still revoked consent
-            sql = """SELECT ag_login_id FROM ag.consent_revoked"""
-            TRN.add(sql)
-            revoked = {result[0] for result in TRN.execute()[0]}
-
             sql = """SELECT survey_id, participant_email
                      FROM ag_login_surveys
                      JOIN ag_consent USING (ag_login_id, participant_name)
@@ -366,6 +360,12 @@ class AGDataAccess(object):
             sql = """DELETE FROM ag_consent
                      WHERE ag_login_id = %s AND participant_name = %s"""
             TRN.add(sql, [ag_login_id, participant_name])
+
+            # checks if user has previously been
+            # removed and is has still revoked consent
+            sql = """SELECT ag_login_id FROM ag.consent_revoked"""
+            TRN.add(sql)
+            revoked = {result[0] for result in TRN.execute_fetchindex()}
 
             # only inserts to ag.consent_revoked if not already there
             if ag_login_id not in revoked:

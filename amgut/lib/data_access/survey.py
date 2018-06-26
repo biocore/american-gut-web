@@ -353,12 +353,6 @@ class Survey(object):
             of the data to insert
         """
         with TRN:
-            # checks if user has previously been
-            # removed and has still revoked consent
-            sql = """SELECT ag_login_id FROM ag.consent_revoked"""
-            TRN.add(sql)
-            revoked = [result[0] for result in TRN.execute()[0]]
-
             TRN.add("""SELECT EXISTS(
                        SELECT 1
                        FROM ag_login_surveys
@@ -400,6 +394,12 @@ class Survey(object):
                             (consent_details['login_id'],
                              consent_details['survey_id'],
                              consent_details['participant_name']))
+
+# checks if user has previously been
+                # removed and has still revoked consent
+                sql = """SELECT ag_login_id FROM ag.consent_revoked"""
+                TRN.add(sql)
+                revoked = {result[0] for result in TRN.execute_fetchindex()}
 
                 # removes the user from the consent_revoked
                 # table if they are already in it
