@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from tornado.web import authenticated
+from tornado.escape import jsone_encode
 import logging
 from collections import defaultdict
 
@@ -49,8 +50,8 @@ class AuthRegisterHandoutHandler(AuthBasehandler):
                        'state': self.get_argument('state'),
                        'zip': self.get_argument('zip'),
                        'country': self.get_argument('country')}
-            self.render("register_user.html", kit_counts=kit_counts, 
-                        loginerror='', countries=countries,entries=entries)
+            self.render("register_user.html", kit_counts=kit_counts,
+                        loginerror='', countries=countries, entries=entries)
             return
 
         # Register handout
