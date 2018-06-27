@@ -797,7 +797,7 @@ _REGISTER_USER = {
     'SUBMIT': "Submit My Information",
     'ZIP': "Postcode",
     'KIT_ID': 'Kit ID',
-    'INVALID_ID_OR_PW': "Invalid Kit ID or Password"
+    'INVALID_ID_OR_PW': "Invalid kit ID or password"
 }
 
 _ADDENDUM = {

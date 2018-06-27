@@ -869,7 +869,7 @@ _REGISTER_USER = {
     'PASSWORD': 'Password',
     'KIT_ID': 'Kit ID',
     'SUBMIT': 'Submit My Information',
-    'INVALID_ID_OR_PW': "Invalid Kit ID or Password"
+    'INVALID_ID_OR_PW': "Invalid kit ID or password"
 }
 
 _ADDENDUM = {
