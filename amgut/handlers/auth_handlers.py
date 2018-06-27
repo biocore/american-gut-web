@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from tornado.web import authenticated
-from tornado.escape import jsone_encode
+from tornado.escape import json_encode
 import logging
 from collections import defaultdict
 
