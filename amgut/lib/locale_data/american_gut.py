@@ -96,7 +96,6 @@ _HANDLERS = {
     'AUTH_REGISTER_PGP': "\n\nFor the PGP cohort, we are requesting that you collect one sample from each of the following sites:\n\nLeft hand\nRight hand\nForehead\nMouth\nFecal\n\nThis is important to ensure that we have the same types of samples for all PGP participants which, in turn, could be helpful in downstream analysis when looking for relationships between the microbiome and the human genome\n\n.",
     'AUTH_REGISTER_BODY': "Thank you for registering with the %(project_name)s! Your verification code is:\n\n{0}\n\nYou will need this code to verifiy your kit on the %(project_shorthand)s webstite. To get started, please log into:\n\nhttp://microbio.me/AmericanGut\n\nEnter the kit_id and password found inside your kit, verify the contents of your kit, and enter the verification code found in this email.{1}\n\nSincerely,\nThe %(project_shorthand)s Team" % {'project_shorthand': AMGUT_CONFIG.project_shorthand, 'project_name': AMGUT_CONFIG.project_name},
     'KIT_REG_SUCCESS': 'Kit registered successfully.',
-    'INVALID_KITID': "Invalid Kit ID or Password",
     'ADD_KIT_ERROR': "Could not add kit to database.  Did you hit the back button while registering and press 'register user' again?",
     'ADD_BARCODE_ERROR': "Could not add barcode to database. Did you hit the back button while registering and press 'register user' again?",
     'CHANGE_PASS_BODY': 'This is a courtesy email to confirm that you have changed your password for your kit with ID %s. If you did not request this change, please email us immediately at {0}'.format(media_locale['HELP_EMAIL']),
@@ -869,7 +868,8 @@ _REGISTER_USER = {
     'COUNTRY': 'Country',
     'PASSWORD': 'Password',
     'KIT_ID': 'Kit ID',
-    'SUBMIT': 'Submit My Information'
+    'SUBMIT': 'Submit My Information',
+    'INVALID_ID_OR_PW': "Invalid Kit ID or Password"
 }
 
 _ADDENDUM = {

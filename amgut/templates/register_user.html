@@ -83,24 +83,31 @@ $(document).ready(function() {
 {% block content %}
 {% from amgut import text_locale %}
 {% set tl = text_locale['register_user.html'] %}
+{% set e = entries %}
 <div class="registerwrapper" style="position:absolute; left:285px; padding:15px;">
     <form name="newParticipant" id="newParticipant" method="post" action="{% raw media_locale['SITEBASE'] %}/auth/register/">
         <h3>New User Registration</h3>
+        {% if e['kit_id'] %}
+            <p style="color:red">{{tl['INVALID_ID_OR_PW']}}</p>
+        {% end %}
         <table>
-            <tr><td>{% raw tl['KIT_ID'] %}</td><td><input type="text" name="kit_id" id="kit_id"></td></tr>
+            <tr><td>{% raw tl['KIT_ID'] %}</td><td><input type="text" name="kit_id" id="kit_id" value={{e['kit_id']}}></td></tr>
             <tr><td>{% raw tl['PASSWORD'] %}</td><td><input type="password" name="password" id="password"></td></tr>
-            <tr><td>{% raw tl['EMAIL'] %}</td><td><input type="text" name="email" id="email"></td></tr>
-            <tr><td>{% raw tl['EMAIL2'] %}</td><td><input type="text" name="email2" id="email2"></td></tr>
-            <tr><td>{% raw tl['NAME'] %}</td><td><input type="text" name="participantname" id="participantname"></td></tr>
-            <tr><td>{% raw tl['ADDRESS'] %}</td><td><input type="text" name="address" id="address"></td></tr>
-            <tr><td>{% raw tl['CITY'] %}</td><td><input type="text" name="city" id="city"></td></tr>
-            <tr><td>{% raw tl['STATE'] %}</td><td><input type="text" name="state" id="state"></td></tr>
-            <tr><td>{% raw tl['ZIP'] %}</td><td><input type="text" name="zip" id="zip"></td></tr>
+            <tr><td>{% raw tl['EMAIL'] %}</td><td><input type="text" name="email" id="email" value={{e['email']}}></td></tr>
+            <tr><td>{% raw tl['EMAIL2'] %}</td><td><input type="text" name="email2" id="email2" value={{e['email2']}}></td></tr>
+            <tr><td>{% raw tl['NAME'] %}</td><td><input type="text" name="participantname" id="participantname" value={{e['participantname']}}></td></tr>
+            <tr><td>{% raw tl['ADDRESS'] %}</td><td><input type="text" name="address" id="address" value={{e['address']}}></td></tr>
+            <tr><td>{% raw tl['CITY'] %}</td><td><input type="text" name="city" id="city" value={{e['city']}}></td></tr>
+            <tr><td>{% raw tl['STATE'] %}</td><td><input type="text" name="state" id="state" value={{e['state']}}></td></tr>
+            <tr><td>{% raw tl['ZIP'] %}</td><td><input type="text" name="zip" id="zip" value={{e['zip']}}></td></tr>
             <tr><td>{% raw tl['COUNTRY'] %}</td><td>
               <select name="country" id="country" class="chosen-dropdown">
               <option value=''></option>
               {% for country in countries %}
                 <option value='{{country}}'>{{country}}</option>
+              {% end %}
+              {% if e['country'] %}
+                <option selected='{{e['country']}}'>{{e['country']}}</option>
               {% end %}
               </select>
             </td></tr>
