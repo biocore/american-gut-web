@@ -388,14 +388,14 @@ class Survey(object):
                              consent_details['obtainer_name'],
                              consent_details['age_range']))
 
-                    TRN.add("""INSERT INTO ag_login_surveys
-                                   (ag_login_id, survey_id, participant_name)
-                             VALUES (%s, %s, %s)""",
-                            (consent_details['login_id'],
-                             consent_details['survey_id'],
-                             consent_details['participant_name']))
+                TRN.add("""INSERT INTO ag_login_surveys
+                               (ag_login_id, survey_id, participant_name)
+                         VALUES (%s, %s, %s)""",
+                        (consent_details['login_id'],
+                         consent_details['survey_id'],
+                         consent_details['participant_name']))
 
-# checks if user has previously been
+                # checks if user has previously been
                 # removed and has still revoked consent
                 sql = """SELECT ag_login_id FROM ag.consent_revoked"""
                 TRN.add(sql)
