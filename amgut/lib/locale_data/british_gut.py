@@ -41,7 +41,7 @@ media_locale = {
     'ADDENDUM_PCOA_AG_POPULATION': _SITEBASE + "/static/img/PCoA3.png",
     'ADDENDUM_PCOA_BODYSITES': _SITEBASE + "/static/img/PCoA1.png",
     'ADDENDUM_TAX_BARCHART': _SITEBASE + "/static/img/TaxFig.png",
-    'ADD_PARTICIPANT': "http://player.vimeo.com/video/63931218",
+    'ADD_PARTICIPANT': "https://player.vimeo.com/video/63931218",
     'ADD_PARTICIPANT_IMG_1': _SITEBASE + "/static/img/add_participant.png",
     'ADD_PARTICIPANT_IMG_MENU': _SITEBASE + "/static/img/add_participant_menu.png",
     'ADD_SAMPLE_HIGHLIGHT': _SITEBASE + "/static/img/add_sample_highlight.png",
@@ -79,8 +79,8 @@ media_locale = {
     'PORTAL_SHIPPING': _SITEBASE + "/static/img/shipping.png",
     'PROJECT_TITLE': AMGUT_CONFIG.project_name,
     'SAMPLE_BARCODE': _SITEBASE + "/static/img/sample_barcode.jpg",
-    'STEPS_VIDEO': "http://player.vimeo.com/video/63542787",
-    'SWAB_HANDLING': "http://player.vimeo.com/video/62393487",
+    'STEPS_VIDEO': "https://player.vimeo.com/video/63542787",
+    'SWAB_HANDLING': "https://player.vimeo.com/video/62393487",
     'EMAIL_ERROR': "There was a problem sending your email. Please contact us directly at <a href='mailto:%(help_email)s'>%(help_email)s</a>" % {'help_email': HELP_EMAIL},
     'EMAIL_SENT': 'Your message has been sent. We will reply shortly',
     'SHIPPING_ADDRESS': u'British Gut<br/>Department of Twin Research<br>Kings College London<br/>St Thomas’ Hospital Campus<br>The Rayne Institute<br>Lambeth Wing, 4th Floor<br/>Westminster Bridge Road<br>London SE1 7EH',
@@ -119,7 +119,7 @@ _NEW_PARTICIPANT = {
     'AGE_7_12': '7-12 years',
     'AGE_13_17': '13-17 years',
     'AGE_18': '18+ years',
-    'ASSENT_7_12': '''<p align='center'>University of California, San Diego<br/>
+    'ASSENT_7_12': '''<p align='center'><b>University of California, San Diego</b><br/>
 Assent to Act as a Research Subject<br/>
 (Ages 7-12 years)</p>
 
@@ -196,7 +196,7 @@ Assent to Act as a Research Subject<br/>
 
 <p>You agree to participate.</p>''',
     'CONSENT_18':
-        '''<p align='center'>University of California, San Diego<br/>
+        '''<p align='center'><b>University of California, San Diego</b><br/>
 Consent to Act as a Research Subject</p>
 
 <p style='font-weight: bold;' align='center'>American Gut Project</p>
@@ -275,7 +275,7 @@ The following tests are available:</p>
 <p style='font-weight: bold;'>Your Signature and Consent</p>
 <p>You have received a copy of this consent document and a copy of the "Experimental Subject's Bill of Rights" to keep.</p>
 <p>You agree to participate.</p>''',
-    'CONSENT_YOUR_CHILD': '''<p align='center'>University of California, San Diego<br/>
+    'CONSENT_YOUR_CHILD': '''<p align='center'><b>University of California, San Diego</b><br/>
 Parent Consent for Child to Act as a Research Subject<br/></p>
 
 <p align='center' style='font-weight: bold;'>American Gut Project</p>
@@ -413,7 +413,7 @@ Email: khussein@ucsd.edu''',
     'PARTICIPANT_EMAIL': 'Participant email',
     'PARTICIPANT_PARENT_1': 'Parent/Guardian name',
     'PARTICIPANT_PARENT_2': 'Parent/Guardian name of second parent',
-    'PARTICIPANT_DECEASED_PARENTS': 'One parent/guardian is deceased or unable to consent.',
+    'PARTICIPANT_DECEASED_PARENTS': 'One parent/guardian is deceased or unable to consent',
     'DATE_SIGNED': 'Date Signed',
     'PARTICIPANT_ADDRESS': 'Participant Address',
     'PARTICIPANT_CITY': 'Participant City',
@@ -423,7 +423,7 @@ Email: khussein@ucsd.edu''',
 }
 
 _FAQ = {
-    'ADD_PARTICIPANT': '<a href="%(add_participant_vid)s">%(project_shorthand)s - How to Add a Participant</a> from <a href="http://vimeo.com/user16100300">shelley schlender</a> on <a href="http://vimeo.com">Vimeo</a>.' % {'project_shorthand': AMGUT_CONFIG.project_shorthand, 'add_participant_vid': media_locale['ADD_PARTICIPANT']},
+        'ADD_PARTICIPANT': '<a href="%(add_participant_vid)s">%(project_shorthand)s - How to Add a Participant</a> from <a href="https://vimeo.com/user16100300">shelley schlender</a> on <a href="https://vimeo.com">Vimeo</a>.' % {'project_shorthand': AMGUT_CONFIG.project_shorthand, 'add_participant_vid': media_locale['ADD_PARTICIPANT']},
     'ANOTHER_COPY_RESULTS': 'Am I able to get another copy of my results?',
     'ANOTHER_COPY_RESULTS_ANS': 'You can download a copy from our website. Log in with your account name and password, go to the left side bar, move your mouse to Human Samples -> PARTICIPANT NAME -> SAMPLE NUMBER, and then click on SAMPLE NUMBER.pdf to download it.',
     'BETTER_OR_WORSE': 'How can I tell if my gut microbiome is better or worse than other people in my category?',
@@ -502,7 +502,7 @@ _FAQ = {
     'RAW_DATA_ANS_1': '<P>The raw data can be fetched from the <a href=http://www.ebi.ac.uk/>European Bioinformatics Institute</a>. EBI is part of <a href=http://www.insdc.org/>The International Nucleotide Sequence Database Collaboration</a> and is a public warehouse for sequence data. The deposited %(project)s accession is <a href="http://www.ebi.ac.uk/ena/data/view/ERP012803&display=html">ERP012803</a>.' % {'project': AMGUT_CONFIG.project_name},
     'RAW_DATA_ANS_2': 'Processed sequence data and open-access descriptions of the bioinformatic processing can be found at our <a href="https://github.com/qiime/American-Gut">Github repository</a>.</p>'
                       '<p>Sequencing of %(project_shorthand)s samples is an on-going project, as are the bioinformatic analyses. These resources will be updated as more information is added and as more open-access descriptions are finalized.' % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
-    'STEPS_TO_FOLLOW': '<a href="%(steps_vid)s">%(project_shorthand)s - Steps to Follow When Your Kit Arrives</a> from <a href="http://vimeo.com/user16100300">shelley schlender</a> on <a href="http://vimeo.com">Vimeo</a>.' % {'project_shorthand': AMGUT_CONFIG.project_shorthand, 'steps_vid': media_locale['STEPS_VIDEO']},
+    'STEPS_TO_FOLLOW': '<a href="%(steps_vid)s">%(project_shorthand)s - Steps to Follow When Your Kit Arrives</a> from <a href="https://vimeo.com/user16100300">shelley schlender</a> on <a href="https://vimeo.com">Vimeo</a>.' % {'project_shorthand': AMGUT_CONFIG.project_shorthand, 'steps_vid': media_locale['STEPS_VIDEO']},
     'TAKES_SIX_MONTHS': "Does it really take up to four months to get my results?",
     'TAKES_SIX_MONTHS_ANS': "Yes. It takes about eight weeks for extractions, eight weeks for the remainder of the processing, and two weeks to do the actual sequencing. This is before any analysis and if everything goes as planned, with no delays - equipment down, run failures, reagents or other consumables back ordered. There are also added transit times for your sample to travel between the UK and the US. Things do sometimes go wrong, so we say up to four months, although we are working to improve these.",
     'WATCH_VIDEOS': "Watch these helpful videos created by our colleagues at the American Gut about what to do once you've received your kit!",
