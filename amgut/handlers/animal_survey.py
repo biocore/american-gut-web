@@ -40,6 +40,9 @@ class AnimalSurveyHandler(BaseHandler):
 
         if not animal_survey_id:
             animal_survey_id = binascii.hexlify(os.urandom(8))
+            new_survey = True
+        else:
+            new_survey = False
 
         form = self.animal_survey()
         form.process(data=self.request.arguments)
@@ -71,7 +74,7 @@ class AnimalSurveyHandler(BaseHandler):
         redis.expire(animal_survey_id, 86400)
 
         store_survey(primary_animal_survey, animal_survey_id)
-        if animal_survey_id:
+        if not new_survey:
             message = urlencode([('errmsg', tl['SUCCESSFULLY_EDITED'] %
                                  participant_name)])
         else:
