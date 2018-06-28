@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 from tornado.web import authenticated
-from tornado.escape import json_encode, url_escape
+from tornado.escape import json_encode
 import logging
+from collections import defaultdict
 
 from amgut.connections import ag_data
 from amgut.lib.mail import send_email
@@ -25,18 +26,32 @@ class AuthRegisterHandoutHandler(AuthBasehandler):
     def get(self):
         kit_counts = ag_data.getMapMarkers()
         countries = ag_data.get_countries()
-        self.render("register_user.html",
-                    kit_counts=kit_counts, loginerror='', countries=countries)
+
+        # defaults entries dict to be empty
+        entries = defaultdict(str)
+        self.render("register_user.html", kit_counts=kit_counts,
+                    loginerror='', countries=countries, entries=entries)
 
     def post(self):
         # Check handout
         skid = self.get_argument("kit_id").strip()
         password = self.get_argument("password")
+
         is_handout = ag_data.handoutCheck(skid, password)
         if not is_handout:
-            tl = text_locale['handlers']
-            self.redirect(media_locale['SITEBASE'] +
-                          "/?loginerror=" + url_escape(tl['INVALID_KITID']))
+            kit_counts = ag_data.getMapMarkers()
+            countries = ag_data.get_countries()
+            entries = {'kit_id': self.get_argument('kit_id'),
+                       'email': self.get_argument('email'),
+                       'email2': self.get_argument('email2'),
+                       'participantname': self.get_argument('participantname'),
+                       'address': self.get_argument('address'),
+                       'city': self.get_argument('city'),
+                       'state': self.get_argument('state'),
+                       'zip': self.get_argument('zip'),
+                       'country': self.get_argument('country')}
+            self.render("register_user.html", kit_counts=kit_counts,
+                        loginerror='', countries=countries, entries=entries)
             return
 
         # Register handout
