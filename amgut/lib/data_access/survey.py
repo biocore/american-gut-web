@@ -390,10 +390,28 @@ class Survey(object):
 
                 TRN.add("""INSERT INTO ag_login_surveys
                                (ag_login_id, survey_id, participant_name)
-                           VALUES (%s, %s, %s)""",
+                         VALUES (%s, %s, %s)""",
                         (consent_details['login_id'],
                          consent_details['survey_id'],
                          consent_details['participant_name']))
+
+                # checks if user has previously been
+                # removed and has still revoked consent
+                sql = """SELECT ag_login_id FROM ag.consent_revoked"""
+                TRN.add(sql)
+                revoked = {result[0] for result in TRN.execute_fetchindex()}
+
+                # removes the user from the consent_revoked
+                # table if they are already in it
+                if consent_details['login_id'] in revoked:
+                    sql = """DELETE FROM ag.consent_revoked
+                             WHERE ag_login_id = %s
+                             AND participant_name = %s
+                             AND participant_email = %s"""
+                    TRN.add(sql, [consent_details['login_id'],
+                            consent_details['participant_name'],
+                            consent_details['participant_email']])
+                    TRN.execute()
 
             # now we insert the answers
             TRN.add("""INSERT INTO survey_answers

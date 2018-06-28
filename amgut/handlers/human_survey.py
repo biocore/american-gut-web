@@ -150,7 +150,6 @@ class HumanSurveyHandler(BaseHandler):
                                       'survey ID: %s to email: %s' %
                                       (human_survey_id,
                                        consent_info['participant_email']))
-
             self.redirect(sitebase + '/authed/human_survey_completed/')
 
     @authenticated
