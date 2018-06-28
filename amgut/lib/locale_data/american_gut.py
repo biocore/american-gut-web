@@ -24,8 +24,8 @@ media_locale = {
     'LATITUDE': 39.83,
     'LONGITUDE': -99.89,
     'ZOOM': 4,
-    'STEPS_VIDEO': "http://player.vimeo.com/video/63542787",
-    'ADD_PARTICIPANT': 'http://player.vimeo.com/video/63931218',
+    'STEPS_VIDEO': "https://player.vimeo.com/video/63542787",
+    'ADD_PARTICIPANT': 'https://player.vimeo.com/video/63931218',
     'ADD_PARTICIPANT_IMG_1': _SITEBASE + "/static/img/add_participant.png",
     'ADD_PARTICIPANT_IMG_MENU': _SITEBASE + "/static/img/add_participant_menu.png",
     'LOG_SAMPLE_OPTS': _SITEBASE + "/static/img/log_sample_options.png",
@@ -33,7 +33,7 @@ media_locale = {
     'ADD_SAMPLE_OVERVIEW': _SITEBASE + "/static/img/add_sample_overview.png",
     'FAQ_AMBIGUOUS_PASS': _SITEBASE + '/static/img/creds_example.png',
     'SAMPLE_BARCODE': _SITEBASE + '/static/img/sample_barcode.jpg',
-    'SWAB_HANDLING': 'http://player.vimeo.com/video/62393487',
+    'SWAB_HANDLING': 'https://player.vimeo.com/video/62393487',
     'HELP_EMAIL': HELP_EMAIL,
     'PROJECT_TITLE': AMGUT_CONFIG.project_name,
     'FAVICON': _SITEBASE + '/static/img/favicon.ico',
@@ -125,7 +125,7 @@ _FAQ = {
     'DIFFERENT_WHATS_WRONG_WITH_ME_ANS': 'No! Your gut microbiome is as unique as your fingerprint so you should expect to see some differences. Many factors can affect your gut microbiome, and any differences you see are likely to be the result of one of these factors. Maybe your diet is different than most people your age. Maybe you just traveled somewhere exotic. Different does not necessarily mean bad.',
     'WHEN_RESULTS_NON_FECAL_ANS': 'The vast majority of the samples we\'ve received are fecal, which was why we prioritized those samples. Much of the analysis and results infrastructure we\'ve put in place is applicable to other sample types, but we do still need to assess what specific representations of the data make the most sense to return to participants. We apologize for the delay.',
     'FIND_DETAILED_INFO': 'Where can I find more detailed information about my sample?',
-    'ADD_PARTICIPANT': '<a href="%(add_participant_vid)s">%(shorthand)s - How to Add a Participant</a> from <a href="http://vimeo.com/user16100300">shelley schlender</a> on <a href="http://vimeo.com">Vimeo</a>.' % {"shorthand": AMGUT_CONFIG.project_shorthand, 'add_participant_vid': media_locale["ADD_PARTICIPANT"]},
+    'ADD_PARTICIPANT': '<a href="%(add_participant_vid)s">%(shorthand)s - How to Add a Participant</a> from <a href="https://vimeo.com/user16100300">shelley schlender</a> on <a href="https://vimeo.com">Vimeo</a>.' % {"shorthand": AMGUT_CONFIG.project_shorthand, 'add_participant_vid': media_locale["ADD_PARTICIPANT"]},
     'PASSWORD_DOESNT_WORK': "My password doesn't work!",
     'COMBINE_RESULTS': 'My whole family participated, can we combine the results somehow?',
     'PASSWORD_DOESNT_WORK_ANS': '<p>The passwords have some ambiguous characters in them, so we have this guide to help you decipher which characters are in your password.</p>'
@@ -153,7 +153,7 @@ _FAQ = {
                                 '<p>We should also mention that since we are only interested in your microbes, we do not sequence human genomic DNA in our typical analyses. Where it is possible for human DNA to be sequenced (e.g., the Beyond Bacteria kits), we remove the human DNA using the same bioinformatics approaches undertaken in the NIH-funded Human Microbiome Project and approved by NIH bioethicists. Additionally, there is so little human DNA in fecal, skin and mucus samples that the chances of us being able to sequence your entire human genome are almost none, even if we tried.',
     'FECAL_NO_RESULTS_ANS': 'On any given sequencing run (not just the %(shorthand)s), a small percentage of the samples fail for unknown reasons -- our methods are good but not perfect. This is one of the reasons the sample kits have two Q-tips. It allows us to perform a second microbial DNA extraction and re-sequence if the first attempt failed. We will be doing this for all of the samples that failed. If there was a technical problem with the sample itself (e.g. not enough microbes on the swab) that inhibits us from producing data for you, we will be re-contacting you about collecting another sample.' % {"shorthand": AMGUT_CONFIG.project_shorthand},
     'MULTIPLE_KITS_DIFFERENT_TIMES_ANS': 'For best results, we recommend that you mail each sample within 24 hours of collection.',
-    'STEPS_TO_FOLLOW': '<a href="%(video)s">%(shorthand)s - Steps to Follow When Your Kit Arrives</a> from <a href="http://vimeo.com/user16100300">shelley schlender</a> on <a href="http://vimeo.com">Vimeo</a>.' % {"shorthand": AMGUT_CONFIG.project_shorthand, "video": media_locale["STEPS_VIDEO"]},
+    'STEPS_TO_FOLLOW': '<a href="%(video)s">%(shorthand)s - Steps to Follow When Your Kit Arrives</a> from <a href="https://vimeo.com/user16100300">shelley schlender</a> on <a href="https://vimeo.com">Vimeo</a>.' % {"shorthand": AMGUT_CONFIG.project_shorthand, "video": media_locale["STEPS_VIDEO"]},
     'WHY_TWO_SWABS': 'Why are there 2 swabs inside the tube?',
     'MULTIPLE_KITS_DIFFERENT_TIMES': 'I have a 2+ sample kit, and would like to collect and send them in at different times',
     'COMBINE_RESULTS_ANS': "We're still evaluating how best to present the data for samples that represent a family. We are mailing individual results now and will provide updated results through the web site later.",
@@ -325,7 +325,7 @@ _NEW_PARTICIPANT = {
     'AGE_7_12': '7-12 years',
     'AGE_13_17': '13-17 years',
     'AGE_18': '18+ years',
-    'ASSENT_7_12': '''<p align='center'>University of California, San Diego<br/>
+    'ASSENT_7_12': '''<p align='center'><b>University of California, San Diego</b><br/>
 Assent to Act as a Research Subject<br/>
 (Ages 7-12 years)</p>
 
@@ -415,7 +415,7 @@ You may call the Human Research Protections Program Office at 858-246-4777 to in
 <p>You agree to participate.</p>''',
     'CONSENT_18':
         '''<p align='center'><b>University of California, San Diego</b><br/>
-<b>Consent to Act as a Research Subject</b></p>
+Consent to Act as a Research Subject</p>
 
 <p style='font-weight: bold;' align='center'>American Gut Project</p>
 
@@ -541,7 +541,7 @@ You may call the Human Research Protections Program Office at 858-246-4777 to in
 <p style='font-weight: bold;'><i>Your Signature and Consent</i></p>
 <p>You have received a copy of this consent document and a copy of the "Experimental Subject's Bill of Rights" to keep.</p>
 <p>You agree to participate.</p>''',
-    'CONSENT_YOUR_CHILD': '''<p align='center'>University of California, San Diego<br/>
+    'CONSENT_YOUR_CHILD': '''<p align='center'><b>University of California, San Diego</b><br/>
 Parent Consent for Child to Act as a Research Subject<br/></p>
 
 <p align='center' style='font-weight: bold;'>American Gut Project</p>
@@ -789,7 +789,7 @@ Email: khussein@ucsd.edu''',
     'PARTICIPANT_EMAIL': 'Participant email',
     'PARTICIPANT_PARENT_1': 'Parent/Guardian name',
     'PARTICIPANT_PARENT_2': 'Parent/Guardian name of second parent',
-    'PARTICIPANT_DECEASED_PARENTS': 'One parent/guardian is deceased or unable to consent.',
+    'PARTICIPANT_DECEASED_PARENTS': 'One parent/guardian is deceased or unable to consent',
     'DATE_SIGNED': 'Date Signed',
     'PARTICIPANT_ADDRESS': 'Participant Address',
     'PARTICIPANT_CITY': 'Participant City',
