@@ -221,7 +221,7 @@ class AGDataAccess(object):
         survey_id : str
             the id of the survey group
         language : str
-            the langauge the survey is intended for
+            the language the survey is intended for
 
         Returns
         -------
