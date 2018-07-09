@@ -72,7 +72,7 @@ media_locale = {
     'NAV_MICROBIOME_101': "%(project_shorthand)s 101" % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
     'NAV_MICROBIOME_FAQ': "Human Microbiome FAQ",
     'NAV_PARTICIPANT_LOGIN': "Participant Log In",
-    'NAV_PARTICIPANT_RESOURCES': "Participant resources",
+    'NAV_PARTICIPANT_RESOURCES': "Participant Resources",
     'NAV_PRELIM_RESULTS': "Preliminary results!",
     'NAV_RECEIVED': "(Received)",
     'PORTAL_DIET_QUESTIONS': _SITEBASE + "/static/img/diet_questions.png",
@@ -84,7 +84,7 @@ media_locale = {
     'EMAIL_ERROR': "There was a problem sending your email. Please contact us directly at <a href='mailto:%(help_email)s'>%(help_email)s</a>" % {'help_email': HELP_EMAIL},
     'EMAIL_SENT': 'Your message has been sent. We will reply shortly',
     'SHIPPING_ADDRESS': u'British Gut<br/>Department of Twin Research<br>Kings College London<br/>St Thomas’ Hospital Campus<br>The Rayne Institute<br>Lambeth Wing, 4th Floor<br/>Westminster Bridge Road<br>London SE1 7EH',
-    'AMGUT_SHIPPING_ADDRESS': "University of California, San Diego<br>Knight Lab/ATTN: Greg Humphrey<br>BRF II Room 1220D<br>9500 Gilman Drive, MC 0763<br>La Jolla, CA 92093-0763"
+    'AMGUT_SHIPPING_ADDRESS': "University of California, San Diego<br>ATTN: Greg Humphrey, Knight Lab<br>BRF II Room 1220D<br>9500 Gilman Drive<br>La Jolla, CA 92093-0763"
 }
 
 _HANDLERS = {
@@ -908,7 +908,7 @@ _INTERNATIONAL = {
     'PAGE_TITLE': '%(shorthand)s International Shipping Instructions' % {'shorthand': AMGUT_CONFIG.project_shorthand},
     'INTERNATIONAL_HEADER_1': "International Shipping",
     'INTERNATIONAL_TEXT_1': 'At the moment, we are unable to accept non-British samples at the British Gut. Please send any non-UK international samples to:',
-    'INTERNATIONAL_TEXT_2': 'In order to comply with amended federal and IATA regulations, we are requesting that international participants return their sample tubes through FedEx International and that international participants follow the additional safely requirements for shipping human swab samples to the United States. Your airway bill must clearly identify the package as containing "human exempt specimens". The samples will additionally need to be packaged within a secondary containment to ensure that they can safely enter the United States.',
+    'INTERNATIONAL_TEXT_2': 'In order to comply with amended federal and IATA regulations, we are requesting that international participants return their sample tubes through FedEx International and that international participants follow the additional safely requirements for shipping human swab samples to the United States. Your airway bill must clearly identify the package as containing "human exempt samples". The samples will additionally need to be packaged within a secondary containment to ensure that they can safely enter the United States.',
     'INTERNATIONAL_TEXT_3': "For shipment, you will need to use clear tape to secure the sample swabs to the sample tube, then place the sample tube in the provided buff mailing envelope. Then place the buff envelope inside a Tyvek/plastic mailer, <strong>which can be acquired free of charge from FedEx</strong>, when shipping the sample, prior to FedEx shipment.",
     'INTERNATIONAL_TEXT_4': "If you do not follow these directions the sample will be destroyed by United States Customs at the port of entry into the United States.",
     'YOUR_SAMPLES': 'Your samples',
@@ -925,7 +925,7 @@ _PORTAL = {
     'GREETING': "Hi %(user_name)s! Please follow the steps below.",
     'INTERNATIONAL_HEADER_1': "International Shipping",
     'INTERNATIONAL_HEADER_2': "Your samples",
-    'INTERNATIONAL_TEXT_1': 'In order to comply with amended federal and IATA regulations, we are requesting that international participants return their sample tubes through FedEx International and that international participants follow the additional safely requirements for shipping human swab samples to the United States. Your airway bill must clearly identify the package as containing "human exempt specimens". The samples will additionally need to be packaged within a secondary containment to ensure that they can safely enter the United States.',
+    'INTERNATIONAL_TEXT_1': 'In order to comply with amended federal and IATA regulations, we are requesting that international participants return their sample tubes through FedEx International and that international participants follow the additional safely requirements for shipping human swab samples to the United States. Your airway bill must clearly identify the package as containing "human exempt samples". The samples will additionally need to be packaged within a secondary containment to ensure that they can safely enter the United States.',
     'INTERNATIONAL_TEXT_2': "For shipment, you will need to use clear tape to secure the sample swabs to the sample tube, then place the sample tube in the provided buff mailing envelope. Then place the buff envelope inside a Tyvek/plastic mailer, <strong>which can be acquired free of charge from FedEx</strong>, when shipping the sample, prior to FedEx shipment.",
     'INTERNATIONAL_TEXT_3': "If you do not follow these directions the sample will be destroyed by United States Customs at the port of entry into the United States.",
     'INTERNATIONAL_TEXT_4': '<li>Are considered dried specimens</li><li>Must be shipped via FedEx</li><li>Must have tape to sealing the plastic tube that contains the swab</li><li>Must be placed in a buff mailing envelope with the buff envelope placed inside a Tyvek/plastic mailer prior to FedEx shipment</li><li>Must be shipped with an airway bill and must be labeled with the complete address of the sender and complete address of recipient, and with the words "Human exempt sample(s)"</li>',
