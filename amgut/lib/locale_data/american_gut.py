@@ -19,7 +19,7 @@ _SITEBASE = AMGUT_CONFIG.sitebase
 media_locale = {
     'LOCALE': AMGUT_CONFIG.locale,
     'SITEBASE': _SITEBASE,
-    'LOGO': _SITEBASE + '/static/img/ag_logo.jpg',
+    'LOGO': _SITEBASE + '/static/img/ag_logo.png',
     'ANALYTICS_ID': 'UA-55353353-1',
     'LATITUDE': 39.83,
     'LONGITUDE': -99.89,
@@ -80,10 +80,10 @@ media_locale = {
     'ADDENDUM_PCOA_AGES_POPS': _SITEBASE + '/static/img/PCoA2.png',
     'ADDENDUM_PCOA_AG_POPULATION': _SITEBASE + '/static/img/PCoA3.png',
     'PORTAL_DIET_QUESTIONS': _SITEBASE + '/static/img/diet_questions.png',
-    'PORTAL_SHIPPING': _SITEBASE + '/static/img/shipping.png',
+    'PORTAL_SHIPPING': _SITEBASE + '/static/img/international_shipping.png',
     'EMAIL_ERROR': "There was a problem sending your email. Please contact us directly at <a href='mailto:%(help_email)s'>%(help_email)s</a>" % {'help_email': HELP_EMAIL},
     'EMAIL_SENT': 'Your message has been sent. We will reply shortly',
-    'SHIPPING_ADDRESS': "ATTN: Greg Humphrey, Knight Lab<br>BRF II Room 1220D<br>9500 Gilman Drive<br>La Jolla, CA 92093-0763"
+    'SHIPPING_ADDRESS': "ATTN: Greg Humphrey, Knight Lab<br>BRF II Room 1220D<br>9500 Gilman Drive<br>La Jolla, CA 92093-0763",
 }
 
 
@@ -96,6 +96,7 @@ _HANDLERS = {
     'AUTH_REGISTER_PGP': "\n\nFor the PGP cohort, we are requesting that you collect one sample from each of the following sites:\n\nLeft hand\nRight hand\nForehead\nMouth\nFecal\n\nThis is important to ensure that we have the same types of samples for all PGP participants which, in turn, could be helpful in downstream analysis when looking for relationships between the microbiome and the human genome\n\n.",
     'AUTH_REGISTER_BODY': "Thank you for registering with the %(project_name)s! Your verification code is:\n\n{0}\n\nYou will need this code to verifiy your kit on the %(project_shorthand)s webstite. To get started, please log into:\n\nhttp://microbio.me/AmericanGut\n\nEnter the kit_id and password found inside your kit, verify the contents of your kit, and enter the verification code found in this email.{1}\n\nSincerely,\nThe %(project_shorthand)s Team" % {'project_shorthand': AMGUT_CONFIG.project_shorthand, 'project_name': AMGUT_CONFIG.project_name},
     'KIT_REG_SUCCESS': 'Kit registered successfully.',
+    'INVALID_KITID': "Invalid Kit ID or Password",
     'ADD_KIT_ERROR': "Could not add kit to database.  Did you hit the back button while registering and press 'register user' again?",
     'ADD_BARCODE_ERROR': "Could not add barcode to database. Did you hit the back button while registering and press 'register user' again?",
     'CHANGE_PASS_BODY': 'This is a courtesy email to confirm that you have changed your password for your kit with ID %s. If you did not request this change, please email us immediately at {0}'.format(media_locale['HELP_EMAIL']),
@@ -147,12 +148,10 @@ _FAQ = {
     'HOW_CHANGE_GUT_ANS': 'Although we still don\'t have a predictable way to change the gut microbiome in terms of increasing or decreasing the abundances of specific bacteria, we do know that a variety of factors influence gut microbial community composition. Diet is a major factor affecting the gut microbiome so by changing your diet, you may be able to affect your gut microbiome. We still don\'t fully understand probiotics but know that they can influence your gut microbiome while you are actively taking them. Factors such as stress can also influence the gut microbiome. However, it is important to remember that there are factors we can\'t change, such as age or genetics, that can affect the gut microbiome.',
     'RAW_DATA': 'How can I get the raw data?',
     'WATCH_VIDEOS': "Watch these helpful videos about what to do once you've received your kit!",
-    'INTRODUCTION_BEGINNING': '<a href="http://www.robrdunn.com">Rob Dunn</a> has provided this excellent introduction to some of the basics that every curious reader should check out!<br/>&nbsp;<br/>Rob is the author of the <a href="http://www.yourwildlife.org/the-wild-life-of-our-bodies/">Wild Life of Our Bodies</a>. He is an evolutionary biologist and writer at North Carolina State University. For more about your gut and all of your other parts, read more from Rob at <a href="http://www.robrdunn.com">www.robrdunn.com</a></p>'
-                                '',
     'INFORMATION_IDENTIFY_ME_ANS': 'No. First, all of your personal information has been de-identified in our database as mandated by institutional guidelines. Second, although each person has a unique gut microbiome, many of the unique qualities are at the species or strain level of bacteria. Our sequencing methods currently do not allow us to describe your gut microbiome in that much detail. Finally, for most medical conditions, there are no known, predictable patterns in gut microbial community composition. Research simply hasn\'t gotten that far yet.</p>'
                                 '<p>We should also mention that since we are only interested in your microbes, we do not sequence human genomic DNA in our typical analyses. Where it is possible for human DNA to be sequenced (e.g., the Beyond Bacteria kits), we remove the human DNA using the same bioinformatics approaches undertaken in the NIH-funded Human Microbiome Project and approved by NIH bioethicists. Additionally, there is so little human DNA in fecal, skin and mucus samples that the chances of us being able to sequence your entire human genome are almost none, even if we tried.',
     'FECAL_NO_RESULTS_ANS': 'On any given sequencing run (not just the %(shorthand)s), a small percentage of the samples fail for unknown reasons -- our methods are good but not perfect. This is one of the reasons the sample kits have two Q-tips. It allows us to perform a second microbial DNA extraction and re-sequence if the first attempt failed. We will be doing this for all of the samples that failed. If there was a technical problem with the sample itself (e.g. not enough microbes on the swab) that inhibits us from producing data for you, we will be re-contacting you about collecting another sample.' % {"shorthand": AMGUT_CONFIG.project_shorthand},
-    'MULTIPLE_KITS_DIFFERENT_TIMES_ANS': 'For best results, we recommend that you mail each sample within 24 hours of collection.',
+    'MULTIPLE_KITS_DIFFERENT_TIMES_ANS': 'For best results, we recommend that you mail each sample within 48 hours of collection.',
     'STEPS_TO_FOLLOW': '<a href="%(video)s">%(shorthand)s - Steps to Follow When Your Kit Arrives</a> from <a href="https://vimeo.com/user16100300">shelley schlender</a> on <a href="https://vimeo.com">Vimeo</a>.' % {"shorthand": AMGUT_CONFIG.project_shorthand, "video": media_locale["STEPS_VIDEO"]},
     'WHY_TWO_SWABS': 'Why are there 2 swabs inside the tube?',
     'MULTIPLE_KITS_DIFFERENT_TIMES': 'I have a 2+ sample kit, and would like to collect and send them in at different times',
@@ -169,8 +168,7 @@ _FAQ = {
     'LOG_IN_WHAT_NOW_ANS_2': '<p>During this workflow you (or whomever is being sampled) will:</p>'
                                 '<ol>   <li>Add a participant</li><li>Provide electronic consent</li><li>Answer survey questions (including the diet questions)</li><li>Upon completion, become eligible to associate samples</li>          </ol><p>When participants are eligible,  you will then see their name under the corresponding menu on the left, in this example we have just added the participant "Test":</p>'
                                 '',
-    'PROJECT_101': '%(shorthand)s 101' % {"shorthand": AMGUT_CONFIG.project_shorthand},
-    'WHAT_FORMS_ANS': 'The instruction on the sampling instructions that requires you to "place your forms and the sample tube in preaddressed envelope" is leftover from a previous version of the sampling instructions. There are no forms for you to include inside the envelope with your sample. If you are shipping internationally, please visit the <a href="%(sitebase)s/international_shipping/">International Shipping Instructions</a></p>' % {'sitebase': media_locale['SITEBASE']},
+    'WHAT_FORMS_ANS': 'The instruction on the sampling instructions that requires you to "place your forms and the sample tube in preaddressed envelope" is leftover from a previous version of the sampling instructions. There are no forms for you to include inside the envelope with your sample.</p>' % {'sitebase': media_locale['SITEBASE']},
     'WHY_TWO_SWABS_ANS_1': 'Each sampling tube contains two swabs and looks like this:',
     'MISSING_METADATA': 'What are missing metadata?',
     'ONLY_FECAL_RESULTS': 'I sent more than one kind of sample, but I only received data for my fecal sample. What happened to my other samples?',
@@ -189,6 +187,15 @@ _FAQ = {
     'FIND_DETAILED_INFO_ANS': 'You can find the raw data from European Bioinformatics Institute (please see <a href="#faq8">here</a>) or download the copy of your result from our website (please see <a href="#faq20">here</a>).',
     'WHEN_RESULTS_NON_FECAL': 'I sent in a non-fecal sample and have not received any results, when should I expect results?',
     'WHAT_FORMS': 'What are the forms you talk about on the sampling instructions?',
+    'ANOTHER_COPY_RESULTS': 'Can I get another copy of my results?',
+    'NOT_A_BUSINESS': 'We are not a business',
+    'WHERE_SEND_SAMPLE_ANS': '<p>This is the shipping address:</p>'
+                              '%(address)s<p>If you are shipping internationally, please see the <a href="%(sitebase)s/international_shipping/">international shipping instructions</a>.' % {'sitebase': media_locale['SITEBASE'], 'address': media_locale['SHIPPING_ADDRESS']}
+}
+
+_INTRODUCTION = {
+    'PROJECT_101': '%(shorthand)s 101' % {"shorthand": AMGUT_CONFIG.project_shorthand},
+    'INTRODUCTION_BEGINNING': '<a href="http://www.robrdunn.com">Rob Dunn</a> has provided this excellent introduction to some of the basics that every curious reader should check out!<br/>&nbsp;<br/>Rob is the author of the <a href="http://www.yourwildlife.org/the-wild-life-of-our-bodies/">Wild Life of Our Bodies</a>. He is an evolutionary biologist and writer at North Carolina State University. For more about your gut and all of your other parts, read more from Rob at <a href="http://www.robrdunn.com">www.robrdunn.com</a>.</p>',
     'INTRODUCTION_WHAT_IS_GUT_HEAD': "What is a Gut?",
     'INTRODUCTION_WHAT_IS_GUT': "Your gut is a hole that runs through your body. Your gut is actually, developmentally speaking, the outside of your body, but it has evolved many intricacies that make it seem like the inside. Your gut starts with your mouth and ends with your anus. In between food is changed into energy, feces, bacteria, viruses and a few other things. Your gut exacts a kind of metamorphosis on everything you eat, turning hotdog or grilled cheese, miraculously, into energy and, ultimately, cells, signals and even thoughts. We are only beginning to understand this process, a process in which microbes play (or fail to play) a major role.",
     'INTRODUCTION_WHAT_IS_PROJECT_HEAD': "What is the %(project_name)s?" % {'project_name': AMGUT_CONFIG.project_name},
@@ -208,13 +215,8 @@ _FAQ = {
     'INTRODUCTION_DISCOVER_HEAD': "What will we discover in your gut?",
     'INTRODUCTION_DISCOVER': "When the early meetings were going on about this project, everyone sat around talking about what we might see from colon samples. One scientist was sure that we would see bacteria that looked like Elvis. Another though we would find Shakespeare's great lost play. But the truth is all that we are going to see from your gut are lists of nucleotides. Let me explain&hellip;<br/>&nbsp;<br/>Nucleotides are those hunks of protein out of which DNA and RNA are made. They come in different forms to which scientists have assigned names and letters. When the robots are done with the work, what they produce are lists of the nucleotides in all of 16S genes from all of the cells in your sample. These nucleotides tell the scientists which kinds of life are in your sample (and in you). But because we will only have samples of little stretches of the 16S genes, we won't know exactly which species are in you, just which lineages they are from. You might have the bacterial equivalent of a chimpanzee and a gorilla in you, but all we'll know from your sample is that there was an ape. Knowing you have a bacterial ape in your gut will, on its own, not tell you so much. The real information will come from context, statistical context. I know, that sounds boring, but I promise it is not.<br/>&nbsp;<br/>We think that hundreds of different things you do during your life, in addition to what your mother and father did (let's try not to think about that), your genes and even just where you grew up influence which species of microbes are found inside you. But we don't really know. The problem is humans are so darn complicated. What we need to be able to do is to compare large numbers of people, people who differ in many ways, to be able to sort out which variables are sometimes a little important and which ones are the big deal. Is a vegan gut very different from a vegetarian one? Does eating yoghurt make a big difference? Do the effects of a c-section birth last forever? These questions require us to compare many people, which is where you come in. Your sample, gives us context and it gives you context too. It won't be terribly exciting on its own (you will know which ancient lineages you have dividing and thriving inside you. OK, that is pretty cool on second thought), but it will be very exciting in context. Where do you fall relative to fish eaters, sick people healthy people, hunter gatherers, or even your dog? You will know and we will know. And this is not all.<br/>&nbsp;<br/>All of the questions I have mentioned so far are what I might call first order questions. How does this thing compare to that thing. But what we'd love to be able to answer are second order questions, contingent questions, questions such as whether the effect of your diet depends on your ethnicity (it probably does), whether the effect of having a dog depends on whether or not you live in the city (again, I bet it does) and so on. These questions are exactly the sort of question we have failed to be able to answer well when it comes to diet, because we don't have big enough samples sizes. We can see the forest for all of humans. Well, that isn't quite right, but you get the idea, we will be able to understand elaborate effects of multiple variables on the wilderness between your pie hole and the other hole and that, to us, is exciting.",
     'INTRODUCTION_STORIES_HEAD': "A few of the stories of the evolutionary tree in your gut",
-    'INTRODUCTION_STORIES': "Some people have least favorite bacteria. Salmonella, for example, seems to have inspired some haters. But microbiologists also have favorite bacteria, as well they should. The stories of bacteria (and those who chase and study them) are among the most important of humanities stories and include the tales of many species without which we could not live, or whose presence or absence affects how we live. These species are as fascinating and, dare I say, lovely as pandas or koala bears, just harder to see and far more significant. I have begun to compile a book of the stories of some of the most common and interesting species you are likely to encounter&mdash; whether in your own gut, on your lettuce or the next time you sink your fingers into the soil. These stories will be available online here at <a href=\"http://invisiblelife.yourwildlife.org/\">Invisible Life</a> as they are compiled as a book, a book written by some of the very best science writers AND scientists out there. For starters, you might be interested to know that <a href=\"http://invisiblelife.yourwildlife.org/mycoplasma/\">the smallest species on Earth</a> is sometimes found inside humans and, once we look at your 16S, we will even know whether it lives in you. As more of these stories are written, they will appear here, eventually as an ebook, an ebook that you can reference when you find out what lives inside you to know whether your constant companion is a species we know everything about or, as is more typical, no one has ever studied. Like Charlie Chaplin once said&hellip; Wait, Charlie Chaplin was the one who didn't say anything wasn't he.",
-    'ANOTHER_COPY_RESULTS': 'Can I get another copy of my results?',
-    'NOT_A_BUSINESS': 'We are not a business',
-    'WHERE_SEND_SAMPLE_ANS': '<p>This is the shipping address:</p>'
-                              '%(address)s<p>If you are shipping internationally, please see the <a href="%(sitebase)s/international_shipping/">international shipping instructions</a>.' % {'sitebase': media_locale['SITEBASE'], 'address': media_locale['SHIPPING_ADDRESS']}
+    'INTRODUCTION_STORIES': "Some people have least favorite bacteria. Salmonella, for example, seems to have inspired some haters. But microbiologists also have favorite bacteria, as well they should. The stories of bacteria (and those who chase and study them) are among the most important of humanities stories and include the tales of many species without which we could not live, or whose presence or absence affects how we live. These species are as fascinating and, dare I say, lovely as pandas or koala bears, just harder to see and far more significant. I have begun to compile a book of the stories of some of the most common and interesting species you are likely to encounter&mdash; whether in your own gut, on your lettuce or the next time you sink your fingers into the soil. These stories will be available online here at <a href=\"http://invisiblelife.yourwildlife.org/\">Invisible Life</a> as they are compiled as a book, a book written by some of the very best science writers AND scientists out there. For starters, you might be interested to know that <a href=\"http://invisiblelife.yourwildlife.org/mycoplasma/\">the smallest species on Earth</a> is sometimes found inside humans and, once we look at your 16S, we will even know whether it lives in you. As more of these stories are written, they will appear here, eventually as an ebook, an ebook that you can reference when you find out what lives inside you to know whether your constant companion is a species we know everything about or, as is more typical, no one has ever studied. Like Charlie Chaplin once said&hellip; Wait, Charlie Chaplin was the one who didn't say anything wasn't he."
 }
-
 
 _TAXA_SUMMARY = {'RESOLUTION_NOTE': "Note: Where there are blanks in the table below, the taxonomy could not be resolved in finer detail.",
                  'PERCENTAGES_NOTE': "Note: The percentages listed represent the relative abundance of each taxon. This summary is based off of normalized data. Because of limitations in the way the samples are processed, we cannot reliably obtain species level resolution. As such, the data shown are collapsed at the genus level.",
@@ -310,10 +312,10 @@ _INTERNATIONAL = {
     'INTERNATIONAL_HEADER_1': "International Shipping",
     'INTERNATIONAL_TEXT_1': 'Please send any non-US international samples to:',
     'INTERNATIONAL_TEXT_2': 'In order to comply with amended federal and IATA regulations, we are requesting that international participants return their sample tubes through FedEx International and that international participants follow the additional safely requirements for shipping human swab samples to the United States. Your airway bill must clearly identify the package as containing "Human Exempt Sample(s)". The samples will additionally need to be packaged within a secondary containment to ensure that they can safely enter the United States.',
-    'INTERNATIONAL_TEXT_3': "For shipment, you will need to use clear tape to secure the sample swabs to the sample tube. Additionally, we suggest using a buff mailing envelope (optional) to protect the sample further. If a buff envelope is used, place the sample in it before placing your sample inside the provided Tyvek/plastic mailer.",
+    'INTERNATIONAL_TEXT_3': "For shipment, you will need to use clear tape to secure the sample swabs to the sample tube. Additionally, we suggest using a buff mailing envelope (optional) to protect the sample further. If a buff envelope is used, place the sample in it before placing it inside the provided Tyvek/plastic mailer.",
     'INTERNATIONAL_TEXT_4': "If you do not follow these directions the sample will be destroyed by United States Customs at the port of entry into the United States.",
     'YOUR_SAMPLES': 'Your samples',
-    'INTERNATIONAL_TEXT_5': "Additionally, we require samples to be shipped within 48 hours of being collected.",
+    'INTERNATIONAL_TEXT_5': "Additionally, we require samples to be shipped <strong>within 48 hours</strong> of being collected.",
     'YOUR_SAMPLES_LIST': '<li>Are considered dried specimens</li><li>Must be shipped via FedEx</li><li>Must have tape to sealing the plastic tube that contains the swab</li><li>Must be placed in a buff mailing envelope with the buff envelope placed inside a Tyvek/plastic mailer prior to FedEx shipment</li><li>Must be shipped with an airway bill and must be labeled with the complete address of the sender and complete address of recipient, and with the words "Human Exempt Sample(s)"</li>',
     'AMERICAN_GUT_ADDRESS': media_locale['SHIPPING_ADDRESS']
 }
@@ -835,7 +837,7 @@ _RETREIVE_KITID = {
     }
 
 _ADD_SAMPLE = {
-    'NEW_SAMPLE_TITLE': 'Log a new sample for',
+    'NEW_SAMPLE_TITLE': 'Assign a new sample for',
     'NEW_SAMPLE_DESCRIPTION_1': 'Choose the barcode from your kit that corresponds to the sample you are logging.',
     'NEW_SAMPLE_DESCRIPTION_2': 'It is very important that the sample barcode matches <strong>exactly</strong> for downstream analysis steps.',
     'SITE_SAMPLED': 'Site Sampled',
@@ -982,7 +984,7 @@ _PORTAL = {
     'VERIFY_TAB': 'Verify Your Kit',
     'ADD_SOURCE_TAB': 'Add Source <br>Survey',
     'TAKE_SAMPLE_TAB': 'Take a Sample',
-    'LOG_SAMPLE_TAB': 'Log a Sample',
+    'LOG_SAMPLE_TAB': 'Assign a Sample',
     'MAIL_TAB': 'Mail Samples <br>to Us',
     'SEQ_TAB': 'Sequencing &amp;<br>Results',
     'VERIFICATION_HEADER_1': 'Verification',
@@ -1009,43 +1011,45 @@ _PORTAL = {
     'SURVEY_TEXT_3': 'If you are taking a human sample, the survey includes demographic, lifestyle, medical and diet questions. All survey questions are optional.',
     'SURVEY_TEXT_4': 'The diet questions do not require a food diary, but please be prepared to answer questions about your eating habits. A screenshot of the dietary questions is shown below.',
     'SAMPLE_STEPS_HEADER_1': 'Before Taking Your Samples',
-    'SAMPLE_STEPS_TEXT_1': 'These are the steps involved in taking a sample:',
-    'SAMPLE_STEPS_TEXT_2': '<li>Make sure you have <a href="#" onclick="selectTab(\'source\')">added your sample source and complete the required survey(s)</a></li><li>Remove the sample swabs from the sample tube</li><li>Collect your sample following the guidelines below</li><li>Place sample swabs into the sample tube</li>',
-    'SAMPLE_STEPS_TEXT_3': 'These sample collection instructions are very important, please read through them <strong>before</strong> beginning to take your sample. Deviations will cause issues with sample processing, sequencing, and data analysis. We cannot guarantee that we will be able to process your sample if the instructions are not followed, and <strong>we cannot offer replacements if instructions were not followed</strong>. Please do not hesitate to ask us questions at <a href="%(sitebase)s/authed/help_request/">%(help_email)s</a>.' % {"help_email": media_locale["HELP_EMAIL"], 'sitebase': media_locale['SITEBASE']},
+    'SAMPLE_STEPS_TEXT_1': 'These sample collection instructions are very important, please read through them <strong>before</strong> beginning to take your sample. Deviations will cause issues with sample processing, sequencing, and data analysis. We cannot guarantee that we will be able to process your sample if the instructions are not followed, and <strong>we cannot offer replacements if instructions were not followed</strong>. Please do not hesitate to ask us questions at <a href="%(sitebase)s/authed/help_request/">%(help_email)s</a>.' % {"help_email": media_locale["HELP_EMAIL"], 'sitebase': media_locale['SITEBASE']},
+    'SAMPLE_STEPS_TEXT_2': 'These are the steps involved in taking a sample:',
+    'SAMPLE_STEPS_TEXT_3': '<li>Make sure you have <a href="#" onclick="selectTab(\'source\')">added your sample source and complete the required survey(s)</a></li><li>Remove the sample swabs from the sample tube</li><li>Collect your sample following the guidelines below</li><li>Place sample swabs into the sample tube</li>',
     'SAMPLE_STEPS_HEADER_2': 'Taking Your Samples',
     'SAMPLE_STEPS_TEXT_4': 'Once you have removed the sample tube, only handle the sample swab by the red cap.',
-    'SAMPLE_STEPS_TEXT_5': 'For a <strong>fecal sample</strong>, rub both cotton tips on a fecal specimen (a used piece ofbathroom tissue). Collect a small amount of biomass. Maximum collection would be to saturate 1/2 a swab. <strong>More is not better!</strong> The ideal amount of biomass collected is shown below.',
+    'SAMPLE_STEPS_TEXT_5': 'For a <strong>fecal sample</strong>, rub both cotton tips on a fecal specimen (a used piece of bathroom tissue). Collect a small amount of biomass. Maximum collection would be to saturate 1/2 a swab. <strong>More is not better!</strong> The ideal amount of biomass collected is shown below.',
     'SAMPLE_STEPS_TEXT_6': 'For an <strong>oral sample</strong>, firmly rub both sides of both cotton tips on the surface of the tongue for 20 seconds. Take great caution not to touch the cheeks, teeth, or lips.',
     'SAMPLE_STEPS_TEXT_7': 'For a <strong>skin sample</strong>, firmly rub both sides of both cotton tips over the skin surface being sampled for 20 seconds.',
     'SAMPLE_STEPS_TEXT_8': 'For an <strong>other/environmental sample</strong>, firmly rub both sides of both cotton tips over the surface being sampled for 20 seconds.',
-    'SAMPLE_STEPS_TEXT_9': 'After you have finished taking your sample, return the swabs to the sample tube and push the red cap on firmly.',
-    'LOG_SAMPLE_HEADER_1': 'Logging Samples',
+    'SAMPLE_STEPS_TEXT_9': 'After you have finished taking your sample, return the swabs to the sample tube and push the red cap on firmly. Then, immediately move on to <a href="#" onclick="selectTab(\'log\')"><strong>assign the sample</strong></a>.',
+    'LOG_SAMPLE_HEADER_1': 'Assigning Samples',
     'LOG_SAMPLE_TEXT_1': 'Please write the sample site, date, and time on the sampling tube.',
-    'LOG_SAMPLE_TEXT_2': 'After writing the information on the sampling tube tube, <a href="%(sitebase)s/authed/add_sample_overview/">log the sample</a> in our system.' % {'sitebase': media_locale['SITEBASE']},
+    'LOG_SAMPLE_TEXT_2': 'After writing the information on the sampling tube tube, <a href="%(sitebase)s/authed/add_sample_overview/">assign the sample</a> to a source.' % {'sitebase': media_locale['SITEBASE']},
+    'LOG_SAMPLE_TEXT_3': '<strong>We require samples to be assigned</strong> so that we can process each sample and later upload the results based on each sample\'s barcode and corresponding profile.',
     'MAILING_HEADER_1': 'Mailing samples',
-    'MAILING_TEXT_1': 'Once you have added a <a href="#" onclick="selectTab(\'source\')">sample source, completed the relevant survey</a> (if applicable), <a href="#" onclick="selectTab(\'sample\')">taken</a> and <a href="#" onclick="selectTab(\'log\')">logged your samples</a>, you should then mail the samples back to us.',
+    'MAILING_TEXT_1': 'Once you have added a <a href="#" onclick="selectTab(\'source\')">sample source, completed the relevant survey</a> (if applicable), <a href="#" onclick="selectTab(\'sample\')">taken</a> and <a href="#" onclick="selectTab(\'log\')">assigned your samples</a>, you should then mail the samples back to us.',
     'MAILING_TEXT_2': 'Wrap the sample tube in absorbent tissue, such as facial tissue or paper towels, and mail it back as soon as possible. The absorbent tissue will help to keep the relative humidity within the package low.',
     'MAILING_TEXT_3': 'We also recommend using a reinforced envelope to reduce the chance of losing your sample due to damaged packaging.',
     'MAILING_TEXT_4': 'The sooner we receive your sample, the sooner we can get it stored in our -80C freezers and ready for processing!',
-    'MAILING_TEXT_5': '<strong>Do not refrigerate or freeze the samples</strong> if they cannot be shipped immediately. Store them in a cool dry place such as a cabinet or a closet.',
+    'MAILING_TEXT_5': '<strong>Do not refrigerate or freeze the samples</strong> if they cannot be shipped immediately.',
     'DOMESTIC_HEADER_1': 'Domestic Shipping',
     'DOMESTIC_TEXT_1': 'Shipping within the US should be less than $1.50, but we recommend taking the sample to the post office to get the proper postage. Getting the postage right on the first try is important since samples that spend a long time in transit will likely not produce the highest quality results.',
     'DOMESTIC_TEXT_2': 'This is the shipping address:',
     'DOMESTIC_TEXT_3': media_locale['SHIPPING_ADDRESS'],
     'INTERNATIONAL_HEADER_1': 'International Shipping',
     'INTERNATIONAL_TEXT_1': 'In order to comply with amended federal and IATA regulations, we are requesting that international participants return their sample tubes through FedEx International and that international participants follow the additional safely requirements for shipping human swab samples to the United States. Your airway bill must clearly identify the package as containing "Human Exempt Sample(s)". The samples will additionally need to be packaged within a secondary containment to ensure that they can safely enter the United States.',
-    'INTERNATIONAL_TEXT_2': "For shipment, you will need to use clear tape to secure the sample swabs to the sample tube. Additionally, we suggest using a buff mailing enve     lope (optional) to protect the sample further. If a buff envelope is used, place the sample in it before placing your sample inside the provided Tyvek/plastic mailer.",
+    'INTERNATIONAL_TEXT_2': "For shipment, you will need to use clear tape to secure the sample swabs to the sample tube. Additionally, we suggest using a buff mailing envelope (optional) to protect the sample further. If a buff envelope is used, place the sample in it before it sample inside the provided Tyvek/plastic mailer.",
     'INTERNATIONAL_TEXT_3': 'If you do not follow these directions the sample will be destroyed by United States Customs at the port of entry into the United States.',
-    'INTERNATIONAL_TEXT_4': "Additionally, we require samples to be shipped within 48 hours of being collected.",
+    'INTERNATIONAL_TEXT_4': "Additionally, we require samples to be shipped <strong>within 48 hours</strong> of being collected.",
     'INTERNATIONAL_HEADER_2': 'Your samples',
     'YOUR_SAMPLES_LIST': '<li>Are considered dried specimens</li><li>Must be shipped via FedEx</li><li>Must have tape to sealing the plastic tube that contains the swab</li><li>Must be placed in a buff mailing envelope with the buff envelope placed inside a Tyvek/plastic mailer prior to FedEx shipment</li><li>Must be shipped with an airway bill and must be labeled with the complete address of the sender and complete address of recipient, and with the words "Human exempt sample(s)"</li>',
     'RESULTS_HEADER_1': 'Sequencing &amp; Results',
-    'RESULTS_TEXT_1': 'Once you have added a <a href="#" onclick="selectTab(\'source\')">sample source, completed the relevant survey</a> (if applicable), <a href="#" onclick="selectTab(\'sample\')">taken</a> and <a href="#" onclick="selectTab(\'log\')">logged your samples</a> and you have <a href="#" onclick="selectTab(\'mail\')">mailed the samples back to us</a>, we will then perform sequencing and analysis on your samples.',
-    'RESULTS_TEXT_2': 'Sequencing and data analysis can take up to 6 months, please be patient! We will let you know as soon as your samples have been sequenced and analyzed.',
+    'RESULTS_TEXT_1': 'Once you have added a <a href="#" onclick="selectTab(\'source\')">sample source, completed the relevant survey</a> (if applicable), <a href="#" onclick="selectTab(\'sample\')">taken</a> and <a href="#" onclick="selectTab(\'log\')">assigned your samples</a> and you have <a href="#" onclick="selectTab(\'mail\')">mailed the samples back to us</a>, we will then perform sequencing and analysis on your samples.',
+    'RESULTS_TEXT_2': "Sequencing and data analysis can take up to 3 months, please be patient! We will let you know as soon as your samples have been sequenced and analyzed. Once your results are ready, we will send you an email notification.",
     'RESULTS_READY_HEADER_1': 'Your results are ready!',
     'RESULTS_READY_TEXT_1': 'One or more of the samples you submitted have been sequenced, and the results are now available online! Currently, we have only processed fecal samples, but we will be processing samples from other body sites soon.',
     'RESULTS_READY_TEXT_2': 'To access your available results, hover over "Human Samples" in the menu on the left, hover over your name, then click on your sample to view your results, or click one of the links below. <b>For help interpreting results, <a href="%s/authed/addendum/">click here</a></b>. The following barcodes are ready:' % _SITEBASE,
-    'RESULTS_READY_TEXT_3': 'You will be able to view your results here on this website once they are available.'
+    'RESULTS_READY_TEXT_3': 'You will be able to view your results here on this website once they are available.',
+    'FOBT_INSTRUCTIONS': '<strong>If you have a FOBT card, please follow <a href="%s/static/img/FOBT_instructions.pdf" target="_blank">these sampling instructions</a> instead and <a href="#" onclick="selectTab(\'log\')">assign it</a>.</strong>' % _SITEBASE
 }
 
 _CHANGE_PASS_VERIFY = {
@@ -1241,6 +1245,7 @@ text_locale = {
     '404.html': _404,
     '403.html': _403,
     'FAQ.html': _FAQ,
+    'introduction.html': _INTRODUCTION,
     'new_participant_overview.html': _NEW_PARTICIPANT_OVERVIEW,
     'personal_microbiome_overview.html': _PERSONAL_MICROBIOME,
     'addendum.html': _ADDENDUM,

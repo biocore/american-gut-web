@@ -1,0 +1,34 @@
+{% extends no_auth_sitebase.html %}
+{% block content %}
+{% from amgut import text_locale, media_locale %}
+{% set tl = text_locale['introduction.html'] %}
+<h2>{% raw tl['FAQ_HEADER'] %}</h2>
+<div class="faq_wrapper">
+  <div class="faq">
+    <div class="faq_content">
+        <p>{% raw tl['INTRODUCTION_BEGINNING'] %}</p>
+        <div class="indent_box">
+              <h4>{% raw tl['INTRODUCTION_WHAT_IS_GUT_HEAD'] %}</h4>
+              <p>{% raw tl['INTRODUCTION_WHAT_IS_GUT'] %}</p>
+              <h4>{% raw tl['INTRODUCTION_WHAT_IS_PROJECT_HEAD'] %}</h4>
+              <p>{% raw tl['INTRODUCTION_WHAT_IS_PROJECT'] %}</p>
+              <h4>{% raw tl['INTRODUCTION_WHAT_IS_16S_HEAD'] %}</h4>
+              <p>{% raw tl['INTRODUCTION_WHAT_IS_16S'] %}</p>
+              <h4>{% raw tl['INTRODUCTION_ROBOTS_HEAD'] %}</h4>
+              <p>{% raw tl['INTRODUCTION_ROBOTS'] %}</p>
+              <h4>{% raw tl['INTRODUCTION_TREE_HEAD'] %}</h4>
+              <p>{% raw tl['INTRODUCTION_TREE'] %}</p>
+              <h4>{% raw tl['INTRODUCTION_MICROBIOME_HEAD'] %}</h4>
+              <p>{% raw tl['INTRODUCTION_MICROBIOME'] %}</p>
+              <h4>{% raw tl['INTRODUCTION_EAT_HEAD'] %}</h4>
+              <p>{% raw tl['INTRODUCTION_EAT'] %}</p>
+              <h4>{% raw tl['INTRODUCTION_MICROBES_COME_FROM_HEAD'] %}</h4>
+              <p>{% raw tl['INTRODUCTION_MICROBES_COME_FROM'] %}</p>
+              <h4>{% raw tl['INTRODUCTION_DISCOVER_HEAD'] %}</h4>
+              <p>{% raw tl['INTRODUCTION_DISCOVER'] %}</p>
+              <h4>{% raw tl['INTRODUCTION_STORIES_HEAD'] %}</h4>
+              <p>{% raw tl['INTRODUCTION_STORIES'] %}</p>
+        </div>
+    </div>
+  </div>
+</div>

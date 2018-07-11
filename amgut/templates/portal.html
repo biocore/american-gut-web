@@ -110,10 +110,11 @@
               </ul>
             {% end %}
             <h2>{% raw tl['SAMPLE_STEPS_HEADER_1'] %}</h2>
-            <p class="portal_blurb">{% raw tl['SAMPLE_STEPS_TEXT_1'] %}</p>
-            <ol class="sample_steps">{% raw tl['SAMPLE_STEPS_TEXT_2'] %}</ol>
-            <p class="portal_blurb">{% raw tl['SAMPLE_STEPS_TEXT_3'] % fmt %}</p>
+            <p class="portal_blurb">{% raw tl['SAMPLE_STEPS_TEXT_1'] % fmt %}</p>
+            <p class="portal_blurb">{% raw tl['SAMPLE_STEPS_TEXT_2'] %}</p>
+            <ol class="sample_steps">{% raw tl['SAMPLE_STEPS_TEXT_3'] %}</ol>
             <h2>{% raw tl['SAMPLE_STEPS_HEADER_2'] %}</h2>
+            <p class ="portal_blurb">{% raw tl['FOBT_INSTRUCTIONS'] %}</p>
             <p class="portal_blurb">{% raw tl['SAMPLE_STEPS_TEXT_4'] %}</p>
             <div class="centered"><img src="{% raw media_locale['SITEBASE'] %}/static/img/sampling_wrong.png"><img src="{% raw media_locale['SITEBASE'] %}/static/img/sampling_correct.png"></div>
             <p class="portal_blurb">{% raw tl['SAMPLE_STEPS_TEXT_5'] %}</p>
@@ -143,6 +144,7 @@
             <p class="portal_blurb">{% raw tl['LOG_SAMPLE_TEXT_1'] %}</p>
             <div class="centered"><img src="{% raw media_locale['SITEBASE'] %}/static/img/labeled_tube.png"></div>
             <p class="portal_blurb">{% raw tl['LOG_SAMPLE_TEXT_2'] %}</p>
+            <p class="portal_blurb">{% raw tl['LOG_SAMPLE_TEXT_3'] %}</p>
         </div>
         <div id="mail_content" class="portal_unselected">
             {% if unconsented %}
@@ -161,7 +163,6 @@
             <p class="portal_blurb">{% raw tl['MAILING_TEXT_3'] %}</p>
             <p class="portal_blurb">{% raw tl['MAILING_TEXT_4'] %}</p>
             <p class="portal_blurb">{% raw tl['MAILING_TEXT_5'] %}</p>
-            <br />
             <h2>{% raw tl['DOMESTIC_HEADER_1'] %}</h2>
             <p class="portal_blurb">{% raw tl['DOMESTIC_TEXT_1'] %}</p>
             <p class="portal_blurb">{% raw tl['DOMESTIC_TEXT_2'] %}</p>
@@ -174,9 +175,11 @@
                 {% raw tl['INTERNATIONAL_TEXT_2'] %}
                 <br /><br />
                 {% raw tl['INTERNATIONAL_TEXT_3'] %}
+                <br /><br />
+                {% raw tl['INTERNATIONAL_TEXT_4'] %}
             </p>
             <h3>{% raw tl['INTERNATIONAL_HEADER_2'] %}</h3>
-            <ul class="shipping">{% raw tl['INTERNATIONAL_TEXT_4'] %}</ul>
+            <ul class="shipping">{% raw tl['YOUR_SAMPLES_LIST'] %}</ul>
             <br /><br />
             <div class="centered"><img src="{% raw media_locale['PORTAL_SHIPPING'] %}"/></div>
         </div>
