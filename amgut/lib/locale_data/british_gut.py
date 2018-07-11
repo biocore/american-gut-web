@@ -910,7 +910,7 @@ _ADDENDUM = {
 _INTERNATIONAL = {
     'PAGE_TITLE': '%(shorthand)s International Shipping Instructions' % {'shorthand': AMGUT_CONFIG.project_shorthand},
     'INTERNATIONAL_HEADER_1': "International Shipping",
-    'INTERNATIONAL_TEXT_1': 'At the moment, we are unable to accept non-British samples at the British Gut. Please send any non-UK international samples to:',
+    'INTERNATIONAL_TEXT_1': 'Please send any non-US and non-European international samples to:',
     'INTERNATIONAL_TEXT_2': 'In order to comply with amended federal and IATA regulations, we are requesting that international participants return their sample tubes through FedEx International and that international participants follow the additional safely requirements for shipping human swab samples to the United States. Your airway bill must clearly identify the package as containing "Human Exempt Sample(s)". The samples will additionally need to be packaged within a secondary containment to ensure that they can safely enter the United States.',
     'INTERNATIONAL_TEXT_3': "For shipment, you will need to use clear tape to secure the sample swabs to the sample tube. Additionally, we suggest using a buff mailing envelope (optional) to protect the sample further. If a buff envelope is used, place the sample in it before placing it inside the provided Tyvek/plastic mailer.",
     'INTERNATIONAL_TEXT_4': "If you do not follow these directions the sample will be destroyed by United States Customs at the port of entry into the United States.",
