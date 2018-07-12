@@ -2,12 +2,12 @@
 {% block content %}
 {% from amgut import text_locale, media_locale %}
 {% set tl = text_locale['introduction.html'] %}
-<h2>{% raw tl['FAQ_HEADER'] %}</h2>
+<h2>{% raw tl['PROJECT_101'] %}</h2>
 <div class="faq_wrapper">
   <div class="faq">
-    <div class="faq_content">
+  <div class="separator" style="width:97.5%;"></div>
         <p>{% raw tl['INTRODUCTION_BEGINNING'] %}</p>
-        <div class="indent_box">
+        <div class="indent_box" style="margin-top:20px; margin-bottom:20px;">
               <h4>{% raw tl['INTRODUCTION_WHAT_IS_GUT_HEAD'] %}</h4>
               <p>{% raw tl['INTRODUCTION_WHAT_IS_GUT'] %}</p>
               <h4>{% raw tl['INTRODUCTION_WHAT_IS_PROJECT_HEAD'] %}</h4>
@@ -28,7 +28,8 @@
               <p>{% raw tl['INTRODUCTION_DISCOVER'] %}</p>
               <h4>{% raw tl['INTRODUCTION_STORIES_HEAD'] %}</h4>
               <p>{% raw tl['INTRODUCTION_STORIES'] %}</p>
-        </div>
+        </div><br>
     </div>
   </div>
 </div>
+{% end %}

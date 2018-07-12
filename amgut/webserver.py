@@ -21,6 +21,7 @@ from amgut.handlers.sample_overview import SampleOverviewHandler
 from amgut.handlers.basic_report import BasicReportHandler
 from amgut.handlers.interactive_report import InteractiveReportHandler
 from amgut.handlers.FAQ import FAQHandler
+from amgut.handlers.introduction import IntroductionHandler
 from amgut.handlers.participant_overview import ParticipantOverviewHandler
 from amgut.handlers.international import InternationalHandler
 from amgut.handlers.animal_survey import (AnimalSurveyHandler,
@@ -95,6 +96,7 @@ class AGWebApplication(Application):
             (r"/authed/connect/open-humans/", OpenHumansLoginHandler),
             (r"/authed/download/(.*)", DownloadHandler),
             (r"/faq/", FAQHandler),
+            (r"/introduction/", IntroductionHandler),
             (r"/participants/(.*)", ParticipantOverviewHandler),
             (r"/international_shipping/", InternationalHandler),
             (r"/check_participant_name/", CheckParticipantName),

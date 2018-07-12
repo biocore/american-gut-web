@@ -1025,6 +1025,7 @@ _PORTAL = {
     'LOG_SAMPLE_TEXT_1': 'Please write the sample site, date, and time on the sampling tube.',
     'LOG_SAMPLE_TEXT_2': 'After writing the information on the sampling tube tube, <a href="%(sitebase)s/authed/add_sample_overview/">assign the sample</a> to a source.' % {'sitebase': media_locale['SITEBASE']},
     'LOG_SAMPLE_TEXT_3': '<strong>We require samples to be assigned</strong> so that we can process each sample and later upload the results based on each sample\'s barcode and corresponding profile.',
+    'LOG_SAMPLE_NEW': 'You have samples to be assigned:',
     'MAILING_HEADER_1': 'Mailing samples',
     'MAILING_TEXT_1': 'Once you have added a <a href="#" onclick="selectTab(\'source\')">sample source, completed the relevant survey</a> (if applicable), <a href="#" onclick="selectTab(\'sample\')">taken</a> and <a href="#" onclick="selectTab(\'log\')">assigned your samples</a>, you should then mail the samples back to us.',
     'MAILING_TEXT_2': 'Wrap the sample tube in absorbent tissue, such as facial tissue or paper towels, and mail it back as soon as possible. The absorbent tissue will help to keep the relative humidity within the package low.',
