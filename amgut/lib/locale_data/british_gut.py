@@ -46,8 +46,12 @@ media_locale = {
     'ADD_PARTICIPANT_IMG_MENU': _SITEBASE + "/static/img/add_participant_menu.png",
     'ADD_SAMPLE_HIGHLIGHT': _SITEBASE + "/static/img/add_sample_highlight.png",
     'ADD_SAMPLE_OVERVIEW': _SITEBASE + "/static/img/add_sample_overview.png",
+    'AMGUT_SHIPPING_ADDRESS': "University of California, San Diego<br>ATTN: Greg Humphrey, Knight Lab<br>BRF II Room 1220D<br>9500 Gilman Drive<br>La Jolla, CA 92093-0763",
+    'EMAIL_ERROR': "There was a problem sending your email. Please contact us directly at <a href='mailto:%(help_email)s'>%(help_email)s</a>" % {'help_email': HELP_EMAIL},
+    'EMAIL_SENT': 'Your message has been sent. We will reply shortly',
     'FAQ_AMBIGUOUS_PASS': _SITEBASE + "/static/img/creds_example.png",
     'FAVICON': _SITEBASE + "/static/img/favicon.ico",
+    'FOBT_PDF': _SITEBASE + '/static/img/FOBT_instructions.pdf',
     'FUNDRAZR_URL': "https://fundrazr.com/campaigns/4sSf3",
     'HELP_EMAIL': HELP_EMAIL,
     'LOGO': _SITEBASE + '/static/img/bg_logo.jpg',
@@ -78,13 +82,12 @@ media_locale = {
     'PORTAL_DIET_QUESTIONS': _SITEBASE + "/static/img/diet_questions.png",
     'PORTAL_SHIPPING': _SITEBASE + "/static/img/international_shipping.png",
     'PROJECT_TITLE': AMGUT_CONFIG.project_name,
+    'RAW_DATA_1': _SITEBASE + 'static/img/raw_data_instructions_1.png',
+    'RAW_DATA_2': _SITEBASE + 'static/img/raw_data_instructions_2.png',
     'SAMPLE_BARCODE': _SITEBASE + "/static/img/sample_barcode.jpg",
-    'STEPS_VIDEO': "https://player.vimeo.com/video/63542787",
-    'SWAB_HANDLING': "https://player.vimeo.com/video/62393487",
-    'EMAIL_ERROR': "There was a problem sending your email. Please contact us directly at <a href='mailto:%(help_email)s'>%(help_email)s</a>" % {'help_email': HELP_EMAIL},
-    'EMAIL_SENT': 'Your message has been sent. We will reply shortly',
     'SHIPPING_ADDRESS': 'Gabriela Surdulescu<br/>Department of Twin Research<br/>St. Thomas’ Hospital Campus<br>The Rayne Institute, Lambeth Wing, 4th Floor<br/>Westminster Bridge Road, London SE1 7EH',
-    'AMGUT_SHIPPING_ADDRESS': "University of California, San Diego<br>ATTN: Greg Humphrey, Knight Lab<br>BRF II Room 1220D<br>9500 Gilman Drive<br>La Jolla, CA 92093-0763"
+    'STEPS_VIDEO': "https://player.vimeo.com/video/63542787",
+    'SWAB_HANDLING': "https://player.vimeo.com/video/62393487"
 }
 
 _HANDLERS = {
@@ -477,12 +480,20 @@ _FAQ = {
     'PASSWORD_SAME_VERIFICATION_ANS': 'No. Your <strong>password</strong> is printed on the sheet that you received with your kit in the mail. That sheet looks like this:</p><img src="%(sitebase)s/static/img/creds_example.png"/>'
                                       '<p>Your <strong>verification code</strong> is emailed to you. Look for the email: <br /><br /><strong>FROM:</strong>  %(project_name)s (%(help_email)s)<br /><strong>SUBJECT:</strong>  %(project_shorthand)s Kit ID & Verification Code' % {'sitebase': media_locale['SITEBASE'], 'project_shorthand': AMGUT_CONFIG.project_shorthand, 'project_name': AMGUT_CONFIG.project_name, 'help_email': media_locale['HELP_EMAIL']},
     'RAW_DATA': "How can I get the raw data?",
-    'RAW_DATA_ANS_1': '<P>The raw data can be fetched from the <a href=http://www.ebi.ac.uk/>European Bioinformatics Institute</a>. EBI is part of <a href=http://www.insdc.org/>The International Nucleotide Sequence Database Collaboration</a> and is a public warehouse for sequence data. The deposited %(project)s accession is <a href="http://www.ebi.ac.uk/ena/data/view/ERP012803&display=html">ERP012803</a>.' % {'project': AMGUT_CONFIG.project_name},
+    'RAW_DATA_ANS_1': '<P>The raw data can be fetched from the <a href=http://www.ebi.ac.uk/>European Bioinformatics Institute</a>. EBI is part of <a href=http://www.insdc.org/>The International Nucleotide Sequence Database Collaboration</a> and is a public warehouse for sequence data. The deposited %(project)s accession is <a href="http://www.ebi.ac.uk/ena/data/view/ERP012803&display=html">ERP012803</a>. You will need your sample barcode number to access your raw data. If you cannot find your sample barcode number, then it likely has not completed processing yet.  If you are still unable to locate it and your results are currently available, please email us to inquire.' % {"project": AMGUT_CONFIG.project_name},
+    'RAW_DATA_STEPS': 'Click on the <a href="http://www.ebi.ac.uk/ena/data/view/ERP012803&display=html">ERP012803</a> accession link above and follow these instructions:',
+    'RAW_DATA_STEP_1': 'Wait until the "Read Files" tab appears',
+    'RAW_DATA_STEP_2': 'Click on the "TEXT" link. A text file will download (it\'s a large file, so it\'ll take a while to download)',
+    'RAW_DATA_STEP_3': 'Open up the text file with Notepad/TextEdit/a simplified text editor program. There should be one pre-installed on your computer',
+    'RAW_DATA_STEP_4': 'Use the find shortcut (CTRL+F or COMMAND+F) and search the text file using your barcode number',
+    'RAW_DATA_STEP_5': 'Four lines above your barcode number, you\'ll find a string of letters and numbers that read "SAMEA[XXXXXXX]". Copy that number',
+    'RAW_DATA_STEP_6': 'Back on the EBI page in the URL address, replace "PRJEB11419" with the copied string from the text file. Press ENTER/RETURN on your computer',
+    'RAW_DATA_STEP_7': 'You can now access your sample\'s raw data! You can download the various files found on the page to explore more',
     'RAW_DATA_ANS_2': 'Processed sequence data and open-access descriptions of the bioinformatic processing can be found at our <a href="https://github.com/qiime/American-Gut">Github repository</a>.</p>'
                       '<p>Sequencing of %(project_shorthand)s samples is an on-going project, as are the bioinformatic analyses. These resources will be updated as more information is added and as more open-access descriptions are finalized.' % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
     'STEPS_TO_FOLLOW': '<a href="%(steps_vid)s">%(project_shorthand)s - Steps to Follow When Your Kit Arrives</a> from <a href="https://vimeo.com/user16100300">shelley schlender</a> on <a href="https://vimeo.com">Vimeo</a>.' % {'project_shorthand': AMGUT_CONFIG.project_shorthand, 'steps_vid': media_locale['STEPS_VIDEO']},
     'TAKES_SIX_MONTHS': "Does it really take up to four months to get my results?",
-    'TAKES_SIX_MONTHS_ANS': "Yes. It takes about eight weeks for extractions, eight weeks for the remainder of the processing, and two weeks to do the actual sequencing. This is before any analysis and if everything goes as planned, with no delays - equipment down, run failures, reagents or other consumables back ordered. There are also added transit times for your sample to travel between the UK and the US. Things do sometimes go wrong, so we say up to four months, although we are working to improve these.",
+    'TAKES_SIX_MONTHS_ANS': "Yes. It takes about six weeks for extractions, six weeks for the remainder of the processing, and two weeks to do the actual sequencing. This is before any analysis and if everything goes as planned, with no delays - equipment down, run failures, reagents or other consumables back ordered. There are also added transit times for your sample to travel between the UK and the US. Things do sometimes go wrong, so we say up to four months, although we are working to improve these.",
     'WATCH_VIDEOS': "Watch these helpful videos created by our colleagues at the American Gut about what to do once you've received your kit!",
     'WHAT_FORMS': "What are the forms you talk about on the sampling instructions?",
     'WHAT_FORMS_ANS': 'The instruction on the sampling instructions that requires you to "place your forms and the sample tube in preaddressed envelope" is leftover from a previous version of the sampling instructions. There are no forms for you to include inside the envelope with your sample.</p>' % {'sitebase': media_locale['SITEBASE']},
@@ -926,7 +937,7 @@ _PORTAL = {
     'DOMESTIC_TEXT_1': "Shipping within the UK should be around £2.90, but we recommend taking the sample to the post office to get the proper postage. Getting the postage right on the first try is important since samples that spend a long time in transit will likely not produce the highest quality results.",
     'DOMESTIC_TEXT_2': "This is the shipping address:",
     'DOMESTIC_TEXT_3': media_locale['SHIPPING_ADDRESS'],
-    'FOBT_INSTRUCTIONS': '<strong>If you have a FOBT card, please follow <a href="%s/static/img/FOBT_instructions.pdf" target="_blank">these sampling instructions</a> instead and <a href="#" onclick="selectTab(\'log\')">assign it</a>.</strong>' % _SITEBASE,
+    'FOBT_INSTRUCTIONS': '<strong>If you have a FOBT card, please follow <a href="%s" target="_blank">these sampling instructions</a> instead and <a href="#" onclick="selectTab(\'log\')">assign it</a>.</strong>' % media_locale['FOBT_PDF']
     'GREETING': "Hi %(user_name)s! Please follow the steps below.",
     'INTERNATIONAL_HEADER_1': "International Shipping",
     'INTERNATIONAL_HEADER_2': "Your samples",

@@ -32,8 +32,11 @@ media_locale = {
     'ADD_SAMPLE_HIGHLIGHT': _SITEBASE + "/static/img/add_sample_highlight.png",
     'ADD_SAMPLE_OVERVIEW': _SITEBASE + "/static/img/add_sample_overview.png",
     'FAQ_AMBIGUOUS_PASS': _SITEBASE + '/static/img/creds_example.png',
+    'RAW_DATA_1': _SITEBASE + "/static/img/raw_data_instructions_1.png",
+    'RAW_DATA_2': _SITEBASE + "/static/img/raw_data_instructions_2.png",
     'SAMPLE_BARCODE': _SITEBASE + '/static/img/sample_barcode.jpg',
     'SWAB_HANDLING': 'https://player.vimeo.com/video/62393487',
+    'FOBT_PDF': _SITEBASE + '/static/img/FOBT_instructions.pdf',
     'HELP_EMAIL': HELP_EMAIL,
     'PROJECT_TITLE': AMGUT_CONFIG.project_name,
     'FAVICON': _SITEBASE + '/static/img/favicon.ico',
@@ -135,12 +138,20 @@ _FAQ = {
     'LOG_IN_WHAT_NOW_ANS_4': 'The generic add sample page looks like this:',
     'RAW_DATA_ANS_2': 'Processed sequence data and open-access descriptions of the bioinformatic processing can be found at our <a href="https://github.com/qiime/American-Gut">Github repository</a>.</p>'
                                 '<p>Sequencing of %(shorthand)s samples is an on-going project, as are the bioinformatic analyses. These resources will be updated as more information is added and as more open-access descriptions are finalized.' % {"shorthand": AMGUT_CONFIG.project_shorthand},
-    'RAW_DATA_ANS_1': '<P>The raw data can be fetched from the <a href=http://www.ebi.ac.uk/>European Bioinformatics Institute</a>. EBI is part of <a href=http://www.insdc.org/>The International Nucleotide Sequence Database Collaboration</a> and is a public warehouse for sequence data. The deposited %(project)s accession is <a href="http://www.ebi.ac.uk/ena/data/view/ERP012803&display=html">ERP012803</a>.' % {"project": AMGUT_CONFIG.project_name},
+    'RAW_DATA_ANS_1': '<P>The raw data can be fetched from the <a href=http://www.ebi.ac.uk/>European Bioinformatics Institute</a>. EBI is part of <a href=http://www.insdc.org/>The International Nucleotide Sequence Database Collaboration</a> and is a public warehouse for sequence data. The deposited %(project)s accession is <a href="http://www.ebi.ac.uk/ena/data/view/ERP012803&display=html">ERP012803</a>. You will need your sample barcode number to access your raw data. If you cannot find your sample barcode number, then it likely has not completed processing yet.  If you are still unable to locate it and your results are currently available, please email us to inquire.' % {"project": AMGUT_CONFIG.project_name},
+    'RAW_DATA_STEPS': 'Click on the <a href="http://www.ebi.ac.uk/ena/data/view/ERP012803&display=html">ERP012803</a> accession link above and follow these instructions:',
+    'RAW_DATA_STEP_1': 'Wait until the "Read Files" tab appears',
+    'RAW_DATA_STEP_2': 'Click on the "TEXT" link. A text file will download (it\'s a large file, so it\'ll take a while to download)',
+    'RAW_DATA_STEP_3': 'Open up the text file with Notepad/TextEdit/a simplified text editor program. There should be one pre-installed on your computer',
+    'RAW_DATA_STEP_4': 'Use the find shortcut (CTRL+F or COMMAND+F) and search the text file using your barcode number',
+    'RAW_DATA_STEP_5': 'Four lines above your barcode number, you\'ll find a string of letters and numbers that read "SAMEA[XXXXXXX]". Copy that number',
+    'RAW_DATA_STEP_6': 'Back on the EBI page in the URL address, replace "PRJEB11419" with the copied string from the text file. Press ENTER/RETURN on your computer',
+    'RAW_DATA_STEP_7': 'You can now access your sample\'s raw data! You can download the various files found on the page to explore more',
     'BETTER_OR_WORSE_ANS': 'Right now, you can\'t. We\'re still trying to understand what constitutes a normal or average gut microbiome, and we have a lot to learn about the functions of many of the microbes that inhabit the gut. Therefore, it\'s tough to know what combinations of microbes are best for nutrition and health. That\'s one reason collecting data from so many people is important - hopefully we can start to learn more about this.',
     'LOOK_BELOW': "If you're still experiencing issues, look for your problem in the FAQ below",
     'PASSWORD_SAME_VERIFICATION_ANS': 'No. Your <strong>password</strong> is printed on the sheet that you received with your kit in the mail. That sheet looks like this:</p>'
                                       '<img src="%(FAQ_AMBIGUOUS_PASS)s"/><p>Your <strong>verification code</strong> is emailed to you. Look for the email: <br /><br /><strong>FROM:</strong>  %(project)s (%(help_email)s)<br /><strong>SUBJECT:</strong>  %(shorthand)s Kit ID & Verification Code' % {"shorthand": AMGUT_CONFIG.project_shorthand, "project": AMGUT_CONFIG.project_name, "FAQ_AMBIGUOUS_PASS": media_locale['FAQ_AMBIGUOUS_PASS'], 'help_email': media_locale['HELP_EMAIL']},
-    'TAKES_SIX_MONTHS_ANS': 'Yes. It takes about eight weeks for extractions, eight weeks for the remainder of the processing, and two weeks to do the actual sequencing. This is before any analysis and if everything goes as planned, with no delays - equipment down, run failures, reagents or other consumables back ordered. Things do sometimes go wrong, so we say up to three months.',
+    'TAKES_SIX_MONTHS_ANS': 'Yes. It takes about six weeks for extractions, six weeks for the remainder of the processing, and two weeks to do the actual sequencing. This is before any analysis and if everything goes as planned, with no delays - equipment down, run failures, reagents or other consumables back ordered. Things do sometimes go wrong, so we say up to three months.',
     'PARTICIPATE_WITH_DIAGNOSIS_ANS': 'Of course! The only exclusion criteria are: you must be more than 3 months old and cannot be in prison. Please keep in mind that, for legal and ethical reasons, the %(project)s does not provide medically actionable results or advice.' % {"project": AMGUT_CONFIG.project_name},
     'HOW_PROCESS_SAMPLES': 'How are the samples and data processed?',
     'WHO_MICHAEL_POLLAN_ANS': 'Michael Pollan is a New York Times Best Seller for his books on diet and nutrition. Further information about Michael can be found <a href="http://michaelpollan.com/">here</a>.',
@@ -1050,7 +1061,7 @@ _PORTAL = {
     'RESULTS_READY_TEXT_1': 'One or more of the samples you submitted have been sequenced, and the results are now available online! Currently, we have only processed fecal samples, but we will be processing samples from other body sites soon.',
     'RESULTS_READY_TEXT_2': 'To access your available results, hover over "Human Samples" in the menu on the left, hover over your name, then click on your sample to view your results, or click one of the links below. <b>For help interpreting results, <a href="%s/authed/addendum/">click here</a></b>. The following barcodes are ready:' % _SITEBASE,
     'RESULTS_READY_TEXT_3': 'You will be able to view your results here on this website once they are available.',
-    'FOBT_INSTRUCTIONS': '<strong>If you have a FOBT card, please follow <a href="%s/static/img/FOBT_instructions.pdf" target="_blank">these sampling instructions</a> instead and <a href="#" onclick="selectTab(\'log\')">assign it</a>.</strong>' % _SITEBASE
+    'FOBT_INSTRUCTIONS': '<strong>If you have a FOBT card, please follow <a href="%s" target="_blank">these sampling instructions</a> instead and <a href="#" onclick="selectTab(\'log\')">assign it</a>.</strong>' % media_locale['FOBT_PDF']
 }
 
 _CHANGE_PASS_VERIFY = {
