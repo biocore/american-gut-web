@@ -18,6 +18,7 @@ _SITEBASE = AMGUT_CONFIG.sitebase
 
 media_locale = {
     'LOCALE': AMGUT_CONFIG.locale,
+    'SHORTHAND': AMGUT_CONFIG.project_shorthand,
     'SITEBASE': _SITEBASE,
     'LOGO': _SITEBASE + '/static/img/ag_logo.png',
     'ANALYTICS_ID': 'UA-55353353-1',
@@ -41,7 +42,11 @@ media_locale = {
     'PROJECT_TITLE': AMGUT_CONFIG.project_name,
     'FAVICON': _SITEBASE + '/static/img/favicon.ico',
     'FUNDRAZR_URL': 'https://fundrazr.com/campaigns/4Tqx5',
+    'AMERICAN_GUT_PROJECT': 'http://humanfoodproject.com/americangut',
+    'BRITISH_GUT_PROJECT': 'http://britishgut.org',
+    'ALT_GUT_SITE': 'https://microbio.me',
     'NAV_PARTICIPANT_RESOURCES': 'Participant Resources',
+    'NAV_OTHER_SITES': 'Other Sites',
     'NAV_HOME': 'Home',
     'NAV_MICROBIOME_101': '%s 101' % AMGUT_CONFIG.project_shorthand,
     'NAV_FAQ': 'FAQ',
@@ -64,6 +69,9 @@ media_locale = {
     'NAV_REGISTER_KIT': 'Register Kit',
     'NAV_FORGOT_KITID': 'I forgot my kit ID',
     'NAV_INTERNATIONAL': 'International Shipping',
+    'NAV_AMERICAN_GUT_PROJECT': 'American Gut Project',
+    'NAV_BRITISH_GUT_PROJECT': 'British Gut Project',
+    'NAV_ALT_GUT': ' Participant Site',
     'NAV_FORGOT_PASSWORD': 'I forgot my password',
     'ADDENDUM_CERT_TITLE': _SITEBASE + '/static/img/Michael_Pollan_mod-01.png',
     'ADDENDUM_CERT_NAME': _SITEBASE + '/static/img/Michael_Pollan_mod-01b.png',
@@ -87,6 +95,7 @@ media_locale = {
     'EMAIL_ERROR': "There was a problem sending your email. Please contact us directly at <a href='mailto:%(help_email)s'>%(help_email)s</a>" % {'help_email': HELP_EMAIL},
     'EMAIL_SENT': 'Your message has been sent. We will reply shortly',
     'SHIPPING_ADDRESS': "ATTN: Greg Humphrey, Knight Lab<br>BRF II Room 1220D<br>9500 Gilman Drive<br>La Jolla, CA 92093-0763",
+    'GUT_PROJECT_SHORTHANDS': ['American Gut', 'British Gut']
 }
 
 
