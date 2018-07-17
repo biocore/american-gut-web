@@ -11,7 +11,6 @@ from amgut.lib.config_manager import AMGUT_CONFIG
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
 
-
 # Any media specific localizations
 HELP_EMAIL = "info@britishgut.org"
 
@@ -19,6 +18,7 @@ _SITEBASE = AMGUT_CONFIG.sitebase
 
 media_locale = {
     'LOCALE': AMGUT_CONFIG.locale,
+    'SHORTHAND': AMGUT_CONFIG.project_shorthand,
     'SITEBASE': _SITEBASE,
     'ANALYTICS_ID': 'UA-55355651-1',
     'LATITUDE': 54.5,
@@ -46,21 +46,28 @@ media_locale = {
     'ADD_PARTICIPANT_IMG_MENU': _SITEBASE + "/static/img/add_participant_menu.png",
     'ADD_SAMPLE_HIGHLIGHT': _SITEBASE + "/static/img/add_sample_highlight.png",
     'ADD_SAMPLE_OVERVIEW': _SITEBASE + "/static/img/add_sample_overview.png",
-    'AMGUT_SHIPPING_ADDRESS': "University of California, San Diego<br>ATTN: Greg Humphrey, Knight Lab<br>BRF II Room 1220D<br>9500 Gilman Drive<br>La Jolla, CA 92093-0763",
+    'ALT_GUT_SITE': 'https://microbio.me',
+    'AMERICAN_GUT_PROJECT': 'http://humanfoodproject.com/americangut',
+    'AMGUT_SHIPPING_ADDRESS': "ATTN: Greg Humphrey, Knight Lab<br>BRF II Room 1220D<br>9500 Gilman Drive<br>La Jolla, CA 92093-0763",
+    'BRITISH_GUT_PROJECT': 'http://britishgut.org',
     'EMAIL_ERROR': "There was a problem sending your email. Please contact us directly at <a href='mailto:%(help_email)s'>%(help_email)s</a>" % {'help_email': HELP_EMAIL},
     'EMAIL_SENT': 'Your message has been sent. We will reply shortly',
     'FAQ_AMBIGUOUS_PASS': _SITEBASE + "/static/img/creds_example.png",
     'FAVICON': _SITEBASE + "/static/img/favicon.ico",
     'FOBT_PDF': _SITEBASE + '/static/img/FOBT_instructions.pdf',
     'FUNDRAZR_URL': "https://fundrazr.com/campaigns/4sSf3",
+    'GUT_PROJECT_SHORTHANDS': ['American Gut', 'British Gut'],
     'HELP_EMAIL': HELP_EMAIL,
     'KIT_INSTRUCTIONS': _SITEBASE + '/static/img/bg_kit_instructions.pdf',
-    'LOGO': _SITEBASE + '/static/img/bg_logo.jpg',
+    'LOGO': _SITEBASE + '/static/img/bg_logo.png',
     'LOG_SAMPLE_OPTS': _SITEBASE + "/static/img/log_sample_options.png",
     'NAV_ADDENDUM': "How do I interpret my results?",
     'NAV_ADD_ANIMAL': "Add Animal Source",
     'NAV_ADD_HUMAN': "Add Human Source",
+    'NAV_ALT_GUT': ' Participant Site',
+    'NAV_AMERICAN_GUT_PROJECT': 'American Gut Project',
     'NAV_ANIMAL_SAMPLES': "Animal Samples",
+    'NAV_BRITISH_GUT_PROJECT': 'British Gut Project',
     'NAV_CHANGE_PASSWORD': "Change Password",
     'NAV_CONTACT_US': "Contact Us",
     'NAV_ENV_SAMPLES': "Environmental Samples",
@@ -76,12 +83,13 @@ media_locale = {
     'NAV_LOG_SAMPLE': "Assign Sample",
     'NAV_MICROBIOME_101': "%(project_shorthand)s 101" % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
     'NAV_MICROBIOME_FAQ': "Human Microbiome FAQ",
+    'NAV_OTHER_SITES': 'Other Sites',
     'NAV_PARTICIPANT_LOGIN': "Participant Log In",
     'NAV_PARTICIPANT_RESOURCES': "Participant Resources",
     'NAV_PRELIM_RESULTS': "Preliminary results!",
     'NAV_RECEIVED': "(Received)",
     'PORTAL_DIET_QUESTIONS': _SITEBASE + "/static/img/diet_questions.png",
-    'PORTAL_SHIPPING': _SITEBASE + "/static/img/international_shipping.png",
+    'PORTAL_SHIPPING': _SITEBASE + "/static/img/shipping.png",
     'PROJECT_TITLE': AMGUT_CONFIG.project_name,
     'RAW_DATA_1': _SITEBASE + 'static/img/raw_data_instructions_1.png',
     'RAW_DATA_2': _SITEBASE + 'static/img/raw_data_instructions_2.png',
@@ -472,7 +480,7 @@ _FAQ = {
     'NOT_A_BUSINESS': "We are not a business",
     'NOT_A_BUSINESS_ANS': 'We have had many enquiries about our "service" or "business". %(project_shorthand)s is a contribution-supported academic project that is a collaboration between the <a href="http://www.earthmicrobiome.org">Earth Microbiome Project</a> and the <a href="http://humanfoodproject.com/">Human Food Project</a>, primarily run out of the <a href="https://knightlab.ucsd.edu/">Knight Lab</a> at the University of California San Diego, and is not a business or service.  In particular, the project is not a diagnostic test (although the information gained through the project may in future contribute to the development of diagnostic tests). All data except for information that needs to be kept confidential for privacy reasons is openly and freely released into public databases, and the project is not intended to make a profit (any surplus funds would be recycled back into furthering human microbiome research).' % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
     'ONLY_FECAL_RESULTS': "I sent more than one kind of sample, but I only received data for my faecal sample. What happened to my other samples?",
-    'ONLY_FECAL_RESULTS_ANS': 'Results are only available for fecal, oral, and skin samples.  We are in the process of evaluating how best to present the other sample types. Please see <a href="#faq12">the previous question </a>',
+    'ONLY_FECAL_RESULTS_ANS': 'Results are only available for fecal, oral, and skin samples. We are in the process of evaluating how best to present the other sample types. Please see <a href="#faq12">the previous question </a>',
     'PARTICIPATE_WITH_DIAGNOSIS': "Can I participate in the project if I am diagnosed with ...?",
     'PARTICIPATE_WITH_DIAGNOSIS_ANS': "Of course! The only exclusion criteria are: you must be more than 3 months old and cannot be in prison. Please keep in mind that, for legal and ethical reasons, the British Gut Project does not provide medically actionable results or advice.",
     'PASSWORD_DOESNT_WORK': "My password doesn't work!",
