@@ -900,6 +900,7 @@ _ADDENDUM = {
     'TITLE': 'American Gut Addendum',
     'INTRO': 'We\'d like to note that in general these data allow you to understand how similar or different you are to other people in terms of the bacterial composition of the sample you sent. The information about the microbes is at as fine level of a taxonomic resolution as we were able to achieve with our sequencing methods, and varies for different groups of microbes. Currently, we cannot tell you what it means if you have more or less of a certain bacteria than other people. Gut microbiome research is still new, and we have a lot to learn. Your participation in the American Gut Project will allow us to learn more, and we hope to update you with new findings as they emerge.',
     'LEARN_MORE': 'Learn more about your certificate by clicking on a plot or table',
+    'NOTE': 'Note that the results below act as an example of what our reports look like (we use Michael Pollan’s as a sample).  These are not a reflection of your own results.',
     'MOD01ALT': 'Your American Gut Sample',
     'MOD01bALT': 'Michael Pollan',
     'MOD02ALT': 'What\'s in your sample?',

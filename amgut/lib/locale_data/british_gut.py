@@ -897,6 +897,7 @@ _ADDENDUM = {
     'MOD13ALT': "Abundant Microbes",
     'MOD14ALT': "Enriched Microbes",
     'MOD15ALT': "Rare Microbes",
+    'NOTE': 'Note that the results below act as an example of what our reports look like (we use Michael Pollan’s as a sample).  These are not a reflection of your own results.',
     'OBSERVED_TAXON_1': "<td class = 'taxa'>Family Prevotella</td><td class = 'row'>24.9%</td>",
     'OBSERVED_TAXON_2': "<td class = 'taxa'>Family Ruminococcaceae</td><td class = 'row'>13.4%</td>",
     'OBSERVED_TAXON_3': "<td class = 'taxa'>Family Lachnospiraceae</td><td class = 'row'>10.1%</td>",
