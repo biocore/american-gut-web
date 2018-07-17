@@ -947,7 +947,7 @@ _PORTAL = {
     'DOMESTIC_TEXT_1': "Shipping within the UK should be around £2.90, but we recommend taking the sample to the post office to get the proper postage. Getting the postage right on the first try is important since samples that spend a long time in transit will likely not produce the highest quality results.",
     'DOMESTIC_TEXT_2': "This is the shipping address:",
     'DOMESTIC_TEXT_3': media_locale['SHIPPING_ADDRESS'],
-    'FOBT_INSTRUCTIONS': '<strong>If you have a FOBT card, please follow <a href="%s" target="_blank">these sampling instructions</a> instead and <a href="#" onclick="selectTab(\'log\')">assign it</a>.</strong>' % media_locale['FOBT_PDF']
+    'FOBT_INSTRUCTIONS': '<strong>If you have a FOBT card, please follow <a href="%s" target="_blank">these sampling instructions</a> instead and <a href="#" onclick="selectTab(\'log\')">assign it</a>.</strong>' % media_locale['FOBT_PDF'],
     'GREETING': "Hi %(user_name)s! Please follow the steps below.",
     'INTERNATIONAL_HEADER_1': "International Shipping",
     'INTERNATIONAL_HEADER_2': "Your samples",
