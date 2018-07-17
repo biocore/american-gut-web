@@ -88,7 +88,7 @@ media_locale = {
 
 
 _HANDLERS = {
-    'PARTICIPANT_EXISTS': 'Participant %s already exists!',
+    'PARTICIPANT_EXISTS': 'Participant %s already exists! This means we already have a survey on file under this name. Try using a variation of the name (such as substituting an initial for the first or last name).',
     'MISSING_NAME_EMAIL': 'Missing participant name or email. Please retry, adding all required information.',
     'SUCCESSFULLY_ADDED': "Successfully added %s!",
     'SUCCESSFULLY_EDITED': "Successfully edited %s!",
