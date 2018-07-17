@@ -127,6 +127,12 @@ _HANDLERS = {
 # Template specific dicts
 _FAQ = {
     'FAQ_HEADER': "%(shorthand)s FAQ" % {"shorthand": AMGUT_CONFIG.project_shorthand},
+    'FAQ_SECTION_1': "The %(name)s general questions and information" % {"name": AMGUT_CONFIG.project_name},
+    'FAQ_SECTION_2': "I'm having trouble logging in",
+    'FAQ_SECTION_3': "I have a question about the submission process/instruction packet",
+    'FAQ_SECTION_4': "I have a question about my sample results",
+    'FAQ_SECTION_5': "I have a question about my raw data and the analysis process",
+    'FAQ_SECTION_6': "Miscellaneous questions",
     'LOG_IN_WHAT_NOW_ANS_1': 'You need to follow the add participant workflow. Click on the "Add Source & Survey" tab located at the top of the page.',
     'INFORMATION_IDENTIFY_ME': 'Can data describing my gut microbiome be used to identify me or a medical condition I have?',
     'LOG_IN_WHAT_NOW_ANS_3': 'You can assign a sample by clicking the "Assign Sample" link in the menu. If you do not see the "Assign Sample" link, then all of your barcodes have been assigned.',
@@ -209,7 +215,7 @@ _FAQ = {
     'WHEN_RESULTS_NON_FECAL': 'I sent in a non-fecal sample and have not received any results, when should I expect results?',
     'WHAT_FORMS': 'What are the forms you talk about on the sampling instructions?',
     'ANOTHER_COPY_RESULTS': 'Can I get another copy of my results?',
-    'NOT_A_BUSINESS': 'We are not a business',
+    'NOT_A_BUSINESS': 'Is the %(name)s a business?' % {"name": AMGUT_CONFIG.project_name},
     'WHERE_SEND_SAMPLE_ANS': '<p>This is the shipping address:</p>'
                               '%(address)s<p>If you are shipping internationally, please see the <a href="%(sitebase)s/international_shipping/">international shipping instructions</a>.' % {'sitebase': media_locale['SITEBASE'], 'address': media_locale['SHIPPING_ADDRESS']}
 }
