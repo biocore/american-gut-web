@@ -1050,7 +1050,7 @@ _HUMAN_SURVEY_COMPLETED = {
 
 _NOJS = {
     'MESSAGE': 'You have JavaScript disabled, which this site requires in order to function properly. <br/>Please enable javascript and reload <a href="http://www.microbio.me/britishgut">http://www.microbio.me/britishgut</a>.',
-    'NEED_HELP': 'If you need help enabling JavaScript in your browser, <br/>Please email us at <a href="mailto:americangut@gmail.com">americangut@gmail.com</a>'
+    'NEED_HELP': 'If you need help enabling JavaScript in your browser, <br/>Please email us at <a href="mailto:britishgut@gmail.com">britishgut@gmail.com</a>'
 }
 
 _PERSONAL_MICROBIOME = {
