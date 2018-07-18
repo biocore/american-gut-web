@@ -560,7 +560,8 @@ _HELP_REQUEST = {
     'PROBLEM_PROMPT': "Enter information related to your problem",
     'CONTACT_HEADER': "Contact the %(project_shorthand)s" % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
     'RESPONSE_TIMING': "We will send a response to the email address you supply within 24 hours.",
-    'EMAIL_ADDRESS': "Email address        ",
+    'EMAIL_ADDRESS': "Email address",
+    'NOTE': 'Note that all inquiries are directed to the American Gut help account, which will be responding to the request.'
 }
 _DB_ERROR = {
     'HEADER': "Oops! There seems to be a database error.",

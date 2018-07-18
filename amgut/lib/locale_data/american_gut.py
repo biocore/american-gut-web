@@ -253,7 +253,8 @@ _HELP_REQUEST = {
     'FIRST_NAME': "First name",
     'LAST_NAME': "Last name",
     'EMAIL_ADDRESS': "Email address",
-    'PROBLEM_PROMPT': "Enter information related to your problem"
+    'PROBLEM_PROMPT': "Enter information related to your problem",
+    'NOTE': 'Note that all inquiries are directed to the American Gut help account, which will be responding to the request.'
 }
 
 _DB_ERROR = {
