@@ -127,7 +127,7 @@ _HANDLERS = {
 # Template specific dicts
 _FAQ = {
     'FAQ_HEADER': "%(shorthand)s FAQ" % {"shorthand": AMGUT_CONFIG.project_shorthand},
-    'FAQ_SECTION_1': "The %(name)s general questions and information" % {"name": AMGUT_CONFIG.project_name},
+    'FAQ_SECTION_1': "The %(shorthand)s general questions and information" % {"shorthand": AMGUT_CONFIG.project_shorthand},
     'FAQ_SECTION_2': "I'm having trouble logging in",
     'FAQ_SECTION_3': "I have a question about the submission process/instruction packet",
     'FAQ_SECTION_4': "I have a question about my sample results",
@@ -215,9 +215,10 @@ _FAQ = {
     'WHEN_RESULTS_NON_FECAL': 'I sent in a non-fecal sample and have not received any results, when should I expect results?',
     'WHAT_FORMS': 'What are the forms you talk about on the sampling instructions?',
     'ANOTHER_COPY_RESULTS': 'Can I get another copy of my results?',
-    'NOT_A_BUSINESS': 'Is the %(name)s a business?' % {"name": AMGUT_CONFIG.project_name},
+    'NOT_A_BUSINESS': 'Is the %(shorthand)s a business?' % {"shorthand": AMGUT_CONFIG.project_shorthand},
     'WHERE_SEND_SAMPLE_ANS': '<p>This is the shipping address:</p>'
-                              '%(address)s<p>If you are shipping internationally, please see the <a href="%(sitebase)s/international_shipping/">international shipping instructions</a>.' % {'sitebase': media_locale['SITEBASE'], 'address': media_locale['SHIPPING_ADDRESS']}
+                              '%(address)s<p>If you are shipping internationally, please see the <a href="%(sitebase)s/international_shipping/">international shipping instructions</a>.' % {'sitebase': media_locale['SITEBASE'], 'address': media_locale['SHIPPING_ADDRESS']},
+    'ADDITIONAL_QUESTIONS': 'If you are not able to get your question answered, please email us at <a href="mailto:%(help_email)s">%(help_email)s</a> and we will do our best to assist you.' % {"help_email": media_locale["HELP_EMAIL"]}
 }
 
 _INTRODUCTION = {

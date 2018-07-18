@@ -36,36 +36,6 @@
       <br />
       <div class="separator"></div>
       <h3>{% raw tl['LOOK_BELOW'] %}</h3>
-      <ul class="faq">
-          <ul class="faq">
-              <li>test</li>
-              <li>TEST</LI>
-          </ul>
-      <li><a href="#faq1">{% raw tl['PASSWORD_SAME_VERIFICATION'] %}</a></li>
-      <li><a href="#faq2">{% raw tl['PASSWORD_DOESNT_WORK'] %}</a></li>
-      <li><a href="#faq3">{% raw tl['LOG_IN_WHAT_NOW'] %}</a></li>
-      <li><a href="#faq4">{% raw tl['TAKES_SIX_MONTHS'] %}</a></li>
-      <li><a href="#faq5">{% raw tl['WHY_TWO_SWABS'] %}</a></li>
-      <li><a href="#faq6">{% raw tl['MULTIPLE_KITS_DIFFERENT_TIMES'] %}</a></li>
-      <li><a href="#faq7">{% raw tl['WHAT_FORMS'] %}</a></li>
-      <li><a href="#faq8">{% raw tl['RAW_DATA'] %}</a></li>
-      <li><a href="#faq9">{% raw tl['WHERE_SEND_SAMPLE'] %}</a></li>
-      <li><a href="#faq10">{% raw tl['DIFFERENT_WHATS_WRONG_WITH_ME'] %}</a></li>
-      <li><a href="#faq11">{% raw tl['BETTER_OR_WORSE'] %}</a></li>
-      <li><a href="#faq12">{% raw tl['WHEN_RESULTS_NON_FECAL'] %}</a></li>
-      <li><a href="#faq13">{% raw tl['ONLY_FECAL_RESULTS'] %}</a></li>
-      <li><a href="#faq14">{% raw tl['COMBINE_RESULTS'] %}</a></li>
-      <li><a href="#faq15">{% raw tl['FECAL_NO_RESULTS'] %}</a></li>
-      <li><a href="#faq16">{% raw tl['INFORMATION_IDENTIFY_ME'] %}</a></li>
-      <li><a href="#faq17">{% raw tl['FIND_DETAILED_INFO'] %}</a></li>
-      <li><a href="#faq18">{% raw tl['WHO_MICHAEL_POLLAN'] %}</a></li>
-      <li><a href="#faq19">{% raw tl['HOW_CHANGE_GUT'] %}</a></li>
-      <li><a href="#faq20">{% raw tl['ANOTHER_COPY_RESULTS'] %}</a></li>
-      <li><a href="#faq23">{% raw tl['PARTICIPATE_WITH_DIAGNOSIS'] %}</a></li>
-      <li><a href="#faq24">{% raw tl['MISSING_METADATA'] %}</a></li>
-      <li><a href="#faq25">{% raw tl['HOW_PROCESS_SAMPLES'] %}</a></li>
-      <li><a href="#faq2">{% raw tl['NOT_A_BUSINESS'] %}</a></li>
-      </ul>
 
       <button class="collapsible" id="faq1">{% raw tl['FAQ_SECTION_1'] %}</button>
       <div class="collapsed_content">
@@ -106,15 +76,15 @@
           <h3 class="faq_header" id="faq9">{% raw tl['LOG_IN_WHAT_NOW'] %}</h3>
           <div class="faq_content">
               <p>{% raw tl['LOG_IN_WHAT_NOW_ANS_1'] %}</p>
-              <img src="{{media_locale['ADD_PARTICIPANT_IMG_1']}}">
+              <img src="{{media_locale['ADD_PARTICIPANT_IMG_1']}}" height='auto' width='650px'/>
               {% raw tl['LOG_IN_WHAT_NOW_ANS_2'] %}
-              <img src="{{media_locale['ADD_PARTICIPANT_IMG_MENU']}}"/>
+              <img src="{{media_locale['ADD_PARTICIPANT_IMG_MENU']}}" height='auto' width='650px'/>
               <p>{% raw tl['LOG_IN_WHAT_NOW_ANS_3'] %}</p>
-              <img src="{{media_locale['LOG_SAMPLE_OPTS']}}"/>
+              <img src="{{media_locale['LOG_SAMPLE_OPTS']}}" height='auto' width='650px'/>
               <p>{% raw tl['LOG_IN_WHAT_NOW_ANS_4'] %}</p>
-              <img src="{{media_locale['ADD_SAMPLE_HIGHLIGHT']}}"/>
+              <img src="{{media_locale['ADD_SAMPLE_HIGHLIGHT']}}" height='auto' width='550px'/>
               <p>{% raw tl['LOG_IN_WHAT_NOW_ANS_5'] %}</p>
-              <img src="{{media_locale['ADD_SAMPLE_OVERVIEW']}}"/>
+              <img src="{{media_locale['ADD_SAMPLE_OVERVIEW']}}" height='auto' width='650px'/>
           </div>
           <div class="separator"></div>
 
@@ -209,11 +179,11 @@
               <ol>
                   <li>{% raw tl['RAW_DATA_STEP_1'] %}</li>
                   <li>{% raw tl['RAW_DATA_STEP_2'] %}</li>
-                  <img src="{{media_locale['RAW_DATA_1']}}" height="auto" width="700px" style="margin: 10px 0;">
+                  <img src="{{media_locale['RAW_DATA_1']}}" height="auto" width="600px" style="margin: 10px 0;">
                   <li>{% raw tl['RAW_DATA_STEP_3'] %}</li>
                   <li>{% raw tl['RAW_DATA_STEP_4'] %}</li>
                   <li>{% raw tl['RAW_DATA_STEP_5'] %}</li>
-                  <img src="{{media_locale['RAW_DATA_2']}}" height="auto" width="700px" style="margin: 10px 0;">
+                  <img src="{{media_locale['RAW_DATA_2']}}" height="auto" width="600px" style="margin: 10px 0;">
                   <li>{% raw tl['RAW_DATA_STEP_6'] %}</li>
                   <li>{% raw tl['RAW_DATA_STEP_7'] %}</li>
               </ol>
@@ -256,9 +226,10 @@
           </div>
           <br>
       </div>
+      <p>{% raw tl['ADDITIONAL_QUESTIONS'] %}</p>
     </div>
   </div>
-  <br><br/>
+  <br>
 </div>
 <script>
 var coll = document.getElementsByClassName("collapsible");
