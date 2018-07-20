@@ -749,6 +749,25 @@ class TestAGDataAccess(TestCase):
         res = self.ag_data.getBarcodesByKit('42')
         self.assertEqual(res, [])
 
+    def test_getAGSurveyDetails_primary(self):
+        res = self.ag_data.getAGSurveyDetails(1, 'american')
+
+        # confirms if columns are as expectected
+        res_columns = res.columns
+        exp_columns = {'survey_question_id', 'american',
+                       'question_shortname', 'response', 'response_index'}
+        self.assertTrue(exp_columns.issubset(res_columns))
+
+        res_column = set(res.loc[:,'american'])
+        exp_column = {'Gender:', 'Birth year:', 'Country of residence:',
+                   'How were you fed as an infant?',
+                   'Have you ever been diagnosed with cancer?',
+                   'I have received a flu vaccine in the last ____________.',
+                   'Please write anything else about yourself that ' +
+                   'you think could affect your personal microorganisms.'
+                   }
+        self.assertTrue(exp_column.issubset(res_column))
+
     def test_getAGSurveyDetails_invalidParam(self):
         with self.assertRaises(ValueError):
             self.ag_data.getAGSurveyDetails(0, 'inval_language')
