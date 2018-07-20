@@ -231,18 +231,13 @@ class AGDataAccess(object):
         Raises
         ------
         ValueError
-            both survey_id and language not found in database
-        ValueError
             survey_id not found in database
         ValueError
             language not found in database
         """
         if survey_id not in self.getKnownSurveyIds():
-            if language not in self.getKnownLanguages():
-                raise ValueError('Invalid survey_id and language')
-            else:
-                raise ValueError('Invalid survey_id')
-        elif language not in self.getKnownLanguages():
+            raise ValueError('Invalid survey_id')
+        if language not in self.getKnownLanguages():
             raise ValueError('Invalid language')
 
         sql = """SELECT survey_question_id,
