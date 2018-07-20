@@ -749,6 +749,26 @@ class TestAGDataAccess(TestCase):
         res = self.ag_data.getBarcodesByKit('42')
         self.assertEqual(res, [])
 
+    def test_getAGSurveyDetails_invalidParam(self):
+        with self.assertRaises(ValueError):
+            self.ag_data.getAGSurveyDetails(0, 'inval_language')
+
+        with self.assertRaises(ValueError):
+            self.ag_data.getAGSurveyDetails(0, 'american')
+
+        with self.assertRaises(ValueError):
+            self.ag_data.getAGSurveyDetails(1, 'inval_language')
+
+    def test_getKnownSurveyIds(self):
+        res = self.ag_data.getKnownSurveyIds()
+        exp = {1, 2, 3, 4, 5}
+        self.assertTrue(exp.issubset(res))
+
+    def test_getKnownLanguages(self):
+        res = self.ag_data.getKnownLanguages()
+        exp = {'american', 'british'}
+        self.assertTrue(exp.issubset(res))
+
     def test_checkPrintResults(self):
         obs = self.ag_data.checkPrintResults(
             self.ag_data.ut_get_supplied_kit_id(
