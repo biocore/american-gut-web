@@ -227,7 +227,24 @@ class AGDataAccess(object):
         -------
         DataFrame
             pandas DataFrame of sorted survey details
+
+        Raises
+        ------
+        ValueError
+            both survey_id and language not found in database
+        ValueError
+            survey_id not found in database
+        ValueError
+            language not found in database
         """
+        if survey_id not in self.getKnownSurveyIds():
+            if language not in self.getKnownLanguages():
+                raise ValueError('Invalid survey_id and language')
+            else:
+                raise ValueError('Invalid survey_id')
+        elif language not in self.getKnownLanguages():
+            raise ValueError('Invalid language')
+
         sql = """SELECT survey_question_id,
                         survey_group,
                         %s,
@@ -261,6 +278,64 @@ class AGDataAccess(object):
         df['response_index'] = df['response_index'].apply(
                 lambda x: None if np.isnan(x) else int(x), convert_dtype=False)
         return df
+
+    def getKnownSurveyIds(self):
+        """Returns all known survey IDs of each survey type
+
+        Returns
+        -------
+        list of ints
+            List of survey_ids in ascending order
+
+        Raises
+        ------
+        ValueError
+            Survey IDs were not able to be found
+        """
+        sql = """SELECT survey_id FROM ag.surveys"""
+
+        with TRN:
+            TRN.add(sql)
+            survey_ids = TRN.execute_fetchindex()
+
+        if not survey_ids:
+            raise ValueError('Survey IDs were not able to be found')
+
+        # survey_ids must be converted from list of DictRow to a set
+        survey_ids = [x[0] for x in survey_ids]
+        unique_survey_ids = set([])
+        for i in survey_ids:
+            unique_survey_ids.add(i)
+        return unique_survey_ids
+
+    def getKnownLanguages(self):
+        """Returns all known language locales
+
+        Returns
+        -------
+        list of strings
+            List of language locales used for surveys
+
+        Raises
+        ------
+        ValueError
+            Languages were not able to be found
+        """
+        sql = """SELECT column_name FROM information_schema.columns
+                 WHERE table_name = 'survey_response'"""
+
+        with TRN:
+            TRN.add(sql)
+            languages = TRN.execute_fetchindex()
+
+        if not languages:
+            raise ValueError('Languages were not able to be found')
+
+        languages = [x[0] for x in languages]
+        languages_set = set([])
+        for i in languages:
+            languages_set.add(i)
+        return languages_set
 
     def getAGKitDetails(self, supplied_kit_id):
         sql = """SELECT cast(ag_kit_id as varchar(100)),
@@ -417,7 +492,7 @@ class AGDataAccess(object):
             TRN.execute()
 
     def get_withdrawn(self):
-        """Gets teh list of withdrawn participants and information
+        """Gets the list of withdrawn participants and information
 
         Returns
         -------
