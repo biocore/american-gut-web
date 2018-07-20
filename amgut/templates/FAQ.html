@@ -2,6 +2,28 @@
 {% block content %}
 {% from amgut import text_locale, media_locale %}
 {% set tl = text_locale['FAQ.html'] %}
+<head><style>
+.collapsible {
+    background-color: #777;
+    color: white;
+    padding: 14px;
+    width: 100%;
+    text-align: left;
+    font-size: 16px;
+    border: none;
+    margin: 5px 0;
+}
+.active, .collapsible:hover {
+    background-color: #555;
+}
+.collapsed_content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+</style></head>
+
 <h2>{% raw tl['FAQ_HEADER'] %}</h2>
 <div class="faq_wrapper">
   <div class="faq">
@@ -13,224 +35,221 @@
       </div>
       <br />
       <div class="separator"></div>
-      <br>
       <h3>{% raw tl['LOOK_BELOW'] %}</h3>
-      <ul class="faq">
-      <li><a href="#faq0">{% raw tl['PROJECT_101'] %}</a></li>
-      <li><a href="#faq1">{% raw tl['PASSWORD_SAME_VERIFICATION'] %}</a></li>
-      <li><a href="#faq2">{% raw tl['PASSWORD_DOESNT_WORK'] %}</a></li>
-      <li><a href="#faq3">{% raw tl['LOG_IN_WHAT_NOW'] %}</a></li>
-      <li><a href="#faq4">{% raw tl['TAKES_SIX_MONTHS'] %}</a></li>
-      <li><a href="#faq5">{% raw tl['WHY_TWO_SWABS'] %}</a></li>
-      <li><a href="#faq6">{% raw tl['MULTIPLE_KITS_DIFFERENT_TIMES'] %}</a></li>
-      <li><a href="#faq7">{% raw tl['WHAT_FORMS'] %}</a></li>
-      <li><a href="#faq8">{% raw tl['RAW_DATA'] %}</a></li>
-      <li><a href="#faq9">{% raw tl['WHERE_SEND_SAMPLE'] %}</a></li>
-      <li><a href="#faq10">{% raw tl['DIFFERENT_WHATS_WRONG_WITH_ME'] %}</a></li>
-      <li><a href="#faq11">{% raw tl['BETTER_OR_WORSE'] %}</a></li>
-      <li><a href="#faq12">{% raw tl['WHEN_RESULTS_NON_FECAL'] %}</a></li>
-      <li><a href="#faq13">{% raw tl['ONLY_FECAL_RESULTS'] %}</a></li>
-      <li><a href="#faq14">{% raw tl['COMBINE_RESULTS'] %}</a></li>
-      <li><a href="#faq15">{% raw tl['FECAL_NO_RESULTS'] %}</a></li>
-      <li><a href="#faq16">{% raw tl['INFORMATION_IDENTIFY_ME'] %}</a></li>
-      <li><a href="#faq17">{% raw tl['FIND_DETAILED_INFO'] %}</a></li>
-      <li><a href="#faq18">{% raw tl['WHO_MICHAEL_POLLAN'] %}</a></li>
-      <li><a href="#faq19">{% raw tl['HOW_CHANGE_GUT'] %}</a></li>
-      <li><a href="#faq20">{% raw tl['ANOTHER_COPY_RESULTS'] %}</a></li>
-      <li><a href="#faq23">{% raw tl['PARTICIPATE_WITH_DIAGNOSIS'] %}</a></li>
-      <li><a href="#faq24">{% raw tl['MISSING_METADATA'] %}</a></li>
-      <li><a href="#faq25">{% raw tl['HOW_PROCESS_SAMPLES'] %}</a></li>
-      <li><a href="#faq26">{% raw tl['NOT_A_BUSINESS'] %}</a></li>
-      </ul>
-      <br>
-      <div class="separator"></div>
-      <br>
 
-      <h3 class="faq_header" id="faq0">{% raw tl['PROJECT_101'] %}</h3>
-      <div class="faq_content">
-            <p>{% raw tl['INTRODUCTION_BEGINNING'] %}</p>
-            <div class="indent_box">
-                  <h4>{% raw tl['INTRODUCTION_WHAT_IS_GUT_HEAD'] %}</h4>
-                  <p>{% raw tl['INTRODUCTION_WHAT_IS_GUT'] %}</p>
-                  <h4>{% raw tl['INTRODUCTION_WHAT_IS_PROJECT_HEAD'] %}</h4>
-                  <p>{% raw tl['INTRODUCTION_WHAT_IS_PROJECT'] %}</p>
-                  <h4>{% raw tl['INTRODUCTION_WHAT_IS_16S_HEAD'] %}</h4>
-                  <p>{% raw tl['INTRODUCTION_WHAT_IS_16S'] %}</p>
-                  <h4>{% raw tl['INTRODUCTION_ROBOTS_HEAD'] %}</h4>
-                  <p>{% raw tl['INTRODUCTION_ROBOTS'] %}</p>
-                  <h4>{% raw tl['INTRODUCTION_TREE_HEAD'] %}</h4>
-                  <p>{% raw tl['INTRODUCTION_TREE'] %}</p>
-                  <h4>{% raw tl['INTRODUCTION_MICROBIOME_HEAD'] %}</h4>
-                  <p>{% raw tl['INTRODUCTION_MICROBIOME'] %}</p>
-                  <h4>{% raw tl['INTRODUCTION_EAT_HEAD'] %}</h4>
-                  <p>{% raw tl['INTRODUCTION_EAT'] %}</p>
-                  <h4>{% raw tl['INTRODUCTION_MICROBES_COME_FROM_HEAD'] %}</h4>
-                  <p>{% raw tl['INTRODUCTION_MICROBES_COME_FROM'] %}</p>
-                  <h4>{% raw tl['INTRODUCTION_DISCOVER_HEAD'] %}</h4>
-                  <p>{% raw tl['INTRODUCTION_DISCOVER'] %}</p>
-                  <h4>{% raw tl['INTRODUCTION_STORIES_HEAD'] %}</h4>
-                  <p>{% raw tl['INTRODUCTION_STORIES'] %}</p>
-            </div>
-      </div>
-      <br>
-      <div class="separator"></div>
-      <br>
-      <h3 class="faq_header" id="faq1">{% raw tl['PASSWORD_SAME_VERIFICATION'] %}</h3>
-      <div class="faq_content">
-          <p>{% raw tl['PASSWORD_SAME_VERIFICATION_ANS'] %}</p>
-      </div>
-      <div class="separator"></div>
-      <h3 class="faq_header" id="faq2">{% raw tl['PASSWORD_DOESNT_WORK'] %}</h3>
-      <div class="faq_content">
-          {% raw tl['PASSWORD_DOESNT_WORK_ANS'] %}
-      </div>
-      <div class="separator"></div>
-      <h3 class="faq_header" id="faq3">{% raw tl['LOG_IN_WHAT_NOW'] %}</h3>
-      <div class="faq_content">
-          <p>{% raw tl['LOG_IN_WHAT_NOW_ANS_1'] %}</p>
-          <img src="{{media_locale['ADD_PARTICIPANT_IMG_1']}}">
-          {% raw tl['LOG_IN_WHAT_NOW_ANS_2'] %}
-          <img src="{{media_locale['ADD_PARTICIPANT_IMG_MENU']}}"/>
-          <p>{% raw tl['LOG_IN_WHAT_NOW_ANS_3'] %}</p>
-          <img src="{{media_locale['LOG_SAMPLE_OPTS']}}"/>
-          <p>{% raw tl['LOG_IN_WHAT_NOW_ANS_4'] %}</p>
-          <img src="{{media_locale['ADD_SAMPLE_HIGHLIGHT']}}"/>
-          <p>{% raw tl['LOG_IN_WHAT_NOW_ANS_5'] %}</p>
-          <img src="{{media_locale['ADD_SAMPLE_OVERVIEW']}}"/>
-      </div>
-      <div class="separator"></div>
-      <h3 class="faq_header" id="faq4">{% raw tl['TAKES_SIX_MONTHS'] %}</h3>
-      <div class="faq_content">
-          <p>{% raw tl['TAKES_SIX_MONTHS_ANS'] %}</p>
-      </div>
-      <div class="separator"></div>
-      <h3 class="faq_header" id="faq5">{% raw tl['WHY_TWO_SWABS'] %}</h3>
-      <div class="faq_content">
-      <p>{% raw tl['WHY_TWO_SWABS_ANS_1'] %}</p>
-      <img src="{{media_locale['SAMPLE_BARCODE']}}"/>
-      {% raw tl['WHY_TWO_SWABS_ANS_2'] %}
-      </div>
-      <div class="separator"></div>
-      <h3 class="faq_header" id="faq6">{% raw tl['MULTIPLE_KITS_DIFFERENT_TIMES'] %}</h3>
-      <div class="faq_content">
-      <p>{% raw tl['MULTIPLE_KITS_DIFFERENT_TIMES_ANS'] %}</p>
-      </div>
-      <div class="separator"></div>
-      <h3 class="faq_header" id="faq7">{% raw tl['WHAT_FORMS'] %}</h3>
-      <div class="faq_content">
-      <p>{% raw tl['WHAT_FORMS_ANS'] %}</p>
-      </div>
-      <div class="separator"></div>
-      <h3 class="faq_header" id="faq8">{% raw tl['RAW_DATA'] %}</h3>
-      <div class="faq_content">
-          {% raw tl['RAW_DATA_ANS_1'] %}
-          <p>{% raw tl['RAW_DATA_ANS_2'] %}</p>
-      </div>
-      <div class="separator"></div>
-      <h3 class="faq_header" id="faq9">{% raw tl['WHERE_SEND_SAMPLE'] %}</h3>
-      <div class="faq_content">
-          <p>{% raw tl['WHERE_SEND_SAMPLE_ANS'] %}</p>
-      </div>
-      <div class="separator"></div>
-      <h3 class="faq_header" id="faq10">{% raw tl['DIFFERENT_WHATS_WRONG_WITH_ME'] %}</h3>
-      <div class="faq_content">
-          <p>{% raw tl['DIFFERENT_WHATS_WRONG_WITH_ME_ANS'] %}</p>
-      </div>
-      <div class="separator"></div>
+      <button class="collapsible" id="faq1">{% raw tl['FAQ_SECTION_1'] %}</button>
+      <div class="collapsed_content">
+          <h3 class="faq_header" id="faq2">{% raw tl['NOT_A_BUSINESS'] %}</h3>
+          <div class="faq_content">
+              <p>{% raw tl['NOT_A_BUSINESS_ANS'] %}</p>
+          </div>
+          <div class="separator"></div>
 
-
-      <h3 class="faq_header" id="faq11">{% raw tl['BETTER_OR_WORSE'] %}</h3>
-      <div class="faq_content">
-          <p>{% raw tl['BETTER_OR_WORSE_ANS'] %}</p>
+          <h3 class="faq_header" id="faq3">{% raw tl['PARTICIPATE_WITH_DIAGNOSIS'] %}</h3>
+          <div class="faq_content">
+              <p>{% raw tl['PARTICIPATE_WITH_DIAGNOSIS_ANS'] %}</p>
+          </div>
+          <div class="separator"></div>
+          
+          <h3 class="faq_header" id="faq4">{% raw tl['INFORMATION_IDENTIFY_ME'] %}</h3>
+          <div class="faq_content">
+              <p>{% raw tl['INFORMATION_IDENTIFY_ME_ANS'] %}</p>
+          </div>
+          <br>
       </div>
-      <div class="separator"></div>
+      <button class="collapsible" id="faq5">{% raw tl['FAQ_SECTION_2'] %}</button>
+      <div class="collapsed_content">
+          <h3 class="faq_header" id="faq6">{% raw tl['PASSWORD_SAME_VERIFICATION'] %}</h3>
+          <div class="faq_content">
+              <p>{% raw tl['PASSWORD_SAME_VERIFICATION_ANS'] %}</p>
+          </div>
+          <div class="separator"></div>
 
-      <h3 class="faq_header" id="faq12">{% raw tl['WHEN_RESULTS_NON_FECAL'] %}</h3>
-      <div class="faq_content">
-          <p>{% raw tl['WHEN_RESULTS_NON_FECAL_ANS'] %}</p>
+          <h3 class="faq_header" id="faq7">{% raw tl['PASSWORD_DOESNT_WORK'] %}</h3>
+          <div class="faq_content">
+              {% raw tl['PASSWORD_DOESNT_WORK_ANS'] %}
+          </div>
+          <br>
       </div>
-      <div class="separator"></div>
+      <button class="collapsible" id="faq8">{% raw tl['FAQ_SECTION_3'] %}</button>
+      <div class="collapsed_content">
+          <h3 class="faq_header" id="faq9">{% raw tl['LOG_IN_WHAT_NOW'] %}</h3>
+          <div class="faq_content">
+              <p>{% raw tl['LOG_IN_WHAT_NOW_ANS_1'] %}</p>
+              <img src="{{media_locale['ADD_PARTICIPANT_IMG_1']}}" height='auto' width='650px'/>
+              {% raw tl['LOG_IN_WHAT_NOW_ANS_2'] %}
+              <img src="{{media_locale['ADD_PARTICIPANT_IMG_MENU']}}" height='auto' width='650px'/>
+              <p>{% raw tl['LOG_IN_WHAT_NOW_ANS_3'] %}</p>
+              <img src="{{media_locale['LOG_SAMPLE_OPTS']}}" height='auto' width='650px'/>
+              <p>{% raw tl['LOG_IN_WHAT_NOW_ANS_4'] %}</p>
+              <img src="{{media_locale['ADD_SAMPLE_HIGHLIGHT']}}" height='auto' width='550px'/>
+              <p>{% raw tl['LOG_IN_WHAT_NOW_ANS_5'] %}</p>
+              <img src="{{media_locale['ADD_SAMPLE_OVERVIEW']}}" height='auto' width='650px'/>
+          </div>
+          <div class="separator"></div>
 
-      <h3 class="faq_header" id="faq13">{% raw tl['ONLY_FECAL_RESULTS'] %}</h3>
-      <div class="faq_content">
-          <p>{% raw tl['ONLY_FECAL_RESULTS_ANS'] %}</p>
-      </div>
-      <div class="separator"></div>
+          <h3 class="faq_header" id="faq10">{% raw tl['WHY_TWO_SWABS'] %}</h3>
+          <div class="faq_content">
+          <p>{% raw tl['WHY_TWO_SWABS_ANS_1'] %}</p>
+          <img src="{{media_locale['SAMPLE_BARCODE']}}"/>
+          {% raw tl['WHY_TWO_SWABS_ANS_2'] %}
+          </div>
+          <div class="separator"></div>
 
-      <h3 class="faq_header" id="faq14">{% raw tl['COMBINE_RESULTS'] %}</h3>
-      <div class="faq_content">
-          <p>{% raw tl['COMBINE_RESULTS_ANS'] %}</p>
-      </div>
-      <div class="separator"></div>
+          <h3 class="faq_header" id="faq11">{% raw tl['WHAT_FORMS'] %}</h3>
+          <div class="faq_content">
+          <p>{% raw tl['WHAT_FORMS_ANS'] %}</p>
+          </div>
+          <div class="separator"></div>
+          
+          <h3 class="faq_header" id="faq12">{% raw tl['WHERE_SEND_SAMPLE'] %}</h3>
+          <div class="faq_content">
+              <p>{% raw tl['WHERE_SEND_SAMPLE_ANS'] %}</p>
+          </div>
+          <div class="separator"></div>
 
-      <h3 class="faq_header" id="faq15">{% raw tl['FECAL_NO_RESULTS'] %}</h3>
-      <div class="faq_content">
-          <p>{% raw tl['FECAL_NO_RESULTS_ANS'] %}</p>
+          <h3 class="faq_header" id="faq13">{% raw tl['MULTIPLE_KITS_DIFFERENT_TIMES'] %}</h3>
+          <div class="faq_content">
+          <p>{% raw tl['MULTIPLE_KITS_DIFFERENT_TIMES_ANS'] %}</p>
+          </div>
+          <br>
       </div>
-      <div class="separator"></div>
+      <button class="collapsible" id="faq14">{% raw tl['FAQ_SECTION_4'] %}</button>
+      <div class="collapsed_content">
+          <h3 class="faq_header" id="faq15">{% raw tl['TAKES_SIX_MONTHS'] %}</h3>
+          <div class="faq_content">
+              <p>{% raw tl['TAKES_SIX_MONTHS_ANS'] %}</p>
+          </div>
+          <div class="separator"></div>
 
-      <h3 class="faq_header" id="faq16">{% raw tl['INFORMATION_IDENTIFY_ME'] %}</h3>
-      <div class="faq_content">
-          <p>{% raw tl['INFORMATION_IDENTIFY_ME_ANS'] %}</p>
-      </div>
-      <div class="separator"></div>
+          <h3 class="faq_header" id="faq16">{% raw tl['WHEN_RESULTS_NON_FECAL'] %}</h3>
+          <div class="faq_content">
+              <p>{% raw tl['WHEN_RESULTS_NON_FECAL_ANS'] %}</p>
+          </div>
+          <div class="separator"></div>
 
-      <h3 class="faq_header" id="faq17">{% raw tl['FIND_DETAILED_INFO'] %}</h3>
-      <div class="faq_content">
-          <p>{% raw tl['FIND_DETAILED_INFO_ANS'] %}</p>
-      </div>
-      <div class="separator"></div>
+          <h3 class="faq_header" id="faq17">{% raw tl['ONLY_FECAL_RESULTS'] %}</h3>
+          <div class="faq_content">
+              <p>{% raw tl['ONLY_FECAL_RESULTS_ANS'] %}</p>
+          </div>
+          <div class="separator"></div>
 
-      <h3 class="faq_header" id="faq18">{% raw tl['WHO_MICHAEL_POLLAN'] %}</h3>
-      <div class="faq_content">
-          <p>{% raw tl['WHO_MICHAEL_POLLAN_ANS'] %}</p>
-      </div>
-      <div class="separator"></div>
+          <h3 class="faq_header" id="faq18">{% raw tl['FECAL_NO_RESULTS'] %}</h3>
+          <div class="faq_content">
+              <p>{% raw tl['FECAL_NO_RESULTS_ANS'] %}</p>
+          </div>
+          <div class="separator"></div>
 
-      <h3 class="faq_header" id="faq19">{% raw tl['HOW_CHANGE_GUT'] %}</h3>
-      <div class="faq_content">
-          <p>{% raw tl['HOW_CHANGE_GUT_ANS'] %}</p>
-      </div>
-      <div class="separator"></div>
+          <h3 class="faq_header" id="faq19">{% raw tl['ANOTHER_COPY_RESULTS'] %}</h3>
+          <div class="faq_content">
+              <p>{% raw tl['ANOTHER_COPY_RESULTS_ANS'] %}</p>
+          </div>
+          <div class="separator"></div>
 
-      <h3 class="faq_header" id="faq20">{% raw tl['ANOTHER_COPY_RESULTS'] %}</h3>
-      <div class="faq_content">
-          <p>{% raw tl['ANOTHER_COPY_RESULTS_ANS'] %}</p>
-      </div>
-      <div class="separator"></div>
+          <h3 class="faq_header" id="faq20">{% raw tl['DIFFERENT_WHATS_WRONG_WITH_ME'] %}</h3>
+          <div class="faq_content">
+              <p>{% raw tl['DIFFERENT_WHATS_WRONG_WITH_ME_ANS'] %}</p>
+          </div>
+          <div class="separator"></div>
 
-      <h3 class="faq_header" id="faq23">{% raw tl['PARTICIPATE_WITH_DIAGNOSIS'] %}</h3>
-      <div class="faq_content">
-          <p>{% raw tl['PARTICIPATE_WITH_DIAGNOSIS_ANS'] %}</p>
-      </div>
-      <div class="separator"></div>
+          <h3 class="faq_header" id="faq21">{% raw tl['BETTER_OR_WORSE'] %}</h3>
+          <div class="faq_content">
+              <p>{% raw tl['BETTER_OR_WORSE_ANS'] %}</p>
+          </div>
+          <div class="separator"></div>
 
-      <h3 class="faq_header" id="faq24">{% raw tl['MISSING_METADATA'] %}</h3>
-      <div class="faq_content">
-          <p>{% raw tl['MISSING_METADATA_ANS'] %}</p>
-      </div>
-      <div class="separator"></div>
+          <h3 class="faq_header" id="faq22">{% raw tl['COMBINE_RESULTS'] %}</h3>
+          <div class="faq_content">
+              <p>{% raw tl['COMBINE_RESULTS_ANS'] %}</p>
+          </div>
+          <div class="separator"></div>
 
-      <h3 class="faq_header" id="faq25">{% raw tl['HOW_PROCESS_SAMPLES'] %}</h3>
-      <div class="faq_content">
-          <p>{% raw tl['HOW_PROCESS_SAMPLES_ANS_1'] %}</p>
-          <p>{% raw tl['HOW_PROCESS_SAMPLES_ANS_2'] %}</p>
-          <p>{% raw tl['HOW_PROCESS_SAMPLES_ANS_3'] %}</p>
-          <p>{% raw tl['HOW_PROCESS_SAMPLES_ANS_4'] %}</p>
-          <p>{% raw tl['HOW_PROCESS_SAMPLES_ANS_5'] %}</p>
-          <p>{% raw tl['HOW_PROCESS_SAMPLES_ANS_6'] %}</p>
-          <p>{% raw tl['HOW_PROCESS_SAMPLES_ANS_7'] %}</p>
-          <p>{% raw tl['HOW_PROCESS_SAMPLES_ANS_8'] %}</p>
-          <p>{% raw tl['HOW_PROCESS_SAMPLES_ANS_9'] %}</p>
-          <p>{% raw tl['HOW_PROCESS_SAMPLES_ANS_10'] %}</p>
+          <h3 class="faq_header" id="faq23">{% raw tl['FIND_DETAILED_INFO'] %}</h3>
+          <div class="faq_content">
+              <p>{% raw tl['FIND_DETAILED_INFO_ANS'] %}</p>
+          </div>
+          <br>
       </div>
-      <div class="separator"></div>
-      <h3 class="faq_header" id="faq26">{% raw tl['NOT_A_BUSINESS'] %}</h3>
-      <div class="faq_content">
+      <button class="collapsible" id="faq24">{% raw tl['FAQ_SECTION_5'] %}</button>
+      <div class="collapsed_content">
+          <h3 class="faq_header" id="faq25">{% raw tl['RAW_DATA'] %}</h3>
+          <div class="faq_content">
+              {% raw tl['RAW_DATA_ANS_1'] %}
+              <p>{% raw tl['RAW_DATA_STEPS'] %}</p>
+              <ol>
+                  <li>{% raw tl['RAW_DATA_STEP_1'] %}</li>
+                  <li>{% raw tl['RAW_DATA_STEP_2'] %}</li>
+                  <img src="{{media_locale['RAW_DATA_1']}}" height="auto" width="600px" style="margin: 10px 0;">
+                  <li>{% raw tl['RAW_DATA_STEP_3'] %}</li>
+                  <li>{% raw tl['RAW_DATA_STEP_4'] %}</li>
+                  <li>{% raw tl['RAW_DATA_STEP_5'] %}</li>
+                  <img src="{{media_locale['RAW_DATA_2']}}" height="auto" width="600px" style="margin: 10px 0;">
+                  <li>{% raw tl['RAW_DATA_STEP_6'] %}</li>
+                  <li>{% raw tl['RAW_DATA_STEP_7'] %}</li>
+              </ol>
+              <p>{% raw tl['RAW_DATA_ANS_2'] %}</p>
+          </div>
+          <div class="separator"></div>
 
-          <p>{% raw tl['NOT_A_BUSINESS_ANS'] %}</p>
+          <h3 class="faq_header" id="faq26">{% raw tl['MISSING_METADATA'] %}</h3>
+          <div class="faq_content">
+              <p>{% raw tl['MISSING_METADATA_ANS'] %}</p>
+          </div>
+          <div class="separator"></div>
+
+          <h3 class="faq_header" id="faq27">{% raw tl['HOW_PROCESS_SAMPLES'] %}</h3>
+          <div class="faq_content">
+              <p>{% raw tl['HOW_PROCESS_SAMPLES_ANS_1'] %}</p>
+              <p>{% raw tl['HOW_PROCESS_SAMPLES_ANS_2'] %}</p>
+              <p>{% raw tl['HOW_PROCESS_SAMPLES_ANS_3'] %}</p>
+              <p>{% raw tl['HOW_PROCESS_SAMPLES_ANS_4'] %}</p>
+              <p>{% raw tl['HOW_PROCESS_SAMPLES_ANS_5'] %}</p>
+              <p>{% raw tl['HOW_PROCESS_SAMPLES_ANS_6'] %}</p>
+              <p>{% raw tl['HOW_PROCESS_SAMPLES_ANS_7'] %}</p>
+              <p>{% raw tl['HOW_PROCESS_SAMPLES_ANS_8'] %}</p>
+              <p>{% raw tl['HOW_PROCESS_SAMPLES_ANS_9'] %}</p>
+              <p>{% raw tl['HOW_PROCESS_SAMPLES_ANS_10'] %}</p>
+          </div>
+          <br>
       </div>
-      <div class="separator"></div>
+      <button class="collapsible" id="faq28">{% raw tl['FAQ_SECTION_6'] %}</button>
+      <div class="collapsed_content">
+          <h3 class="faq_header" id="faq29">{% raw tl['HOW_CHANGE_GUT'] %}</h3>
+          <div class="faq_content">
+              <p>{% raw tl['HOW_CHANGE_GUT_ANS'] %}</p>
+          </div>
+          <div class="separator"></div>
+
+          <h3 class="faq_header" id="faq30">{% raw tl['WHO_MICHAEL_POLLAN'] %}</h3>
+          <div class="faq_content">
+              <p>{% raw tl['WHO_MICHAEL_POLLAN_ANS'] %}</p>
+          </div>
+          <br>
+      </div>
+      <p>{% raw tl['ADDITIONAL_QUESTIONS'] %}</p>
+    </div>
   </div>
+  <br>
 </div>
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+            content.style.display = "none";
+        } else {
+            content.style.display = "block";
+        }
+    });
+    coll[i].addEventListener("open", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        content.style.display = "block";
+    });
+}
+</script>
 {% end %}

@@ -1,8 +1,9 @@
 {% from amgut import media_locale %}
-{% from amgut.handlers.FAQ import FAQHandler %}
-{% from amgut.handlers.addendum import AddendumHandler %}
-{% from amgut.handlers.auth_handlers import AuthRegisterHandoutHandler %}
 {% from amgut.connections import redis %}
+{% from amgut.handlers.FAQ import FAQHandler %}
+{% from amgut.handlers.introduction import IntroductionHandler %}
+{% from amgut.handlers.international import InternationalHandler %}
+{% from amgut.handlers.auth_handlers import AuthRegisterHandoutHandler %}
 {% set maintenance = redis.get('maintenance') %}
 <!DOCTYPE html>
 <html lang="en">
@@ -78,7 +79,7 @@
     {% block head %}
     {% end %}
 
-    {% if current_user and not isinstance(handler, (FAQHandler, AddendumHandler, AuthRegisterHandoutHandler)) %}
+    {% if current_user and not isinstance(handler, (FAQHandler, IntroductionHandler, AuthRegisterHandoutHandler, InternationalHandler)) %}
         <meta http-equiv="refresh" content="0; url={% raw media_locale['SITEBASE'] %}/authed/portal/" />
     {% end %}
 </head>
@@ -86,9 +87,9 @@
     {% block map %}
     {% end %}
     <!-- Header logo -->
-    <div class="wrapper clearfix" style="position:absolute; top:10px; left:50px; right:50px; opacity:0.9;">
+    <div class="wrapper clearfix" style="position:absolute; top:10px; left:50px; right:50px;">
         <div class="header clearfix">
-            <img id="logo" src="{% raw media_locale['LOGO'] %}">
+            <img id="logo" style="margin-top:5px; height:100px; width:auto;" src="{% raw media_locale['LOGO'] %}">
 
     {% if maintenance is not None %}
             <big><font color="red">
@@ -103,16 +104,27 @@
                 {% if current_user %}
                     <li class="active"><a href="{% raw media_locale['SITEBASE'] %}/authed/portal/"><span>{% raw media_locale['NAV_HOME'] %}</span></a></li>
                 {% end %}
-                    <li><a href="{% raw media_locale['SITEBASE'] %}/faq/#faq0">{% raw media_locale['NAV_MICROBIOME_101'] %}</a></li>
+                    <li><a href="{% raw media_locale['SITEBASE'] %}/introduction/">{% raw media_locale['NAV_MICROBIOME_101'] %}</a></li>
                     <li><a href="{% raw media_locale['FUNDRAZR_URL'] %}" target="_blank">{% raw media_locale['NAV_JOIN_PROJECT'] %}</a></li>
                     <li><a href="{% raw media_locale['SITEBASE'] %}/static/img/mod1_main.pdf" target="_blank">{% raw media_locale['NAV_PRELIM_RESULTS'] %}</a></li>
                     <li><a href="{% raw media_locale['SITEBASE'] %}/static/img/FAQ_Human_Microbiome.pdf" target="_blank">{% raw media_locale['NAV_MICROBIOME_FAQ'] %}</a></li>
                     <li class="has-sub"><a><span>{% raw media_locale['NAV_PARTICIPANT_RESOURCES'] %}</span></a>
                         <ul>
                             <li><a href="{% raw media_locale['SITEBASE'] %}/faq/">{% raw media_locale['NAV_FAQ'] %}</a></li>
-                            <li><a href="{% raw media_locale['SITEBASE'] %}/static/img/full_instructions.pdf" target="_blank">{% raw media_locale['NAV_KIT_INSTRUCTIONS'] %}</a></li>
+                            <li><a href="{% raw media_locale['KIT_INSTRUCTIONS'] %}" target="_blank">{% raw media_locale['NAV_KIT_INSTRUCTIONS'] %}</a></li>
                         {% if 'NAV_INTERNATIONAL' in media_locale %}
                             <li class="last"><a href="{% raw media_locale['SITEBASE'] %}/international_shipping/">{% raw media_locale['NAV_INTERNATIONAL'] %}</a></li>
+                        {% end %}
+                        </ul>
+                    </li>
+                    <li class="has-sub"><a><span>{% raw media_locale['NAV_OTHER_SITES'] %}</span></a>
+                        <ul>
+                            <li><a href="{% raw media_locale['AMERICAN_GUT_PROJECT'] %}">{% raw media_locale['NAV_AMERICAN_GUT_PROJECT'] %}</a></li>
+                            <li><a href="{% raw media_locale['BRITISH_GUT_PROJECT'] %}">{% raw media_locale['NAV_BRITISH_GUT_PROJECT'] %}</a></li>
+                        {% for alt_site in media_locale['GUT_PROJECT_SHORTHANDS'] %}
+                            {% if alt_site != media_locale['SHORTHAND'] %}
+                            <li><a href="{% raw media_locale['ALT_GUT_SITE'] %}/{% raw alt_site.replace(' ','') %}">{% raw alt_site %}{% raw media_locale['NAV_ALT_GUT'] %}</a></li>
+                            {% end %}
                         {% end %}
                         </ul>
                     </li>
