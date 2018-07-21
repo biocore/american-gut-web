@@ -752,12 +752,6 @@ class TestAGDataAccess(TestCase):
     def test_getAGSurveyDetails_primary(self):
         res = self.ag_data.getAGSurveyDetails(1, 'american')
 
-        # confirms if columns are as expectected
-        res_columns = res.columns
-        exp_columns = {'survey_question_id', 'american',
-                       'question_shortname', 'response', 'response_index'}
-        self.assertTrue(exp_columns.issubset(res_columns))
-
         res_column = set(res.loc[:,'american'])
         exp_column = {'Gender:', 'Birth year:', 'Country of residence:',
                    'How were you fed as an infant?',
@@ -768,7 +762,42 @@ class TestAGDataAccess(TestCase):
                    }
         self.assertTrue(exp_column.issubset(res_column))
 
-    def test_getAGSurveyDetails_invalidParam(self):
+    def test_getAGSurveyDetails_compare_survey_diff_lang(self):
+        surveys = []
+        survey_columns = ['survey_question_id',
+                          'question_shortname',
+                          'response_index']
+
+        # loops through known languages for surveys
+        for language in self.ag_data.getKnownLanguages():
+            survey = self.ag_data.getAGSurveyDetails(1, language)
+            surveys.append(survey[survey_columns])
+
+        # compares contents of survey_question_id, question_shortname, and
+        # response_index of different language surveys to american survey
+        for survey in surveys[1:]:
+            for column in survey_columns:
+                self.assertEqual(list(surveys[0].loc[:,column]),
+                                 list(survey.loc[:,column]))
+
+    def test_getAGSurveyDetails_compare_survey_diff_id(self):
+        surveys = []
+        columns = ['survey_question_id',
+                   'american',
+                   'question_shortname',
+                   'response',
+                   'response_index']
+
+        # loops through known ids for surveys
+        for survey_id in self.ag_data.getKnownSurveyIds():
+            survey = self.ag_data.getAGSurveyDetails(survey_id, 'american')
+            surveys.append(list(survey.columns))
+
+        # confirms if columns have the same names
+        for survey in surveys[1:]:
+            self.assertEqual(surveys[0], survey)
+
+    def test_getAGSurveyDetails_invalid_param(self):
         with self.assertRaises(ValueError):
             self.ag_data.getAGSurveyDetails(0, 'inval_language')
 
