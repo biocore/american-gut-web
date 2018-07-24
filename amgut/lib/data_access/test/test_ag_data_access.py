@@ -817,11 +817,9 @@ class TestAGDataAccess(TestCase):
         exp = {'american', 'british'}
         self.assertTrue(exp.issubset(res))
 
-'''    def test_checkPrintResults(self):
-        obs = self.ag_data.checkPrintResults(
-            self.ag_data.ut_get_supplied_kit_id(
-            'dc3172b2-792c-4087-8a20-714297821c6a'))
-        self.assertFalse(obs)'''
+    def test_checkPrintResults(self):
+        obs = self.ag_data.checkPrintResults(self.ag_data.ut_get_supplied_kit_id('dc3172b2-792c-4087-8a20-714297821c6a'))
+        self.assertFalse(obs)
 
         kit_id = self.ag_data\
             .ut_get_arbitrary_handout_printed_min6_supplied_kit_id()
