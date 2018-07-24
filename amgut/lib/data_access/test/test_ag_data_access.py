@@ -795,7 +795,7 @@ class TestAGDataAccess(TestCase):
 
         # confirms if columns have the same names
         for survey in surveys[1:]:
-            self.assertEqual(surveys[0], survey)
+            self.assertEqual(columns, survey)
 
     def test_getAGSurveyDetails_invalid_param(self):
         with self.assertRaises(ValueError):
