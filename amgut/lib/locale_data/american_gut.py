@@ -43,7 +43,7 @@ media_locale = {
     'PROJECT_TITLE': AMGUT_CONFIG.project_name,
     'FAVICON': _SITEBASE + '/static/img/favicon.ico',
     'FUNDRAZR_URL': 'https://fundrazr.com/campaigns/4Tqx5',
-    'AMERICAN_GUT_PROJECT': 'http://humanfoodproject.com/americangut',
+    'AMERICAN_GUT_PROJECT': 'http://americangut.org',
     'BRITISH_GUT_PROJECT': 'http://britishgut.org',
     'ALT_GUT_SITE': 'https://microbio.me',
     'NAV_PARTICIPANT_RESOURCES': 'Participant Resources',
@@ -249,7 +249,7 @@ _INTERACTIVE_REPORT = {'TITLE': "Interactive Report for %(barcode)s"}
 
 _HELP_REQUEST = {
     'CONTACT_HEADER': "Contact the %(shorthand)s" % {"shorthand": AMGUT_CONFIG.project_shorthand},
-    'RESPONSE_TIMING': "We will send a response to the email address you supply within 24 hours.",
+    'RESPONSE_TIMING': "We will send a response to the email address you supply within 48 hours.",
     'FIRST_NAME': "First name",
     'LAST_NAME': "Last name",
     'EMAIL_ADDRESS': "Email address",

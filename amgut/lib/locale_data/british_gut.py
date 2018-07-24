@@ -47,7 +47,7 @@ media_locale = {
     'ADD_SAMPLE_HIGHLIGHT': _SITEBASE + "/static/img/add_sample_highlight.png",
     'ADD_SAMPLE_OVERVIEW': _SITEBASE + "/static/img/add_sample_overview.png",
     'ALT_GUT_SITE': 'https://microbio.me',
-    'AMERICAN_GUT_PROJECT': 'http://humanfoodproject.com/americangut',
+    'AMERICAN_GUT_PROJECT': 'http://americangut.org',
     'AMGUT_SHIPPING_ADDRESS': "ATTN: Greg Humphrey, Knight Lab<br>BRF II Room 1220D<br>9500 Gilman Drive<br>La Jolla, CA 92093-0763",
     'BRITISH_GUT_PROJECT': 'http://britishgut.org',
     'EMAIL_ERROR': "There was a problem sending your email. Please contact us directly at <a href='mailto:%(help_email)s'>%(help_email)s</a>" % {'help_email': HELP_EMAIL},
@@ -559,7 +559,7 @@ _HELP_REQUEST = {
     'LAST_NAME': "Last name",
     'PROBLEM_PROMPT': "Enter information related to your problem",
     'CONTACT_HEADER': "Contact the %(project_shorthand)s" % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
-    'RESPONSE_TIMING': "We will send a response to the email address you supply within 24 hours.",
+    'RESPONSE_TIMING': "We will send a response to the email address you supply within 48 hours.",
     'EMAIL_ADDRESS': "Email address",
     'NOTE': 'Note that all inquiries are directed to the American Gut help account, which will be responding to the request.'
 }
