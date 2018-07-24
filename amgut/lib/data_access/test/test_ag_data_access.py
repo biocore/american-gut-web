@@ -243,6 +243,73 @@ class TestAGDataAccess(TestCase):
         with self.assertRaises(ValueError):
             self.ag_data.getConsent('be8516e8c5d4ff4d')
 
+    @rollback
+    def test_deleteAGParticipantSurvey_with_no_barcodes(self):
+        ag_login_id = '000fc4cd-8fa4-db8b-e050-8a800c5d02b5'
+        with TRN:
+            sql = """SELECT survey_id
+                     FROM ag.ag_login_surveys
+                     WHERE ag_login_id = %s"""
+            TRN.add(sql, [ag_login_id])
+            old_survey_ids = [x[0] for x in TRN.execute_fetchindex()]
+
+            sql = """SELECT barcode
+                     FROM ag.source_barcodes_surveys
+                     WHERE survey_id IN %s"""
+            TRN.add(sql, [tuple(old_survey_ids)])
+            old_barcodes = [x[0] for x in TRN.execute_fetchindex()]
+
+            # deletes the barcode information belonging to the survey_id
+            sql = """DELETE FROM ag.source_barcodes_surveys
+                     WHERE survey_id IN %s"""
+            TRN.add(sql, [tuple(old_survey_ids)])
+
+            sql = """DELETE FROM ag.ag_kit_barcodes
+                     WHERE barcode IN %s"""
+            TRN.add(sql, [tuple(old_barcodes)])
+
+        self.ag_data.getConsent('8b2b45bb3390b585')
+
+        names = self.ag_data.ut_get_participant_names_from_ag_login_id(
+            ag_login_id)
+        self.ag_data.deleteAGParticipantSurvey(ag_login_id, names[0])
+
+        with self.assertRaises(ValueError):
+            self.ag_data.getConsent('8b2b45bb3390b585')
+
+        res = self.ag_data.get_withdrawn()
+        today = datetime.datetime.now().date()
+        self.assertIn(ag_login_id, [r[0] for r in res])
+        # we cannot check name and email since they get randomly scrubbed
+        for r in res:
+            if r[0] == ag_login_id:
+                self.assertEqual(r[3], today)
+
+        with TRN:
+            # check that barcode are really deleted from
+            # source_barcodes_surveys
+            sql = """SELECT COUNT(*)
+                     FROM ag.source_barcodes_surveys
+                     WHERE barcode IN %s"""
+            TRN.add(sql, [tuple(old_barcodes)])
+            self.assertEqual(TRN.execute_fetchindex()[0][0], 0)
+
+            # check that survey_ids are really deleted from
+            # source_barcodes_surveys
+            sql = """SELECT COUNT(*)
+                     FROM ag.source_barcodes_surveys
+                     WHERE survey_id IN %s"""
+            TRN.add(sql, [tuple(old_survey_ids)])
+            self.assertEqual(TRN.execute_fetchindex()[0][0], 0)
+
+            # check that barcode are really deleted from
+            # ag_kit_barcodes
+            sql = """SELECT COUNT(*)
+                     FROM ag.ag_kit_barcodes
+                     WHERE barcode IN %s"""
+            TRN.add(sql, [tuple(old_barcodes)])
+            self.assertEqual(TRN.execute_fetchindex()[0][0], 0)
+
     def test_getConsent(self):
         obs = self.ag_data.getConsent("8b2b45bb3390b585")
         exp = {'date_signed': None,
