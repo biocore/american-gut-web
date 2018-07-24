@@ -133,6 +133,8 @@ _FAQ = {
     'FAQ_SECTION_4': "I have a question about my sample results",
     'FAQ_SECTION_5': "I have a question about my raw data and the analysis process",
     'FAQ_SECTION_6': "Miscellaneous questions",
+    'PROJECT_RELATION': 'What is the American Gut’s relation to other sites, such as the British Gut?',
+    'PROJECT_RELATION_ANS': 'The American Gut Project is the original project that started back in 2012 between co-founders Jeff Leach and Rob Knight.  It now ties back to a larger umbrella known as <a href=http://microsetta.ucsd.edu/>"The Microsetta Initiative</a>, which was an effort started in 2018 that wishes to collect microbiome samples and rich phenotypic data across the world’s populations.  By having sites set up throughout the world (such as our current sites of British Gut, Asian Gut, and an aggregation site in Australia), the American Gut is able to collect a larger variety of samples from people that have different lifestyles.',
     'LOG_IN_WHAT_NOW_ANS_1': 'You need to follow the add participant workflow. Click on the "Add Source & Survey" tab located at the top of the page.',
     'INFORMATION_IDENTIFY_ME': 'Can data describing my gut microbiome be used to identify me or a medical condition I have?',
     'LOG_IN_WHAT_NOW_ANS_3': 'You can assign a sample by clicking the "Assign Sample" link in the menu. If you do not see the "Assign Sample" link, then all of your barcodes have been assigned.',
