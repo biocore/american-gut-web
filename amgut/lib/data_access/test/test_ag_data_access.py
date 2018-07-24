@@ -752,14 +752,14 @@ class TestAGDataAccess(TestCase):
     def test_getAGSurveyDetails_primary(self):
         res = self.ag_data.getAGSurveyDetails(1, 'american')
 
-        res_column = set(res.loc[:,'american'])
+        res_column = set(res.loc[:, 'american'])
         exp_column = {'Gender:', 'Birth year:', 'Country of residence:',
-                   'How were you fed as an infant?',
-                   'Have you ever been diagnosed with cancer?',
-                   'I have received a flu vaccine in the last ____________.',
-                   'Please write anything else about yourself that ' +
-                   'you think could affect your personal microorganisms.'
-                   }
+                      'How were you fed as an infant?',
+                      'Have you ever been diagnosed with cancer?',
+                      'I have received a flu vaccine in the last ____________.',
+                      'Please write anything else about yourself that ' +
+                      'you think could affect your personal microorganisms.'
+                     }
         self.assertTrue(exp_column.issubset(res_column))
 
     def test_getAGSurveyDetails_compare_survey_diff_lang(self):
@@ -777,8 +777,8 @@ class TestAGDataAccess(TestCase):
         # response_index of different language surveys to american survey
         for survey in surveys[1:]:
             for column in survey_columns:
-                self.assertEqual(list(surveys[0].loc[:,column]),
-                                 list(survey.loc[:,column]))
+                self.assertEqual(list(surveys[0].loc[:, column]),
+                                 list(survey.loc[:, column]))
 
     def test_getAGSurveyDetails_compare_survey_diff_id(self):
         surveys = []
@@ -818,7 +818,9 @@ class TestAGDataAccess(TestCase):
         self.assertTrue(exp.issubset(res))
 
     def test_checkPrintResults(self):
-        obs = self.ag_data.checkPrintResults(self.ag_data.ut_get_supplied_kit_id('dc3172b2-792c-4087-8a20-714297821c6a'))
+        obs = self.ag_data.checkPrintResults(
+            self.ag_data.ut_get_supplied_kit_id(
+                'dc3172b2-792c-4087-8a20-714297821c6a'))
         self.assertFalse(obs)
 
         kit_id = self.ag_data\
