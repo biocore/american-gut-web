@@ -820,7 +820,7 @@ class TestAGDataAccess(TestCase):
     def test_checkPrintResults(self):
         obs = self.ag_data.checkPrintResults(
             self.ag_data.ut_get_supplied_kit_id(
-                'dc3172b2-792c-4087-8a20-714297821c6a'))
+            'dc3172b2-792c-4087-8a20-714297821c6a'))
         self.assertFalse(obs)
 
         kit_id = self.ag_data\
