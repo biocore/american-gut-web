@@ -756,10 +756,11 @@ class TestAGDataAccess(TestCase):
         exp_column = {'Gender:', 'Birth year:', 'Country of residence:',
                       'How were you fed as an infant?',
                       'Have you ever been diagnosed with cancer?',
-                      'I have received a flu vaccine in the last ____________.',
+                      'I have received a flu vaccine in ' +
+                      'the last ____________.',
                       'Please write anything else about yourself that ' +
                       'you think could affect your personal microorganisms.'
-                     }
+                      }
         self.assertTrue(exp_column.issubset(res_column))
 
     def test_getAGSurveyDetails_compare_survey_diff_lang(self):
