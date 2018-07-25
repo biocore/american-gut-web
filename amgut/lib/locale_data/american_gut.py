@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-# coding: utf-8
+# -*- coding: utf-8 -*-
 from __future__ import division
 from amgut.lib.config_manager import AMGUT_CONFIG
+from amgut.lib.locale_data import english_gut as ENG
 
 # -----------------------------------------------------------------------------
 # Copyright (c) 2014--, The American Gut Project Development Team.
@@ -17,87 +18,18 @@ HELP_EMAIL = "info@americangut.org"
 _SITEBASE = AMGUT_CONFIG.sitebase
 
 media_locale = {
-    'LOCALE': AMGUT_CONFIG.locale,
-    'SHORTHAND': AMGUT_CONFIG.project_shorthand,
-    'SITEBASE': _SITEBASE,
-    'LOGO': _SITEBASE + '/static/img/ag_logo.png',
     'ANALYTICS_ID': 'UA-55353353-1',
-    'LATITUDE': 39.83,
-    'LONGITUDE': -99.89,
-    'ZOOM': 4,
-    'STEPS_VIDEO': "https://player.vimeo.com/video/63542787",
-    'ADD_PARTICIPANT': 'https://player.vimeo.com/video/63931218',
-    'ADD_PARTICIPANT_IMG_1': _SITEBASE + "/static/img/add_participant.png",
-    'ADD_PARTICIPANT_IMG_MENU': _SITEBASE + "/static/img/add_participant_menu.png",
-    'LOG_SAMPLE_OPTS': _SITEBASE + "/static/img/log_sample_options.png",
-    'ADD_SAMPLE_HIGHLIGHT': _SITEBASE + "/static/img/add_sample_highlight.png",
-    'ADD_SAMPLE_OVERVIEW': _SITEBASE + "/static/img/add_sample_overview.png",
-    'FAQ_AMBIGUOUS_PASS': _SITEBASE + '/static/img/creds_example.png',
-    'RAW_DATA_1': _SITEBASE + "/static/img/raw_data_instructions_1.png",
-    'RAW_DATA_2': _SITEBASE + "/static/img/raw_data_instructions_2.png",
-    'SAMPLE_BARCODE': _SITEBASE + '/static/img/sample_barcode.jpg',
-    'SWAB_HANDLING': 'https://player.vimeo.com/video/62393487',
-    'KIT_INSTRUCTIONS': _SITEBASE + '/static/img/ag_kit_instructions.pdf',
-    'FOBT_PDF': _SITEBASE + '/static/img/FOBT_instructions.pdf',
-    'HELP_EMAIL': HELP_EMAIL,
-    'PROJECT_TITLE': AMGUT_CONFIG.project_name,
-    'FAVICON': _SITEBASE + '/static/img/favicon.ico',
-    'FUNDRAZR_URL': 'https://fundrazr.com/campaigns/4Tqx5',
-    'AMERICAN_GUT_PROJECT': 'http://humanfoodproject.com/americangut',
-    'BRITISH_GUT_PROJECT': 'http://britishgut.org',
-    'ALT_GUT_SITE': 'https://microbio.me',
-    'NAV_PARTICIPANT_RESOURCES': 'Participant Resources',
-    'NAV_OTHER_SITES': 'Other Sites',
-    'NAV_HOME': 'Home',
-    'NAV_MICROBIOME_101': '%s 101' % AMGUT_CONFIG.project_shorthand,
-    'NAV_FAQ': 'FAQ',
-    'NAV_MICROBIOME_FAQ': 'Human Microbiome FAQ',
-    'NAV_ADDENDUM': 'How do I interpret my results?',
-    'NAV_PRELIM_RESULTS': 'Preliminary results!',
-    'NAV_CHANGE_PASSWORD': 'Change Password',
-    'NAV_CONTACT_US': 'Contact Us',
-    'NAV_LOGOUT': 'Log out',
-    'NAV_HUMAN_SAMPLES': 'Human Samples',
-    'NAV_RECEIVED': '(Received)',
-    'NAV_ADD_HUMAN': 'Add Human Source',
-    'NAV_ANIMAL_SAMPLES': 'Animal Samples',
-    'NAV_ADD_ANIMAL': 'Add Animal Source',
-    'NAV_ENV_SAMPLES': 'Environmental Samples',
-    'NAV_LOG_SAMPLE': 'Assign Sample',
-    'NAV_JOIN_PROJECT': 'Join The Project',
-    'NAV_KIT_INSTRUCTIONS': 'Kit Instructions',
-    'NAV_PARTICIPANT_LOGIN': 'Participant Log In',
-    'NAV_REGISTER_KIT': 'Register Kit',
-    'NAV_FORGOT_KITID': 'I forgot my kit ID',
-    'NAV_INTERNATIONAL': 'International Shipping',
-    'NAV_AMERICAN_GUT_PROJECT': 'American Gut Project',
-    'NAV_BRITISH_GUT_PROJECT': 'British Gut Project',
-    'NAV_ALT_GUT': ' Participant Site',
-    'NAV_FORGOT_PASSWORD': 'I forgot my password',
-    'ADDENDUM_CERT_TITLE': _SITEBASE + '/static/img/Michael_Pollan_mod-01.png',
-    'ADDENDUM_CERT_NAME': _SITEBASE + '/static/img/Michael_Pollan_mod-01b.png',
-    'ADDENDUM_CERT_HEADER': _SITEBASE + '/static/img/Michael_Pollan_mod-02.png',
-    'ADDENDUM_CERT_BARCHART': _SITEBASE + '/static/img/Michael_Pollan_mod-11.png',
-    'ADDENDUM_CERT_BARCHART_LEGEND': _SITEBASE + '/static/img/Michael_Pollan_mod-12.png',
-    'ADDENDUM_CERT_ABUNDANT_MICROBES': _SITEBASE + '/static/img/Michael_Pollan_mod-13.png',
-    'ADDENDUM_CERT_ENRICHED_MICROBES': _SITEBASE + '/static/img/Michael_Pollan_mod-14.png',
-    'ADDENDUM_CERT_RARE_MICROBES': _SITEBASE + '/static/img/Michael_Pollan_mod-15.png',
-    'ADDENDUM_CERT_HEADER_PCOA': _SITEBASE + '/static/img/Michael_Pollan_mod-03.png',
-    'ADDENDUM_CERT_PCOA_LEGEND': _SITEBASE + '/static/img/Michael_Pollan_mod-04.png',
-    'ADDENDUM_CERT_PCOA_BODYSITES': _SITEBASE + '/static/img/Michael_Pollan_mod-08.png',
-    'ADDENDUM_CERT_PCOA_AGES_POP': _SITEBASE + '/static/img/Michael_Pollan_mod-09.png',
-    'ADDENDUM_CERT_PCOA_AG_POPULATION': _SITEBASE + '/static/img/Michael_Pollan_mod-10.png',
-    'ADDENDUM_TAX_BARCHART': _SITEBASE + '/static/img/TaxFig.png',
-    'ADDENDUM_PCOA_BODYSITES': _SITEBASE + '/static/img/PCoA1.png',
-    'ADDENDUM_PCOA_AGES_POPS': _SITEBASE + '/static/img/PCoA2.png',
-    'ADDENDUM_PCOA_AG_POPULATION': _SITEBASE + '/static/img/PCoA3.png',
-    'PORTAL_DIET_QUESTIONS': _SITEBASE + '/static/img/diet_questions.png',
-    'PORTAL_SHIPPING': _SITEBASE + '/static/img/shipping.png',
     'EMAIL_ERROR': "There was a problem sending your email. Please contact us directly at <a href='mailto:%(help_email)s'>%(help_email)s</a>" % {'help_email': HELP_EMAIL},
-    'EMAIL_SENT': 'Your message has been sent. We will reply shortly',
+    'FUNDRAZR_URL': 'https://fundrazr.com/campaigns/4Tqx5',
+    'HELP_EMAIL': HELP_EMAIL,
+    'KIT_INSTRUCTIONS': _SITEBASE + '/static/img/ag_kit_instructions.pdf',
+    'LATITUDE': 39.83,
+    'LOGO': _SITEBASE + '/static/img/ag_logo.png',
+    'LONGITUDE': -99.89,
     'SHIPPING_ADDRESS': "ATTN: Greg Humphrey, Knight Lab<br>BRF II Room 1220D<br>9500 Gilman Drive<br>La Jolla, CA 92093-0763",
-    'GUT_PROJECT_SHORTHANDS': ['American Gut', 'British Gut']
+    'ZOOM': 4
 }
+media_locale.update(ENG.media_locale)
 
 
 _HANDLERS = {
