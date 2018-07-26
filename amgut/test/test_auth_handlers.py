@@ -14,7 +14,7 @@ class TestAuthBasehandler(TestHandlerBase):
         self.assertIn('Set-Cookie', response.headers.keys())
 
         # test that cookie is re-used
-        self.mock_login('tst_ACJUJ')
+        self.mock_login('cKxwJ')
         response = self.get('/auth/register/')
         self.assertNotIn('Set-Cookie', response.headers.keys())
 
@@ -86,14 +86,14 @@ class TestAuthLoginHandler(TestHandlerBase):
 
     def test_post_correct_pass(self):
         # test a sucessful login, for a handout kit
-        self.mock_login('tst_ACJUJ')
+        self.mock_login('cKxwJ')
         response = self.get('/authed/portal/')
         self.assertEqual(response.code, 200)
         self.assertNotIn(text_locale['handlers']['REGISTER_KIT'],
                          response.body)
 
         # test a sucessful login, for a non-handout kit
-        self.mock_login('tst_aAdKt')
+        self.mock_login('wiydx')
         response = self.get('/authed/portal/')
         self.assertEqual(response.code, 200)
         self.assertIn(text_locale['portal.html']['VERIFICATION_HEADER_2'],
@@ -107,7 +107,7 @@ class TestAuthLoginHandler(TestHandlerBase):
         self.assertEqual(response.code, 200)
 
         # check that invalid password is reported for wrong password
-        response = self.post('/auth/login/', {'skid': 'tst_ACJUJ',
+        response = self.post('/auth/login/', {'skid': 'cKxwJ',
                                               'passwd': 'wrong'})
         self.assertIn(text_locale['handlers']['INVALID_KITID'], response.body)
         self.assertEqual(response.code, 200)
