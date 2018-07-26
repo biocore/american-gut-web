@@ -43,8 +43,7 @@ class TestAuthRegisterHandoutHandler(TestHandlerBase):
         port = self.get_http_port()
         self.assertEqual(
             response.effective_url,
-            'http://localhost:%d/?loginerror=%s' %
-            (port, url_escape(text_locale['handlers']['INVALID_KITID'])))
+            'http://localhost:35452/auth/register/')
 
         # TODO: see issue #618
         unregistered_kits = ag_data.get_all_handout_kits()
