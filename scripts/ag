@@ -9,7 +9,7 @@
 # -----------------------------------------------------------------------------
 import click
 
-from amgut.connections import redis
+from amgut.connections import redis, ag_data
 from amgut.lib.data_access.env_management import (
     create_database, build, initialize, make_settings_table, patch_db,
     populate_test_db, rebuild_test)
@@ -68,6 +68,24 @@ def make(db, force):
     click.echo("Applying patches to database")
     patch_db(verbose=True)
     click.echo("{} environment successfully created".format(db))
+
+
+@cli.command('extract-survey')
+@click.option('--survey', type=click.Choice(['primary', 'pet',
+              'diet', 'fermented', 'surfing']), default='primary')
+@click.option('--language', type=click.Choice(['american', 'british']),
+              default='american')
+@click.option('--output', type=str, default='survey_info.tsv', help='Output tsv')
+def extract(survey, language, output):
+    """Extracts survey infomation of a barcode."""
+    click.echo("Extracting %s survey information to %s" % (survey, output))
+    survey_ids = {'primary': '1',
+                  'pet': '2',
+                  'diet': '3',
+                  'fermented': '4',
+                  'surfing': '5'}
+    df  = ag_data.getAGSurveyDetails(survey_ids[survey], language)
+    df.to_csv(output, sep='\t', index=False, header=True)
 
 
 @cli.command('rebuild-test-db')

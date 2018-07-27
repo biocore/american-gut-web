@@ -17,7 +17,9 @@ class HumanSurveyCompletedHandler(BaseHandler):
 
         else:
             consent_info = ag_data.getConsent(human_survey_id)
-            surveys = [f(human_survey_id, consent_info)
+            internal_surveys = ag_data.get_participants_surveys(
+                consent_info['ag_login_id'], consent_info['participant_name'])
+            surveys = [f(human_survey_id, consent_info, internal_surveys)
                        for f in external_surveys]
 
             self.render('human_survey_completed.html', skid=self.current_user,
