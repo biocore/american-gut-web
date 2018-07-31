@@ -56,15 +56,6 @@ class TestMigration(TestCase):
         # why do we have two more consents than sources (both for ag_login_id
         # e1934ceb-6e92-c36a-e040-8a80115d2d64)??
 
-        # check number of barcodes
-        with TRN:
-            sql = """SELECT COUNT(*)
-                     FROM (SELECT DISTINCT barcode
-                           FROM ag.ag_kit_barcodes) AS foo"""
-            TRN.add(sql, [])
-            num_barcodes = TRN.execute_fetchindex()[0][0]
-        self.assertEqual(num_barcodes, 28865)
-
     def test_sources(self):
         with TRN:
             sql = """SELECT barcode
