@@ -65,13 +65,14 @@ setup(name='American Gut participant UI',
           'click==3.3',
           'future==0.13.1',
           'open-humans-tornado-oauth2==2.1.0',
-          'psycopg2',
+          'psycopg2==2.7.4',
           'pycrypto==2.6.1',
           'bcrypt',
           'redis',
           'requests',
           'tornado==4.4.2',
           'WTForms==2.0.1',
-          'natsort'
+          'natsort',
+          'pandas'
       ],
       classifiers=classifiers)
