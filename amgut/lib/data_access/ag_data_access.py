@@ -17,6 +17,8 @@ from uuid import UUID
 
 import psycopg2
 import bcrypt
+import numpy as np
+import pandas as pd
 
 from amgut.lib.data_access.sql_connection import TRN
 
@@ -210,6 +212,125 @@ class AGDataAccess(object):
             if not row:
                 raise ValueError('Barcode does not exist in AG: %s' % barcode)
             return dict(row[0])
+
+    def getAGSurveyDetails(self, survey_id, language):
+        """Returns survey information of a specific survey_id and language
+
+        Parameters
+        ----------
+        survey_id : str
+            the id of the survey group
+        language : str
+            the language the survey is intended for
+
+        Returns
+        -------
+        DataFrame
+            pandas DataFrame of sorted survey details
+
+        Raises
+        ------
+        ValueError
+            survey_id not found in database
+        ValueError
+            language not found in database
+        """
+        if survey_id not in self.getKnownSurveyIds():
+            raise ValueError('Invalid survey_id')
+        if language not in self.getKnownLanguages():
+            raise ValueError('Invalid language')
+
+        sql = """SELECT survey_question_id,
+                        survey_group,
+                        %s,
+                        question_shortname,
+                        response,
+                        ag.survey_question_response.display_index
+                            AS response_index
+                 FROM ag.survey_question
+                 LEFT JOIN ag.survey_question_response
+                     USING (survey_question_id)
+                 LEFT JOIN ag.group_questions USING (survey_question_id)
+                 LEFT JOIN ag.surveys USING (survey_group)
+                 WHERE survey_id = %s""" % (language, survey_id)
+
+        with TRN:
+            TRN.add(sql)
+            survey_details = TRN.execute_fetchindex()
+
+        df = pd.DataFrame([dict(r) for r in survey_details],
+                          columns=['survey_question_id',
+                                   'survey_group',
+                                   language,
+                                   'question_shortname',
+                                   'response',
+                                   'response_index'])
+        # sorts so that questions emmulate survey order
+        df = df.sort_values(by=['survey_group',
+                                'survey_question_id',
+                                'response_index']).drop(columns='survey_group')
+        # converts response_index from float to int
+        df['response_index'] = df['response_index'].apply(
+                lambda x: None if np.isnan(x) else int(x), convert_dtype=False)
+        return df
+
+    def getKnownSurveyIds(self):
+        """Returns all known survey IDs of each survey type
+
+        Returns
+        -------
+        list of ints
+            List of survey_ids in ascending order
+
+        Raises
+        ------
+        ValueError
+            Survey IDs were not able to be found
+        """
+        sql = """SELECT survey_id FROM ag.surveys"""
+
+        with TRN:
+            TRN.add(sql)
+            survey_ids = TRN.execute_fetchindex()
+
+        if not survey_ids:
+            raise ValueError('Survey IDs were not able to be found')
+
+        # survey_ids must be converted from list of DictRow to a set
+        survey_ids = [x[0] for x in survey_ids]
+        unique_survey_ids = set([])
+        for i in survey_ids:
+            unique_survey_ids.add(i)
+        return unique_survey_ids
+
+    def getKnownLanguages(self):
+        """Returns all known language locales
+
+        Returns
+        -------
+        list of strings
+            List of language locales used for surveys
+
+        Raises
+        ------
+        ValueError
+            Languages were not able to be found
+        """
+        sql = """SELECT column_name FROM information_schema.columns
+                 WHERE table_name = 'survey_response'"""
+
+        with TRN:
+            TRN.add(sql)
+            languages = TRN.execute_fetchindex()
+
+        if not languages:
+            raise ValueError('Languages were not able to be found')
+
+        languages = [x[0] for x in languages]
+        languages_set = set([])
+        for i in languages:
+            languages_set.add(i)
+        return languages_set
 
     def getAGKitDetails(self, supplied_kit_id):
         sql = """SELECT cast(ag_kit_id as varchar(100)),

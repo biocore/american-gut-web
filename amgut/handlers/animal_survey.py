@@ -40,13 +40,16 @@ class AnimalSurveyHandler(BaseHandler):
 
         if not animal_survey_id:
             animal_survey_id = binascii.hexlify(os.urandom(8))
+            new_survey = True
+        else:
+            new_survey = False
 
         form = self.animal_survey()
         form.process(data=self.request.arguments)
         data = {'questions': form.data}
         participant_name = form['Pet_Information_127_0'].data[0]
         # If the participant already exists, stop them outright
-        if not animal_survey_id and \
+        if new_survey and \
                 ag_data.check_if_consent_exists(ag_login_id, participant_name):
             errmsg = url_escape(tl['PARTICIPANT_EXISTS'] % participant_name)
             url = sitebase + "/authed/portal/?errmsg=%s" % errmsg
@@ -71,7 +74,7 @@ class AnimalSurveyHandler(BaseHandler):
         redis.expire(animal_survey_id, 86400)
 
         store_survey(primary_animal_survey, animal_survey_id)
-        if animal_survey_id:
+        if not new_survey:
             message = urlencode([('errmsg', tl['SUCCESSFULLY_EDITED'] %
                                  participant_name)])
         else:
