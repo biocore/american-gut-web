@@ -185,22 +185,22 @@
             <p class="portal_blurb">{% raw tl['DOMESTIC_TEXT_1'] %}</p>
             <p class="portal_blurb">{% raw tl['DOMESTIC_TEXT_2'] %}</p>
             {% raw tl['DOMESTIC_TEXT_3'] %}
-            <br />
-            {% if 'PORTAL_SHIPPING' in media_locale %} 
-              <h2>{% raw tl['INTERNATIONAL_HEADER_1'] %}</h2>
-              <p class="portal_blurb">
-                  {% raw tl['INTERNATIONAL_TEXT_1'] %}
-                  <br /><br />
-                  {% raw tl['INTERNATIONAL_TEXT_2'] %}
-                  <br /><br />
-                  {% raw tl['INTERNATIONAL_TEXT_3'] %}
-                  <br /><br />
-                  {% raw tl['INTERNATIONAL_TEXT_4'] %}
-              </p>
-              <h3>{% raw tl['INTERNATIONAL_HEADER_2'] %}</h3>
-              <ul class="shipping">{% raw tl['YOUR_SAMPLES_LIST'] %}</ul>
-              <br /><br />
-              <div class="centered"><img src="{% raw media_locale['PORTAL_SHIPPING'] %}"/></div>
+            <br/>
+            {% if 'NAV_INTERNATIONAL' in media_locale %}
+                <h2>{% raw tl['INTERNATIONAL_HEADER_1'] %}</h2>
+                    <p class="portal_blurb">
+                    {% raw tl['INTERNATIONAL_TEXT_1'] %}
+                    <br /><br />
+                    {% raw tl['INTERNATIONAL_TEXT_2'] %}
+                    <br /><br />
+                    {% raw tl['INTERNATIONAL_TEXT_3'] %}
+                    <br /><br />
+                    {% raw tl['INTERNATIONAL_TEXT_4'] %}
+                </p>
+                <h3>{% raw tl['INTERNATIONAL_HEADER_2'] %}</h3>
+                <ul class="shipping">{% raw tl['YOUR_SAMPLES_LIST'] %}</ul>
+                <br /><br />
+                <div class="centered"><img src="{% raw media_locale['PORTAL_SHIPPING'] %}"/></div>
             {% end %}
         </div>
         <div id="results_content" class="portal_unselected">
