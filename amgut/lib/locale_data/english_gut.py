@@ -47,7 +47,6 @@ media_locale = {
     'FAQ_AMBIGUOUS_PASS': _SITEBASE + "/static/img/creds_example.png",
     'FAVICON': _SITEBASE + "/static/img/favicon.ico",
     'FOBT_PDF': _SITEBASE + '/static/img/FOBT_instructions.pdf',
-    'FUNDRAZR_URL': "https://fundrazr.com/campaigns/4sSf3",
     'GUT_PROJECT_SHORTHANDS': ['American Gut', 'British Gut'],
     'HELP_EMAIL': HELP_EMAIL,
     'LOCALE': AMGUT_CONFIG.locale,
