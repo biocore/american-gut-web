@@ -542,6 +542,7 @@ _HELP_REQUEST = {
     'EMAIL_ADDRESS': "Email address",
     'FIRST_NAME': "First name",
     'LAST_NAME': "Last name",
+    'NOTE': "Note that all inquiries are directed to the American Gut help account, which will be responding to the request",
     'PROBLEM_PROMPT': "Enter information related to your problem",
     'RESPONSE_TIMING': "We will send a response to the email address you supply within 48 hours.",
 }
