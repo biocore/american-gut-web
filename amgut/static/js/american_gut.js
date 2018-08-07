@@ -1,8 +1,16 @@
 //functions for the portal toggle system
 function selectTab(id) {
-    document.querySelectorAll('.selected')[0].className = 'unselected';
+    if (document.querySelectorAll('.selected')[0].classList.contains('disabled')) {
+        document.querySelectorAll('.selected')[0].className = "unselected disabled";
+    } else {
+        document.querySelectorAll('.selected')[0].className = 'unselected';
+    }
     document.querySelectorAll('.portal_selected')[0].className = 'portal_unselected';
-    document.getElementById(id+'_tab').className = 'selected';
+    if (document.getElementById(id+'_tab').classList.contains('disabled')) {
+        document.getElementById(id+'_tab').className = "selected disabled";
+    } else {
+        document.getElementById(id+'_tab').className = 'selected';
+    }
     document.getElementById(id+'_content').className = 'portal_selected';
 }
 
