@@ -156,12 +156,16 @@
             <p class="portal_blurb">{% raw tl['LOG_SAMPLE_TEXT_1'] %}</p>
             <div class="centered"><img src="{% raw media_locale['SITEBASE'] %}/static/img/labeled_tube.png"></div>
             <p class="portal_blurb">{% raw tl['LOG_SAMPLE_TEXT_2'] %}</p>
-                <h2><font color="red">{% raw tl['LOG_SAMPLE_NEW'] %}</font></h2>
+            {% if avail_barcodes %}
+              <h2><font color="red">{% raw tl['LOG_SAMPLE_NEW'] %}</font></h2>
                 <ul>
-                {% for barcode in barcodes %}
+                {% for barcode in avail_barcodes %}
                     <li><a href="{% raw media_locale['SITEBASE'] %}/authed/add_sample_overview/">{{barcode}}</a></li>
                 {% end %}
                 </ul>
+            {% else %}
+              <h2><font color="red">{% raw tl['LOG_SAMPLE_NO_SAMPLES'] %}</font></h2>
+            {% end %}
             <p class="portal_blurb">{% raw tl['LOG_SAMPLE_TEXT_3'] %}</p>
         </div>
         <div id="mail_content" class="portal_unselected">
