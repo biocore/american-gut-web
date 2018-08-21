@@ -77,7 +77,7 @@ def make(db, force):
               default='american')
 @click.option('--output', type=str, default='survey_info.tsv', help='Output tsv')
 def extract(survey, language, output):
-    """Extracts survey infomation of a barcode."""
+    """Extracts survey infomation of a particular survey and language."""
     click.echo("Extracting %s survey information to %s" % (survey, output))
     survey_ids = {'primary': '1',
                   'pet': '2',
