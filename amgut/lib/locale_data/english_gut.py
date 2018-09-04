@@ -92,7 +92,7 @@ media_locale = {
 _HANDLERS = {
     'ADD_BARCODE_ERROR': "Could not add barcode to database. Did you hit the back button while registering and press 'register user' again?",
     'ADD_KIT_ERROR': 'Could not add kit to database. Did you hit the back button while registering and press "Register Kit" again?',
-    'AUTH_REGISTER_BODY': "Thank you for registering with the %(project_name)s! Your verification code is:\n\n{0}\n\nYou will need this code to verifiy your kit on the %(project_shorthand)s webstite. To get started, please log into:\n\n%(sitebase)s\n\nEnter the kit_id and password found inside your kit, verify the contents of your kit, and enter the verification code found in this email.{1}\n\nSincerely,\nThe %(project_shorthand)s Team" % {'project_shorthand': AMGUT_CONFIG.project_shorthand, 'project_name': AMGUT_CONFIG.project_name, 'sitebase': media_locale['SITEBASE']},
+    'AUTH_REGISTER_BODY': "Thank you for registering with the %(project_name)s! Your verification code is:\n\n{0}\n\nYou will need this code to verifiy your kit on the %(project_shorthand)s webstite. To get started, please log into:\n\nhttps://microbio.me%(sitebase)s\n\nEnter the kit_id and password found inside your kit, verify the contents of your kit, and enter the verification code found in this email.{1}\n\nSincerely,\nThe %(project_shorthand)s Team" % {'project_shorthand': AMGUT_CONFIG.project_shorthand, 'project_name': AMGUT_CONFIG.project_name, 'sitebase': media_locale['SITEBASE']},
     'AUTH_REGISTER_PGP': "\n\nFor the PGP cohort, we are requesting that you collect one sample from each of the following sites:\n\nLeft hand\nRight hand\nForehead\nMouth\nFecal\n\nThis is important to ensure that we have the same types of samples for all PGP participants which, in turn, could be helpful in downstream analysis when looking for relationships between the microbiome and the human genome\n\n.",
     'AUTH_REGISTER_SUBJECT': "%(project_shorthand)s Verification Code" % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
     'AUTH_SUBJECT': "You have registered your kit!  Your verification code is below.",
@@ -108,7 +108,7 @@ _HANDLERS = {
     'MISSING_NAME_EMAIL': 'Missing participant name or email. Please retry, adding all required information.',
     'PARTICIPANT_EXISTS': 'Participant %s already exists! This means we already have a survey on file under this name. Try using a variation of the name (such as substituting an initial for the first or last name).',
     'REGISTER_KIT': 'Kit has not been registered. Please click "Register Kit" link.',
-    'RESET_PASS_BODY': 'The password on {1} Kit ID %s  has been reset please click the link below within two hours\n{0}change_pass_verify/?email=%s&kitid=%s&passcode=%s'.format(media_locale['SITEBASE'], AMGUT_CONFIG.project_shorthand),
+    'RESET_PASS_BODY': 'The password on {1} Kit ID %s  has been reset please click the link below within two hours\n\nhttps://microbio.me{0}change_pass_verify/?email=%s&kitid=%s&passcode=%s'.format(media_locale['SITEBASE'], AMGUT_CONFIG.project_shorthand),
     'SUCCESSFULLY_ADDED': 'Successfully added %s!',
     'SUCCESSFULLY_EDITED': 'Successfully edited %s!'
 }
@@ -584,7 +584,7 @@ _FAQ = {
     'TAKES_SIX_MONTHS_ANS': "Yes. It takes about six weeks for extractions, six weeks for the remainder of the processing, and two weeks to do the actual sequencing. This is before any analysis and if everything goes as planned, with no delays - equipment down, run failures, reagents or other consumables back ordered. There are also added transit times for your sample to travel between the UK and the US. Things do sometimes go wrong, so we say up to four months, although we are working to improve these.",
     'WATCH_VIDEOS': "Watch these helpful videos created by our colleagues at the American Gut about what to do once you've received your kit!",
     'WHAT_FORMS': "What are the forms you talk about on the sampling instructions?",
-    'WHAT_FORMS_ANS': 'The instruction on the sampling instructions that requires you to "place your forms and the sample tube in preaddressed envelope" is leftover from a previous version of the sampling instructions. There are no forms for you to include inside the envelope with your sample.</p>' % {'sitebase': media_locale['SITEBASE']},
+    'WHAT_FORMS_ANS': 'The instruction on the sampling instructions that requires you to "place your forms and the sample tube in preaddressed envelope" is leftover from a previous version of the sampling instructions. There are no forms for you to include inside the envelope with your sample.</p>',
     'WHERE_SEND_SAMPLE': "Where do I send my sample?",
     'WHO_MICHAEL_POLLAN': "Who is Michael Pollan?",
     'WHO_MICHAEL_POLLAN_ANS': 'Michael Pollan is a New York Times Best Seller for his books on diet and nutrition. Further information about Michael can be found <a href="http://michaelpollan.com/">here</a>.',
@@ -730,7 +730,7 @@ _FORGOT_PASSWORD = {
 
 _ERROR = {
     'ERROR_CONTACT': "The error has been logged and we will look into it. Please go back to the main page.",
-    'ERROR_OCCURED': "AN ERROR HAS OCCURED!"
+    'ERROR_OCCURED': "AN ERROR HAS OCCURRED!"
 }
 
 _RETREIVE_KITID = {
