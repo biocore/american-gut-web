@@ -93,7 +93,7 @@ media_locale = {
 _HANDLERS = {
     'ADD_BARCODE_ERROR': "Could not add barcode to database. Did you hit the back button while registering and press 'register user' again?",
     'ADD_KIT_ERROR': 'Could not add kit to database. Did you hit the back button while registering and press "Register Kit" again?',
-    'AUTH_REGISTER_BODY': "Thank you for registering with the %(project_name)s! Your verification code is:\n\n{0}\n\nYou will need this code to verifiy your kit on the %(project_shorthand)s webstite. To get started, please log into:\n\n%(sitebase)s\n\nEnter the kit_id and password found inside your kit, verify the contents of your kit, and enter the verification code found in this email.{1}\n\nSincerely,\nThe %(project_shorthand)s Team" % {'project_shorthand': AMGUT_CONFIG.project_shorthand, 'project_name': AMGUT_CONFIG.project_name, 'sitebase': media_locale['SITEBASE']},
+    'AUTH_REGISTER_BODY': "Thank you for registering with the %(project_name)s! Your verification code is:\n\n{0}\n\nYou will need this code to verifiy your kit on the %(project_shorthand)s website. To get started, please log into:\n\nmicrobio.me%(sitebase)s\n\nEnter the kit_id and password found inside your kit, verify the contents of your kit, and enter the verification code found in this email.{1}\n\nSincerely,\nThe %(project_shorthand)s Team" % {'project_shorthand': AMGUT_CONFIG.project_shorthand, 'project_name': AMGUT_CONFIG.project_name, 'sitebase': media_locale['SITEBASE']},
     'AUTH_REGISTER_PGP': "\n\nFor the PGP cohort, we are requesting that you collect one sample from each of the following sites:\n\nLeft hand\nRight hand\nForehead\nMouth\nFecal\n\nThis is important to ensure that we have the same types of samples for all PGP participants which, in turn, could be helpful in downstream analysis when looking for relationships between the microbiome and the human genome\n\n.",
     'AUTH_REGISTER_SUBJECT': "%(project_shorthand)s Verification Code" % {'project_shorthand': AMGUT_CONFIG.project_shorthand},
     'AUTH_SUBJECT': "You have registered your kit!  Your verification code is below.",
@@ -109,7 +109,7 @@ _HANDLERS = {
     'MISSING_NAME_EMAIL': 'Missing participant name or email. Please retry, adding all required information.',
     'PARTICIPANT_EXISTS': 'Participant %s already exists! This means we already have a survey on file under this name. Try using a variation of the name (such as substituting an initial for the first or last name).',
     'REGISTER_KIT': 'Kit has not been registered. Please click "Register Kit" link.',
-    'RESET_PASS_BODY': 'The password on {1} Kit ID %s has been reset please click the link below within two hours\n{0}/change_pass_verify/?email=%s&kitid=%s&passcode=%s'.format(media_locale['SITEBASE'], AMGUT_CONFIG.project_shorthand),
+    'RESET_PASS_BODY': 'The password on {1} Kit ID %s has been reset please click the link below within two hours\nmicrobio.me{0}/change_pass_verify/?email=%s&kitid=%s&passcode=%s'.format(media_locale['SITEBASE'], AMGUT_CONFIG.project_shorthand),
     'SUCCESSFULLY_ADDED': 'Successfully added %s!',
     'SUCCESSFULLY_EDITED': 'Successfully edited %s!'
 }
