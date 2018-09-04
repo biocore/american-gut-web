@@ -108,7 +108,7 @@ _HANDLERS = {
     'MISSING_NAME_EMAIL': 'Missing participant name or email. Please retry, adding all required information.',
     'PARTICIPANT_EXISTS': 'Participant %s already exists! This means we already have a survey on file under this name. Try using a variation of the name (such as substituting an initial for the first or last name).',
     'REGISTER_KIT': 'Kit has not been registered. Please click "Register Kit" link.',
-    'RESET_PASS_BODY': 'The password on {1} Kit ID %s  has been reset please click the link below within two hours\n\nhttps://microbio.me{0}change_pass_verify/?email=%s&kitid=%s&passcode=%s'.format(media_locale['SITEBASE'], AMGUT_CONFIG.project_shorthand),
+    'RESET_PASS_BODY': 'The password on {1} Kit ID %s has been reset please click the link below within two hours\n\nhttps://microbio.me{0}change_pass_verify/?email=%s&kitid=%s&passcode=%s'.format(media_locale['SITEBASE'], AMGUT_CONFIG.project_shorthand),
     'SUCCESSFULLY_ADDED': 'Successfully added %s!',
     'SUCCESSFULLY_EDITED': 'Successfully edited %s!'
 }
