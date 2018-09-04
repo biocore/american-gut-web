@@ -642,7 +642,7 @@ _FORGOT_PASSWORD = {
 
 _ERROR = {
     'ERROR_CONTACT': "The error has been logged and we will look into it. Please go back to the main page.",
-    'ERROR_OCCURED': "AN ERROR HAS OCCURED!"
+    'ERROR_OCCURED': "AN ERROR HAS OCCURRED!"
 }
 
 _RETREIVE_KITID = {
