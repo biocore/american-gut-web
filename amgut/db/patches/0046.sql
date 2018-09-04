@@ -5,7 +5,8 @@ CREATE TABLE ag.vioscreen_foodcomponents (
   survey_id            varchar  NOT NULL,
   units                varchar  NOT NULL,
   valueType            varchar,
-  CONSTRAINT pk_vioscreen_foodcomponents PRIMARY KEY ( survey_id, code )
+  CONSTRAINT pk_vioscreen_foodcomponents PRIMARY KEY ( survey_id, code ),
+  CONSTRAINT fk_vioscreen_foodcomponents FOREIGN KEY ( survey_id ) REFERENCES ag.ag_login_surveys ( survey_id )
 );
 
 CREATE TABLE ag.vioscreen_percentenergy (
@@ -18,7 +19,8 @@ CREATE TABLE ag.vioscreen_percentenergy (
   shortDescription     varchar  ,
   survey_id            varchar  NOT NULL,
   units                varchar  NOT NULL,
-  CONSTRAINT pk_vioscreen_percentenergy PRIMARY KEY ( survey_id, code )
+  CONSTRAINT pk_vioscreen_percentenergy PRIMARY KEY ( survey_id, code ),
+  CONSTRAINT fk_vioscreen_percentenergy FOREIGN KEY ( survey_id ) REFERENCES ag.ag_login_surveys ( survey_id )
 );
 
 CREATE TABLE ag.vioscreen_mpeds (
@@ -28,7 +30,8 @@ CREATE TABLE ag.vioscreen_mpeds (
   survey_id            varchar  NOT NULL,
   units                varchar  NOT NULL,
   valueType            varchar  ,
-  CONSTRAINT pk_vioscreen_mpeds PRIMARY KEY ( survey_id, code )
+  CONSTRAINT pk_vioscreen_mpeds PRIMARY KEY ( survey_id, code ),
+  CONSTRAINT fk_vioscreen_mpeds FOREIGN KEY ( survey_id ) REFERENCES ag.ag_login_surveys ( survey_id )
 );
 
 CREATE TABLE ag.vioscreen_eatingpatterns (
@@ -38,7 +41,8 @@ CREATE TABLE ag.vioscreen_eatingpatterns (
   survey_id            varchar  NOT NULL,
   units                varchar  NOT NULL,
   valueType            varchar  ,
-  CONSTRAINT pk_vioscreen_eatingpatterns PRIMARY KEY ( survey_id, code )
+  CONSTRAINT pk_vioscreen_eatingpatterns PRIMARY KEY ( survey_id, code ),
+  CONSTRAINT fk_vioscreen_eatingpatterns FOREIGN KEY ( survey_id ) REFERENCES ag.ag_login_surveys ( survey_id )
 );
 
 CREATE TABLE ag.vioscreen_foodconsumption (
@@ -53,7 +57,8 @@ CREATE TABLE ag.vioscreen_foodconsumption (
   servingFrequencyText varchar(500)  NOT NULL,
   servingSizeText      varchar(500)  NOT NULL,
   survey_id            varchar  NOT NULL,
-  CONSTRAINT pk_vioscreen_foodconsumption PRIMARY KEY ( survey_id, foodCode )
+  CONSTRAINT pk_vioscreen_foodconsumption PRIMARY KEY ( survey_id, foodCode ),
+  CONSTRAINT fk_vioscreen_foodconsumption FOREIGN KEY ( survey_id ) REFERENCES ag.ag_login_surveys ( survey_id )
 );
 
 CREATE TABLE ag.vioscreen_dietaryscore (
@@ -63,12 +68,29 @@ CREATE TABLE ag.vioscreen_dietaryscore (
   survey_id            varchar  NOT NULL,
   type                 varchar  NOT NULL,
   upperLimit           float8  ,
-  CONSTRAINT pk_vioscreen_dietaryscore PRIMARY KEY ( survey_id, type )
+  CONSTRAINT pk_vioscreen_dietaryscore PRIMARY KEY ( survey_id, type ),
+  CONSTRAINT fk_vioscreen_dietaryscore FOREIGN KEY ( survey_id ) REFERENCES ag.ag_login_surveys ( survey_id )
 );
 
 CREATE TABLE ag.vioscreen_surveys (
   status               varchar  NOT NULL,
-  survey_id            varchar  NOT NULL
+  survey_id            varchar  NOT NULL,
   pulldown_date        varchar  ,
-  CONSTRAINT pk_vioscreen_surveys PRIMARY KEY ( survey_id )
+  CONSTRAINT pk_vioscreen_surveys PRIMARY KEY ( survey_id ),
+  CONSTRAINT fk_vioscreen_surveys FOREIGN KEY ( survey_id ) REFERENCES ag.ag_login_surveys ( survey_id )
 );
+
+CREATE TABLE ag.vioscreen_sessions (
+  session_id           varchar  NOT NULL,
+  CONSTRAINT pk_vioscreen_sessions PRIMARY KEY ( session_id )
+);
+
+INSERT INTO ag.vioscreen_sessions (session_id) VALUES 
+  ('foodcomponents'),
+  ('percentenergy'),
+  ('mpeds'),
+  ('eatingpatterns'),
+  ('foodconsumption'),
+  ('dietaryscore');
+
+INSERT INTO ag.external_survey_sources (external_survey, external_survey_description, external_survey_url) VALUES ('Vioscreen', 'Food frequency questionnaire pulled from vioscreen','https://api.viocare.com/KLUCB/');
