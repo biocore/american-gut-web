@@ -119,11 +119,11 @@
                     </li>
                     <li class="has-sub"><a><span>{% raw media_locale['NAV_OTHER_SITES'] %}</span></a>
                         <ul>
-                            <li><a href="{% raw media_locale['AMERICAN_GUT_PROJECT'] %}">{% raw media_locale['NAV_AMERICAN_GUT_PROJECT'] %}</a></li>
-                            <li><a href="{% raw media_locale['BRITISH_GUT_PROJECT'] %}">{% raw media_locale['NAV_BRITISH_GUT_PROJECT'] %}</a></li>
+                            <li><a href="{% raw media_locale['AMERICAN_GUT_PROJECT'] %}" target="_blank">{% raw media_locale['NAV_AMERICAN_GUT_PROJECT'] %}</a></li>
+                            <li><a href="{% raw media_locale['BRITISH_GUT_PROJECT'] %}" target="_blank">{% raw media_locale['NAV_BRITISH_GUT_PROJECT'] %}</a></li>
                         {% for alt_site in media_locale['GUT_PROJECT_SHORTHANDS'] %}
                             {% if alt_site != media_locale['SHORTHAND'] %}
-                            <li><a href="{% raw media_locale['ALT_GUT_SITE'] %}/{% raw alt_site.replace(' ','') %}">{% raw alt_site %}{% raw media_locale['NAV_ALT_GUT'] %}</a></li>
+                            <li><a href="{% raw media_locale['ALT_GUT_SITE'] %}/{% raw alt_site.replace(' ','') %}" target="_blank">{% raw alt_site %}{% raw media_locale['NAV_ALT_GUT'] %}</a></li>
                             {% end %}
                         {% end %}
                         </ul>
