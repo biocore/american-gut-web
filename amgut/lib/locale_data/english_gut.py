@@ -109,7 +109,7 @@ _HANDLERS = {
     'MISSING_NAME_EMAIL': 'Missing participant name or email. Please retry, adding all required information.',
     'PARTICIPANT_EXISTS': 'Participant %s already exists! This means we already have a survey on file under this name. Try using a variation of the name (such as substituting an initial for the first or last name).',
     'REGISTER_KIT': 'Kit has not been registered. Please click "Register Kit" link.',
-    'RESET_PASS_BODY': 'The password on {1} Kit ID %s  has been reset please click the link below within two hours\n{0}change_pass_verify/?email=%s&kitid=%s&passcode=%s'.format(media_locale['SITEBASE'], AMGUT_CONFIG.project_shorthand),
+    'RESET_PASS_BODY': 'The password on {1} Kit ID %s has been reset please click the link below within two hours\n{0}/change_pass_verify/?email=%s&kitid=%s&passcode=%s'.format(media_locale['SITEBASE'], AMGUT_CONFIG.project_shorthand),
     'SUCCESSFULLY_ADDED': 'Successfully added %s!',
     'SUCCESSFULLY_EDITED': 'Successfully edited %s!'
 }
@@ -496,7 +496,7 @@ _FAQ = {
     'TAKES_SIX_MONTHS_ANS': "Yes. It takes about six weeks for extractions, six weeks for the remainder of the processing, and two weeks to do the actual sequencing. This is before any analysis and if everything goes as planned, with no delays - equipment down, run failures, reagents or other consumables back ordered. There are also added transit times for your sample to travel between the UK and the US. Things do sometimes go wrong, so we say up to four months, although we are working to improve these.",
     'WATCH_VIDEOS': "Watch these helpful videos created by our colleagues at the American Gut about what to do once you've received your kit!",
     'WHAT_FORMS': "What are the forms you talk about on the sampling instructions?",
-    'WHAT_FORMS_ANS': 'The instruction on the sampling instructions that requires you to "place your forms and the sample tube in preaddressed envelope" is leftover from a previous version of the sampling instructions. There are no forms for you to include inside the envelope with your sample.</p>' % {'sitebase': media_locale['SITEBASE']},
+    'WHAT_FORMS_ANS': 'The instruction on the sampling instructions that requires you to "place your forms and the sample tube in preaddressed envelope" is leftover from a previous version of the sampling instructions. There are no forms for you to include inside the envelope with your sample.</p>',
     'WHEN_RESULTS_NON_FECAL': "I sent in a non-faecal sample and have not received any results, when should I expect results?",
     'WHERE_SEND_SAMPLE': "Where do I send my sample?",
     'WHO_MICHAEL_POLLAN': "Who is Michael Pollan?",
