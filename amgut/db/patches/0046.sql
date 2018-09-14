@@ -39,7 +39,7 @@ CREATE TABLE ag.vioscreen_eatingpatterns (
   code                 varchar  NOT NULL,
   description          varchar(500)  ,
   survey_id            varchar  NOT NULL,
-  units                varchar  NOT NULL,
+  units                varchar  ,
   valueType            varchar  ,
   CONSTRAINT pk_vioscreen_eatingpatterns PRIMARY KEY ( survey_id, code ),
   CONSTRAINT fk_vioscreen_eatingpatterns FOREIGN KEY ( survey_id ) REFERENCES ag.ag_login_surveys ( survey_id )
@@ -51,13 +51,13 @@ CREATE TABLE ag.vioscreen_foodconsumption (
   created              varchar  ,
   data                 json  NOT NULL,
   description          varchar(500)  ,
-  foodCode             int  NOT NULL,
+  foodCode             varchar  NOT NULL,
   foodGroup            varchar  NOT NULL,
   frequency            int  NOT NULL,
   servingFrequencyText varchar(500)  NOT NULL,
   servingSizeText      varchar(500)  NOT NULL,
   survey_id            varchar  NOT NULL,
-  CONSTRAINT pk_vioscreen_foodconsumption PRIMARY KEY ( survey_id, foodCode ),
+  CONSTRAINT pk_vioscreen_foodconsumption PRIMARY KEY ( survey_id, foodCode, foodGroup ),
   CONSTRAINT fk_vioscreen_foodconsumption FOREIGN KEY ( survey_id ) REFERENCES ag.ag_login_surveys ( survey_id )
 );
 
@@ -75,7 +75,7 @@ CREATE TABLE ag.vioscreen_dietaryscore (
 CREATE TABLE ag.vioscreen_surveys (
   status               varchar  NOT NULL,
   survey_id            varchar  NOT NULL,
-  pulldown_date        varchar  ,
+  pulldown_date        date  ,
   CONSTRAINT pk_vioscreen_surveys PRIMARY KEY ( survey_id ),
   CONSTRAINT fk_vioscreen_surveys FOREIGN KEY ( survey_id ) REFERENCES ag.ag_login_surveys ( survey_id )
 );
