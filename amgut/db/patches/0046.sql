@@ -79,18 +79,3 @@ CREATE TABLE ag.vioscreen_surveys (
   CONSTRAINT pk_vioscreen_surveys PRIMARY KEY ( survey_id ),
   CONSTRAINT fk_vioscreen_surveys FOREIGN KEY ( survey_id ) REFERENCES ag.ag_login_surveys ( survey_id )
 );
-
-CREATE TABLE ag.vioscreen_sessions (
-  session_id           varchar  NOT NULL,
-  CONSTRAINT pk_vioscreen_sessions PRIMARY KEY ( session_id )
-);
-
-INSERT INTO ag.vioscreen_sessions (session_id) VALUES 
-  ('foodcomponents'),
-  ('percentenergy'),
-  ('mpeds'),
-  ('eatingpatterns'),
-  ('foodconsumption'),
-  ('dietaryscore');
-
-INSERT INTO ag.external_survey_sources (external_survey, external_survey_description, external_survey_url) VALUES ('Vioscreen', 'Food frequency questionnaire pulled from vioscreen','https://api.viocare.com/KLUCB/');
