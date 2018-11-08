@@ -7,7 +7,7 @@ The website for the American Gut Project participant portal
 Installation Guide for OSX
 --------------------------
 
-First install and run `Postgres.app <http://postgresapp.com/>`_. Using the binaries for a version of Postgres before 11 is currently required, due to an `ongoing issue <https://github.com/biocore/american-gut-web/issues/721>`_. Make sure that the path is configured properly so add the following to your `.bash_profile`::
+First install and run `Postgres.app <http://postgresapp.com/>`_. (Using the binaries for a version of Postgres before 11 is currently required, due to an `ongoing issue <https://github.com/biocore/american-gut-web/issues/721>`_.) Make sure that the path is configured properly so add the following to your `.bash_profile`::
 
    export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
 
