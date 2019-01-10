@@ -1,6 +1,6 @@
 from mock import Mock
 try:
-    from urllib import urlencode
+    from urllib.parse import urlencode
 except ImportError:  # py3
     from urllib.parse import urlencode
 

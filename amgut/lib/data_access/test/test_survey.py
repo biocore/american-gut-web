@@ -298,7 +298,7 @@ class TestSurvey(TestCase):
                99, 101, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113,
                114, 115, 116, 117, 118, 119, 120, 122, 124, 126, 146, 148, 149,
                150, 153, 154, 155, 156, 157, 158, 159, 160, 162, 163, 164]
-        self.assertEqual(survey.questions.keys(), exp)
+        self.assertEqual(list(survey.questions.keys()), exp)
         exp = {1: 'SINGLE', 2: 'SINGLE', 3: 'SINGLE', 4: 'SINGLE', 5: 'SINGLE',
                6: 'SINGLE', 7: 'SINGLE', 8: 'SINGLE', 9: 'MULTIPLE',
                11: 'SINGLE', 12: 'SINGLE', 13: 'SINGLE',
@@ -402,7 +402,7 @@ class TestSurvey(TestCase):
                    (survey_id, 140, 'Unspecified'),
                    (survey_id, 141, 'Never')]
         without_fk = [(survey_id, 130, '["20"]'),
-                      (survey_id, 142, unicode('["Mötley Crüe!"]', 'utf-8')),
+                      (survey_id, 142, str('["Mötley Crüe!"]', 'utf-8')),
                       (survey_id, 143, '["Capybara"]'),
                       (survey_id, 144, '[""]'),
                       (survey_id, 145, '["29 - Male"]'),
@@ -418,7 +418,7 @@ class TestSurvey(TestCase):
                'Pet_Information_138_0': 1,
                'Pet_Information_144_0': '',
                'Pet_Information_129_0': 4,
-               'Pet_Information_142_0': u'M\xf6tley Cr\xfce!'.encode('utf-8'),
+               'Pet_Information_142_0': 'M\xf6tley Cr\xfce!'.encode('utf-8'),
                'Pet_Information_133_0': 3,
                'Pet_Information_139_0': 5,
                'Pet_Information_130_0': '20',

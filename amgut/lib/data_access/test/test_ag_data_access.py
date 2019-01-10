@@ -125,7 +125,7 @@ class TestAGDataAccess(TestCase):
                'supplied_kit_id':
                self.ag_data.ut_get_supplied_kit_id(
                 'd8592c74-84ba-2135-e040-8a80115d6401'),
-               'swabs_per_kit': 1L,
+               'swabs_per_kit': 1,
                'kit_password':
                '$2a$12$rX8UTcDkIj8bwcxZ22iRpebAxblEclT83xBiUIdJGUJGoUfznu1RK',
                'verification_email_sent': 'n',
@@ -139,7 +139,7 @@ class TestAGDataAccess(TestCase):
         self.assertTrue(len(obs) > 0)
 
         for kit_id in obs:
-            self.assertRegexpMatches(kit_id, '[a-zA-Z_]*')
+            self.assertRegex(kit_id, '[a-zA-Z_]*')
 
     def test_registerHandoutKit_bad_data(self):
         # run on bad data
@@ -490,7 +490,7 @@ class TestAGDataAccess(TestCase):
                'sample_date': datetime.date(2015, 6, 7),
                'site_sampled': 'Stool'}
         # transform results
-        res = [dict((k, r[0][k]) for k in exp.keys()) for r in res if r != []]
+        res = [dict((k, r[0][k]) for k in list(exp.keys())) for r in res if r != []]
         # only look at those fields, that are not subject to scrubbing
         self.assertIn(exp, res)
 
@@ -653,7 +653,7 @@ class TestAGDataAccess(TestCase):
         self.assertTrue(len(obs) > 0)
 
         for kit_id in obs:
-            self.assertRegexpMatches(kit_id, '[a-zA-Z_]*')
+            self.assertRegex(kit_id, '[a-zA-Z_]*')
             obs = self.ag_data.getAGKitDetails(kit_id)
             self.assertEqual(obs['kit_verified'], 'n')
 
@@ -698,7 +698,7 @@ class TestAGDataAccess(TestCase):
         ag_login_id = 'd8592c74-8416-2135-e040-8a80115d6401'
 
         # Generate new random code and assign it
-        testcode = ''.join(choice(ascii_letters) for i in range(10))
+        testcode = ''.join(choice(ascii_letters) for i in list(range(10)))
         email = self.ag_data.ut_get_email_from_ag_login_id(ag_login_id)
         self.ag_data.ag_set_pass_change_code(
             email,
@@ -733,7 +733,7 @@ class TestAGDataAccess(TestCase):
     @rollback
     def test_ag_update_kit_password(self):
         # Generate new pass and make sure is different from current pass
-        newpass = ''.join(choice(ascii_letters) for i in range(randint(8, 15)))
+        newpass = ''.join(choice(ascii_letters) for i in list(range(randint(8, 15))))
         auth = self.ag_data.authenticateWebAppUser(
             self.ag_data.ut_get_supplied_kit_id(
                 'd8592c74-8416-2135-e040-8a80115d6401'),
@@ -780,7 +780,7 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(obs, False)
 
         # Reset code and make sure it works
-        testcode = ''.join(choice(ascii_letters) for i in range(10))
+        testcode = ''.join(choice(ascii_letters) for i in list(range(10)))
         self.ag_data.ag_set_pass_change_code(
             email,
             self.ag_data.ut_get_supplied_kit_id(ag_login_id),
@@ -961,10 +961,10 @@ class TestAGDataAccess(TestCase):
         exp = {'ag_login_id': ag_login_id,
                'email': self.ag_data.ut_get_email_from_ag_login_id(
                 ag_login_id)}
-        self.assertEqual(exp, dict((k, obs[k]) for k in exp.keys()))
+        self.assertEqual(exp, dict((k, obs[k]) for k in list(exp.keys())))
         exp = ['address', 'ag_login_id', 'city', 'country', 'email', 'name',
                'state', 'zip']
-        self.assertItemsEqual(obs.keys(), exp)
+        self.assertItemsEqual(list(obs.keys()), exp)
 
     def test_get_user_info_non_existent(self):
         with self.assertRaises(ValueError):
@@ -1005,7 +1005,7 @@ class TestAGDataAccess(TestCase):
         exp = {'ag_login_id': id_,
                'email': self.ag_data.ut_get_email_from_ag_login_id(id_)}
         obs = self.ag_data.get_login_info(id_)
-        self.assertEqual(dict((k, obs[0][k]) for k in exp.keys()), exp)
+        self.assertEqual(dict((k, obs[0][k]) for k in list(exp.keys())), exp)
 
     def test_get_login_info_non_existant_id(self):
         id_ = '00000000-0000-0000-0000-000000000000'

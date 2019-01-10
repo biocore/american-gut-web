@@ -16,7 +16,7 @@ class BaseHandler(RequestHandler):
             self.clear_cookie("skid")
             return None
         else:
-            return skid.strip('" ')
+            return skid.decode('utf-8').strip('" ')
 
     def write_error(self, status_code, **kwargs):
         """Overrides the error page created by Tornado"""

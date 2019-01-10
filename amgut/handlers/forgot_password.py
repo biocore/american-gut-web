@@ -1,5 +1,5 @@
-from string import letters, digits
-from urllib import quote
+from string import ascii_letters, digits
+from urllib.parse import quote
 from random import choice
 
 from amgut.lib.mail import send_email

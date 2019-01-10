@@ -11,7 +11,7 @@ from amgut import media_locale
 
 class LogSample(Form):
     required = validators.required
-    participant_name = HiddenField(u'participant_name')
+    participant_name = HiddenField('participant_name')
     barcode = SelectField(validators=[required("Required field")])
     sample_site = SelectField(validators=[required("Required field")])
     sample_date = DateField(validators=[required("Required field")],

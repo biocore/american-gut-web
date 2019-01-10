@@ -42,24 +42,24 @@ class TestHumanSurveyCompleted(TestHandlerBase):
 
         s = Survey(main_survey_id)
         s.store_survey(
-            {u'login_id': ag_login_id,
-             u'age_range': u'18-plus',
-             u'parent_1_name': None,
-             u'participant_email': email,
-             u'obtainer_name': None,
-             u'parent_2_name': None,
-             u'deceased_parent': u'No',
-             u'participant_name': participant_name,
-             u'survey_id': main_survey_id,
-             u'is_juvenile': False},
+            {'login_id': ag_login_id,
+             'age_range': '18-plus',
+             'parent_1_name': None,
+             'participant_email': email,
+             'obtainer_name': None,
+             'parent_2_name': None,
+             'deceased_parent': 'No',
+             'participant_name': participant_name,
+             'survey_id': main_survey_id,
+             'is_juvenile': False},
             with_fk_inserts, without_fk_inserts)
 
         # confirm that no secondary surveys are present
         response = self.post('/participants/%s' % participant_name,
                              {'participant_type': 'human'})
         self.assertEqual(response.code, 200)
-        self.assertNotIn('fermented', response.body)
-        self.assertNotIn('surf', response.body)
+        self.assertNotIn(b'fermented', response.body)
+        self.assertNotIn(b'surf', response.body)
 
         # add a new fermented food survey
         data = {'questions': {'Fermented_Foods_170_0': [''],

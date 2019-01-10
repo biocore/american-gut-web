@@ -1,5 +1,5 @@
 # This Python file uses the following encoding: utf-8
-from __future__ import division
+
 
 # -----------------------------------------------------------------------------
 # Copyright (c) 2014--, The American Gut Development Team.

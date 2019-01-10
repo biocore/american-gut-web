@@ -6,7 +6,7 @@
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
 import posixpath
-import urlparse
+import urllib.parse
 
 from json import loads, dumps
 from collections import defaultdict
@@ -65,7 +65,7 @@ def make_survey_class(group, survey_type):
             prompts[eid] = q.question
 
             if q.triggers:
-                for triggered_id, triggering_responses in q.triggers.items():
+                for triggered_id, triggering_responses in list(q.triggers.items()):
                     triggers[eid].extend(triggering_responses)
                     triggered[eid].extend(group.id_to_eid[triggered_id])
 
@@ -281,10 +281,10 @@ def basejoin(base, url):
     if url.endswith('/') and not normalized_url.endswith('/'):
         normalized_url += '/'
 
-    join = urlparse.urljoin(base, normalized_url)
-    joined_url = urlparse.urlparse(join)
+    join = urllib.parse.urljoin(base, normalized_url)
+    joined_url = urllib.parse.urlparse(join)
 
-    return urlparse.urlunparse((joined_url.scheme,
+    return urllib.parse.urlunparse((joined_url.scheme,
                                 joined_url.netloc,
                                 joined_url.path,
                                 joined_url.params,

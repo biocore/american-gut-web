@@ -1,4 +1,4 @@
-from __future__ import division
+
 
 # -----------------------------------------------------------------------------
 # Copyright (c) 2014--, The American Gut Development Team.

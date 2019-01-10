@@ -11,12 +11,12 @@ class TestAuthBasehandler(TestHandlerBase):
     def test_set_current_user(self):
         # test if new cookie will be set
         response = self.get('/auth/register/')
-        self.assertIn('Set-Cookie', response.headers.keys())
+        self.assertIn('Set-Cookie', list(response.headers.keys()))
 
         # test that cookie is re-used
         self.mock_login('cKxwJ')
         response = self.get('/auth/register/')
-        self.assertNotIn('Set-Cookie', response.headers.keys())
+        self.assertNotIn('Set-Cookie', list(response.headers.keys()))
 
 
 class TestAuthRegisterHandoutHandler(TestHandlerBase):
@@ -88,27 +88,28 @@ class TestAuthLoginHandler(TestHandlerBase):
         self.mock_login('cKxwJ')
         response = self.get('/authed/portal/')
         self.assertEqual(response.code, 200)
-        self.assertNotIn(text_locale['handlers']['REGISTER_KIT'],
+        self.assertNotIn(text_locale['handlers']['REGISTER_KIT'].encode(),
                          response.body)
 
         # test a sucessful login, for a non-handout kit
         self.mock_login('wiydx')
         response = self.get('/authed/portal/')
         self.assertEqual(response.code, 200)
-        self.assertIn(text_locale['portal.html']['VERIFICATION_HEADER_2'],
+        self.assertIn(text_locale['portal.html']['VERIFICATION_HEADER_2'].encode(),
                       response.body)
 
     def test_post_wrong_pass(self):
         # check that invalid kit is reported for non existent skid
         response = self.post('/auth/login/', {'skid': 'wrong',
                                               'passwd': 'test'})
-        self.assertIn(text_locale['handlers']['INVALID_KITID'], response.body)
+        self.assertIn(text_locale['handlers']['INVALID_KITID'].encode(), response.body)
         self.assertEqual(response.code, 200)
 
         # check that invalid password is reported for wrong password
         response = self.post('/auth/login/', {'skid': 'cKxwJ',
                                               'passwd': 'wrong'})
-        self.assertIn(text_locale['handlers']['INVALID_KITID'], response.body)
+        print(type(response.body))
+        self.assertIn(text_locale['handlers']['INVALID_KITID'].encode(), response.body)
         self.assertEqual(response.code, 200)
 
 
