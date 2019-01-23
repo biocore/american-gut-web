@@ -8,6 +8,7 @@ addons:
   postgresql: "9.3"
 before_install:
   - redis-server --version
+	- sudo mount -o remount,size=25% /var/ramfs
 install:
   - pip install --upgrade pip
   - pip install mock nose>=0.10.1 pep8 flake8 coveralls
