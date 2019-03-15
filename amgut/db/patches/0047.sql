@@ -1,0 +1,7 @@
+-- create a table to support the persistent buffer for scanned samples in
+-- labadmin
+CREATE TABLE barcodes.project_qiita_buffer (
+    barcode varchar,
+    CONSTRAINT pk_project_qiita_buffer PRIMARY KEY (barcode),
+    CONSTRAINT fk_project_qiita_buffer FOREIGN KEY (barcode) REFERENCES barcodes.barcode(barcode)
+);
