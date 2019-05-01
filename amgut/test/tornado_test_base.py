@@ -26,10 +26,10 @@ class TestHandlerBase(AsyncHTTPTestCase, LogTrapTestCase):
 
     def get(self, url, data=None, headers=None):
         if isinstance(data, dict):
-                data = urlencode(data)
+            data = urlencode(data)
         return self.fetch(url, method='GET', body=data, headers=headers)
 
     def post(self, url, data, headers=None):
         if isinstance(data, dict):
-                data = urlencode(data)
+            data = urlencode(data)
         return self.fetch(url, method='POST', body=data, headers=headers)
