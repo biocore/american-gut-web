@@ -10,11 +10,12 @@ from amgut.handlers.base_handlers import BaseHandler
 
 
 class TestHandlerBase(AsyncHTTPTestCase, LogTrapTestCase):
-    orig_func = BaseHandler.get_current_user
+    def __init__(self, *args, **kwargs):
+        super(TestHandlerBase, self).__init__(*args, **kwargs)
+        self.original_get_current_user = BaseHandler.get_current_user
 
     def tearDown(self):
-        #THIS WAS CAUSING GET_SECURE_COOKIE ERROR
-        #BaseHandler.get_current_user = self.orig_func
+        BaseHandler.get_current_user = self.original_get_current_user
         super(TestHandlerBase, self).tearDown()
 
     def get_app(self):

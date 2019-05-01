@@ -192,7 +192,7 @@ def rollback(f):
     # http://stackoverflow.com/q/7727678
     @wraps(f)
     def test_inner(*args, **kwargs):
-        
+
         with TRN:
             x = f(*args, **kwargs)
             TRN.rollback()
@@ -238,7 +238,7 @@ def basejoin(base, url):
     ...     ('https://abc.xyz/f/', '/d/../e/'),
     ... ]
     >>> for result in [basejoin(a, b) for a, b in tests]:
-    ...     print result
+    ...     print(result)
     https://abc.xyz/d/e
     https://abc.xyz/d/e
     https://abc.xyz/d/e
