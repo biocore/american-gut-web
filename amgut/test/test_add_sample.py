@@ -4,13 +4,15 @@ from amgut.test.tornado_test_base import TestHandlerBase
 from amgut.connections import ag_data
 from tornado import escape
 from amgut.lib.util import rollback
-
+import urllib.parse as parse
 
 class TestAddSample(TestHandlerBase):
     def test_get_not_authed(self):
         response = self.get(
             '/authed/add_sample_human/?participant_name=REMOVED-0')
         self.assertEqual(response.code, 200)
+        url = parse.unquote('/?next=%2Fauthed%2Fadd_sample_human%2F%3F'
+                'participant_name%3DREMOVED-0')
         # Make sure logged out URL
         self.assertTrue(
             response.effective_url.endswith(
@@ -112,8 +114,8 @@ class TestAddSample(TestHandlerBase):
         names = ag_data.ut_get_participant_names_from_ag_login_id(ag_login_id)
         response = self.post('/authed/add_sample_human/',
                              {'participant_name': names[0],
-                              'barcode': '000005628',
-                              'sample_site': 'Stool',
+                              'barcode': b'000005628',
+                              'sample_site': b'Stool',
                               'sample_date': '12/13/2014',
                               'sample_time': '11:12 PM',
                               'notes': 'TESTING TORNADO LOGGING HUMAN'})

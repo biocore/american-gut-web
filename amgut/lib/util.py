@@ -92,6 +92,8 @@ def store_survey(survey, survey_id):
 
     data = redis.hgetall(survey_id)
     to_store = PartitionResponse(survey.question_types)
+    #print(data[b'consent'])
+    #issue here is that json requires a string but this is being stored as bytes
     consent_details = loads(data.pop('consent'))
 
     if 'existing' in data:
@@ -190,10 +192,11 @@ def rollback(f):
     # http://stackoverflow.com/q/7727678
     @wraps(f)
     def test_inner(*args, **kwargs):
+        
         with TRN:
             x = f(*args, **kwargs)
             TRN.rollback()
-            return x
+        return x
     return test_inner
 
 
@@ -296,4 +299,5 @@ if __name__ == '__main__':
     import doctest
 
     doctest.testmod(verbose=True, optionflags=(doctest.NORMALIZE_WHITESPACE |
-                                               doctest.REPORT_NDIFF))
+                                                        doctest.REPORT_NDIFF))
+

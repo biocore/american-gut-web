@@ -37,7 +37,7 @@ class BaseHandler(RequestHandler):
         error = exc_info[1]
         formatted_email = (">SKID\n%s\n\n>Error\n%s\n\n>Traceback\n%s\n\n"
                            ">Request Info\n%s\n\n" %
-                           (user, error.message, trace_info, request_info))
+                           (user, error, trace_info, request_info))
         if not AMGUT_CONFIG.test_environment:
             send_email(formatted_email, "SERVER ERROR!",
                        recipient=AMGUT_CONFIG.error_email)

@@ -13,7 +13,8 @@ class TestHandlerBase(AsyncHTTPTestCase, LogTrapTestCase):
     orig_func = BaseHandler.get_current_user
 
     def tearDown(self):
-        BaseHandler.get_current_user = self.orig_func
+        #THIS WAS CAUSING GET_SECURE_COOKIE ERROR
+        #BaseHandler.get_current_user = self.orig_func
         super(TestHandlerBase, self).tearDown()
 
     def get_app(self):

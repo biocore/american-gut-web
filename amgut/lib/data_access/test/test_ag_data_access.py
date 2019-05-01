@@ -593,7 +593,7 @@ class TestAGDataAccess(TestCase):
                 'barcode': '000004219',
                 'sample_date': datetime.date(2013, 10, 17),
                 'site_sampled': 'Stool'}]
-        self.assertItemsEqual(obs, exp)
+        self.assertCountEqual(obs, exp)
 
     def test_getParticipantSamplesNotPresent(self):
         i = '00000000-0000-0000-0000-000000000000'
@@ -621,14 +621,14 @@ class TestAGDataAccess(TestCase):
         res = self.ag_data.getAvailableBarcodes(i)
         exp = ['000005628', '000005627', '000005624',
                '000005625', '000005626', '000004217']
-        self.assertItemsEqual(res, exp)
+        self.assertCountEqual(res, exp)
 
         i = "d6b0f287-b9d9-40d4-82fd-a8fd3db6c476"
         res = self.ag_data.getAvailableBarcodes(i)
         exp = [x['barcode'] for x in
                self.ag_data.ut_get_barcode_from_ag_login_id(i)
                if x['kit_verified'] == 'y' and x['sample_date'] is None]
-        self.assertItemsEqual(res, exp)
+        self.assertCountEqual(res, exp)
 
     def test_getAvailableBarcodesNotPresent(self):
         i = '00000000-0000-0000-0000-000000000000'
@@ -740,16 +740,12 @@ class TestAGDataAccess(TestCase):
             newpass)
         self.assertFalse(
             auth, msg="Randomly generated password matches existing")
-
+        
         # Actually test password change
-        self.ag_data.ag_update_kit_password(
-            self.ag_data.ut_get_supplied_kit_id(
-                'd8592c74-8416-2135-e040-8a80115d6401'),
-            newpass)
-        auth = self.ag_data.authenticateWebAppUser(
-            self.ag_data.ut_get_supplied_kit_id(
-                'd8592c74-8416-2135-e040-8a80115d6401'),
-            newpass)
+        kit_id = self.ag_data.ut_get_supplied_kit_id(
+            'd8592c74-8416-2135-e040-8a80115d6401')
+        self.ag_data.ag_update_kit_password(kit_id, newpass)
+        auth = self.ag_data.authenticateWebAppUser(kit_id, newpass)
         self.assertTrue(isinstance(auth, dict))
         self.assertEqual(auth['ag_login_id'],
                          'd8592c74-8416-2135-e040-8a80115d6401')
@@ -757,6 +753,7 @@ class TestAGDataAccess(TestCase):
         # Test giving bad skid
         # TODO: make this raise error and test
         self.ag_data.ag_update_kit_password('NOTINTHEDB', newpass)
+
 
     @rollback
     def test_ag_verify_kit_password_change_code(self):
@@ -810,7 +807,7 @@ class TestAGDataAccess(TestCase):
             self.ag_data.ut_get_supplied_kit_id(
                 'd8592c74-7e7f-2135-e040-8a80115d6401'))
         exp = ['000001322']
-        self.assertItemsEqual(res, exp)
+        self.assertCountEqual(res, exp)
 
     def test_getBarcodesByKitNotPresent(self):
         res = self.ag_data.getBarcodesByKit('42')
@@ -961,10 +958,10 @@ class TestAGDataAccess(TestCase):
         exp = {'ag_login_id': ag_login_id,
                'email': self.ag_data.ut_get_email_from_ag_login_id(
                 ag_login_id)}
-        self.assertEqual(exp, dict((k, obs[k]) for k in list(exp.keys())))
+        self.assertCountEqual(exp, dict((k, obs[k]) for k in list(exp.keys())))
         exp = ['address', 'ag_login_id', 'city', 'country', 'email', 'name',
                'state', 'zip']
-        self.assertItemsEqual(list(obs.keys()), exp)
+        self.assertCountEqual(list(obs.keys()), exp)
 
     def test_get_user_info_non_existent(self):
         with self.assertRaises(ValueError):
@@ -994,7 +991,7 @@ class TestAGDataAccess(TestCase):
                {'barcode': '000004216'},
                {'barcode': '000004218'},
                {'barcode': '000004219'}]
-        self.assertItemsEqual(obs, exp)
+        self.assertCountEqual(obs, exp)
 
     def test_get_barcode_results_non_existant_id(self):
         with self.assertRaises(ValueError):

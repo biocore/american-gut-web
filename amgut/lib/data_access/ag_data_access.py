@@ -95,7 +95,8 @@ class AGDataAccess(object):
             results = dict(row[0])
 
             password = password.encode('utf-8')
-            if not bcrypt.checkpw(password, results['kit_password']):
+            
+            if not bcrypt.checkpw(password, results['kit_password'].encode('utf-8')):
                 return False
             results['ag_login_id'] = str(results['ag_login_id'])
 
@@ -207,7 +208,7 @@ class AGDataAccess(object):
                  WHERE barcode = %s"""
 
         with TRN:
-            TRN.add(sql, [barcode])
+            TRN.add(sql, [barcode.encode('utf-8')])
             row = TRN.execute_fetchindex()
             if not row:
                 raise ValueError('Barcode does not exist in AG: %s' % barcode)
@@ -758,7 +759,7 @@ class AGDataAccess(object):
             if not to_check:
                 return False
             else:
-                return bcrypt.checkpw(password, to_check[0][0])
+                return bcrypt.checkpw(password, to_check[0][0].encode('utf-8'))
 
     def check_access(self, supplied_kit_id, barcode):
         """Check if the user has access to the barcode
@@ -782,7 +783,7 @@ class AGDataAccess(object):
                         FROM ag.ag_kit
                         JOIN ag.ag_kit_barcodes USING (ag_kit_id)
                       WHERE ag_login_id = %s AND barcode = %s)"""
-            TRN.add(sql, [ag_login_id, barcode])
+            TRN.add(sql, [ag_login_id.encpde('utf-8'), barcode])
             return TRN.execute_fetchlast()
 
     def getAGKitIDsByEmail(self, email):
@@ -826,7 +827,9 @@ class AGDataAccess(object):
             sql = """UPDATE AG_KIT
                      SET kit_password = %s, pass_reset_code = NULL
                      WHERE supplied_kit_id = %s"""
-            TRN.add(sql, [password, kit_id])
+            TRN.add(sql, [password.decode('utf-8'), kit_id])
+
+            TRN.execute()
 
     def ag_verify_kit_password_change_code(self, email, kitid, passcode):
         """returns true if it still in the password change window

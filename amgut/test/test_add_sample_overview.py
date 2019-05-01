@@ -13,6 +13,7 @@ class TestAddSampleOverview(TestHandlerBase):
         self.assertTrue(
             response.effective_url.endswith('/authed/add_sample_overview'))
 
+
     def test_get_overview_human(self):
         # Test with human login id
         ag_login_id = 'd8592c74-9694-2135-e040-8a80115d6401'
@@ -34,7 +35,7 @@ class TestAddSampleOverview(TestHandlerBase):
         # Test with animal login id
         ag_login_id = 'd8592c74-8710-2135-e040-8a80115d6401'
         self.mock_login(ag_data.ut_get_supplied_kit_id(ag_login_id))
-        response = self.get(b'/authed/add_sample_overview/')
+        response = self.get('/authed/add_sample_overview/')
         self.assertEqual(response.code, 200)
         self.assertTrue(
             response.effective_url.endswith('/authed/add_sample_overview/'))
