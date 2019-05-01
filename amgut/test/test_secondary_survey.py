@@ -11,7 +11,7 @@ class TestAddSampleOverview(TestHandlerBase):
         self.assertEqual(response.code, 200)
         self.assertTrue(
             response.effective_url.endswith(
-                '%2Fauthed%2Fsecondary_survey%2F%3Ftype%3Dsurf'
+               '%2Fauthed%2Fsecondary_survey%2F%3Ftype%3Dsurf'
                 '%26participant_name%3Dtest'))
 
     def test_get_missing_info(self):

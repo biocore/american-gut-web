@@ -108,7 +108,6 @@ class TestAuthLoginHandler(TestHandlerBase):
         # check that invalid password is reported for wrong password
         response = self.post('/auth/login/', {'skid': 'cKxwJ',
                                               'passwd': 'wrong'})
-        print(type(response.body))
         self.assertIn(text_locale['handlers']['INVALID_KITID'].encode(), response.body)
         self.assertEqual(response.code, 200)
 

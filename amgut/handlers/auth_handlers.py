@@ -112,6 +112,7 @@ class AuthLoginHandler(AuthBasehandler):
             # have them register themselves
             self.redirect(media_locale['SITEBASE'] + '/?loginerror=' +
                           tl['REGISTER_KIT'])
+
             return
 
         login = ag_data.authenticateWebAppUser(skid, password)
