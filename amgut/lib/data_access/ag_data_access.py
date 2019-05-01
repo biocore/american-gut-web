@@ -95,7 +95,7 @@ class AGDataAccess(object):
             results = dict(row[0])
 
             password = password.encode('utf-8')
-            
+
             if not bcrypt.checkpw(password, results['kit_password'].encode('utf-8')):
                 return False
             results['ag_login_id'] = str(results['ag_login_id'])
@@ -207,8 +207,11 @@ class AGDataAccess(object):
                  LEFT JOIN ag.ag_login USING (ag_login_id)
                  WHERE barcode = %s"""
 
+        if isinstance(barcode, bytes):
+            barcode = barcode.decode('utf-8')
+
         with TRN:
-            TRN.add(sql, [barcode.encode('utf-8')])
+            TRN.add(sql, [barcode])
             row = TRN.execute_fetchindex()
             if not row:
                 raise ValueError('Barcode does not exist in AG: %s' % barcode)
@@ -783,7 +786,7 @@ class AGDataAccess(object):
                         FROM ag.ag_kit
                         JOIN ag.ag_kit_barcodes USING (ag_kit_id)
                       WHERE ag_login_id = %s AND barcode = %s)"""
-            TRN.add(sql, [ag_login_id.encode('utf-8'), barcode])
+            TRN.add(sql, [ag_login_id, barcode])
             return TRN.execute_fetchlast()
 
     def getAGKitIDsByEmail(self, email):
