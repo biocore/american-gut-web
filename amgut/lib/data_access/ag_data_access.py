@@ -783,7 +783,7 @@ class AGDataAccess(object):
                         FROM ag.ag_kit
                         JOIN ag.ag_kit_barcodes USING (ag_kit_id)
                       WHERE ag_login_id = %s AND barcode = %s)"""
-            TRN.add(sql, [ag_login_id.encpde('utf-8'), barcode])
+            TRN.add(sql, [ag_login_id.encode('utf-8'), barcode])
             return TRN.execute_fetchlast()
 
     def getAGKitIDsByEmail(self, email):
