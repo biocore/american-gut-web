@@ -31,8 +31,10 @@ class AddSample(BaseHandler):
         participant_name = self.get_argument('participant_name',
                                              'environmental')
         form = self.build_form()
-        args = {a: v[0] for a, v in viewitems(self.request.arguments)}
+        args = {a: v[0].decode('utf-8')
+                for a, v in viewitems(self.request.arguments)}
         form.process(data=args)
+
         # Validate input
         invalid = False
         if not form.validate():
