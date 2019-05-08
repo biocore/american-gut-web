@@ -94,13 +94,14 @@ def store_survey(survey, survey_id):
     to_store = PartitionResponse(survey.question_types)
     #print(data[b'consent'])
     #issue here is that json requires a string but this is being stored as bytes
-    consent_details = loads(data.pop('consent'))
+    #print(data.pop(b'consent'))
+    consent_details = loads(data.pop(b'consent').decode('utf-8'))
 
     if 'existing' in data:
         data.pop('existing')
 
     for page in data:
-        page_data = loads(data[page])
+        page_data = loads(data[page].decode('utf-8'))
         questions = page_data['questions']
 
         for quest, resps in viewitems(questions):
