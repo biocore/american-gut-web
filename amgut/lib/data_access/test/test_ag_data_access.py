@@ -490,7 +490,9 @@ class TestAGDataAccess(TestCase):
                'sample_date': datetime.date(2015, 6, 7),
                'site_sampled': 'Stool'}
         # transform results
-        res = [dict((k, r[0][k]) for k in list(exp.keys())) for r in res if r != []]
+        res = [dict((k, r[0][k]) 
+               for k in list(exp.keys())) 
+               for r in res if r != []]
         # only look at those fields, that are not subject to scrubbing
         self.assertIn(exp, res)
 
@@ -737,10 +739,10 @@ class TestAGDataAccess(TestCase):
         auth = self.ag_data.authenticateWebAppUser(
             self.ag_data.ut_get_supplied_kit_id(
                 'd8592c74-8416-2135-e040-8a80115d6401'),
-            newpass)
+                newpass)
         self.assertFalse(
             auth, msg="Randomly generated password matches existing")
-        
+ 
         # Actually test password change
         kit_id = self.ag_data.ut_get_supplied_kit_id(
             'd8592c74-8416-2135-e040-8a80115d6401')
@@ -753,7 +755,6 @@ class TestAGDataAccess(TestCase):
         # Test giving bad skid
         # TODO: make this raise error and test
         self.ag_data.ag_update_kit_password('NOTINTHEDB', newpass)
-
 
     @rollback
     def test_ag_verify_kit_password_change_code(self):

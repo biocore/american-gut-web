@@ -28,7 +28,7 @@ class ForgotPasswordHandler(BaseHandler):
         tl = text_locale['handlers']
         # if the kit id matches the email generate and send an email
         if kit_id in kitids:
-            alphabet = letters + digits
+            alphabet = ascii_letters + digits
             new_act_code = ''.join([choice(alphabet) for i in range(20)])
             # add new pass to the database
             ag_data.ag_set_pass_change_code(email, kit_id, new_act_code)

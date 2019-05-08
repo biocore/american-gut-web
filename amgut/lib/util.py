@@ -65,7 +65,7 @@ def make_survey_class(group, survey_type):
             prompts[eid] = q.question
 
             if q.triggers:
-                for triggered_id, triggering_responses in list(q.triggers.items()):
+                for triggered_id, triggering_responses in q.triggers.items():
                     triggers[eid].extend(triggering_responses)
                     triggered[eid].extend(group.id_to_eid[triggered_id])
 
@@ -92,9 +92,6 @@ def store_survey(survey, survey_id):
 
     data = redis.hgetall(survey_id)
     to_store = PartitionResponse(survey.question_types)
-    #print(data[b'consent'])
-    #issue here is that json requires a string but this is being stored as bytes
-    #print(data.pop(b'consent'))
     consent_details = loads(data.pop(b'consent').decode('utf-8'))
 
     if 'existing' in data:
@@ -289,16 +286,15 @@ def basejoin(base, url):
     joined_url = urllib.parse.urlparse(join)
 
     return urllib.parse.urlunparse((joined_url.scheme,
-                                joined_url.netloc,
-                                joined_url.path,
-                                joined_url.params,
-                                joined_url.query,
-                                joined_url.fragment))
+                                    joined_url.netloc,
+                                    joined_url.path,
+                                    joined_url.params,
+                                    joined_url.query,
+                                    joined_url.fragment))
 
 
 if __name__ == '__main__':
     import doctest
 
     doctest.testmod(verbose=True, optionflags=(doctest.NORMALIZE_WHITESPACE |
-                                                        doctest.REPORT_NDIFF))
-
+                                               doctest.REPORT_NDIFF))

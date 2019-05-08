@@ -10,7 +10,7 @@ class HumanSurveyCompletedHandler(BaseHandler):
     @authenticated
     def get(self):
         human_survey_id = self.get_secure_cookie('completed_survey_id')
-
+        human_survey_id = human_survey_id.decode('utf-8')
         if human_survey_id is None:
             self.clear_cookie('completed_survey_id')
             self.redirect(media_locale['SITEBASE'] + '/authed/portal/')

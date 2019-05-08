@@ -96,7 +96,8 @@ class AGDataAccess(object):
 
             password = password.encode('utf-8')
 
-            if not bcrypt.checkpw(password, results['kit_password'].encode('utf-8')):
+            if not bcrypt.checkpw(password, 
+                                  results['kit_password'].encode('utf-8')):
                 return False
             results['ag_login_id'] = str(results['ag_login_id'])
 

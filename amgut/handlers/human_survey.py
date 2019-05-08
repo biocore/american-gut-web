@@ -94,6 +94,8 @@ class HumanSurveyHandler(BaseHandler):
                 err_msg = url_escape("There was an unexpected error.")
                 self.redirect(sitebase + "/authed/portal/?errmsg=%s" % err_msg)
                 return
+            else:
+                human_survey_id = human_survey_id.decode('utf-8')
         else:
             # we came from participant_overview
             consent = ag_data.getConsent(human_survey_id)
@@ -104,14 +106,16 @@ class HumanSurveyHandler(BaseHandler):
             redis.hset(human_survey_id, 'consent', dumps(consent))
             redis.hset(human_survey_id, 'existing', dumps(data))
             redis.expire(human_survey_id, 86400)
-
+        
         next_page_number = page_number + 1
 
         if page_number >= 0:
             form_data = surveys[page_number]()
-            form_data.process(data=self.request.arguments)
+            normalized = {k: l.decode('utf-8') for k, v in self.request.arguments.items() for l in v}
+            form_data.process(data=normalized)
+            
             data = {'questions': form_data.data}
-
+            print(human_survey_id, page_number, dumps(data))
             redis.hset(human_survey_id, page_number, dumps(data))
 
         progress = int(100.0 * (page_number + 2) / (len(phs_groups) + 1))
@@ -122,6 +126,7 @@ class HumanSurveyHandler(BaseHandler):
 
             existing_responses = redis.hget(human_survey_id, 'existing')
             if existing_responses:
+                existing_responses = existing_responses.decode('utf-8')
                 existing_responses = loads(existing_responses)
                 the_form = surveys[next_page_number](data=existing_responses)
 

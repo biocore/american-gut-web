@@ -88,27 +88,29 @@ class TestAuthLoginHandler(TestHandlerBase):
         self.mock_login('cKxwJ')
         response = self.get('/authed/portal/')
         self.assertEqual(response.code, 200)
-        self.assertNotIn(text_locale['handlers']['REGISTER_KIT'].encode(),
-                         response.body)
+        self.assertNotIn(text_locale['handlers']['REGISTER_KIT'],
+                         response.body.decode('utf-8'))
 
         # test a sucessful login, for a non-handout kit
         self.mock_login('wiydx')
         response = self.get('/authed/portal/')
         self.assertEqual(response.code, 200)
-        self.assertIn(text_locale['portal.html']['VERIFICATION_HEADER_2'].encode(),
-                      response.body)
+        self.assertIn(text_locale['portal.html']['VERIFICATION_HEADER_2'],
+                        response.body.decode('utf-8'))
 
     def test_post_wrong_pass(self):
         # check that invalid kit is reported for non existent skid
         response = self.post('/auth/login/', {'skid': 'wrong',
                                               'passwd': 'test'})
-        self.assertIn(text_locale['handlers']['INVALID_KITID'].encode(), response.body)
+        self.assertIn(text_locale['handlers']['INVALID_KITID'], 
+                        response.body.decode('utf-8'))
         self.assertEqual(response.code, 200)
 
         # check that invalid password is reported for wrong password
         response = self.post('/auth/login/', {'skid': 'cKxwJ',
                                               'passwd': 'wrong'})
-        self.assertIn(text_locale['handlers']['INVALID_KITID'].encode(), response.body)
+        self.assertIn(text_locale['handlers']['INVALID_KITID'], 
+                        response.body.decode('utf-8'))
         self.assertEqual(response.code, 200)
 
 

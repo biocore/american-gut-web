@@ -6,13 +6,12 @@ from tornado import escape
 from amgut.lib.util import rollback
 import urllib.parse as parse
 
+
 class TestAddSample(TestHandlerBase):
     def test_get_not_authed(self):
         response = self.get(
             '/authed/add_sample_human/?participant_name=REMOVED-0')
         self.assertEqual(response.code, 200)
-        url = parse.unquote('/?next=%2Fauthed%2Fadd_sample_human%2F%3F'
-                'participant_name%3DREMOVED-0')
         # Make sure logged out URL
         self.assertTrue(
             response.effective_url.endswith(
@@ -28,7 +27,8 @@ class TestAddSample(TestHandlerBase):
         self.assertEqual(response.code, 200)
         # Make sure proper name in place
         self.assertIn(
-            b'<input type="hidden" name="participant_name" value="REMOVED-0"/>',
+            b'<input type="hidden" name="participant_name" '
+            b'value="REMOVED-0"/>',
             response.body)
 
         # Spot check sample locations
@@ -48,7 +48,8 @@ class TestAddSample(TestHandlerBase):
         self.assertEqual(response.code, 200)
         # Make sure proper name in place
         self.assertIn(
-            b'<input type="hidden" name="participant_name" value="REMOVED-0"/>',
+            b'<input type="hidden" name="participant_name" '
+            b'value="REMOVED-0"/>',
             response.body)
 
         # Spot check sample locations

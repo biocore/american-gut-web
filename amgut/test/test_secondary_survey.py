@@ -11,7 +11,7 @@ class TestAddSampleOverview(TestHandlerBase):
         self.assertEqual(response.code, 200)
         self.assertTrue(
             response.effective_url.endswith(
-               '%2Fauthed%2Fsecondary_survey%2F%3Ftype%3Dsurf'
+                '%2Fauthed%2Fsecondary_survey%2F%3Ftype%3Dsurf'
                 '%26participant_name%3Dtest'))
 
     def test_get_missing_info(self):
@@ -34,7 +34,7 @@ class TestAddSampleOverview(TestHandlerBase):
         self.assertEqual(response.code, 200)
         self.assertIn(b'<h2>Surf Survey</h2>', response.body)
         self.assertIn(b'<td width="50%" class="tdmainform">How often do you '
-                      b'travel to other surf breaks?</td>', response.body)
+                b'travel to other surf breaks?</td>', response.body)
 
     def test_get_fermented(self):
         self.mock_login(
@@ -46,9 +46,9 @@ class TestAddSampleOverview(TestHandlerBase):
         self.assertEqual(response.code, 200)
         self.assertIn(b'<h2>Fermented Survey</h2>', response.body)
         self.assertIn(b'<td width="50%" class="tdmainform">How often do you '
-                      b'consume one or more servings of fermented vegetables or'
-                      b' plant products a day in an average week?',
-                      response.body)
+                b'consume one or more servings of fermented vegetables or'
+                b' plant products a day in an average week?',
+                response.body)
 
     def test_post(self):
         data = {'Fermented_Foods_164_0': '3',
