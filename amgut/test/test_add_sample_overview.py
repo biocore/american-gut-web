@@ -13,6 +13,7 @@ class TestAddSampleOverview(TestHandlerBase):
         self.assertTrue(
             response.effective_url.endswith('/authed/add_sample_overview'))
 
+
     def test_get_overview_human(self):
         # Test with human login id
         ag_login_id = 'd8592c74-9694-2135-e040-8a80115d6401'
@@ -22,13 +23,13 @@ class TestAddSampleOverview(TestHandlerBase):
         self.assertTrue(
             response.effective_url.endswith('/authed/add_sample_overview/'))
         # Check for some main text
-        self.assertIn('sample source', response.body)
+        self.assertIn(b'sample source', response.body)
         names = ag_data.ut_get_participant_names_from_ag_login_id(
             ag_login_id)
         for name in names:
-            self.assertIn(escape.xhtml_escape(name), response.body)
-        self.assertIn('Environmental', response.body)
-        self.assertNotIn('- Animal Source', response.body)
+            self.assertIn(escape.xhtml_escape(name).encode(), response.body)
+        self.assertIn(b'Environmental', response.body)
+        self.assertNotIn(b'- Animal Source', response.body)
 
     def test_get_overview_animal(self):
         # Test with animal login id
@@ -41,10 +42,10 @@ class TestAddSampleOverview(TestHandlerBase):
         # Check for some main text
         names = ag_data.ut_get_participant_names_from_ag_login_id(
             ag_login_id)
-        self.assertIn('sample source', response.body)
+        self.assertIn(b'sample source', response.body)
         for name in names:
-            self.assertIn(escape.xhtml_escape(name), response.body)
-        self.assertIn('Environmental', response.body)
+            self.assertIn(escape.xhtml_escape(name).encode(), response.body)
+        self.assertIn(b'Environmental', response.body)
 
 
 if __name__ == '__main__':

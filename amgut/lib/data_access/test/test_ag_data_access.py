@@ -125,7 +125,7 @@ class TestAGDataAccess(TestCase):
                'supplied_kit_id':
                self.ag_data.ut_get_supplied_kit_id(
                 'd8592c74-84ba-2135-e040-8a80115d6401'),
-               'swabs_per_kit': 1L,
+               'swabs_per_kit': 1,
                'kit_password':
                '$2a$12$rX8UTcDkIj8bwcxZ22iRpebAxblEclT83xBiUIdJGUJGoUfznu1RK',
                'verification_email_sent': 'n',
@@ -139,7 +139,7 @@ class TestAGDataAccess(TestCase):
         self.assertTrue(len(obs) > 0)
 
         for kit_id in obs:
-            self.assertRegexpMatches(kit_id, '[a-zA-Z_]*')
+            self.assertRegex(kit_id, '[a-zA-Z_]*')
 
     def test_registerHandoutKit_bad_data(self):
         # run on bad data
@@ -490,7 +490,9 @@ class TestAGDataAccess(TestCase):
                'sample_date': datetime.date(2015, 6, 7),
                'site_sampled': 'Stool'}
         # transform results
-        res = [dict((k, r[0][k]) for k in exp.keys()) for r in res if r != []]
+        res = [dict((k, r[0][k]) 
+               for k in list(exp.keys())) 
+               for r in res if r != []]
         # only look at those fields, that are not subject to scrubbing
         self.assertIn(exp, res)
 
@@ -593,7 +595,7 @@ class TestAGDataAccess(TestCase):
                 'barcode': '000004219',
                 'sample_date': datetime.date(2013, 10, 17),
                 'site_sampled': 'Stool'}]
-        self.assertItemsEqual(obs, exp)
+        self.assertCountEqual(obs, exp)
 
     def test_getParticipantSamplesNotPresent(self):
         i = '00000000-0000-0000-0000-000000000000'
@@ -621,14 +623,14 @@ class TestAGDataAccess(TestCase):
         res = self.ag_data.getAvailableBarcodes(i)
         exp = ['000005628', '000005627', '000005624',
                '000005625', '000005626', '000004217']
-        self.assertItemsEqual(res, exp)
+        self.assertCountEqual(res, exp)
 
         i = "d6b0f287-b9d9-40d4-82fd-a8fd3db6c476"
         res = self.ag_data.getAvailableBarcodes(i)
         exp = [x['barcode'] for x in
                self.ag_data.ut_get_barcode_from_ag_login_id(i)
                if x['kit_verified'] == 'y' and x['sample_date'] is None]
-        self.assertItemsEqual(res, exp)
+        self.assertCountEqual(res, exp)
 
     def test_getAvailableBarcodesNotPresent(self):
         i = '00000000-0000-0000-0000-000000000000'
@@ -653,7 +655,7 @@ class TestAGDataAccess(TestCase):
         self.assertTrue(len(obs) > 0)
 
         for kit_id in obs:
-            self.assertRegexpMatches(kit_id, '[a-zA-Z_]*')
+            self.assertRegex(kit_id, '[a-zA-Z_]*')
             obs = self.ag_data.getAGKitDetails(kit_id)
             self.assertEqual(obs['kit_verified'], 'n')
 
@@ -698,7 +700,7 @@ class TestAGDataAccess(TestCase):
         ag_login_id = 'd8592c74-8416-2135-e040-8a80115d6401'
 
         # Generate new random code and assign it
-        testcode = ''.join(choice(ascii_letters) for i in range(10))
+        testcode = ''.join(choice(ascii_letters) for i in list(range(10)))
         email = self.ag_data.ut_get_email_from_ag_login_id(ag_login_id)
         self.ag_data.ag_set_pass_change_code(
             email,
@@ -733,23 +735,19 @@ class TestAGDataAccess(TestCase):
     @rollback
     def test_ag_update_kit_password(self):
         # Generate new pass and make sure is different from current pass
-        newpass = ''.join(choice(ascii_letters) for i in range(randint(8, 15)))
+        newpass = ''.join(choice(ascii_letters) for i in list(range(randint(8, 15))))
         auth = self.ag_data.authenticateWebAppUser(
             self.ag_data.ut_get_supplied_kit_id(
                 'd8592c74-8416-2135-e040-8a80115d6401'),
-            newpass)
+                newpass)
         self.assertFalse(
             auth, msg="Randomly generated password matches existing")
-
+ 
         # Actually test password change
-        self.ag_data.ag_update_kit_password(
-            self.ag_data.ut_get_supplied_kit_id(
-                'd8592c74-8416-2135-e040-8a80115d6401'),
-            newpass)
-        auth = self.ag_data.authenticateWebAppUser(
-            self.ag_data.ut_get_supplied_kit_id(
-                'd8592c74-8416-2135-e040-8a80115d6401'),
-            newpass)
+        kit_id = self.ag_data.ut_get_supplied_kit_id(
+            'd8592c74-8416-2135-e040-8a80115d6401')
+        self.ag_data.ag_update_kit_password(kit_id, newpass)
+        auth = self.ag_data.authenticateWebAppUser(kit_id, newpass)
         self.assertTrue(isinstance(auth, dict))
         self.assertEqual(auth['ag_login_id'],
                          'd8592c74-8416-2135-e040-8a80115d6401')
@@ -780,7 +778,7 @@ class TestAGDataAccess(TestCase):
         self.assertEqual(obs, False)
 
         # Reset code and make sure it works
-        testcode = ''.join(choice(ascii_letters) for i in range(10))
+        testcode = ''.join(choice(ascii_letters) for i in list(range(10)))
         self.ag_data.ag_set_pass_change_code(
             email,
             self.ag_data.ut_get_supplied_kit_id(ag_login_id),
@@ -810,7 +808,7 @@ class TestAGDataAccess(TestCase):
             self.ag_data.ut_get_supplied_kit_id(
                 'd8592c74-7e7f-2135-e040-8a80115d6401'))
         exp = ['000001322']
-        self.assertItemsEqual(res, exp)
+        self.assertCountEqual(res, exp)
 
     def test_getBarcodesByKitNotPresent(self):
         res = self.ag_data.getBarcodesByKit('42')
@@ -961,10 +959,10 @@ class TestAGDataAccess(TestCase):
         exp = {'ag_login_id': ag_login_id,
                'email': self.ag_data.ut_get_email_from_ag_login_id(
                 ag_login_id)}
-        self.assertEqual(exp, dict((k, obs[k]) for k in exp.keys()))
+        self.assertCountEqual(exp, dict((k, obs[k]) for k in list(exp.keys())))
         exp = ['address', 'ag_login_id', 'city', 'country', 'email', 'name',
                'state', 'zip']
-        self.assertItemsEqual(obs.keys(), exp)
+        self.assertCountEqual(list(obs.keys()), exp)
 
     def test_get_user_info_non_existent(self):
         with self.assertRaises(ValueError):
@@ -994,7 +992,7 @@ class TestAGDataAccess(TestCase):
                {'barcode': '000004216'},
                {'barcode': '000004218'},
                {'barcode': '000004219'}]
-        self.assertItemsEqual(obs, exp)
+        self.assertCountEqual(obs, exp)
 
     def test_get_barcode_results_non_existant_id(self):
         with self.assertRaises(ValueError):
@@ -1005,7 +1003,7 @@ class TestAGDataAccess(TestCase):
         exp = {'ag_login_id': id_,
                'email': self.ag_data.ut_get_email_from_ag_login_id(id_)}
         obs = self.ag_data.get_login_info(id_)
-        self.assertEqual(dict((k, obs[0][k]) for k in exp.keys()), exp)
+        self.assertEqual(dict((k, obs[0][k]) for k in list(exp.keys())), exp)
 
     def test_get_login_info_non_existant_id(self):
         id_ = '00000000-0000-0000-0000-000000000000'

@@ -1,11 +1,11 @@
-# -----------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 # Copyright (c) 2014--, The Qiita Development Team.
 #
 # Distributed under the terms of the BSD 3-clause License.
 #
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
-from __future__ import division
+
 from contextlib import contextmanager
 from itertools import chain
 from functools import wraps
@@ -239,7 +239,7 @@ class Transaction(object):
                     # Some other error happened during the execution of the
                     # query, so we need to rollback
                     self._raise_execution_error(sql, sql_args, e)
-
+			
                 # Store the results of the current query
                 self._results.append(res)
 

@@ -1,4 +1,4 @@
-from urllib import urlencode
+from urllib.parse import urlencode
 from tornado.escape import url_unescape
 from json import dumps
 import binascii

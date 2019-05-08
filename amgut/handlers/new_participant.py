@@ -58,7 +58,7 @@ class NewParticipantHandler(BaseHandler):
             return
 
         human_survey_id = binascii.hexlify(os.urandom(8))
-
+        human_survey_id = human_survey_id.decode('utf-8')
         consent = {'participant_name': participant_name,
                    'participant_email': participant_email,
                    'parent_1_name': parent_1_name,

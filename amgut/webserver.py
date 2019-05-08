@@ -131,7 +131,7 @@ def main():
     parse_command_line()
     http_server = HTTPServer(AGWebApplication())
     http_server.listen(options.port)
-    print("Tornado started on port", options.port)
+    print(("Tornado started on port", options.port))
     IOLoop.instance().start()
 
 

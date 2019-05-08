@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import division
+
 from amgut.lib.config_manager import AMGUT_CONFIG
 from amgut.lib.locale_data import english_gut as ENG
 

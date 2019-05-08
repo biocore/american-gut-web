@@ -32,9 +32,9 @@ class TestAddSampleOverview(TestHandlerBase):
         response = self.get(
             '/authed/secondary_survey/?type=surf&participant_name=test%2Bfoo')
         self.assertEqual(response.code, 200)
-        self.assertIn('<h2>Surf Survey</h2>', response.body)
-        self.assertIn('<td width="50%" class="tdmainform">How often do you '
-                      'travel to other surf breaks?</td>', response.body)
+        self.assertIn(b'<h2>Surf Survey</h2>', response.body)
+        self.assertIn(b'<td width="50%" class="tdmainform">How often do you '
+                b'travel to other surf breaks?</td>', response.body)
 
     def test_get_fermented(self):
         self.mock_login(
@@ -44,11 +44,11 @@ class TestAddSampleOverview(TestHandlerBase):
             '/authed/secondary_survey/?type=fermented&'
             'participant_name=test%20bar')
         self.assertEqual(response.code, 200)
-        self.assertIn('<h2>Fermented Survey</h2>', response.body)
-        self.assertIn('<td width="50%" class="tdmainform">How often do you '
-                      'consume one or more servings of fermented vegetables or'
-                      ' plant products a day in an average week?',
-                      response.body)
+        self.assertIn(b'<h2>Fermented Survey</h2>', response.body)
+        self.assertIn(b'<td width="50%" class="tdmainform">How often do you '
+                b'consume one or more servings of fermented vegetables or'
+                b' plant products a day in an average week?',
+                response.body)
 
     def test_post(self):
         data = {'Fermented_Foods_164_0': '3',

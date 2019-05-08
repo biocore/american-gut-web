@@ -19,7 +19,7 @@ class _LazyAgData(object):
         if not self._ag_data_access:
             from amgut.lib.data_access.ag_data_access import AGDataAccess
 
-            print 'Connecting to postgres for amgut.connections.ag_data'
+            print('Connecting to postgres for amgut.connections.ag_data')
 
             self._ag_data_access = AGDataAccess()
 
@@ -32,7 +32,7 @@ class _LazyRedis(object):
 
     def __getattr__(self, name):
         if not self._redis:
-            print 'Connecting to redis for amgut.connections.redis'
+            print('Connecting to redis for amgut.connections.redis')
 
             from amgut.lib.config_manager import AMGUT_CONFIG
             from redis import Redis

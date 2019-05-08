@@ -1,4 +1,4 @@
-from urllib import unquote
+from urllib.parse import unquote
 
 from amgut.lib.mail import send_email
 from amgut.handlers.base_handlers import BaseHandler

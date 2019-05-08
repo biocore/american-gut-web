@@ -11,7 +11,7 @@ from amgut import media_locale
 
 class LogSample(Form):
     required = validators.required
-    participant_name = HiddenField(u'participant_name')
+    participant_name = HiddenField('participant_name')
     barcode = SelectField(validators=[required("Required field")])
     sample_site = SelectField(validators=[required("Required field")])
     sample_date = DateField(validators=[required("Required field")],
@@ -31,8 +31,10 @@ class AddSample(BaseHandler):
         participant_name = self.get_argument('participant_name',
                                              'environmental')
         form = self.build_form()
-        args = {a: v[0] for a, v in viewitems(self.request.arguments)}
+        args = {a: v[0].decode('utf-8')
+                for a, v in viewitems(self.request.arguments)}
         form.process(data=args)
+
         # Validate input
         invalid = False
         if not form.validate():

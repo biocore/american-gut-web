@@ -4,6 +4,7 @@ from amgut.test.tornado_test_base import TestHandlerBase
 from amgut.connections import ag_data
 from tornado import escape
 from amgut.lib.util import rollback
+import urllib.parse as parse
 
 
 class TestAddSample(TestHandlerBase):
@@ -26,16 +27,17 @@ class TestAddSample(TestHandlerBase):
         self.assertEqual(response.code, 200)
         # Make sure proper name in place
         self.assertIn(
-            '<input type="hidden" name="participant_name" value="REMOVED-0"/>',
+            b'<input type="hidden" name="participant_name" '
+            b'value="REMOVED-0"/>',
             response.body)
 
         # Spot check sample locations
-        self.assertIn('Left hand', response.body)
-        self.assertIn('Stool', response.body)
-        self.assertIn('Ear wax', response.body)
+        self.assertIn(b'Left hand', response.body)
+        self.assertIn(b'Stool', response.body)
+        self.assertIn(b'Ear wax', response.body)
 
         # Make sure proper form setup used
-        self.assertIn('action="/authed/add_sample_human/"', response.body)
+        self.assertIn(b'action="/authed/add_sample_human/"', response.body)
 
     def test_get_animal(self):
         self.mock_login(
@@ -46,15 +48,16 @@ class TestAddSample(TestHandlerBase):
         self.assertEqual(response.code, 200)
         # Make sure proper name in place
         self.assertIn(
-            '<input type="hidden" name="participant_name" value="REMOVED-0"/>',
+            b'<input type="hidden" name="participant_name" '
+            b'value="REMOVED-0"/>',
             response.body)
 
         # Spot check sample locations
-        self.assertIn('Fur', response.body)
-        self.assertIn('Ears', response.body)
+        self.assertIn(b'Fur', response.body)
+        self.assertIn(b'Ears', response.body)
 
         # Make sure proper form setup used
-        self.assertIn('action="/authed/add_sample_animal/"', response.body)
+        self.assertIn(b'action="/authed/add_sample_animal/"', response.body)
 
     def test_get_general(self):
         self.mock_login(
@@ -65,17 +68,17 @@ class TestAddSample(TestHandlerBase):
         self.assertEqual(response.code, 200)
         # Make sure proper name in place
         self.assertIn(
-            '<input type="hidden" name="participant_name" '
-            'value="environmental"/>',
+            b'<input type="hidden" name="participant_name" '
+            b'value="environmental"/>',
             response.body)
 
         # Spot check sample locations
-        self.assertIn('Animal Habitat', response.body)
-        self.assertIn('Indoor Surface', response.body)
-        self.assertIn('Biofilm', response.body)
+        self.assertIn(b'Animal Habitat', response.body)
+        self.assertIn(b'Indoor Surface', response.body)
+        self.assertIn(b'Biofilm', response.body)
 
         # Make sure proper form setup used
-        self.assertIn('action="/authed/add_sample_general/"', response.body)
+        self.assertIn(b'action="/authed/add_sample_general/"', response.body)
 
     def test_get_no_participant(self):
         self.mock_login(
@@ -112,8 +115,8 @@ class TestAddSample(TestHandlerBase):
         names = ag_data.ut_get_participant_names_from_ag_login_id(ag_login_id)
         response = self.post('/authed/add_sample_human/',
                              {'participant_name': names[0],
-                              'barcode': '000005628',
-                              'sample_site': 'Stool',
+                              'barcode': b'000005628',
+                              'sample_site': b'Stool',
                               'sample_date': '12/13/2014',
                               'sample_time': '11:12 PM',
                               'notes': 'TESTING TORNADO LOGGING HUMAN'})

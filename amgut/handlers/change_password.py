@@ -1,4 +1,4 @@
-from urllib import unquote
+from urllib.parse import unquote
 from tornado.web import authenticated
 
 from amgut.handlers.base_handlers import BaseHandler

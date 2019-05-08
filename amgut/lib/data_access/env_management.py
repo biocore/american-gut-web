@@ -205,12 +205,12 @@ def rebuild_test(verbose=False):
         test = cur.execute("SELECT test_environment FROM ag.settings")
         test = cur.fetchone()[0]
         if test != 'true':
-            print "ABORTING: Not working on test database"
+            print("ABORTING: Not working on test database")
             return
     conn.close()
 
     if verbose:
-        print "Dropping database %s" % AMGUT_CONFIG.database
+        print("Dropping database %s" % AMGUT_CONFIG.database)
 
     p = Popen(['dropdb', '--if-exists', AMGUT_CONFIG.database])
     retcode = p.wait()
@@ -220,10 +220,10 @@ def rebuild_test(verbose=False):
                            (AMGUT_CONFIG.database, retcode))
 
     if verbose:
-        print "Rebuilding database"
+        print("Rebuilding database")
     create_database()
     populate_test_db()
     initialize(verbose)
     if verbose:
-        print "Patching database"
+        print("Patching database")
     patch_db(verbose=verbose)

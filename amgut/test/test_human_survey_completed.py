@@ -42,24 +42,24 @@ class TestHumanSurveyCompleted(TestHandlerBase):
 
         s = Survey(main_survey_id)
         s.store_survey(
-            {u'login_id': ag_login_id,
-             u'age_range': u'18-plus',
-             u'parent_1_name': None,
-             u'participant_email': email,
-             u'obtainer_name': None,
-             u'parent_2_name': None,
-             u'deceased_parent': u'No',
-             u'participant_name': participant_name,
-             u'survey_id': main_survey_id,
-             u'is_juvenile': False},
+            {'login_id': ag_login_id,
+             'age_range': '18-plus',
+             'parent_1_name': None,
+             'participant_email': email,
+             'obtainer_name': None,
+             'parent_2_name': None,
+             'deceased_parent': 'No',
+             'participant_name': participant_name,
+             'survey_id': main_survey_id,
+             'is_juvenile': False},
             with_fk_inserts, without_fk_inserts)
 
         # confirm that no secondary surveys are present
         response = self.post('/participants/%s' % participant_name,
                              {'participant_type': 'human'})
         self.assertEqual(response.code, 200)
-        self.assertNotIn('fermented', response.body)
-        self.assertNotIn('surf', response.body)
+        self.assertNotIn(b'fermented', response.body)
+        self.assertNotIn(b'surf', response.body)
 
         # add a new fermented food survey
         data = {'questions': {'Fermented_Foods_170_0': [''],
@@ -86,12 +86,14 @@ class TestHumanSurveyCompleted(TestHandlerBase):
         response = self.post('/participants/%s' % participant_name,
                              {'participant_type': 'human'})
         self.assertEqual(response.code, 200)
-        self.assertIn('fermented', response.body)
-        self.assertNotIn('surf', response.body)
-        self.assertIn('secondary_survey/?type=%s&participant_name=%s&survey=%s'
-                      % ('fermented',
-                         participant_name,
-                         sec_survey_id_fermented), response.body)
+        self.assertIn(b'fermented', response.body)
+        self.assertNotIn(b'surf', response.body)
+        self.assertIn(
+                b'secondary_survey/?type=%s&participant_name=%s&survey=%s'
+                % (b'fermented',
+                   participant_name.encode('utf-8'),
+                   sec_survey_id_fermented.encode('utf-8')), 
+                response.body)
         # check human_survey_completed links:
         # TODO: I don't know how to set a secured cookie for
         # completed_survey_id and could need some help to actually test values
@@ -126,18 +128,20 @@ class TestHumanSurveyCompleted(TestHandlerBase):
         response = self.post('/participants/%s' % participant_name,
                              {'participant_type': 'human'})
         self.assertEqual(response.code, 200)
-        self.assertIn('fermented', response.body)
-        self.assertIn('surf', response.body)
-        self.assertIn('secondary_survey/?type=%s&participant_name=%s&survey=%s'
-                      % ('fermented',
-                         participant_name,
-                         sec_survey_id_fermented),
-                      response.body)
-        self.assertIn('secondary_survey/?type=%s&participant_name=%s&survey=%s'
-                      % ('surf',
-                         participant_name,
-                         sec_survey_id_surfer),
-                      response.body)
+        self.assertIn(b'fermented', response.body)
+        self.assertIn(b'surf', response.body)
+        self.assertIn(
+                b'secondary_survey/?type=%s&participant_name=%s&survey=%s'
+                % (b'fermented',
+                   participant_name.encode("utf-8"),
+                   sec_survey_id_fermented.encode("utf-8")),
+                response.body)
+        self.assertIn(
+                b'secondary_survey/?type=%s&participant_name=%s&survey=%s'
+                % (b'surf',
+                   participant_name.encode("utf-8"),
+                   sec_survey_id_surfer.encode("utf-8")),
+                response.body)
 
 
 if __name__ == '__main__':

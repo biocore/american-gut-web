@@ -1,6 +1,6 @@
 from mock import Mock
 try:
-    from urllib import urlencode
+    from urllib.parse import urlencode
 except ImportError:  # py3
     from urllib.parse import urlencode
 
@@ -10,10 +10,12 @@ from amgut.handlers.base_handlers import BaseHandler
 
 
 class TestHandlerBase(AsyncHTTPTestCase, LogTrapTestCase):
-    orig_func = BaseHandler.get_current_user
+    def __init__(self, *args, **kwargs):
+        super(TestHandlerBase, self).__init__(*args, **kwargs)
+        self.original_get_current_user = BaseHandler.get_current_user
 
     def tearDown(self):
-        BaseHandler.get_current_user = self.orig_func
+        BaseHandler.get_current_user = self.original_get_current_user
         super(TestHandlerBase, self).tearDown()
 
     def get_app(self):

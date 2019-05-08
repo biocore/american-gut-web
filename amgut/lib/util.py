@@ -6,7 +6,7 @@
 # The full license is in the file LICENSE, distributed with this software.
 # -----------------------------------------------------------------------------
 import posixpath
-import urlparse
+import urllib.parse
 
 from json import loads, dumps
 from collections import defaultdict
@@ -92,13 +92,13 @@ def store_survey(survey, survey_id):
 
     data = redis.hgetall(survey_id)
     to_store = PartitionResponse(survey.question_types)
-    consent_details = loads(data.pop('consent'))
+    consent_details = loads(data.pop(b'consent').decode('utf-8'))
 
     if 'existing' in data:
         data.pop('existing')
 
     for page in data:
-        page_data = loads(data[page])
+        page_data = loads(data[page].decode('utf-8'))
         questions = page_data['questions']
 
         for quest, resps in viewitems(questions):
@@ -190,10 +190,11 @@ def rollback(f):
     # http://stackoverflow.com/q/7727678
     @wraps(f)
     def test_inner(*args, **kwargs):
+
         with TRN:
             x = f(*args, **kwargs)
             TRN.rollback()
-            return x
+        return x
     return test_inner
 
 
@@ -235,7 +236,7 @@ def basejoin(base, url):
     ...     ('https://abc.xyz/f/', '/d/../e/'),
     ... ]
     >>> for result in [basejoin(a, b) for a, b in tests]:
-    ...     print result
+    ...     print(result)
     https://abc.xyz/d/e
     https://abc.xyz/d/e
     https://abc.xyz/d/e
@@ -281,15 +282,15 @@ def basejoin(base, url):
     if url.endswith('/') and not normalized_url.endswith('/'):
         normalized_url += '/'
 
-    join = urlparse.urljoin(base, normalized_url)
-    joined_url = urlparse.urlparse(join)
+    join = urllib.parse.urljoin(base, normalized_url)
+    joined_url = urllib.parse.urlparse(join)
 
-    return urlparse.urlunparse((joined_url.scheme,
-                                joined_url.netloc,
-                                joined_url.path,
-                                joined_url.params,
-                                joined_url.query,
-                                joined_url.fragment))
+    return urllib.parse.urlunparse((joined_url.scheme,
+                                    joined_url.netloc,
+                                    joined_url.path,
+                                    joined_url.params,
+                                    joined_url.query,
+                                    joined_url.fragment))
 
 
 if __name__ == '__main__':

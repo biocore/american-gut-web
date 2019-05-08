@@ -1,4 +1,4 @@
-from __future__ import division
+
 
 # -----------------------------------------------------------------------------
 # Copyright (c) 2014--, The American Gut Development Team.
@@ -95,7 +95,9 @@ class AGDataAccess(object):
             results = dict(row[0])
 
             password = password.encode('utf-8')
-            if not bcrypt.checkpw(password, results['kit_password']):
+
+            if not bcrypt.checkpw(password, 
+                                  results['kit_password'].encode('utf-8')):
                 return False
             results['ag_login_id'] = str(results['ag_login_id'])
 
@@ -205,6 +207,9 @@ class AGDataAccess(object):
                  LEFT JOIN ag.ag_login_surveys USING (ag_login_id)
                  LEFT JOIN ag.ag_login USING (ag_login_id)
                  WHERE barcode = %s"""
+
+        if isinstance(barcode, bytes):
+            barcode = barcode.decode('utf-8')
 
         with TRN:
             TRN.add(sql, [barcode])
@@ -758,7 +763,7 @@ class AGDataAccess(object):
             if not to_check:
                 return False
             else:
-                return bcrypt.checkpw(password, to_check[0][0])
+                return bcrypt.checkpw(password, to_check[0][0].encode('utf-8'))
 
     def check_access(self, supplied_kit_id, barcode):
         """Check if the user has access to the barcode
@@ -826,7 +831,9 @@ class AGDataAccess(object):
             sql = """UPDATE AG_KIT
                      SET kit_password = %s, pass_reset_code = NULL
                      WHERE supplied_kit_id = %s"""
-            TRN.add(sql, [password, kit_id])
+            TRN.add(sql, [password.decode('utf-8'), kit_id])
+
+            TRN.execute()
 
     def ag_verify_kit_password_change_code(self, email, kitid, passcode):
         """returns true if it still in the password change window
