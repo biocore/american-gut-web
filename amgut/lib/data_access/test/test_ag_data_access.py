@@ -325,6 +325,16 @@ class TestAGDataAccess(TestCase):
         with self.assertRaises(ValueError):
             self.ag_data.getConsent("42")
 
+    def test_get_new_survey_id(self):
+        with TRN:
+            sql = """SELECT survey_id FROM ag.ag_login_surveys"""
+            TRN.add(sql)
+            results = {i[0] for i in TRN.execute()[0]}
+
+        for i in range(100):
+            new_id = self.ag_data.get_new_survey_id()
+            self.assertNotIn(new_id, results)
+
     def test_logParticipantSample_badinfo(self):
         # bad ag_login_id
         with self.assertRaises(ValueError):

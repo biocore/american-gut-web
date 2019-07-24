@@ -245,7 +245,7 @@ class TestSurvey(TestCase):
         c = ascii_letters + '1234567890'
         notes_test = ''.join([choice(c) for i in range(40)])
 
-        survey_id = '817ff95701f4dd10'
+        survey_id = ag_data.get_new_survey_id()
         survey = Survey(2)
         consent = {
             'login_id': 'eba20873-b7db-33cc-e040-8a80115d392c',

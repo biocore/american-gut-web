@@ -19,6 +19,8 @@ import psycopg2
 import bcrypt
 import numpy as np
 import pandas as pd
+import binascii
+import os
 
 from amgut.lib.data_access.sql_connection import TRN
 
@@ -1101,6 +1103,34 @@ class AGDataAccess(object):
             if not surveys:
                 raise ValueError("No survey IDs found!")
             return surveys
+
+    def get_new_survey_id(self):
+        """Return a new unique survey ID
+
+        Notes
+        -----
+        This is *NOT* atomic. At the creation of this method, it is not
+        possible to store a survey ID without first storing consent. That
+        would require a fairly large structural change. This method replaces
+        the existing non-atomic logic, with logic that is much safer but not
+        perfect.
+
+        Returns
+        -------
+        str
+            A unique survey ID
+        """
+        with TRN:
+            sql = """SELECT survey_id
+                     FROM ag.ag_login_surveys"""
+            TRN.add(sql)
+            existing = {i[0] for i in TRN.execute()[0]}
+
+            new_id = binascii.hexlify(os.urandom(32))
+            while new_id in existing:
+                new_id = binascii.hexlify(os.urandom(32))
+
+            return new_id
 
     def get_countries(self):
         """

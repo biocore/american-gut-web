@@ -1,7 +1,6 @@
 from urllib import urlencode
 from tornado.escape import url_unescape
 from json import dumps
-import binascii
 import os
 
 from tornado.web import authenticated
@@ -54,7 +53,7 @@ class SecondarySurveyHandler(BaseHandler):
         sitebase = media_locale['SITEBASE']
 
         if not survey_id:
-            survey_id = binascii.hexlify(os.urandom(8))
+            survey_id = ag_data.get_new_survey_id()
 
         sec_survey = self.sec_surveys[survey_type]
         survey_class = make_survey_class(sec_survey.groups[0],
