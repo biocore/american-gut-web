@@ -111,7 +111,8 @@ class AddSample(BaseHandler):
             self.set_secure_cookie('participant_name',
                                    escape.json_encode(participant_name))
             self.set_secure_cookie('barcode', escape.json_encode(barcode))
-            self.redirect(media_locale['SITEBASE'] + '/authed/add_sample_human_ffq/')
+            url = media_locale['SITEBASE'] + '/authed/add_sample_human_ffq/'
+            self.redirect(url)
 
     @authenticated
     def get(self):

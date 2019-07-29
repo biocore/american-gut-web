@@ -1,6 +1,5 @@
 from urllib import urlencode
 from json import dumps
-import os
 
 from tornado.web import authenticated
 from tornado.escape import url_escape

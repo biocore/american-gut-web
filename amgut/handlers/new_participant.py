@@ -1,4 +1,3 @@
-import os
 from json import dumps
 
 from tornado.web import authenticated
