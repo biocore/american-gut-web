@@ -30,6 +30,7 @@ from amgut.handlers.human_survey import HumanSurveyHandler
 from amgut.handlers.human_survey_completed import HumanSurveyCompletedHandler
 from amgut.handlers.vioscreen import VioscreenPassthroughHandler
 from amgut.handlers.add_sample import (AddHumanSampleHandler,
+                                       AddHumanFFQHandler,
                                        AddGeneralSampleHandler,
                                        AddAnimalSampleHandler)
 from amgut.handlers.new_participant import NewParticipantHandler
@@ -88,6 +89,7 @@ class AGWebApplication(Application):
              PersonalMicrobiomeOverviewHandler),
             (r"/authed/portal/", PortalHandler),
             (r"/authed/add_sample_human/", AddHumanSampleHandler),
+            (r"/authed/add_sample_human_ffq/", AddHumanFFQHandler),
             (r"/authed/add_sample_animal/", AddAnimalSampleHandler),
             (r"/authed/add_sample_general/", AddGeneralSampleHandler),
             (r"/authed/change_password/", ChangePasswordHandler),

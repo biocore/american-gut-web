@@ -1,5 +1,3 @@
-import binascii
-import os
 from json import dumps
 
 from tornado.web import authenticated
@@ -57,7 +55,7 @@ class NewParticipantHandler(BaseHandler):
             self.redirect(url)
             return
 
-        human_survey_id = binascii.hexlify(os.urandom(8))
+        human_survey_id = ag_data.get_new_survey_id()
 
         consent = {'participant_name': participant_name,
                    'participant_email': participant_email,

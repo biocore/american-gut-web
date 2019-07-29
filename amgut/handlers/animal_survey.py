@@ -1,7 +1,5 @@
 from urllib import urlencode
 from json import dumps
-import binascii
-import os
 
 from tornado.web import authenticated
 from tornado.escape import url_escape
@@ -38,16 +36,18 @@ class AnimalSurveyHandler(BaseHandler):
         animal_survey_id = self.get_argument('survey_id', None)
         sitebase = media_locale['SITEBASE']
 
-        if not animal_survey_id:
-            animal_survey_id = binascii.hexlify(os.urandom(8))
-            new_survey = True
-        else:
-            new_survey = False
-
         form = self.animal_survey()
         form.process(data=self.request.arguments)
         data = {'questions': form.data}
         participant_name = form['Pet_Information_127_0'].data[0]
+
+        if not animal_survey_id:
+            animal_survey_id = ag_data.get_new_survey_id()
+
+            new_survey = True
+        else:
+            new_survey = False
+
         # If the participant already exists, stop them outright
         if new_survey and \
                 ag_data.check_if_consent_exists(ag_login_id, participant_name):
