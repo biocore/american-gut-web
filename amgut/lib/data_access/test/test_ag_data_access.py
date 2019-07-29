@@ -379,42 +379,51 @@ class TestAGDataAccess(TestCase):
         ag_login_id = '1835e434-b4a4-4f0d-a781-25ba54070c0b'
         barcode = '000033139'
 
-        a = self.ag_data.get_new_survey_id()
-        b = 'not a vios'
+        focus_ffq = self.ag_data.get_new_survey_id()
+
+        # for example, the main survey which we then associate to the
+        # barcode in this method
+        main_questionnaire = 'not a vios'
+
+        other_ffq = self.ag_data.get_new_survey_id()
 
         self.ag_data.associate_barcode_to_survey_id(ag_login_id,
                                                     participant_name,
-                                                    barcode, a)
+                                                    barcode, focus_ffq)
 
         with TRN:
             sql = """INSERT INTO ag_login_surveys
                      (ag_login_id, survey_id, participant_name)
                      VALUES (%s, %s, %s)"""
-            TRN.add(sql, [ag_login_id, b, participant_name])
+            TRN.add(sql, [ag_login_id, main_questionnaire, participant_name])
+            TRN.add(sql, [ag_login_id, other_ffq, participant_name])
 
-        self.ag_data.updateVioscreenStatus(a, 0)
+        self.ag_data.updateVioscreenStatus(focus_ffq, 0)
+        self.ag_data.updateVioscreenStatus(other_ffq, 0)
 
+        # sanity test prior to associating with main survey
         with TRN:
             sql = """SELECT survey_id FROM ag.source_barcodes_surveys
                      WHERE barcode = %s"""
             TRN.add(sql, [barcode])
             obs = set(TRN.execute_fetchflatten())
-            self.assertEqual(len(obs), 2)
-            self.assertTrue(a in obs)
-            self.assertFalse(b in obs)
+            self.assertTrue(focus_ffq in obs)
+            self.assertFalse(main_questionnaire in obs)
+            self.assertFalse(other_ffq in obs)
 
         self.ag_data.logParticipantSample(
             ag_login_id, barcode, 'Stool', None, datetime.date(2015, 9, 27),
             datetime.time(15, 54), participant_name, '')
 
+        # sanity test after associating to main survey
         with TRN:
             sql = """SELECT survey_id FROM ag.source_barcodes_surveys
                      WHERE barcode = %s"""
             TRN.add(sql, [barcode])
             obs = set(TRN.execute_fetchflatten())
-            self.assertEqual(len(obs), 3)
-            self.assertTrue(a in obs)
-            self.assertTrue(b in obs)
+            self.assertTrue(focus_ffq in obs)
+            self.assertTrue(main_questionnaire in obs)
+            self.assertFalse(other_ffq in obs)
 
     @rollback
     def test_logParticipantSample_tomultiplesurveys(self):
