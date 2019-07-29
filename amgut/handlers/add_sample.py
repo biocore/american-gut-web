@@ -30,9 +30,8 @@ class AddHumanFFQHandler(BaseHandler):
 
     def get(self):
         ag_login_id = ag_data.get_user_for_kit(self.current_user)
-        barcode = escape.json_decode(self.get_secure_cookie('barcode'))
-        participant_name = escape.json_decode(
-            self.get_secure_cookie('participant_name'))
+        barcode = self.get_secure_cookie('barcode')
+        participant_name = self.get_secure_cookie('participant_name')
         self.clear_cookie('barcode')
         self.clear_cookie('participant_name')
 
@@ -40,6 +39,9 @@ class AddHumanFFQHandler(BaseHandler):
             self.set_status(404)
             self.redirect(media_locale['SITEBASE'] + '/authed/portal/')
             return
+        else:
+            barcode = escape.json_decode(barcode)
+            participant_name = escape.json_decode(participant_name)
 
         new_survey_id = ag_data.get_new_survey_id()
         ag_data.associate_barcode_to_survey_id(ag_login_id, participant_name,
