@@ -344,6 +344,79 @@ class TestAGDataAccess(TestCase):
                 datetime.time(15, 54), 'BADNAME', '')
 
     @rollback
+    def test_associate_barcode_to_survey_id(self):
+        name = 'Name - öV2NA"+u+$'
+        id_ = '1835e434-b4a4-4f0d-a781-25ba54070c0b'
+        barcode = '000033139'
+
+        with TRN:
+            self.ag_data.associate_barcode_to_survey_id(id_, name, barcode,
+                                                        'xyz')
+            self.ag_data.associate_barcode_to_survey_id(id_, name, barcode,
+                                                        'yzx')
+            self.ag_data.associate_barcode_to_survey_id(id_, name, barcode,
+                                                        'foo')
+            sql = """SELECT survey_id
+                     FROM ag.source_barcodes_surveys
+                     WHERE barcode = %s"""
+
+            TRN.add(sql, [barcode])
+            obs = set(TRN.execute_fetchflatten())
+            exp = {'xyz', 'yzx', 'foo'}
+            self.assertTrue(exp.issubset(obs))
+
+        with self.assertRaises(ValueError):
+            self.ag_data.associate_barcode_to_survey_id(id_, name + 'foo',
+                                                        barcode, 'xyz')
+
+        with self.assertRaises(ValueError):
+            self.ag_data.associate_barcode_to_survey_id(id_, name,
+                                                        '000004216', 'xyz')
+
+    @rollback
+    def test_logParticipantSample_avoid_vios(self):
+        participant_name = 'Name - öV2NA"+u+$'
+        ag_login_id = '1835e434-b4a4-4f0d-a781-25ba54070c0b'
+        barcode = '000033139'
+
+        a = self.ag_data.get_new_survey_id()
+        b = 'not a vios'
+
+        self.ag_data.associate_barcode_to_survey_id(ag_login_id,
+                                                    participant_name,
+                                                    barcode, a)
+
+        with TRN:
+            sql = """INSERT INTO ag_login_surveys
+                     (ag_login_id, survey_id, participant_name)
+                     VALUES (%s, %s, %s)"""
+            TRN.add(sql, [ag_login_id, b, participant_name])
+
+        self.ag_data.updateVioscreenStatus(a, 0)
+
+        with TRN:
+            sql = """SELECT survey_id FROM ag.source_barcodes_surveys
+                     WHERE barcode = %s"""
+            TRN.add(sql, [barcode])
+            obs = set(TRN.execute_fetchflatten())
+            self.assertEqual(len(obs), 2)
+            self.assertTrue(a in obs)
+            self.assertFalse(b in obs)
+
+        self.ag_data.logParticipantSample(
+            ag_login_id, barcode, 'Stool', None, datetime.date(2015, 9, 27),
+            datetime.time(15, 54), participant_name, '')
+
+        with TRN:
+            sql = """SELECT survey_id FROM ag.source_barcodes_surveys
+                     WHERE barcode = %s"""
+            TRN.add(sql, [barcode])
+            obs = set(TRN.execute_fetchflatten())
+            self.assertEqual(len(obs), 3)
+            self.assertTrue(a in obs)
+            self.assertTrue(b in obs)
+
+    @rollback
     def test_logParticipantSample_tomultiplesurveys(self):
         ag_login_id = '5a10ea3e-9c7f-4ec3-9e96-3dc42e896668'
         participant_name = "Name - )?Åú*IüKb+"

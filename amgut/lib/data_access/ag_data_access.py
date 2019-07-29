@@ -542,10 +542,16 @@ class AGDataAccess(object):
                              participant_name, notes):
         with TRN:
             if sample_site is not None:
-                # Get survey id
+                # Get non timepoint specific survey IDs.
+                # As of this comment, a non timepoint specific survey is
+                # implicit, and currently limited to vioscreen FFQs
+                # We do not want to associate timepoint specific surveys
+                # with the wrong barcode
                 sql = """SELECT survey_id
                          FROM ag_login_surveys
-                         WHERE ag_login_id = %s AND participant_name = %s"""
+                         WHERE ag_login_id = %s
+                            AND participant_name = %s
+                            AND vioscreen_status is null"""
 
                 TRN.add(sql, (ag_login_id, participant_name))
                 survey_ids = TRN.execute_fetchindex()
@@ -635,6 +641,45 @@ class AGDataAccess(object):
         with TRN:
             TRN.add(sql, [ag_login_id, 1])
             return TRN.execute_fetchflatten()
+
+    def associate_barcode_to_survey_id(self, ag_login_id, participant_name,
+                                       barcode, survey_id):
+        """Associate a barcode to an existing survey ID
+
+        Parameters
+        ----------
+        ag_login_id : str
+            A valid AG login ID
+        participant_name : str
+            The name of a participant associated with the login
+        barcode : str
+            A valid barcode associated with the login
+        survey_id : str
+            A valid survey ID
+        """
+        with TRN:
+            # first let's sanity check things
+            sql = """SELECT ag_login_id, participant_name, barcode
+                     FROM ag.ag_login_surveys
+                     JOIN ag.source_barcodes_surveys USING(survey_id)
+                     WHERE ag_login_id=%s
+                        AND participant_name=%s
+                        AND barcode=%s"""
+            TRN.add(sql, [ag_login_id, participant_name, barcode])
+            results = TRN.execute_fetchflatten()
+
+            if len(results) == 0:
+                raise ValueError("Unexpected name and ID relation")
+
+            sql = """INSERT INTO ag_login_surveys
+                     (ag_login_id, survey_id, participant_name)
+                     VALUES (%s, %s, %s)"""
+            TRN.add(sql, [ag_login_id, survey_id, participant_name])
+
+            sql = """INSERT INTO ag.source_barcodes_surveys
+                     (survey_id, barcode)
+                     VALUES (%s, %s)"""
+            TRN.add(sql, [survey_id, barcode])
 
     def updateVioscreenStatus(self, survey_id, status):
         with TRN:

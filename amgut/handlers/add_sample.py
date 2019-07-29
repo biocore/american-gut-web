@@ -2,9 +2,11 @@ from datetime import datetime
 from wtforms import (Form, SelectField, DateField, DateTimeField, TextField,
                      HiddenField, validators)
 from tornado.web import authenticated
+from tornado import escape
 from future.utils import viewitems
 
 from amgut.connections import ag_data
+from amgut.lib.util import survey_vioscreen
 from amgut.handlers.base_handlers import BaseHandler
 from amgut import media_locale
 
@@ -19,6 +21,35 @@ class LogSample(Form):
     sample_time = DateTimeField(validators=[required("Required field")],
                                 format='%I:%M %p')
     notes = TextField('notes')
+
+
+class AddHumanFFQHandler(BaseHandler):
+    @authenticated
+    def post(self):
+        self.redirect(media_locale['SITEBASE'] + '/authed/portal/')
+
+    def get(self):
+        ag_login_id = ag_data.get_user_for_kit(self.current_user)
+        barcode = escape.json_decode(self.get_secure_cookie('barcode'))
+        participant_name = escape.json_decode(
+            self.get_secure_cookie('participant_name'))
+        self.clear_cookie('barcode')
+        self.clear_cookie('participant_name')
+
+        if barcode is None or participant_name is None:
+            self.set_status(404)
+            self.redirect(media_locale['SITEBASE'] + '/authed/portal/')
+            return
+
+        new_survey_id = ag_data.get_new_survey_id()
+        ag_data.associate_barcode_to_survey_id(ag_login_id, participant_name,
+                                               barcode, new_survey_id)
+        ag_data.updateVioscreenStatus(new_survey_id, 0)  # 0 -> not started
+        dat = survey_vioscreen(new_survey_id, None, None)
+
+        self.render('human_sample_specific_survey.html',
+                    skid=self.current_user,
+                    surveys=[dat])
 
 
 class AddSample(BaseHandler):
@@ -74,7 +105,13 @@ class AddSample(BaseHandler):
                                      env_sampled, sample_date,
                                      sample_time, participant_name, notes)
 
-        self.redirect(media_locale['SITEBASE'] + '/authed/portal/')
+        if sample_site is None or self.page_type != 'add_sample_human':
+            self.redirect(media_locale['SITEBASE'] + '/authed/portal/')
+        else:
+            self.set_secure_cookie('participant_name',
+                                   escape.json_encode(participant_name))
+            self.set_secure_cookie('barcode', escape.json_encode(barcode))
+            self.redirect(media_locale['SITEBASE'] + '/authed/add_sample_human_ffq/')
 
     @authenticated
     def get(self):
