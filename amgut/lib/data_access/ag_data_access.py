@@ -19,8 +19,8 @@ import psycopg2
 import bcrypt
 import numpy as np
 import pandas as pd
-import binascii
-import os
+import random
+import string
 
 from amgut.lib.data_access.sql_connection import TRN
 
@@ -1165,15 +1165,16 @@ class AGDataAccess(object):
         str
             A unique survey ID
         """
+        alpha = string.ascii_letters + string.digits
         with TRN:
             sql = """SELECT survey_id
                      FROM ag.ag_login_surveys"""
             TRN.add(sql)
             existing = {i[0] for i in TRN.execute()[0]}
 
-            new_id = binascii.hexlify(os.urandom(32))
+            new_id = ''.join([random.choice(alpha) for i in range(16)])
             while new_id in existing:
-                new_id = binascii.hexlify(os.urandom(32))
+                new_id = ''.join([random.choice(alpha) for i in range(16)])
 
             return new_id
 
