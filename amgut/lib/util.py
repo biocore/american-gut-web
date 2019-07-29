@@ -181,7 +181,7 @@ def survey_surf(survey_id, consent_info, internal_surveys=[]):
     return embedded_text % url
 
 
-external_surveys = (survey_vioscreen, survey_fermented, survey_surf)
+external_surveys = (survey_fermented, survey_surf)
 
 
 def rollback(f):
