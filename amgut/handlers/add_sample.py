@@ -28,6 +28,7 @@ class AddHumanFFQHandler(BaseHandler):
     def post(self):
         self.redirect(media_locale['SITEBASE'] + '/authed/portal/')
 
+    @authenticated
     def get(self):
         ag_login_id = ag_data.get_user_for_kit(self.current_user)
         barcode = self.get_secure_cookie('barcode')
@@ -111,8 +112,11 @@ class AddSample(BaseHandler):
             self.redirect(media_locale['SITEBASE'] + '/authed/portal/')
         else:
             self.set_secure_cookie('participant_name',
-                                   escape.json_encode(participant_name))
-            self.set_secure_cookie('barcode', escape.json_encode(barcode))
+                                   escape.json_encode(participant_name),
+                                   expires_days=1)
+            self.set_secure_cookie('barcode',
+                                   escape.json_encode(barcode),
+                                   expires_days=1)
             url = media_locale['SITEBASE'] + '/authed/add_sample_human_ffq/'
             self.redirect(url)
 
