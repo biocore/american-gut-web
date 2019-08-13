@@ -3,7 +3,7 @@ python:
   - "2.7"
 sudo: false
 addons:
-  postgresql: "9.3"
+  postgresql: "9.5"
 services:
   - redis-server
   - postgresql 
