@@ -335,6 +335,22 @@ class TestAGDataAccess(TestCase):
             new_id = self.ag_data.get_new_survey_id()
             self.assertNotIn(new_id, results)
 
+    @rollback
+    def test_logParticipantSample_bug_only_one_surveyid(self):
+        # before ag.source_barcodes_survey was added, it used to be that
+        # the survey ID used for the main survey was what was used for
+        # vioscreen. So for those who had created a survey before this
+        # switch, we have to treat them a little different.
+        # In addition, it seems that some samples prior to the PR which allowed
+        # for per sample vioscreen surveys ended up a vioscreen_status set
+        # but only a single survey, and it isn't obvious how.
+        id_ = 'c5b3ee5d-c143-4253-8dae-2722637fb08f'
+        bc = '000070778'
+        name = 'Name - Ø6CTz2LLqn'
+        self.ag_data.logParticipantSample(id_, bc,
+            'stool', None, datetime.date(2015, 9, 27),
+            datetime.time(15, 54), name, '')
+
     def test_logParticipantSample_badinfo(self):
         # bad ag_login_id
         with self.assertRaises(ValueError):
