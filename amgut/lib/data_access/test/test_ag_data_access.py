@@ -347,9 +347,9 @@ class TestAGDataAccess(TestCase):
         id_ = 'c5b3ee5d-c143-4253-8dae-2722637fb08f'
         bc = '000070778'
         name = 'Name - Ø6CTz2LLqn'
-        self.ag_data.logParticipantSample(id_, bc,
-            'stool', None, datetime.date(2015, 9, 27),
-            datetime.time(15, 54), name, '')
+        self.ag_data.logParticipantSample(id_, bc, 'stool', None,
+                                          datetime.date(2015, 9, 27),
+                                          datetime.time(15, 54), name, '')
 
     def test_logParticipantSample_badinfo(self):
         # bad ag_login_id
