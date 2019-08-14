@@ -20,6 +20,7 @@ from amgut import media_locale, text_locale
 from amgut.lib.data_access.sql_connection import TRN
 from amgut.connections import redis
 from amgut.lib.vioscreen import encrypt_key
+from amgut.lib.config_manager import AMGUT_CONFIG
 
 
 class PartitionResponse(object):
@@ -132,8 +133,9 @@ def survey_vioscreen(survey_id, consent_info, internal_surveys=[]):
     """Return a formatted text block and URL for the external survey"""
     tl = text_locale['human_survey_completed.html']
     embedded_text = tl['SURVEY_VIOSCREEN']
-    url = ("https://vioscreen.com/remotelogin.aspx?Key=%s&RegCode=KLUCB" %
-           url_escape(encrypt_key(survey_id)))
+    regcode = AMGUT_CONFIG.vioscreen_regcode
+    url = ("https://vioscreen.com/remotelogin.aspx?Key=%s&RegCode=%s" %
+           (regcode, url_escape(encrypt_key(survey_id))))
     return embedded_text % url
 
 
