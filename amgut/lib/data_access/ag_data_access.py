@@ -547,19 +547,35 @@ class AGDataAccess(object):
                 # implicit, and currently limited to vioscreen FFQs
                 # We do not want to associate timepoint specific surveys
                 # with the wrong barcode
-                sql = """SELECT survey_id
+                sql = """SELECT survey_id, vioscreen_status
                          FROM ag_login_surveys
                          WHERE ag_login_id = %s
-                            AND participant_name = %s
-                            AND vioscreen_status is null"""
+                            AND participant_name = %s"""
 
                 TRN.add(sql, (ag_login_id, participant_name))
-                survey_ids = TRN.execute_fetchindex()
-                if not survey_ids:
+                results = TRN.execute_fetchindex()
+                survey_ids = [x[0] for x in results]
+                statuses = [x[1] for x in results]
+
+                # if we have more than 1 ID, filter out those associated to
+                # vioscreen
+                if len(survey_ids) > 1:
+                    keep = []
+                    for sid, vs in zip(survey_ids, statuses):
+                        if vs is None:
+                            keep.append(sid)
+                    survey_ids = keep
+
+                # if we only have a single survey ID then advance regardless
+                # of vioscreen status
+                if len(survey_ids) == 1:
+                    pass
+
+                if len(survey_ids) == 0:
                     raise ValueError("No survey IDs for ag_login_id %s and "
                                      "participant name %s" %
                                      (ag_login_id, participant_name))
-                survey_ids = [x[0] for x in survey_ids]
+
             else:
                 # otherwise, it is an environmental sample
                 survey_ids = []
