@@ -135,7 +135,7 @@ def survey_vioscreen(survey_id, consent_info, internal_surveys=[]):
     embedded_text = tl['SURVEY_VIOSCREEN']
     regcode = AMGUT_CONFIG.vioscreen_regcode
     url = ("https://vioscreen.com/remotelogin.aspx?Key=%s&RegCode=%s" %
-           (url_escape(encrypt_key(survey_id))), regcode)
+           (url_escape(encrypt_key(survey_id)), regcode))
     return embedded_text % url
 
 
