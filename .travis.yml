@@ -2,10 +2,11 @@ language: python
 python:
   - "2.7"
 sudo: false
+addons:
+  postgresql: "9.5"
 services:
   - redis-server
-addons:
-  postgresql: "9.3"
+  - postgresql 
 before_install:
   - redis-server --version
   - sudo mount -o remount,size=25% /var/ramfs
