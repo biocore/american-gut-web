@@ -572,9 +572,15 @@ class AGDataAccess(object):
                     pass
 
                 if len(survey_ids) == 0:
-                    raise ValueError("No survey IDs for ag_login_id %s and "
-                                     "participant name %s" %
-                                     (ag_login_id, participant_name))
+                    # if we don't have a definite non-vioscreen survey ID
+                    # which can arise on legacy accounts, then we'll create a
+                    # new ID without a vioscreen_status entry. Note that
+                    # the associate_barcode_to_survey_id call is necessary to
+                    # add the survey ID into ag_login_surveys and it also takes
+                    # care of the survey_id <-> barcode association
+                    new_survey_id = self.get_new_survey_id()
+                    self.associate_barcode_to_survey_id(ag_login_id, participant_name,
+                                                        barcode, new_survey_id)
 
             else:
                 # otherwise, it is an environmental sample
@@ -589,6 +595,7 @@ class AGDataAccess(object):
             TRN.add(sql, [sample_site, environment_sampled, sample_date,
                           sample_time, notes,
                           barcode])
+
             if len(survey_ids) > 0:
                 sql = """INSERT INTO ag.source_barcodes_surveys (survey_id,
                                                                  barcode)
@@ -660,7 +667,7 @@ class AGDataAccess(object):
 
     def associate_barcode_to_survey_id(self, ag_login_id, participant_name,
                                        barcode, survey_id):
-        """Associate a barcode to an existing survey ID
+        """Associate a barcode to a survey ID
 
         Parameters
         ----------
@@ -674,7 +681,7 @@ class AGDataAccess(object):
             A valid survey ID
         """
         with TRN:
-            # first let's sanity check things
+            # test first if the barcode is already associated to a participant
             sql = """SELECT ag_login_id, participant_name, barcode
                      FROM ag.ag_login_surveys
                      JOIN ag.source_barcodes_surveys USING(survey_id)
@@ -685,7 +692,37 @@ class AGDataAccess(object):
             results = TRN.execute_fetchflatten()
 
             if len(results) == 0:
-                raise ValueError("Unexpected name and ID relation")
+                # this implies the barcode was unassigned, and this is a new
+                # assignment.
+
+                # Let's verify the barcode is associated to the kit and login
+                sql = """SELECT 1
+                         FROM ag.ag_login
+                         JOIN ag.ag_kit USING (ag_login_id)
+                         JOIN ag.ag_kit_barcodes USING (ag_kit_id)
+                         WHERE ag_login_id=%s
+                            AND barcode=%s"""
+
+                TRN.add(sql, [ag_login_id, barcode])
+                results = TRN.execute_fetchflatten()
+
+                if len(results) == 0:
+                    # the barcode is not part of a kit with the login ID
+                    raise ValueError("Unexpected barcode / kit relationship")
+
+                # the barcode should also not already be linked to a
+                # participant within the kit
+                sql = """SELECT 1
+                         FROM ag.ag_login_surveys
+                         JOIN ag.source_barcodes_surveys USING(survey_id)
+                         WHERE ag_login_id=%s
+                            AND barcode=%s"""
+                TRN.add(sql, [ag_login_id, barcode])
+                results = TRN.execute_fetchflatten()
+
+                if len(results) > 0:
+                    # the barcode is already assigned to someone on the kit
+                    raise ValueError("Barcode already assigned")
 
             sql = """INSERT INTO ag_login_surveys
                      (ag_login_id, survey_id, participant_name)
@@ -1186,7 +1223,7 @@ class AGDataAccess(object):
             sql = """SELECT survey_id
                      FROM ag.ag_login_surveys"""
             TRN.add(sql)
-            existing = {i[0] for i in TRN.execute()[0]}
+            existing = {i[0] for i in TRN.execute_fetchflatten()}
 
             new_id = ''.join([random.choice(alpha) for i in range(16)])
             while new_id in existing:
