@@ -351,6 +351,25 @@ class TestAGDataAccess(TestCase):
                                           datetime.date(2015, 9, 27),
                                           datetime.time(15, 54), name, '')
 
+    @rollback
+    def test_logParticipantSample_bug_no_usable_survey(self):
+        # not sure how this state was established, but the ID below ended
+        # up without any viable survey IDs. First we need to mimick the state
+        id_ = 'c5b3ee5d-c143-4253-8dae-2722637fb08f'
+        sid = 'EVA6KTTZOtTHK3xG'
+        bc = '000070778'
+        name = 'Name - Ø6CTz2LLqn'
+        with TRN:
+            sql = """INSERT INTO ag.ag_login_surveys
+                        (ag_login_id, survey_id, participant_name,
+                         vioscreen_status)
+                     VALUES (%s, %s, %s, 0)"""
+            TRN.add(sql, [id_, sid, name])
+
+        self.ag_data.logParticipantSample(id_, bc, 'stool', None,
+                                          datetime.date(2015, 9, 27),
+                                          datetime.time(15, 54), name, '')
+
     def test_logParticipantSample_badinfo(self):
         # bad ag_login_id
         with self.assertRaises(ValueError):
@@ -364,6 +383,36 @@ class TestAGDataAccess(TestCase):
         name = 'Name - öV2NA"+u+$'
         id_ = '1835e434-b4a4-4f0d-a781-25ba54070c0b'
         barcode = '000033139'
+
+        with TRN:
+            self.ag_data.associate_barcode_to_survey_id(id_, name, barcode,
+                                                        'xyz')
+            self.ag_data.associate_barcode_to_survey_id(id_, name, barcode,
+                                                        'yzx')
+            self.ag_data.associate_barcode_to_survey_id(id_, name, barcode,
+                                                        'foo')
+            sql = """SELECT survey_id
+                     FROM ag.source_barcodes_surveys
+                     WHERE barcode = %s"""
+
+            TRN.add(sql, [barcode])
+            obs = set(TRN.execute_fetchflatten())
+            exp = {'xyz', 'yzx', 'foo'}
+            self.assertTrue(exp.issubset(obs))
+
+        with self.assertRaises(ValueError):
+            self.ag_data.associate_barcode_to_survey_id(id_, name + 'foo',
+                                                        barcode, 'xyz')
+
+        with self.assertRaises(ValueError):
+            self.ag_data.associate_barcode_to_survey_id(id_, name,
+                                                        '000004216', 'xyz')
+
+    @rollback
+    def test_associate_barcode_to_survey_id_previously_unassociated(self):
+        name = 'Name - Ø6CTz2LLqn'
+        id_ = 'c5b3ee5d-c143-4253-8dae-2722637fb08f'
+        barcode = '000070770'
 
         with TRN:
             self.ag_data.associate_barcode_to_survey_id(id_, name, barcode,
