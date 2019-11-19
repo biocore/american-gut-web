@@ -1223,7 +1223,7 @@ class AGDataAccess(object):
             sql = """SELECT survey_id
                      FROM ag.ag_login_surveys"""
             TRN.add(sql)
-            existing = {i[0] for i in TRN.execute_fetchflatten()}
+            existing = {i for i in TRN.execute_fetchflatten()}
 
             new_id = ''.join([random.choice(alpha) for i in range(16)])
             while new_id in existing:
