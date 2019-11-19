@@ -579,7 +579,8 @@ class AGDataAccess(object):
                     # add the survey ID into ag_login_surveys and it also takes
                     # care of the survey_id <-> barcode association
                     new_survey_id = self.get_new_survey_id()
-                    self.associate_barcode_to_survey_id(ag_login_id, participant_name,
+                    self.associate_barcode_to_survey_id(ag_login_id,
+                                                        participant_name,
                                                         barcode, new_survey_id)
 
             else:

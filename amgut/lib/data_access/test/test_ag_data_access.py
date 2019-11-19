@@ -437,6 +437,7 @@ class TestAGDataAccess(TestCase):
         with self.assertRaises(ValueError):
             self.ag_data.associate_barcode_to_survey_id(id_, name,
                                                         '000004216', 'xyz')
+
     @rollback
     def test_logParticipantSample_avoid_vios(self):
         participant_name = 'Name - öV2NA"+u+$'
