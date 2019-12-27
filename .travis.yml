@@ -12,7 +12,7 @@ before_install:
   - sudo mount -o remount,size=25% /var/ramfs
 install:
   - pip install --upgrade pip
-  - pip install mock nose>=0.10.1 pep8 flake8 coveralls
+  - pip install mock nose>=0.10.1 pep8 flake8 coveralls geocoder
   - travis_retry pip install .
 script:
   - export AG_CONFIG=`pwd`/ag_config.txt.example

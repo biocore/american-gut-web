@@ -23,6 +23,7 @@ import random
 import string
 
 from amgut.lib.data_access.sql_connection import TRN
+from amgut.lib.geocode import geocode_aglogins
 
 
 # character sets for kit id, passwords and verification codes
@@ -125,7 +126,8 @@ class AGDataAccess(object):
                 value = value[0][0]
             return None if value == [] else value
 
-    def addAGLogin(self, email, name, address, city, state, zip_, country):
+    def addAGLogin(self, email, name, address, city, state, zip_, country,
+                   geocode=True):
         """Adds a new login or returns the login_id if email already exists
 
         Parameters
@@ -144,6 +146,10 @@ class AGDataAccess(object):
             Postal code to register for user
         country : str
             Country to register for user
+        geocode : bool
+            Use address to obtain lat,lng,elev via geocoding API.
+            Switch off useful for unit testing.
+            Default: True
 
         Returns
         -------
@@ -162,6 +168,9 @@ class AGDataAccess(object):
                 TRN.add(sql, [clean_email, name, address, city, state, zip_,
                               country])
                 ag_login_id = TRN.execute_fetchlast()
+                # geocode new address to retrieve lat,lng and elevation
+                if geocode:
+                    geocode_aglogins(ag_login_id)
             return ag_login_id
 
     def getAGBarcodeDetails(self, barcode):
@@ -1570,3 +1579,30 @@ class AGDataAccess(object):
             if not info:
                 raise ValueError('Barcode "%s" not in DB' % barcode)
             return info[0][0]
+
+    def ut_get_location(self, ag_login_id):
+        """Get kit registration information
+        Parameters
+        ----------
+        ag_login_id : str
+            A valid login ID, that should be a test as a valid UUID
+        Returns
+        -------
+        list of dict
+            A list of registration information associated with a common login
+            ID.
+        Raises
+        ------
+        ValueError
+            Unknown ag_login_id passed
+        """
+        with TRN:
+            sql = """SELECT latitude, longitude, elevation, cannot_geocode
+                     FROM ag_login
+                     WHERE ag_login_id = %s"""
+            TRN.add(sql, [ag_login_id])
+            info = TRN.execute_fetchindex()
+            if not info:
+                raise ValueError('ag_login_id not in database: %s' %
+                                 ag_login_id)
+            return [dict(row) for row in info][0]
