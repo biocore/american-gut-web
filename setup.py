@@ -70,7 +70,7 @@ setup(name='American Gut participant UI',
           'bcrypt',
           'redis',
           'requests',
-          'tornado==4.4.2',
+          'tornado==6.3.2',
           'WTForms==2.0.1',
           'natsort',
           'pandas'
