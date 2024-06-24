@@ -79,11 +79,11 @@ def make(db, force):
 def extract(survey, language, output):
     """Extracts survey infomation of a particular survey and language."""
     click.echo("Extracting %s survey information to %s" % (survey, output))
-    survey_ids = {'primary': '1',
-                  'pet': '2',
-                  'diet': '3',
-                  'fermented': '4',
-                  'surfing': '5'}
+    survey_ids = {'primary': 1,
+                  'pet': 2,
+                  'personal': 5,
+                  'fermented': 3,
+                  'surfing': 4}
     df  = ag_data.getAGSurveyDetails(survey_ids[survey], language)
     df.to_csv(output, sep='\t', index=False, header=True)
 
